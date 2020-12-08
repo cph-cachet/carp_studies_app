@@ -1,16 +1,7 @@
-# carp_study_app
+#CARP Study App
+The CARP Study App is designed to run generic studies using the [CARP Mobile Sensing](https://pub.dev/packages/carp_mobile_sensing) 
+(CAMS) Framework, which is part of the [CACHET Research Platform](https://carp.cachet.dk) (CARP) 
+from the [Copenhagen Center for Health Technology](https://www.cachet.dk).
 
-The generic CARP study app
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+It follows the Flutter Business Logic Component (BLoC) architecture, as described in the 
+[CARP Mobile Sensing Demo App](https://github.com/cph-cachet/carp.sensing-flutter/tree/master/apps/carp_mobile_sensing_app).

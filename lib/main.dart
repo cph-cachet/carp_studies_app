@@ -18,7 +18,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
 
 part 'app.dart';
-part 'blocs/sensing_bloc.dart';
+part 'blocs/app_bloc.dart';
 part 'blocs/settings_bloc.dart';
 part 'models/tasklist_page_model.dart';
 part 'models/study_page_model.dart';

@@ -1,6 +1,6 @@
 part of carp_study_app;
 
-class DataVisualization extends StatelessWidget {
+class DataVisualizationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

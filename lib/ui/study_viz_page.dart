@@ -1,6 +1,10 @@
 part of carp_study_app;
 
-class StudyVisualization extends StatelessWidget {
+class StudyPage extends StatelessWidget {
+  final StudyPageModel model;
+
+  StudyPage(this.model);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

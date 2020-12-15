@@ -29,7 +29,6 @@ class CARPStudyAppState extends State<CARPStudyAppHome> {
     super.initState();
     settings.init();
     bloc.init();
-    bloc.start();
   }
 
   void dispose() {
@@ -49,23 +48,17 @@ class CARPStudyAppState extends State<CARPStudyAppHome> {
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
       ),
-//      floatingActionButton: new FloatingActionButton(
-//        onPressed: _restart,
-//        tooltip: 'Restart study & probes',
-//        child: bloc.isRunning ? Icon(Icons.pause) : Icon(Icons.play_arrow),
-//      ),
+      floatingActionButton: new FloatingActionButton(
+        onPressed: _restart,
+        tooltip: 'Restart study',
+        child: bloc.isRunning ? Icon(Icons.pause) : Icon(Icons.play_arrow),
+      ),
     );
   }
 
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
-    });
-  }
-
-  void _stop() {
-    setState(() {
-      if (bloc.isRunning) bloc.stop();
     });
   }
 

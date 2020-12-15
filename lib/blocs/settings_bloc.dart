@@ -40,7 +40,7 @@ class SettingsBLoC {
   Future<DateTime> get studyStartTimestamp async {
     if (_studyStartTimestamp == null) {
       String str = (await preferences).get(STUDY_START_KEY);
-      _studyStartTimestamp = DateTime.parse(str);
+      _studyStartTimestamp = (str != null) ? DateTime.parse(str) : null;
       if (_studyStartTimestamp == null) {
         _studyStartTimestamp = DateTime.now();
         (await preferences).setString(

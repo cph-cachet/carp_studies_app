@@ -4,6 +4,7 @@ class CARPStudyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData.light(),
+      darkTheme: ThemeData.dark(),
       home: CARPStudyAppHome(key: key),
     );
   }
@@ -19,9 +20,9 @@ class CARPStudyAppState extends State<CARPStudyAppHome> {
   int _selectedIndex = 0;
 
   final _pages = [
-    StudyVisualization(),
-    TaskList(),
-    DataVisualization(),
+    StudyPage(StudyPageModel()),
+    TaskListPage(TaskListPageModel()),
+    DataVisualizationPage(),
   ];
 
   void initState() {

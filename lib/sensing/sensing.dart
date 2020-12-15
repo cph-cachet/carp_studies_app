@@ -7,7 +7,8 @@ class Sensing implements StudyManager {
   StudyController controller;
 
   /// the list of running - i.e. used - probes in this study.
-  List<Probe> get runningProbes => (controller != null) ? controller.executor.probes : List();
+  List<Probe> get runningProbes =>
+      (controller != null) ? controller.executor.probes : List();
 
   Sensing() : super() {
     // create and register external sampling packages
@@ -57,10 +58,11 @@ class Sensing implements StudyManager {
     if (study == null) {
       study = Study(studyId, await settings.userId)
         ..name = 'Pulmonary Monitor'
-        ..description = "With the Pulmonary Monitor you can monitor your respiratory health. "
-            "By using the phones sensors, including the microphone, it will try to monitor you breathing, heart rate, sleep, social contact to others, and your movement. "
-            "You will also be able to fill in a simple daily survey to help us understand how you're doing. "
-            "Before you start, please also fill in the demographich survey. "
+        ..description =
+            "With the Pulmonary Monitor you can monitor your respiratory health. "
+                "By using the phones sensors, including the microphone, it will try to monitor you breathing, heart rate, sleep, social contact to others, and your movement. "
+                "You will also be able to fill in a simple daily survey to help us understand how you're doing. "
+                "Before you start, please also fill in the demographich survey. "
         ..dataEndPoint = getDataEndpoint(DataEndPointTypes.FILE)
         // collect basic device measures continously
         ..addTriggerTask(
@@ -129,7 +131,8 @@ class Sensing implements StudyManager {
                 enabled: true,
                 surveyTask: surveys.demographics.survey,
               ))
-              ..measures.add(SamplingSchema.common().measures[ContextSamplingPackage.LOCATION]))
+              ..measures.add(SamplingSchema.common()
+                  .measures[ContextSamplingPackage.LOCATION]))
         // collect symptoms on a daily basis
         ..addTriggerTask(
             PeriodicTrigger(period: Duration(days: 1)),
@@ -145,12 +148,14 @@ class Sensing implements StudyManager {
                 enabled: true,
                 surveyTask: surveys.symptoms.survey,
               ))
-              ..measures.add(SamplingSchema.common().measures[ContextSamplingPackage.LOCATION]))
+              ..measures.add(SamplingSchema.common()
+                  .measures[ContextSamplingPackage.LOCATION]))
         // when the reading (audio) measure is collected, the add a user task to
         // collect location, and local weather and air quality
         ..addTriggerTask(
             ConditionalSamplingEventTrigger(
-              measureType: MeasureType(NameSpace.CARP, AudioSamplingPackage.AUDIO),
+              measureType:
+                  MeasureType(NameSpace.CARP, AudioSamplingPackage.AUDIO),
               resumeCondition: (Datum datum) => true,
               pauseCondition: (Datum datum) => true,
             ),
@@ -179,7 +184,8 @@ class Sensing implements StudyManager {
             ..dataEndPoint = getDataEndpoint(DataEndPointTypes.FILE)
             ..addTriggerTask(
                 ConditionalSamplingEventTrigger(
-                  measureType: MeasureType(NameSpace.CARP, SurveySamplingPackage.SURVEY),
+                  measureType:
+                      MeasureType(NameSpace.CARP, SurveySamplingPackage.SURVEY),
                   resumeCondition: (Datum datum) => true,
                   pauseCondition: (Datum datum) => true,
                 ),
@@ -221,7 +227,8 @@ class Sensing implements StudyManager {
                     surveyTask: surveys.demographics.survey,
                   ))
                   ..measures.add(Measure(
-                    MeasureType(NameSpace.CARP, ContextSamplingPackage.LOCATION),
+                    MeasureType(
+                        NameSpace.CARP, ContextSamplingPackage.LOCATION),
                   )))
 //
             ..addTriggerTask(
@@ -239,7 +246,8 @@ class Sensing implements StudyManager {
                     surveyTask: surveys.symptoms.survey,
                   ))
                   ..measures.add(Measure(
-                    MeasureType(NameSpace.CARP, ContextSamplingPackage.LOCATION),
+                    MeasureType(
+                        NameSpace.CARP, ContextSamplingPackage.LOCATION),
                   )))
           // ..addTriggerTask(
           //     PeriodicTrigger(period: Duration(minutes: 2)),
@@ -300,7 +308,8 @@ class Sensing implements StudyManager {
       case DataEndPointTypes.PRINT:
         return new DataEndPoint(DataEndPointTypes.PRINT);
       case DataEndPointTypes.FILE:
-        return FileDataEndPoint(bufferSize: 50 * 1000, zip: true, encrypt: false);
+        return FileDataEndPoint(
+            bufferSize: 50 * 1000, zip: true, encrypt: false);
       case DataEndPointTypes.CARP:
         return CarpDataEndPoint(CarpUploadMethod.DATA_POINT,
             name: 'CARP Staging Server',

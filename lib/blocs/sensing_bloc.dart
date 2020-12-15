@@ -3,17 +3,14 @@ part of carp_study_app;
 class SensingBLoC {
   final Sensing sensing = Sensing();
 
-  /// The list of available app tasks for the user to address.
-  List<UserTask> get tasks => AppTaskController().userTaskQueue;
-
   /// Is sensing running, i.e. has the study executor been resumed?
-  bool get isRunning => (sensing.controller != null) && sensing.controller.executor.state == ProbeState.resumed;
+  bool get isRunning =>
+      (sensing.controller != null) &&
+      sensing.controller.executor.state == ProbeState.resumed;
 
-  /// Get the study for this app.
-  StudyModel get study => sensing.study != null ? StudyModel(sensing.study) : null;
-
-  /// Get the data model for this study.
-  DataModel get data => null;
+  /// Get the study page model for this app.
+  StudyPageModel get studyPageModel =>
+      sensing.study != null ? StudyPageModel(sensing.study) : null;
 
   SensingBLoC();
 
@@ -61,7 +58,8 @@ class SensingBLoC {
   void addDatum(Datum datum) => sensing.controller.executor.addDatum(datum);
 
   /// Add a error to the stream of events.
-  void addError(Object error, [StackTrace stacktrace]) => sensing.controller.executor.addError(error, stacktrace);
+  void addError(Object error, [StackTrace stacktrace]) =>
+      sensing.controller.executor.addError(error, stacktrace);
 }
 
 final bloc = SensingBLoC();

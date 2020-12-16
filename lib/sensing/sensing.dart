@@ -267,11 +267,11 @@ class LocalStudyManager implements StudyManager {
       case DataEndPointTypes.CARP:
         return CarpDataEndPoint(CarpUploadMethod.DATA_POINT,
             name: 'CARP Staging Server',
-            uri: settings.uri,
-            clientId: settings.clientID,
-            clientSecret: settings.clientSecret,
-            email: settings.username,
-            password: settings.password);
+            uri: bloc.uri,
+            clientId: bloc.clientID,
+            clientSecret: bloc.clientSecret,
+            email: bloc.username,
+            password: bloc.password);
 //        return CarpDataEndPoint(
 //          CarpUploadMethod.BATCH_DATA_POINT,
 //          name: 'CARP Staging Server',
@@ -299,5 +299,11 @@ class LocalStudyManager implements StudyManager {
       default:
         return new DataEndPoint(DataEndPointTypes.PRINT);
     }
+  }
+
+  @override
+  Future<bool> saveStudy(Study study) {
+    // TODO: implement saveStudy
+    throw UnimplementedError();
   }
 }

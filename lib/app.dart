@@ -27,7 +27,6 @@ class CARPStudyAppState extends State<CARPStudyAppHome> {
 
   void initState() {
     super.initState();
-    settings.init();
     bloc.init();
   }
 

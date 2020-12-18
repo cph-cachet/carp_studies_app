@@ -21,8 +21,10 @@ class AppBLoC {
   }
 
   Future<void> init() async {
+    settings.init();
+
     // Get the study from the study manager
-    _study = await studyManager.getStudy(settings.studyId);
+    _study = await studyManager.getStudy(studyId);
 
     // Create a Study Controller that can manage this study and initialize it.
     controller = StudyController(
@@ -60,6 +62,21 @@ class AppBLoC {
     });
   }
 
+  String get studyId => "2";
+
+  /// The CARP username.
+  String get username => "researcher@example.com";
+
+  /// The CARP password.
+  String get password =>
+      "..."; //decrypt("lkjhf98sdvhcksdmnfewoiywefhowieyurpo2hjr");
+
+  /// The URI of the CARP server.
+  String get uri => "http://staging.carp.cachet.dk:8080";
+
+  String get clientID => "carp";
+  String get clientSecret => "carp";
+
   Study get study => _study;
 
   /// Is sensing running, i.e. has the study executor been resumed?
@@ -73,11 +90,8 @@ class AppBLoC {
   /// Start sensing. Should only be called once.
   /// Use [resume] and [pause] if pausing/resuming sensing.
   Future<void> start() async {
-    // check the start time for this study on this phone
-    _studyStartTimestamp = await settings.studyStartTimestamp;
-    info('Study was started on this phone on ${_studyStartTimestamp.toUtc()}');
-
     controller.resume();
+    _studyStartTimestamp = await settings.studyStartTimestamp;
 
     // listening on all data events from the study and print it (for debugging purpose).
     controller.events.forEach(print);

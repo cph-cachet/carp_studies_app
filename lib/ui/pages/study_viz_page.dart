@@ -8,7 +8,7 @@ class StudyVisualization extends StatefulWidget {
 class _StudyVisualizationState extends State<StudyVisualization> {
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
-    // TODO get messages from bloc
+    // TODO remove this line and use the streambuilder
     List<Message> messages = [];
 
     return Scaffold(
@@ -22,6 +22,7 @@ class _StudyVisualizationState extends State<StudyVisualization> {
                   CarpAppBar(),
                   StudyBanner(),
                   Flexible(
+                      // TODO use the stream builder
                       child: StreamBuilder<UserTask>(
                           stream: AppTaskController().userTaskEvents,
                           builder: (context, AsyncSnapshot<UserTask> snapshot) {

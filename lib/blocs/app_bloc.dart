@@ -7,11 +7,8 @@ class AppBLoC {
   DateTime _studyStartTimestamp;
   DateTime get studyStartTimestamp => _studyStartTimestamp;
 
-  /// The list of available app tasks for the user to address.
+  /// TODO REMOVE THIS LINE
   List<UserTask> get tasks => AppTaskController().userTaskQueue;
-
-  TaskListPageModel taskListPageModel;
-  StudyPageModel studyPageModel;
 
   AppBLoC() : super() {
     // create and register external sampling packages

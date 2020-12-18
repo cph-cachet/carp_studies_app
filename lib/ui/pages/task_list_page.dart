@@ -9,6 +9,8 @@ class _TaskListState extends State<TaskList> {
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
+
+    // TODO remove this line and use the stream builder
     List<UserTask> tasks = bloc.tasks.reversed.toList();
 
     return Scaffold(
@@ -36,6 +38,7 @@ class _TaskListState extends State<TaskList> {
                       )),
                   SizedBox(height: 15),
                   Flexible(
+                      // TODO use the stream builder
                       child: StreamBuilder<UserTask>(
                           stream: AppTaskController().userTaskEvents,
                           builder: (context, snapshot) {

@@ -9,13 +9,9 @@ class TaskListPageModel {
   /// A stream of [UserTask]s as they are generated.
   Stream<UserTask> get userTaskEvents => AppTaskController().userTaskEvents;
 
-  /// The number of days the user has been part of this study.
-  int get daysInStudy =>
-      DateTime.now().difference(bloc.studyStartTimestamp).inDays;
+  /// The number of day the user has been part of this study.
+  int get daysInStudy => 0;
 
   /// The number of tasks completed so far.
-  int get taskCompleted => AppTaskController()
-      .userTaskQueue
-      .where((task) => task.state == UserTaskState.done)
-      .length;
+  int get taskCompleted => 0;
 }

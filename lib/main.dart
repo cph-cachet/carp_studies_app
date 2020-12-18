@@ -23,7 +23,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:uuid/uuid.dart';
 
 part 'app.dart';
-part 'blocs/app_bloc.dart';
+part 'blocs/sensing_bloc.dart';
 part 'blocs/settings_bloc.dart';
 part 'models/tasklist_page_model.dart';
 part 'models/study_page_model.dart';

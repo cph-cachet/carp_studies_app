@@ -1,16 +1,62 @@
 part of carp_study_app;
 
-class LocalStudyManager implements StudyManager {
-  Study _study;
+/// This class implements the sensing layer incl. setting up
+/// a [Study] with [MeasureTask]s and [Measure]s.
+class Sensing implements StudyManager {
+  Study study;
+  StudyController controller;
+
+  /// the list of running - i.e. used - probes in this study.
+  List<Probe> get runningProbes =>
+      (controller != null) ? controller.executor.probes : List();
+
+  Sensing() : super() {
+    // create and register external sampling packages
+    //SamplingPackageRegistry.register(ConnectivitySamplingPackage());
+    SamplingPackageRegistry().register(ContextSamplingPackage());
+    //SamplingPackageRegistry.register(CommunicationSamplingPackage());
+    SamplingPackageRegistry().register(AudioSamplingPackage());
+    SamplingPackageRegistry().register(SurveySamplingPackage());
+    //SamplingPackageRegistry.register(HealthSamplingPackage());
+
+    // create and register external data managers
+    DataManagerRegistry().register(CarpDataManager());
+  }
+
+  /// Start sensing.
+  Future<void> start() async {
+    // Get the study.
+    study = await this.getStudy(settings.studyId);
+
+    // Create a Study Controller that can manage this study, initialize it, and start it.
+    controller = StudyController(
+      study,
+      debugLevel: DebugLevel.DEBUG,
+    );
+    await controller.initialize();
+
+    // start sensing
+    controller.resume();
+
+    // listening on all data events from the study and print it (for debugging purpose).
+    controller.events.forEach(print);
+  }
+
+  /// Stop sensing.
+  void stop() async {
+    controller.stop();
+    study = null;
+  }
 
   Future<void> initialize() => null;
 
-  Future<Study> getStudy(String studyId) async =>
-      _study ??= await _getPulmonaryStudy(studyId);
+  Future<Study> getStudy(String studyId) async {
+    return _getPulmonaryStudy(studyId);
+  }
 
   Future<Study> _getPulmonaryStudy(String studyId) async {
-    if (_study == null) {
-      _study = Study(studyId, await settings.userId)
+    if (study == null) {
+      study = Study(studyId, await settings.userId)
         ..name = 'Pulmonary Monitor'
         ..description =
             "With the Pulmonary Monitor you can monitor your respiratory health. "
@@ -127,12 +173,12 @@ class LocalStudyManager implements StudyManager {
               ));
     }
 
-    return _study;
+    return study;
   }
 
   Future<Study> _getConditionalStudy(String studyId) async {
-    if (_study == null) {
-      _study = Study(studyId, await settings.userId)
+    if (study == null) {
+      study = Study(studyId, await settings.userId)
             ..name = 'Conditional Monitor'
             ..description = 'This is a test study.'
             ..dataEndPoint = getDataEndpoint(DataEndPointTypes.FILE)
@@ -252,7 +298,7 @@ class LocalStudyManager implements StudyManager {
           //
           ;
     }
-    return _study;
+    return study;
   }
 
   /// Return a [DataEndPoint] of the specified type.

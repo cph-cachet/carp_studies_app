@@ -40,9 +40,12 @@ class CARPStudyAppState extends State<CARPStudyAppHome> {
       body: _pages[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.new_releases_outlined), label: 'Tasks', activeIcon: Icon(Icons.new_releases)),
-          BottomNavigationBarItem(icon: Icon(Icons.announcement_outlined), label: 'About', activeIcon: Icon(Icons.announcement)),
-          BottomNavigationBarItem(icon: Icon(Icons.leaderboard_outlined), label: 'Data', activeIcon: Icon(Icons.leaderboard)),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.new_releases_outlined), label: 'Tasks', activeIcon: Icon(Icons.new_releases)),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.announcement_outlined), label: 'About', activeIcon: Icon(Icons.announcement)),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.leaderboard_outlined), label: 'Data', activeIcon: Icon(Icons.leaderboard)),
         ],
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,

@@ -7,6 +7,12 @@ class AppBLoC {
   DateTime _studyStartTimestamp;
   DateTime get studyStartTimestamp => _studyStartTimestamp;
 
+  /// The list of available app tasks for the user to address.
+  List<UserTask> get tasks => AppTaskController().userTaskQueue;
+
+  TaskListPageModel taskListPageModel;
+  StudyPageModel studyPageModel;
+
   AppBLoC() : super() {
     // create and register external sampling packages
     //SamplingPackageRegistry.register(ConnectivitySamplingPackage());
@@ -63,12 +69,10 @@ class AppBLoC {
   Study get study => _study;
 
   /// Is sensing running, i.e. has the study executor been resumed?
-  bool get isRunning =>
-      (controller != null) && controller.executor.state == ProbeState.resumed;
+  bool get isRunning => (controller != null) && controller.executor.state == ProbeState.resumed;
 
   /// the list of running - i.e. used - probes in this study.
-  List<Probe> get runningProbes =>
-      (controller != null) ? controller.executor.probes : List();
+  List<Probe> get runningProbes => (controller != null) ? controller.executor.probes : List();
 
   /// Start sensing. Should only be called once.
   /// Use [resume] and [pause] if pausing/resuming sensing.
@@ -100,8 +104,7 @@ class AppBLoC {
   void addDatum(Datum datum) => controller.executor.addDatum(datum);
 
   /// Add a error to the stream of events.
-  void addError(Object error, [StackTrace stacktrace]) =>
-      controller.executor.addError(error, stacktrace);
+  void addError(Object error, [StackTrace stacktrace]) => controller.executor.addError(error, stacktrace);
 }
 
 final bloc = AppBLoC();

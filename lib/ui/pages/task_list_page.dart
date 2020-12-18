@@ -1,67 +1,115 @@
 part of carp_study_app;
 
-class TaskList extends StatelessWidget {
+class TaskList extends StatefulWidget {
+  @override
+  _TaskListState createState() => _TaskListState();
+}
+
+class _TaskListState extends State<TaskList> {
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
+    List<UserTask> tasks = bloc.tasks.reversed.toList();
+
     return Scaffold(
         body: Container(
-      height: height,
-      child: Stack(children: <Widget>[
-        StreamBuilder<UserTask>(
-            stream: TaskListPageModel().userTaskEvents,
-            builder: (context, snapshot) {
-              if (!snapshot.hasData) return CircularProgressIndicator();
-              return Container(
-                  padding: EdgeInsets.symmetric(horizontal: 5),
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        SizedBox(height: height * .08),
-                        CarpAppBar(),
-                        scoreBoard(TaskListPageModel().daysInStudy, TaskListPageModel().taskCompleted),
-                        SizedBox(height: 15),
-                        Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 15),
-                            child: Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text('MY TASKS', style: sectionTitleStyle),
-                            )),
-                        SingleChildScrollView(
-                            child: ListView.builder(
-                                reverse: true,
-                                shrinkWrap: true,
-                                physics: NeverScrollableScrollPhysics(),
-                                // -1 because these are "Previous Chapters, so we don't want to show the latest one
-                                //itemCount: snapshot.data.chapters.length - 1,
-                                itemBuilder: (context, index) {
-                                  return task(snapshot.data.task.title, 1, DateTime.now());
-                                })),
-                      ]));
-            })
-      ]
-          //child: CircularProgressIndicator(),
-          ),
-    ));
+            padding: EdgeInsets.symmetric(horizontal: 5),
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  SizedBox(height: height * .08),
+                  CarpAppBar(),
+                  Flexible(
+                      child: StreamBuilder<UserTask>(
+                          stream: AppTaskController().userTaskEvents,
+                          builder: (context, snapshot) {
+                            // TODO: use model here
+                            return _scoreBoard(2, 4);
+                          })),
+                  SizedBox(height: 15),
+                  Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 15),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text('MY TASKS', style: sectionTitleStyle),
+                      )),
+                  SizedBox(height: 15),
+                  Flexible(
+                      child: StreamBuilder<UserTask>(
+                          stream: AppTaskController().userTaskEvents,
+                          builder: (context, snapshot) {
+                            return Scrollbar(
+                              child: ListView.builder(
+                                  itemCount: tasks.length,
+                                  padding: EdgeInsets.symmetric(vertical: 8.0),
+                                  itemBuilder: (context, index) {
+                                    // TODO: show the undone tasks first
+                                    if (tasks[index].state == UserTaskState.done)
+                                      return _buildDoneTaskCard(context, tasks[index]);
+                                    else
+                                      return _buildTaskCard(context, tasks[index]);
+                                  }),
+                            );
+                          }))
+                ])));
   }
 
-  Widget task(String title, int timeToComplete, DateTime date) {
-    return Card(
-      child: ListTile(
-        leading: CircleAvatar(
-          backgroundColor: Color(0xFFF1F9FF),
-          child: Icon(Icons.mood_outlined, color: Color.fromRGBO(32, 111, 162, 1)),
+  Widget _buildTaskCard(BuildContext context, UserTask userTask) {
+    return Center(
+      child: Card(
+        margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+        elevation: 5,
+        child: StreamBuilder<UserTaskState>(
+          stream: userTask.stateEvents,
+          initialData: UserTaskState.initialized,
+          builder: (context, AsyncSnapshot<UserTaskState> snapshot) => Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              ListTile(
+                leading: CircleAvatar(
+                  backgroundColor: Color(0xFFF1F9FF),
+                  //TODO: change icon to task type
+                  child: Icon(Icons.mood_outlined, color: Color.fromRGBO(32, 111, 162, 1)),
+                ),
+                title: Text(userTask.title, style: aboutCardTitleStyle),
+                subtitle: Text(
+                    userTask.task.minutesToComplete.toString() + ' min to complete - ' + '?' + ' remaining'),
+                //TODO: use the remaining time from model
+                onTap: () => userTask.onStart(context),
+              ),
+            ],
+          ),
         ),
-        title: Text(title, style: aboutCardTitleStyle),
-        subtitle: Text(timeToComplete.toString() + 'min to complete -' + date.day.toString()),
       ),
-      margin: EdgeInsets.all(10),
-      elevation: 5,
     );
   }
 
-  Widget scoreBoard(int daysInStudy, int taskCompleted) {
+  Widget _buildDoneTaskCard(BuildContext context, UserTask userTask) {
+    return Center(
+        child: Opacity(
+      opacity: 0.6,
+      child: Card(
+        margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+        elevation: 3,
+        child: StreamBuilder<UserTaskState>(
+          stream: userTask.stateEvents,
+          initialData: UserTaskState.initialized,
+          builder: (context, AsyncSnapshot<UserTaskState> snapshot) => Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              ListTile(
+                leading: Icon(Icons.check_circle_outlined, color: Color(0xFF90D88F)),
+                title: Text(userTask.title, style: aboutCardTitleStyle),
+              ),
+            ],
+          ),
+        ),
+      ),
+    ));
+  }
+
+  Widget _scoreBoard(int daysInStudy, int taskCompleted) {
     return Container(
       width: 400,
       height: 110,

@@ -3,8 +3,7 @@ part of carp_study_app;
 class CARPStudyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData.light(),
-      darkTheme: ThemeData.dark(),
+      theme: carpStudyTheme,
       home: CARPStudyAppHome(key: key),
     );
   }
@@ -20,9 +19,9 @@ class CARPStudyAppState extends State<CARPStudyAppHome> {
   int _selectedIndex = 0;
 
   final _pages = [
-    StudyPage(StudyPageModel()),
-    TaskListPage(TaskListPageModel()),
-    DataVisualizationPage(),
+    TaskList(TaskListPageModel()),
+    StudyVisualization(StudyPageModel()),
+    DataVisualization(),
   ];
 
   void initState() {
@@ -40,16 +39,19 @@ class CARPStudyAppState extends State<CARPStudyAppHome> {
       body: _pages[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.school), label: 'Study'),
-          BottomNavigationBarItem(icon: Icon(Icons.spellcheck), label: 'Tasks'),
-          BottomNavigationBarItem(icon: Icon(Icons.show_chart), label: 'Data'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.new_releases_outlined), label: 'Tasks', activeIcon: Icon(Icons.new_releases)),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.announcement_outlined), label: 'About', activeIcon: Icon(Icons.announcement)),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.leaderboard_outlined), label: 'Data', activeIcon: Icon(Icons.leaderboard)),
         ],
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
       ),
       floatingActionButton: new FloatingActionButton(
         onPressed: _restart,
-        tooltip: 'Restart study',
+        tooltip: 'Restart study & probes',
         child: bloc.isRunning ? Icon(Icons.pause) : Icon(Icons.play_arrow),
       ),
     );

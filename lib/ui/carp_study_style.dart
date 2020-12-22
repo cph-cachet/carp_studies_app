@@ -29,7 +29,7 @@ TextStyle scoreNumberStyle =
 TextStyle scoreTextStyle = TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: Color(0xff77A8C8));
 
 TextStyle aboutCardTitleStyle =
-    TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: Color.fromRGBO(32, 111, 162, 1));
+    TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: Color.fromRGBO(32, 111, 162, 1));
 
 TextStyle aboutCardInfoStyle =
     TextStyle(fontSize: 12, fontStyle: FontStyle.italic, color: Color.fromRGBO(32, 111, 162, 1));

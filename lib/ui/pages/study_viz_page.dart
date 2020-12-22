@@ -1,53 +1,54 @@
 part of carp_study_app;
 
-class StudyVisualization extends StatelessWidget {
+class StudyVisualization extends StatefulWidget {
   @override
+  _StudyVisualizationState createState() => _StudyVisualizationState();
+}
+
+class _StudyVisualizationState extends State<StudyVisualization> {
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
+    // TODO remove this line and use the streambuilder
+    List<Message> messages = [];
+
     return Scaffold(
         body: Container(
-      height: height,
-      child: Stack(children: <Widget>[
-        Container(
             padding: EdgeInsets.symmetric(horizontal: 5),
-            child: SingleChildScrollView(
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
                   SizedBox(height: height * .08),
                   CarpAppBar(),
                   StudyBanner(),
-                  articleStudyCard(
-                      'Carp’s Mcardia study verifies the importance of wearables in patient motivation',
-                      'This study will ask you to provide information about the following categories categories categories',
-                      'https://www.cachet.dk/newslist/Nyhed?id={58737646-B6D2-4BC9-9D73-45D3F7D9962B}'),
-                  announcementStudyCard('New version of Carp app will be out soon in the app store',
-                      'Minor bug fixes has been implemented. To enjoy the latest and fastest version of the app please update it '),
-                  articleStudyCard(
-                      'Carp’s Mcardia study verifies the importance of wearables in patient motivation',
-                      'This study will ask you to provide information about the following categories categories categories',
-                      'https://www.cachet.dk/newslist/Nyhed?id={58737646-B6D2-4BC9-9D73-45D3F7D9962B}'),
-                  announcementStudyCard('New version of Carp app will be out soon in the app store',
-                      'Minor bug fixes has been implemented. To enjoy the latest and fastest version of the app please update it ')
-                ])))
-      ]
-          //child: CircularProgressIndicator(),
-          ),
-    ));
+                  Flexible(
+                      // TODO use the stream builder
+                      child: StreamBuilder<UserTask>(
+                          stream: AppTaskController().userTaskEvents,
+                          builder: (context, AsyncSnapshot<UserTask> snapshot) {
+                            return Scrollbar(
+                              child: ListView.builder(
+                                  itemCount: messages.length,
+                                  padding: EdgeInsets.symmetric(vertical: 8.0),
+                                  itemBuilder: (context, index) {
+                                    return _aboutStudyCard(context, messages[index]);
+                                  }),
+                            );
+                          }))
+                ])));
   }
 
-  Widget articleStudyCard(String subtitle, String content, String url) {
+  Widget _aboutStudyCard(BuildContext context, Message message) {
     return Card(
       semanticContainer: true,
       clipBehavior: Clip.antiAliasWithSaveLayer,
       child: InkWell(
         onTap: () async {
           print("tapped");
-          if (await canLaunch(url)) {
-            await launch(url);
+          if (await canLaunch(message.url)) {
+            await launch(message.url);
           } else {
-            throw 'Could not launch $url';
+            throw 'Could not launch $message.url';
           }
         },
         child: Column(
@@ -55,79 +56,33 @@ class StudyVisualization extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Row(children: [
-                Expanded(
-                  child: Image.asset(
-                    'assets/study.png',
-                    fit: BoxFit.fill,
-                  ),
-                )
+                message.type == MessageType.article
+                    ? Expanded(
+                        child: Container(
+                        height: 150.0,
+                        color: Color(0xFFF1F9FF),
+                        child: message.image,
+                      ))
+                    : SizedBox.shrink()
               ]),
-              SizedBox(height: 5),
+              SizedBox(height: 10),
               Row(crossAxisAlignment: CrossAxisAlignment.baseline, children: [
                 SizedBox(width: 15),
-                Icon(Icons.menu_book, color: Color.fromRGBO(32, 111, 162, 1)),
-                SizedBox(width: 15),
-                Text('ARTICLE', style: aboutCardTitleStyle),
-                SizedBox(width: 15),
-                Text('2 hours ago', style: aboutCardInfoStyle),
+                Expanded(child: Text(message.title, style: aboutCardTitleStyle)),
               ]),
               SizedBox(height: 5),
               Row(children: [
                 SizedBox(width: 15),
-                Expanded(child: Text(subtitle, style: aboutCardSubtitleStyle)),
-                SizedBox(width: 15)
+                Text(message.type.toString() + ' - ' + message.timestamp.toString(),
+                    style: aboutCardSubtitleStyle),
               ]),
               SizedBox(height: 5),
               Row(children: [
                 SizedBox(width: 15),
-                Expanded(child: Text(content, style: aboutCardContentStyle)),
+                Expanded(child: Text(message.subTitle, style: aboutCardContentStyle)),
                 SizedBox(width: 15),
               ]),
-              SizedBox(height: 5),
-            ]),
-      ),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
-      ),
-      elevation: 5,
-      margin: EdgeInsets.all(10),
-    );
-  }
-
-  Widget announcementStudyCard(String subtitle, String content) {
-    return Card(
-      semanticContainer: true,
-      clipBehavior: Clip.antiAliasWithSaveLayer,
-      child: InkWell(
-        onTap: () {
-          print("tapped");
-        },
-        child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(height: 5),
-              Row(crossAxisAlignment: CrossAxisAlignment.baseline, children: [
-                SizedBox(width: 15),
-                Icon(Icons.campaign_outlined, color: Color.fromRGBO(32, 111, 162, 1)),
-                SizedBox(width: 15),
-                Text('ANNOUNCEMENT', style: aboutCardTitleStyle),
-                SizedBox(width: 15),
-                Text('2 hours ago', style: aboutCardInfoStyle),
-              ]),
-              SizedBox(height: 5),
-              Row(children: [
-                SizedBox(width: 15),
-                Expanded(child: Text(subtitle, style: aboutCardSubtitleStyle)),
-                SizedBox(width: 15)
-              ]),
-              SizedBox(height: 5),
-              Row(children: [
-                SizedBox(width: 15),
-                Expanded(child: Text(content, style: aboutCardContentStyle)),
-                SizedBox(width: 15),
-              ]),
-              SizedBox(height: 5),
+              SizedBox(height: 10),
             ]),
       ),
       shape: RoundedRectangleBorder(

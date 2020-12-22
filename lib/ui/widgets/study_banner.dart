@@ -1,6 +1,4 @@
-import 'package:carp_study_app/ui/carp_study_style.dart';
-import 'package:carp_study_app/ui/pages/study_overview_page.dart';
-import 'package:flutter/material.dart';
+part of carp_study_app;
 
 class StudyBanner extends StatelessWidget {
   @override
@@ -17,7 +15,7 @@ class StudyBanner extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [Text('Bad eating study', style: studyTitleStyle)],
+            children: [Text(bloc._study.name, style: studyTitleStyle)],
           ),
           SizedBox(height: 15),
           GestureDetector(

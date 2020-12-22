@@ -17,10 +17,9 @@ class DataVisualization extends StatelessWidget {
                     children: <Widget>[
                   SizedBox(height: height * .08),
                   CarpAppBar(),
+                  CircularProgressIndicator(),
                 ])))
-      ]
-          //child: CircularProgressIndicator(),
-          ),
+      ]),
     ));
   }
 }

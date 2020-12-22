@@ -67,7 +67,11 @@ class Message {
 
   // TODO - add the defult images to the assets/images folder
   /// The default image based on the [type] of message.
-  Image get image => Image.asset('assets/images/$type.png');
+  /// Image get image => Image.asset('assets/images/$type.png');
+  ///
+  /// Only articles have images, get it randomly
+  Image get image =>
+      Image.asset('assets/images/article_' + Random().nextInt(3).toString() + '.png', fit: BoxFit.fitHeight);
 }
 
 /// The different types of messages that can occur in the list of messages

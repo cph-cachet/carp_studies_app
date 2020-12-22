@@ -37,6 +37,7 @@ dependencies:
   #carp_health_package: ^0.6.1
 
   research_package: ^0.3.0
+  url_launcher: ^5.7.10
 
 # Overriding carp libraries to use the local or github copy
 # Remove this before release of package
@@ -85,7 +86,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/study.png
+    - assets/images/
     - assets/cachet_logo.png
     - assets/logo.png
 

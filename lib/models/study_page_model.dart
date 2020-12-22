@@ -2,14 +2,12 @@ part of carp_study_app;
 
 class StudyPageModel {
   String get name => bloc.study.name;
-  String get description =>
-      bloc.study.description ?? 'No description available.';
+  String get description => bloc.study.description ?? 'No description available.';
   Image get image => Image.asset('assets/images/study.png');
   String get userID => bloc.study.userId;
 
   /// Events on the state of the study executor
-  Stream<ProbeState> get studyExecutorStateEvents =>
-      bloc.controller.executor.stateEvents;
+  Stream<ProbeState> get studyExecutorStateEvents => bloc.controller.executor.stateEvents;
 
   /// Current state of the study executor (e.g., resumed, paused, ...)
   ProbeState get studyState => bloc.controller.executor.state;
@@ -63,7 +61,11 @@ class Message {
 
   // TODO - add the defult images to the assets/images folder
   /// The default image based on the [type] of message.
-  Image get image => Image.asset('assets/images/$type.png');
+  /// Image get image => Image.asset('assets/images/$type.png');
+  ///
+  /// Only articles have images, get it randomly
+  Image get image =>
+      Image.asset('assets/images/article_' + Random().nextInt(3).toString() + '.png', fit: BoxFit.fitHeight);
 }
 
 /// The different types of messages that can occur in the list of messages

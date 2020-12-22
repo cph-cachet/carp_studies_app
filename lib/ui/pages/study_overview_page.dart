@@ -15,9 +15,9 @@ class _StudyOverviewPageState extends State<StudyOverviewPage> {
         body: SafeArea(
             child: Column(mainAxisAlignment: MainAxisAlignment.end, children: <Widget>[
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 20),
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
             width: 400,
-            height: 3 * height / 4,
+            height: 3 * height / 4 + 10,
             color: Color(0xFFF1F9FF),
             child: Column(
               children: <Widget>[

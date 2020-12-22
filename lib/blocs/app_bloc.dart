@@ -21,7 +21,7 @@ class AppBLoC {
   }
 
   Future<void> init() async {
-    settings.init();
+    await settings.init();
 
     // Get the study from the study manager
     _study = await studyManager.getStudy(studyId);

@@ -13,11 +13,11 @@ class CarpAppBar extends StatelessWidget {
       ),
       SizedBox(width: 3),
       IconButton(
-        icon: const Icon(Icons.help_outline, color: Color.fromRGBO(32, 111, 162, 1), size: 30),
+        icon: const Icon(Icons.account_circle_outlined, color: Color.fromRGBO(32, 111, 162, 1), size: 30),
         tooltip: 'Help',
         onPressed: () {
           Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return ContactPage();
+            return ProfilePage();
           }));
         },
       ),

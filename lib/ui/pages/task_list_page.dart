@@ -17,18 +17,20 @@ class _TaskListState extends State<TaskList> {
       body: Container(
         padding: EdgeInsets.symmetric(horizontal: 5),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             SizedBox(height: height * .08),
             CarpAppBar(),
             Flexible(
-                child: StreamBuilder<UserTask>(
-                    stream: widget.model.userTaskEvents,
-                    builder: (context, snapshot) {
-                      // TODO: use model here
-                      return _scoreBoard(widget.model.daysInStudy, widget.model.taskCompleted);
-                    })),
+              child: StreamBuilder<UserTask>(
+                stream: widget.model.userTaskEvents,
+                builder: (context, snapshot) {
+                  // TODO: use the model for daysInStudy widget.model.daysInStudy
+                  return _scoreBoard(2, widget.model.taskCompleted);
+                },
+              ),
+            ),
             SizedBox(height: 15),
             Padding(
                 padding: EdgeInsets.symmetric(horizontal: 15),
@@ -38,7 +40,6 @@ class _TaskListState extends State<TaskList> {
                 )),
             SizedBox(height: 15),
             Flexible(
-              // TODO use the stream builder
               child: StreamBuilder<UserTask>(
                 stream: widget.model.userTaskEvents,
                 builder: (context, snapshot) {
@@ -48,6 +49,7 @@ class _TaskListState extends State<TaskList> {
                         padding: EdgeInsets.symmetric(vertical: 8.0),
                         itemBuilder: (context, index) {
                           // TODO: show the undone tasks first
+                          // TODO: refresh list when done
                           if (widget.model.tasks[index].state == UserTaskState.done)
                             return _buildDoneTaskCard(context, widget.model.tasks[index]);
                           else
@@ -77,7 +79,6 @@ class _TaskListState extends State<TaskList> {
               ListTile(
                 leading: CircleAvatar(
                   backgroundColor: Color(0xFFF1F9FF),
-                  //TODO: change icon to task type
                   child: Icon(Icons.mood_outlined, color: Color.fromRGBO(32, 111, 162, 1)),
                 ),
                 title: Text(userTask.title, style: aboutCardTitleStyle),

@@ -6,6 +6,7 @@ class StudyOverviewPage extends StatefulWidget {
 }
 
 class _StudyOverviewPageState extends State<StudyOverviewPage> {
+  final StudyPageModel studyPageModel = StudyPageModel();
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
@@ -21,7 +22,7 @@ class _StudyOverviewPageState extends State<StudyOverviewPage> {
             child: Column(
               children: <Widget>[
                 Expanded(
-                    child: Text(bloc._study.description,
+                    child: Text(studyPageModel.description,
                         style: aboutCardContentStyle, textAlign: TextAlign.justify)),
                 GestureDetector(
                     onTap: () {

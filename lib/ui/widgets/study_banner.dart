@@ -1,6 +1,8 @@
 part of carp_study_app;
 
 class StudyBanner extends StatelessWidget {
+  final StudyPageModel studyPageModel = StudyPageModel();
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -15,7 +17,7 @@ class StudyBanner extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [Text(bloc._study.name, style: studyTitleStyle)],
+            children: [Text(studyPageModel.name, style: studyTitleStyle)],
           ),
           SizedBox(height: 15),
           GestureDetector(

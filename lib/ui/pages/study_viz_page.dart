@@ -1,6 +1,9 @@
 part of carp_study_app;
 
 class StudyVisualization extends StatefulWidget {
+  final StudyPageModel model;
+  const StudyVisualization(this.model);
+
   @override
   _StudyVisualizationState createState() => _StudyVisualizationState();
 }
@@ -8,34 +11,35 @@ class StudyVisualization extends StatefulWidget {
 class _StudyVisualizationState extends State<StudyVisualization> {
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
-    // TODO remove this line and use the streambuilder
-    List<Message> messages = [];
 
     return Scaffold(
-        body: Container(
-            padding: EdgeInsets.symmetric(horizontal: 5),
-            child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  SizedBox(height: height * .08),
-                  CarpAppBar(),
-                  StudyBanner(),
-                  Flexible(
-                      // TODO use the stream builder
-                      child: StreamBuilder<UserTask>(
-                          stream: AppTaskController().userTaskEvents,
-                          builder: (context, AsyncSnapshot<UserTask> snapshot) {
-                            return Scrollbar(
-                              child: ListView.builder(
-                                  itemCount: messages.length,
-                                  padding: EdgeInsets.symmetric(vertical: 8.0),
-                                  itemBuilder: (context, index) {
-                                    return _aboutStudyCard(context, messages[index]);
-                                  }),
-                            );
-                          }))
-                ])));
+      body: Container(
+        padding: EdgeInsets.symmetric(horizontal: 5),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            SizedBox(height: height * .08),
+            CarpAppBar(),
+            StudyBanner(),
+            Flexible(
+              child: StreamBuilder<Datum>(
+                  stream: widget.model.samplingEvents,
+                  builder: (context, AsyncSnapshot<Datum> snapshot) {
+                    return Scrollbar(
+                      child: ListView.builder(
+                          itemCount: widget.model.messages.length,
+                          padding: EdgeInsets.symmetric(vertical: 8.0),
+                          itemBuilder: (context, index) {
+                            return _aboutStudyCard(context, widget.model.messages[index]);
+                          }),
+                    );
+                  }),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   Widget _aboutStudyCard(BuildContext context, Message message) {

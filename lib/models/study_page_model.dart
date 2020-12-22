@@ -1,33 +1,27 @@
 part of carp_study_app;
 
 class StudyPageModel {
-  Study _study;
-
-  String get name => _study.name;
-  String get description => _study.description ?? 'No description available.';
+  String get name => bloc.study.name;
+  String get description => bloc.study.description ?? 'No description available.';
   Image get image => Image.asset('assets/images/study.png');
-  String get userID => _study.userId;
+  String get userID => bloc.study.userId;
 
   /// Events on the state of the study executor
-  Stream<ProbeState> get studyExecutorStateEvents =>
-      bloc.sensing.controller.executor.stateEvents;
+  Stream<ProbeState> get studyExecutorStateEvents => bloc.controller.executor.stateEvents;
 
   /// Current state of the study executor (e.g., resumed, paused, ...)
-  ProbeState get studyState => bloc.sensing.controller.executor.state;
+  ProbeState get studyState => bloc.controller.executor.state;
 
   /// Get all sesing events (i.e. all [Datum] objects being collected).
-  Stream<Datum> get samplingEvents => bloc.sensing.controller.events;
+  Stream<Datum> get samplingEvents => bloc.controller.events;
 
   /// The total sampling size so far since this study was started.
-  int get samplingSize => bloc.sensing.controller.samplingSize;
+  int get samplingSize => bloc.controller.samplingSize;
 
   /// The list of messages to be displayed.
   List<Message> get messages => [];
 
-  StudyPageModel(this._study)
-      : assert(_study != null,
-            'A StudyPageModel must be initialized with a real Study.'),
-        super();
+  StudyPageModel();
 }
 
 /// A message to be shown in the message list

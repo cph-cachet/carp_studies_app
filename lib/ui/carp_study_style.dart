@@ -42,3 +42,8 @@ TextStyle aboutCardContentStyle =
 
 TextStyle sectionTitleStyle =
     TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: Color.fromRGBO(70, 70, 70, 1));
+
+TextStyle inputFieldStyle = TextStyle(fontSize: 15, color: Color(0xff707070));
+
+TextStyle welcomeMessageStyle =
+    TextStyle(fontSize: 24, color: Color(0xff707070), fontWeight: FontWeight.bold);

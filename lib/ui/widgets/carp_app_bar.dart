@@ -1,3 +1,4 @@
+import 'package:carp_study_app/main.dart';
 import 'package:flutter/material.dart';
 
 class CarpAppBar extends StatelessWidget {
@@ -15,7 +16,9 @@ class CarpAppBar extends StatelessWidget {
         icon: const Icon(Icons.help_outline, color: Color.fromRGBO(32, 111, 162, 1), size: 30),
         tooltip: 'Help',
         onPressed: () {
-          print('help');
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return ContactPage();
+          }));
         },
       ),
     ]);

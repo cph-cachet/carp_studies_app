@@ -13,30 +13,33 @@ class _StudyVisualizationState extends State<StudyVisualization> {
     final height = MediaQuery.of(context).size.height;
 
     return Scaffold(
-        body: Container(
-            padding: EdgeInsets.symmetric(horizontal: 5),
-            child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  SizedBox(height: height * .08),
-                  CarpAppBar(),
-                  StudyBanner(),
-                  Flexible(
-                      // TODO use the stream builder
-                      child: StreamBuilder<Datum>(
-                          stream: widget.model.samplingEvents,
-                          builder: (context, AsyncSnapshot<Datum> snapshot) {
-                            return Scrollbar(
-                              child: ListView.builder(
-                                  itemCount: widget.model.messages.length,
-                                  padding: EdgeInsets.symmetric(vertical: 8.0),
-                                  itemBuilder: (context, index) {
-                                    return _aboutStudyCard(context, widget.model.messages[index]);
-                                  }),
-                            );
-                          }))
-                ])));
+      body: Container(
+        padding: EdgeInsets.symmetric(horizontal: 5),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            SizedBox(height: height * .08),
+            CarpAppBar(),
+            StudyBanner(),
+            Flexible(
+              child: StreamBuilder<Datum>(
+                  stream: widget.model.samplingEvents,
+                  builder: (context, AsyncSnapshot<Datum> snapshot) {
+                    return Scrollbar(
+                      child: ListView.builder(
+                          itemCount: widget.model.messages.length,
+                          padding: EdgeInsets.symmetric(vertical: 8.0),
+                          itemBuilder: (context, index) {
+                            return _aboutStudyCard(context, widget.model.messages[index]);
+                          }),
+                    );
+                  }),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   Widget _aboutStudyCard(BuildContext context, Message message) {

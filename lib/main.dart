@@ -29,6 +29,7 @@ part 'ui/pages/data_viz_page.dart';
 part 'ui/pages/study_viz_page.dart';
 part 'ui/pages/task_list_page.dart';
 part 'ui/pages/study_overview_page.dart';
+part 'ui/pages/contact_page.dart';
 part 'ui/widgets/study_banner.dart';
 
 void main() {

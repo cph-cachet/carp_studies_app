@@ -7,9 +7,6 @@ class AppBLoC {
   DateTime _studyStartTimestamp;
   DateTime get studyStartTimestamp => _studyStartTimestamp;
 
-  /// TODO REMOVE THIS LINE
-  List<UserTask> get tasks => AppTaskController().userTaskQueue;
-
   AppBLoC() : super() {
     // create and register external sampling packages
     //SamplingPackageRegistry.register(ConnectivitySamplingPackage());
@@ -71,8 +68,7 @@ class AppBLoC {
   String get username => "researcher@example.com";
 
   /// The CARP password.
-  String get password =>
-      "..."; //decrypt("lkjhf98sdvhcksdmnfewoiywefhowieyurpo2hjr");
+  String get password => "..."; //decrypt("lkjhf98sdvhcksdmnfewoiywefhowieyurpo2hjr");
 
   /// The URI of the CARP server.
   String get uri => "http://staging.carp.cachet.dk:8080";

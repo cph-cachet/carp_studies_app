@@ -1,7 +1,6 @@
 library carp_study_app;
 
 import 'dart:async';
-
 import 'package:carp_audio_package/audio.dart';
 //import 'package:carp_health_package/health_package.dart';
 import 'package:carp_backend/carp_backend.dart';
@@ -16,15 +15,10 @@ import 'package:carp_study_app/ui/widgets/study_banner.dart';
 import 'package:carp_survey_package/survey.dart';
 import 'package:flutter/material.dart';
 //import 'package:flutter_localizations/flutter_localizations.dart';
-
 import 'package:research_package/research_package.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:uuid/uuid.dart';
 
 part 'app.dart';
-part 'blocs/sensing_bloc.dart';
-part 'blocs/settings_bloc.dart';
+part 'blocs/app_bloc.dart';
 part 'models/tasklist_page_model.dart';
 part 'models/study_page_model.dart';
 part 'sensing/sensing.dart';

@@ -55,8 +55,8 @@ class Sensing implements StudyManager {
   }
 
   Future<Study> _getPulmonaryStudy(String studyId) async {
-    if (study == null) {
-      study = Study(studyId, await settings.userId)
+    if (_study == null) {
+      _study = Study(id: studyId, userId: await settings.userId)
         ..name = 'Pulmonary Monitor'
         ..description =
             "With the Pulmonary Monitor you can monitor your respiratory health. "
@@ -126,7 +126,7 @@ class Sensing implements StudyManager {
               minutesToComplete: surveys.demographics.minutesToComplete,
             )
               ..measures.add(RPTaskMeasure(
-                MeasureType(NameSpace.CARP, SurveySamplingPackage.SURVEY),
+                type: MeasureType(NameSpace.CARP, SurveySamplingPackage.SURVEY),
                 name: surveys.demographics.title,
                 enabled: true,
                 surveyTask: surveys.demographics.survey,
@@ -143,7 +143,7 @@ class Sensing implements StudyManager {
               minutesToComplete: surveys.symptoms.minutesToComplete,
             )
               ..measures.add(RPTaskMeasure(
-                MeasureType(NameSpace.CARP, SurveySamplingPackage.SURVEY),
+                type: MeasureType(NameSpace.CARP, SurveySamplingPackage.SURVEY),
                 name: surveys.symptoms.title,
                 enabled: true,
                 surveyTask: surveys.symptoms.survey,
@@ -177,8 +177,8 @@ class Sensing implements StudyManager {
   }
 
   Future<Study> _getConditionalStudy(String studyId) async {
-    if (study == null) {
-      study = Study(studyId, await settings.userId)
+    if (_study == null) {
+      _study = Study(id: studyId, userId: await settings.userId)
             ..name = 'Conditional Monitor'
             ..description = 'This is a test study.'
             ..dataEndPoint = getDataEndpoint(DataEndPointTypes.FILE)
@@ -221,13 +221,14 @@ class Sensing implements StudyManager {
                   minutesToComplete: surveys.demographics.minutesToComplete,
                 )
                   ..measures.add(RPTaskMeasure(
-                    MeasureType(NameSpace.CARP, SurveySamplingPackage.SURVEY),
+                    type: MeasureType(
+                        NameSpace.CARP, SurveySamplingPackage.SURVEY),
                     name: surveys.demographics.title,
                     enabled: true,
                     surveyTask: surveys.demographics.survey,
                   ))
                   ..measures.add(Measure(
-                    MeasureType(
+                    type: MeasureType(
                         NameSpace.CARP, ContextSamplingPackage.LOCATION),
                   )))
 //
@@ -240,13 +241,14 @@ class Sensing implements StudyManager {
                   minutesToComplete: surveys.symptoms.minutesToComplete,
                 )
                   ..measures.add(RPTaskMeasure(
-                    MeasureType(NameSpace.CARP, SurveySamplingPackage.SURVEY),
+                    type: MeasureType(
+                        NameSpace.CARP, SurveySamplingPackage.SURVEY),
                     name: surveys.symptoms.title,
                     enabled: true,
                     surveyTask: surveys.symptoms.survey,
                   ))
                   ..measures.add(Measure(
-                    MeasureType(
+                    type: MeasureType(
                         NameSpace.CARP, ContextSamplingPackage.LOCATION),
                   )))
           // ..addTriggerTask(
@@ -306,18 +308,18 @@ class Sensing implements StudyManager {
     assert(type != null);
     switch (type) {
       case DataEndPointTypes.PRINT:
-        return new DataEndPoint(DataEndPointTypes.PRINT);
+        return new DataEndPoint(type: DataEndPointTypes.PRINT);
       case DataEndPointTypes.FILE:
         return FileDataEndPoint(
             bufferSize: 50 * 1000, zip: true, encrypt: false);
       case DataEndPointTypes.CARP:
         return CarpDataEndPoint(CarpUploadMethod.DATA_POINT,
             name: 'CARP Staging Server',
-            uri: settings.uri,
-            clientId: settings.clientID,
-            clientSecret: settings.clientSecret,
-            email: settings.username,
-            password: settings.password);
+            uri: bloc.uri,
+            clientId: bloc.clientID,
+            clientSecret: bloc.clientSecret,
+            email: bloc.username,
+            password: bloc.password);
 //        return CarpDataEndPoint(
 //          CarpUploadMethod.BATCH_DATA_POINT,
 //          name: 'CARP Staging Server',
@@ -343,7 +345,13 @@ class Sensing implements StudyManager {
 //          deleteWhenUploaded: false,
 //        );
       default:
-        return new DataEndPoint(DataEndPointTypes.PRINT);
+        return new DataEndPoint(type: DataEndPointTypes.PRINT);
     }
+  }
+
+  @override
+  Future<bool> saveStudy(Study study) {
+    // TODO: implement saveStudy
+    throw UnimplementedError();
   }
 }

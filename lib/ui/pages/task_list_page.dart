@@ -17,18 +17,22 @@ class _TaskListState extends State<TaskList> {
       body: Container(
         padding: EdgeInsets.symmetric(horizontal: 5),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             SizedBox(height: height * .08),
             CarpAppBar(),
             Flexible(
-                child: StreamBuilder<UserTask>(
-                    stream: widget.model.userTaskEvents,
-                    builder: (context, snapshot) {
-                      // TODO: use model here
-                      return _scoreBoard(widget.model.daysInStudy, widget.model.taskCompleted);
-                    })),
+              child: StreamBuilder<UserTask>(
+                stream: widget.model.userTaskEvents,
+                builder: (context, snapshot) {
+                  return _scoreBoard(
+                    widget.model.daysInStudy,
+                    widget.model.taskCompleted,
+                  );
+                },
+              ),
+            ),
             SizedBox(height: 15),
             Padding(
                 padding: EdgeInsets.symmetric(horizontal: 15),
@@ -38,7 +42,6 @@ class _TaskListState extends State<TaskList> {
                 )),
             SizedBox(height: 15),
             Flexible(
-              // TODO use the stream builder
               child: StreamBuilder<UserTask>(
                 stream: widget.model.userTaskEvents,
                 builder: (context, snapshot) {
@@ -48,10 +51,14 @@ class _TaskListState extends State<TaskList> {
                         padding: EdgeInsets.symmetric(vertical: 8.0),
                         itemBuilder: (context, index) {
                           // TODO: show the undone tasks first
-                          if (widget.model.tasks[index].state == UserTaskState.done)
-                            return _buildDoneTaskCard(context, widget.model.tasks[index]);
+                          // TODO: refresh list when done
+                          if (widget.model.tasks[index].state ==
+                              UserTaskState.done)
+                            return _buildDoneTaskCard(
+                                context, widget.model.tasks[index]);
                           else
-                            return _buildTaskCard(context, widget.model.tasks[index]);
+                            return _buildTaskCard(
+                                context, widget.model.tasks[index]);
                         }),
                   );
                 },
@@ -77,13 +84,11 @@ class _TaskListState extends State<TaskList> {
               ListTile(
                 leading: CircleAvatar(
                   backgroundColor: Color(0xFFF1F9FF),
-                  //TODO: change icon to task type
-                  child: Icon(Icons.mood_outlined, color: Color.fromRGBO(32, 111, 162, 1)),
+                  child: Icon(Icons.mood_outlined,
+                      color: Color.fromRGBO(32, 111, 162, 1)),
                 ),
                 title: Text(userTask.title, style: aboutCardTitleStyle),
-                subtitle: Text(
-                    userTask.task.minutesToComplete.toString() + ' min to complete - ' + '?' + ' remaining'),
-                //TODO: use the remaining time from model
+                subtitle: Text(_subtitle(userTask)),
                 onTap: () => userTask.onStart(context),
               ),
             ],
@@ -91,6 +96,18 @@ class _TaskListState extends State<TaskList> {
         ),
       ),
     );
+  }
+
+  String _subtitle(UserTask userTask) {
+    String str = (userTask?.task?.minutesToComplete != null)
+        ? '${userTask.task.minutesToComplete} min to complete'
+        : '';
+
+    str += (userTask.expiresIn != null)
+        ? ' - ${userTask.expiresIn.inDays + 1} days remaining'
+        : '';
+
+    return str;
   }
 
   Widget _buildDoneTaskCard(BuildContext context, UserTask userTask) {
@@ -107,7 +124,8 @@ class _TaskListState extends State<TaskList> {
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 ListTile(
-                  leading: Icon(Icons.check_circle_outlined, color: Color(0xFF90D88F)),
+                  leading: Icon(Icons.check_circle_outlined,
+                      color: Color(0xFF90D88F)),
                   title: Text(userTask.title, style: aboutCardTitleStyle),
                 ),
               ],

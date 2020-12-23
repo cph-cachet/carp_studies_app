@@ -23,6 +23,9 @@ abstract class Survey {
   /// How many minutes will it take to do this survey?
   int get minutesToComplete;
 
+  /// The duration of this app task, i.e. when it expire
+  Duration get expire;
+
   /// The survey to fill out.
   RPTask get survey;
 }
@@ -31,6 +34,7 @@ class _WHO5Survey implements Survey {
   String get title => "WHO5 Well-Being";
   String get description => "A short 5-item survey on your well-being.";
   int get minutesToComplete => 1;
+  Duration get expire => const Duration(days: 5);
 
   static List<RPChoice> _choices = [
     RPChoice.withParams("All of the time", 5),
@@ -86,15 +90,18 @@ class _DemographicSurvey implements Survey {
   String get title => "Demographics";
   String get description => "A short 4-item survey on your background.";
   int get minutesToComplete => 2;
+  Duration get expire => const Duration(days: 4);
 
-  final RPChoiceAnswerFormat _sexChoices = RPChoiceAnswerFormat.withParams(ChoiceAnswerStyle.SingleChoice, [
+  final RPChoiceAnswerFormat _sexChoices =
+      RPChoiceAnswerFormat.withParams(ChoiceAnswerStyle.SingleChoice, [
     RPChoice.withParams("Femal", 1),
     RPChoice.withParams("Male", 2),
     RPChoice.withParams("Other", 3),
     RPChoice.withParams("Prefer not to say", 4),
   ]);
 
-  final RPChoiceAnswerFormat _ageChoices = RPChoiceAnswerFormat.withParams(ChoiceAnswerStyle.SingleChoice, [
+  final RPChoiceAnswerFormat _ageChoices =
+      RPChoiceAnswerFormat.withParams(ChoiceAnswerStyle.SingleChoice, [
     RPChoice.withParams("Under 20", 1),
     RPChoice.withParams("20-29", 2),
     RPChoice.withParams("30-39", 3),
@@ -107,7 +114,8 @@ class _DemographicSurvey implements Survey {
     RPChoice.withParams("Prefer not to say", 10),
   ]);
 
-  final RPChoiceAnswerFormat _medicalChoices = RPChoiceAnswerFormat.withParams(ChoiceAnswerStyle.MultipleChoice, [
+  final RPChoiceAnswerFormat _medicalChoices =
+      RPChoiceAnswerFormat.withParams(ChoiceAnswerStyle.MultipleChoice, [
     RPChoice.withParams("None", 1),
     RPChoice.withParams("Asthma", 2),
     RPChoice.withParams("Cystic fibrosis", 3),
@@ -128,7 +136,8 @@ class _DemographicSurvey implements Survey {
     RPChoice.withParams("Prefer not to say", 18),
   ]);
 
-  final RPChoiceAnswerFormat _smokeChoices = RPChoiceAnswerFormat.withParams(ChoiceAnswerStyle.SingleChoice, [
+  final RPChoiceAnswerFormat _smokeChoices =
+      RPChoiceAnswerFormat.withParams(ChoiceAnswerStyle.SingleChoice, [
     RPChoice.withParams("Never smoked", 1),
     RPChoice.withParams("Ex-smoker", 2),
     RPChoice.withParams("Current smoker (less than once a day", 3),
@@ -166,8 +175,10 @@ class _SymptomsSurvey implements Survey {
   String get title => "Symptoms";
   String get description => "A short 1-item survey on your daily symptoms.";
   int get minutesToComplete => 1;
+  Duration get expire => const Duration(days: 1);
 
-  RPChoiceAnswerFormat _symptomsChoices = RPChoiceAnswerFormat.withParams(ChoiceAnswerStyle.MultipleChoice, [
+  RPChoiceAnswerFormat _symptomsChoices =
+      RPChoiceAnswerFormat.withParams(ChoiceAnswerStyle.MultipleChoice, [
     RPChoice.withParams("None", 1),
     RPChoice.withParams("Fever (warmer than usual)", 2),
     RPChoice.withParams("Dry cough", 3),

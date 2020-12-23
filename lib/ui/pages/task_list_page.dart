@@ -12,71 +12,69 @@ class _TaskListState extends State<TaskList> {
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
-    return Navigator(onGenerateRoute: (RouteSettings settings) {
-      return new MaterialPageRoute(
-          settings: settings,
-          builder: (BuildContext context) {
-            return Scaffold(
-              body: Container(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    SizedBox(height: height * .08),
-                    CarpAppBar(),
-                    Flexible(
-                      child: StreamBuilder<UserTask>(
-                        stream: widget.model.userTaskEvents,
-                        builder: (context, snapshot) {
-                          return _scoreBoard(
-                            widget.model.daysInStudy,
-                            widget.model.taskCompleted,
-                          );
-                        },
-                      ),
-                    ),
-                    SizedBox(height: 15),
-                    Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 15),
-                        child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text('MY TASKS', style: sectionTitleStyle),
-                        )),
-                    SizedBox(height: 15),
-                    Flexible(
-                      fit: FlexFit.loose,
-                      child: StreamBuilder<UserTask>(
-                          stream: widget.model.userTaskEvents,
-                          builder: (context, snapshot) {
-                            // TODO: refresh list when done
-                            return CustomScrollView(
-                              slivers: <Widget>[
-                                SliverList(
-                                  delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
-                                    if (widget.model.tasks[index].state != UserTaskState.done)
-                                      return _buildTaskCard(context, widget.model.tasks[index]);
-                                    else
-                                      return SizedBox.shrink();
-                                  }, childCount: widget.model.tasks.length),
-                                ),
-                                SliverList(
-                                  delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
-                                    if (widget.model.tasks[index].state == UserTaskState.done)
-                                      return _buildDoneTaskCard(context, widget.model.tasks[index]);
-                                    else
-                                      return SizedBox.shrink();
-                                  }, childCount: widget.model.tasks.length),
-                                )
-                              ],
-                            );
-                          }),
-                    ),
-                  ],
-                ),
+
+    return Scaffold(
+      body: Container(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            SizedBox(height: height * .08),
+            CarpAppBar(),
+            Flexible(
+              child: StreamBuilder<UserTask>(
+                stream: widget.model.userTaskEvents,
+                builder: (context, snapshot) {
+                  return _scoreBoard(
+                    widget.model.daysInStudy,
+                    widget.model.taskCompleted,
+                  );
+                },
               ),
-            );
-          });
-    });
+            ),
+            SizedBox(height: 15),
+            Padding(
+                padding: EdgeInsets.symmetric(horizontal: 15),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text('MY TASKS', style: sectionTitleStyle),
+                )),
+            SizedBox(height: 15),
+            Expanded(
+              child: StreamBuilder<UserTask>(
+                stream: widget.model.userTaskEvents,
+                builder: (context, snapshot) {
+                  // TODO: refresh list when done
+                  return CustomScrollView(
+                    slivers: <Widget>[
+                      SliverList(
+                        delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
+                          if (widget.model.tasks[index].state != UserTaskState.done)
+                            return _buildTaskCard(context, widget.model.tasks[index]);
+                          else
+                            return SizedBox.shrink();
+                        }, childCount: widget.model.tasks.length),
+                      ),
+                      SliverList(
+                        delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
+                          if (widget.model.tasks[index].state == UserTaskState.done)
+                            return _buildDoneTaskCard(context, widget.model.tasks[index]);
+                          else
+                            return SizedBox.shrink();
+                        }, childCount: widget.model.tasks.length),
+                      ),
+                      SliverFillRemaining(
+                        hasScrollBody: false,
+                      ),
+                    ],
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   Widget _buildTaskCard(BuildContext context, UserTask userTask) {

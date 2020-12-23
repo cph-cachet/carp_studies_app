@@ -12,62 +12,71 @@ class _TaskListState extends State<TaskList> {
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
-
-    return Scaffold(
-      body: Container(
-        padding: EdgeInsets.symmetric(horizontal: 5),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            SizedBox(height: height * .08),
-            CarpAppBar(),
-            Flexible(
-              child: StreamBuilder<UserTask>(
-                stream: widget.model.userTaskEvents,
-                builder: (context, snapshot) {
-                  return _scoreBoard(
-                    widget.model.daysInStudy,
-                    widget.model.taskCompleted,
-                  );
-                },
+    return Navigator(onGenerateRoute: (RouteSettings settings) {
+      return new MaterialPageRoute(
+          settings: settings,
+          builder: (BuildContext context) {
+            return Scaffold(
+              body: Container(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    SizedBox(height: height * .08),
+                    CarpAppBar(),
+                    Flexible(
+                      child: StreamBuilder<UserTask>(
+                        stream: widget.model.userTaskEvents,
+                        builder: (context, snapshot) {
+                          return _scoreBoard(
+                            widget.model.daysInStudy,
+                            widget.model.taskCompleted,
+                          );
+                        },
+                      ),
+                    ),
+                    SizedBox(height: 15),
+                    Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 15),
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text('MY TASKS', style: sectionTitleStyle),
+                        )),
+                    SizedBox(height: 15),
+                    Flexible(
+                      fit: FlexFit.loose,
+                      child: StreamBuilder<UserTask>(
+                          stream: widget.model.userTaskEvents,
+                          builder: (context, snapshot) {
+                            // TODO: refresh list when done
+                            return CustomScrollView(
+                              slivers: <Widget>[
+                                SliverList(
+                                  delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
+                                    if (widget.model.tasks[index].state != UserTaskState.done)
+                                      return _buildTaskCard(context, widget.model.tasks[index]);
+                                    else
+                                      return SizedBox.shrink();
+                                  }, childCount: widget.model.tasks.length),
+                                ),
+                                SliverList(
+                                  delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
+                                    if (widget.model.tasks[index].state == UserTaskState.done)
+                                      return _buildDoneTaskCard(context, widget.model.tasks[index]);
+                                    else
+                                      return SizedBox.shrink();
+                                  }, childCount: widget.model.tasks.length),
+                                )
+                              ],
+                            );
+                          }),
+                    ),
+                  ],
+                ),
               ),
-            ),
-            SizedBox(height: 15),
-            Padding(
-                padding: EdgeInsets.symmetric(horizontal: 15),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text('MY TASKS', style: sectionTitleStyle),
-                )),
-            SizedBox(height: 15),
-            Flexible(
-              child: StreamBuilder<UserTask>(
-                stream: widget.model.userTaskEvents,
-                builder: (context, snapshot) {
-                  return Scrollbar(
-                    child: ListView.builder(
-                        itemCount: widget.model.tasks.length,
-                        padding: EdgeInsets.symmetric(vertical: 8.0),
-                        itemBuilder: (context, index) {
-                          // TODO: show the undone tasks first
-                          // TODO: refresh list when done
-                          if (widget.model.tasks[index].state ==
-                              UserTaskState.done)
-                            return _buildDoneTaskCard(
-                                context, widget.model.tasks[index]);
-                          else
-                            return _buildTaskCard(
-                                context, widget.model.tasks[index]);
-                        }),
-                  );
-                },
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
+            );
+          });
+    });
   }
 
   Widget _buildTaskCard(BuildContext context, UserTask userTask) {
@@ -83,13 +92,15 @@ class _TaskListState extends State<TaskList> {
             children: <Widget>[
               ListTile(
                 leading: CircleAvatar(
-                  backgroundColor: Color(0xFFF1F9FF),
-                  child: Icon(Icons.mood_outlined,
-                      color: Color.fromRGBO(32, 111, 162, 1)),
+                  backgroundColor: Theme.of(context).accentColor,
+                  child: Icon(Icons.mood_outlined, color: Theme.of(context).primaryColor),
                 ),
-                title: Text(userTask.title, style: aboutCardTitleStyle),
+                title: Text(userTask.title,
+                    style: aboutCardTitleStyle.copyWith(color: Theme.of(context).primaryColor)),
                 subtitle: Text(_subtitle(userTask)),
-                onTap: () => userTask.onStart(context),
+                onTap: () {
+                  userTask.onStart(context);
+                },
               ),
             ],
           ),
@@ -103,9 +114,7 @@ class _TaskListState extends State<TaskList> {
         ? '${userTask.task.minutesToComplete} min to complete'
         : '';
 
-    str += (userTask.expiresIn != null)
-        ? ' - ${userTask.expiresIn.inDays + 1} days remaining'
-        : '';
+    str += (userTask.expiresIn != null) ? ' - ${userTask.expiresIn.inDays + 1} days remaining' : '';
 
     return str;
   }
@@ -124,9 +133,9 @@ class _TaskListState extends State<TaskList> {
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 ListTile(
-                  leading: Icon(Icons.check_circle_outlined,
-                      color: Color(0xFF90D88F)),
-                  title: Text(userTask.title, style: aboutCardTitleStyle),
+                  leading: Icon(Icons.check_circle_outlined, color: Color(0xFF90D88F)),
+                  title: Text(userTask.title,
+                      style: aboutCardTitleStyle.copyWith(color: Theme.of(context).primaryColor)),
                 ),
               ],
             ),
@@ -138,9 +147,8 @@ class _TaskListState extends State<TaskList> {
 
   Widget _scoreBoard(int daysInStudy, int taskCompleted) {
     return Container(
-      width: 400,
       height: 110,
-      color: Color(0xFFF1F9FF),
+      color: Theme.of(context).accentColor,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -152,20 +160,24 @@ class _TaskListState extends State<TaskList> {
             children: [
               Column(
                 children: [
-                  Text(daysInStudy.toString(), style: scoreNumberStyle),
-                  Text('Days in study', style: scoreTextStyle),
+                  Text(daysInStudy.toString(),
+                      style: scoreNumberStyle.copyWith(color: Theme.of(context).primaryColor)),
+                  Text('Days in study',
+                      style: scoreTextStyle.copyWith(color: Theme.of(context).primaryColor)),
                 ],
               ),
               Container(
                   height: 66,
                   child: VerticalDivider(
-                    color: Color(0xff77A8C8),
+                    color: Theme.of(context).primaryColor,
                     width: 80,
                   )),
               Column(
                 children: [
-                  Text(taskCompleted.toString(), style: scoreNumberStyle),
-                  Text('Task completed', style: scoreTextStyle),
+                  Text(taskCompleted.toString(),
+                      style: scoreNumberStyle.copyWith(color: Theme.of(context).primaryColor)),
+                  Text('Task completed',
+                      style: scoreTextStyle.copyWith(color: Theme.of(context).primaryColor)),
                 ],
               )
             ],

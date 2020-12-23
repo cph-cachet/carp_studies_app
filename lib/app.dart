@@ -4,6 +4,7 @@ class CARPStudyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: carpStudyTheme,
+      darkTheme: carpStudyDarkTheme,
       home: CARPStudyAppHome(key: key),
     );
   }
@@ -38,9 +39,13 @@ class CARPStudyAppState extends State<CARPStudyAppHome> {
     return Scaffold(
       body: _pages[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
+        selectedItemColor: Theme.of(context).primaryColor,
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-              icon: Icon(Icons.new_releases_outlined), label: 'Tasks', activeIcon: Icon(Icons.new_releases)),
+            icon: Icon(Icons.new_releases_outlined),
+            label: 'Tasks',
+            activeIcon: Icon(Icons.new_releases),
+          ),
           BottomNavigationBarItem(
               icon: Icon(Icons.announcement_outlined), label: 'About', activeIcon: Icon(Icons.announcement)),
           BottomNavigationBarItem(

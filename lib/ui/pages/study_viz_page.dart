@@ -11,35 +11,39 @@ class StudyVisualization extends StatefulWidget {
 class _StudyVisualizationState extends State<StudyVisualization> {
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
-
-    return Scaffold(
-      body: Container(
-        padding: EdgeInsets.symmetric(horizontal: 5),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            SizedBox(height: height * .08),
-            CarpAppBar(),
-            StudyBanner(),
-            Flexible(
-              child: StreamBuilder<Datum>(
-                  stream: widget.model.samplingEvents,
-                  builder: (context, AsyncSnapshot<Datum> snapshot) {
-                    return Scrollbar(
-                      child: ListView.builder(
-                          itemCount: widget.model.messages.length,
-                          padding: EdgeInsets.symmetric(vertical: 8.0),
-                          itemBuilder: (context, index) {
-                            return _aboutStudyCard(context, widget.model.messages[index]);
+    return Navigator(onGenerateRoute: (RouteSettings settings) {
+      return new MaterialPageRoute(
+          settings: settings,
+          builder: (BuildContext context) {
+            return Scaffold(
+              body: Container(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    SizedBox(height: height * .08),
+                    CarpAppBar(),
+                    StudyBanner(),
+                    Flexible(
+                      child: StreamBuilder<Datum>(
+                          stream: widget.model.samplingEvents,
+                          builder: (context, AsyncSnapshot<Datum> snapshot) {
+                            return Scrollbar(
+                              child: ListView.builder(
+                                  itemCount: widget.model.messages.length,
+                                  padding: EdgeInsets.symmetric(vertical: 8.0),
+                                  itemBuilder: (context, index) {
+                                    return _aboutStudyCard(context, widget.model.messages[index]);
+                                  }),
+                            );
                           }),
-                    );
-                  }),
-            ),
-          ],
-        ),
-      ),
-    );
+                    ),
+                  ],
+                ),
+              ),
+            );
+          });
+    });
   }
 
   Widget _aboutStudyCard(BuildContext context, Message message) {
@@ -72,7 +76,9 @@ class _StudyVisualizationState extends State<StudyVisualization> {
               SizedBox(height: 10),
               Row(crossAxisAlignment: CrossAxisAlignment.baseline, children: [
                 SizedBox(width: 15),
-                Expanded(child: Text(message.title, style: aboutCardTitleStyle)),
+                Expanded(
+                    child: Text(message.title,
+                        style: aboutCardTitleStyle.copyWith(color: Theme.of(context).primaryColor))),
               ]),
               SizedBox(height: 5),
               Row(children: [

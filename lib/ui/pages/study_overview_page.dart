@@ -16,7 +16,7 @@ class _StudyOverviewPageState extends State<StudyOverviewPage> {
             child: Column(mainAxisAlignment: MainAxisAlignment.end, children: <Widget>[
           Container(
             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-            height: 3 * height / 4 + 10,
+            height: height - 240,
             color: Theme.of(context).accentColor,
             child: Column(
               children: <Widget>[

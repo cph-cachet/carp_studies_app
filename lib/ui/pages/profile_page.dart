@@ -16,7 +16,7 @@ class ProfilePage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    SizedBox(height: height * .08),
+                    SizedBox(height: height * .075),
                     CarpAppBar(),
                     SizedBox(height: 15),
                     Padding(

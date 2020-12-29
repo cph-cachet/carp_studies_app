@@ -8,7 +8,7 @@ class CarpAppBar extends StatelessWidget {
       Container(
         child: Image.asset(
           'assets/cachet_logo.png',
-          height: 50,
+          height: 20,
         ),
       ),
       SizedBox(width: 3),

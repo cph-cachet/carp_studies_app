@@ -21,7 +21,7 @@ class _StudyVisualizationState extends State<StudyVisualization> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    SizedBox(height: height * .08),
+                    SizedBox(height: height * .075),
                     CarpAppBar(),
                     StudyBanner(),
                     Flexible(

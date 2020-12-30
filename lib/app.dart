@@ -1,15 +1,5 @@
 part of carp_study_app;
 
-class CARPStudyApp extends StatelessWidget {
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: carpStudyTheme,
-      darkTheme: carpStudyDarkTheme,
-      home: CARPStudyAppHome(key: key),
-    );
-  }
-}
-
 class CARPStudyAppHome extends StatefulWidget {
   CARPStudyAppHome({Key key}) : super(key: key);
 

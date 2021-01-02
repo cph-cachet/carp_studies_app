@@ -269,7 +269,8 @@ class LocalStudyManager implements StudyManager {
         return FileDataEndPoint(
             bufferSize: 50 * 1000, zip: true, encrypt: false);
       case DataEndPointTypes.CARP:
-        return CarpDataEndPoint(CarpUploadMethod.DATA_POINT,
+        return CarpDataEndPoint(
+            uploadMethod: CarpUploadMethod.DATA_POINT,
             name: 'CARP Staging Server',
             uri: bloc.uri,
             clientId: bloc.clientID,
@@ -277,7 +278,7 @@ class LocalStudyManager implements StudyManager {
             email: bloc.username,
             password: bloc.password);
 //        return CarpDataEndPoint(
-//          CarpUploadMethod.BATCH_DATA_POINT,
+//          uploadMethod: CarpUploadMethod.BATCH_DATA_POINT,
 //          name: 'CARP Staging Server',
 //          uri: uri,
 //          clientId: clientID,
@@ -289,7 +290,7 @@ class LocalStudyManager implements StudyManager {
 //          deleteWhenUploaded: false,
 //        );
 //        return CarpDataEndPoint(
-//          CarpUploadMethod.FILE,
+//          uploadMethod: CarpUploadMethod.FILE,
 //          name: 'CARP Staging Server',
 //          uri: uri,
 //          clientId: clientID,

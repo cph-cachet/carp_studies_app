@@ -172,7 +172,7 @@ class _DemographicSurvey implements Survey {
 }
 
 class _SymptomsSurvey implements Survey {
-  String get title => "Symptoms";
+  String get title => "Daily Symptoms";
   String get description => "A short 1-item survey on your daily symptoms.";
   int get minutesToComplete => 1;
   Duration get expire => const Duration(days: 1);

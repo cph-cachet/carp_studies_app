@@ -6,9 +6,8 @@ class StudyBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 400,
       height: 110,
-      color: Color(0xFFF1F9FF),
+      color: Theme.of(context).accentColor,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -17,7 +16,10 @@ class StudyBanner extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [Text(studyPageModel.name, style: studyTitleStyle)],
+            children: [
+              Text(studyPageModel.name,
+                  style: studyTitleStyle.copyWith(color: Theme.of(context).primaryColor))
+            ],
           ),
           SizedBox(height: 15),
           GestureDetector(
@@ -29,8 +31,9 @@ class StudyBanner extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('Read more about the study', style: readMoreStudyStyle),
-                  Icon(Icons.keyboard_arrow_down_outlined, color: Color(0xff77A8C8))
+                  Text('Read more about the study',
+                      style: readMoreStudyStyle.copyWith(color: Theme.of(context).primaryColor)),
+                  Icon(Icons.keyboard_arrow_down_outlined, color: Theme.of(context).primaryColor)
                 ],
               ))
         ],

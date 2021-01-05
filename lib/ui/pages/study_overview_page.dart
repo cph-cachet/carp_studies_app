@@ -16,14 +16,14 @@ class _StudyOverviewPageState extends State<StudyOverviewPage> {
             child: Column(mainAxisAlignment: MainAxisAlignment.end, children: <Widget>[
           Container(
             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-            width: 400,
-            height: 3 * height / 4 + 10,
-            color: Color(0xFFF1F9FF),
+            height: height - 240,
+            color: Theme.of(context).accentColor,
             child: Column(
               children: <Widget>[
                 Expanded(
                     child: Text(studyPageModel.description,
-                        style: aboutCardContentStyle, textAlign: TextAlign.justify)),
+                        style: studyDescriptionStyle.copyWith(color: Theme.of(context).primaryColor),
+                        textAlign: TextAlign.justify)),
                 GestureDetector(
                     onTap: () {
                       Navigator.of(context).pop();
@@ -33,7 +33,7 @@ class _StudyOverviewPageState extends State<StudyOverviewPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text('Read less', style: readMoreStudyStyle),
-                        Icon(Icons.keyboard_arrow_up_outlined, color: Color(0xff77A8C8))
+                        Icon(Icons.keyboard_arrow_up_outlined, color: Theme.of(context).primaryColor)
                       ],
                     )),
                 SizedBox(height: height * .05)

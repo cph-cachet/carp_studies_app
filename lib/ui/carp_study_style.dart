@@ -2,20 +2,27 @@ import 'package:flutter/material.dart';
 
 ThemeData carpStudyTheme = ThemeData.light().copyWith(
   primaryColor: Color.fromRGBO(32, 111, 162, 1),
-  accentColor: Color.fromRGBO(113, 164, 218, 1),
+  accentColor: Color(0xFFF1F9FF),
   textTheme: ThemeData.light().textTheme.apply(fontFamily: 'MuseoSans', bodyColor: Colors.grey[800]),
+);
+
+ThemeData carpStudyDarkTheme = ThemeData.dark().copyWith(
+  primaryColor: Color(0xff81C7F3),
+  accentColor: Color(0xff4C4C4C),
+  textTheme: ThemeData.dark().textTheme.apply(fontFamily: 'MuseoSans', bodyColor: Colors.grey[800]),
 );
 
 ButtonTheme roundedFilledButtonTheme = ButtonTheme(
   height: 40,
   minWidth: 100,
   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-  buttonColor: carpStudyTheme.accentColor,
+  buttonColor: carpStudyTheme.primaryColor,
 );
 
 ButtonTheme flatButtonTheme = ButtonTheme(
   height: 40,
   minWidth: 100,
+  buttonColor: carpStudyTheme.primaryColor,
 );
 
 TextStyle studyTitleStyle =
@@ -47,3 +54,5 @@ TextStyle inputFieldStyle = TextStyle(fontSize: 15, color: Color(0xff707070));
 
 TextStyle welcomeMessageStyle =
     TextStyle(fontSize: 24, color: Color(0xff707070), fontWeight: FontWeight.bold);
+
+TextStyle studyDescriptionStyle = TextStyle(fontSize: 12, fontWeight: FontWeight.w300);

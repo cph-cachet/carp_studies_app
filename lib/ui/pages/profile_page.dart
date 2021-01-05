@@ -5,28 +5,35 @@ class ProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     return Scaffold(
-        body: Container(
-      height: height,
-      child: Stack(children: <Widget>[
-        Container(
-            padding: EdgeInsets.symmetric(horizontal: 5),
-            child: SingleChildScrollView(
+      body: Container(
+        height: height,
+        child: Stack(
+          children: <Widget>[
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 5),
+              child: SingleChildScrollView(
                 child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                  SizedBox(height: height * .08),
-                  CarpAppBar(),
-                  SizedBox(height: 15),
-                  Padding(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    SizedBox(height: height * .075),
+                    CarpAppBar(),
+                    SizedBox(height: 15),
+                    Padding(
                       padding: EdgeInsets.symmetric(horizontal: 15),
                       child: Align(
                         alignment: Alignment.centerLeft,
                         child: Text('MY PROFILE', style: sectionTitleStyle),
-                      )),
-                  SizedBox(height: 15),
-                ])))
-      ]),
-    ));
+                      ),
+                    ),
+                    SizedBox(height: 15),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

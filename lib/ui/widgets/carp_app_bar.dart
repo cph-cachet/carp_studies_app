@@ -8,15 +8,15 @@ class CarpAppBar extends StatelessWidget {
       Container(
         child: Image.asset(
           'assets/cachet_logo.png',
-          height: 50,
+          height: 20,
         ),
       ),
       SizedBox(width: 3),
       IconButton(
-        icon: const Icon(Icons.account_circle_outlined, color: Color.fromRGBO(32, 111, 162, 1), size: 30),
-        tooltip: 'Help',
+        icon: Icon(Icons.account_circle_outlined, color: Theme.of(context).primaryColor, size: 30),
+        tooltip: 'Profile',
         onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) {
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
             return ProfilePage();
           }));
         },

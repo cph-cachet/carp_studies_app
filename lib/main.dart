@@ -27,6 +27,7 @@ part 'models/tasklist_page_model.dart';
 part 'models/study_page_model.dart';
 part 'sensing/sensing.dart';
 part 'sensing/surveys.dart';
+part 'sensing/messages.dart';
 part 'ui/colors.dart';
 part 'ui/pages/data_viz_page.dart';
 part 'ui/pages/study_viz_page.dart';

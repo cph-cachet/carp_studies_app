@@ -36,7 +36,10 @@ class _TaskListState extends State<TaskList> {
               padding: EdgeInsets.symmetric(horizontal: 15),
               child: Align(
                 alignment: Alignment.centerLeft,
-                child: Text('MY TASKS', style: sectionTitleStyle),
+                child: Text(
+                  'MY TASKS',
+                  style: sectionTitleStyle,
+                ),
               )),
           SizedBox(height: 15),
           Expanded(
@@ -48,17 +51,23 @@ class _TaskListState extends State<TaskList> {
                 return CustomScrollView(
                   slivers: <Widget>[
                     SliverList(
-                      delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
-                        if (widget.model.tasks[index].state != UserTaskState.done)
-                          return _buildTaskCard(context, widget.model.tasks[index]);
+                      delegate: SliverChildBuilderDelegate(
+                          (BuildContext context, int index) {
+                        if (widget.model.tasks[index].state !=
+                            UserTaskState.done)
+                          return _buildTaskCard(
+                              context, widget.model.tasks[index]);
                         else
                           return SizedBox.shrink();
                       }, childCount: widget.model.tasks.length),
                     ),
                     SliverList(
-                      delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
-                        if (widget.model.tasks[index].state == UserTaskState.done)
-                          return _buildDoneTaskCard(context, widget.model.tasks[index]);
+                      delegate: SliverChildBuilderDelegate(
+                          (BuildContext context, int index) {
+                        if (widget.model.tasks[index].state ==
+                            UserTaskState.done)
+                          return _buildDoneTaskCard(
+                              context, widget.model.tasks[index]);
                         else
                           return SizedBox.shrink();
                       }, childCount: widget.model.tasks.length),
@@ -81,10 +90,13 @@ class _TaskListState extends State<TaskList> {
         child: ListTile(
           leading: CircleAvatar(
             backgroundColor: Theme.of(context).accentColor,
-            child: Icon(Icons.mood_outlined, color: Theme.of(context).primaryColor),
+            // child: taskTypeIcon[userTask.type],  // use a type icon
+            child: measureTypeIcon[userTask
+                .task.measures[0].type.name], // use the 1st measure as an icon
           ),
           title: Text(userTask.title,
-              style: aboutCardTitleStyle.copyWith(color: Theme.of(context).primaryColor)),
+              style: aboutCardTitleStyle.copyWith(
+                  color: Theme.of(context).primaryColor)),
           subtitle: Text(_subtitle(userTask)),
           onTap: () {
             userTask.onStart(context);
@@ -99,7 +111,11 @@ class _TaskListState extends State<TaskList> {
         ? '${userTask.task.minutesToComplete} min to complete'
         : '';
 
-    str += (userTask.expiresIn != null) ? ' - ${userTask.expiresIn.inDays + 1} days remaining' : '';
+    str += (userTask.expiresIn != null)
+        ? ' - ${userTask.expiresIn.inDays + 1} days remaining'
+        : '';
+
+    str = (str.isEmpty) ? userTask.description : str;
 
     return str;
   }
@@ -112,9 +128,11 @@ class _TaskListState extends State<TaskList> {
           margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
           elevation: 3,
           child: ListTile(
-            leading: Icon(Icons.check_circle_outlined, color: Color(0xFF90D88F)),
+            leading:
+                Icon(Icons.check_circle_outlined, color: Color(0xFF90D88F)),
             title: Text(userTask.title,
-                style: aboutCardTitleStyle.copyWith(color: Theme.of(context).primaryColor)),
+                style: aboutCardTitleStyle.copyWith(
+                    color: Theme.of(context).primaryColor)),
           ),
         ),
       ),
@@ -137,9 +155,11 @@ class _TaskListState extends State<TaskList> {
               Column(
                 children: [
                   Text(daysInStudy.toString(),
-                      style: scoreNumberStyle.copyWith(color: Theme.of(context).primaryColor)),
+                      style: scoreNumberStyle.copyWith(
+                          color: Theme.of(context).primaryColor)),
                   Text('Days in study',
-                      style: scoreTextStyle.copyWith(color: Theme.of(context).primaryColor)),
+                      style: scoreTextStyle.copyWith(
+                          color: Theme.of(context).primaryColor)),
                 ],
               ),
               Container(
@@ -151,9 +171,11 @@ class _TaskListState extends State<TaskList> {
               Column(
                 children: [
                   Text(taskCompleted.toString(),
-                      style: scoreNumberStyle.copyWith(color: Theme.of(context).primaryColor)),
-                  Text('Task completed',
-                      style: scoreTextStyle.copyWith(color: Theme.of(context).primaryColor)),
+                      style: scoreNumberStyle.copyWith(
+                          color: Theme.of(context).primaryColor)),
+                  Text('Tasks completed',
+                      style: scoreTextStyle.copyWith(
+                          color: Theme.of(context).primaryColor)),
                 ],
               )
             ],
@@ -163,4 +185,135 @@ class _TaskListState extends State<TaskList> {
       ),
     );
   }
+
+  Map<String, Icon> get taskTypeIcon => {
+        SurveyUserTask.WHO5_SURVEY_TYPE: Icon(
+          Icons.design_services,
+          color: CACHET.ORANGE,
+        ),
+        SurveyUserTask.DEMOGRAPHIC_SURVEY_TYPE: Icon(
+          Icons.person,
+          color: CACHET.ORANGE,
+        ),
+        SurveyUserTask.SURVEY_TYPE: Icon(
+          Icons.description,
+          color: CACHET.ORANGE,
+        ),
+        'audio': Icon(
+          Icons.record_voice_over,
+          color: CACHET.GREEN,
+        ),
+        SensingUserTask.SENSING_TYPE: Icon(
+          Icons.settings_input_antenna,
+          color: CACHET.CACHET_BLUE,
+        ),
+        SensingUserTask.ONE_TIME_SENSING_TYPE: Icon(
+          Icons.settings_input_component,
+          color: CACHET.CACHET_BLUE,
+        ),
+      };
+
+  static Map<String, Icon> get measureTypeIcon => {
+        DataType.UNKNOWN: Icon(
+          Icons.error,
+          color: CACHET.GREY_4,
+        ),
+        DataType.NONE: Icon(
+          Icons.report_problem,
+          color: CACHET.GREY_4,
+        ),
+        DeviceSamplingPackage.MEMORY: Icon(
+          Icons.memory,
+          color: CACHET.GREY_4,
+        ),
+        DeviceSamplingPackage.DEVICE: Icon(
+          Icons.phone_android,
+          color: CACHET.GREY_4,
+        ),
+        DeviceSamplingPackage.BATTERY: Icon(
+          Icons.battery_charging_full,
+          color: CACHET.GREEN,
+        ),
+        SensorSamplingPackage.PEDOMETER: Icon(
+          Icons.directions_walk,
+          color: CACHET.LIGHT_PURPLE,
+        ),
+        SensorSamplingPackage.ACCELEROMETER: Icon(
+          Icons.adb,
+          color: CACHET.GREY_4,
+        ),
+        SensorSamplingPackage.GYROSCOPE: Icon(
+          Icons.adb,
+          color: CACHET.GREY_4,
+        ),
+        SensorSamplingPackage.LIGHT: Icon(
+          Icons.highlight,
+          color: CACHET.YELLOW,
+        ),
+        // ConnectivitySamplingPackage.BLUETOOTH:
+        //     Icon(Icons.bluetooth_searching, size: 50, color: CACHET.DARK_BLUE),
+        // ConnectivitySamplingPackage.WIFI:
+        //     Icon(Icons.wifi, size: 50, color: CACHET.LIGHT_PURPLE),
+        // ConnectivitySamplingPackage.CONNECTIVITY:
+        //     Icon(Icons.cast_connected, size: 50, color: CACHET.GREEN),
+        AudioSamplingPackage.AUDIO: Icon(
+          Icons.mic,
+          color: CACHET.ORANGE,
+        ),
+        AudioSamplingPackage.NOISE: Icon(
+          Icons.hearing,
+          color: CACHET.YELLOW,
+        ),
+        // AppsSamplingPackage.APPS: Icon(Icons.apps, size: 50, color: CACHET.LIGHT_GREEN),
+        //AppsSamplingPackage.APP_USAGE: Icon(Icons.get_app, size: 50, color: CACHET.LIGHT_GREEN),
+        // CommunicationSamplingPackage.TEXT_MESSAGE: Icon(Icons.text_fields, size: 50, color: CACHET.LIGHT_PURPLE),
+        // CommunicationSamplingPackage.TEXT_MESSAGE_LOG: Icon(Icons.textsms, size: 50, color: CACHET.LIGHT_PURPLE),
+        // CommunicationSamplingPackage.PHONE_LOG: Icon(Icons.phone_in_talk, size: 50, color: CACHET.ORANGE),
+        // CommunicationSamplingPackage.CALENDAR: Icon(Icons.event, size: 50, color: CACHET.CYAN),
+        DeviceSamplingPackage.SCREEN: Icon(
+          Icons.screen_lock_portrait,
+          color: CACHET.LIGHT_PURPLE,
+        ),
+        ContextSamplingPackage.LOCATION: Icon(
+          Icons.location_searching,
+          color: CACHET.CYAN,
+        ),
+        ContextSamplingPackage.GEOLOCATION: Icon(
+          Icons.my_location,
+          color: CACHET.YELLOW,
+        ),
+        ContextSamplingPackage.ACTIVITY: Icon(
+          Icons.directions_bike,
+          color: CACHET.ORANGE,
+        ),
+        ContextSamplingPackage.WEATHER: Icon(
+          Icons.cloud,
+          color: CACHET.LIGHT_BLUE_2,
+        ),
+        ContextSamplingPackage.AIR_QUALITY: Icon(
+          Icons.warning,
+          color: CACHET.GREY_3,
+        ),
+        ContextSamplingPackage.GEOFENCE: Icon(
+          Icons.location_on,
+          color: CACHET.CYAN,
+        ),
+        ContextSamplingPackage.MOBILITY: Icon(
+          Icons.location_on,
+          color: CACHET.ORANGE,
+        ),
+        SurveySamplingPackage.SURVEY: Icon(
+          Icons.description,
+          color: CACHET.ORANGE,
+        ),
+      };
+
+  Map<UserTaskState, Icon> get taskStateIcon => {
+        UserTaskState.initialized: Icon(Icons.stream, color: CACHET.YELLOW),
+        UserTaskState.enqueued: Icon(Icons.notifications, color: CACHET.YELLOW),
+        UserTaskState.dequeued: Icon(Icons.stop, color: CACHET.YELLOW),
+        UserTaskState.started: Icon(Icons.play_arrow, color: CACHET.GREY_4),
+        UserTaskState.onhold: Icon(Icons.pause, color: CACHET.GREY_4),
+        UserTaskState.done: Icon(Icons.check, color: CACHET.GREEN),
+      };
 }

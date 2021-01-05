@@ -26,7 +26,9 @@ class _ContactPageState extends State<ContactPage> {
                 alignment: Alignment.topLeft,
                 child: RichText(
                   textAlign: TextAlign.start,
-                  text: TextSpan(text: 'Have any questions? \nPlease contact us', style: welcomeMessageStyle),
+                  text: TextSpan(
+                      text: 'Have any questions? \nPlease contact us',
+                      style: welcomeMessageStyle),
                 ),
               ),
               _entryField("Name", _nameController),
@@ -36,8 +38,12 @@ class _ContactPageState extends State<ContactPage> {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  ElevatedButton(onPressed: () => Navigator.pop(context), child: Text('BACK')),
-                  ElevatedButton(onPressed: () => Navigator.pop(context), child: Text('SEND')),
+                  ElevatedButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: Text('BACK')),
+                  ElevatedButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: Text('SEND')),
                 ],
               ),
             ],
@@ -63,7 +69,8 @@ class _ContactPageState extends State<ContactPage> {
               decoration: InputDecoration(
                   hintText: title,
                   hintStyle: inputFieldStyle,
-                  border: OutlineInputBorder(borderSide: BorderSide(color: Color(0xfff3f3f4))),
+                  border: OutlineInputBorder(
+                      borderSide: BorderSide(color: Color(0xfff3f3f4))),
                   fillColor: Color(0xfff3f3f4),
                   filled: false))
         ],

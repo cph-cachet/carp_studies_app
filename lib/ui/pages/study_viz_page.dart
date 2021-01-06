@@ -83,7 +83,14 @@ class _StudyVisualizationState extends State<StudyVisualization> {
               SizedBox(height: 5),
               Row(children: [
                 SizedBox(width: 15),
-                Text(message.type.toString() + ' - ' + message.timestamp.toString(),
+                Text(
+                    message.type.toString().split('.')[1][0].toUpperCase() +
+                        message.type.toString().split('.')[1].substring(1) +
+                        ' - ' +
+                        timeago.format(DateTime.now().subtract(Duration(
+                            days: message.timestamp.day,
+                            hours: message.timestamp.hour,
+                            minutes: message.timestamp.minute))),
                     style: aboutCardSubtitleStyle),
               ]),
               SizedBox(height: 5),

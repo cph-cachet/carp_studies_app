@@ -18,22 +18,27 @@ class StudyBanner extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(studyPageModel.name,
-                  style: studyTitleStyle.copyWith(color: Theme.of(context).primaryColor))
+                  style: studyTitleStyle.copyWith(
+                      color: Theme.of(context).primaryColor))
             ],
           ),
           SizedBox(height: 15),
           GestureDetector(
               onTap: () {
                 Navigator.of(context).push(PageRouteBuilder(
-                    opaque: false, pageBuilder: (BuildContext context, _, __) => StudyOverviewPage()));
+                    opaque: false,
+                    pageBuilder: (BuildContext context, _, __) =>
+                        StudyOverviewPage()));
               },
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text('Read more about the study',
-                      style: readMoreStudyStyle.copyWith(color: Theme.of(context).primaryColor)),
-                  Icon(Icons.keyboard_arrow_down_outlined, color: Theme.of(context).primaryColor)
+                      style: readMoreStudyStyle.copyWith(
+                          color: Theme.of(context).primaryColor)),
+                  Icon(Icons.keyboard_arrow_down_outlined,
+                      color: Theme.of(context).primaryColor)
                 ],
               ))
         ],

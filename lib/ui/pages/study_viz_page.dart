@@ -91,12 +91,15 @@ class _StudyVisualizationState extends State<StudyVisualization> {
                             days: message.timestamp.day,
                             hours: message.timestamp.hour,
                             minutes: message.timestamp.minute))),
-                    style: aboutCardSubtitleStyle),
+                    style: aboutCardSubtitleStyle.copyWith(color: Theme.of(context).primaryColor)),
               ]),
               SizedBox(height: 5),
               Row(children: [
                 SizedBox(width: 15),
-                Expanded(child: Text(message.subTitle, style: aboutCardContentStyle)),
+                if (message.subTitle.isNotEmpty)
+                  Expanded(
+                      child: Text(message.subTitle,
+                          style: aboutCardContentStyle.copyWith(color: Theme.of(context).primaryColor))),
                 SizedBox(width: 15),
               ]),
               SizedBox(height: 10),

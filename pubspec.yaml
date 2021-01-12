@@ -40,6 +40,8 @@ dependencies:
   url_launcher: ^5.7.10
   timeago: ^2.0.29
   expandable: ^4.1.4
+  charts_flutter: ^0.9.0
+
 
 
 # Overriding carp libraries to use the local or github copy

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:charts_flutter/flutter.dart' as charts;
 
 ThemeData carpStudyTheme = ThemeData.light().copyWith(
   primaryColor: Color.fromRGBO(32, 111, 162, 1),
@@ -9,6 +10,7 @@ ThemeData carpStudyTheme = ThemeData.light().copyWith(
 ThemeData carpStudyDarkTheme = ThemeData.dark().copyWith(
   primaryColor: Color(0xff81C7F3),
   accentColor: Color(0xff4C4C4C),
+  disabledColor: Color(0xffcce8fa),
   textTheme: ThemeData.dark().textTheme.apply(fontFamily: 'MuseoSans', bodyColor: Color(0xff81C7F3)),
 );
 
@@ -24,6 +26,30 @@ ButtonTheme flatButtonTheme = ButtonTheme(
   minWidth: 100,
   buttonColor: carpStudyTheme.primaryColor,
 );
+
+class AxisTheme {
+  static charts.RenderSpec<num> axisThemeNum() {
+    return charts.GridlineRendererSpec(
+      labelStyle: charts.TextStyleSpec(
+        color: charts.MaterialPalette.gray.shade500,
+      ),
+      lineStyle: charts.LineStyleSpec(
+        color: charts.MaterialPalette.gray.shade500,
+      ),
+    );
+  }
+
+  static charts.RenderSpec<DateTime> axisThemeDateTime() {
+    return charts.GridlineRendererSpec(
+      labelStyle: charts.TextStyleSpec(
+        color: charts.MaterialPalette.gray.shade500,
+      ),
+      lineStyle: charts.LineStyleSpec(
+        color: charts.MaterialPalette.transparent,
+      ),
+    );
+  }
+}
 
 TextStyle studyTitleStyle =
     TextStyle(fontSize: 24, fontWeight: FontWeight.w600, color: Color.fromRGBO(32, 111, 162, 1));

@@ -11,19 +11,18 @@ class DataVisualization extends StatelessWidget {
           builder: (BuildContext context) {
             return Scaffold(
               body: Container(
-                height: height,
-                child: Stack(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Container(
+                    SizedBox(height: height * .075),
+                    CarpAppBar(),
+                    Expanded(
                       child: SingleChildScrollView(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            SizedBox(height: height * .075),
-                            CarpAppBar(),
-                            CircularProgressIndicator(),
-                          ],
+                          children: <Widget>[StepsCard(), MobilityCard(), ActivityCard()],
                         ),
                       ),
                     )

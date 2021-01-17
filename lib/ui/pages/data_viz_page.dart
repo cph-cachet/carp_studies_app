@@ -3,6 +3,7 @@ part of carp_study_app;
 class DataVisualization extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    bloc.data.printSamplingTable();
     final height = MediaQuery.of(context).size.height;
     return Navigator(
       onGenerateRoute: (RouteSettings settings) {
@@ -22,7 +23,11 @@ class DataVisualization extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[StepsCard(), MobilityCard(), ActivityCard()],
+                          children: <Widget>[
+                            StepsCard(),
+                            MobilityCard(),
+                            ActivityCard()
+                          ],
                         ),
                       ),
                     )

@@ -5,14 +5,9 @@ class ActivityCard extends StatefulWidget {
   _ActivityCardState createState() => _ActivityCardState();
 }
 
-class Activity {
-  final DateTime date;
-  final int minutes;
-  Activity(this.date, this.minutes);
-}
-
 class _ActivityCardState extends State<ActivityCard> {
-  static List<charts.Series<Activity, DateTime>> _createChartList(BuildContext context) {
+  static List<charts.Series<Activity, DateTime>> _createChartList(
+      BuildContext context) {
     final randomWalkData = [
       new Activity(DateTime.now().add(Duration(days: 1)), 90),
       new Activity(DateTime.now().add(Duration(days: 2)), 100),
@@ -34,14 +29,18 @@ class _ActivityCardState extends State<ActivityCard> {
 
     return [
       charts.Series<Activity, DateTime>(
-        colorFn: (d, i) => charts.ColorUtil.fromDartColor(Theme.of(context).primaryColor).darker.darker,
+        colorFn: (d, i) =>
+            charts.ColorUtil.fromDartColor(Theme.of(context).primaryColor)
+                .darker
+                .darker,
         id: 'DailyWalkList',
         data: randomWalkData,
         domainFn: (Activity datum, _) => datum.date,
         measureFn: (Activity datum, _) => datum.minutes,
       ),
       charts.Series<Activity, DateTime>(
-        colorFn: (d, i) => charts.ColorUtil.fromDartColor(Theme.of(context).primaryColor),
+        colorFn: (d, i) =>
+            charts.ColorUtil.fromDartColor(Theme.of(context).primaryColor),
         id: 'DailyRunList',
         data: randomRunData,
         domainFn: (Activity datum, _) => datum.date,
@@ -49,7 +48,11 @@ class _ActivityCardState extends State<ActivityCard> {
       ),
       charts.Series<Activity, DateTime>(
         colorFn: (d, i) =>
-            charts.ColorUtil.fromDartColor(Theme.of(context).primaryColor).lighter.lighter.lighter.lighter,
+            charts.ColorUtil.fromDartColor(Theme.of(context).primaryColor)
+                .lighter
+                .lighter
+                .lighter
+                .lighter,
         id: 'DailyBikeList',
         data: randomBikeData,
         domainFn: (Activity datum, _) => datum.date,
@@ -63,6 +66,7 @@ class _ActivityCardState extends State<ActivityCard> {
 
   @override
   Widget build(BuildContext context) {
+    bloc.data.printWeeklyActivities();
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Card(
@@ -74,7 +78,8 @@ class _ActivityCardState extends State<ActivityCard> {
             children: <Widget>[
               CardHeader(
                   title: 'Activity',
-                  iconAssetName: Icon(Icons.fitness_center, color: Theme.of(context).primaryColor),
+                  iconAssetName: Icon(Icons.fitness_center,
+                      color: Theme.of(context).primaryColor),
                   heroTag: 'activity-card',
                   value: '43 min running'),
               Container(

@@ -21,6 +21,8 @@ import 'package:research_package/research_package.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:timeago/timeago.dart' as timeago;
+import 'package:expandable/expandable.dart';
+import 'package:charts_flutter/flutter.dart' as charts;
 
 part 'app.dart';
 part 'first_screen.dart';
@@ -33,12 +35,16 @@ part 'sensing/messages.dart';
 part 'ui/colors.dart';
 part 'ui/pages/data_viz_page.dart';
 part 'ui/pages/study_viz_page.dart';
-part 'ui/pages/task_list_page.dart';
 part 'ui/pages/study_overview_page.dart';
+part 'ui/pages/task_list_page.dart';
 part 'ui/pages/contact_page.dart';
 part 'ui/pages/profile_page.dart';
 part 'ui/pages/informed_consent_page.dart';
 part 'ui/widgets/study_banner.dart';
+part 'ui/widgets/card_header.dart';
+part 'ui/cards/steps_card.dart';
+part 'ui/cards/activity_card.dart';
+part 'ui/cards/mobility_card.dart';
 
 void main() {
   runApp(CARPStudyApp());

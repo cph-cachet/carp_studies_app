@@ -300,7 +300,7 @@ class _TaskListState extends State<TaskList> {
         ),
       };
 
-  Map<UserTaskState, Icon> get taskStateIcon => {
+  static Map<UserTaskState, Icon> get taskStateIcon => {
         UserTaskState.initialized: Icon(Icons.stream, color: CACHET.YELLOW),
         UserTaskState.enqueued: Icon(Icons.notifications, color: CACHET.YELLOW),
         UserTaskState.dequeued: Icon(Icons.stop, color: CACHET.YELLOW),

@@ -24,6 +24,7 @@ class _SplashScreenState extends State<SplashScreen> {
   load(BuildContext context) async {
     SharedPreferences sp = await SharedPreferences.getInstance();
     bool firstTime = sp.getBool('first_time');
+    firstTime = true; // for testing purposes.
 
     if (firstTime != null && !firstTime) {
       // Not first time

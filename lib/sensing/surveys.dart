@@ -52,9 +52,9 @@ class _WHO5Survey implements Survey {
         RPInstructionStep(title: "WHO Well-Being Index")
           ..text =
               "Please indicate for each of the following five statements which is closest to how you have been feeling over the last two weeks. "
-                  "Notice that higher numbers mean better well-being.\n\n"
-                  "Example: If you have felt cheerful and in good spirits more than half of the time during the last two weeks, "
-                  "select the box with the label 'More than half of the time'.",
+              "Notice that higher numbers mean better well-being.\n\n"
+              "Example: If you have felt cheerful and in good spirits more than half of the time during the last two weeks, "
+              "select the box with the label 'More than half of the time'.",
         RPQuestionStep.withAnswerFormat(
           "who5_1",
           "I have felt cheerful and in good spirits",

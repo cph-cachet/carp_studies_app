@@ -25,7 +25,8 @@ class StudyBanner extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(studyPageModel.name,
-                          style: studyTitleStyle.copyWith(color: Theme.of(context).primaryColor))
+                          style: studyTitleStyle.copyWith(
+                              color: Theme.of(context).primaryColor))
                     ],
                   ),
                 ],
@@ -38,7 +39,8 @@ class StudyBanner extends StatelessWidget {
                 child: Column(children: <Widget>[
                   Expanded(
                       child: Text(studyPageModel.description,
-                          style: studyDescriptionStyle.copyWith(color: Theme.of(context).primaryColor),
+                          style: studyDescriptionStyle.copyWith(
+                              color: Theme.of(context).primaryColor),
                           textAlign: TextAlign.justify)),
                 ])),
             theme: ExpandableThemeData(

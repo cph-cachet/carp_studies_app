@@ -33,7 +33,8 @@ class _StudyVisualizationState extends State<StudyVisualization> {
                                   itemCount: widget.model.messages.length,
                                   padding: EdgeInsets.symmetric(vertical: 8.0),
                                   itemBuilder: (context, index) {
-                                    return _aboutStudyCard(context, widget.model.messages[index]);
+                                    return _aboutStudyCard(
+                                        context, widget.model.messages[index]);
                                   }),
                             );
                           }),
@@ -78,7 +79,8 @@ class _StudyVisualizationState extends State<StudyVisualization> {
                 SizedBox(width: 15),
                 Expanded(
                     child: Text(message.title,
-                        style: aboutCardTitleStyle.copyWith(color: Theme.of(context).primaryColor))),
+                        style: aboutCardTitleStyle.copyWith(
+                            color: Theme.of(context).primaryColor))),
               ]),
               SizedBox(height: 5),
               Row(children: [
@@ -91,7 +93,8 @@ class _StudyVisualizationState extends State<StudyVisualization> {
                             days: message.timestamp.day,
                             hours: message.timestamp.hour,
                             minutes: message.timestamp.minute))),
-                    style: aboutCardSubtitleStyle.copyWith(color: Theme.of(context).primaryColor)),
+                    style: aboutCardSubtitleStyle.copyWith(
+                        color: Theme.of(context).primaryColor)),
               ]),
               SizedBox(height: 5),
               Row(children: [
@@ -99,7 +102,8 @@ class _StudyVisualizationState extends State<StudyVisualization> {
                 if (message.subTitle.isNotEmpty)
                   Expanded(
                       child: Text(message.subTitle,
-                          style: aboutCardContentStyle.copyWith(color: Theme.of(context).primaryColor))),
+                          style: aboutCardContentStyle.copyWith(
+                              color: Theme.of(context).primaryColor))),
                 SizedBox(width: 15),
               ]),
               SizedBox(height: 10),

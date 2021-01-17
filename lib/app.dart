@@ -32,14 +32,18 @@ class CARPStudyAppState extends State<CARPStudyAppHome> {
         selectedItemColor: Theme.of(context).primaryColor,
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.new_releases_outlined),
+            icon: Icon(Icons.playlist_add_check_outlined),
             label: 'Tasks',
-            activeIcon: Icon(Icons.new_releases),
+            activeIcon: Icon(Icons.playlist_add_check),
           ),
           BottomNavigationBarItem(
-              icon: Icon(Icons.announcement_outlined), label: 'About', activeIcon: Icon(Icons.announcement)),
+              icon: Icon(Icons.announcement_outlined),
+              label: 'About',
+              activeIcon: Icon(Icons.announcement)),
           BottomNavigationBarItem(
-              icon: Icon(Icons.leaderboard_outlined), label: 'Data', activeIcon: Icon(Icons.leaderboard)),
+              icon: Icon(Icons.leaderboard_outlined),
+              label: 'Data',
+              activeIcon: Icon(Icons.leaderboard)),
         ],
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,

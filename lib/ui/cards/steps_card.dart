@@ -5,32 +5,33 @@ class StepsCard extends StatefulWidget {
   _StepsCardState createState() => _StepsCardState();
 }
 
-class Steps {
-  final DateTime date;
-  final int steps;
-  Steps(this.date, this.steps);
-}
-
 class _StepsCardState extends State<StepsCard> {
-  static List<charts.Series<Steps, DateTime>> _createChartList(BuildContext context) {
+  static List<charts.Series<Steps, DateTime>> _createChartList(
+      BuildContext context) {
     final randomStepsData = [
       new Steps(DateTime.now().add(Duration(days: 1)), Random().nextInt(10000)),
       new Steps(DateTime.now().add(Duration(days: 2)), Random().nextInt(10000)),
+      // new Steps(DateTime.now().add(Duration(days: 2, hours: 12)),
+      //     Random().nextInt(10000)),
       new Steps(DateTime.now().add(Duration(days: 3)), Random().nextInt(10000)),
       new Steps(DateTime.now().add(Duration(days: 4)), Random().nextInt(10000)),
       new Steps(DateTime.now().add(Duration(days: 5)), Random().nextInt(10000)),
       new Steps(DateTime.now().add(Duration(days: 6)), Random().nextInt(10000)),
       new Steps(DateTime.now().add(Duration(days: 7)), Random().nextInt(10000)),
-      new Steps(DateTime.now().add(Duration(days: 8)), Random().nextInt(10000)),
-      new Steps(DateTime.now().add(Duration(days: 9)), Random().nextInt(10000)),
-      new Steps(DateTime.now().add(Duration(days: 10)), Random().nextInt(10000)),
-      new Steps(DateTime.now().add(Duration(days: 11)), Random().nextInt(10000)),
-      new Steps(DateTime.now().add(Duration(days: 12)), Random().nextInt(10000)),
+      // new Steps(DateTime.now().add(Duration(days: 8)), Random().nextInt(10000)),
+      // new Steps(DateTime.now().add(Duration(days: 9)), Random().nextInt(10000)),
+      // new Steps(
+      //     DateTime.now().add(Duration(days: 10)), Random().nextInt(10000)),
+      // new Steps(
+      //     DateTime.now().add(Duration(days: 11)), Random().nextInt(10000)),
+      // new Steps(
+      //     DateTime.now().add(Duration(days: 12)), Random().nextInt(10000)),
     ];
 
     return [
       charts.Series<Steps, DateTime>(
-        colorFn: (d, i) => charts.ColorUtil.fromDartColor(Theme.of(context).primaryColor),
+        colorFn: (d, i) =>
+            charts.ColorUtil.fromDartColor(Theme.of(context).primaryColor),
         id: 'DailyStepsList',
         data: randomStepsData,
         domainFn: (Steps datum, _) => datum.date,
@@ -44,6 +45,7 @@ class _StepsCardState extends State<StepsCard> {
 
   @override
   Widget build(BuildContext context) {
+    bloc.data.printWeeklySteps();
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Card(
@@ -55,7 +57,8 @@ class _StepsCardState extends State<StepsCard> {
             children: <Widget>[
               CardHeader(
                   title: 'Steps',
-                  iconAssetName: Icon(Icons.directions_walk, color: Theme.of(context).primaryColor),
+                  iconAssetName: Icon(Icons.directions_walk,
+                      color: Theme.of(context).primaryColor),
                   heroTag: 'steps-card',
                   value: '9805 steps'),
               Container(

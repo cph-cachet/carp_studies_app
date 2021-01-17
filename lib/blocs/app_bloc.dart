@@ -1,6 +1,7 @@
 part of carp_study_app;
 
 class AppBLoC {
+  CarpStydyAppDataModel _data = CarpStydyAppDataModel();
   Study _study;
   StudyController controller;
   StudyManager studyManager = LocalStudyManager();
@@ -8,6 +9,9 @@ class AppBLoC {
   DateTime get studyStartTimestamp => _studyStartTimestamp;
   List<Message> _messages = [];
   List<Message> get messages => _messages;
+
+  /// The persistent data model for this app
+  CarpStydyAppDataModel get data => _data;
 
   AppBLoC() : super() {
     // create and register external sampling packages
@@ -34,6 +38,7 @@ class AppBLoC {
       debugLevel: DebugLevel.DEBUG,
     );
     await controller.initialize();
+    await data.init(controller);
 
     // This show how an app can listen to user task events.
     // Is not used right now.

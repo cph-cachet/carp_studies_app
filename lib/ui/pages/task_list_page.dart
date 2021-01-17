@@ -12,73 +12,75 @@ class _TaskListState extends State<TaskList> {
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
-
-    return Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          SizedBox(height: height * .075),
-          CarpAppBar(),
-          Flexible(
-            child: StreamBuilder<UserTask>(
-              stream: widget.model.userTaskEvents,
-              builder: (context, snapshot) {
-                return _scoreBoard(
-                  context,
-                  widget.model.daysInStudy,
-                  widget.model.taskCompleted,
-                );
-              },
-            ),
-          ),
-          SizedBox(height: 15),
-          Padding(
-              padding: EdgeInsets.symmetric(horizontal: 15),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  'MY TASKS',
-                  style: sectionTitleStyle,
-                ),
-              )),
-          SizedBox(height: 15),
-          Expanded(
-            flex: 4,
-            child: StreamBuilder<UserTask>(
-              stream: widget.model.userTaskEvents,
-              builder: (context, snapshot) {
-                // TODO: refresh list when done
-                return CustomScrollView(
-                  slivers: <Widget>[
-                    SliverList(
-                      delegate: SliverChildBuilderDelegate(
-                          (BuildContext context, int index) {
-                        if (widget.model.tasks[index].state !=
-                            UserTaskState.done)
-                          return _buildTaskCard(
-                              context, widget.model.tasks[index]);
-                        else
-                          return SizedBox.shrink();
-                      }, childCount: widget.model.tasks.length),
+    return Navigator(
+      onGenerateRoute: (RouteSettings settings) {
+        return new MaterialPageRoute(
+          settings: settings,
+          builder: (BuildContext context) {
+            return Scaffold(
+              body: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  SizedBox(height: height * .075),
+                  CarpAppBar(),
+                  Flexible(
+                    child: StreamBuilder<UserTask>(
+                      stream: widget.model.userTaskEvents,
+                      builder: (context, snapshot) {
+                        return _scoreBoard(
+                          context,
+                          widget.model.daysInStudy,
+                          widget.model.taskCompleted,
+                        );
+                      },
                     ),
-                    SliverList(
-                      delegate: SliverChildBuilderDelegate(
-                          (BuildContext context, int index) {
-                        if (widget.model.tasks[index].state ==
-                            UserTaskState.done)
-                          return _buildDoneTaskCard(
-                              context, widget.model.tasks[index]);
-                        else
-                          return SizedBox.shrink();
-                      }, childCount: widget.model.tasks.length),
+                  ),
+                  SizedBox(height: 15),
+                  Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 15),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          'MY TASKS',
+                          style: sectionTitleStyle.copyWith(color: Theme.of(context).primaryColor),
+                        ),
+                      )),
+                  SizedBox(height: 15),
+                  Expanded(
+                    flex: 4,
+                    child: StreamBuilder<UserTask>(
+                      stream: widget.model.userTaskEvents,
+                      builder: (context, snapshot) {
+                        // TODO: refresh list when done
+                        return CustomScrollView(
+                          slivers: <Widget>[
+                            SliverList(
+                              delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
+                                if (widget.model.tasks[index].state != UserTaskState.done)
+                                  return _buildTaskCard(context, widget.model.tasks[index]);
+                                else
+                                  return SizedBox.shrink();
+                              }, childCount: widget.model.tasks.length),
+                            ),
+                            SliverList(
+                              delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
+                                if (widget.model.tasks[index].state == UserTaskState.done)
+                                  return _buildDoneTaskCard(context, widget.model.tasks[index]);
+                                else
+                                  return SizedBox.shrink();
+                              }, childCount: widget.model.tasks.length),
+                            ),
+                          ],
+                        );
+                      },
                     ),
-                  ],
-                );
-              },
-            ),
-          ),
-        ],
-      ),
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      },
     );
   }
 
@@ -91,12 +93,10 @@ class _TaskListState extends State<TaskList> {
           leading: CircleAvatar(
             backgroundColor: Theme.of(context).accentColor,
             // child: taskTypeIcon[userTask.type],  // use a type icon
-            child: measureTypeIcon[userTask
-                .task.measures[0].type.name], // use the 1st measure as an icon
+            child: measureTypeIcon[userTask.task.measures[0].type.name], // use the 1st measure as an icon
           ),
           title: Text(userTask.title,
-              style: aboutCardTitleStyle.copyWith(
-                  color: Theme.of(context).primaryColor)),
+              style: aboutCardTitleStyle.copyWith(color: Theme.of(context).primaryColor)),
           subtitle: Text(_subtitle(userTask)),
           onTap: () {
             userTask.onStart(context);
@@ -111,9 +111,7 @@ class _TaskListState extends State<TaskList> {
         ? '${userTask.task.minutesToComplete} min to complete'
         : '';
 
-    str += (userTask.expiresIn != null)
-        ? ' - ${userTask.expiresIn.inDays + 1} days remaining'
-        : '';
+    str += (userTask.expiresIn != null) ? ' - ${userTask.expiresIn.inDays + 1} days remaining' : '';
 
     str = (str.isEmpty) ? userTask.description : str;
 
@@ -128,11 +126,9 @@ class _TaskListState extends State<TaskList> {
           margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
           elevation: 3,
           child: ListTile(
-            leading:
-                Icon(Icons.check_circle_outlined, color: Color(0xFF90D88F)),
+            leading: Icon(Icons.check_circle_outlined, color: Color(0xFF90D88F)),
             title: Text(userTask.title,
-                style: aboutCardTitleStyle.copyWith(
-                    color: Theme.of(context).primaryColor)),
+                style: aboutCardTitleStyle.copyWith(color: Theme.of(context).primaryColor)),
           ),
         ),
       ),
@@ -155,11 +151,9 @@ class _TaskListState extends State<TaskList> {
               Column(
                 children: [
                   Text(daysInStudy.toString(),
-                      style: scoreNumberStyle.copyWith(
-                          color: Theme.of(context).primaryColor)),
+                      style: scoreNumberStyle.copyWith(color: Theme.of(context).primaryColor)),
                   Text('Days in study',
-                      style: scoreTextStyle.copyWith(
-                          color: Theme.of(context).primaryColor)),
+                      style: scoreTextStyle.copyWith(color: Theme.of(context).primaryColor)),
                 ],
               ),
               Container(
@@ -171,11 +165,9 @@ class _TaskListState extends State<TaskList> {
               Column(
                 children: [
                   Text(taskCompleted.toString(),
-                      style: scoreNumberStyle.copyWith(
-                          color: Theme.of(context).primaryColor)),
+                      style: scoreNumberStyle.copyWith(color: Theme.of(context).primaryColor)),
                   Text('Tasks completed',
-                      style: scoreTextStyle.copyWith(
-                          color: Theme.of(context).primaryColor)),
+                      style: scoreTextStyle.copyWith(color: Theme.of(context).primaryColor)),
                 ],
               )
             ],
@@ -308,7 +300,7 @@ class _TaskListState extends State<TaskList> {
         ),
       };
 
-  Map<UserTaskState, Icon> get taskStateIcon => {
+  static Map<UserTaskState, Icon> get taskStateIcon => {
         UserTaskState.initialized: Icon(Icons.stream, color: CACHET.YELLOW),
         UserTaskState.enqueued: Icon(Icons.notifications, color: CACHET.YELLOW),
         UserTaskState.dequeued: Icon(Icons.stop, color: CACHET.YELLOW),

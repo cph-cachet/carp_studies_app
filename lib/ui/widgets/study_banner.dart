@@ -6,41 +6,51 @@ class StudyBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 110,
       color: Theme.of(context).accentColor,
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(height: 15),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(studyPageModel.name,
-                  style: studyTitleStyle.copyWith(
-                      color: Theme.of(context).primaryColor))
-            ],
-          ),
-          SizedBox(height: 15),
-          GestureDetector(
-              onTap: () {
-                Navigator.of(context).push(PageRouteBuilder(
-                    opaque: false,
-                    pageBuilder: (BuildContext context, _, __) =>
-                        StudyOverviewPage()));
-              },
-              child: Row(
+          ExpandablePanel(
+            header: Container(
+              height: 110,
+              color: Theme.of(context).accentColor,
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('Read more about the study',
-                      style: readMoreStudyStyle.copyWith(
-                          color: Theme.of(context).primaryColor)),
-                  Icon(Icons.keyboard_arrow_down_outlined,
-                      color: Theme.of(context).primaryColor)
+                  SizedBox(height: 15),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(studyPageModel.name,
+                          style: studyTitleStyle.copyWith(
+                              color: Theme.of(context).primaryColor))
+                    ],
+                  ),
                 ],
-              ))
+              ),
+            ),
+            expanded: Container(
+                height: 110,
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                color: Theme.of(context).accentColor,
+                child: Column(children: <Widget>[
+                  Expanded(
+                      child: Text(studyPageModel.description,
+                          style: studyDescriptionStyle.copyWith(
+                              color: Theme.of(context).primaryColor),
+                          textAlign: TextAlign.justify)),
+                ])),
+            theme: ExpandableThemeData(
+              iconPlacement: ExpandablePanelIconPlacement.right,
+              iconColor: Theme.of(context).primaryColor,
+              headerAlignment: ExpandablePanelHeaderAlignment.center,
+              tapHeaderToExpand: true,
+              hasIcon: true,
+            ),
+          ),
         ],
       ),
     );

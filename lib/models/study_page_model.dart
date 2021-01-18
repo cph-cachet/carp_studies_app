@@ -1,6 +1,6 @@
 part of carp_study_app;
 
-class StudyPageModel {
+class StudyPageModel extends DataModel {
   String get name => bloc.study.name;
   String get description =>
       bloc.study.description ?? 'No description available.';
@@ -24,6 +24,10 @@ class StudyPageModel {
   List<Message> get messages => bloc.messages;
 
   StudyPageModel();
+
+  void init(StudyController controller) {
+    super.init(controller);
+  }
 }
 
 /// A message to be shown in the message list

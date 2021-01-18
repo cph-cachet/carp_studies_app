@@ -2,22 +2,20 @@ part of carp_study_app;
 
 class CARPStudyAppHome extends StatefulWidget {
   CARPStudyAppHome({Key key}) : super(key: key);
-
   CARPStudyAppState createState() => CARPStudyAppState();
 }
 
 class CARPStudyAppState extends State<CARPStudyAppHome> {
   int _selectedIndex = 0;
-
-  final _pages = [
-    TaskList(TaskListPageModel()),
-    StudyVisualization(StudyPageModel()),
-    DataVisualization(),
-  ];
+  final _pages = [];
 
   void initState() {
     super.initState();
     bloc.init();
+
+    _pages.add(TaskList(bloc.data.taskListPageModel));
+    _pages.add(StudyVisualization(bloc.data.studyPageModel));
+    _pages.add(DataVisualization(bloc.data.dataPageModel));
   }
 
   void dispose() {
@@ -48,7 +46,7 @@ class CARPStudyAppState extends State<CARPStudyAppHome> {
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
       ),
-      floatingActionButton: new FloatingActionButton(
+      floatingActionButton: FloatingActionButton(
         onPressed: _restart,
         tooltip: 'Restart study & probes',
         child: bloc.isRunning ? Icon(Icons.pause) : Icon(Icons.play_arrow),

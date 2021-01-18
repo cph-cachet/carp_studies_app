@@ -1,11 +1,12 @@
 part of carp_study_app;
 
-class ActivityCard extends StatefulWidget {
-  @override
-  _ActivityCardState createState() => _ActivityCardState();
+class ActivityCardWidget extends StatefulWidget {
+  final ActivityCardDataModel model;
+  ActivityCardWidget(this.model);
+  _ActivityCardWidgetState createState() => _ActivityCardWidgetState();
 }
 
-class _ActivityCardState extends State<ActivityCard> {
+class _ActivityCardWidgetState extends State<ActivityCardWidget> {
   static List<charts.Series<Activity, DateTime>> _createChartList(
       BuildContext context) {
     final randomWalkData = [
@@ -66,7 +67,7 @@ class _ActivityCardState extends State<ActivityCard> {
 
   @override
   Widget build(BuildContext context) {
-    bloc.data.printWeeklyActivities();
+    print(widget.model.toString());
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Card(

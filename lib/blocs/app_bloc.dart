@@ -37,8 +37,8 @@ class AppBLoC {
       _study,
       debugLevel: DebugLevel.DEBUG,
     );
+    data.init(controller);
     await controller.initialize();
-    await data.init(controller);
 
     // This show how an app can listen to user task events.
     // Is not used right now.

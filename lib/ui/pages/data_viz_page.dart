@@ -1,10 +1,12 @@
 part of carp_study_app;
 
 class DataVisualization extends StatelessWidget {
-  @override
+  final DataPageModel model;
+  DataVisualization(this.model);
+
   Widget build(BuildContext context) {
-    bloc.data.printSamplingTable();
     final height = MediaQuery.of(context).size.height;
+
     return Navigator(
       onGenerateRoute: (RouteSettings settings) {
         return new MaterialPageRoute(
@@ -24,9 +26,10 @@ class DataVisualization extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            StepsCard(),
-                            MobilityCard(),
-                            ActivityCard()
+                            MeasuresCardWidget(model.measuresCardDataModel),
+                            StepsCardWidget(model.stepsCardDataModel),
+                            MobilityCardWidget(model.mobilityCardDataModel),
+                            ActivityCardWidget(model.activityCardDataModel),
                           ],
                         ),
                       ),

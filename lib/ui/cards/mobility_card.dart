@@ -1,11 +1,12 @@
 part of carp_study_app;
 
-class MobilityCard extends StatefulWidget {
-  @override
-  _MobilityCardState createState() => _MobilityCardState();
+class MobilityCardWidget extends StatefulWidget {
+  final MobilityCardDataModel model;
+  MobilityCardWidget(this.model);
+  _MobilityCardWidgetState createState() => _MobilityCardWidgetState();
 }
 
-class _MobilityCardState extends State<MobilityCard> {
+class _MobilityCardWidgetState extends State<MobilityCardWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -19,7 +20,8 @@ class _MobilityCardState extends State<MobilityCard> {
             children: <Widget>[
               CardHeader(
                   title: 'Mobility',
-                  iconAssetName: Icon(Icons.emoji_transportation, color: Theme.of(context).primaryColor),
+                  iconAssetName: Icon(Icons.emoji_transportation,
+                      color: Theme.of(context).primaryColor),
                   heroTag: 'mobility-card',
                   value: '54% home stay'),
               Container(

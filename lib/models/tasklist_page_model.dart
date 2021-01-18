@@ -1,6 +1,6 @@
 part of carp_study_app;
 
-class TaskListPageModel {
+class TaskListPageModel extends DataModel {
   TaskListPageModel();
 
   /// The list of available app tasks for the user to address.
@@ -19,4 +19,8 @@ class TaskListPageModel {
       .userTaskQueue
       .where((task) => task.state == UserTaskState.done)
       .length;
+
+  void init(StudyController controller) {
+    super.init(controller);
+  }
 }

@@ -28,13 +28,17 @@ import 'package:charts_flutter/flutter.dart' as charts;
 part 'app.dart';
 part 'first_screen.dart';
 part 'blocs/app_bloc.dart';
-part 'data/datamodel.dart';
 part 'data/sensing.dart';
 part 'data/surveys.dart';
 part 'data/messages.dart';
+part 'models/data_model.dart';
 part 'models/tasklist_page_model.dart';
 part 'models/study_page_model.dart';
 part 'models/data_page_model.dart';
+part 'models/cards/activity_data_model.dart';
+part 'models/cards/mobility_data_model.dart';
+part 'models/cards/steps_data_model.dart';
+part 'models/cards/measures_data_model.dart';
 part 'ui/colors.dart';
 part 'ui/pages/data_viz_page.dart';
 part 'ui/pages/study_viz_page.dart';
@@ -48,6 +52,7 @@ part 'ui/widgets/card_header.dart';
 part 'ui/cards/steps_card.dart';
 part 'ui/cards/activity_card.dart';
 part 'ui/cards/mobility_card.dart';
+part 'ui/cards/measures_card.dart';
 
 void main() {
   runApp(CARPStudyApp());

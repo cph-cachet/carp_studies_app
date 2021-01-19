@@ -8,42 +8,22 @@ class StepsCardWidget extends StatefulWidget {
 }
 
 class _StepsCardWidgetState extends State<StepsCardWidget> {
-  static List<charts.Series<Steps, DateTime>> _createChartList(
-      BuildContext context) {
-    final randomStepsData = [
-      new Steps(DateTime.now().add(Duration(days: 1)), Random().nextInt(10000)),
-      new Steps(DateTime.now().add(Duration(days: 2)), Random().nextInt(10000)),
-      // new Steps(DateTime.now().add(Duration(days: 2, hours: 12)),
-      //     Random().nextInt(10000)),
-      new Steps(DateTime.now().add(Duration(days: 3)), Random().nextInt(10000)),
-      new Steps(DateTime.now().add(Duration(days: 4)), Random().nextInt(10000)),
-      new Steps(DateTime.now().add(Duration(days: 5)), Random().nextInt(10000)),
-      new Steps(DateTime.now().add(Duration(days: 6)), Random().nextInt(10000)),
-      new Steps(DateTime.now().add(Duration(days: 7)), Random().nextInt(10000)),
-      // new Steps(DateTime.now().add(Duration(days: 8)), Random().nextInt(10000)),
-      // new Steps(DateTime.now().add(Duration(days: 9)), Random().nextInt(10000)),
-      // new Steps(
-      //     DateTime.now().add(Duration(days: 10)), Random().nextInt(10000)),
-      // new Steps(
-      //     DateTime.now().add(Duration(days: 11)), Random().nextInt(10000)),
-      // new Steps(
-      //     DateTime.now().add(Duration(days: 12)), Random().nextInt(10000)),
-    ];
-
+  static List<charts.Series<Steps, String>> _createChartList(BuildContext context, StepsCardDataModel model) {
+    List<Steps> _steps = model._weeklySteps.entries.map((entry) => Steps(entry.key, entry.value)).toList();
     return [
-      charts.Series<Steps, DateTime>(
-        colorFn: (d, i) =>
-            charts.ColorUtil.fromDartColor(Theme.of(context).primaryColor),
+      charts.Series<Steps, String>(
+        colorFn: (d, i) => charts.ColorUtil.fromDartColor(Theme.of(context).primaryColor),
         id: 'DailyStepsList',
-        data: randomStepsData,
-        domainFn: (Steps datum, _) => datum.date,
+        data: _steps,
+        domainFn: (Steps datum, _) => datum.toString(),
         measureFn: (Steps datum, _) => datum.steps,
       )
     ];
   }
 
-  charts.RenderSpec<num> renderSpecPrimary = AxisTheme.axisThemeNum();
-  charts.RenderSpec<DateTime> renderSpecDomain = AxisTheme.axisThemeDateTime();
+  charts.RenderSpec<num> renderSpecNum = AxisTheme.axisThemeNum();
+  charts.RenderSpec<DateTime> renderSpecTime = AxisTheme.axisThemeDateTime();
+  charts.RenderSpec<String> renderSpecString = AxisTheme.axisThemeOrdinal();
 
   @override
   Widget build(BuildContext context) {
@@ -57,30 +37,32 @@ class _StepsCardWidgetState extends State<StepsCardWidget> {
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: <Widget>[
-              CardHeader(
-                  title: 'Steps',
-                  iconAssetName: Icon(Icons.directions_walk,
-                      color: Theme.of(context).primaryColor),
-                  heroTag: 'steps-card',
-                  value: '9805 steps'),
-              Container(
-                height: 160,
-                child: charts.TimeSeriesChart(
-                  _createChartList(context),
-                  defaultRenderer: charts.BarRendererConfig<DateTime>(
-                    cornerStrategy: const charts.ConstCornerStrategy(10),
-                  ),
-                  defaultInteractions: false,
-                  primaryMeasureAxis: charts.NumericAxisSpec(
-                    tickProviderSpec: charts.BasicNumericTickProviderSpec(
-                      zeroBound: false,
-                    ),
-                    renderSpec: renderSpecPrimary,
-                  ),
-                  domainAxis: charts.DateTimeAxisSpec(
-                    renderSpec: renderSpecDomain,
-                  ),
-                ),
+              StreamBuilder(
+                stream: widget.model._controller.events,
+                builder: (context, AsyncSnapshot<Datum> snapshot) {
+                  return Column(
+                    children: [
+                      CardHeader(
+                          title: 'Steps',
+                          iconAssetName: Icon(Icons.directions_walk, color: Theme.of(context).primaryColor),
+                          heroTag: 'steps-card',
+                          value: '${widget.model._lastStep} steps'),
+                      Container(
+                          height: 160,
+                          child: charts.BarChart(
+                            _createChartList(context, widget.model),
+                            animate: true,
+                            defaultRenderer: charts.BarRendererConfig<String>(
+                              cornerStrategy: const charts.ConstCornerStrategy(10),
+                            ),
+                            domainAxis: charts.OrdinalAxisSpec(
+                              renderSpec: renderSpecString,
+                            ),
+                            primaryMeasureAxis: charts.NumericAxisSpec(renderSpec: renderSpecNum),
+                          )),
+                    ],
+                  );
+                },
               ),
             ],
           ),

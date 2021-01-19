@@ -20,7 +20,7 @@ class MeasuresCardDataModel extends DataModel {
 
     // initialize the sampling table
     controller.study.measures
-        .forEach((measure) => _samplingTable[measure.type.name] = 0);
+        .forEach((measure) => _samplingTable[measure.type.name] = 2); // TODO - change back to 0
 
     // listen to incoming events in order to count the measure types
     controller.events.listen((datum) => _samplingTable[datum.format.name]++);
@@ -31,4 +31,10 @@ class MeasuresCardDataModel extends DataModel {
     _samplingTable.forEach((type, no) => _str += '$type\t| $no\n');
     return _str;
   }
+}
+
+class Measures {
+  final String measure;
+  final int size;
+  Measures(this.measure, this.size);
 }

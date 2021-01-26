@@ -1,6 +1,7 @@
 library carp_study_app;
 
 import 'dart:async';
+import 'dart:ffi';
 import 'dart:math';
 
 import 'package:carp_audio_package/audio.dart';

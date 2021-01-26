@@ -19,8 +19,7 @@ class MeasuresCardDataModel extends DataModel {
     super.init(controller);
 
     // initialize the sampling table
-    controller.study.measures
-        .forEach((measure) => _samplingTable[measure.type.name] = 2); // TODO - change back to 0
+    controller.study.measures.forEach((measure) => _samplingTable[measure.type.name] = 0);
 
     // listen to incoming events in order to count the measure types
     controller.events.listen((datum) => _samplingTable[datum.format.name]++);

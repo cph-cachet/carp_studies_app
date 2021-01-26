@@ -13,9 +13,12 @@ class _MeasuresCardWidgetState extends State<MeasuresCardWidget> {
         model._samplingTable.entries.map((entry) => Measures(entry.key, entry.value)).toList();
     return [
       charts.Series<Measures, String>(
-        //colorFn: (d, i) => charts.MaterialPalette.blue.makeShades(model.samplingSize)[i],
+        colorFn: (_, index) {
+          return charts.MaterialPalette.blue.makeShades(7)[index];
+        },
+        //colorFn: (d, i) => charts.ColorUtil.fromDartColor(Colors.blue),
         id: 'DailyStepsList',
-        data: _measures,
+        data: _measures.sublist(0, 6),
         domainFn: (Measures datum, _) => datum.measure,
         measureFn: (Measures datum, _) => datum.size,
       )
@@ -38,27 +41,62 @@ class _MeasuresCardWidgetState extends State<MeasuresCardWidget> {
                 builder: (context, AsyncSnapshot<Datum> snapshot) {
                   return Column(
                     children: [
-                      CardHeader(
-                          title: 'Measures',
-                          iconAssetName: Icon(Icons.emoji_objects, color: Theme.of(context).primaryColor),
-                          heroTag: 'measures-card',
-                          value: '${widget.model.samplingSize} measures'),
                       Container(
-                        height: 160,
-                        child: charts.PieChart(
-                          _createChartList(context, widget.model),
-                          animate: true,
-                          behaviors: [
-                            charts.DatumLegend(
-                              position: charts.BehaviorPosition.end,
-                              desiredMaxRows: 8,
-                              entryTextStyle: charts.TextStyleSpec(fontSize: 10),
-                              cellPadding: new EdgeInsets.only(right: 3.0, bottom: 2.0),
+                        padding: EdgeInsets.only(left: 10),
+                        child: Row(
+                          children: <Widget>[
+                            Expanded(
+                              flex: 5,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Text('Hello Name',
+                                      style: aboutCardTitleStyle.copyWith(
+                                          color: Theme.of(context).primaryColor)),
+                                  Text(
+                                      'Thank you for participating in this study. This a summary of your contribution to the study.',
+                                      style: aboutCardSubtitleStyle.copyWith(
+                                          color: Theme.of(context).primaryColor)),
+                                ],
+                              ),
                             ),
                           ],
-                          defaultRenderer: charts.ArcRendererConfig(
-                            arcWidth: 20,
-                          ),
+                        ),
+                      ),
+                      Container(
+                        height: 160,
+                        child: Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            charts.PieChart(
+                              _createChartList(context, widget.model),
+                              animate: true,
+                              behaviors: [
+                                charts.DatumLegend(
+                                  position: charts.BehaviorPosition.end,
+                                  desiredMaxRows: 7,
+                                  //entryTextStyle: charts.TextStyleSpec(fontSize: 10),
+                                  cellPadding: EdgeInsets.only(right: 3.0, bottom: 2.0),
+                                  showMeasures: true,
+                                  legendDefaultMeasure: charts.LegendDefaultMeasure.firstValue,
+                                  measureFormatter: (num value) {
+                                    return value == null ? '-' : '$value';
+                                  },
+                                ),
+                              ],
+                              defaultRenderer: charts.ArcRendererConfig(
+                                arcWidth: 20,
+                              ),
+                            ),
+                            Positioned(
+                              left: 92,
+                              child: Text(
+                                '${widget.model.samplingSize} \nmeasures',
+                                textAlign: TextAlign.center,
+                                style: aboutCardSubtitleStyle.copyWith(color: Theme.of(context).primaryColor),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],

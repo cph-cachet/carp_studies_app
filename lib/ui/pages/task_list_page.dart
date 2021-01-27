@@ -11,7 +11,6 @@ class TaskList extends StatefulWidget {
 class _TaskListState extends State<TaskList> {
   @override
   Widget build(BuildContext context) {
-    final height = MediaQuery.of(context).size.height;
     return Navigator(
       onGenerateRoute: (RouteSettings settings) {
         return new MaterialPageRoute(
@@ -21,7 +20,6 @@ class _TaskListState extends State<TaskList> {
               body: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  SizedBox(height: height * .075),
                   CarpAppBar(),
                   Flexible(
                     child: StreamBuilder<UserTask>(

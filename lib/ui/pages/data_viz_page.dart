@@ -5,8 +5,6 @@ class DataVisualization extends StatelessWidget {
   DataVisualization(this.model);
 
   Widget build(BuildContext context) {
-    final height = MediaQuery.of(context).size.height;
-
     return Navigator(
       onGenerateRoute: (RouteSettings settings) {
         return new MaterialPageRoute(
@@ -18,7 +16,6 @@ class DataVisualization extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    SizedBox(height: height * .075),
                     CarpAppBar(),
                     Expanded(
                       child: SingleChildScrollView(

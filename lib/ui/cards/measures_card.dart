@@ -14,11 +14,11 @@ class _MeasuresCardWidgetState extends State<MeasuresCardWidget> {
     return [
       charts.Series<Measures, String>(
         colorFn: (_, index) {
-          return charts.MaterialPalette.blue.makeShades(7)[index];
+          return charts.MaterialPalette.blue.makeShades(model._samplingTable.length)[index];
         },
         //colorFn: (d, i) => charts.ColorUtil.fromDartColor(Colors.blue),
         id: 'DailyStepsList',
-        data: _measures.sublist(0, 6),
+        data: _measures.sublist(0, 6), //TODO: remove sublist
         domainFn: (Measures datum, _) => datum.measure,
         measureFn: (Measures datum, _) => datum.size,
       )
@@ -50,13 +50,14 @@ class _MeasuresCardWidgetState extends State<MeasuresCardWidget> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
-                                  Text('Hello Name',
-                                      style: aboutCardTitleStyle.copyWith(
-                                          color: Theme.of(context).primaryColor)),
+                                  Text('Hello Jakob', style: aboutCardTitleStyle), //TODO: get user name
                                   Text(
                                       'Thank you for participating in this study. This a summary of your contribution to the study.',
-                                      style: aboutCardSubtitleStyle.copyWith(
-                                          color: Theme.of(context).primaryColor)),
+                                      style: aboutCardSubtitleStyle),
+                                  SizedBox(height: 10),
+                                  Text('${widget.model.samplingSize} MEASURES',
+                                      //textAlign: TextAlign.center,
+                                      style: dataCardTitleStyle),
                                 ],
                               ),
                             ),
@@ -88,14 +89,14 @@ class _MeasuresCardWidgetState extends State<MeasuresCardWidget> {
                                 arcWidth: 20,
                               ),
                             ),
-                            Positioned(
+                            /* Positioned(
                               left: 92,
                               child: Text(
                                 '${widget.model.samplingSize} \nmeasures',
                                 textAlign: TextAlign.center,
-                                style: aboutCardSubtitleStyle.copyWith(color: Theme.of(context).primaryColor),
+                                style: measuresStyle.copyWith(color: Theme.of(context).primaryColor),
                               ),
-                            ),
+                            ), */
                           ],
                         ),
                       ),

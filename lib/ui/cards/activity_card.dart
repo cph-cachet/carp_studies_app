@@ -65,8 +65,17 @@ class _ActivityCardWidgetState extends State<ActivityCardWidget> {
   num _cycle = 0;
 
   @override
+  void initState() {
+    // Get current day activities
+    _walk = widget.model._activities[ActivityType.WALKING][DateTime.now().weekday];
+    _run = widget.model._activities[ActivityType.RUNNING][DateTime.now().weekday];
+    _cycle = widget.model._activities[ActivityType.ON_BICYCLE][DateTime.now().weekday];
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    print(widget.model.toString());
+    //print(widget.model.toString());
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Card(
@@ -89,12 +98,7 @@ class _ActivityCardWidgetState extends State<ActivityCardWidget> {
                   _createChartList(context, widget.model),
                   barGroupingType: charts.BarGroupingType.stacked,
                   animate: true,
-                  /* defaultRenderer: charts.BarRendererConfig<String>(
-                    cornerStrategy: const charts.ConstCornerStrategy(2),
-                  ), */
-                  domainAxis: charts.OrdinalAxisSpec(
-                    renderSpec: renderSpecString,
-                  ),
+                  domainAxis: charts.OrdinalAxisSpec(renderSpec: renderSpecString),
                   primaryMeasureAxis: charts.NumericAxisSpec(renderSpec: renderSpecNum),
                   userManagedState: _myState,
                   defaultInteractions: true,

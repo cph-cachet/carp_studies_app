@@ -25,23 +25,18 @@ class CardHeader extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(title.toUpperCase(),
-                    style: aboutCardSubtitleStyle.copyWith(color: Theme.of(context).primaryColor)),
+                Text(title.toUpperCase(), style: dataCardTitleStyle),
+                SizedBox(height: 10),
                 Row(
                   children: values
                       .asMap()
                       .entries
                       .map(
                         (entry) => Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             Icon(Icons.circle, color: colors[entry.key], size: 12.0),
-                            Text(
-                              ' ' + entry.value + ' ',
-                              style: aboutCardSubtitleStyle.copyWith(
-                                  color: Theme.of(context).primaryColor,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w400),
-                            ),
+                            Text(' ' + entry.value + ' ', style: legendStyle),
                           ],
                         ),
                       )

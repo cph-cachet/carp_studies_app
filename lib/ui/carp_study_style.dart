@@ -4,14 +4,14 @@ import 'package:charts_flutter/flutter.dart' as charts;
 ThemeData carpStudyTheme = ThemeData.light().copyWith(
   primaryColor: Color.fromRGBO(32, 111, 162, 1),
   accentColor: Color(0xFFF1F9FF),
-  textTheme: ThemeData.light().textTheme.apply(fontFamily: 'MuseoSans', bodyColor: Colors.grey[800]),
+  textTheme: ThemeData.light().textTheme.apply(fontFamily: 'MuseoSans', bodyColor: Colors.grey[900]),
 );
 
 ThemeData carpStudyDarkTheme = ThemeData.dark().copyWith(
   primaryColor: Color(0xff81C7F3),
   accentColor: Color(0xff4C4C4C),
   disabledColor: Color(0xffcce8fa),
-  textTheme: ThemeData.dark().textTheme.apply(fontFamily: 'MuseoSans', bodyColor: Color(0xff81C7F3)),
+  textTheme: ThemeData.dark().textTheme.apply(fontFamily: 'MuseoSans', bodyColor: Colors.grey.shade50),
 );
 
 ButtonTheme roundedFilledButtonTheme = ButtonTheme(
@@ -72,15 +72,15 @@ TextStyle scoreNumberStyle =
 
 TextStyle scoreTextStyle = TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: Color(0xff77A8C8));
 
-TextStyle aboutCardTitleStyle = TextStyle(fontSize: 18, fontWeight: FontWeight.w700);
+TextStyle aboutCardTitleStyle = TextStyle(fontSize: 20, fontWeight: FontWeight.w700);
 
-TextStyle aboutCardInfoStyle = TextStyle(fontSize: 12, fontStyle: FontStyle.italic);
+TextStyle aboutCardInfoStyle = TextStyle(fontSize: 14, fontStyle: FontStyle.italic);
 
-TextStyle aboutCardSubtitleStyle = TextStyle(fontSize: 14, fontWeight: FontWeight.w300);
+TextStyle aboutCardSubtitleStyle = TextStyle(fontSize: 16, fontWeight: FontWeight.w300);
 
-TextStyle aboutCardContentStyle = TextStyle(fontSize: 12, fontWeight: FontWeight.w300);
+TextStyle aboutCardContentStyle = TextStyle(fontSize: 14, fontWeight: FontWeight.w300);
 
-TextStyle sectionTitleStyle = TextStyle(fontSize: 16, fontWeight: FontWeight.w700);
+TextStyle sectionTitleStyle = TextStyle(fontSize: 18, fontWeight: FontWeight.w700);
 
 TextStyle inputFieldStyle = TextStyle(fontSize: 15, color: Color(0xff707070));
 
@@ -88,3 +88,6 @@ TextStyle welcomeMessageStyle =
     TextStyle(fontSize: 24, color: Color(0xff707070), fontWeight: FontWeight.bold);
 
 TextStyle studyDescriptionStyle = TextStyle(fontSize: 12, fontWeight: FontWeight.w300);
+TextStyle dataCardTitleStyle = TextStyle(fontSize: 16, fontWeight: FontWeight.w400, letterSpacing: 1);
+TextStyle measuresStyle = TextStyle(fontSize: 18, fontWeight: FontWeight.w400);
+TextStyle legendStyle = TextStyle(fontSize: 12, fontWeight: FontWeight.w400);

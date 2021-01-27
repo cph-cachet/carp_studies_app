@@ -14,6 +14,7 @@ class _MobilityCardWidgetState extends State<MobilityCardWidget> {
     Color.fromRGBO(239, 68, 87, 1),
   ];
 
+  // TODO: refactor
   List<charts.Series<Mobility, String>> _createChartList(BuildContext context, MobilityCardDataModel model) {
     List<Mobility> _distance =
         model._weeklyDistanceTraveled.entries.map((entry) => Mobility(entry.key, 0, 0, entry.value)).toList();
@@ -56,6 +57,16 @@ class _MobilityCardWidgetState extends State<MobilityCardWidget> {
     'weeklyHomeStay': [0, 0, 0],
     'weeklyPlaces': [0, 0, 0],
   };
+
+  @override
+  void initState() {
+    // Get current day mobility // TODO: REFACTOR
+    _measures['weeklyHomeStay'][1] = widget.model._weeklyHomeStay[DateTime.now().weekday];
+    _measures['weeklyDistanceTraveled'][0] = widget.model._weeklyDistanceTraveled[DateTime.now().weekday];
+    _measures['weeklyPlaces'][2] = widget.model._weeklyPlaces[DateTime.now().weekday];
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -114,6 +125,7 @@ class _MobilityCardWidgetState extends State<MobilityCardWidget> {
     );
   }
 
+  // TODO: refactor
   void _infoSelectionModelChanged(charts.SelectionModel model) {
     final selectedDatum = model.selectedDatum;
 

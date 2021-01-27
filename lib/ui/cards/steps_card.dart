@@ -23,16 +23,22 @@ class _StepsCardWidgetState extends State<StepsCardWidget> {
     ];
   }
 
+  // Render settings of the axis
   charts.RenderSpec<num> renderSpecNum = AxisTheme.axisThemeNum();
-  charts.RenderSpec<DateTime> renderSpecTime = AxisTheme.axisThemeDateTime();
   charts.RenderSpec<String> renderSpecString = AxisTheme.axisThemeOrdinal();
 
   final _myState = new charts.UserManagedState<String>();
   int _selectedSteps = 0;
 
   @override
+  void initState() {
+    // Get current day steps
+    _selectedSteps = widget.model._weeklySteps[DateTime.now().weekday];
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    print(widget.model.toString());
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Card(
@@ -66,24 +72,20 @@ class _StepsCardWidgetState extends State<StepsCardWidget> {
                             renderSpec: renderSpecString,
                           ),
                           primaryMeasureAxis: charts.NumericAxisSpec(renderSpec: renderSpecNum),
-                          userManagedState: _myState,
-                          defaultInteractions: true,
+                          //userManagedState: _myState,
+                          defaultInteractions: false,
                           selectionModels: [
                             charts.SelectionModelConfig(
                                 type: charts.SelectionModelType.info,
-                                updatedListener: (charts.SelectionModel model) {
+                                /* updatedListener: (charts.SelectionModel model) {
                                   _myState.selectionModels[charts.SelectionModelType.info] =
                                       charts.UserManagedSelectionModel(model: model);
-                                },
-                                changedListener: (charts.SelectionModel model) {
-                                  if (model.hasDatumSelection)
-                                    setState(() {
-                                      _selectedSteps =
-                                          model.selectedSeries[0].measureFn(model.selectedDatum[0].index);
-                                    });
-                                  else
-                                    _selectedSteps = widget.model._lastStep.stepCount;
-                                })
+                                }, */
+                                changedListener: _infoSelectionModelChanged)
+                          ],
+                          behaviors: [
+                            charts.SelectNearest(),
+                            charts.DomainHighlighter(charts.SelectionModelType.action)
                           ],
                         ),
                       ),
@@ -98,7 +100,14 @@ class _StepsCardWidgetState extends State<StepsCardWidget> {
     );
   }
 
-  void _infoSelectionModelUpdated(charts.SelectionModel model) {
-    _myState.selectionModels[charts.SelectionModelType.info] = charts.UserManagedSelectionModel(model: model);
+  void _infoSelectionModelChanged(charts.SelectionModel model) {
+    if (model.hasDatumSelection)
+      setState(() {
+        _selectedSteps = model.selectedSeries[0].measureFn(model.selectedDatum[0].index);
+      });
+    else
+      setState(() {
+        _selectedSteps = widget.model._lastStep.stepCount;
+      });
   }
 }

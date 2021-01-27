@@ -11,6 +11,12 @@ class _Surveys {
 
   Survey _symptoms = _SymptomsSurvey();
   Survey get symptoms => _symptoms;
+
+  Survey _parnas = _PARNASSurvey();
+  Survey get parnas => _parnas;
+
+  Survey _exposure = _ExposureSurvey();
+  Survey get exposure => _exposure;
 }
 
 abstract class Survey {
@@ -28,6 +34,171 @@ abstract class Survey {
 
   /// The survey to fill out.
   RPTask get survey;
+}
+
+class _ExposureSurvey implements Survey {
+  String get title => 'Tvangstanker & -handlinger';
+
+  String get description =>
+      'Skriv tvangstanken og/eller tvangshandlingen som du arbejder på';
+
+  Duration get expire => const Duration(days: 2);
+
+  int get minutesToComplete => 10;
+
+  RPImageChoiceAnswerFormat _imageChoiceAnswerFormat =
+      RPImageChoiceAnswerFormat.withParams([
+    RPImageChoice.withParams(
+        Image.asset('assets/icons/very-sad.png'), 0, 'Uudholdelig'),
+    RPImageChoice.withParams(
+        Image.asset('assets/icons/sad.png'), 0, 'Meget stor ubehag'),
+    RPImageChoice.withParams(
+        Image.asset('assets/icons/ok.png'), 0, 'Ret stor ubehag'),
+    RPImageChoice.withParams(
+        Image.asset('assets/icons/happy.png'), 0, 'En vis ubehag'),
+    RPImageChoice.withParams(
+        Image.asset('assets/icons/very-happy.png'), 0, 'Rolig'),
+  ]);
+
+  RPTask get survey => RPOrderedTask("demo_survey", [
+        RPInstructionStep(title: "Tvangstanker og -handlinger")
+          ..text = "I denne øvelse skal du først notere en tvangstanke eller -handling som du arbejder på. "
+              "Derefter skal du beskrive hvordan du vil arbejde på tvangstanken og/eller tvangshandlingen.\n\n"
+              "Når du så starter med at arbejde med øvelsen, så skal du notere hvor meget "
+              "ubehag eller angst du oplever undervejs.\n\n"
+              "Dine forældre eller terapeut kan hjælp dig med at hold styr på tiden og med at skrive ned.",
+        RPQuestionStep.withAnswerFormat(
+            "thought",
+            "Skriv tvangstanken og/eller tvangshandlingen som du arbejder på",
+            RPIntegerAnswerFormat.withParams(0, 200)),
+        RPQuestionStep.withAnswerFormat(
+            "exercise",
+            "Beskriv eksponeringsøvelsen, dvs. hvordan du vil arbejde på tvangstanken og/eller tvangshandlingen",
+            RPIntegerAnswerFormat.withParams(0, 200)),
+        RPInstructionStep(title: "Tvangstanker og -handlinger")
+          ..text = "Nu skal du begynde at arbejde med øvelsen. "
+              "Mens du gør det, så skal du skrive hvor meget "
+              "ubehag eller angst du oplever lige nu og efter 5, 10, og 15 minutter.\n\n"
+              "Dine forældre eller terapeut kan hjælp dig med at hold styr på tiden og med at skrive ned.",
+        RPQuestionStep.withAnswerFormat(
+          "exposure_1",
+          "Hvor megen ubehag eller angst oplever du lige nu?",
+          _imageChoiceAnswerFormat,
+        ),
+        RPQuestionStep.withAnswerFormat(
+          "exposure_2",
+          "Hvor megen ubehag eller angst oplever du efter 5 minutter?",
+          _imageChoiceAnswerFormat,
+        ),
+        RPQuestionStep.withAnswerFormat(
+          "exposure_3",
+          "Hvor megen ubehag eller angst oplever du efter 10 minutter?",
+          _imageChoiceAnswerFormat,
+        ),
+        RPQuestionStep.withAnswerFormat(
+          "exposure_4",
+          "Hvor megen ubehag eller angst oplever du efter 15 minutter?",
+          _imageChoiceAnswerFormat,
+        ),
+        RPCompletionStep("completion")
+          ..title = "Færdig!"
+          ..text = "Tak for dine notater. Vi håber øvelsen hjalp dig...",
+      ]);
+}
+
+class _PARNASSurvey implements Survey {
+  String get title => 'Positive & Negative Affect';
+
+  String get description => 'A short survey on you current fealings';
+
+  Duration get expire => const Duration(days: 2);
+
+  int get minutesToComplete => 4;
+
+  final RPChoiceAnswerFormat _locationChoices =
+      RPChoiceAnswerFormat.withParams(ChoiceAnswerStyle.MultipleChoice, [
+    RPChoice.withParams("Alone", 1),
+    RPChoice.withParams(
+        "With my other children who are not part of the study", 2),
+    RPChoice.withParams("With my child who is part of the study", 3),
+    RPChoice.withParams("With the child's other parent", 3),
+    RPChoice.withParams("With my friends", 4),
+    RPChoice.withParams("With others", 5),
+  ]);
+
+  final RPChoiceAnswerFormat _parnasAnswerFormat =
+      RPChoiceAnswerFormat.withParams(ChoiceAnswerStyle.SingleChoice, [
+    RPChoice.withParams("Much", 5),
+    RPChoice.withParams("Pretty much", 4),
+    RPChoice.withParams("Moderate", 3),
+    RPChoice.withParams("A little", 2),
+    RPChoice.withParams("Not at all", 1),
+  ]);
+
+  RPTask get survey => RPOrderedTask("demo_survey", [
+        RPInstructionStep(title: "Where are you?")
+          ..text =
+              "In the following question, please indicate where you are, and who you are with.",
+        RPQuestionStep.withAnswerFormat(
+          "location",
+          "Right now I am...",
+          _locationChoices,
+        ),
+        RPInstructionStep(
+            title: "International Positive and Negative Affect Schedule")
+          ..text = "In the following questions, please indicate how "
+              "much each of the stated emotions is affecting you at the moment.",
+        RPQuestionStep.withAnswerFormat(
+          "parnas_1",
+          "Upset",
+          _parnasAnswerFormat,
+        ),
+        RPQuestionStep.withAnswerFormat(
+          "parnas_2",
+          "Hostile",
+          _parnasAnswerFormat,
+        ),
+        RPQuestionStep.withAnswerFormat(
+          "parnas_3",
+          "Alert",
+          _parnasAnswerFormat,
+        ),
+        RPQuestionStep.withAnswerFormat(
+          "parnas_4",
+          "Ashamed",
+          _parnasAnswerFormat,
+        ),
+        RPQuestionStep.withAnswerFormat(
+          "parnas_5",
+          "Inspired",
+          _parnasAnswerFormat,
+        ),
+        RPQuestionStep.withAnswerFormat(
+          "parnas_6",
+          "Nervous",
+          _parnasAnswerFormat,
+        ),
+        RPQuestionStep.withAnswerFormat(
+          "parnas_7",
+          "Determined",
+          _parnasAnswerFormat,
+        ),
+        RPQuestionStep.withAnswerFormat(
+          "parnas_8",
+          "Attentive",
+          _parnasAnswerFormat,
+        ),
+        RPQuestionStep.withAnswerFormat(
+          "parnas_9",
+          "Afraid",
+          _parnasAnswerFormat,
+        ),
+        RPQuestionStep.withAnswerFormat(
+          "parnas_10",
+          "Active",
+          _parnasAnswerFormat,
+        ),
+      ]);
 }
 
 class _WHO5Survey implements Survey {
@@ -52,9 +223,9 @@ class _WHO5Survey implements Survey {
         RPInstructionStep(title: "WHO Well-Being Index")
           ..text =
               "Please indicate for each of the following five statements which is closest to how you have been feeling over the last two weeks. "
-              "Notice that higher numbers mean better well-being.\n\n"
-              "Example: If you have felt cheerful and in good spirits more than half of the time during the last two weeks, "
-              "select the box with the label 'More than half of the time'.",
+                  "Notice that higher numbers mean better well-being.\n\n"
+                  "Example: If you have felt cheerful and in good spirits more than half of the time during the last two weeks, "
+                  "select the box with the label 'More than half of the time'.",
         RPQuestionStep.withAnswerFormat(
           "who5_1",
           "I have felt cheerful and in good spirits",

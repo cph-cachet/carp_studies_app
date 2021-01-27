@@ -2,9 +2,9 @@ import 'package:research_package/model.dart';
 
 RPConsentSection overviewSection = RPConsentSection.withParams(
     RPConsentSectionType.Custom)
-  ..title = "DiaFocus"
+  ..title = "Wrist Angel"
   ..summary =
-      "To understand how the DiaFocus system can be used to collect diabetes-related information, we will ask you to use it for up to two months and complete simple surveys. We will investigate the usefulness of the system and the data collected."
+      "To understand how the Wrist Angel system can be used to collect diabetes-related information, we will ask you to use it for up to two months and complete simple surveys. We will investigate the usefulness of the system and the data collected."
   ..content =
       "You are being asked to take part in a research test. Before you decide to participate in this test, it is important that you understand why the research is being done and what it will involve. Please read the following information carefully. Please ask if there is anything that is not clear or if you need more information.\n\nThe purpose of this test is to investigate the technical and clinical feasibility of the DiaFocus system for diabetes monitoring. This means that we want to understand the usefulness and usability of using wearable and mobile technology for collection of diabetes-related data.\n\nYou will be asked to use the DiaFocus smartphone app for up to two months. During this period, the system will collect different kinds of data related to your glucose levels, your movement, mood and emotions, sleep, and ask you to enter details on events you might experience. You will also be asked to fill in different questionnaires.\n\n\nThe title of the test is: \"Feasibility Test of the DiaFocus System\"\n\nThe Principle Investigator (PI) is:\n\n•Jakob E. Bardram, professor, MSc., PhD\n\n•Department of Health Technology\n\n•Technical University of Denmark\n\n•Richard Pedersens Plads, DK-2800 Lyngby\n\n•email:\tjakba@dtu.dk\n\n\nYou can contact the project manager if you have any questions.";
 
@@ -29,8 +29,8 @@ RPConsentSection privacySection = RPConsentSection.withParams(
   ..content =
       "The Technical University of Denmark (DTU) is the data responsible of this test. Data is collected and stored on secure servers operated by DTU.\n\nThe Data Protection Officer (DPO) at DTU is:\n\n•name:\tAne Sandager\n\n•email:\tanesa@dtu.dk\n\n•telephone:\t+45 9351 1439\n\nYou can contact the DPO for any questions you may have regarding the data processing of this test.\nYou can get a digital copy of the data being collected by you in this test by contacting the principle investigator.";
 
-RPConsentSection studyTaskAndTimeCommitmentSection = RPConsentSection.withParams(
-    RPConsentSectionType.Custom)
+RPConsentSection studyTaskAndTimeCommitmentSection = RPConsentSection
+    .withParams(RPConsentSectionType.Custom)
   ..title = "Test Tasks and Time Commitment"
   ..summary =
       "To get a good picture of your diabetes health we will ask you to use the DiaFocus system on a daily basis for two months"

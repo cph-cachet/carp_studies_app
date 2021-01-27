@@ -16,11 +16,10 @@ class InformedConsentPage extends StatelessWidget {
     );
 
     void resultCallback(RPTaskResult result) async {
-      SharedPreferences sp = await SharedPreferences.getInstance();
+      Navigator.of(context).pushReplacementNamed('/HomePage');
 
       // Upload consent document
       try {
-        Navigator.of(context).pushReplacementNamed('/HomePage');
         // TODO: uploadInformedConsent
         /* ConsentDocument consentDocument = await CARPBackend().uploadInformedConsent(result);
         if (consentDocument != null) {
@@ -32,7 +31,9 @@ class InformedConsentPage extends StatelessWidget {
           _scaffoldKey.currentState.showSnackBar(snackBar);
           // TODO: Handle errors in uploading consent document
         } */
+        bloc.informedConsentAccepted = true;
       } catch (e) {
+        bloc.informedConsentAccepted = false;
         _scaffoldKey.currentState.showSnackBar(snackBar);
       }
 

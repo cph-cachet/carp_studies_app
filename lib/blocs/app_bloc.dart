@@ -1,6 +1,8 @@
 part of carp_study_app;
 
 class AppBLoC {
+  static final SHOW_INFORMED_CONSENT_KEY = 'show_informed_consent';
+
   CarpStydyAppDataModel _data = CarpStydyAppDataModel();
   Study _study;
   StudyController controller;
@@ -40,6 +42,9 @@ class AppBLoC {
     data.init(controller);
     await controller.initialize();
 
+    // wait 10 sec and the start sampling
+    Timer(Duration(seconds: 10), () => controller.resume());
+
     // This show how an app can listen to user task events.
     // Is not used right now.
     AppTaskController().userTaskEvents.listen((event) {
@@ -71,6 +76,22 @@ class AppBLoC {
     _messages.add(LocalMessages.message1);
     _messages.add(LocalMessages.message2);
   }
+
+  /// Has the informed consent been shown to, and accepted by the user?
+  bool get hasInformedConsentBeenAccepted {
+    // bool show =
+    //     settings.preferences.getBool(SHOW_INFORMED_CONSENT_KEY) ?? false;
+    // print('>> show: $show');
+    return true;
+  }
+
+  /// Has the informed consent been handled?
+  /// This entails that it has been:
+  ///  * shown to the user
+  ///  * accepted by the user
+  ///  * successfully uploaded to CARP
+  set informedConsentAccepted(bool shown) =>
+      settings.preferences.setBool(SHOW_INFORMED_CONSENT_KEY, shown);
 
   String get studyId => "2";
 

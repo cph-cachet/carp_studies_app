@@ -88,7 +88,7 @@ class LocalStudyManager implements StudyManager {
                       .measures[ContextSamplingPackage.LOCATION]))
             // collect symptoms on a daily basis
             ..addTriggerTask(
-                PeriodicTrigger(period: Duration(minutes: 1)),
+                PeriodicTrigger(period: Duration(minutes: 5)),
                 AppTask(
                   type: SurveyUserTask.SURVEY_TYPE,
                   title: surveys.parnas.title,
@@ -108,7 +108,7 @@ class LocalStudyManager implements StudyManager {
                   ..measures.add(SamplingSchema.common()
                       .measures[ContextSamplingPackage.WEATHER]))
             ..addTriggerTask(
-                PeriodicTrigger(period: Duration(minutes: 1)),
+                PeriodicTrigger(period: Duration(minutes: 5)),
                 AppTask(
                   type: SurveyUserTask.SURVEY_TYPE,
                   title: surveys.exposure.title,

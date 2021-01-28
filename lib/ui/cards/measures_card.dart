@@ -13,9 +13,7 @@ class _MeasuresCardWidgetState extends State<MeasuresCardWidget> {
         model._samplingTable.entries.map((entry) => Measures(entry.key, entry.value)).toList();
     return [
       charts.Series<Measures, String>(
-        colorFn: (_, index) {
-          return charts.MaterialPalette.blue.makeShades(model._samplingTable.length)[index];
-        },
+        colorFn: (_, index) => charts.MaterialPalette.blue.makeShades(model._samplingTable.length)[index + 1],
         //colorFn: (d, i) => charts.ColorUtil.fromDartColor(Colors.blue),
         id: 'DailyStepsList',
         data: _measures.sublist(0, 6), //TODO: remove sublist

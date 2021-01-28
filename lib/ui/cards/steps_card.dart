@@ -2,15 +2,16 @@ part of carp_study_app;
 
 class StepsCardWidget extends StatefulWidget {
   final StepsCardDataModel model;
-  StepsCardWidget(this.model);
+  final List<Color> colors;
+  final List<charts.Series<Steps, String>> seriesList;
 
-  _StepsCardWidgetState createState() => _StepsCardWidgetState();
-}
+  StepsCardWidget(this.seriesList, this.model, {this.colors = const [CACHET.BLUE_1]});
 
-class _StepsCardWidgetState extends State<StepsCardWidget> {
-  final List<Color> colors = [Color.fromRGBO(12, 70, 128, 1)];
+  factory StepsCardWidget.withSampleData(StepsCardDataModel model) {
+    return StepsCardWidget(_createChartList(model, [CACHET.BLUE_1]), model);
+  }
 
-  List<charts.Series<Steps, String>> _createChartList(BuildContext context, StepsCardDataModel model) {
+  static List<charts.Series<Steps, String>> _createChartList(StepsCardDataModel model, List<Color> colors) {
     List<Steps> _steps = model._weeklySteps.entries.map((entry) => Steps(entry.key, entry.value)).toList();
     return [
       charts.Series<Steps, String>(
@@ -23,11 +24,15 @@ class _StepsCardWidgetState extends State<StepsCardWidget> {
     ];
   }
 
-  // Render settings of the axis
+  @override
+  _StepsCardWidgetState createState() => _StepsCardWidgetState();
+}
+
+class _StepsCardWidgetState extends State<StepsCardWidget> {
+  // Axis render settings
   charts.RenderSpec<num> renderSpecNum = AxisTheme.axisThemeNum();
   charts.RenderSpec<String> renderSpecString = AxisTheme.axisThemeOrdinal();
 
-  final _myState = new charts.UserManagedState<String>();
   int _selectedSteps = 0;
 
   @override
@@ -58,12 +63,12 @@ class _StepsCardWidgetState extends State<StepsCardWidget> {
                         iconAssetName: Icon(Icons.directions_walk, color: Theme.of(context).primaryColor),
                         heroTag: 'steps-card',
                         values: ['$_selectedSteps steps'],
-                        colors: colors,
+                        colors: widget.colors,
                       ),
                       Container(
                         height: 160,
                         child: charts.BarChart(
-                          _createChartList(context, widget.model),
+                          widget.seriesList,
                           animate: true,
                           defaultRenderer: charts.BarRendererConfig<String>(
                             cornerStrategy: const charts.ConstCornerStrategy(2),
@@ -72,20 +77,15 @@ class _StepsCardWidgetState extends State<StepsCardWidget> {
                             renderSpec: renderSpecString,
                           ),
                           primaryMeasureAxis: charts.NumericAxisSpec(renderSpec: renderSpecNum),
-                          //userManagedState: _myState,
                           defaultInteractions: false,
                           selectionModels: [
                             charts.SelectionModelConfig(
                                 type: charts.SelectionModelType.info,
-                                /* updatedListener: (charts.SelectionModel model) {
-                                  _myState.selectionModels[charts.SelectionModelType.info] =
-                                      charts.UserManagedSelectionModel(model: model);
-                                }, */
                                 changedListener: _infoSelectionModelChanged)
                           ],
                           behaviors: [
-                            charts.SelectNearest(),
-                            charts.DomainHighlighter(charts.SelectionModelType.action)
+                            charts.SelectNearest(eventTrigger: charts.SelectionTrigger.tapAndDrag),
+                            charts.DomainHighlighter(),
                           ],
                         ),
                       ),
@@ -105,9 +105,20 @@ class _StepsCardWidgetState extends State<StepsCardWidget> {
       setState(() {
         _selectedSteps = model.selectedSeries[0].measureFn(model.selectedDatum[0].index);
       });
-    else
-      setState(() {
-        _selectedSteps = widget.model._lastStep.stepCount;
-      });
+  }
+}
+
+class StepsOuterStatefulWidget extends StatefulWidget {
+  final StepsCardDataModel model;
+  StepsOuterStatefulWidget(this.model);
+
+  @override
+  _StepsOuterStatefulWidgetState createState() => _StepsOuterStatefulWidgetState();
+}
+
+class _StepsOuterStatefulWidgetState extends State<StepsOuterStatefulWidget> {
+  @override
+  Widget build(BuildContext context) {
+    return StepsCardWidget.withSampleData(widget.model);
   }
 }

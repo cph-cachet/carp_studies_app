@@ -2,18 +2,17 @@ part of carp_study_app;
 
 class ActivityCardWidget extends StatefulWidget {
   final ActivityCardDataModel model;
-  ActivityCardWidget(this.model);
-  _ActivityCardWidgetState createState() => _ActivityCardWidgetState();
-}
+  final List<charts.Series<Activity, String>> seriesList;
+  final List<Color> colors;
+  ActivityCardWidget(this.seriesList, this.model,
+      {this.colors = const [CACHET.BLUE_1, CACHET.BLUE_2, CACHET.BLUE_3]});
 
-class _ActivityCardWidgetState extends State<ActivityCardWidget> {
-  final List<Color> colors = [
-    Color.fromRGBO(12, 70, 128, 1),
-    Color.fromRGBO(33, 146, 201, 1),
-    Color.fromRGBO(130, 206, 233, 1)
-  ];
+  factory ActivityCardWidget.withSampleData(ActivityCardDataModel model) {
+    return ActivityCardWidget(_createChartList(model, [CACHET.BLUE_1, CACHET.BLUE_2, CACHET.BLUE_3]), model);
+  }
 
-  List<charts.Series<Activity, String>> _createChartList(BuildContext context, ActivityCardDataModel model) {
+  static List<charts.Series<Activity, String>> _createChartList(
+      ActivityCardDataModel model, List<Color> colors) {
     List<Activity> _running = [];
     List<Activity> _walking = [];
     List<Activity> _cycling = [];
@@ -29,6 +28,7 @@ class _ActivityCardWidgetState extends State<ActivityCardWidget> {
     _running = _running.map((entry) => Activity(entry.day, entry.minutes)).toList();
     _walking = _walking.map((entry) => Activity(entry.day, entry.minutes)).toList();
     _cycling = _cycling.map((entry) => Activity(entry.day, entry.minutes)).toList();
+
     return [
       charts.Series<Activity, String>(
         colorFn: (d, i) => charts.ColorUtil.fromDartColor(colors[0]),
@@ -54,11 +54,14 @@ class _ActivityCardWidgetState extends State<ActivityCardWidget> {
     ];
   }
 
+  @override
+  _ActivityCardWidgetState createState() => _ActivityCardWidgetState();
+}
+
+class _ActivityCardWidgetState extends State<ActivityCardWidget> {
   charts.RenderSpec<num> renderSpecNum = AxisTheme.axisThemeNum();
   charts.RenderSpec<DateTime> renderSpecTime = AxisTheme.axisThemeDateTime();
   charts.RenderSpec<String> renderSpecString = AxisTheme.axisThemeOrdinal();
-
-  final _myState = new charts.UserManagedState<String>();
 
   num _walk = 0;
   num _run = 0;
@@ -90,26 +93,30 @@ class _ActivityCardWidgetState extends State<ActivityCardWidget> {
                 iconAssetName: Icon(Icons.fitness_center, color: Theme.of(context).primaryColor),
                 heroTag: 'activity-card',
                 values: ['$_walk min walking', '$_run min running', '$_cycle min cycling'],
-                colors: colors,
+                colors: widget.colors,
               ),
               Container(
                 height: 160,
                 child: charts.BarChart(
-                  _createChartList(context, widget.model),
+                  widget.seriesList,
                   barGroupingType: charts.BarGroupingType.stacked,
                   animate: true,
                   domainAxis: charts.OrdinalAxisSpec(renderSpec: renderSpecString),
                   primaryMeasureAxis: charts.NumericAxisSpec(renderSpec: renderSpecNum),
-                  userManagedState: _myState,
+                  //userManagedState: _myState,
                   defaultInteractions: true,
                   selectionModels: [
                     charts.SelectionModelConfig(
                         type: charts.SelectionModelType.info,
-                        updatedListener: (charts.SelectionModel model) {
-                          _myState.selectionModels[charts.SelectionModelType.info] =
-                              charts.UserManagedSelectionModel(model: model);
-                        },
+                        /* updatedListener: (charts.SelectionModel model) {
+                                  _myState.selectionModels[charts.SelectionModelType.info] =
+                                      charts.UserManagedSelectionModel(model: model);
+                                }, */
                         changedListener: _infoSelectionModelChanged)
+                  ],
+                  behaviors: [
+                    charts.SelectNearest(eventTrigger: charts.SelectionTrigger.tapAndDrag),
+                    charts.DomainHighlighter(),
                   ],
                 ),
               ),
@@ -137,5 +144,20 @@ class _ActivityCardWidgetState extends State<ActivityCardWidget> {
         _run = v;
       else if (k == 'cycling') _cycle = v;
     });
+  }
+}
+
+class ActivityOuterStatefulWidget extends StatefulWidget {
+  final ActivityCardDataModel model;
+  ActivityOuterStatefulWidget(this.model);
+
+  @override
+  _ActivityOuterStatefulWidgetState createState() => _ActivityOuterStatefulWidgetState();
+}
+
+class _ActivityOuterStatefulWidgetState extends State<ActivityOuterStatefulWidget> {
+  @override
+  Widget build(BuildContext context) {
+    return ActivityCardWidget.withSampleData(widget.model);
   }
 }

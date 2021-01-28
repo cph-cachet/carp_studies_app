@@ -24,9 +24,9 @@ class DataVisualization extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             MeasuresCardWidget(model.measuresCardDataModel),
-                            StepsCardWidget(model.stepsCardDataModel),
-                            MobilityCardWidget(model.mobilityCardDataModel),
-                            ActivityCardWidget(model.activityCardDataModel),
+                            StepsOuterStatefulWidget(model.stepsCardDataModel),
+                            MobilityOuterStatefulWidget(model.mobilityCardDataModel),
+                            ActivityOuterStatefulWidget(model.activityCardDataModel),
                           ],
                         ),
                       ),

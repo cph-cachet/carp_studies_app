@@ -4,7 +4,8 @@ import 'package:charts_flutter/flutter.dart' as charts;
 ThemeData carpStudyTheme = ThemeData.light().copyWith(
   primaryColor: Color.fromRGBO(32, 111, 162, 1),
   accentColor: Color(0xFFF1F9FF),
-  textTheme: ThemeData.light().textTheme.apply(fontFamily: 'MuseoSans', bodyColor: Colors.grey[900]),
+  textTheme:
+      ThemeData.light().textTheme.apply(fontFamily: 'MuseoSans', bodyColor: Color.fromRGBO(112, 112, 112, 1)),
 );
 
 ThemeData carpStudyDarkTheme = ThemeData.dark().copyWith(
@@ -91,3 +92,7 @@ TextStyle studyDescriptionStyle = TextStyle(fontSize: 12, fontWeight: FontWeight
 TextStyle dataCardTitleStyle = TextStyle(fontSize: 16, fontWeight: FontWeight.w400, letterSpacing: 1);
 TextStyle measuresStyle = TextStyle(fontSize: 18, fontWeight: FontWeight.w400);
 TextStyle legendStyle = TextStyle(fontSize: 12, fontWeight: FontWeight.w400);
+
+TextStyle audioTitleStyle = TextStyle(fontSize: 22, fontWeight: FontWeight.w700);
+TextStyle audioContentStyle = TextStyle(fontSize: 16, fontWeight: FontWeight.w500);
+TextStyle audioDescriptionStyle = TextStyle(fontSize: 14, fontWeight: FontWeight.w400);

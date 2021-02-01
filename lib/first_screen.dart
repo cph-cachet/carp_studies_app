@@ -10,7 +10,7 @@ class CARPStudyApp extends StatelessWidget {
         '/HomePage': (context) => CARPStudyAppHome(),
         '/ConsentPage': (context) => InformedConsentPage(),
         '/ProfilePage': (context) => ProfilePage(),
-        '/AudioTaskPage': (context) => AudioRecordPage(), // TODO: remove
+        '/AudioTaskPage': (context) => AudioTaskPage(), // TODO: remove
       },
     );
   }

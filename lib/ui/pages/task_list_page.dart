@@ -124,7 +124,7 @@ class _TaskListState extends State<TaskList> {
           margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
           elevation: 3,
           child: ListTile(
-            leading: Icon(Icons.check_circle_outlined, color: Color(0xFF90D88F)),
+            leading: Icon(Icons.check_circle_outlined, color: CACHET.GREEN_1),
             title: Text(userTask.title,
                 style: aboutCardTitleStyle.copyWith(color: Theme.of(context).primaryColor)),
           ),

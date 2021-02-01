@@ -10,6 +10,7 @@ class CARPStudyApp extends StatelessWidget {
         '/HomePage': (context) => CARPStudyAppHome(),
         '/ConsentPage': (context) => InformedConsentPage(),
         '/ProfilePage': (context) => ProfilePage(),
+        '/AudioTaskPage': (context) => AudioRecordPage(), // TODO: remove
       },
     );
   }
@@ -28,7 +29,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
     if (firstTime != null && !firstTime) {
       // Not first time
-      return Navigator.of(context).pushReplacementNamed('/HomePage');
+      return Navigator.of(context).pushReplacementNamed('/AudioTaskPage'); // TODO: change back to homepage
     } else {
       // First time
       sp.setBool('first_time', false);

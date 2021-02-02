@@ -5,16 +5,139 @@ class LocalStudyManager implements StudyManager {
 
   Future<void> initialize() => null;
 
-  Future<Study> getStudy(String studyId) async => _study ??= await _getPulmonaryStudy(studyId);
+  Future<Study> getStudy(String studyId) async =>
+      _study ??= await _getWristWatchStudy(studyId);
+
+  Future<Study> _getWristWatchStudy(String studyId) async {
+    if (_study == null) {
+      _study = Study(id: studyId, userId: await settings.userId)
+            ..name = 'The WristWatch Study'
+            ..description =
+                "This study tries to understand children with OCD..."
+            ..dataEndPoint = getDataEndpoint(DataEndPointTypes.FILE)
+            // collect basic device measures continously
+            ..addTriggerTask(
+                ImmediateTrigger(),
+                AutomaticTask()
+                  ..measures = SamplingSchema.debug().getMeasureList(
+                    namespace: NameSpace.CARP,
+                    types: [
+                      SensorSamplingPackage.LIGHT,
+                      SensorSamplingPackage.PEDOMETER,
+                      // DeviceSamplingPackage.MEMORY,
+                      DeviceSamplingPackage.DEVICE,
+                      DeviceSamplingPackage.BATTERY,
+                      DeviceSamplingPackage.SCREEN,
+                    ],
+                  ))
+            // collect location, weather and air quality every 5 minutes
+            ..addTriggerTask(
+                PeriodicTrigger(period: Duration(minutes: 5)),
+                Task()
+                  ..measures = SamplingSchema.common().getMeasureList(
+                    namespace: NameSpace.CARP,
+                    types: [
+                      ContextSamplingPackage.LOCATION,
+                      ContextSamplingPackage.WEATHER,
+                      ContextSamplingPackage.AIR_QUALITY,
+                    ],
+                  ))
+            // collect location and activity measures continously (event-based)
+            ..addTriggerTask(
+                ImmediateTrigger(),
+                Task()
+                  ..measures = SamplingSchema.common().getMeasureList(
+                    namespace: NameSpace.CARP,
+                    types: [
+                      ContextSamplingPackage.GEOLOCATION,
+                      ContextSamplingPackage.ACTIVITY,
+                    ],
+                  ))
+            // collect local weather and air quality as an app task
+            ..addTriggerTask(
+                ImmediateTrigger(),
+                AppTask(
+                  type: SensingUserTask.ONE_TIME_SENSING_TYPE,
+                  title: "Weather & Air Quality",
+                  description: "Collect local weather and air quality",
+                )..measures = SamplingSchema.common().getMeasureList(
+                    namespace: NameSpace.CARP,
+                    types: [
+                      ContextSamplingPackage.WEATHER,
+                      ContextSamplingPackage.AIR_QUALITY,
+                    ],
+                  ))
+            // collect demographics once when the study starts
+            ..addTriggerTask(
+                ImmediateTrigger(),
+                AppTask(
+                  type: SurveyUserTask.DEMOGRAPHIC_SURVEY_TYPE,
+                  title: surveys.demographics.title,
+                  description: surveys.demographics.description,
+                  minutesToComplete: surveys.demographics.minutesToComplete,
+                  expire: surveys.demographics.expire,
+                )
+                  ..measures.add(RPTaskMeasure(
+                    type: MeasureType(
+                        NameSpace.CARP, SurveySamplingPackage.SURVEY),
+                    name: surveys.demographics.title,
+                    enabled: true,
+                    surveyTask: surveys.demographics.survey,
+                  ))
+                  ..measures.add(SamplingSchema.common()
+                      .measures[ContextSamplingPackage.LOCATION]))
+            // collect symptoms on a daily basis
+            ..addTriggerTask(
+                PeriodicTrigger(period: Duration(minutes: 5)),
+                AppTask(
+                  type: SurveyUserTask.SURVEY_TYPE,
+                  title: surveys.parnas.title,
+                  description: surveys.parnas.description,
+                  minutesToComplete: surveys.parnas.minutesToComplete,
+                  expire: surveys.parnas.expire,
+                )
+                  ..measures.add(RPTaskMeasure(
+                    type: MeasureType(
+                        NameSpace.CARP, SurveySamplingPackage.SURVEY),
+                    name: surveys.parnas.title,
+                    enabled: true,
+                    surveyTask: surveys.parnas.survey,
+                  ))
+                  ..measures.add(SamplingSchema.common()
+                      .measures[ContextSamplingPackage.LOCATION])
+                  ..measures.add(SamplingSchema.common()
+                      .measures[ContextSamplingPackage.WEATHER]))
+            ..addTriggerTask(
+                PeriodicTrigger(period: Duration(minutes: 5)),
+                AppTask(
+                  type: SurveyUserTask.SURVEY_TYPE,
+                  title: surveys.exposure.title,
+                  description: surveys.exposure.description,
+                  minutesToComplete: surveys.exposure.minutesToComplete,
+                  expire: surveys.exposure.expire,
+                )..measures.add(RPTaskMeasure(
+                    type: MeasureType(
+                        NameSpace.CARP, SurveySamplingPackage.SURVEY),
+                    name: surveys.exposure.title,
+                    enabled: true,
+                    surveyTask: surveys.exposure.survey,
+                  )))
+          //
+          ;
+    }
+
+    return _study;
+  }
 
   Future<Study> _getPulmonaryStudy(String studyId) async {
     if (_study == null) {
       _study = Study(id: studyId, userId: await settings.userId)
         ..name = 'Pulmonary Monitor'
-        ..description = "With the Pulmonary Monitor you can monitor your respiratory health. "
-            "By using the phones sensors, including the microphone, it will try to monitor you breathing, heart rate, sleep, social contact to others, and your movement. "
-            "You will also be able to fill in a simple daily survey to help us understand how you're doing. "
-            "Before you start, please also fill in the demographich survey. "
+        ..description =
+            "With the Pulmonary Monitor you can monitor your respiratory health. "
+                "By using the phones sensors, including the microphone, it will try to monitor you breathing, heart rate, sleep, social contact to others, and your movement. "
+                "You will also be able to fill in a simple daily survey to help us understand how you're doing. "
+                "Before you start, please also fill in the demographich survey. "
         ..dataEndPoint = getDataEndpoint(DataEndPointTypes.FILE)
         // collect basic device measures continously
         ..addTriggerTask(
@@ -84,7 +207,8 @@ class LocalStudyManager implements StudyManager {
                 enabled: true,
                 surveyTask: surveys.demographics.survey,
               ))
-              ..measures.add(SamplingSchema.common().measures[ContextSamplingPackage.LOCATION]))
+              ..measures.add(SamplingSchema.common()
+                  .measures[ContextSamplingPackage.LOCATION]))
         // collect symptoms on a daily basis
         ..addTriggerTask(
             PeriodicTrigger(period: Duration(days: 1)),
@@ -101,12 +225,14 @@ class LocalStudyManager implements StudyManager {
                 enabled: true,
                 surveyTask: surveys.symptoms.survey,
               ))
-              ..measures.add(SamplingSchema.common().measures[ContextSamplingPackage.LOCATION]))
+              ..measures.add(SamplingSchema.common()
+                  .measures[ContextSamplingPackage.LOCATION]))
         // when the reading (audio) measure is collected, the add a user task to
         // collect location, and local weather and air quality
         ..addTriggerTask(
             ConditionalSamplingEventTrigger(
-              measureType: MeasureType(NameSpace.CARP, AudioSamplingPackage.AUDIO),
+              measureType:
+                  MeasureType(NameSpace.CARP, AudioSamplingPackage.AUDIO),
               resumeCondition: (Datum datum) => true,
               pauseCondition: (Datum datum) => true,
             ),
@@ -135,7 +261,8 @@ class LocalStudyManager implements StudyManager {
             ..dataEndPoint = getDataEndpoint(DataEndPointTypes.FILE)
             ..addTriggerTask(
                 ConditionalSamplingEventTrigger(
-                  measureType: MeasureType(NameSpace.CARP, SurveySamplingPackage.SURVEY),
+                  measureType:
+                      MeasureType(NameSpace.CARP, SurveySamplingPackage.SURVEY),
                   resumeCondition: (Datum datum) => true,
                   pauseCondition: (Datum datum) => true,
                 ),
@@ -171,13 +298,15 @@ class LocalStudyManager implements StudyManager {
                   minutesToComplete: surveys.demographics.minutesToComplete,
                 )
                   ..measures.add(RPTaskMeasure(
-                    type: MeasureType(NameSpace.CARP, SurveySamplingPackage.SURVEY),
+                    type: MeasureType(
+                        NameSpace.CARP, SurveySamplingPackage.SURVEY),
                     name: surveys.demographics.title,
                     enabled: true,
                     surveyTask: surveys.demographics.survey,
                   ))
                   ..measures.add(Measure(
-                    type: MeasureType(NameSpace.CARP, ContextSamplingPackage.LOCATION),
+                    type: MeasureType(
+                        NameSpace.CARP, ContextSamplingPackage.LOCATION),
                   )))
 //
             ..addTriggerTask(
@@ -189,13 +318,15 @@ class LocalStudyManager implements StudyManager {
                   minutesToComplete: surveys.symptoms.minutesToComplete,
                 )
                   ..measures.add(RPTaskMeasure(
-                    type: MeasureType(NameSpace.CARP, SurveySamplingPackage.SURVEY),
+                    type: MeasureType(
+                        NameSpace.CARP, SurveySamplingPackage.SURVEY),
                     name: surveys.symptoms.title,
                     enabled: true,
                     surveyTask: surveys.symptoms.survey,
                   ))
                   ..measures.add(Measure(
-                    type: MeasureType(NameSpace.CARP, ContextSamplingPackage.LOCATION),
+                    type: MeasureType(
+                        NameSpace.CARP, ContextSamplingPackage.LOCATION),
                   )))
           // ..addTriggerTask(
           //     PeriodicTrigger(period: Duration(minutes: 2)),
@@ -256,7 +387,8 @@ class LocalStudyManager implements StudyManager {
       case DataEndPointTypes.PRINT:
         return new DataEndPoint(type: DataEndPointTypes.PRINT);
       case DataEndPointTypes.FILE:
-        return FileDataEndPoint(bufferSize: 50 * 1000, zip: true, encrypt: false);
+        return FileDataEndPoint(
+            bufferSize: 50 * 1000, zip: true, encrypt: false);
       case DataEndPointTypes.CARP:
         return CarpDataEndPoint(
             uploadMethod: CarpUploadMethod.DATA_POINT,

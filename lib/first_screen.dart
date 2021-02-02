@@ -17,27 +17,15 @@ class CARPStudyApp extends StatelessWidget {
 }
 
 class SplashScreen extends StatefulWidget {
-  @override
   _SplashScreenState createState() => new _SplashScreenState();
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  load(BuildContext context) async {
-    SharedPreferences sp = await SharedPreferences.getInstance();
-    bool firstTime = sp.getBool('first_time');
-    firstTime = false; // for testing purposes.
+  // Future load(BuildContext context) async =>
+  //     (bloc.hasInformedConsentBeenAccepted)
+  //         ? Navigator.of(context).pushReplacementNamed('/HomePage')
+  //         : Navigator.of(context).pushReplacementNamed('/ConsentPage');
 
-    if (firstTime != null && !firstTime) {
-      // Not first time
-      return Navigator.of(context).pushReplacementNamed('/AudioTaskPage'); // TODO: change back to homepage
-    } else {
-      // First time
-      sp.setBool('first_time', false);
-      return Navigator.of(context).pushReplacementNamed('/ConsentPage');
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -46,7 +34,9 @@ class _SplashScreenState extends State<SplashScreen> {
           mainAxisSize: MainAxisSize.min,
           children: [
             FutureBuilder(
-              future: load(context),
+              future: (bloc.hasInformedConsentBeenAccepted)
+                  ? Navigator.of(context).pushReplacementNamed('/HomePage')
+                  : Navigator.of(context).pushReplacementNamed('/ConsentPage'),
               builder: (context, snapshot) {
                 if (!snapshot.hasData) {
                   return Container(

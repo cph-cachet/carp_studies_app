@@ -46,11 +46,11 @@ class CARPStudyAppState extends State<CARPStudyAppHome> {
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _restart,
-        tooltip: 'Restart study & probes',
-        child: bloc.isRunning ? Icon(Icons.pause) : Icon(Icons.play_arrow),
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: _restart,
+      //   tooltip: 'Restart study & probes',
+      //   child: bloc.isRunning ? Icon(Icons.pause) : Icon(Icons.play_arrow),
+      // ),
     );
   }
 

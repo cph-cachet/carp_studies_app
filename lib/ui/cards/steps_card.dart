@@ -2,52 +2,48 @@ part of carp_study_app;
 
 class StepsCardWidget extends StatefulWidget {
   final StepsCardDataModel model;
-  StepsCardWidget(this.model);
+  final List<Color> colors;
+  final List<charts.Series<Steps, String>> seriesList;
 
-  _StepsCardWidgetState createState() => _StepsCardWidgetState();
-}
+  StepsCardWidget(this.seriesList, this.model, {this.colors = const [CACHET.BLUE_1]});
 
-class _StepsCardWidgetState extends State<StepsCardWidget> {
-  static List<charts.Series<Steps, DateTime>> _createChartList(
-      BuildContext context) {
-    final randomStepsData = [
-      new Steps(DateTime.now().add(Duration(days: 1)), Random().nextInt(10000)),
-      new Steps(DateTime.now().add(Duration(days: 2)), Random().nextInt(10000)),
-      // new Steps(DateTime.now().add(Duration(days: 2, hours: 12)),
-      //     Random().nextInt(10000)),
-      new Steps(DateTime.now().add(Duration(days: 3)), Random().nextInt(10000)),
-      new Steps(DateTime.now().add(Duration(days: 4)), Random().nextInt(10000)),
-      new Steps(DateTime.now().add(Duration(days: 5)), Random().nextInt(10000)),
-      new Steps(DateTime.now().add(Duration(days: 6)), Random().nextInt(10000)),
-      new Steps(DateTime.now().add(Duration(days: 7)), Random().nextInt(10000)),
-      // new Steps(DateTime.now().add(Duration(days: 8)), Random().nextInt(10000)),
-      // new Steps(DateTime.now().add(Duration(days: 9)), Random().nextInt(10000)),
-      // new Steps(
-      //     DateTime.now().add(Duration(days: 10)), Random().nextInt(10000)),
-      // new Steps(
-      //     DateTime.now().add(Duration(days: 11)), Random().nextInt(10000)),
-      // new Steps(
-      //     DateTime.now().add(Duration(days: 12)), Random().nextInt(10000)),
-    ];
+  factory StepsCardWidget.withSampleData(StepsCardDataModel model) {
+    return StepsCardWidget(_createChartList(model, [CACHET.BLUE_1]), model);
+  }
 
+  static List<charts.Series<Steps, String>> _createChartList(StepsCardDataModel model, List<Color> colors) {
+    List<Steps> _steps = model._weeklySteps.entries.map((entry) => Steps(entry.key, entry.value)).toList();
     return [
-      charts.Series<Steps, DateTime>(
-        colorFn: (d, i) =>
-            charts.ColorUtil.fromDartColor(Theme.of(context).primaryColor),
+      charts.Series<Steps, String>(
+        colorFn: (d, i) => charts.ColorUtil.fromDartColor(colors[0]),
         id: 'DailyStepsList',
-        data: randomStepsData,
-        domainFn: (Steps datum, _) => datum.date,
+        data: _steps,
+        domainFn: (Steps datum, _) => datum.toString(),
         measureFn: (Steps datum, _) => datum.steps,
       )
     ];
   }
 
-  charts.RenderSpec<num> renderSpecPrimary = AxisTheme.axisThemeNum();
-  charts.RenderSpec<DateTime> renderSpecDomain = AxisTheme.axisThemeDateTime();
+  @override
+  _StepsCardWidgetState createState() => _StepsCardWidgetState();
+}
+
+class _StepsCardWidgetState extends State<StepsCardWidget> {
+  // Axis render settings
+  charts.RenderSpec<num> renderSpecNum = AxisTheme.axisThemeNum();
+  charts.RenderSpec<String> renderSpecString = AxisTheme.axisThemeOrdinal();
+
+  int _selectedSteps = 0;
+
+  @override
+  void initState() {
+    // Get current day steps
+    _selectedSteps = widget.model._weeklySteps[DateTime.now().weekday];
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    print(widget.model.toString());
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Card(
@@ -57,35 +53,72 @@ class _StepsCardWidgetState extends State<StepsCardWidget> {
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: <Widget>[
-              CardHeader(
-                  title: 'Steps',
-                  iconAssetName: Icon(Icons.directions_walk,
-                      color: Theme.of(context).primaryColor),
-                  heroTag: 'steps-card',
-                  value: '9805 steps'),
-              Container(
-                height: 160,
-                child: charts.TimeSeriesChart(
-                  _createChartList(context),
-                  defaultRenderer: charts.BarRendererConfig<DateTime>(
-                    cornerStrategy: const charts.ConstCornerStrategy(10),
-                  ),
-                  defaultInteractions: false,
-                  primaryMeasureAxis: charts.NumericAxisSpec(
-                    tickProviderSpec: charts.BasicNumericTickProviderSpec(
-                      zeroBound: false,
-                    ),
-                    renderSpec: renderSpecPrimary,
-                  ),
-                  domainAxis: charts.DateTimeAxisSpec(
-                    renderSpec: renderSpecDomain,
-                  ),
-                ),
+              StreamBuilder(
+                stream: widget.model._controller.events,
+                builder: (context, AsyncSnapshot<Datum> snapshot) {
+                  return Column(
+                    children: [
+                      CardHeader(
+                        title: 'Steps',
+                        iconAssetName: Icon(Icons.directions_walk, color: Theme.of(context).primaryColor),
+                        heroTag: 'steps-card',
+                        values: ['$_selectedSteps steps'],
+                        colors: widget.colors,
+                      ),
+                      Container(
+                        height: 160,
+                        child: charts.BarChart(
+                          widget.seriesList,
+                          animate: true,
+                          defaultRenderer: charts.BarRendererConfig<String>(
+                            cornerStrategy: const charts.ConstCornerStrategy(2),
+                          ),
+                          domainAxis: charts.OrdinalAxisSpec(
+                            renderSpec: renderSpecString,
+                          ),
+                          primaryMeasureAxis: charts.NumericAxisSpec(renderSpec: renderSpecNum),
+                          defaultInteractions: false,
+                          selectionModels: [
+                            charts.SelectionModelConfig(
+                                type: charts.SelectionModelType.info,
+                                changedListener: _infoSelectionModelChanged)
+                          ],
+                          behaviors: [
+                            charts.SelectNearest(eventTrigger: charts.SelectionTrigger.tapAndDrag),
+                            charts.DomainHighlighter(),
+                          ],
+                        ),
+                      ),
+                    ],
+                  );
+                },
               ),
             ],
           ),
         ),
       ),
     );
+  }
+
+  void _infoSelectionModelChanged(charts.SelectionModel model) {
+    if (model.hasDatumSelection)
+      setState(() {
+        _selectedSteps = model.selectedSeries[0].measureFn(model.selectedDatum[0].index);
+      });
+  }
+}
+
+class StepsOuterStatefulWidget extends StatefulWidget {
+  final StepsCardDataModel model;
+  StepsOuterStatefulWidget(this.model);
+
+  @override
+  _StepsOuterStatefulWidgetState createState() => _StepsOuterStatefulWidgetState();
+}
+
+class _StepsOuterStatefulWidgetState extends State<StepsOuterStatefulWidget> {
+  @override
+  Widget build(BuildContext context) {
+    return StepsCardWidget.withSampleData(widget.model);
   }
 }

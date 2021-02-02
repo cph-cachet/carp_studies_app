@@ -7,8 +7,24 @@ class MeasuresCardWidget extends StatefulWidget {
 }
 
 class _MeasuresCardWidgetState extends State<MeasuresCardWidget> {
+  static List<charts.Series<Measures, String>> _createChartList(
+      BuildContext context, MeasuresCardDataModel model) {
+    List<Measures> _measures =
+        model._samplingTable.entries.map((entry) => Measures(entry.key, entry.value)).toList();
+    return [
+      charts.Series<Measures, String>(
+        colorFn: (_, index) => charts.MaterialPalette.blue.makeShades(model._samplingTable.length)[index + 1],
+        //colorFn: (d, i) => charts.ColorUtil.fromDartColor(Colors.blue),
+        id: 'DailyStepsList',
+        data: _measures.sublist(0, 6), //TODO: remove sublist
+        domainFn: (Measures datum, _) => datum.measure,
+        measureFn: (Measures datum, _) => datum.size,
+      )
+    ];
+  }
+
   Widget build(BuildContext context) {
-    print(widget.model.toString());
+    print(widget.model._samplingTable);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Card(
@@ -20,15 +36,71 @@ class _MeasuresCardWidgetState extends State<MeasuresCardWidget> {
             children: <Widget>[
               StreamBuilder(
                 stream: widget.model.measureEvents,
-                builder: (context, AsyncSnapshot<Datum> snapshot) => CardHeader(
-                    title: 'Measures',
-                    iconAssetName: Icon(Icons.emoji_objects,
-                        color: Theme.of(context).primaryColor),
-                    heroTag: 'measures-card',
-                    value: '${widget.model.samplingSize} measures'),
-              ),
-              Container(
-                height: 160,
+                builder: (context, AsyncSnapshot<Datum> snapshot) {
+                  return Column(
+                    children: [
+                      Container(
+                        padding: EdgeInsets.only(left: 10),
+                        child: Row(
+                          children: <Widget>[
+                            Expanded(
+                              flex: 5,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Text('Hello Jakob', style: aboutCardTitleStyle), //TODO: get user name
+                                  Text(
+                                      'Thank you for participating in this study. This a summary of your contribution to the study.',
+                                      style: aboutCardSubtitleStyle),
+                                  SizedBox(height: 10),
+                                  Text('${widget.model.samplingSize} MEASURES',
+                                      //textAlign: TextAlign.center,
+                                      style: dataCardTitleStyle),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        height: 160,
+                        child: Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            charts.PieChart(
+                              _createChartList(context, widget.model),
+                              animate: true,
+                              behaviors: [
+                                charts.DatumLegend(
+                                  position: charts.BehaviorPosition.end,
+                                  desiredMaxRows: 7,
+                                  //entryTextStyle: charts.TextStyleSpec(fontSize: 10),
+                                  cellPadding: EdgeInsets.only(right: 3.0, bottom: 2.0),
+                                  showMeasures: true,
+                                  legendDefaultMeasure: charts.LegendDefaultMeasure.firstValue,
+                                  measureFormatter: (num value) {
+                                    return value == null ? '-' : '$value';
+                                  },
+                                ),
+                              ],
+                              defaultRenderer: charts.ArcRendererConfig(
+                                arcWidth: 20,
+                              ),
+                            ),
+                            /* Positioned(
+                              left: 92,
+                              child: Text(
+                                '${widget.model.samplingSize} \nmeasures',
+                                textAlign: TextAlign.center,
+                                style: measuresStyle.copyWith(color: Theme.of(context).primaryColor),
+                              ),
+                            ), */
+                          ],
+                        ),
+                      ),
+                    ],
+                  );
+                },
               ),
             ],
           ),

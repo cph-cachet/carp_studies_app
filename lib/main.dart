@@ -1,6 +1,7 @@
 library carp_study_app;
 
 import 'dart:async';
+import 'dart:ffi';
 import 'dart:math';
 
 import 'package:carp_audio_package/audio.dart';
@@ -47,8 +48,12 @@ part 'ui/pages/task_list_page.dart';
 part 'ui/pages/contact_page.dart';
 part 'ui/pages/profile_page.dart';
 part 'ui/pages/informed_consent_page.dart';
+part 'ui/pages/audio_task_page.dart';
+
 part 'ui/widgets/study_banner.dart';
 part 'ui/widgets/card_header.dart';
+part 'ui/widgets/study_card.dart';
+
 part 'ui/cards/steps_card.dart';
 part 'ui/cards/activity_card.dart';
 part 'ui/cards/mobility_card.dart';

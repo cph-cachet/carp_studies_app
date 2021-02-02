@@ -25,9 +25,9 @@
     <!-- for Android 10 (API 29 and later), use: -->
     <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" />
 
-    <!-- The following permissions are used in the Audio Package 
+    <!-- The following permissions are used in the Audio Package  -->
     <uses-permission android:name="android.permission.RECORD_AUDIO"/>
-    -->
+   
 
     <!-- io.flutter.app.FlutterApplication is an android.app.Application that
          calls FlutterMain.startInitialization(this); in its onCreate method.

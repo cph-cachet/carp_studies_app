@@ -16,14 +16,14 @@ class ProfilePage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    SizedBox(height: height * .075),
                     CarpAppBar(),
                     SizedBox(height: 15),
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 15),
                       child: Align(
                         alignment: Alignment.centerLeft,
-                        child: Text('MY PROFILE', style: sectionTitleStyle),
+                        child: Text('MY PROFILE',
+                            style: sectionTitleStyle.copyWith(color: Theme.of(context).primaryColor)),
                       ),
                     ),
                     SizedBox(height: 15),

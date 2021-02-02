@@ -20,7 +20,7 @@ class ActivityCardDataModel extends DataModel {
     // TODO - set values to zero once a new week starts.
     ActivityType.values.forEach((type) {
       _activities[type] = {};
-      for (int i = 1; i <= 7; i++) _activities[type][i] = 0;
+      for (int i = 1; i <= 7; i++) _activities[type][i] = Random().nextInt(300); // TODO: change back to 0
     });
 
     // listen for activity events and count the minutes
@@ -40,8 +40,8 @@ class ActivityCardDataModel extends DataModel {
 
   String toString() {
     String _str = '  TYPE\t| day | min.\n';
-    activities.forEach((type, data) => data.forEach((day, minutes) =>
-        _str += '${type.toString().split(".").last}\t|  $day  |  $minutes\n'));
+    activities.forEach((type, data) =>
+        data.forEach((day, minutes) => _str += '${type.toString().split(".").last}\t|  $day  |  $minutes\n'));
     return _str;
   }
 }
@@ -52,7 +52,27 @@ class Activity {
   /// Activity [type] as a string.
   String get typeString => type.toString().split(".").last;
 
-  final DateTime date;
+  final int day;
   final int minutes;
-  Activity(this.date, this.minutes);
+
+  String toString() {
+    if (this.day == 1)
+      return "Mon";
+    else if (this.day == 2)
+      return "Tue";
+    else if (this.day == 3)
+      return "Wed";
+    else if (this.day == 4)
+      return "Thu";
+    else if (this.day == 5)
+      return "Fri";
+    else if (this.day == 6)
+      return "Sat";
+    else if (this.day == 7)
+      return "Sun";
+    else
+      return "?";
+  }
+
+  Activity(this.day, this.minutes);
 }

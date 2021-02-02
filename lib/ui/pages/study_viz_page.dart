@@ -10,7 +10,6 @@ class StudyVisualization extends StatefulWidget {
 
 class _StudyVisualizationState extends State<StudyVisualization> {
   Widget build(BuildContext context) {
-    final height = MediaQuery.of(context).size.height;
     return Navigator(onGenerateRoute: (RouteSettings settings) {
       return new MaterialPageRoute(
           settings: settings,
@@ -21,9 +20,9 @@ class _StudyVisualizationState extends State<StudyVisualization> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    SizedBox(height: height * .075),
                     CarpAppBar(),
-                    StudyBanner(),
+                    //StudyBanner(),
+                    StudyCard(),
                     Flexible(
                       child: StreamBuilder<Datum>(
                           stream: widget.model.samplingEvents,
@@ -33,8 +32,7 @@ class _StudyVisualizationState extends State<StudyVisualization> {
                                   itemCount: widget.model.messages.length,
                                   padding: EdgeInsets.symmetric(vertical: 8.0),
                                   itemBuilder: (context, index) {
-                                    return _aboutStudyCard(
-                                        context, widget.model.messages[index]);
+                                    return _aboutStudyCard(context, widget.model.messages[index]);
                                   }),
                             );
                           }),
@@ -79,8 +77,7 @@ class _StudyVisualizationState extends State<StudyVisualization> {
                 SizedBox(width: 15),
                 Expanded(
                     child: Text(message.title,
-                        style: aboutCardTitleStyle.copyWith(
-                            color: Theme.of(context).primaryColor))),
+                        style: aboutCardTitleStyle.copyWith(color: Theme.of(context).primaryColor))),
               ]),
               SizedBox(height: 5),
               Row(children: [
@@ -93,8 +90,7 @@ class _StudyVisualizationState extends State<StudyVisualization> {
                             days: message.timestamp.day,
                             hours: message.timestamp.hour,
                             minutes: message.timestamp.minute))),
-                    style: aboutCardSubtitleStyle.copyWith(
-                        color: Theme.of(context).primaryColor)),
+                    style: aboutCardSubtitleStyle.copyWith(color: Theme.of(context).primaryColor)),
               ]),
               SizedBox(height: 5),
               Row(children: [
@@ -102,8 +98,14 @@ class _StudyVisualizationState extends State<StudyVisualization> {
                 if (message.subTitle.isNotEmpty)
                   Expanded(
                       child: Text(message.subTitle,
-                          style: aboutCardContentStyle.copyWith(
-                              color: Theme.of(context).primaryColor))),
+                          style: aboutCardContentStyle.copyWith(color: Theme.of(context).primaryColor))),
+                if (message.message.isNotEmpty)
+                  Expanded(
+                      child: Text(
+                    message.message,
+                    style: aboutCardContentStyle,
+                    textAlign: TextAlign.justify,
+                  )),
                 SizedBox(width: 15),
               ]),
               SizedBox(height: 10),

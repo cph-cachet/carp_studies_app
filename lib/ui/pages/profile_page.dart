@@ -10,7 +10,7 @@ class ProfilePage extends StatelessWidget {
         child: Stack(
           children: <Widget>[
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 5),
+              //padding: EdgeInsets.symmetric(horizontal: 5),
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -27,6 +27,18 @@ class ProfilePage extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: 15),
+                    // TODO: remove this
+                    ElevatedButton(
+                      child: Text("View Audio Tasks"),
+                      onPressed: () => Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return AudioTaskPage();
+                          },
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),

@@ -21,12 +21,12 @@ class CarpAppBar extends StatelessWidget {
               icon: Icon(Icons.account_circle_outlined, color: Theme.of(context).primaryColor, size: 30),
               tooltip: 'Profile',
               onPressed: () {
-                Navigator.pushReplacement(
+                Navigator.push(
                   context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return ProfilePage();
-                    },
+                  PageRouteBuilder(
+                    pageBuilder: (c, a1, a2) => ProfilePage(),
+                    transitionsBuilder: (c, anim, a2, child) => FadeTransition(opacity: anim, child: child),
+                    transitionDuration: Duration(milliseconds: 200),
                   ),
                 );
               },

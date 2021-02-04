@@ -9,8 +9,7 @@ class CARPStudyApp extends StatelessWidget {
       routes: {
         '/HomePage': (context) => CARPStudyAppHome(),
         '/ConsentPage': (context) => InformedConsentPage(),
-        '/ProfilePage': (context) => ProfilePage(),
-        '/AudioTaskPage': (context) => AudioTaskPage(), // TODO: remove
+        '/ProfilePage': (context) => ProfilePage(), // TODO: remove
       },
     );
   }

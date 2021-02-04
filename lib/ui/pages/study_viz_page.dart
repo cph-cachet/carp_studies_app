@@ -114,7 +114,7 @@ class _StudyVisualizationState extends State<StudyVisualization> {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.0),
       ),
-      elevation: 5,
+      elevation: 4,
       margin: EdgeInsets.all(10),
     );
   }

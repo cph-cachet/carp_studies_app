@@ -26,6 +26,9 @@ class AppBLoC {
 
     // create and register external data managers
     DataManagerRegistry().register(CarpDataManager());
+
+    // register the special-purpose audio user task factory
+    AppTaskController().registerUserTaskFactory(AudioUserTaskFactory());
   }
 
   Future<void> init() async {

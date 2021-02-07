@@ -13,6 +13,11 @@ class MobilityCardDataModel extends DataModel {
   /// which has the value 1.
   Map<int, double> get weeklyHomeStay => _weeklyHomeStay;
 
+  /// The list of [Mobility] object representing home stay.
+  List<Mobility> get homeStay => _weeklyHomeStay.entries
+      .map((entry) => Mobility(entry.key, 0, entry.value, 0))
+      .toList();
+
   /// A map of weekly places organized by the day of the week.
   ///
   ///    (weekday,places)
@@ -21,6 +26,11 @@ class MobilityCardDataModel extends DataModel {
   /// which has the value 1.
   Map<int, int> get weeklyPlaces => _weeklyPlaces;
 
+  /// The list of [Mobility] object representing the places visited.
+  List<Mobility> get places => _weeklyPlaces.entries
+      .map((entry) => Mobility(entry.key, entry.value, 0, 0))
+      .toList();
+
   /// A map of weekly places organized by the day of the week.
   ///
   ///    (weekday,places)
@@ -28,6 +38,11 @@ class MobilityCardDataModel extends DataModel {
   /// In accordance with Dart [DateTime] a week starts with Monday,
   /// which has the value 1.
   Map<int, double> get weeklyDistanceTraveled => _weeklyDistanceTraveled;
+
+  /// The list of [Mobility] object representing distance traveled.
+  List<Mobility> get distance => _weeklyDistanceTraveled.entries
+      .map((entry) => Mobility(entry.key, 0, 0, entry.value))
+      .toList();
 
   MobilityCardDataModel();
   void init(StudyController controller) {
@@ -40,11 +55,12 @@ class MobilityCardDataModel extends DataModel {
       _weeklyPlaces[i] = Random().nextInt(10);
     }
 
-    // listen for pedometer events and count them
+    // listen for mobility events and count them
     controller.events.where((datum) => datum is MobilityDatum).listen((datum) {
       MobilityDatum _mobility = datum as MobilityDatum;
       // just collect the data asuming the date is correct
-      _weeklyDistanceTraveled[_mobility.date.weekday] = _mobility.distanceTravelled;
+      _weeklyDistanceTraveled[_mobility.date.weekday] =
+          _mobility.distanceTravelled;
       _weeklyHomeStay[_mobility.date.weekday] = _mobility.homeStay;
       _weeklyPlaces[_mobility.date.weekday] = _mobility.numberOfPlaces;
     });
@@ -57,24 +73,10 @@ class Mobility {
   final double homeStay;
   final double distance;
 
-  String toString() {
-    if (this.day == 1)
-      return "Mon";
-    else if (this.day == 2)
-      return "Tue";
-    else if (this.day == 3)
-      return "Wed";
-    else if (this.day == 4)
-      return "Thu";
-    else if (this.day == 5)
-      return "Fri";
-    else if (this.day == 6)
-      return "Sat";
-    else if (this.day == 7)
-      return "Sun";
-    else
-      return "?";
-  }
-
   Mobility(this.day, this.places, this.homeStay, this.distance);
+
+  /// Get the localilzed name of the [day].
+  String toString() => DateFormat('EEEE')
+      .format(DateTime(2021, 2, 7).add(Duration(days: day)))
+      .substring(0, 3);
 }

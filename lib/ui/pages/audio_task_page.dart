@@ -109,7 +109,6 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
         stream: audioUserTask.stateEvents,
         initialData: UserTaskState.enqueued,
         builder: (context, AsyncSnapshot<UserTaskState> snapshot) {
-          print('snapshot :: $snapshot');
           switch (snapshot.data) {
             case UserTaskState.enqueued:
               return Text(audioUserTask.title, style: audioTitleStyle);
@@ -128,7 +127,6 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
         stream: audioUserTask.stateEvents,
         initialData: UserTaskState.enqueued,
         builder: (context, AsyncSnapshot<UserTaskState> snapshot) {
-          print('snapshot :: $snapshot');
           switch (snapshot.data) {
             case UserTaskState.enqueued:
               return Text(
@@ -152,7 +150,6 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
         stream: audioUserTask.stateEvents,
         initialData: UserTaskState.enqueued,
         builder: (context, AsyncSnapshot<UserTaskState> snapshot) {
-          print('snapshot :: $snapshot');
           switch (snapshot.data) {
             case UserTaskState.enqueued:
               return _record();
@@ -176,10 +173,7 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
             radius: 30,
             backgroundColor: CACHET.RED_1,
             child: IconButton(
-              onPressed: () {
-                print("start recording");
-                audioUserTask.onRecordStart();
-              },
+              onPressed: () => audioUserTask.onRecordStart(),
               padding: EdgeInsets.all(0),
               icon: Icon(Icons.mic, color: Colors.white, size: 40),
             ),
@@ -211,10 +205,7 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
                 radius: 35,
                 backgroundColor: CACHET.RED_1,
                 child: IconButton(
-                  onPressed: () {
-                    print("stop recording");
-                    audioUserTask.onRecordStop();
-                  },
+                  onPressed: () => audioUserTask.onRecordStop(),
                   padding: EdgeInsets.all(0),
                   icon: Icon(Icons.graphic_eq, color: Colors.white, size: 40),
                 ),
@@ -237,10 +228,7 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
             children: [
               SizedBox(width: 30),
               IconButton(
-                onPressed: () {
-                  print('restart recording');
-                  audioUserTask.onRecordStart();
-                },
+                onPressed: () => audioUserTask.onRecordStart(),
                 padding: EdgeInsets.all(0),
                 icon: Icon(Icons.replay, size: 25, color: CACHET.GREY_5),
               ),
@@ -248,10 +236,7 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
                 radius: 30,
                 backgroundColor: CACHET.GREEN_1,
                 child: IconButton(
-                  onPressed: () {
-                    print("recording done");
-                    Navigator.pop(context);
-                  },
+                  onPressed: () => Navigator.pop(context),
                   padding: EdgeInsets.all(0),
                   icon: Icon(Icons.check_circle_outline,
                       color: Colors.white, size: 40),

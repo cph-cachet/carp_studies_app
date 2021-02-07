@@ -12,6 +12,11 @@ class ActivityCardDataModel extends DataModel {
   ///
   Map<ActivityType, Map<int, int>> get activities => _activities;
 
+  List<Activity> activitiesByType(ActivityType type) => _activities[type]
+      .entries
+      .map((entry) => Activity(entry.key, entry.value))
+      .toList();
+
   ActivityCardDataModel() : super();
 
   void init(StudyController controller) {
@@ -20,7 +25,8 @@ class ActivityCardDataModel extends DataModel {
     // TODO - set values to zero once a new week starts.
     ActivityType.values.forEach((type) {
       _activities[type] = {};
-      for (int i = 1; i <= 7; i++) _activities[type][i] = Random().nextInt(300); // TODO: change back to 0
+      for (int i = 1; i <= 7; i++)
+        _activities[type][i] = Random().nextInt(300); // TODO: change back to 0
     });
 
     // listen for activity events and count the minutes
@@ -40,39 +46,24 @@ class ActivityCardDataModel extends DataModel {
 
   String toString() {
     String _str = '  TYPE\t| day | min.\n';
-    activities.forEach((type, data) =>
-        data.forEach((day, minutes) => _str += '${type.toString().split(".").last}\t|  $day  |  $minutes\n'));
+    activities.forEach((type, data) => data.forEach((day, minutes) =>
+        _str += '${type.toString().split(".").last}\t|  $day  |  $minutes\n'));
     return _str;
   }
 }
 
 class Activity {
+  final int day;
+  final int minutes;
   ActivityType type;
 
   /// Activity [type] as a string.
   String get typeString => type.toString().split(".").last;
 
-  final int day;
-  final int minutes;
-
-  String toString() {
-    if (this.day == 1)
-      return "Mon";
-    else if (this.day == 2)
-      return "Tue";
-    else if (this.day == 3)
-      return "Wed";
-    else if (this.day == 4)
-      return "Thu";
-    else if (this.day == 5)
-      return "Fri";
-    else if (this.day == 6)
-      return "Sat";
-    else if (this.day == 7)
-      return "Sun";
-    else
-      return "?";
-  }
-
   Activity(this.day, this.minutes);
+
+  /// Get the localilzed name of the [day].
+  String toString() => DateFormat('EEEE')
+      .format(DateTime(2021, 2, 7).add(Duration(days: day)))
+      .substring(0, 3);
 }

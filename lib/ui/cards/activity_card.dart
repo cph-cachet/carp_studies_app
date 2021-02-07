@@ -8,51 +8,36 @@ class ActivityCardWidget extends StatefulWidget {
       {this.colors = const [CACHET.BLUE_1, CACHET.BLUE_2, CACHET.BLUE_3]});
 
   factory ActivityCardWidget.withSampleData(ActivityCardDataModel model) {
-    return ActivityCardWidget(_createChartList(model, [CACHET.BLUE_1, CACHET.BLUE_2, CACHET.BLUE_3]), model);
+    return ActivityCardWidget(
+        _createChartList(model, [CACHET.BLUE_1, CACHET.BLUE_2, CACHET.BLUE_3]),
+        model);
   }
 
   static List<charts.Series<Activity, String>> _createChartList(
-      ActivityCardDataModel model, List<Color> colors) {
-    List<Activity> _running = [];
-    List<Activity> _walking = [];
-    List<Activity> _cycling = [];
-
-    model._activities.forEach((k, v) {
-      if (k == ActivityType.RUNNING)
-        _running = v.entries.map((entry) => Activity(entry.key, entry.value)).toList();
-      else if (k == ActivityType.WALKING)
-        _walking = v.entries.map((entry) => Activity(entry.key, entry.value)).toList();
-      else if (k == ActivityType.ON_BICYCLE)
-        _cycling = v.entries.map((entry) => Activity(entry.key, entry.value)).toList();
-    });
-    _running = _running.map((entry) => Activity(entry.day, entry.minutes)).toList();
-    _walking = _walking.map((entry) => Activity(entry.day, entry.minutes)).toList();
-    _cycling = _cycling.map((entry) => Activity(entry.day, entry.minutes)).toList();
-
-    return [
-      charts.Series<Activity, String>(
-        colorFn: (d, i) => charts.ColorUtil.fromDartColor(colors[0]),
-        id: 'walking',
-        data: _walking,
-        domainFn: (Activity datum, _) => datum.toString(),
-        measureFn: (Activity datum, _) => datum.minutes,
-      ),
-      charts.Series<Activity, String>(
-        colorFn: (d, i) => charts.ColorUtil.fromDartColor(colors[1]),
-        id: 'running',
-        data: _running,
-        domainFn: (Activity datum, _) => datum.toString(),
-        measureFn: (Activity datum, _) => datum.minutes,
-      ),
-      charts.Series<Activity, String>(
-        colorFn: (d, i) => charts.ColorUtil.fromDartColor(colors[2]),
-        id: 'cycling',
-        data: _cycling,
-        domainFn: (Activity datum, _) => datum.toString(),
-        measureFn: (Activity datum, _) => datum.minutes,
-      )
-    ];
-  }
+          ActivityCardDataModel model, List<Color> colors) =>
+      [
+        charts.Series<Activity, String>(
+          colorFn: (d, i) => charts.ColorUtil.fromDartColor(colors[0]),
+          id: 'walking',
+          data: model.activitiesByType(ActivityType.WALKING),
+          domainFn: (Activity datum, _) => datum.toString(),
+          measureFn: (Activity datum, _) => datum.minutes,
+        ),
+        charts.Series<Activity, String>(
+          colorFn: (d, i) => charts.ColorUtil.fromDartColor(colors[1]),
+          id: 'running',
+          data: model.activitiesByType(ActivityType.RUNNING),
+          domainFn: (Activity datum, _) => datum.toString(),
+          measureFn: (Activity datum, _) => datum.minutes,
+        ),
+        charts.Series<Activity, String>(
+          colorFn: (d, i) => charts.ColorUtil.fromDartColor(colors[2]),
+          id: 'cycling',
+          data: model.activitiesByType(ActivityType.ON_BICYCLE),
+          domainFn: (Activity datum, _) => datum.toString(),
+          measureFn: (Activity datum, _) => datum.minutes,
+        )
+      ];
 
   @override
   _ActivityCardWidgetState createState() => _ActivityCardWidgetState();
@@ -70,9 +55,12 @@ class _ActivityCardWidgetState extends State<ActivityCardWidget> {
   @override
   void initState() {
     // Get current day activities
-    _walk = widget.model._activities[ActivityType.WALKING][DateTime.now().weekday];
-    _run = widget.model._activities[ActivityType.RUNNING][DateTime.now().weekday];
-    _cycle = widget.model._activities[ActivityType.ON_BICYCLE][DateTime.now().weekday];
+    _walk =
+        widget.model.activities[ActivityType.WALKING][DateTime.now().weekday];
+    _run =
+        widget.model.activities[ActivityType.RUNNING][DateTime.now().weekday];
+    _cycle = widget.model.activities[ActivityType.ON_BICYCLE]
+        [DateTime.now().weekday];
     super.initState();
   }
 
@@ -90,9 +78,14 @@ class _ActivityCardWidgetState extends State<ActivityCardWidget> {
             children: <Widget>[
               CardHeader(
                 title: 'Activity',
-                iconAssetName: Icon(Icons.fitness_center, color: Theme.of(context).primaryColor),
+                iconAssetName: Icon(Icons.fitness_center,
+                    color: Theme.of(context).primaryColor),
                 heroTag: 'activity-card',
-                values: ['$_walk min walking', '$_run min running', '$_cycle min cycling'],
+                values: [
+                  '$_walk min walking',
+                  '$_run min running',
+                  '$_cycle min cycling'
+                ],
                 colors: widget.colors,
               ),
               Container(
@@ -101,8 +94,10 @@ class _ActivityCardWidgetState extends State<ActivityCardWidget> {
                   widget.seriesList,
                   barGroupingType: charts.BarGroupingType.stacked,
                   animate: true,
-                  domainAxis: charts.OrdinalAxisSpec(renderSpec: renderSpecString),
-                  primaryMeasureAxis: charts.NumericAxisSpec(renderSpec: renderSpecNum),
+                  domainAxis:
+                      charts.OrdinalAxisSpec(renderSpec: renderSpecString),
+                  primaryMeasureAxis:
+                      charts.NumericAxisSpec(renderSpec: renderSpecNum),
                   //userManagedState: _myState,
                   defaultInteractions: true,
                   selectionModels: [
@@ -115,7 +110,8 @@ class _ActivityCardWidgetState extends State<ActivityCardWidget> {
                         changedListener: _infoSelectionModelChanged)
                   ],
                   behaviors: [
-                    charts.SelectNearest(eventTrigger: charts.SelectionTrigger.tapAndDrag),
+                    charts.SelectNearest(
+                        eventTrigger: charts.SelectionTrigger.tapAndDrag),
                     charts.DomainHighlighter(),
                   ],
                 ),
@@ -152,10 +148,12 @@ class ActivityOuterStatefulWidget extends StatefulWidget {
   ActivityOuterStatefulWidget(this.model);
 
   @override
-  _ActivityOuterStatefulWidgetState createState() => _ActivityOuterStatefulWidgetState();
+  _ActivityOuterStatefulWidgetState createState() =>
+      _ActivityOuterStatefulWidgetState();
 }
 
-class _ActivityOuterStatefulWidgetState extends State<ActivityOuterStatefulWidget> {
+class _ActivityOuterStatefulWidgetState
+    extends State<ActivityOuterStatefulWidget> {
   @override
   Widget build(BuildContext context) {
     return ActivityCardWidget.withSampleData(widget.model);

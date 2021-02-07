@@ -13,13 +13,19 @@ class MeasuresCardDataModel extends DataModel {
   /// A table with sampling size of each measure type
   Map<String, int> get samplingTable => _samplingTable;
 
+  /// The list of measures
+  List<Measures> get measures => _samplingTable.entries
+      .map((entry) => Measures(entry.key, entry.value))
+      .toList();
+
   MeasuresCardDataModel() : super();
 
   void init(StudyController controller) {
     super.init(controller);
 
     // initialize the sampling table
-    controller.study.measures.forEach((measure) => _samplingTable[measure.type.name] = 0);
+    controller.study.measures
+        .forEach((measure) => _samplingTable[measure.type.name] = 0);
 
     // listen to incoming events in order to count the measure types
     controller.events.listen((datum) => _samplingTable[datum.format.name]++);

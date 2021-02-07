@@ -6,7 +6,7 @@ class LocalStudyManager implements StudyManager {
   Future<void> initialize() => null;
 
   Future<Study> getStudy(String studyId) async =>
-      _study ??= await _getWristWatchStudy(studyId);
+      _study ??= await _getPulmonaryStudy(studyId);
 
   Future<Study> _getWristWatchStudy(String studyId) async {
     if (_study == null) {
@@ -227,6 +227,47 @@ class LocalStudyManager implements StudyManager {
               ))
               ..measures.add(SamplingSchema.common()
                   .measures[ContextSamplingPackage.LOCATION]))
+        // collect a coughing sample on a daily basis
+        // also collect location, and local weather and air quality of this sample
+        ..addTriggerTask(
+            PeriodicTrigger(period: Duration(minutes: 1)),
+            AppTask(
+              type: AudioUserTask.AUDIO_TYPE,
+              title: "Coughing",
+              description:
+                  'In this small exercise we would like to collect sound samples of coughing.',
+              instructions: 'Please cough 5 times.',
+              minutesToComplete: 1,
+            )
+              ..measures.add(AudioMeasure(
+                type: MeasureType(NameSpace.CARP, AudioSamplingPackage.AUDIO),
+                name: "Coughing",
+                studyId: studyId,
+              ))
+              ..measures.add(SamplingSchema.common()
+                  .measures[ContextSamplingPackage.LOCATION])
+              ..measures.add(SamplingSchema.common()
+                  .measures[ContextSamplingPackage.WEATHER])
+              ..measures.add(SamplingSchema.common()
+                  .measures[ContextSamplingPackage.AIR_QUALITY]))
+        // collect a reading / audio sample on a daily basis
+        ..addTriggerTask(
+            PeriodicTrigger(period: Duration(minutes: 1)),
+            AppTask(
+              type: AudioUserTask.AUDIO_TYPE,
+              title: "Reading",
+              description:
+                  'In this small exercise we would like to collect sound data while you are reading.',
+              instructions: 'Please read the following textaloud.\n\n'
+                  'Many, many years ago lived an emperor, who thought so much of new clothes that he spent all his money in order to obtain them; his only ambition was to be always well dressed. '
+                  'He did not care for his soldiers, and the theatre did not amuse him; the only thing, in fact, he thought anything of was to drive out and show a new suit of clothes. '
+                  'He had a coat for every hour of the day; and as one would say of a king "He is in his cabinet," so one could say of him, "The emperor is in his dressing-room."',
+              minutesToComplete: 3,
+            )..measures.add(AudioMeasure(
+                type: MeasureType(NameSpace.CARP, AudioSamplingPackage.AUDIO),
+                name: "Reading",
+                studyId: studyId,
+              )))
         // when the reading (audio) measure is collected, the add a user task to
         // collect location, and local weather and air quality
         ..addTriggerTask(

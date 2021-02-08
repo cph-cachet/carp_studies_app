@@ -30,7 +30,7 @@ class _StudyVisualizationState extends State<StudyVisualization> {
                             return Scrollbar(
                               child: ListView.builder(
                                   itemCount: widget.model.messages.length,
-                                  padding: EdgeInsets.symmetric(vertical: 8.0),
+                                  padding: EdgeInsets.symmetric(vertical: 5.0),
                                   itemBuilder: (context, index) {
                                     return _aboutStudyCard(context, widget.model.messages[index]);
                                   }),
@@ -115,7 +115,7 @@ class _StudyVisualizationState extends State<StudyVisualization> {
         borderRadius: BorderRadius.circular(10.0),
       ),
       elevation: 4,
-      margin: EdgeInsets.all(10),
+      margin: EdgeInsets.all(5),
     );
   }
 }

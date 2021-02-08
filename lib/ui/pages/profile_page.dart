@@ -27,18 +27,6 @@ class ProfilePage extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: 15),
-                    // TODO: remove this
-                    ElevatedButton(
-                      child: Text("View Audio Tasks"),
-                      onPressed: () => Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) {
-                            return AudioTaskPage();
-                          },
-                        ),
-                      ),
-                    ),
                   ],
                 ),
               ),

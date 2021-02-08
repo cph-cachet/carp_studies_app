@@ -5,8 +5,7 @@ class StepsCardWidget extends StatefulWidget {
   final List<Color> colors;
   final List<charts.Series<Steps, String>> seriesList;
 
-  StepsCardWidget(this.seriesList, this.model,
-      {this.colors = const [CACHET.BLUE_1]});
+  StepsCardWidget(this.seriesList, this.model, {this.colors = const [CACHET.BLUE_1]});
 
   factory StepsCardWidget.withSampleData(StepsCardDataModel model) =>
       StepsCardWidget(_createChartList(model, [CACHET.BLUE_1]), model);
@@ -46,7 +45,7 @@ class _StepsCardWidgetState extends State<StepsCardWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(5.0),
       child: Card(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         elevation: 4,
@@ -61,8 +60,7 @@ class _StepsCardWidgetState extends State<StepsCardWidget> {
                     children: [
                       CardHeader(
                         title: 'Steps',
-                        iconAssetName: Icon(Icons.directions_walk,
-                            color: Theme.of(context).primaryColor),
+                        iconAssetName: Icon(Icons.directions_walk, color: Theme.of(context).primaryColor),
                         heroTag: 'steps-card',
                         values: ['$_selectedSteps steps'],
                         colors: widget.colors,
@@ -78,8 +76,7 @@ class _StepsCardWidgetState extends State<StepsCardWidget> {
                           domainAxis: charts.OrdinalAxisSpec(
                             renderSpec: renderSpecString,
                           ),
-                          primaryMeasureAxis:
-                              charts.NumericAxisSpec(renderSpec: renderSpecNum),
+                          primaryMeasureAxis: charts.NumericAxisSpec(renderSpec: renderSpecNum),
                           defaultInteractions: false,
                           selectionModels: [
                             charts.SelectionModelConfig(
@@ -87,9 +84,7 @@ class _StepsCardWidgetState extends State<StepsCardWidget> {
                                 changedListener: _infoSelectionModelChanged)
                           ],
                           behaviors: [
-                            charts.SelectNearest(
-                                eventTrigger:
-                                    charts.SelectionTrigger.tapAndDrag),
+                            charts.SelectNearest(eventTrigger: charts.SelectionTrigger.tapAndDrag),
                             charts.DomainHighlighter(),
                           ],
                         ),
@@ -108,8 +103,7 @@ class _StepsCardWidgetState extends State<StepsCardWidget> {
   void _infoSelectionModelChanged(charts.SelectionModel model) {
     if (model.hasDatumSelection)
       setState(() {
-        _selectedSteps =
-            model.selectedSeries[0].measureFn(model.selectedDatum[0].index);
+        _selectedSteps = model.selectedSeries[0].measureFn(model.selectedDatum[0].index);
       });
   }
 }
@@ -119,8 +113,7 @@ class StepsOuterStatefulWidget extends StatefulWidget {
   StepsOuterStatefulWidget(this.model);
 
   @override
-  _StepsOuterStatefulWidgetState createState() =>
-      _StepsOuterStatefulWidgetState();
+  _StepsOuterStatefulWidgetState createState() => _StepsOuterStatefulWidgetState();
 }
 
 class _StepsOuterStatefulWidgetState extends State<StepsOuterStatefulWidget> {

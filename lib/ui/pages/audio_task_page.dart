@@ -31,23 +31,7 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
     return Scaffold(
       body: Container(
         padding: EdgeInsets.symmetric(horizontal: 15),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            SizedBox(height: 35),
-            _header(),
-            SizedBox(height: 35),
-            Image(
-                image: AssetImage('assets/images/audio.png'),
-                width: 220,
-                height: 220),
-            SizedBox(height: 55),
-            _title(),
-            SizedBox(height: 10),
-            _description(),
-            _button(),
-          ],
-        ),
+        child: _stepSelector(),
       ),
     );
   }
@@ -97,157 +81,196 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
           tooltip: 'Close',
           onPressed: () {
             print("close");
-            // TODO: cancelation confirmation?
+            // TODO: close confirmation
           },
         ),
       ],
     );
   }
 
-  Widget _title() {
-    return StreamBuilder<UserTaskState>(
-        stream: audioUserTask.stateEvents,
-        initialData: UserTaskState.enqueued,
-        builder: (context, AsyncSnapshot<UserTaskState> snapshot) {
-          switch (snapshot.data) {
-            case UserTaskState.enqueued:
-              return Text(audioUserTask.title, style: audioTitleStyle);
-            case UserTaskState.started:
-              return Text('Recording...', style: audioTitleStyle);
-            case UserTaskState.done:
-              return Text('Done!', style: audioTitleStyle);
-            default:
-              return SizedBox.shrink();
-          }
-        });
+  Widget _stepSelector() {
+    if (_currentStep == 0)
+      return _stepOne(); //task description
+    else if (_currentStep == 1)
+      return _stepTwo(); // task instructions
+    else if (_currentStep == 2)
+      return _stepThree();
+    else
+      return (SizedBox.shrink());
   }
 
-  Widget _description() {
-    return StreamBuilder<UserTaskState>(
-        stream: audioUserTask.stateEvents,
-        initialData: UserTaskState.enqueued,
-        builder: (context, AsyncSnapshot<UserTaskState> snapshot) {
-          switch (snapshot.data) {
-            case UserTaskState.enqueued:
-              return Text(
-                  '${audioUserTask.description}\n\nPlease press the button below when ready.',
-                  style: audioDescriptionStyle);
-            case UserTaskState.started:
-              return Text(audioUserTask.instructions, style: audioContentStyle);
-            case UserTaskState.done:
-              return Text(
-                  'Recording completed. Press the green button to save this recording.\n\n'
-                  'If you want to redo the recording the press the button on the left.',
-                  style: audioDescriptionStyle);
-            default:
-              return Text('');
-          }
-        });
+  Widget _stepOne() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        SizedBox(height: 35),
+        _header(),
+        SizedBox(height: 35),
+        Image(image: AssetImage('assets/images/audio.png'), width: 220, height: 220),
+        SizedBox(height: 40),
+        Text("This is the title", style: audioTitleStyle),
+        SizedBox(height: 10),
+        Text("This is the description", style: audioDescriptionStyle),
+        Expanded(
+          child: Align(
+            alignment: FractionalOffset.bottomCenter,
+            child: Padding(
+              padding: EdgeInsets.only(bottom: 30.0),
+              child: CircleAvatar(
+                radius: 30,
+                backgroundColor: CACHET.RED_1,
+                child: IconButton(
+                  onPressed: () {
+                    print("start recording");
+                    // TODO: change task state to start
+                    setState(() {
+                      _currentStep = 1;
+                    });
+                  },
+                  padding: EdgeInsets.all(0),
+                  icon: Icon(Icons.mic, color: Colors.white, size: 30),
+                ),
+              ),
+            ),
+          ),
+        )
+      ],
+    );
   }
 
-  Widget _button() {
-    return StreamBuilder<UserTaskState>(
-        stream: audioUserTask.stateEvents,
-        initialData: UserTaskState.enqueued,
-        builder: (context, AsyncSnapshot<UserTaskState> snapshot) {
-          switch (snapshot.data) {
-            case UserTaskState.enqueued:
-              return _record();
-            case UserTaskState.started:
-              return _recording();
-            case UserTaskState.done:
-              return _done();
-            default:
-              return SizedBox.shrink();
-          }
-        });
-  }
-
-  Widget _record() {
-    return Expanded(
-      child: Align(
-        alignment: FractionalOffset.bottomCenter,
-        child: Padding(
-          padding: EdgeInsets.only(bottom: 60.0),
-          child: CircleAvatar(
-            radius: 30,
-            backgroundColor: CACHET.RED_1,
-            child: IconButton(
-              onPressed: () => audioUserTask.onRecordStart(),
-              padding: EdgeInsets.all(0),
-              icon: Icon(Icons.mic, color: Colors.white, size: 40),
+  Widget _stepTwo() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        SizedBox(height: 35),
+        _header(),
+        SizedBox(height: 35),
+        Image(image: AssetImage('assets/images/audio.png'), width: 220, height: 220),
+        SizedBox(height: 40),
+        Text("Recording...", style: audioTitleStyle),
+        SizedBox(height: 10),
+        // TODO: put here instruccions
+        Text("This are the instructions", style: audioContentStyle),
+        SizedBox(height: 10),
+        Expanded(
+          flex: 2,
+          child: Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            elevation: 4,
+            child: Scrollbar(
+              child: SingleChildScrollView(
+                scrollDirection: Axis.vertical, //.horizontal
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  // TODO: put here extra instruccions
+                  child: Text(
+                      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut ac pellentesque nibh. Nam eget libero sit amet ex tempus ultrices. Maecenas nisi ligula, aliquam a ullamcorper id, auctor eu ipsum. Sed tristique sapien sed nisl bibendum facilisis. Suspendisse ut elit lobortis, commodo sem in, molestie augue. Donec non magna eu odio accumsan tincidunt. Quisque a tellus ligula. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut ac pellentesque nibh. Nam eget libero sit amet ex tempus ultrices. Maecenas nisi ligula, aliquam a ullamcorper id, auctor eu ipsum. Sed tristique sapien sed nisl bibendum facilisis. Suspendisse ut elit lobortis, commodo sem in, molestie augue. Donec non magna eu odio accumsan tincidunt. Quisque a tellus ligula. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut ac pellentesque nibh. Nam eget libero sit amet ex tempus ultrices. Maecenas nisi ligula, aliquam a ullamcorper id, auctor eu ipsum. Sed tristique sapien sed nisl bibendum facilisis. Suspendisse ut elit lobortis, commodo sem in, molestie augue. Donec non magna eu odio accumsan tincidunt. Quisque a tellus ligula. ",
+                      style: audioInstructionStyle),
+                ),
+              ),
             ),
           ),
         ),
-      ),
+        SizedBox(height: 10),
+        Expanded(
+          flex: 1,
+          child: Align(
+            alignment: FractionalOffset.bottomCenter,
+            child: Padding(
+              padding: EdgeInsets.only(bottom: 30.0),
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  SizedBox(
+                    width: 60,
+                    height: 60,
+                    child: CircularProgressIndicator(
+                      backgroundColor: CACHET.RED_3,
+                      valueColor: AlwaysStoppedAnimation(CACHET.RED_2),
+                      strokeWidth: 10,
+                    ),
+                  ),
+                  CircleAvatar(
+                    radius: 30,
+                    backgroundColor: CACHET.RED_1,
+                    child: IconButton(
+                      onPressed: () {
+                        print("stop recording");
+                        // TODO: change task state to done
+                        setState(() {
+                          _currentStep = 2;
+                        });
+                      },
+                      padding: EdgeInsets.all(0),
+                      icon: Icon(Icons.stop, color: Colors.white, size: 30),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 
-  Widget _recording() {
-    return Expanded(
-      child: Align(
-        alignment: FractionalOffset.bottomCenter,
-        child: Padding(
-          padding: EdgeInsets.only(bottom: 60.0),
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              SizedBox(
-                width: 80,
-                height: 80,
-                child: CircularProgressIndicator(
-                  backgroundColor: CACHET.RED_3,
-                  valueColor: AlwaysStoppedAnimation(CACHET.RED_2),
-                  strokeWidth: 10,
-                ),
+  Widget _stepThree() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        SizedBox(height: 35),
+        _header(),
+        SizedBox(height: 35),
+        Image(image: AssetImage('assets/images/audio.png'), width: 220, height: 220),
+        SizedBox(height: 40),
+        Text("Done!", style: audioTitleStyle),
+        SizedBox(height: 10),
+        Text(
+            "Recording completed. Press the green button to save this recording.\nIf you want to start over the recording press the button in the left.",
+            style: audioDescriptionStyle),
+        Expanded(
+          child: Align(
+            alignment: FractionalOffset.bottomCenter,
+            child: Padding(
+              padding: EdgeInsets.only(bottom: 30.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  SizedBox(width: 30),
+                  IconButton(
+                    onPressed: () {
+                      print('restart recording');
+                      // TODO: change task state to start
+                      setState(() {
+                        _currentStep = 1;
+                      });
+                    },
+                    padding: EdgeInsets.all(0),
+                    icon: Icon(Icons.replay, size: 25, color: CACHET.GREY_5),
+                  ),
+                  CircleAvatar(
+                    radius: 30,
+                    backgroundColor: CACHET.GREEN_1,
+                    child: IconButton(
+                      onPressed: () {
+                        print("done");
+                        // TODO: save
+                        // TODO: change task state to done
+                      },
+                      padding: EdgeInsets.all(0),
+                      icon: Icon(Icons.check_circle_outline, color: Colors.white, size: 30),
+                    ),
+                  ),
+                  SizedBox(width: 50),
+                  SizedBox(width: 30),
+                ],
               ),
-              CircleAvatar(
-                radius: 35,
-                backgroundColor: CACHET.RED_1,
-                child: IconButton(
-                  onPressed: () => audioUserTask.onRecordStop(),
-                  padding: EdgeInsets.all(0),
-                  icon: Icon(Icons.graphic_eq, color: Colors.white, size: 40),
-                ),
-              ),
-            ],
+            ),
           ),
         ),
-      ),
-    );
-  }
-
-  Widget _done() {
-    return Expanded(
-      child: Align(
-        alignment: FractionalOffset.bottomCenter,
-        child: Padding(
-          padding: EdgeInsets.only(bottom: 60.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              SizedBox(width: 30),
-              IconButton(
-                onPressed: () => audioUserTask.onRecordStart(),
-                padding: EdgeInsets.all(0),
-                icon: Icon(Icons.replay, size: 25, color: CACHET.GREY_5),
-              ),
-              CircleAvatar(
-                radius: 30,
-                backgroundColor: CACHET.GREEN_1,
-                child: IconButton(
-                  onPressed: () => Navigator.pop(context),
-                  padding: EdgeInsets.all(0),
-                  icon: Icon(Icons.check_circle_outline,
-                      color: Colors.white, size: 40),
-                ),
-              ),
-              SizedBox(width: 30),
-              SizedBox(width: 30),
-            ],
-          ),
-        ),
-      ),
+      ],
     );
   }
 }

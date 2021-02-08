@@ -48,7 +48,7 @@ class _StepsCardWidgetState extends State<StepsCardWidget> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Card(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         elevation: 4,
         child: Padding(
           padding: const EdgeInsets.all(8.0),

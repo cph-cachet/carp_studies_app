@@ -13,7 +13,7 @@ class _TaskListState extends State<TaskList> {
   Widget build(BuildContext context) {
     return Navigator(
       onGenerateRoute: (RouteSettings settings) {
-        return new MaterialPageRoute(
+        return MaterialPageRoute(
           settings: settings,
           builder: (BuildContext context) {
             return Scaffold(
@@ -21,18 +21,7 @@ class _TaskListState extends State<TaskList> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   CarpAppBar(),
-                  Flexible(
-                    child: StreamBuilder<UserTask>(
-                      stream: widget.model.userTaskEvents,
-                      builder: (context, snapshot) {
-                        return _scoreBoard(
-                          context,
-                          widget.model.daysInStudy,
-                          widget.model.taskCompleted,
-                        );
-                      },
-                    ),
-                  ),
+                  _scoreBoard(),
                   SizedBox(height: 15),
                   Padding(
                       padding: EdgeInsets.symmetric(horizontal: 15),
@@ -86,6 +75,7 @@ class _TaskListState extends State<TaskList> {
     return Center(
       child: Card(
         margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         elevation: 5,
         child: ListTile(
           leading: CircleAvatar(
@@ -122,6 +112,7 @@ class _TaskListState extends State<TaskList> {
         opacity: 0.6,
         child: Card(
           margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           elevation: 3,
           child: ListTile(
             leading: Icon(Icons.check_circle_outlined, color: CACHET.GREEN_1),
@@ -133,46 +124,53 @@ class _TaskListState extends State<TaskList> {
     );
   }
 
-  Widget _scoreBoard(BuildContext context, int daysInStudy, int taskCompleted) {
-    return Container(
-      height: 110,
-      color: Theme.of(context).accentColor,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SizedBox(height: 15),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Column(
-                children: [
-                  Text(daysInStudy.toString(),
-                      style: scoreNumberStyle.copyWith(color: Theme.of(context).primaryColor)),
-                  Text('Days in study',
-                      style: scoreTextStyle.copyWith(color: Theme.of(context).primaryColor)),
-                ],
-              ),
-              Container(
-                  height: 66,
-                  child: VerticalDivider(
-                    color: Theme.of(context).primaryColor,
-                    width: 15,
-                  )),
-              Column(
-                children: [
-                  Text(taskCompleted.toString(),
-                      style: scoreNumberStyle.copyWith(color: Theme.of(context).primaryColor)),
-                  Text('Tasks completed',
-                      style: scoreTextStyle.copyWith(color: Theme.of(context).primaryColor)),
-                ],
-              )
-            ],
+  Widget _scoreBoard() {
+    return StreamBuilder<UserTask>(
+      stream: widget.model.userTaskEvents,
+      builder: (context, snapshot) {
+        return Expanded(
+          child: Container(
+            height: 110,
+            color: Theme.of(context).accentColor,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(height: 15),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Column(
+                      children: [
+                        Text(widget.model.daysInStudy.toString(),
+                            style: scoreNumberStyle.copyWith(color: Theme.of(context).primaryColor)),
+                        Text('Days in study',
+                            style: scoreTextStyle.copyWith(color: Theme.of(context).primaryColor)),
+                      ],
+                    ),
+                    Container(
+                        height: 66,
+                        child: VerticalDivider(
+                          color: Theme.of(context).primaryColor,
+                          width: 15,
+                        )),
+                    Column(
+                      children: [
+                        Text(widget.model.taskCompleted.toString(),
+                            style: scoreNumberStyle.copyWith(color: Theme.of(context).primaryColor)),
+                        Text('Tasks completed',
+                            style: scoreTextStyle.copyWith(color: Theme.of(context).primaryColor)),
+                      ],
+                    )
+                  ],
+                ),
+                SizedBox(height: 15),
+              ],
+            ),
           ),
-          SizedBox(height: 15),
-        ],
-      ),
+        );
+      },
     );
   }
 

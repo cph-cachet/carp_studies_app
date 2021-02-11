@@ -15,16 +15,14 @@ class AudioUserTask extends UserTask {
   int ongoingRecordingDuration;
 
   AudioUserTask(AppTaskExecutor executor) : super(executor) {
-    recordingDuration = (executor.appTask.minutesToComplete != null)
-        ? executor.appTask.minutesToComplete * 60
-        : 60;
+    recordingDuration =
+        (executor.appTask.minutesToComplete != null) ? executor.appTask.minutesToComplete * 60 : 60;
   }
 
   void onStart(BuildContext context) {
     Navigator.push(
       context,
-      MaterialPageRoute(
-          builder: (context) => AudioTaskPage(audioUserTask: this)),
+      MaterialPageRoute(builder: (context) => AudioTaskPage(audioUserTask: this)),
     );
   }
 

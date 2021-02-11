@@ -35,13 +35,9 @@ class CARPStudyAppState extends State<CARPStudyAppHome> {
             activeIcon: Icon(Icons.playlist_add_check),
           ),
           BottomNavigationBarItem(
-              icon: Icon(Icons.announcement_outlined),
-              label: 'About',
-              activeIcon: Icon(Icons.announcement)),
+              icon: Icon(Icons.announcement_outlined), label: 'About', activeIcon: Icon(Icons.announcement)),
           BottomNavigationBarItem(
-              icon: Icon(Icons.leaderboard_outlined),
-              label: 'Data',
-              activeIcon: Icon(Icons.leaderboard)),
+              icon: Icon(Icons.leaderboard_outlined), label: 'Data', activeIcon: Icon(Icons.leaderboard)),
         ],
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,

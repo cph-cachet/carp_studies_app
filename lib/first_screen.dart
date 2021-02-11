@@ -9,7 +9,6 @@ class CARPStudyApp extends StatelessWidget {
       routes: {
         '/HomePage': (context) => CARPStudyAppHome(),
         '/ConsentPage': (context) => InformedConsentPage(),
-        '/ProfilePage': (context) => ProfilePage(), // TODO: remove
       },
     );
   }
@@ -26,9 +25,8 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      body: Center(
+    return Scaffold(backgroundColor: Theme.of(context).scaffoldBackgroundColor, body: CARPStudyAppHome()
+        /* Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -49,7 +47,7 @@ class _SplashScreenState extends State<SplashScreen> {
             ),
           ],
         ),
-      ),
-    );
+      ), */
+        );
   }
 }

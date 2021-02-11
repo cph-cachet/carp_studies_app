@@ -10,39 +10,33 @@ class StudyVisualization extends StatefulWidget {
 
 class _StudyVisualizationState extends State<StudyVisualization> {
   Widget build(BuildContext context) {
-    return Navigator(onGenerateRoute: (RouteSettings settings) {
-      return new MaterialPageRoute(
-          settings: settings,
-          builder: (BuildContext context) {
-            return Scaffold(
-              body: Container(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    CarpAppBar(),
-                    //StudyBanner(),
-                    StudyCard(),
-                    Flexible(
-                      child: StreamBuilder<Datum>(
-                          stream: widget.model.samplingEvents,
-                          builder: (context, AsyncSnapshot<Datum> snapshot) {
-                            return Scrollbar(
-                              child: ListView.builder(
-                                  itemCount: widget.model.messages.length,
-                                  padding: EdgeInsets.symmetric(vertical: 5.0),
-                                  itemBuilder: (context, index) {
-                                    return _aboutStudyCard(context, widget.model.messages[index]);
-                                  }),
-                            );
+    return Scaffold(
+      body: Container(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            CarpAppBar(),
+            //StudyBanner(),
+            StudyCard(),
+            Flexible(
+              child: StreamBuilder<Datum>(
+                  stream: widget.model.samplingEvents,
+                  builder: (context, AsyncSnapshot<Datum> snapshot) {
+                    return Scrollbar(
+                      child: ListView.builder(
+                          itemCount: widget.model.messages.length,
+                          padding: EdgeInsets.symmetric(vertical: 5.0),
+                          itemBuilder: (context, index) {
+                            return _aboutStudyCard(context, widget.model.messages[index]);
                           }),
-                    ),
-                  ],
-                ),
-              ),
-            );
-          });
-    });
+                    );
+                  }),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   Widget _aboutStudyCard(BuildContext context, Message message) {

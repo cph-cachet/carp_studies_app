@@ -77,6 +77,7 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
           tooltip: 'Close',
           onPressed: () {
             print("close");
+            _showCancelConfirmationDialog();
             // TODO: close confirmation
           },
         ),
@@ -270,6 +271,37 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
                 ),
               ),
             ),
+          ],
+        );
+      },
+    );
+  }
+
+  // Taken from RP
+  void _showCancelConfirmationDialog() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Discard results and quit?"),
+          actions: <Widget>[
+            FlatButton(
+              child: Text("NO"),
+              onPressed: () => Navigator.of(context).pop(), // Dismissing the pop-up
+            ),
+            FlatButton(
+              child: Text("YES"),
+              onPressed: () {
+                // Calling the onCancel method with which the developer can for e.g. save the result on the device.
+                // Only call it if it's not null
+                //widget.onCancel?.call(_taskResult);
+                // Popup dismiss
+                Navigator.of(context).pop();
+                // Exit the Ordered Task
+                Navigator.of(context).pop();
+              },
+            )
           ],
         );
       },

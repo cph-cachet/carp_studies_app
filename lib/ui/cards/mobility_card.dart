@@ -8,9 +8,7 @@ class MobilityCardWidget extends StatefulWidget {
       {this.colors = const [CACHET.BLUE_2, CACHET.BLUE_1, CACHET.RED_1]});
 
   factory MobilityCardWidget.withSampleData(MobilityCardDataModel model) {
-    return MobilityCardWidget(
-        _createChartList(model, [CACHET.BLUE_2, CACHET.BLUE_1, CACHET.RED_1]),
-        model);
+    return MobilityCardWidget(_createChartList(model, [CACHET.BLUE_2, CACHET.BLUE_1, CACHET.RED_1]), model);
   }
 
   static const secondaryMeasureAxisId = 'secondaryMeasureAxisId';
@@ -61,36 +59,34 @@ class _MobilityCardWidgetState extends State<MobilityCardWidget> {
   @override
   void initState() {
     // Get current day mobility // TODO: REFACTOR
-    _measures['weeklyHomeStay'][1] =
-        widget.model.weeklyHomeStay[DateTime.now().weekday];
-    _measures['weeklyDistanceTraveled'][0] =
-        widget.model.weeklyDistanceTraveled[DateTime.now().weekday];
-    _measures['weeklyPlaces'][2] =
-        widget.model.weeklyPlaces[DateTime.now().weekday];
+    _measures['weeklyHomeStay'][1] = widget.model.weeklyHomeStay[DateTime.now().weekday];
+    _measures['weeklyDistanceTraveled'][0] = widget.model.weeklyDistanceTraveled[DateTime.now().weekday];
+    _measures['weeklyPlaces'][2] = widget.model.weeklyPlaces[DateTime.now().weekday];
 
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    RPLocalizations locale = RPLocalizations.of(context);
+
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(5.0),
       child: Card(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         elevation: 4,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: <Widget>[
               CardHeader(
-                title: 'Mobility',
-                iconAssetName: Icon(Icons.emoji_transportation,
-                    color: Theme.of(context).primaryColor),
+                title: locale.translate('Mobility'),
+                iconAssetName: Icon(Icons.emoji_transportation, color: Theme.of(context).primaryColor),
                 heroTag: 'mobility-card',
                 values: [
-                  '${_measures['weeklyDistanceTraveled'][0]} km travelled',
-                  '${_measures['weeklyHomeStay'][1]} % homestay',
-                  '${_measures['weeklyPlaces'][2]} places'
+                  '${_measures['weeklyDistanceTraveled'][0]} ' + locale.translate('km travelled'),
+                  '${_measures['weeklyHomeStay'][1]} ' + locale.translate('% homestay'),
+                  '${_measures['weeklyPlaces'][2]} ' + locale.translate('places'),
                 ],
                 colors: widget.colors,
               ),
@@ -104,12 +100,10 @@ class _MobilityCardWidgetState extends State<MobilityCardWidget> {
                   ),
                   primaryMeasureAxis: charts.NumericAxisSpec(
                       renderSpec: renderSpecNum,
-                      tickProviderSpec: charts.BasicNumericTickProviderSpec(
-                          desiredTickCount: 3)),
+                      tickProviderSpec: charts.BasicNumericTickProviderSpec(desiredTickCount: 3)),
                   secondaryMeasureAxis: charts.NumericAxisSpec(
                       renderSpec: renderSpecNum,
-                      tickProviderSpec: charts.BasicNumericTickProviderSpec(
-                          desiredTickCount: 3)),
+                      tickProviderSpec: charts.BasicNumericTickProviderSpec(desiredTickCount: 3)),
                   customSeriesRenderers: [
                     charts.LineRendererConfig(
                       customRendererId: 'customLine',
@@ -117,23 +111,19 @@ class _MobilityCardWidgetState extends State<MobilityCardWidget> {
                       areaOpacity: 0.3,
                       layoutPaintOrder: 0,
                     ),
-                    charts.BarRendererConfig(
-                        groupingType: charts.BarGroupingType.grouped)
+                    charts.BarRendererConfig(groupingType: charts.BarGroupingType.grouped)
                   ],
                   defaultInteractions: false,
                   selectionModels: [
                     charts.SelectionModelConfig(
-                        type: charts.SelectionModelType.info,
-                        changedListener: _infoSelectionModelChanged),
+                        type: charts.SelectionModelType.info, changedListener: _infoSelectionModelChanged),
                   ],
                   behaviors: [
                     charts.LinePointHighlighter(
                       defaultRadiusPx: 5,
                       radiusPaddingPx: 20.0,
-                      showHorizontalFollowLine:
-                          charts.LinePointHighlighterFollowLineType.nearest,
-                      showVerticalFollowLine:
-                          charts.LinePointHighlighterFollowLineType.nearest,
+                      showHorizontalFollowLine: charts.LinePointHighlighterFollowLineType.nearest,
+                      showVerticalFollowLine: charts.LinePointHighlighterFollowLineType.nearest,
                       dashPattern: [],
                     ),
                     charts.SelectNearest(
@@ -172,12 +162,10 @@ class MobilityOuterStatefulWidget extends StatefulWidget {
   MobilityOuterStatefulWidget(this.model);
 
   @override
-  _MobilityOuterStatefulWidgetState createState() =>
-      _MobilityOuterStatefulWidgetState();
+  _MobilityOuterStatefulWidgetState createState() => _MobilityOuterStatefulWidgetState();
 }
 
-class _MobilityOuterStatefulWidgetState
-    extends State<MobilityOuterStatefulWidget> {
+class _MobilityOuterStatefulWidgetState extends State<MobilityOuterStatefulWidget> {
   @override
   Widget build(BuildContext context) {
     return MobilityCardWidget.withSampleData(widget.model);

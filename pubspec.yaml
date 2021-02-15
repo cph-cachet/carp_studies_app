@@ -43,6 +43,9 @@ dependencies:
   charts_flutter: ^0.9.0
   intl: ^0.16.1
 
+  flutter_localizations:
+        sdk: flutter
+
 
 # Overriding carp libraries to use the local or github copy
 # Remove this before release of package
@@ -97,6 +100,8 @@ flutter:
     - assets/icons/
     - assets/cachet_logo.png
     - assets/logo.png
+    - assets/lang/en.json
+    - assets/lang/da.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

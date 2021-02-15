@@ -8,9 +8,7 @@ class ActivityCardWidget extends StatefulWidget {
       {this.colors = const [CACHET.BLUE_1, CACHET.BLUE_2, CACHET.BLUE_3]});
 
   factory ActivityCardWidget.withSampleData(ActivityCardDataModel model) {
-    return ActivityCardWidget(
-        _createChartList(model, [CACHET.BLUE_1, CACHET.BLUE_2, CACHET.BLUE_3]),
-        model);
+    return ActivityCardWidget(_createChartList(model, [CACHET.BLUE_1, CACHET.BLUE_2, CACHET.BLUE_3]), model);
   }
 
   static List<charts.Series<Activity, String>> _createChartList(
@@ -55,36 +53,33 @@ class _ActivityCardWidgetState extends State<ActivityCardWidget> {
   @override
   void initState() {
     // Get current day activities
-    _walk =
-        widget.model.activities[ActivityType.WALKING][DateTime.now().weekday];
-    _run =
-        widget.model.activities[ActivityType.RUNNING][DateTime.now().weekday];
-    _cycle = widget.model.activities[ActivityType.ON_BICYCLE]
-        [DateTime.now().weekday];
+    _walk = widget.model.activities[ActivityType.WALKING][DateTime.now().weekday];
+    _run = widget.model.activities[ActivityType.RUNNING][DateTime.now().weekday];
+    _cycle = widget.model.activities[ActivityType.ON_BICYCLE][DateTime.now().weekday];
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    //print(widget.model.toString());
+    RPLocalizations locale = RPLocalizations.of(context);
+
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(5.0),
       child: Card(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         elevation: 4,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: <Widget>[
               CardHeader(
-                title: 'Activity',
-                iconAssetName: Icon(Icons.fitness_center,
-                    color: Theme.of(context).primaryColor),
+                title: locale.translate('Activity'),
+                iconAssetName: Icon(Icons.fitness_center, color: Theme.of(context).primaryColor),
                 heroTag: 'activity-card',
                 values: [
-                  '$_walk min walking',
-                  '$_run min running',
-                  '$_cycle min cycling'
+                  '$_walk ' + locale.translate('min walking'),
+                  '$_run ' + locale.translate('min running'),
+                  '$_cycle ' + locale.translate('min cycling')
                 ],
                 colors: widget.colors,
               ),
@@ -94,10 +89,8 @@ class _ActivityCardWidgetState extends State<ActivityCardWidget> {
                   widget.seriesList,
                   barGroupingType: charts.BarGroupingType.stacked,
                   animate: true,
-                  domainAxis:
-                      charts.OrdinalAxisSpec(renderSpec: renderSpecString),
-                  primaryMeasureAxis:
-                      charts.NumericAxisSpec(renderSpec: renderSpecNum),
+                  domainAxis: charts.OrdinalAxisSpec(renderSpec: renderSpecString),
+                  primaryMeasureAxis: charts.NumericAxisSpec(renderSpec: renderSpecNum),
                   //userManagedState: _myState,
                   defaultInteractions: true,
                   selectionModels: [
@@ -110,8 +103,7 @@ class _ActivityCardWidgetState extends State<ActivityCardWidget> {
                         changedListener: _infoSelectionModelChanged)
                   ],
                   behaviors: [
-                    charts.SelectNearest(
-                        eventTrigger: charts.SelectionTrigger.tapAndDrag),
+                    charts.SelectNearest(eventTrigger: charts.SelectionTrigger.tapAndDrag),
                     charts.DomainHighlighter(),
                   ],
                 ),
@@ -148,12 +140,10 @@ class ActivityOuterStatefulWidget extends StatefulWidget {
   ActivityOuterStatefulWidget(this.model);
 
   @override
-  _ActivityOuterStatefulWidgetState createState() =>
-      _ActivityOuterStatefulWidgetState();
+  _ActivityOuterStatefulWidgetState createState() => _ActivityOuterStatefulWidgetState();
 }
 
-class _ActivityOuterStatefulWidgetState
-    extends State<ActivityOuterStatefulWidget> {
+class _ActivityOuterStatefulWidgetState extends State<ActivityOuterStatefulWidget> {
   @override
   Widget build(BuildContext context) {
     return ActivityCardWidget.withSampleData(widget.model);

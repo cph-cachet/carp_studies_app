@@ -10,42 +10,42 @@ class StudyVisualization extends StatefulWidget {
 
 class _StudyVisualizationState extends State<StudyVisualization> {
   Widget build(BuildContext context) {
-    return Navigator(onGenerateRoute: (RouteSettings settings) {
-      return new MaterialPageRoute(
-          settings: settings,
-          builder: (BuildContext context) {
-            return Scaffold(
-              body: Container(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    CarpAppBar(),
-                    //StudyBanner(),
-                    StudyCard(),
-                    Flexible(
-                      child: StreamBuilder<Datum>(
-                          stream: widget.model.samplingEvents,
-                          builder: (context, AsyncSnapshot<Datum> snapshot) {
-                            return Scrollbar(
-                              child: ListView.builder(
-                                  itemCount: widget.model.messages.length,
-                                  padding: EdgeInsets.symmetric(vertical: 8.0),
-                                  itemBuilder: (context, index) {
-                                    return _aboutStudyCard(context, widget.model.messages[index]);
-                                  }),
-                            );
+    RPLocalizations locale = RPLocalizations.of(context);
+
+    return Scaffold(
+      body: Container(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            CarpAppBar(),
+            //StudyBanner(),
+            StudyCard(),
+            Flexible(
+              child: StreamBuilder<Datum>(
+                  stream: widget.model.samplingEvents,
+                  builder: (context, AsyncSnapshot<Datum> snapshot) {
+                    return Scrollbar(
+                      child: ListView.builder(
+                          itemCount: widget.model.messages.length,
+                          padding: EdgeInsets.symmetric(vertical: 5.0),
+                          itemBuilder: (context, index) {
+                            return _aboutStudyCard(context, widget.model.messages[index]);
                           }),
-                    ),
-                  ],
-                ),
-              ),
-            );
-          });
-    });
+                    );
+                  }),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   Widget _aboutStudyCard(BuildContext context, Message message) {
+    RPLocalizations locale = RPLocalizations.of(context);
+    // Initialization the language of the tiemago package
+    timeago.setLocaleMessages('da', timeago.DaMessages());
+
     return Card(
       semanticContainer: true,
       clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -83,13 +83,15 @@ class _StudyVisualizationState extends State<StudyVisualization> {
               Row(children: [
                 SizedBox(width: 15),
                 Text(
-                    message.type.toString().split('.')[1][0].toUpperCase() +
-                        message.type.toString().split('.')[1].substring(1) +
+                    locale.translate(message.type.toString().split('.')[1][0].toUpperCase() +
+                            message.type.toString().split('.')[1].substring(1)) +
                         ' - ' +
-                        timeago.format(DateTime.now().subtract(Duration(
-                            days: message.timestamp.day,
-                            hours: message.timestamp.hour,
-                            minutes: message.timestamp.minute))),
+                        timeago.format(
+                            DateTime.now().subtract(Duration(
+                                days: message.timestamp.day,
+                                hours: message.timestamp.hour,
+                                minutes: message.timestamp.minute)),
+                            locale: Localizations.localeOf(context).languageCode),
                     style: aboutCardSubtitleStyle.copyWith(color: Theme.of(context).primaryColor)),
               ]),
               SizedBox(height: 5),
@@ -114,8 +116,8 @@ class _StudyVisualizationState extends State<StudyVisualization> {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.0),
       ),
-      elevation: 5,
-      margin: EdgeInsets.all(10),
+      elevation: 4,
+      margin: EdgeInsets.all(5),
     );
   }
 }

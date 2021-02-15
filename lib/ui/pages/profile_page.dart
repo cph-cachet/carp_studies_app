@@ -3,35 +3,39 @@ part of carp_study_app;
 class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final height = MediaQuery.of(context).size.height;
+    RPLocalizations locale = RPLocalizations.of(context);
+
     return Scaffold(
       body: Container(
-        height: height,
-        child: Stack(
-          children: <Widget>[
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 5),
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    CarpAppBar(),
-                    SizedBox(height: 15),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 15),
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text('MY PROFILE',
-                            style: sectionTitleStyle.copyWith(color: Theme.of(context).primaryColor)),
-                      ),
-                    ),
-                    SizedBox(height: 15),
-                  ],
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(height: 40),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 15),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Row(
+                    children: [
+                      IconButton(
+                          icon:
+                              Icon(Icons.keyboard_backspace, color: Theme.of(context).primaryColor, size: 30),
+                          tooltip: 'Back',
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          }),
+                      SizedBox(width: 2),
+                      Text(locale.translate('MY PROFILE'),
+                          style: sectionTitleStyle.copyWith(color: Theme.of(context).primaryColor)),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+              SizedBox(height: 15),
+            ],
+          ),
         ),
       ),
     );

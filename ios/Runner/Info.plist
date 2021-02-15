@@ -49,5 +49,10 @@
 			<string>external-accessory</string>
 			<string>fetch</string>
 		</array>
+<key>CFBundleLocalizations</key>
+	<array>
+		<string>en</string>
+		<string>Danish</string>
+	</array>
 </dict>
 </plist>

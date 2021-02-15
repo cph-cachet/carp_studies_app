@@ -17,6 +17,8 @@ import 'package:carp_study_app/ui/carp_study_style.dart';
 import 'package:carp_study_app/ui/widgets/carp_app_bar.dart';
 import 'package:carp_survey_package/survey.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+
 import 'package:flutter/semantics.dart';
 //import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:research_package/research_package.dart';
@@ -29,10 +31,13 @@ import 'package:intl/intl.dart';
 
 part 'app.dart';
 part 'first_screen.dart';
+
 part 'blocs/app_bloc.dart';
+
 part 'data/study_manager.dart';
 part 'data/surveys.dart';
 part 'data/messages.dart';
+
 part 'models/data_model.dart';
 part 'models/tasklist_page_model.dart';
 part 'models/study_page_model.dart';
@@ -42,6 +47,7 @@ part 'models/cards/mobility_data_model.dart';
 part 'models/cards/steps_data_model.dart';
 part 'models/cards/measures_data_model.dart';
 part 'models/audio_user_task.dart';
+
 part 'ui/colors.dart';
 part 'ui/pages/data_viz_page.dart';
 part 'ui/pages/study_viz_page.dart';

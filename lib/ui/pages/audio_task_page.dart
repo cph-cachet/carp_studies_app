@@ -37,12 +37,14 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
   }
 
   Widget _header() {
+    RPLocalizations locale = RPLocalizations.of(context);
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         IconButton(
           icon: Icon(Icons.help_outline, color: Theme.of(context).primaryColor, size: 30),
-          tooltip: 'Help',
+          tooltip: locale.translate('Help'),
           onPressed: () {
             print("Help");
             // TODO: show help
@@ -74,7 +76,7 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
             )),
         IconButton(
           icon: Icon(Icons.close, color: Theme.of(context).primaryColor, size: 30),
-          tooltip: 'Close',
+          tooltip: locale.translate('Close'),
           onPressed: () {
             print("close");
             _showCancelConfirmationDialog();
@@ -104,6 +106,8 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
   }
 
   Widget _stepOne() {
+    RPLocalizations locale = RPLocalizations.of(context);
+
     return StreamBuilder<UserTaskState>(
       stream: audioUserTask.stateEvents,
       initialData: UserTaskState.enqueued,
@@ -118,7 +122,9 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
             SizedBox(height: 40),
             Text(audioUserTask.title, style: audioTitleStyle),
             SizedBox(height: 10),
-            Text('${audioUserTask.description}\n\nPlease press the button below when ready.',
+            Text(
+                '${audioUserTask.description}\n\n' +
+                    locale.translate('Please press the button below when ready.'),
                 style: audioDescriptionStyle),
             Expanded(
               child: Align(
@@ -144,6 +150,8 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
   }
 
   Widget _stepTwo() {
+    RPLocalizations locale = RPLocalizations.of(context);
+
     // TODO: split the instructions in the model instead of here
     return StreamBuilder<UserTaskState>(
       stream: audioUserTask.stateEvents,
@@ -157,7 +165,7 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
             SizedBox(height: 35),
             Image(image: AssetImage('assets/images/audio.png'), width: 220, height: 220),
             SizedBox(height: 40),
-            Text("Recording...", style: audioTitleStyle),
+            Text(locale.translate("Recording..."), style: audioTitleStyle),
             SizedBox(height: 10),
             // If instructions are too long, crete scrollable card for the extra instructions
             Text(audioUserTask.instructions.split('\n\n')[0], style: audioContentStyle),
@@ -223,6 +231,8 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
   }
 
   Widget _stepThree() {
+    RPLocalizations locale = RPLocalizations.of(context);
+
     return StreamBuilder<UserTaskState>(
       stream: audioUserTask.stateEvents,
       initialData: UserTaskState.enqueued,
@@ -235,11 +245,11 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
             SizedBox(height: 35),
             Image(image: AssetImage('assets/images/audio.png'), width: 220, height: 220),
             SizedBox(height: 40),
-            Text("Done!", style: audioTitleStyle),
+            Text(locale.translate("Done!"), style: audioTitleStyle),
             SizedBox(height: 10),
             Text(
-                'Recording completed. Press the green button to save this recording.\n\n'
-                'If you want to redo the recording the press the button on the left.',
+                locale.translate(
+                    'Recording completed. Press the green button to save this recording.\n\nIf you want to redo the recording the press the button on the left.'),
                 style: audioDescriptionStyle),
             Expanded(
               child: Align(
@@ -279,19 +289,21 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
 
   // Taken from RP
   void _showCancelConfirmationDialog() {
+    RPLocalizations locale = RPLocalizations.of(context);
+
     showDialog(
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("Discard results and quit?"),
+          title: Text(locale.translate("Discard results and quit?")),
           actions: <Widget>[
             FlatButton(
-              child: Text("NO"),
+              child: Text(locale.translate("NO")),
               onPressed: () => Navigator.of(context).pop(), // Dismissing the pop-up
             ),
             FlatButton(
-              child: Text("YES"),
+              child: Text(locale.translate("YES")),
               onPressed: () {
                 // Calling the onCancel method with which the developer can for e.g. save the result on the device.
                 // Only call it if it's not null

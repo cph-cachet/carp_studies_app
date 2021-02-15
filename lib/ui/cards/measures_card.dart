@@ -24,7 +24,8 @@ class _MeasuresCardWidgetState extends State<MeasuresCardWidget> {
       ];
 
   Widget build(BuildContext context) {
-    //print(widget.model.samplingTable);
+    RPLocalizations locale = RPLocalizations.of(context);
+
     return Padding(
       padding: const EdgeInsets.all(5.0),
       child: Card(
@@ -48,12 +49,14 @@ class _MeasuresCardWidgetState extends State<MeasuresCardWidget> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
-                                  Text('Hello Jakob', style: aboutCardTitleStyle), //TODO: get user name
+                                  Text(locale.translate('Hello') + ' ' + 'Jakob',
+                                      style: aboutCardTitleStyle), //TODO: get user name
                                   Text(
-                                      'Thank you for participating in this study. This a summary of your contribution to the study.',
+                                      locale.translate(
+                                          'Thank you for participating in this study. This a summary of your contribution to the study.'),
                                       style: aboutCardSubtitleStyle),
                                   SizedBox(height: 10),
-                                  Text('${widget.model.samplingSize} MEASURES',
+                                  Text('${widget.model.samplingSize} ' + locale.translate('MEASURES'),
                                       //textAlign: TextAlign.center,
                                       style: dataCardTitleStyle),
                                 ],

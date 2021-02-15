@@ -44,6 +44,8 @@ class _StepsCardWidgetState extends State<StepsCardWidget> {
 
   @override
   Widget build(BuildContext context) {
+    RPLocalizations locale = RPLocalizations.of(context);
+
     return Padding(
       padding: const EdgeInsets.all(5.0),
       child: Card(
@@ -59,10 +61,10 @@ class _StepsCardWidgetState extends State<StepsCardWidget> {
                   return Column(
                     children: [
                       CardHeader(
-                        title: 'Steps',
+                        title: locale.translate('Steps'),
                         iconAssetName: Icon(Icons.directions_walk, color: Theme.of(context).primaryColor),
                         heroTag: 'steps-card',
-                        values: ['$_selectedSteps steps'],
+                        values: ['$_selectedSteps ' + locale.translate('steps')],
                         colors: widget.colors,
                       ),
                       Container(

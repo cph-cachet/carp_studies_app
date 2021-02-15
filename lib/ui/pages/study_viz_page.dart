@@ -10,6 +10,8 @@ class StudyVisualization extends StatefulWidget {
 
 class _StudyVisualizationState extends State<StudyVisualization> {
   Widget build(BuildContext context) {
+    RPLocalizations locale = RPLocalizations.of(context);
+
     return Scaffold(
       body: Container(
         child: Column(
@@ -40,6 +42,10 @@ class _StudyVisualizationState extends State<StudyVisualization> {
   }
 
   Widget _aboutStudyCard(BuildContext context, Message message) {
+    RPLocalizations locale = RPLocalizations.of(context);
+    // Initialization the language of the tiemago package
+    timeago.setLocaleMessages('da', timeago.DaMessages());
+
     return Card(
       semanticContainer: true,
       clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -77,13 +83,15 @@ class _StudyVisualizationState extends State<StudyVisualization> {
               Row(children: [
                 SizedBox(width: 15),
                 Text(
-                    message.type.toString().split('.')[1][0].toUpperCase() +
-                        message.type.toString().split('.')[1].substring(1) +
+                    locale.translate(message.type.toString().split('.')[1][0].toUpperCase() +
+                            message.type.toString().split('.')[1].substring(1)) +
                         ' - ' +
-                        timeago.format(DateTime.now().subtract(Duration(
-                            days: message.timestamp.day,
-                            hours: message.timestamp.hour,
-                            minutes: message.timestamp.minute))),
+                        timeago.format(
+                            DateTime.now().subtract(Duration(
+                                days: message.timestamp.day,
+                                hours: message.timestamp.hour,
+                                minutes: message.timestamp.minute)),
+                            locale: Localizations.localeOf(context).languageCode),
                     style: aboutCardSubtitleStyle.copyWith(color: Theme.of(context).primaryColor)),
               ]),
               SizedBox(height: 5),

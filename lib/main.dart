@@ -17,6 +17,7 @@ import 'package:carp_study_app/ui/carp_study_style.dart';
 import 'package:carp_study_app/ui/widgets/carp_app_bar.dart';
 import 'package:carp_survey_package/survey.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'package:flutter/semantics.dart';
 //import 'package:flutter_localizations/flutter_localizations.dart';

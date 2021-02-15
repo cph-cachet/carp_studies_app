@@ -24,6 +24,8 @@ class CARPStudyAppState extends State<CARPStudyAppHome> {
   }
 
   Widget build(BuildContext context) {
+    RPLocalizations locale = RPLocalizations.of(context);
+
     return Scaffold(
       body: _pages[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
@@ -31,13 +33,17 @@ class CARPStudyAppState extends State<CARPStudyAppHome> {
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.playlist_add_check_outlined),
-            label: 'Tasks',
+            label: locale.translate('Tasks'),
             activeIcon: Icon(Icons.playlist_add_check),
           ),
           BottomNavigationBarItem(
-              icon: Icon(Icons.announcement_outlined), label: 'About', activeIcon: Icon(Icons.announcement)),
+              icon: Icon(Icons.announcement_outlined),
+              label: locale.translate('About'),
+              activeIcon: Icon(Icons.announcement)),
           BottomNavigationBarItem(
-              icon: Icon(Icons.leaderboard_outlined), label: 'Data', activeIcon: Icon(Icons.leaderboard)),
+              icon: Icon(Icons.leaderboard_outlined),
+              label: locale.translate('Data'),
+              activeIcon: Icon(Icons.leaderboard)),
         ],
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,

@@ -3,6 +3,8 @@ part of carp_study_app;
 class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    RPLocalizations locale = RPLocalizations.of(context);
+
     return Scaffold(
       body: Container(
         child: SingleChildScrollView(
@@ -25,7 +27,7 @@ class ProfilePage extends StatelessWidget {
                             Navigator.of(context).pop();
                           }),
                       SizedBox(width: 2),
-                      Text('MY PROFILE',
+                      Text(locale.translate('MY PROFILE'),
                           style: sectionTitleStyle.copyWith(color: Theme.of(context).primaryColor)),
                     ],
                   ),

@@ -11,6 +11,8 @@ class TaskList extends StatefulWidget {
 class _TaskListState extends State<TaskList> {
   @override
   Widget build(BuildContext context) {
+    RPLocalizations locale = RPLocalizations.of(context);
+
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -23,7 +25,7 @@ class _TaskListState extends State<TaskList> {
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  'MY TASKS',
+                  locale.translate('MY TASKS'),
                   style: sectionTitleStyle.copyWith(color: Theme.of(context).primaryColor),
                 ),
               )),
@@ -86,11 +88,14 @@ class _TaskListState extends State<TaskList> {
   }
 
   String _subtitle(UserTask userTask) {
+    RPLocalizations locale = RPLocalizations.of(context);
     String str = (userTask?.task?.minutesToComplete != null)
-        ? '${userTask.task.minutesToComplete} min to complete'
+        ? '${userTask.task.minutesToComplete} ' + locale.translate('min to complete')
         : '';
 
-    str += (userTask.expiresIn != null) ? ' - ${userTask.expiresIn.inDays + 1} days remaining' : '';
+    str += (userTask.expiresIn != null)
+        ? ' - ${userTask.expiresIn.inDays + 1} ' + locale.translate('days remaining')
+        : '';
 
     str = (str.isEmpty) ? userTask.description : str;
 
@@ -116,6 +121,7 @@ class _TaskListState extends State<TaskList> {
   }
 
   Widget _scoreBoard() {
+    RPLocalizations locale = RPLocalizations.of(context);
     return StreamBuilder<UserTask>(
       stream: widget.model.userTaskEvents,
       builder: (context, snapshot) {
@@ -136,7 +142,7 @@ class _TaskListState extends State<TaskList> {
                       children: [
                         Text(widget.model.daysInStudy.toString(),
                             style: scoreNumberStyle.copyWith(color: Theme.of(context).primaryColor)),
-                        Text('Days in study',
+                        Text(locale.translate('Days in study'),
                             style: scoreTextStyle.copyWith(color: Theme.of(context).primaryColor)),
                       ],
                     ),
@@ -150,7 +156,7 @@ class _TaskListState extends State<TaskList> {
                       children: [
                         Text(widget.model.taskCompleted.toString(),
                             style: scoreNumberStyle.copyWith(color: Theme.of(context).primaryColor)),
-                        Text('Tasks completed',
+                        Text(locale.translate('Tasks completed'),
                             style: scoreTextStyle.copyWith(color: Theme.of(context).primaryColor)),
                       ],
                     )

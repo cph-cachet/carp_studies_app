@@ -61,7 +61,8 @@ class _ActivityCardWidgetState extends State<ActivityCardWidget> {
 
   @override
   Widget build(BuildContext context) {
-    //print(widget.model.toString());
+    RPLocalizations locale = RPLocalizations.of(context);
+
     return Padding(
       padding: const EdgeInsets.all(5.0),
       child: Card(
@@ -72,10 +73,14 @@ class _ActivityCardWidgetState extends State<ActivityCardWidget> {
           child: Column(
             children: <Widget>[
               CardHeader(
-                title: 'Activity',
+                title: locale.translate('Activity'),
                 iconAssetName: Icon(Icons.fitness_center, color: Theme.of(context).primaryColor),
                 heroTag: 'activity-card',
-                values: ['$_walk min walking', '$_run min running', '$_cycle min cycling'],
+                values: [
+                  '$_walk ' + locale.translate('min walking'),
+                  '$_run ' + locale.translate('min running'),
+                  '$_cycle ' + locale.translate('min cycling')
+                ],
                 colors: widget.colors,
               ),
               Container(

@@ -68,6 +68,8 @@ class _MobilityCardWidgetState extends State<MobilityCardWidget> {
 
   @override
   Widget build(BuildContext context) {
+    RPLocalizations locale = RPLocalizations.of(context);
+
     return Padding(
       padding: const EdgeInsets.all(5.0),
       child: Card(
@@ -78,13 +80,13 @@ class _MobilityCardWidgetState extends State<MobilityCardWidget> {
           child: Column(
             children: <Widget>[
               CardHeader(
-                title: 'Mobility',
+                title: locale.translate('Mobility'),
                 iconAssetName: Icon(Icons.emoji_transportation, color: Theme.of(context).primaryColor),
                 heroTag: 'mobility-card',
                 values: [
-                  '${_measures['weeklyDistanceTraveled'][0]} km travelled',
-                  '${_measures['weeklyHomeStay'][1]} % homestay',
-                  '${_measures['weeklyPlaces'][2]} places'
+                  '${_measures['weeklyDistanceTraveled'][0]} ' + locale.translate('km travelled'),
+                  '${_measures['weeklyHomeStay'][1]} ' + locale.translate('% homestay'),
+                  '${_measures['weeklyPlaces'][2]} ' + locale.translate('places'),
                 ],
                 colors: widget.colors,
               ),

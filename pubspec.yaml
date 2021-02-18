@@ -48,7 +48,7 @@ dependencies:
 
 
 # Overriding carp libraries to use the local or github copy
-# Remove this before release of package
+# Remove this before release of app
 #dependency_overrides:
 #  carp_mobile_sensing:
 #    path: ../carp/carp.sensing-flutter/carp_mobile_sensing/

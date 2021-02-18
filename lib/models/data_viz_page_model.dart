@@ -1,6 +1,6 @@
 part of carp_study_app;
 
-class DataPageModel extends DataModel {
+class DataVisualizationPageModel extends DataModel {
   final ActivityCardDataModel _activityCardDataModel = ActivityCardDataModel();
   final StepsCardDataModel _stepsCardDataModel = StepsCardDataModel();
   final MeasuresCardDataModel _measuresCardDataModel = MeasuresCardDataModel();
@@ -11,7 +11,7 @@ class DataPageModel extends DataModel {
   MeasuresCardDataModel get measuresCardDataModel => _measuresCardDataModel;
   MobilityCardDataModel get mobilityCardDataModel => _mobilityCardDataModel;
 
-  DataPageModel();
+  DataVisualizationPageModel();
 
   void init(StudyController controller) {
     super.init(controller);

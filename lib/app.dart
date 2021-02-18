@@ -15,7 +15,7 @@ class CARPStudyAppState extends State<CARPStudyAppHome> {
 
     _pages.add(TaskListPage(bloc.data.taskListPageModel));
     _pages.add(StudyPage(bloc.data.studyPageModel));
-    _pages.add(DataVisualization(bloc.data.dataPageModel));
+    _pages.add(DataVisualizationPage(bloc.data.dataPageModel));
   }
 
   void dispose() {

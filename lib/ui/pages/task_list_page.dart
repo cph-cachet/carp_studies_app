@@ -26,7 +26,8 @@ class _TaskListState extends State<TaskList> {
                 alignment: Alignment.centerLeft,
                 child: Text(
                   locale.translate('MY TASKS'),
-                  style: sectionTitleStyle.copyWith(color: Theme.of(context).primaryColor),
+                  style: sectionTitleStyle.copyWith(
+                      color: Theme.of(context).primaryColor),
                 ),
               )),
           SizedBox(height: 15),
@@ -39,17 +40,23 @@ class _TaskListState extends State<TaskList> {
                 return CustomScrollView(
                   slivers: <Widget>[
                     SliverList(
-                      delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
-                        if (widget.model.tasks[index].state != UserTaskState.done)
-                          return _buildTaskCard(context, widget.model.tasks[index]);
+                      delegate: SliverChildBuilderDelegate(
+                          (BuildContext context, int index) {
+                        if (widget.model.tasks[index].state !=
+                            UserTaskState.done)
+                          return _buildTaskCard(
+                              context, widget.model.tasks[index]);
                         else
                           return SizedBox.shrink();
                       }, childCount: widget.model.tasks.length),
                     ),
                     SliverList(
-                      delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
-                        if (widget.model.tasks[index].state == UserTaskState.done)
-                          return _buildDoneTaskCard(context, widget.model.tasks[index]);
+                      delegate: SliverChildBuilderDelegate(
+                          (BuildContext context, int index) {
+                        if (widget.model.tasks[index].state ==
+                            UserTaskState.done)
+                          return _buildDoneTaskCard(
+                              context, widget.model.tasks[index]);
                         else
                           return SizedBox.shrink();
                       }, childCount: widget.model.tasks.length),
@@ -74,10 +81,12 @@ class _TaskListState extends State<TaskList> {
           leading: CircleAvatar(
             backgroundColor: Theme.of(context).accentColor,
             // child: taskTypeIcon[userTask.type],  // use a type icon
-            child: measureTypeIcon[userTask.task.measures[0].type.name], // use the 1st measure as an icon
+            child: measureTypeIcon[userTask
+                .task.measures[0].type.name], // use the 1st measure as an icon
           ),
           title: Text(userTask.title,
-              style: aboutCardTitleStyle.copyWith(color: Theme.of(context).primaryColor)),
+              style: aboutCardTitleStyle.copyWith(
+                  color: Theme.of(context).primaryColor)),
           subtitle: Text(_subtitle(userTask)),
           onTap: () {
             userTask.onStart(context);
@@ -90,11 +99,13 @@ class _TaskListState extends State<TaskList> {
   String _subtitle(UserTask userTask) {
     RPLocalizations locale = RPLocalizations.of(context);
     String str = (userTask?.task?.minutesToComplete != null)
-        ? '${userTask.task.minutesToComplete} ' + locale.translate('min to complete')
+        ? '${userTask.task.minutesToComplete} ' +
+            locale.translate('min to complete')
         : '';
 
     str += (userTask.expiresIn != null)
-        ? ' - ${userTask.expiresIn.inDays + 1} ' + locale.translate('days remaining')
+        ? ' - ${userTask.expiresIn.inDays + 1} ' +
+            locale.translate('days remaining')
         : '';
 
     str = (str.isEmpty) ? userTask.description : str;
@@ -108,12 +119,14 @@ class _TaskListState extends State<TaskList> {
         opacity: 0.6,
         child: Card(
           margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           elevation: 3,
           child: ListTile(
             leading: Icon(Icons.check_circle_outlined, color: CACHET.GREEN_1),
             title: Text(userTask.title,
-                style: aboutCardTitleStyle.copyWith(color: Theme.of(context).primaryColor)),
+                style: aboutCardTitleStyle.copyWith(
+                    color: Theme.of(context).primaryColor)),
           ),
         ),
       ),
@@ -141,9 +154,11 @@ class _TaskListState extends State<TaskList> {
                     Column(
                       children: [
                         Text(widget.model.daysInStudy.toString(),
-                            style: scoreNumberStyle.copyWith(color: Theme.of(context).primaryColor)),
+                            style: scoreNumberStyle.copyWith(
+                                color: Theme.of(context).primaryColor)),
                         Text(locale.translate('Days in study'),
-                            style: scoreTextStyle.copyWith(color: Theme.of(context).primaryColor)),
+                            style: scoreTextStyle.copyWith(
+                                color: Theme.of(context).primaryColor)),
                       ],
                     ),
                     Container(
@@ -155,9 +170,11 @@ class _TaskListState extends State<TaskList> {
                     Column(
                       children: [
                         Text(widget.model.taskCompleted.toString(),
-                            style: scoreNumberStyle.copyWith(color: Theme.of(context).primaryColor)),
+                            style: scoreNumberStyle.copyWith(
+                                color: Theme.of(context).primaryColor)),
                         Text(locale.translate('Tasks completed'),
-                            style: scoreTextStyle.copyWith(color: Theme.of(context).primaryColor)),
+                            style: scoreTextStyle.copyWith(
+                                color: Theme.of(context).primaryColor)),
                       ],
                     )
                   ],
@@ -298,7 +315,7 @@ class _TaskListState extends State<TaskList> {
         UserTaskState.enqueued: Icon(Icons.notifications, color: CACHET.YELLOW),
         UserTaskState.dequeued: Icon(Icons.stop, color: CACHET.YELLOW),
         UserTaskState.started: Icon(Icons.play_arrow, color: CACHET.GREY_4),
-        UserTaskState.onhold: Icon(Icons.pause, color: CACHET.GREY_4),
+        UserTaskState.canceled: Icon(Icons.pause, color: CACHET.GREY_4),
         UserTaskState.done: Icon(Icons.check, color: CACHET.GREEN),
       };
 }

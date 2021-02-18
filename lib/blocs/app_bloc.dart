@@ -64,7 +64,7 @@ class AppBLoC {
         case UserTaskState.started:
           //
           break;
-        case UserTaskState.onhold:
+        case UserTaskState.canceled:
           //
           break;
         case UserTaskState.done:

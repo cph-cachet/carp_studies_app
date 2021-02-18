@@ -2,14 +2,12 @@ part of carp_study_app;
 
 class StudyPageModel extends DataModel {
   String get name => bloc.study.name;
-  String get description =>
-      bloc.study.description ?? 'No description available.';
+  String get description => bloc.study.description ?? 'No description available.';
   Image get image => Image.asset('assets/images/study.png');
   String get userID => bloc.study.userId;
 
   /// Events on the state of the study executor
-  Stream<ProbeState> get studyExecutorStateEvents =>
-      bloc.controller.executor.stateEvents;
+  Stream<ProbeState> get studyExecutorStateEvents => bloc.controller.executor.stateEvents;
 
   /// Current state of the study executor (e.g., resumed, paused, ...)
   ProbeState get studyState => bloc.controller.executor.state;
@@ -80,8 +78,7 @@ class Message {
   /// Image get image => Image.asset('assets/images/$type.png');
   ///
   /// Only articles have images, get it randomly
-  Image get image => Image.asset(
-      'assets/images/article_' + Random().nextInt(3).toString() + '.png',
+  Image get image => Image.asset('assets/images/article_' + Random(10).nextInt(3).toString() + '.png',
       fit: BoxFit.fitHeight);
 }
 

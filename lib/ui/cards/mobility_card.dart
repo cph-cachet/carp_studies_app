@@ -111,23 +111,22 @@ class _MobilityCardWidgetState extends State<MobilityCardWidget> {
                       areaOpacity: 0.3,
                       layoutPaintOrder: 0,
                     ),
-                    charts.BarRendererConfig(groupingType: charts.BarGroupingType.grouped)
                   ],
-                  defaultInteractions: false,
+                  defaultInteractions: true,
                   selectionModels: [
                     charts.SelectionModelConfig(
                         type: charts.SelectionModelType.info, changedListener: _infoSelectionModelChanged),
                   ],
                   behaviors: [
                     charts.LinePointHighlighter(
-                      defaultRadiusPx: 5,
-                      radiusPaddingPx: 20.0,
-                      showHorizontalFollowLine: charts.LinePointHighlighterFollowLineType.nearest,
-                      showVerticalFollowLine: charts.LinePointHighlighterFollowLineType.nearest,
-                      dashPattern: [],
+                      defaultRadiusPx: 0,
+                      showHorizontalFollowLine: charts.LinePointHighlighterFollowLineType.none,
+                      showVerticalFollowLine: charts.LinePointHighlighterFollowLineType.all,
                     ),
                     charts.SelectNearest(
-                      eventTrigger: charts.SelectionTrigger.tapAndDrag,
+                      selectAcrossAllDrawAreaComponents: true,
+                      selectionModelType: charts.SelectionModelType.info,
+                      eventTrigger: charts.SelectionTrigger.tap,
                     ),
                     charts.DomainHighlighter(),
                   ],

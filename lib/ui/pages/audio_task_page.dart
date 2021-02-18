@@ -28,10 +28,13 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        padding: EdgeInsets.symmetric(horizontal: 15),
-        child: _stepSelector(),
+    return WillPopScope(
+      onWillPop: () async => _showCancelConfirmationDialog(),
+      child: Scaffold(
+        body: Container(
+          padding: EdgeInsets.symmetric(horizontal: 15),
+          child: _stepSelector(),
+        ),
       ),
     );
   }
@@ -288,10 +291,9 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
   }
 
   // Taken from RP
-  void _showCancelConfirmationDialog() {
+  Future _showCancelConfirmationDialog() {
     RPLocalizations locale = RPLocalizations.of(context);
-
-    showDialog(
+    return showDialog(
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {

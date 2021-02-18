@@ -14,10 +14,9 @@ class _MeasuresCardWidgetState extends State<MeasuresCardWidget> {
       [
         charts.Series<Measures, String>(
           colorFn: (_, index) =>
-              charts.MaterialPalette.blue.makeShades(model.samplingTable.length)[index + 1],
-          //colorFn: (d, i) => charts.ColorUtil.fromDartColor(Colors.blue),
+              charts.MaterialPalette.blue.makeShades(min(7, model.samplingTable.length))[index],
           id: 'DailyStepsList',
-          data: model.measures.sublist(0, 6), //TODO: figure a way to select which measures to be shown
+          data: model.measures.sublist(0, min(7, model.samplingTable.length)),
           domainFn: (Measures datum, _) => datum.measure,
           measureFn: (Measures datum, _) => datum.size,
         )
@@ -26,6 +25,8 @@ class _MeasuresCardWidgetState extends State<MeasuresCardWidget> {
   Widget build(BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context);
 
+    // Get the measures with more events to prioritize which ones to show
+    widget.model.orderedMeasures();
     return Padding(
       padding: const EdgeInsets.all(5.0),
       child: Card(

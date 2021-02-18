@@ -66,7 +66,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(backgroundColor: Theme.of(context).scaffoldBackgroundColor, body: CARPStudyAppHome()
+    return Scaffold(backgroundColor: Theme.of(context).scaffoldBackgroundColor, body: _initial()
         /* Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -91,4 +91,11 @@ class _SplashScreenState extends State<SplashScreen> {
       ), */
         );
   }
+}
+
+Widget _initial() {
+  if (bloc.hasInformedConsentBeenAccepted)
+    return CARPStudyAppHome();
+  else
+    return InformedConsentPage();
 }

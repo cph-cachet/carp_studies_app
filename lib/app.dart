@@ -13,8 +13,8 @@ class CARPStudyAppState extends State<CARPStudyAppHome> {
     super.initState();
     bloc.init();
 
-    _pages.add(TaskList(bloc.data.taskListPageModel));
-    _pages.add(StudyVisualization(bloc.data.studyPageModel));
+    _pages.add(TaskListPage(bloc.data.taskListPageModel));
+    _pages.add(StudyPage(bloc.data.studyPageModel));
     _pages.add(DataVisualization(bloc.data.dataPageModel));
   }
 

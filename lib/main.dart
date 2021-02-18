@@ -50,7 +50,7 @@ part 'models/audio_user_task.dart';
 
 part 'ui/colors.dart';
 part 'ui/pages/data_viz_page.dart';
-part 'ui/pages/study_viz_page.dart';
+part 'ui/pages/study_page.dart';
 part 'ui/pages/task_list_page.dart';
 part 'ui/pages/contact_page.dart';
 part 'ui/pages/profile_page.dart';

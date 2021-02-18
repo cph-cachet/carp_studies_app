@@ -1,14 +1,14 @@
 part of carp_study_app;
 
-class TaskList extends StatefulWidget {
+class TaskListPage extends StatefulWidget {
   final TaskListPageModel model;
-  const TaskList(this.model);
+  const TaskListPage(this.model);
 
   @override
-  _TaskListState createState() => _TaskListState();
+  _TaskListPageState createState() => _TaskListPageState();
 }
 
-class _TaskListState extends State<TaskList> {
+class _TaskListPageState extends State<TaskListPage> {
   @override
   Widget build(BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context);

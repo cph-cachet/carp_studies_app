@@ -1,7 +1,6 @@
 library carp_study_app;
 
 import 'dart:async';
-import 'dart:ffi';
 import 'dart:math';
 
 import 'package:carp_audio_package/audio.dart';
@@ -18,10 +17,7 @@ import 'package:carp_survey_package/survey.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-import 'package:flutter/semantics.dart';
-//import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:research_package/research_package.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:expandable/expandable.dart';
@@ -30,7 +26,6 @@ import 'package:intl/intl.dart';
 
 part 'app.dart';
 part 'first_screen.dart';
-
 part 'blocs/app_bloc.dart';
 
 part 'data/study_manager.dart';

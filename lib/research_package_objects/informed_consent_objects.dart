@@ -8,8 +8,17 @@ RPConsentSection overviewSection = RPConsentSection.withParams(
       "Before you decide to participate in this study, it is important that you understand why the research is being done and what it will involve. "
       "Please read the following information carefully. "
       "Please ask if there is anything that is not clear or if you need more information.\n\n"
-      "The purpose of this study is to investigate the technical and clinical feasibility of the DiaFocus system for diabetes monitoring. "
-      "This means that we want to understand the usefulness and usability of using wearable and mobile technology for collection of diabetes-related data.\n\nYou will be asked to use the DiaFocus smartphone app for up to two months. During this period, the system will collect different kinds of data related to your glucose levels, your movement, mood and emotions, sleep, and ask you to enter details on events you might experience. You will also be asked to fill in different questionnaires.\n\n\nThe title of the study is: \"Feasibility Test of the DiaFocus System\"\n\nThe Principle Investigator (PI) is:\n\n•Jakob E. Bardram, professor, MSc., PhD\n\n•Department of Health Technology\n\n•Technical University of Denmark\n\n•Richard Pedersens Plads, DK-2800 Lyngby\n\n•email:\tjakba@dtu.dk\n\n\nYou can contact the project manager if you have any questions.";
+      "The title of the study is: \"${bloc.study.title}\"\n\n"
+      "The purpose of this study is: \"${bloc.study.title}\"\n\n"
+      "You will be asked to use the CARP smartphone app for up to two months. "
+      "During this period, the system will collect different kinds of data related to your movements, activities, health. "
+      "You will also be asked to fill in different questionnaires.\n\n\n"
+      "The Principle Investigator (PI) is:\n\n"
+      "${bloc.study.pi.name}, ${bloc.study.pi.title}\n\n"
+      "${bloc.study.pi.affiliation}\n\n"
+      "${bloc.study.pi.address}\n\n"
+      "${bloc.study.pi.email}\n\n"
+      "You can contact the principal investigator if you have any questions.";
 
 RPConsentSection dataGatheringSection = RPConsentSection.withParams(
     RPConsentSectionType.DataGathering)
@@ -34,7 +43,10 @@ RPConsentSection privacySection = RPConsentSection.withParams(
       "The Technical University of Denmark (DTU) is the data responsible of this study and all data will be collected and stored on secure servers, protecting your privacy."
   ..content = "The Technical University of Denmark (DTU) is the data responsible of this study. "
       "Data is collected and stored on secure servers operated by DTU.\n\n"
-      "The Data Protection Officer (DPO) at DTU is:\n\n•name:\tAne Sandager\n\n•email:\tanesa@dtu.dk\n\n•telephone:\t+45 9351 1439\n\n"
+      "The Data Protection Officer (DPO) at DTU is:\n\n"
+      "Ane Sandager\n\n"
+      "anesa@dtu.dk\n\n"
+      "+45 9351 1439\n\n"
       "You can contact the DPO for any questions you may have regarding the data processing of this study.\n"
       "You can get a digital copy of the data being collected by you in this study by contacting the principle investigator.";
 
@@ -46,13 +58,13 @@ RPConsentSection studyTaskAndTimeCommitmentSection = RPConsentSection
   ..content = "This study consists of three main activities.\n\n"
       "First, you will join for a start up meeting. "
       "Here you will be introduced to the system, the study, and then spend some time on becoming familiar with the smartphone app. "
-      "The start up meeting will last approx. two hours and will take place at either DTU or virtually.\n\n"
+      "The start-up meeting will last approx. two hours and will take place at either DTU or virtually.\n\n"
       "Second, you should use the app on a daily basis for two months. "
       "Daily use means that you should complete the different 'Tasks' which are listed in the app's 'Task List' page. "
-      "The daily time commitment to these tasks about 10-15 minutes.\n\n"
+      "The daily time commitment to these tasks is about 10-15 minutes.\n\n"
       "Third, you should complete a digital questionnaire during a closing meeting. "
       "Then there will be a small interview asking for you experience from using the CARP smartphone app. "
-      "This closing meeting will take approx. two hours and will take place at either at DTU or virtually.";
+      "This closing meeting will take approx. one hour and will take place either at DTU or virtually.";
 
 RPConsentSection clinicalInformationSection = RPConsentSection.withParams(
     RPConsentSectionType.Custom)
@@ -62,10 +74,10 @@ RPConsentSection clinicalInformationSection = RPConsentSection.withParams(
           "If you in any way feel uncomfortable or ill during the study, you should contact your regular healthcare professional."
   ..content = "This study is NOT a clinical study. "
       "The purpose of this study is to investigate the technical feasibility of the CACHET Research Platform, including its usefulness for continuous monitoring and its usability in everyday use. "
-      "You will NOT receive any clinical feed-back on the recordings being done, and there is NO doctor looking at these recordings.\n"
+      "You will NOT receive any clinical feed-back on the recordings being done, and there is NO doctor looking at these recordings.\n\n"
       "IF YOU IN ANY WAY FEEL UNCOMFORTABLE OR ILL DURING THE STUDY, YOU SHOULD CONTACT YOUR REGULAR HEALTHCARE PROFESSIONAL.\n\n"
       "After the study, data will be analyzed in cooperation with our collaborating medical researchers in the Copenhagen Center for Health Technolocy (CACHET). "
-      "If the medical researchers finds relevant diabetes complications in the collected data they may contact you.";
+      "If the medical researchers finds complications in the collected data they may contact you.";
 
 RPConsentSection voluntarySection = RPConsentSection.withParams(
     RPConsentSectionType.Custom)

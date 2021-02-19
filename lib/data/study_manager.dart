@@ -6,7 +6,7 @@ class LocalStudyManager implements StudyManager {
   Future<void> initialize() => null;
 
   Future<Study> getStudy(String studyId) async =>
-      _study ??= await _getPulmonaryStudy(studyId);
+      _study ??= await _getGenericCARPStudy(studyId);
 
   Future<Study> _getWristWatchStudy(String studyId) async {
     if (_study == null) {
@@ -129,15 +129,23 @@ class LocalStudyManager implements StudyManager {
     return _study;
   }
 
-  Future<Study> _getPulmonaryStudy(String studyId) async {
+  Future<Study> _getGenericCARPStudy(String studyId) async {
     if (_study == null) {
       _study = Study(id: studyId, userId: await settings.userId)
-        ..name = 'Pulmonary Monitor'
+        ..name = 'CARP Study'
+        ..title = 'CARP Study App Feasibility Study'
+        ..purpose =
+            'To investigate the technical stability and usability of the CARP Generic Study App.'
+        ..pi = PrincipalInvestigator(
+          name: 'Jakob E. Bardram',
+          title: 'PhD, MSc',
+          email: 'jakba@dtu.dk',
+          affiliation: 'Technical University of Denmark',
+          address: 'Ørsteds Plads, bygn. 349, DK-2800 Kg. Lyngby',
+        )
         ..description =
-            "With the Pulmonary Monitor you can monitor your respiratory health. "
-                "By using the phones sensors, including the microphone, it will try to monitor you breathing, heart rate, sleep, social contact to others, and your movement. "
-                "You will also be able to fill in a simple daily survey to help us understand how you're doing. "
-                "Before you start, please also fill in the demographich survey. "
+            "We would like to have you help in testing the technical stability and the usability of the CARP Mobile Sensing app. "
+                "Your data will be collected and store anonymously."
         ..dataEndPoint = getDataEndpoint(DataEndPointTypes.FILE)
         // collect basic device measures continously
         ..addTriggerTask(

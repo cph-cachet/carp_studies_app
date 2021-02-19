@@ -64,6 +64,11 @@ class _SplashScreenState extends State<SplashScreen> {
   //     ? Navigator.of(context).pushReplacementNamed('/HomePage')
   //     : Navigator.of(context).pushReplacementNamed('/ConsentPage');
 
+  /// This methods is used to set up the entire app, including:
+  ///  * initialize the bloc
+  ///  * authenticate the user
+  ///  * get the invitation
+  ///  * collect / show informed consent
   Future<bool> init() async {
     await bloc.init();
     return true;

@@ -12,7 +12,6 @@ import 'package:carp_backend/carp_backend.dart';
 import 'package:carp_context_package/context.dart';
 import 'package:activity_recognition_flutter/activity_recognition_flutter.dart';
 import 'package:carp_mobile_sensing/carp_mobile_sensing.dart';
-import 'package:carp_study_app/research_package_objects/informed_consent_objects.dart';
 import 'package:carp_study_app/ui/carp_study_style.dart';
 import 'package:carp_study_app/ui/widgets/carp_app_bar.dart';
 import 'package:carp_survey_package/survey.dart';
@@ -47,6 +46,7 @@ part 'models/cards/mobility_data_model.dart';
 part 'models/cards/steps_data_model.dart';
 part 'models/cards/measures_data_model.dart';
 part 'models/audio_user_task.dart';
+part 'research_package_objects/informed_consent_objects.dart';
 
 part 'ui/colors.dart';
 part 'ui/pages/data_viz_page.dart';
@@ -66,6 +66,6 @@ part 'ui/cards/activity_card.dart';
 part 'ui/cards/mobility_card.dart';
 part 'ui/cards/measures_card.dart';
 
-void main() {
+void main() async {
   runApp(CARPStudyApp());
 }

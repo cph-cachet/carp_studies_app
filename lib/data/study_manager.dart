@@ -175,6 +175,7 @@ class LocalStudyManager implements StudyManager {
                 types: [
                   ContextSamplingPackage.GEOLOCATION,
                   ContextSamplingPackage.ACTIVITY,
+                  ContextSamplingPackage.MOBILITY,
                 ],
               ))
         // collect local weather and air quality as an app task

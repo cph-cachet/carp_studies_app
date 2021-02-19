@@ -44,7 +44,7 @@ dependencies:
   intl: ^0.16.1
 
   flutter_localizations:
-        sdk: flutter
+    sdk: flutter
 
 
 # Overriding carp libraries to use the local or github copy

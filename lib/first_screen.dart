@@ -60,14 +60,26 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  Future load(BuildContext context) async => (bloc.hasInformedConsentBeenAccepted)
-      ? Navigator.of(context).pushReplacementNamed('/HomePage')
-      : Navigator.of(context).pushReplacementNamed('/ConsentPage');
+  // Future load(BuildContext context) async => (bloc.hasInformedConsentBeenAccepted)
+  //     ? Navigator.of(context).pushReplacementNamed('/HomePage')
+  //     : Navigator.of(context).pushReplacementNamed('/ConsentPage');
+
+  Future<bool> init() async {
+    await bloc.init();
+    return true;
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(backgroundColor: Theme.of(context).scaffoldBackgroundColor, body: _initial()
-        /* Center(
+    return FutureBuilder(
+        future: init(),
+        builder: (context, snapshot) => (!snapshot.hasData)
+            ? CircularProgressIndicator()
+            : Scaffold(
+                backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                body: _initial()));
+
+    /* Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -89,8 +101,14 @@ class _SplashScreenState extends State<SplashScreen> {
           ],
         ),
       ), */
-        );
   }
+
+  // @override
+  // Widget build(BuildContext context) {
+  //   return Scaffold(
+  //       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+  //       body: _initial());
+  // }
 }
 
 Widget _initial() {

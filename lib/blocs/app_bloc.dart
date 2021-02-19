@@ -1,7 +1,7 @@
 part of carp_study_app;
 
 class AppBLoC {
-  static final SHOW_INFORMED_CONSENT_KEY = 'show_informed_consent';
+  static const SHOW_INFORMED_CONSENT_KEY = 'show_informed_consent';
 
   CarpStydyAppDataModel _data = CarpStydyAppDataModel();
   Study _study;
@@ -46,7 +46,7 @@ class AppBLoC {
     await controller.initialize();
 
     // wait 10 sec and the start sampling
-    Timer(Duration(seconds: 10), () => controller.resume());
+    // Timer(Duration(seconds: 10), () => controller.resume());
 
     // This show how an app can listen to user task events.
     // Is not used right now.
@@ -82,10 +82,10 @@ class AppBLoC {
 
   /// Has the informed consent been shown to, and accepted by the user?
   bool get hasInformedConsentBeenAccepted {
-    // bool show =
-    //     settings.preferences.getBool(SHOW_INFORMED_CONSENT_KEY) ?? false;
-    // print('>> show: $show');
-    return true;
+    bool show =
+        settings.preferences.getBool(SHOW_INFORMED_CONSENT_KEY) ?? false;
+    print('>> show: $show');
+    return false;
   }
 
   /// Has the informed consent been handled?
@@ -111,6 +111,7 @@ class AppBLoC {
   String get clientID => "carp";
   String get clientSecret => "carp";
 
+  /// The currently running [Study].
   Study get study => _study;
 
   /// Is sensing running, i.e. has the study executor been resumed?
@@ -131,8 +132,10 @@ class AppBLoC {
     controller.events.forEach(print);
   }
 
+  // Pause sensing.
   void pause() => controller.pause();
 
+  /// Resume sensing.
   void resume() => controller.resume();
 
   /// Stop sensing.
@@ -142,6 +145,7 @@ class AppBLoC {
     _study = null;
   }
 
+  // Dispose the entire sensing.
   void dispose() => stop();
 
   /// Add a [Datum] object to the stream of events.

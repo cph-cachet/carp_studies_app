@@ -2,15 +2,19 @@ library carp_study_app;
 
 import 'dart:async';
 import 'dart:math';
+import 'dart:convert';
 
+import 'package:carp_mobile_sensing/carp_mobile_sensing.dart';
+import 'package:carp_webservices/carp_service/carp_service.dart';
+import 'package:carp_webservices/carp_auth/carp_auth.dart';
+import 'package:carp_webservices/carp_domain/carp_domain.dart';
+import 'package:carp_backend/carp_backend.dart';
 import 'package:carp_audio_package/audio.dart';
 //import 'package:carp_health_package/health_package.dart';
-import 'package:carp_backend/carp_backend.dart';
 //import 'package:carp_connectivity_package/connectivity.dart';
 //import 'package:carp_communication_package/communication.dart';
 import 'package:carp_context_package/context.dart';
 import 'package:activity_recognition_flutter/activity_recognition_flutter.dart';
-import 'package:carp_mobile_sensing/carp_mobile_sensing.dart';
 import 'package:carp_study_app/ui/carp_study_style.dart';
 import 'package:carp_study_app/ui/widgets/carp_app_bar.dart';
 import 'package:carp_survey_package/survey.dart';
@@ -28,9 +32,10 @@ part 'app.dart';
 part 'first_screen.dart';
 part 'blocs/app_bloc.dart';
 
+part 'data/carp_backend.dart';
 part 'data/study_manager.dart';
 part 'data/surveys.dart';
-part 'data/messages.dart';
+part 'data/message_manager.dart';
 
 part 'models/data_model.dart';
 part 'models/tasklist_page_model.dart';

@@ -13,8 +13,8 @@ class _MeasuresCardWidgetState extends State<MeasuresCardWidget> {
   ) =>
       [
         charts.Series<Measures, String>(
-          colorFn: (_, index) =>
-              charts.MaterialPalette.blue.makeShades(min(7, model.samplingTable.length))[index],
+          colorFn: (_, index) => charts.MaterialPalette.blue
+              .makeShades(min(7, model.samplingTable.length))[index],
           id: 'DailyStepsList',
           data: model.measures.sublist(0, min(7, model.samplingTable.length)),
           domainFn: (Measures datum, _) => datum.measure,
@@ -50,14 +50,17 @@ class _MeasuresCardWidgetState extends State<MeasuresCardWidget> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
-                                  Text(locale.translate('Hello') + ' ' + 'Jakob',
-                                      style: aboutCardTitleStyle), //TODO: get user name
+                                  Text(
+                                      '${locale.translate('Hello')} ${bloc.user.firstName}',
+                                      style: aboutCardTitleStyle),
                                   Text(
                                       locale.translate(
                                           'Thank you for participating in this study. This a summary of your contribution to the study.'),
                                       style: aboutCardSubtitleStyle),
                                   SizedBox(height: 10),
-                                  Text('${widget.model.samplingSize} ' + locale.translate('MEASURES'),
+                                  Text(
+                                      '${widget.model.samplingSize} ' +
+                                          locale.translate('MEASURES'),
                                       //textAlign: TextAlign.center,
                                       style: dataCardTitleStyle),
                                 ],
@@ -79,9 +82,11 @@ class _MeasuresCardWidgetState extends State<MeasuresCardWidget> {
                                   position: charts.BehaviorPosition.end,
                                   desiredMaxRows: 7,
                                   //entryTextStyle: charts.TextStyleSpec(fontSize: 10),
-                                  cellPadding: EdgeInsets.only(right: 3.0, bottom: 2.0),
+                                  cellPadding:
+                                      EdgeInsets.only(right: 3.0, bottom: 2.0),
                                   showMeasures: true,
-                                  legendDefaultMeasure: charts.LegendDefaultMeasure.firstValue,
+                                  legendDefaultMeasure:
+                                      charts.LegendDefaultMeasure.firstValue,
                                   measureFormatter: (num value) {
                                     return value == null ? '-' : '$value';
                                   },

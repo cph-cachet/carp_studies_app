@@ -5,6 +5,18 @@ class StudyCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    RPLocalizations locale = RPLocalizations.of(context);
+
+    String description() =>
+        '${studyPageModel.description ?? locale.translate('No description available.')}\n\n'
+        '${locale.translate('The title of the study is')}: \"${bloc.study.title}\".\n\n'
+        '${locale.translate('The purpose of this study is')}: \"${bloc.study.purpose}\".\n\n'
+        '${locale.translate('The Principle Investigator (PI) is')}:\n\n'
+        '${bloc.study.pi.name}, ${bloc.study.pi.title}\n'
+        '${bloc.study.pi.affiliation}\n'
+        '${bloc.study.pi.address}\n'
+        '${bloc.study.pi.email}\n\n';
+
     return Card(
       semanticContainer: true,
       clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -28,10 +40,12 @@ class StudyCard extends StatelessWidget {
                 children: [
                   SizedBox(width: 15),
                   Text(studyPageModel.name,
-                      style: aboutCardTitleStyle.copyWith(color: Theme.of(context).primaryColor)),
+                      style: aboutCardTitleStyle.copyWith(
+                          color: Theme.of(context).primaryColor)),
                   SizedBox(width: 15),
-                  Text('Cachet, DTU and Monsenso', //TODO get the name of researchers from studyPageModel
-                      style: aboutCardSubtitleStyle.copyWith(color: Theme.of(context).primaryColor)),
+                  Text(studyPageModel.affiliation,
+                      style: aboutCardSubtitleStyle.copyWith(
+                          color: Theme.of(context).primaryColor)),
                 ],
               ),
               children: [
@@ -39,7 +53,7 @@ class StudyCard extends StatelessWidget {
                   SizedBox(width: 15),
                   Expanded(
                       child: Text(
-                    studyPageModel.description,
+                    description(),
                     style: aboutCardContentStyle,
                     textAlign: TextAlign.justify,
                   )),

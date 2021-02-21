@@ -60,65 +60,61 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  // Future load(BuildContext context) async => (bloc.hasInformedConsentBeenAccepted)
-  //     ? Navigator.of(context).pushReplacementNamed('/HomePage')
-  //     : Navigator.of(context).pushReplacementNamed('/ConsentPage');
-
   /// This methods is used to set up the entire app, including:
   ///  * initialize the bloc
   ///  * authenticate the user
   ///  * get the invitation
-  ///  * collect / show informed consent
-  Future<bool> init() async {
+  ///  * get the study
+  ///  * initialize sensing
+  ///  * start sensing
+  Future<bool> init(BuildContext context) async {
     await bloc.init();
+    await bloc.backend.authenticate(context);
+    await bloc.backend.getStudyInvitation(context);
+
+    await bloc.getMessages();
+    await bloc.initializeSensing();
+
+    // wait 10 sec and the start sampling
+    // TODO - legally, we should not start sensing before informed consent is accepted...
+    Timer(Duration(seconds: 10), () => bloc.start());
+
     return true;
   }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: init(),
+        future: init(context),
         builder: (context, snapshot) => (!snapshot.hasData)
-            ? CircularProgressIndicator()
+            ? Scaffold(
+                backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                body: Center(
+                    child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [CircularProgressIndicator()],
+                )))
             : Scaffold(
                 backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-                body: _initial()));
-
-    /* Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            FutureBuilder(
-              future: load(context),
-              builder: (context, snapshot) {
-                if (!snapshot.hasData) {
-                  return Container(
-                    child: Column(children: [
-                      CircularProgressIndicator(
-                          //strokeWidth: 8,
-                          )
-                    ]),
-                  );
-                }
-                return SizedBox.shrink();
-              },
-            ),
-          ],
-        ),
-      ), */
+                body: (bloc.hasInformedConsentBeenAccepted)
+                    ? CARPStudyAppHome()
+                    : InformedConsentPage(),
+              ));
   }
 
-  // @override
-  // Widget build(BuildContext context) {
-  //   return Scaffold(
-  //       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-  //       body: _initial());
-  // }
-}
-
-Widget _initial() {
-  if (bloc.hasInformedConsentBeenAccepted)
-    return CARPStudyAppHome();
-  else
-    return InformedConsentPage();
+  // TODO - Not used right now - should we?
+  Widget get _splashImage => Container(
+        decoration: new BoxDecoration(
+          image: new DecorationImage(
+            image: new AssetImage("assets/images/splash_background.png"),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: new Center(
+            child: new Hero(
+          tag: "tick",
+          child: new Image.asset('assets/images/splash_cachet.png',
+              width: 150.0, height: 150.0, scale: 1.0),
+        )),
+      );
 }

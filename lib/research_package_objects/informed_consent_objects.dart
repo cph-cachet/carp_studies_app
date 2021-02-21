@@ -8,15 +8,15 @@ RPConsentSection overviewSection = RPConsentSection.withParams(
       "Before you decide to participate in this study, it is important that you understand why the research is being done and what it will involve. "
       "Please read the following information carefully. "
       "Please ask if there is anything that is not clear or if you need more information.\n\n"
-      "The title of the study is: \"${bloc.study.title}\"\n\n"
-      "The purpose of this study is: \"${bloc.study.title}\"\n\n"
+      "The title of the study is: \"${bloc.study.title}\".\n\n"
+      "The purpose of this study is: \"${bloc.study.purpose}\".\n\n"
       "You will be asked to use the CARP smartphone app for up to two months. "
-      "During this period, the system will collect different kinds of data related to your movements, activities, health. "
+      "During this period, the system will collect different kinds of data related to your movements, activities, and health. "
       "You will also be asked to fill in different questionnaires.\n\n\n"
       "The Principle Investigator (PI) is:\n\n"
-      "${bloc.study.pi.name}, ${bloc.study.pi.title}\n\n"
-      "${bloc.study.pi.affiliation}\n\n"
-      "${bloc.study.pi.address}\n\n"
+      "${bloc.study.pi.name}, ${bloc.study.pi.title}\n"
+      "${bloc.study.pi.affiliation}\n"
+      "${bloc.study.pi.address}\n"
       "${bloc.study.pi.email}\n\n"
       "You can contact the principal investigator if you have any questions.";
 
@@ -73,10 +73,10 @@ RPConsentSection clinicalInformationSection = RPConsentSection.withParams(
       "This is NOT a clinical study and you will NOT receive any clinical feedback on the recordings done as part of this study. "
           "If you in any way feel uncomfortable or ill during the study, you should contact your regular healthcare professional."
   ..content = "This study is NOT a clinical study. "
-      "The purpose of this study is to investigate the technical feasibility of the CACHET Research Platform, including its usefulness for continuous monitoring and its usability in everyday use. "
-      "You will NOT receive any clinical feed-back on the recordings being done, and there is NO doctor looking at these recordings.\n\n"
+      "The purpose of this study is \"${bloc.study.purpose}\". "
+      "You will NOT receive any clinical feedback on the recordings being done, and there is NO doctor looking at these recordings.\n\n"
       "IF YOU IN ANY WAY FEEL UNCOMFORTABLE OR ILL DURING THE STUDY, YOU SHOULD CONTACT YOUR REGULAR HEALTHCARE PROFESSIONAL.\n\n"
-      "After the study, data will be analyzed in cooperation with our collaborating medical researchers in the Copenhagen Center for Health Technolocy (CACHET). "
+      "After the study, data may be analyzed by the medical researchers in the Copenhagen Center for Health Technolocy (CACHET). "
       "If the medical researchers finds complications in the collected data they may contact you.";
 
 RPConsentSection voluntarySection = RPConsentSection.withParams(

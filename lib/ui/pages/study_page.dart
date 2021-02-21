@@ -52,7 +52,6 @@ class _StudyPageState extends State<StudyPage> {
       clipBehavior: Clip.antiAliasWithSaveLayer,
       child: InkWell(
         onTap: () async {
-          print("tapped");
           if (await canLaunch(message.url)) {
             await launch(message.url);
           } else {

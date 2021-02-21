@@ -8,127 +8,6 @@ class LocalStudyManager implements StudyManager {
   Future<Study> getStudy(String studyId) async =>
       _study ??= await _getGenericCARPStudy(studyId);
 
-  Future<Study> _getWristWatchStudy(String studyId) async {
-    if (_study == null) {
-      _study = Study(id: studyId, userId: await settings.userId)
-            ..name = 'The WristWatch Study'
-            ..description =
-                "This study tries to understand children with OCD..."
-            ..dataEndPoint = getDataEndpoint(DataEndPointTypes.FILE)
-            // collect basic device measures continously
-            ..addTriggerTask(
-                ImmediateTrigger(),
-                AutomaticTask()
-                  ..measures = SamplingSchema.debug().getMeasureList(
-                    namespace: NameSpace.CARP,
-                    types: [
-                      SensorSamplingPackage.LIGHT,
-                      SensorSamplingPackage.PEDOMETER,
-                      // DeviceSamplingPackage.MEMORY,
-                      DeviceSamplingPackage.DEVICE,
-                      DeviceSamplingPackage.BATTERY,
-                      DeviceSamplingPackage.SCREEN,
-                    ],
-                  ))
-            // collect location, weather and air quality every 5 minutes
-            ..addTriggerTask(
-                PeriodicTrigger(period: Duration(minutes: 5)),
-                Task()
-                  ..measures = SamplingSchema.common().getMeasureList(
-                    namespace: NameSpace.CARP,
-                    types: [
-                      ContextSamplingPackage.LOCATION,
-                      ContextSamplingPackage.WEATHER,
-                      ContextSamplingPackage.AIR_QUALITY,
-                    ],
-                  ))
-            // collect location and activity measures continously (event-based)
-            ..addTriggerTask(
-                ImmediateTrigger(),
-                Task()
-                  ..measures = SamplingSchema.common().getMeasureList(
-                    namespace: NameSpace.CARP,
-                    types: [
-                      ContextSamplingPackage.GEOLOCATION,
-                      ContextSamplingPackage.ACTIVITY,
-                    ],
-                  ))
-            // collect local weather and air quality as an app task
-            ..addTriggerTask(
-                ImmediateTrigger(),
-                AppTask(
-                  type: SensingUserTask.ONE_TIME_SENSING_TYPE,
-                  title: "Weather & Air Quality",
-                  description: "Collect local weather and air quality",
-                )..measures = SamplingSchema.common().getMeasureList(
-                    namespace: NameSpace.CARP,
-                    types: [
-                      ContextSamplingPackage.WEATHER,
-                      ContextSamplingPackage.AIR_QUALITY,
-                    ],
-                  ))
-            // collect demographics once when the study starts
-            ..addTriggerTask(
-                ImmediateTrigger(),
-                AppTask(
-                  type: SurveyUserTask.DEMOGRAPHIC_SURVEY_TYPE,
-                  title: surveys.demographics.title,
-                  description: surveys.demographics.description,
-                  minutesToComplete: surveys.demographics.minutesToComplete,
-                  expire: surveys.demographics.expire,
-                )
-                  ..measures.add(RPTaskMeasure(
-                    type: MeasureType(
-                        NameSpace.CARP, SurveySamplingPackage.SURVEY),
-                    name: surveys.demographics.title,
-                    enabled: true,
-                    surveyTask: surveys.demographics.survey,
-                  ))
-                  ..measures.add(SamplingSchema.common()
-                      .measures[ContextSamplingPackage.LOCATION]))
-            // collect symptoms on a daily basis
-            ..addTriggerTask(
-                PeriodicTrigger(period: Duration(minutes: 5)),
-                AppTask(
-                  type: SurveyUserTask.SURVEY_TYPE,
-                  title: surveys.parnas.title,
-                  description: surveys.parnas.description,
-                  minutesToComplete: surveys.parnas.minutesToComplete,
-                  expire: surveys.parnas.expire,
-                )
-                  ..measures.add(RPTaskMeasure(
-                    type: MeasureType(
-                        NameSpace.CARP, SurveySamplingPackage.SURVEY),
-                    name: surveys.parnas.title,
-                    enabled: true,
-                    surveyTask: surveys.parnas.survey,
-                  ))
-                  ..measures.add(SamplingSchema.common()
-                      .measures[ContextSamplingPackage.LOCATION])
-                  ..measures.add(SamplingSchema.common()
-                      .measures[ContextSamplingPackage.WEATHER]))
-            ..addTriggerTask(
-                PeriodicTrigger(period: Duration(minutes: 5)),
-                AppTask(
-                  type: SurveyUserTask.SURVEY_TYPE,
-                  title: surveys.exposure.title,
-                  description: surveys.exposure.description,
-                  minutesToComplete: surveys.exposure.minutesToComplete,
-                  expire: surveys.exposure.expire,
-                )..measures.add(RPTaskMeasure(
-                    type: MeasureType(
-                        NameSpace.CARP, SurveySamplingPackage.SURVEY),
-                    name: surveys.exposure.title,
-                    enabled: true,
-                    surveyTask: surveys.exposure.survey,
-                  )))
-          //
-          ;
-    }
-
-    return _study;
-  }
-
   Future<Study> _getGenericCARPStudy(String studyId) async {
     if (_study == null) {
       _study = Study(id: studyId, userId: await settings.userId)
@@ -146,8 +25,8 @@ class LocalStudyManager implements StudyManager {
         ..description =
             "We would like to have you help in testing the technical stability and the usability of the CARP Mobile Sensing app. "
                 "Your data will be collected and store anonymously."
-        ..dataEndPoint = getDataEndpoint(DataEndPointTypes.FILE)
-        // collect basic device measures continously
+        ..dataEndPoint = getDataEndpoint(DataEndPointTypes.CARP)
+        // collect basic device measures
         ..addTriggerTask(
             ImmediateTrigger(),
             AutomaticTask()
@@ -174,7 +53,7 @@ class LocalStudyManager implements StudyManager {
                   ContextSamplingPackage.AIR_QUALITY,
                 ],
               ))
-        // collect location and activity measures continously (event-based)
+        // collect location, activity, mobility measures continously (event-based)
         ..addTriggerTask(
             ImmediateTrigger(),
             Task()
@@ -298,6 +177,127 @@ class LocalStudyManager implements StudyManager {
                   ContextSamplingPackage.AIR_QUALITY,
                 ],
               ));
+    }
+
+    return _study;
+  }
+
+  Future<Study> _getWristWatchStudy(String studyId) async {
+    if (_study == null) {
+      _study = Study(id: studyId, userId: await settings.userId)
+            ..name = 'The WristWatch Study'
+            ..description =
+                "This study tries to understand children with OCD..."
+            ..dataEndPoint = getDataEndpoint(DataEndPointTypes.FILE)
+            // collect basic device measures continously
+            ..addTriggerTask(
+                ImmediateTrigger(),
+                AutomaticTask()
+                  ..measures = SamplingSchema.debug().getMeasureList(
+                    namespace: NameSpace.CARP,
+                    types: [
+                      SensorSamplingPackage.LIGHT,
+                      SensorSamplingPackage.PEDOMETER,
+                      // DeviceSamplingPackage.MEMORY,
+                      DeviceSamplingPackage.DEVICE,
+                      DeviceSamplingPackage.BATTERY,
+                      DeviceSamplingPackage.SCREEN,
+                    ],
+                  ))
+            // collect location, weather and air quality every 5 minutes
+            ..addTriggerTask(
+                PeriodicTrigger(period: Duration(minutes: 5)),
+                Task()
+                  ..measures = SamplingSchema.common().getMeasureList(
+                    namespace: NameSpace.CARP,
+                    types: [
+                      ContextSamplingPackage.LOCATION,
+                      ContextSamplingPackage.WEATHER,
+                      ContextSamplingPackage.AIR_QUALITY,
+                    ],
+                  ))
+            // collect location and activity measures continously (event-based)
+            ..addTriggerTask(
+                ImmediateTrigger(),
+                Task()
+                  ..measures = SamplingSchema.common().getMeasureList(
+                    namespace: NameSpace.CARP,
+                    types: [
+                      ContextSamplingPackage.GEOLOCATION,
+                      ContextSamplingPackage.ACTIVITY,
+                    ],
+                  ))
+            // collect local weather and air quality as an app task
+            ..addTriggerTask(
+                ImmediateTrigger(),
+                AppTask(
+                  type: SensingUserTask.ONE_TIME_SENSING_TYPE,
+                  title: "Weather & Air Quality",
+                  description: "Collect local weather and air quality",
+                )..measures = SamplingSchema.common().getMeasureList(
+                    namespace: NameSpace.CARP,
+                    types: [
+                      ContextSamplingPackage.WEATHER,
+                      ContextSamplingPackage.AIR_QUALITY,
+                    ],
+                  ))
+            // collect demographics once when the study starts
+            ..addTriggerTask(
+                ImmediateTrigger(),
+                AppTask(
+                  type: SurveyUserTask.DEMOGRAPHIC_SURVEY_TYPE,
+                  title: surveys.demographics.title,
+                  description: surveys.demographics.description,
+                  minutesToComplete: surveys.demographics.minutesToComplete,
+                  expire: surveys.demographics.expire,
+                )
+                  ..measures.add(RPTaskMeasure(
+                    type: MeasureType(
+                        NameSpace.CARP, SurveySamplingPackage.SURVEY),
+                    name: surveys.demographics.title,
+                    enabled: true,
+                    surveyTask: surveys.demographics.survey,
+                  ))
+                  ..measures.add(SamplingSchema.common()
+                      .measures[ContextSamplingPackage.LOCATION]))
+            // collect symptoms on a daily basis
+            ..addTriggerTask(
+                PeriodicTrigger(period: Duration(minutes: 5)),
+                AppTask(
+                  type: SurveyUserTask.SURVEY_TYPE,
+                  title: surveys.parnas.title,
+                  description: surveys.parnas.description,
+                  minutesToComplete: surveys.parnas.minutesToComplete,
+                  expire: surveys.parnas.expire,
+                )
+                  ..measures.add(RPTaskMeasure(
+                    type: MeasureType(
+                        NameSpace.CARP, SurveySamplingPackage.SURVEY),
+                    name: surveys.parnas.title,
+                    enabled: true,
+                    surveyTask: surveys.parnas.survey,
+                  ))
+                  ..measures.add(SamplingSchema.common()
+                      .measures[ContextSamplingPackage.LOCATION])
+                  ..measures.add(SamplingSchema.common()
+                      .measures[ContextSamplingPackage.WEATHER]))
+            ..addTriggerTask(
+                PeriodicTrigger(period: Duration(minutes: 5)),
+                AppTask(
+                  type: SurveyUserTask.SURVEY_TYPE,
+                  title: surveys.exposure.title,
+                  description: surveys.exposure.description,
+                  minutesToComplete: surveys.exposure.minutesToComplete,
+                  expire: surveys.exposure.expire,
+                )..measures.add(RPTaskMeasure(
+                    type: MeasureType(
+                        NameSpace.CARP, SurveySamplingPackage.SURVEY),
+                    name: surveys.exposure.title,
+                    enabled: true,
+                    surveyTask: surveys.exposure.survey,
+                  )))
+          //
+          ;
     }
 
     return _study;
@@ -438,40 +438,26 @@ class LocalStudyManager implements StudyManager {
         return new DataEndPoint(type: DataEndPointTypes.PRINT);
       case DataEndPointTypes.FILE:
         return FileDataEndPoint(
-            bufferSize: 50 * 1000, zip: true, encrypt: false);
+          bufferSize: 50 * 1000,
+          zip: true,
+          encrypt: false,
+        );
       case DataEndPointTypes.CARP:
-        return CarpDataEndPoint(
-            uploadMethod: CarpUploadMethod.DATA_POINT,
-            name: 'CARP Staging Server',
-            uri: bloc.uri,
-            clientId: bloc.clientID,
-            clientSecret: bloc.clientSecret,
-            email: bloc.username,
-            password: bloc.password);
-//        return CarpDataEndPoint(
-//          uploadMethod: CarpUploadMethod.BATCH_DATA_POINT,
-//          name: 'CARP Staging Server',
-//          uri: uri,
-//          clientId: clientID,
-//          clientSecret: clientSecret,
-//          email: username,
-//          password: password,
-//          bufferSize: 40 * 1000,
-//          zip: false,
-//          deleteWhenUploaded: false,
-//        );
-//        return CarpDataEndPoint(
-//          uploadMethod: CarpUploadMethod.FILE,
-//          name: 'CARP Staging Server',
-//          uri: uri,
-//          clientId: clientID,
-//          clientSecret: clientSecret,
-//          email: username,
-//          password: password,
-//          bufferSize: 20 * 1000,
-//          zip: true,
-//          deleteWhenUploaded: false,
-//        );
+        // for now, upload each data point separately
+        return CarpDataEndPoint(uploadMethod: CarpUploadMethod.DATA_POINT);
+      // TODO - change to using batch upload once this is working (again)
+      // return CarpDataEndPoint(
+      //   uploadMethod: CarpUploadMethod.BATCH_DATA_POINT,
+      //   bufferSize: 40 * 1000,
+      //   zip: false,
+      //   deleteWhenUploaded: false,
+      // );
+      //   return CarpDataEndPoint(
+      //     uploadMethod: CarpUploadMethod.FILE,
+      //     bufferSize: 20 * 1000,
+      //     zip: true,
+      //     deleteWhenUploaded: false,
+      //   );
       default:
         return new DataEndPoint(type: DataEndPointTypes.PRINT);
     }

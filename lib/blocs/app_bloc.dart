@@ -1,19 +1,23 @@
 part of carp_study_app;
 
 class AppBLoC {
-  static final SHOW_INFORMED_CONSENT_KEY = 'show_informed_consent';
+  static const INFORMED_CONSENT_ACCEPTED_KEY = 'informed_consent_accepted';
 
-  CarpStydyAppDataModel _data = CarpStydyAppDataModel();
+  final CARPBackend _backend = CARPBackend();
+  CARPBackend get backend => _backend;
+  final CarpStydyAppDataModel _data = CarpStydyAppDataModel();
   Study _study;
   StudyController controller;
-  StudyManager studyManager = LocalStudyManager();
   DateTime _studyStartTimestamp;
   DateTime get studyStartTimestamp => _studyStartTimestamp;
-  List<Message> _messages = [];
+  List<Message> _messages;
   List<Message> get messages => _messages;
 
-  /// The persistent data model for this app
+  /// The overall data model for this app
   CarpStydyAppDataModel get data => _data;
+
+  String get _informedConsentAcceptedKey =>
+      '${settings.appName}.$INFORMED_CONSENT_ACCEPTED_KEY'.toLowerCase();
 
   AppBLoC() : super() {
     // create and register external sampling packages
@@ -32,21 +36,20 @@ class AppBLoC {
   }
 
   Future<void> init() async {
+    globalDebugLevel = DebugLevel.DEBUG;
     await settings.init();
+    await backend.init();
+    info('$runtimeType initialized');
+  }
 
+  Future<void> initializeSensing() async {
     // Get the study from the study manager
-    _study = await studyManager.getStudy(studyId);
+    _study = await backend.getStudy();
 
     // Create a Study Controller that can manage this study and initialize it.
-    controller = StudyController(
-      _study,
-      debugLevel: DebugLevel.DEBUG,
-    );
+    controller = StudyController(_study);
     data.init(controller);
     await controller.initialize();
-
-    // wait 10 sec and the start sampling
-    Timer(Duration(seconds: 10), () => controller.resume());
 
     // This show how an app can listen to user task events.
     // Is not used right now.
@@ -64,7 +67,7 @@ class AppBLoC {
         case UserTaskState.started:
           //
           break;
-        case UserTaskState.onhold:
+        case UserTaskState.canceled:
           //
           break;
         case UserTaskState.done:
@@ -75,43 +78,28 @@ class AppBLoC {
           break;
       }
     });
-
-    _messages.add(LocalMessages.message1);
-    _messages.add(LocalMessages.message2);
   }
+
+  Future<void> getMessages() async =>
+      _messages ??= await backend?.messageManager?.messages;
 
   /// Has the informed consent been shown to, and accepted by the user?
-  bool get hasInformedConsentBeenAccepted {
-    // bool show =
-    //     settings.preferences.getBool(SHOW_INFORMED_CONSENT_KEY) ?? false;
-    // print('>> show: $show');
-    return true;
-  }
+  bool get hasInformedConsentBeenAccepted =>
+      settings.preferences.getBool(_informedConsentAcceptedKey) ?? false;
 
   /// Has the informed consent been handled?
   /// This entails that it has been:
   ///  * shown to the user
   ///  * accepted by the user
   ///  * successfully uploaded to CARP
-  set informedConsentAccepted(bool shown) =>
-      settings.preferences.setBool(SHOW_INFORMED_CONSENT_KEY, shown);
+  set informedConsentAccepted(bool accepted) =>
+      settings.preferences.setBool(_informedConsentAcceptedKey, accepted);
 
-  String get studyId => "2";
-
-  /// The CARP username.
-  String get username => "researcher@example.com";
-
-  /// The CARP password.
-  String get password =>
-      "..."; //decrypt("lkjhf98sdvhcksdmnfewoiywefhowieyurpo2hjr");
-
-  /// The URI of the CARP server.
-  String get uri => "http://staging.carp.cachet.dk:8080";
-
-  String get clientID => "carp";
-  String get clientSecret => "carp";
-
+  /// The currently running [Study].
   Study get study => _study;
+
+  /// The signed in user. Returns null if no user is signed in.
+  CarpUser get user => backend?.user;
 
   /// Is sensing running, i.e. has the study executor been resumed?
   bool get isRunning =>
@@ -131,8 +119,10 @@ class AppBLoC {
     controller.events.forEach(print);
   }
 
+  // Pause sensing.
   void pause() => controller.pause();
 
+  /// Resume sensing.
   void resume() => controller.resume();
 
   /// Stop sensing.
@@ -142,6 +132,7 @@ class AppBLoC {
     _study = null;
   }
 
+  // Dispose the entire sensing.
   void dispose() => stop();
 
   /// Add a [Datum] object to the stream of events.

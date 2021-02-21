@@ -6,13 +6,13 @@ class InformedConsentPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final snackBar = SnackBar(
-      content: Text("Informed consent upload has failed"),
+      content: Text("Saving informed consent failed. Please restart the app."),
       action: SnackBarAction(
           onPressed: () {
-            //TODO: implement retry
-            print("retrying");
+            //TODO: restart the app?
+            print("Restarting the app....");
           },
-          label: "RETRY"),
+          label: "RESTART"),
     );
 
     void resultCallback(RPTaskResult result) async {
@@ -20,26 +20,10 @@ class InformedConsentPage extends StatelessWidget {
 
       // Upload consent document
       try {
-        // TODO: uploadInformedConsent
-        /* ConsentDocument consentDocument = await CARPBackend().uploadInformedConsent(result);
-        if (consentDocument != null) {
-          // Save consent complete
-          sp.setBool(CARPBackend.SP_INFORMED_CONSENT, true);
-          print("LOG INFO: Informed consent uploaded");
-          Navigator.of(context).pushReplacementNamed('/demographics');
-        } else {
-          _scaffoldKey.currentState.showSnackBar(snackBar);
-          // TODO: Handle errors in uploading consent document
-        } */
-        bloc.informedConsentAccepted = true;
+        await bloc.backend.uploadInformedConsent(result);
       } catch (e) {
-        bloc.informedConsentAccepted = false;
         _scaffoldKey.currentState.showSnackBar(snackBar);
       }
-
-      // sp.setBool(CARPBackend.SP_INFORMED_CONSENT, true);
-      // print("LOG INFO: Informed consent uploaded");
-      // Navigator.of(context).pushReplacementNamed('/demographics');
     }
 
     return Scaffold(

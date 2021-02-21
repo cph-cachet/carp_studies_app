@@ -15,13 +15,14 @@ abstract class DataModel {
 
 /// The data model for the entire app.
 class CarpStydyAppDataModel extends DataModel {
-  final DataPageModel _dataPageModel = DataPageModel();
+  final DataVisualizationPageModel _dataPageModel =
+      DataVisualizationPageModel();
   final StudyPageModel _studyPageModel = StudyPageModel();
   final TaskListPageModel _taskListPageModel = TaskListPageModel();
 
   CarpStydyAppDataModel() : super();
 
-  DataPageModel get dataPageModel => _dataPageModel;
+  DataVisualizationPageModel get dataPageModel => _dataPageModel;
   StudyPageModel get studyPageModel => _studyPageModel;
   TaskListPageModel get taskListPageModel => _taskListPageModel;
 

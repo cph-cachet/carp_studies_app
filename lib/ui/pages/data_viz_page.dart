@@ -1,8 +1,8 @@
 part of carp_study_app;
 
-class DataVisualization extends StatelessWidget {
-  final DataPageModel model;
-  DataVisualization(this.model);
+class DataVisualizationPage extends StatelessWidget {
+  final DataVisualizationPageModel model;
+  DataVisualizationPage(this.model);
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,12 +17,7 @@ class DataVisualization extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    MeasuresCardWidget(model.measuresCardDataModel),
-                    StepsOuterStatefulWidget(model.stepsCardDataModel),
-                    MobilityOuterStatefulWidget(model.mobilityCardDataModel),
-                    ActivityOuterStatefulWidget(model.activityCardDataModel),
-                  ],
+                  children: _dataVizCards,
                 ),
               ),
             )
@@ -30,5 +25,33 @@ class DataVisualization extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  // the list of cards, depending on what measures are defined in the study
+  // TODO - this needs to adjusted when more measures can be visualized
+  List<Widget> get _dataVizCards {
+    final List<Widget> widgets = [];
+
+    // always show overall measure stats
+    widgets.add(MeasuresCardWidget(model.measuresCardDataModel));
+
+    // check which measures are in the study
+    model.controller.study.measures.forEach((measure) {
+      if (measure.type.name == SensorSamplingPackage.PEDOMETER)
+        widgets.add(StepsOuterStatefulWidget(model.stepsCardDataModel));
+      if (measure.type.name == ContextSamplingPackage.MOBILITY)
+        widgets.add(MobilityOuterStatefulWidget(model.mobilityCardDataModel));
+      if (measure.type.name == ContextSamplingPackage.ACTIVITY)
+        widgets.add(ActivityOuterStatefulWidget(model.activityCardDataModel));
+    });
+
+    return widgets;
+
+    // return <Widget>[
+    //   MeasuresCardWidget(model.measuresCardDataModel),
+    //   StepsOuterStatefulWidget(model.stepsCardDataModel),
+    //   MobilityOuterStatefulWidget(model.mobilityCardDataModel),
+    //   ActivityOuterStatefulWidget(model.activityCardDataModel),
+    // ];
   }
 }

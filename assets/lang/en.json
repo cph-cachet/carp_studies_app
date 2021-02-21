@@ -28,9 +28,13 @@
     "Please press the button below when ready.": "Please press the button below when ready.",
     "Recording...": "Recording...",
     "Done!": "Done!",
-    "Recording completed. Press the green button to save this recording.\n\nIf you want to redo the recording the press the button on the left.": "Recording completed. Press the green button to save this recording.\n\nIf you want to redo the recording the press the button on the left.",
+    "Recording completed. Press the green button to save this recording.\n\nIf you want to redo the recording, then press the button on the left.": "Recording completed. Press the green button to save this recording.\n\nIf you want to redo the recording, then press the button on the left.",
     "Discard results and quit?": "Discard results and quit?",
     "NO": "NO",
     "YES": "YES",
-    "MY PROFILE": "MY PROFILE"
+    "MY PROFILE": "MY PROFILE",
+    "No description available.": "No description available.",
+    "The title of the study is":"The title of the study is",
+    "The purpose of this study is":"The purpose of this study is",
+    "The Principle Investigator (PI) is":"The Principle Investigator (PI) is"
 }

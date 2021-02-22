@@ -80,6 +80,17 @@ class AppBLoC {
     });
   }
 
+  Future<void> leaveStudy() async {
+    controller.stop();
+    bloc.informedConsentAccepted = false;
+    await backend.leaveStudy();
+  }
+
+  Future<void> leaveStudyAndSignOut() async {
+    await leaveStudy();
+    await backend.signOut();
+  }
+
   Future<void> getMessages() async =>
       _messages ??= await backend?.messageManager?.messages;
 

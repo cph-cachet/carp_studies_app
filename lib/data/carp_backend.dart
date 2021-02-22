@@ -165,4 +165,16 @@ class CARPBackend {
 
     return document;
   }
+
+  Future<void> leaveStudy() async {
+    await settings.preferences.remove(_studyIdKey);
+    await settings.preferences.remove(_studyDeploymentIdKey);
+  }
+
+  Future<void> signOut() async {
+    await CarpService().signOut();
+
+    await settings.preferences.remove(_usernameKey);
+    await settings.preferences.remove(_oauthTokenKey);
+  }
 }

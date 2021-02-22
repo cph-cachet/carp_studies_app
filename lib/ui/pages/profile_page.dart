@@ -23,7 +23,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 children: [
                   IconButton(
                       icon: Icon(Icons.keyboard_backspace, color: Theme.of(context).primaryColor, size: 30),
-                      tooltip: 'Back',
+                      tooltip: locale.translate('Back'),
                       onPressed: () {
                         Navigator.of(context).pop();
                       }),
@@ -44,9 +44,9 @@ class _ProfilePageState extends State<ProfilePage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Username',
+                        Text(locale.translate('Username'),
                             style: aboutCardSubtitleStyle.copyWith(color: Theme.of(context).primaryColor)),
-                        Text(bloc._backend.username, style: profileTitleStyle),
+                        Text(bloc.user.username, style: profileTitleStyle),
                       ],
                     ),
                   ),
@@ -55,9 +55,10 @@ class _ProfilePageState extends State<ProfilePage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Account id',
+                        Text(locale.translate('Name'),
                             style: aboutCardSubtitleStyle.copyWith(color: Theme.of(context).primaryColor)),
-                        Text(bloc._backend.clientID, style: profileTitleStyle),
+                        Text(bloc.user.firstName + ' ' + bloc.user.lastName,
+                            style: profileTitleStyle), // TODO add full name
                       ],
                     ),
                   ),
@@ -66,35 +67,12 @@ class _ProfilePageState extends State<ProfilePage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Full name',
+                        Text(locale.translate('Account Id'),
                             style: aboutCardSubtitleStyle.copyWith(color: Theme.of(context).primaryColor)),
-                        Text('name', style: profileTitleStyle), // TODO add full name
+                        Text(bloc.user.id.toString(), style: profileTitleStyle),
                       ],
                     ),
                   ),
-                  ListTile(
-                    title: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('Study id',
-                            style: aboutCardSubtitleStyle.copyWith(color: Theme.of(context).primaryColor)),
-                        Text(bloc._backend.studyId, style: profileTitleStyle),
-                      ],
-                    ),
-                  ),
-                  ListTile(
-                    title: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('Upload backend',
-                            style: aboutCardSubtitleStyle.copyWith(color: Theme.of(context).primaryColor)),
-                        Text('Something here', style: profileTitleStyle),
-                      ],
-                    ),
-                  ),
-                  ListTile(),
                 ]).toList(),
               ),
             ),
@@ -106,7 +84,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 children: [
                   Divider(indent: 0.1, endIndent: 0.1),
                   ListTile(
-                    title: Text('Leave study',
+                    title: Text(locale.translate('LEAVE STUDY'),
                         style: profileActionStyle.copyWith(color: Theme.of(context).primaryColor)),
                     onTap: () {
                       print("leaving study");
@@ -115,7 +93,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                   Divider(),
                   ListTile(
-                    title: Text('Log out',
+                    title: Text(locale.translate('LOG OUT'),
                         style: profileActionStyle.copyWith(color: Theme.of(context).primaryColor)),
                     onTap: () {
                       print("log out");
@@ -140,7 +118,7 @@ class _ProfilePageState extends State<ProfilePage> {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("You are about to log out. Are you sure?"),
+          title: Text(locale.translate("You are about to log out. Are you sure?")),
           actions: <Widget>[
             FlatButton(
               child: Text(locale.translate("NO")),
@@ -152,11 +130,13 @@ class _ProfilePageState extends State<ProfilePage> {
                 // Calling the onCancel method with which the developer can for e.g. save the result on the device.
                 // Only call it if it's not null
                 //widget.onCancel?.call(_taskResult);
+
+                bloc.leaveStudyAndSignOut();
                 // Popup dismiss
                 Navigator.of(context).pop();
                 // Exit the Ordered Task
                 Navigator.of(context).pop();
-                Navigator.of(context).pushNamedAndRemoveUntil('/AuthScreen', (Route<dynamic> route) => false);
+                //Navigator.of(context).pushNamedAndRemoveUntil('/AuthScreen', (Route<dynamic> route) => false);
               },
             )
           ],
@@ -173,7 +153,7 @@ class _ProfilePageState extends State<ProfilePage> {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("You are about to leave the study. Are you sure?"),
+          title: Text(locale.translate("You are about to leave the study. Are you sure?")),
           actions: <Widget>[
             FlatButton(
               child: Text(locale.translate("NO")),
@@ -185,6 +165,8 @@ class _ProfilePageState extends State<ProfilePage> {
                 // Calling the onCancel method with which the developer can for e.g. save the result on the device.
                 // Only call it if it's not null
                 //widget.onCancel?.call(_taskResult);
+                bloc.leaveStudy();
+
                 // Popup dismiss
                 Navigator.of(context).pop();
                 // Exit the Ordered Task

@@ -34,7 +34,15 @@
     "YES": "YES",
     "MY PROFILE": "MY PROFILE",
     "No description available.": "No description available.",
-    "The title of the study is":"The title of the study is",
-    "The purpose of this study is":"The purpose of this study is",
-    "The Principle Investigator (PI) is":"The Principle Investigator (PI) is"
+    "The title of the study is": "The title of the study is",
+    "The purpose of this study is": "The purpose of this study is",
+    "The Principle Investigator (PI) is": "The Principle Investigator (PI) is",
+    "Back": "Back",
+    "Username": "Username",
+    "Name": "Name",
+    "Account Id": "Account Id",
+    "LEAVE STUDY": "LEAVE STUDY",
+    "LOG OUT": "LOG OUT",
+    "You are about to log out. Are you sure?": "You are about to log out. Are you sure?",
+    "You are about to leave the study. Are you sure?": "You are about to leave the study. Are you sure?"
 }

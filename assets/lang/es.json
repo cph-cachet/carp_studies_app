@@ -36,5 +36,13 @@
     "No description available.": "Descripción no disponible.",
     "The title of the study is": "El título del estudio es",
     "The purpose of this study is": "El propósito del estudio es",
-    "The Principle Investigator (PI) is": "El Investigador Principal (PI) es"
+    "The Principle Investigator (PI) is": "El Investigador Principal (PI) es",
+    "Back": "Volver",
+    "Username": "Usuario",
+    "Name": "Nombre",
+    "Account Id": "Id de usuario",
+    "LEAVE STUDY": "ABANDONAR EL ESTUDIO",
+    "LOG OUT": "CERRAR SESIÓN",
+    "You are about to log out. Are you sure?": "Estás a punto de cerrar sesión. ¿Estás seguro?",
+    "You are about to leave the study. Are you sure?": "Estás a punto de abandonar el estudio. ¿Estás seguro?"
 }

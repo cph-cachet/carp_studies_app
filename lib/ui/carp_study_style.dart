@@ -99,4 +99,4 @@ TextStyle audioDescriptionStyle = TextStyle(fontSize: 14, fontWeight: FontWeight
 TextStyle audioInstructionStyle = TextStyle(fontSize: 16, fontWeight: FontWeight.w400);
 
 TextStyle profileTitleStyle = TextStyle(fontSize: 20, fontWeight: FontWeight.w400);
-TextStyle profileActionStyle = TextStyle(fontSize: 20, fontWeight: FontWeight.w700);
+TextStyle profileActionStyle = TextStyle(fontSize: 20, fontWeight: FontWeight.w600);

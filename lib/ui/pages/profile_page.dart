@@ -20,16 +20,23 @@ class _ProfilePageState extends State<ProfilePage> {
             child: Align(
               alignment: Alignment.centerLeft,
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+                  Row(
+                    children: [
+                      IconButton(
+                          icon: Icon(Icons.account_circle, color: Theme.of(context).primaryColor, size: 30),
+                          onPressed: () {}),
+                      Text(locale.translate('Profile'),
+                          style: sectionTitleStyle.copyWith(color: Theme.of(context).primaryColor)),
+                    ],
+                  ),
                   IconButton(
-                      icon: Icon(Icons.keyboard_backspace, color: Theme.of(context).primaryColor, size: 30),
+                      icon: Icon(Icons.close, color: Theme.of(context).primaryColor, size: 30),
                       tooltip: locale.translate('Back'),
                       onPressed: () {
                         Navigator.of(context).pop();
                       }),
-                  SizedBox(width: 2),
-                  Text(locale.translate('MY PROFILE'),
-                      style: sectionTitleStyle.copyWith(color: Theme.of(context).primaryColor)),
                 ],
               ),
             ),
@@ -73,41 +80,55 @@ class _ProfilePageState extends State<ProfilePage> {
                       ],
                     ),
                   ),
-                ]).toList(),
-              ),
-            ),
-          ),
-          Flexible(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 15),
-              child: ListView(
-                children: [
-                  Divider(indent: 0.1, endIndent: 0.1),
                   ListTile(
-                    title: Text(locale.translate('LEAVE STUDY'),
+                    leading: Icon(Icons.support_agent, color: Theme.of(context).primaryColor),
+                    title: Text(locale.translate('Contact researcher'),
                         style: profileActionStyle.copyWith(color: Theme.of(context).primaryColor)),
+                    onTap: () {
+                      print("contact researcher");
+                      _contactResearcher();
+                    },
+                  ),
+                  ListTile(
+                    leading: Icon(Icons.logout, color: CACHET.RED_1),
+                    title: Text(locale.translate('Leave study'),
+                        style: profileActionStyle.copyWith(color: CACHET.RED_1)),
                     onTap: () {
                       print("leaving study");
                       _showLeaveStudyConfirmationDialog();
                     },
                   ),
-                  Divider(),
                   ListTile(
-                    title: Text(locale.translate('LOG OUT'),
-                        style: profileActionStyle.copyWith(color: Theme.of(context).primaryColor)),
+                    leading: Icon(Icons.power_settings_new, color: CACHET.RED_1),
+                    title: Text(locale.translate('Log out'),
+                        style: profileActionStyle.copyWith(color: CACHET.RED_1)),
                     onTap: () {
                       print("log out");
                       _showLogoutConfirmationDialog();
                     },
                   ),
-                  Divider(),
-                ],
+                ]).toList(),
               ),
             ),
           ),
         ],
       ),
     );
+  }
+
+  // Sends and email to the researcher with the name of the study + user id
+  void _contactResearcher() async {
+    final Uri _emailLaunchUri = Uri(scheme: 'mailto', path: bloc.study.pi.email, queryParameters: {
+      'subject': 'Support for study: ${bloc.study.name} - User: ${bloc.user.id.toString()}'
+    });
+
+    var url = _emailLaunchUri.toString().replaceAll("+", "%20");
+
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 
   // TODO: Navigate to log in page

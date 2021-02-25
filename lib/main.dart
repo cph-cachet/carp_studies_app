@@ -27,6 +27,7 @@ import 'package:timeago/timeago.dart' as timeago;
 import 'package:expandable/expandable.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:intl/intl.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 
 part 'app.dart';
 part 'first_screen.dart';

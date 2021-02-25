@@ -157,7 +157,9 @@ class _ProfilePageState extends State<ProfilePage> {
                 Navigator.of(context).pop();
                 // Exit the Ordered Task
                 Navigator.of(context).pop();
-                //Navigator.of(context).pushNamedAndRemoveUntil('/AuthScreen', (Route<dynamic> route) => false);
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => SplashScreen()),
+                );
               },
             )
           ],
@@ -192,6 +194,9 @@ class _ProfilePageState extends State<ProfilePage> {
                 Navigator.of(context).pop();
                 // Exit the Ordered Task
                 Navigator.of(context).pop();
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => SplashScreen()),
+                );
               },
             )
           ],

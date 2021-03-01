@@ -17,6 +17,27 @@ class _Surveys {
 
   Survey _exposure = _ExposureSurvey();
   Survey get exposure => _exposure;
+
+  Survey _exposureDa = _ExposureDaSurvey();
+  Survey get exposureDa => _exposureDa;
+
+  Survey _controlDa = _ControlDaSurvey();
+  Survey get controlDa => _controlDa;
+
+  Survey _controlParentsDa = _ControlParentsDaSurvey();
+  Survey get controlParentsDa => _controlParentsDa;
+
+  Survey _patientDa = _PatientDaSurvey();
+  Survey get patientDa => _patientDa;
+
+  Survey _patientParentsDa = _PatientParentsDaSurvey();
+  Survey get patientParentsDa => _patientParentsDa;
+
+  Survey _ecologicalDa = _EcologicalDaSurvey();
+  Survey get ecologicalDa => _ecologicalDa;
+
+  Survey _ecologicalParentsDa = _EcologicalParentsDaSurvey();
+  Survey get ecologicalParentsDa => _ecologicalParentsDa;
 }
 
 abstract class Survey {
@@ -34,6 +55,793 @@ abstract class Survey {
 
   /// The survey to fill out.
   RPTask get survey;
+}
+
+class _EcologicalParentsDaSurvey implements Survey {
+  String get title => 'Hvordan har du det lige nu? - Forældre';
+
+  String get description => 'todo '; // TODO
+
+  Duration get expire => const Duration(days: 2);
+
+  int get minutesToComplete => 10; // TODO: review time
+
+  RPChoiceAnswerFormat choiceAnswerFormat1 = RPChoiceAnswerFormat.withParams(ChoiceAnswerStyle.SingleChoice, [
+    RPChoice.withParams("Nej", 0),
+    RPChoice.withParams("Ja", 1),
+  ]);
+  RPChoiceAnswerFormat choiceAnswerFormat2 = RPChoiceAnswerFormat.withParams(ChoiceAnswerStyle.SingleChoice, [
+    RPChoice.withParams("Meget svagt, eller slet ikke", 1),
+    RPChoice.withParams("En smule", 2),
+    RPChoice.withParams("Moderat", 3),
+    RPChoice.withParams("Ret meget", 4),
+    RPChoice.withParams("Udpræget", 5),
+  ]);
+
+  RPTask get survey => RPOrderedTask(
+        "Ecological Momentary Assessment Child",
+        [
+          RPQuestionStep.withAnswerFormat(
+            "question1",
+            "Er du alene?",
+            choiceAnswerFormat1,
+          ),
+          RPQuestionStep.withAnswerFormat(
+            "question2",
+            "Er du sammen med dit barn, der deltager i forsøget?",
+            choiceAnswerFormat1,
+          ),
+          RPQuestionStep.withAnswerFormat(
+            "question3",
+            "Er du sammen med dine andre børn, der ikke deltager i forsøget?",
+            choiceAnswerFormat1,
+          ),
+          RPQuestionStep.withAnswerFormat(
+            "question4",
+            "Er du sammen med barnets anden forældre?",
+            choiceAnswerFormat1,
+          ),
+          RPQuestionStep.withAnswerFormat(
+            "question5",
+            "Er du sammen med dine venner?",
+            choiceAnswerFormat1,
+          ),
+          RPQuestionStep.withAnswerFormat(
+            "question6",
+            "Er du sammen med andre vi ikke har nævnt endnu?",
+            choiceAnswerFormat1,
+          ),
+
+          RPInstructionStep(title: "Følelser og Emotioner")
+            ..text = "Beskriv i hvor høj grad nedenstående følelser fylder lige nu",
+          RPQuestionStep.withAnswerFormat(
+            "question7",
+            "Oprørt",
+            choiceAnswerFormat2,
+          ),
+          RPQuestionStep.withAnswerFormat(
+            "question8",
+            "Fjendtlig",
+            choiceAnswerFormat2,
+          ),
+          RPQuestionStep.withAnswerFormat(
+            "question9",
+            "Årvågen",
+            choiceAnswerFormat2,
+          ),
+          RPQuestionStep.withAnswerFormat(
+            "question10",
+            "Flov",
+            choiceAnswerFormat2,
+          ),
+          RPQuestionStep.withAnswerFormat(
+            "question11",
+            "Inspireret",
+            choiceAnswerFormat2,
+          ),
+          RPQuestionStep.withAnswerFormat(
+            "question12",
+            "Nervøs",
+            choiceAnswerFormat2,
+          ),
+          RPQuestionStep.withAnswerFormat(
+            "question13",
+            "Beslutsom",
+            choiceAnswerFormat2,
+          ),
+          RPQuestionStep.withAnswerFormat(
+            "question14",
+            "Opmærksom",
+            choiceAnswerFormat2,
+          ),
+          RPQuestionStep.withAnswerFormat(
+            "question15",
+            "Bange",
+            choiceAnswerFormat2,
+          ),
+          RPQuestionStep.withAnswerFormat(
+            "questio16",
+            "Aktiv",
+            choiceAnswerFormat2,
+          ),
+          // TODO: input text (textbox)
+          RPCompletionStep("completion")
+            ..title = "Godt gået!"
+            ..text = "Godt gået!",
+        ],
+      );
+}
+
+class _EcologicalDaSurvey implements Survey {
+  String get title => 'Hvordan har du det lige nu?';
+
+  String get description => 'todo'; // TODO
+
+  Duration get expire => const Duration(days: 2);
+
+  int get minutesToComplete => 10; // TODO: review time
+
+  RPChoiceAnswerFormat choiceAnswerFormat1 = RPChoiceAnswerFormat.withParams(ChoiceAnswerStyle.SingleChoice, [
+    RPChoice.withParams("Nej", 0),
+    RPChoice.withParams("Ja", 1),
+  ]);
+  RPChoiceAnswerFormat choiceAnswerFormat2 = RPChoiceAnswerFormat.withParams(ChoiceAnswerStyle.SingleChoice, [
+    RPChoice.withParams("Ikke meget elller slet ikke", 1),
+    RPChoice.withParams("Lidt", 2),
+    RPChoice.withParams("Nogle", 3),
+    RPChoice.withParams("En hel del", 4),
+    RPChoice.withParams("Meget", 5),
+  ]);
+
+  RPTask get survey => RPOrderedTask(
+        "Ecological Momentary Assessment Child",
+        [
+          RPQuestionStep.withAnswerFormat(
+            "question1",
+            "Er du alene?",
+            choiceAnswerFormat1,
+          ),
+          RPQuestionStep.withAnswerFormat(
+            "question2",
+            "Er du sammen med min mor/far der også deltager i forsøget?",
+            choiceAnswerFormat1,
+          ),
+          RPQuestionStep.withAnswerFormat(
+            "question3",
+            "Er du sammen med min anden forældre der ikke deltager i forsøget?",
+            choiceAnswerFormat1,
+          ),
+          RPQuestionStep.withAnswerFormat(
+            "question4",
+            "Er du sammen med min søster/bror?",
+            choiceAnswerFormat1,
+          ),
+          RPQuestionStep.withAnswerFormat(
+            "question5",
+            "Er du sammen med mine venner",
+            choiceAnswerFormat1,
+          ),
+          RPQuestionStep.withAnswerFormat(
+            "question6",
+            "Er du sammen med andre?",
+            choiceAnswerFormat1,
+          ),
+
+          RPInstructionStep(title: "Følelser og Emotioner")
+            ..text =
+                "Denne skala indeholder ord, der beskriver forskellige følelser og emotioner.\nLæs hvert udsagn og vælg det tal der bedst passer på hvor meget følelsen fylder lige nu. Vælg 1 hvis den ikke fylder så meget lige nu. Vælg 5 hvis den fylder meget lige nu.",
+          RPQuestionStep.withAnswerFormat(
+            "question7",
+            "Elendig",
+            choiceAnswerFormat2,
+          ),
+          RPQuestionStep.withAnswerFormat(
+            "question8",
+            "Vred",
+            choiceAnswerFormat2,
+          ),
+          RPQuestionStep.withAnswerFormat(
+            "question9",
+            "Livlig",
+            choiceAnswerFormat2,
+          ),
+          RPQuestionStep.withAnswerFormat(
+            "question10",
+            "Trist",
+            choiceAnswerFormat2,
+          ),
+          RPQuestionStep.withAnswerFormat(
+            "question11",
+            "Frydefuld",
+            choiceAnswerFormat2,
+          ),
+          RPQuestionStep.withAnswerFormat(
+            "question12",
+            "Skræmt",
+            choiceAnswerFormat2,
+          ),
+          RPQuestionStep.withAnswerFormat(
+            "question13",
+            "Fornøjet",
+            choiceAnswerFormat2,
+          ),
+          RPQuestionStep.withAnswerFormat(
+            "question14",
+            "Glad",
+            choiceAnswerFormat2,
+          ),
+          RPQuestionStep.withAnswerFormat(
+            "question15",
+            "Bange",
+            choiceAnswerFormat2,
+          ),
+          RPQuestionStep.withAnswerFormat(
+            "questio16",
+            "Glad",
+            choiceAnswerFormat2,
+          ),
+          RPQuestionStep.withAnswerFormat(
+            "question17",
+            "Stolt",
+            choiceAnswerFormat2,
+          ),
+
+          // TODO: input text (textbox)
+          RPCompletionStep("completion")
+            ..title = "Godt gået!"
+            ..text = "Godt gået!",
+        ],
+      );
+}
+
+class _PatientParentsDaSurvey implements Survey {
+  String get title => 'Armbånd med indbygget biosensor - Forældre';
+
+  String get description =>
+      'Brugeroplevelse: Vi vil gerne høre, hvordan det var for dig at have armbåndet på';
+
+  Duration get expire => const Duration(days: 2);
+
+  int get minutesToComplete => 10; // TODO: review time
+
+  RPChoiceAnswerFormat choiceAnswerFormat1 = RPChoiceAnswerFormat.withParams(ChoiceAnswerStyle.SingleChoice, [
+    RPChoice.withParams("Meget uenig", 0),
+    RPChoice.withParams("Lidt uenig", 1),
+    RPChoice.withParams("Enig", 2),
+    RPChoice.withParams("Meget enig", 3),
+  ]);
+
+  RPTask get survey => RPOrderedTask(
+        "PATIENT_Brugerundersøgelse_biosensor_forældre_v1_29-10-2020",
+        [
+          RPInstructionStep(title: "Eksponering og respons prævention")
+            ..text =
+                "Vi vil gerne høre, hvordan det var for dig at have armbåndet på.\nLæs hvert udsagn og vælg det tal (0, 1, 2, eller 3), som passer bedst på dig.",
+          RPQuestionStep.withAnswerFormat(
+            "question1",
+            "Jeg kan godt lide, hvordan armbåndet ser ud",
+            choiceAnswerFormat1,
+          ),
+          RPQuestionStep.withAnswerFormat(
+            "question2",
+            "Armbåndet ser for stort ud",
+            choiceAnswerFormat1,
+          ),
+          RPQuestionStep.withAnswerFormat(
+            "question3",
+            "Det var pinligt at have armbåndet på",
+            choiceAnswerFormat1,
+          ),
+          RPQuestionStep.withAnswerFormat(
+            "question4",
+            "Armbåndet ser sejt ud",
+            choiceAnswerFormat1,
+          ),
+          RPQuestionStep.withAnswerFormat(
+            "question5",
+            "Armbåndet tiltrak for meget opmærksomhed",
+            choiceAnswerFormat1,
+          ),
+          RPQuestionStep.withAnswerFormat(
+            "question6",
+            "Armbåndet var behageligt at have på",
+            choiceAnswerFormat1,
+          ),
+          RPQuestionStep.withAnswerFormat(
+            "question7",
+            "Armbåndet passede mig godt i størrelsen",
+            choiceAnswerFormat1,
+          ),
+          RPQuestionStep.withAnswerFormat(
+            "question8",
+            "Armbåndet var nemt at bruge",
+            choiceAnswerFormat1,
+          ),
+          RPQuestionStep.withAnswerFormat(
+            "question9",
+            "Armbåndet var nemt at oplade",
+            choiceAnswerFormat1,
+          ),
+          RPQuestionStep.withAnswerFormat(
+            "question10",
+            "Jeg glemte tit at tage armbåndet på",
+            choiceAnswerFormat1,
+          ),
+          RPQuestionStep.withAnswerFormat(
+            "question11",
+            "Jeg havde lyst til at tage armbåndet på",
+            choiceAnswerFormat1,
+          ),
+          RPQuestionStep.withAnswerFormat(
+            "question12",
+            "Der var irriterende at trykke på knappen",
+            choiceAnswerFormat1,
+          ),
+          RPQuestionStep.withAnswerFormat(
+            "question13",
+            "Jeg huskede at trykke på knappen, hver gang mit barns OCD generede mig",
+            choiceAnswerFormat1,
+          ),
+          // TODO: input text (textbox)
+          RPQuestionStep.withAnswerFormat(
+            "question14",
+            "Er der andet, du vil fortælle os om din oplevelse af at bruge armbåndet?",
+            RPIntegerAnswerFormat.withParams(0, 200),
+          ),
+          RPCompletionStep("completion")
+            ..title = "Godt gået!"
+            ..text = "Godt gået!",
+        ],
+      );
+}
+
+class _PatientDaSurvey implements Survey {
+  String get title => 'Armbånd med indbygget biosensor';
+
+  String get description =>
+      'Brugeroplevelse: Vi vil gerne høre, hvordan det var for dig at have armbåndet på';
+
+  Duration get expire => const Duration(days: 2);
+
+  int get minutesToComplete => 10; // TODO: review time
+
+  RPChoiceAnswerFormat choiceAnswerFormat1 = RPChoiceAnswerFormat.withParams(ChoiceAnswerStyle.SingleChoice, [
+    RPChoice.withParams("Meget uenig", 0),
+    RPChoice.withParams("Lidt uenig", 1),
+    RPChoice.withParams("Enig", 2),
+    RPChoice.withParams("Meget enig", 3),
+  ]);
+
+  RPTask get survey => RPOrderedTask(
+        "PATIENT_Brugerundersøgelse_biosensor_barn_v1_29-10-2020",
+        [
+          RPInstructionStep(title: "Eksponering og respons prævention")
+            ..text =
+                "Vi vil gerne høre, hvordan det var for dig at have armbåndet på.\nLæs hvert udsagn og vælg det tal (0, 1, 2, eller 3), som passer bedst på dig.",
+          RPQuestionStep.withAnswerFormat(
+            "question1",
+            "Jeg kan godt lide, hvordan armbåndet ser ud",
+            choiceAnswerFormat1,
+          ),
+          RPQuestionStep.withAnswerFormat(
+            "question2",
+            "Armbåndet ser for stort ud",
+            choiceAnswerFormat1,
+          ),
+          RPQuestionStep.withAnswerFormat(
+            "question3",
+            "Det var pinligt at have armbåndet på",
+            choiceAnswerFormat1,
+          ),
+          RPQuestionStep.withAnswerFormat(
+            "question4",
+            "Armbåndet ser sejt ud",
+            choiceAnswerFormat1,
+          ),
+          RPQuestionStep.withAnswerFormat(
+            "question5",
+            "Armbåndet tiltrak for meget opmærksomhed",
+            choiceAnswerFormat1,
+          ),
+          RPQuestionStep.withAnswerFormat(
+            "question6",
+            "Armbåndet var behageligt at have på",
+            choiceAnswerFormat1,
+          ),
+          RPQuestionStep.withAnswerFormat(
+            "question7",
+            "Armbåndet passede mig godt i størrelsen",
+            choiceAnswerFormat1,
+          ),
+          RPQuestionStep.withAnswerFormat(
+            "question8",
+            "Armbåndet var nemt at bruge",
+            choiceAnswerFormat1,
+          ),
+          RPQuestionStep.withAnswerFormat(
+            "question9",
+            "Armbåndet var nemt at oplade",
+            choiceAnswerFormat1,
+          ),
+          RPQuestionStep.withAnswerFormat(
+            "question10",
+            "Jeg glemte tit at tage armbåndet på",
+            choiceAnswerFormat1,
+          ),
+          RPQuestionStep.withAnswerFormat(
+            "question11",
+            "Jeg havde lyst til at tage armbåndet på",
+            choiceAnswerFormat1,
+          ),
+          RPQuestionStep.withAnswerFormat(
+            "question12",
+            "Der var irriterende at trykke på knappen",
+            choiceAnswerFormat1,
+          ),
+          RPQuestionStep.withAnswerFormat(
+            "question13",
+            "Jeg huskede at trykke på knappen, hver gang mit barns OCD generede mig",
+            choiceAnswerFormat1,
+          ),
+          // TODO: input text (textbox)
+          RPQuestionStep.withAnswerFormat(
+            "question14",
+            "Er der andet, du vil fortælle os om din oplevelse af at bruge armbåndet?",
+            RPIntegerAnswerFormat.withParams(0, 200),
+          ),
+          RPCompletionStep("completion")
+            ..title = "Godt gået!"
+            ..text = "Godt gået!",
+        ],
+      );
+}
+
+class _ControlParentsDaSurvey implements Survey {
+  String get title => 'Armbånd med indbygget biosensor - Kontrol, forældre';
+
+  String get description =>
+      'Brugeroplevelse: Vi vil gerne høre, hvordan det var for dig at have armbåndet på';
+
+  Duration get expire => const Duration(days: 2);
+
+  int get minutesToComplete => 10; // TODO: review time
+
+  RPChoiceAnswerFormat choiceAnswerFormat1 = RPChoiceAnswerFormat.withParams(ChoiceAnswerStyle.SingleChoice, [
+    RPChoice.withParams("Meget uenig", 0),
+    RPChoice.withParams("Lidt uenig", 1),
+    RPChoice.withParams("Enig", 2),
+    RPChoice.withParams("Meget enig", 3),
+  ]);
+
+  RPTask get survey => RPOrderedTask(
+        "KONTROL_Brugerundersøgelse_biosensor_forældre_v1_29-10-2020",
+        [
+          RPInstructionStep(title: "Eksponering og respons prævention")
+            ..text =
+                "Vi vil gerne høre, hvordan det var for dig at have armbåndet på.\nLæs hvert udsagn og vælg det tal (0, 1, 2, eller 3), som passer bedst på dig.",
+          RPQuestionStep.withAnswerFormat(
+            "question1",
+            "Jeg kan godt lide, hvordan armbåndet ser ud",
+            choiceAnswerFormat1,
+          ),
+          RPQuestionStep.withAnswerFormat(
+            "question2",
+            "Armbåndet ser for stort ud",
+            choiceAnswerFormat1,
+          ),
+          RPQuestionStep.withAnswerFormat(
+            "question3",
+            "Det var pinligt at have armbåndet på",
+            choiceAnswerFormat1,
+          ),
+          RPQuestionStep.withAnswerFormat(
+            "question4",
+            "Armbåndet ser sejt ud",
+            choiceAnswerFormat1,
+          ),
+          RPQuestionStep.withAnswerFormat(
+            "question5",
+            "Armbåndet tiltrak for meget opmærksomhed",
+            choiceAnswerFormat1,
+          ),
+          RPQuestionStep.withAnswerFormat(
+            "question6",
+            "Armbåndet var behageligt at have på",
+            choiceAnswerFormat1,
+          ),
+          RPQuestionStep.withAnswerFormat(
+            "question7",
+            "Armbåndet passede mig godt i størrelsen",
+            choiceAnswerFormat1,
+          ),
+          RPQuestionStep.withAnswerFormat(
+            "question8",
+            "Armbåndet var nemt at bruge",
+            choiceAnswerFormat1,
+          ),
+          RPQuestionStep.withAnswerFormat(
+            "question9",
+            "Armbåndet var nemt at oplade",
+            choiceAnswerFormat1,
+          ),
+          RPQuestionStep.withAnswerFormat(
+            "question10",
+            "Jeg glemte tit at tage armbåndet på",
+            choiceAnswerFormat1,
+          ),
+          RPQuestionStep.withAnswerFormat(
+            "question11",
+            "Jeg havde lyst til at tage armbåndet på",
+            choiceAnswerFormat1,
+          ),
+          RPQuestionStep.withAnswerFormat(
+            "question12",
+            "Der var irriterende at trykke på knappen",
+            choiceAnswerFormat1,
+          ),
+          RPQuestionStep.withAnswerFormat(
+            "question13",
+            "Jeg huskede at trykke på knappen, hver gang stress generede mig",
+            choiceAnswerFormat1,
+          ),
+          // TODO: input text (textbox)
+          RPQuestionStep.withAnswerFormat(
+            "question14",
+            "Er der andet, du vil fortælle os om din oplevelse af at bruge armbåndet?",
+            RPIntegerAnswerFormat.withParams(0, 200),
+          ),
+          RPCompletionStep("completion")
+            ..title = "Godt gået!"
+            ..text = "Godt gået!",
+        ],
+      );
+}
+
+class _ControlDaSurvey implements Survey {
+  String get title => 'Armbånd med indbygget biosensor - Kontrol';
+
+  String get description =>
+      'Brugeroplevelse: Vi vil gerne høre, hvordan det var for dig at have armbåndet på';
+
+  Duration get expire => const Duration(days: 2);
+
+  int get minutesToComplete => 10; // TODO: review time
+
+  RPChoiceAnswerFormat choiceAnswerFormat1 = RPChoiceAnswerFormat.withParams(ChoiceAnswerStyle.SingleChoice, [
+    RPChoice.withParams("Meget uenig", 0),
+    RPChoice.withParams("Lidt uenig", 1),
+    RPChoice.withParams("Enig", 2),
+    RPChoice.withParams("Meget enig", 3),
+  ]);
+
+  RPTask get survey => RPOrderedTask(
+        "KONTROL_Brugerundersøgelse_biosensor_barn_v1_29-10-2020",
+        [
+          RPInstructionStep(title: "Eksponering og respons prævention")
+            ..text =
+                "Vi vil gerne høre, hvordan det var for dig at have armbåndet på.\nLæs hvert udsagn og vælg det tal (0, 1, 2, eller 3), som passer bedst på dig.",
+          RPQuestionStep.withAnswerFormat(
+            "question1",
+            "Jeg kan godt lide, hvordan armbåndet ser ud",
+            choiceAnswerFormat1,
+          ),
+          RPQuestionStep.withAnswerFormat(
+            "question2",
+            "Armbåndet ser for stort ud",
+            choiceAnswerFormat1,
+          ),
+          RPQuestionStep.withAnswerFormat(
+            "question3",
+            "Det var pinligt at have armbåndet på",
+            choiceAnswerFormat1,
+          ),
+          RPQuestionStep.withAnswerFormat(
+            "question4",
+            "Armbåndet ser sejt ud",
+            choiceAnswerFormat1,
+          ),
+          RPQuestionStep.withAnswerFormat(
+            "question5",
+            "Armbåndet tiltrak for meget opmærksomhed",
+            choiceAnswerFormat1,
+          ),
+          RPQuestionStep.withAnswerFormat(
+            "question6",
+            "Armbåndet var behageligt at have på",
+            choiceAnswerFormat1,
+          ),
+          RPQuestionStep.withAnswerFormat(
+            "question7",
+            "Armbåndet passede mig godt i størrelsen",
+            choiceAnswerFormat1,
+          ),
+          RPQuestionStep.withAnswerFormat(
+            "question8",
+            "Armbåndet var nemt at bruge",
+            choiceAnswerFormat1,
+          ),
+          RPQuestionStep.withAnswerFormat(
+            "question9",
+            "Armbåndet var nemt at oplad",
+            choiceAnswerFormat1,
+          ),
+          RPQuestionStep.withAnswerFormat(
+            "question10",
+            "Jeg glemte tit at tage armbåndet på",
+            choiceAnswerFormat1,
+          ),
+          RPQuestionStep.withAnswerFormat(
+            "question11",
+            "Jeg havde lyst til at tage armbåndet på",
+            choiceAnswerFormat1,
+          ),
+          RPQuestionStep.withAnswerFormat(
+            "question12",
+            "Der var irriterende at trykke på knappen",
+            choiceAnswerFormat1,
+          ),
+          RPQuestionStep.withAnswerFormat(
+            "question13",
+            "Jeg huskede at trykke på knappen, hver gang stress generede mig",
+            choiceAnswerFormat1,
+          ),
+          // TODO: input text (textbox)
+          RPQuestionStep.withAnswerFormat(
+            "question14",
+            "Er der andet, du vil fortælle os om din oplevelse af at bruge armbåndet?",
+            RPIntegerAnswerFormat.withParams(0, 200),
+          ),
+          RPCompletionStep("completion")
+            ..title = "Godt gået!"
+            ..text = "Godt gået!",
+        ],
+      );
+}
+
+class _ExposureDaSurvey implements Survey {
+  String get title => 'Eksponering og respons prævention';
+
+  String get description => 'Skriv tvangstanken og/eller tvangshandlingen som du arbejder på'; // TODO
+
+  Duration get expire => const Duration(days: 2);
+
+  int get minutesToComplete => 10; // TODO: review time
+
+  RPChoiceAnswerFormat choiceAnswerFormat1 = RPChoiceAnswerFormat.withParams(ChoiceAnswerStyle.SingleChoice, [
+    RPChoice.withParams("Nej", 0),
+    RPChoice.withParams("Ja", 1),
+  ]);
+  RPChoiceAnswerFormat choiceAnswerFormat2 =
+      RPChoiceAnswerFormat.withParams(ChoiceAnswerStyle.MultipleChoice, [
+    RPChoice.withParams("Forurening/smitte (snavs, bakterier, sygdomme)", 0),
+    RPChoice.withParams("At skade sig selv eller andre (fysisk eller følelsesmæssigt)", 1),
+    RPChoice.withParams("Sex, graviditet eller seksualitet", 2),
+    RPChoice.withParams("At samle ting eller være bange for at miste noget", 3),
+    RPChoice.withParams(
+        "Magiske/overtroiske tanker eller handlinger (fx lykketal/uheldstal, frygt for at blive forvandlet)",
+        4),
+    RPChoice.withParams(
+        "Kroppen (fx bekymring for at have en sygdom eller at en kropsdel/ens udseende ser forkert ud)", 5),
+    RPChoice.withParams(
+        "Frygt for at fornærme noget religiøst (fx Gud eller satan) eller tanker om, hvad der er rigtigt/forkert/moralsk",
+        6),
+    RPChoice.withParams(
+        "Symmetri og orden (fx at ting skal ligge på en bestemt måde eller ting skal stå i rækkefølge)", 7),
+  ]);
+
+  RPChoiceAnswerFormat choiceAnswerFormat3 =
+      RPChoiceAnswerFormat.withParams(ChoiceAnswerStyle.MultipleChoice, [
+    RPChoice.withParams("Vask eller rengøring", 0),
+    RPChoice.withParams("Kontrollere eller tjekke (fx om man har husket at låse døren)", 1),
+    RPChoice.withParams("Gentage handlinger (fx tænde og slukke lyset flere gange)", 2),
+    RPChoice.withParams("Tælle ting", 3),
+    RPChoice.withParams("Ordne ting eller forsøge at få ting ens", 4),
+    RPChoice.withParams("Samle på ting eller svært ved at smide ting væk", 5),
+    RPChoice.withParams("Magisk/overtroisk adfærd", 6),
+    RPChoice.withParams(
+        "Behov for at involvere andre (fx dine forældre) i et ritual eller behov for at blive beroliget", 7),
+  ]);
+  RPImageChoiceAnswerFormat _imageChoiceAnswerFormat = RPImageChoiceAnswerFormat.withParams([
+    RPImageChoice.withParams(Image.asset('assets/icons/very-sad.png'), 0, 'Uudholdelig'),
+    RPImageChoice.withParams(Image.asset('assets/icons/sad.png'), 0, 'Meget stor ubehag'),
+    RPImageChoice.withParams(Image.asset('assets/icons/ok.png'), 0, 'Ret stor ubehag'),
+    RPImageChoice.withParams(Image.asset('assets/icons/happy.png'), 0, 'En vis ubehag'),
+    RPImageChoice.withParams(Image.asset('assets/icons/very-happy.png'), 0, 'Rolig'),
+  ]);
+  RPChoiceAnswerFormat choiceAnswerFormat4 = RPChoiceAnswerFormat.withParams(ChoiceAnswerStyle.SingleChoice, [
+    RPChoice.withParams("Ja, jeg udførte en tvangshandling", 0),
+    RPChoice.withParams("Ja, udførte en anden slags sikkerhedsadfærd", 1),
+    RPChoice.withParams("Nej, jeg udførte eksponeringsopgaven uden sikkerhedsadfærd", 2),
+  ]);
+
+  RPTask get survey => RPOrderedTask("Exposure_SUDS_v1_26_02_2021", [
+        RPInstructionStep(title: "Eksponering og respons prævention")
+          ..text =
+              "Dette skema skal hjælpe dig med at for styr på OCD’en. Du skal lave en opgave, der handler om eksponering. Eksponering betyder, at man udsætter sig selv for lidt at det, man er bange for. Samtidigt skal man prøve at sige fra over for tvangstankerne og tvangshandlingerne. Respons-prævention betyder, at man lade være med at udføre tvangshandlinger. Måske har du prøvet det i terapien. Hvis du ikke har gennemgået eksponering med din behandler, skal du ikke bruge denne app.",
+        RPQuestionStep.withAnswerFormat(
+          "question1",
+          "Min behandler har givet mig hjemmearbejde for, der handler om eksponering og respons-prævention?",
+          choiceAnswerFormat1,
+        ),
+        RPInstructionStep(title: "Tvangstanker")
+          ..text =
+              "Tvangstanker er tanker eller billeder, som kommer igen og igen, og som du ikke kan lade være at tænke på, selvom du gerne vil være fri for dem",
+        RPQuestionStep.withAnswerFormat(
+          "question2",
+          "Jeg vil arbejde med en tvangstanke",
+          choiceAnswerFormat1,
+        ),
+        // TODO: if question2 == 1
+        RPQuestionStep.withAnswerFormat(
+          "question3",
+          "Tvangstanken, jeg vil arbejde med nu, handler om",
+          choiceAnswerFormat2,
+        ),
+        // TODO: input text (textbox)
+        RPQuestionStep.withAnswerFormat(
+          "question4",
+          "Beskriv tvangstanken, du vil arbejde på",
+          RPIntegerAnswerFormat.withParams(0, 200),
+        ),
+        RPInstructionStep(title: "Tvangstanker")
+          ..text =
+              "Tvangshandling er handlinger, du ikke kan lade være med at gøre. Hvis du prøver at lade være med at udføre handlingerne, vil blive bekymret, frustreret, eller vred",
+        RPQuestionStep.withAnswerFormat(
+          "question5",
+          "Jeg vil arbejde med en tvangshandling",
+          choiceAnswerFormat1,
+        ),
+        // TODO: if question5 == 1
+        RPQuestionStep.withAnswerFormat(
+          "question6",
+          "Tvangshandlingen, jeg vil arbejde med nu, handler om",
+          choiceAnswerFormat3,
+        ),
+        // TODO: input text (textbox)
+        RPQuestionStep.withAnswerFormat(
+          "question7",
+          "Beskriv tvangshandling, du vil arbejde på",
+          RPIntegerAnswerFormat.withParams(0, 200),
+        ),
+        // TODO: input text (textbox)
+        RPQuestionStep.withAnswerFormat(
+          "question8",
+          "Beskriv eksponeringsøvelsen (hvordan du vil arbejde på tvangstanken og/eller tvangshandlingen)",
+          RPIntegerAnswerFormat.withParams(0, 200),
+        ),
+        RPQuestionStep.withAnswerFormat(
+          "question9",
+          "Skriv, hvad klokken er, når du starter øvelsen",
+          RPDateTimeAnswerFormat.withParams(DateTimeAnswerStyle.TimeOfDay),
+        ),
+        RPInstructionStep(title: "Tvangstanker")
+          ..text =
+              "Undervejs skal du bruge ”følelsestermometeret” til at skrive, hvor meget angst eller ubehag, du mærker. Følelsestermometeret er en skala fra 0 til 10, hvor 0 betyder ingen angst, og 10 betyder så meget angst, du overhovedet kan forestille dig.\nBrug følelsestermometeret lige inden øvelsen og efter 5, 10 og 15 minutter.\nDine forældre eller din terapeut kan hjælpe dig med at holde styr på tiden og med at skrive ned.",
+
+        RPQuestionStep.withAnswerFormat(
+          "question10",
+          "Hvor megen ubehag eller angst oplever du lige nu?",
+          _imageChoiceAnswerFormat,
+        ),
+        RPQuestionStep.withAnswerFormat(
+          "question11",
+          "Hvor megen ubehag eller angst oplever du efter 5 minutter?",
+          _imageChoiceAnswerFormat,
+        ),
+        RPQuestionStep.withAnswerFormat(
+          "question12",
+          "Hvor megen ubehag eller angst oplever du efter 10 minutter?",
+          _imageChoiceAnswerFormat,
+        ),
+        RPQuestionStep.withAnswerFormat(
+          "question13",
+          "Hvor megen ubehag eller angst oplever du efter 15 minutter?",
+          _imageChoiceAnswerFormat,
+        ),
+        RPCompletionStep("completion")
+          ..title = "Godt gået!"
+          ..text = "Godt gået!",
+      ]);
 }
 
 class _ExposureSurvey implements Survey {

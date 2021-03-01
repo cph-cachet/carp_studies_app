@@ -5,8 +5,8 @@ class LocalStudyManager implements StudyManager {
 
   Future<void> initialize() => null;
 
-  Future<Study> getStudy(String studyId) async =>
-      _study ??= await _getGenericCARPStudy(studyId); // _getWristWatchStudy(studyId);
+  Future<Study> getStudy(String studyId) async => _study ??=
+      await _getWristWatchStudy(studyId); //_getGenericCARPStudy(studyId); // _getWristWatchStudy(studyId);
 
   Future<Study> _getGenericCARPStudy(String studyId) async {
     if (_study == null) {
@@ -177,81 +177,90 @@ class LocalStudyManager implements StudyManager {
   Future<Study> _getWristWatchStudy(String studyId) async {
     if (_study == null) {
       _study = Study(id: studyId, userId: await settings.userId)
-            ..name = 'ERP App'
-            ..description =
-                "Dette skema skal hjælpe dig at gennemføre en eksponeringsopgave for at få styr på OCD’en. I terapi, har du måske lært at for at få styr på OCD’en skal du sige fra overfor tvangstanker og tvangshandlinger. Det bliver du bedre til ved at øve dig i at gøre noget der fremkalder tvangstanker og lade være med at udføre tvangshandlinger. Hvis du ikke har gennemgået eksponeringsøvelser med din behandler, skal du ikke bruge denne app."
-            ..dataEndPoint = getDataEndpoint(DataEndPointTypes.FILE)
-            // collect basic device measures continously
-            ..addTriggerTask(
-                ImmediateTrigger(),
-                AutomaticTask()
-                  ..measures = SamplingSchema.debug().getMeasureList(
-                    namespace: NameSpace.CARP,
-                    types: [
-                      SensorSamplingPackage.LIGHT,
-                      SensorSamplingPackage.PEDOMETER,
-                      // DeviceSamplingPackage.MEMORY,
-                      DeviceSamplingPackage.DEVICE,
-                      DeviceSamplingPackage.BATTERY,
-                      DeviceSamplingPackage.SCREEN,
-                    ],
-                  ))
-            // collect location, weather and air quality every 5 minutes
-            ..addTriggerTask(
-                PeriodicTrigger(period: Duration(minutes: 5)),
-                Task()
-                  ..measures = SamplingSchema.common().getMeasureList(
-                    namespace: NameSpace.CARP,
-                    types: [
-                      ContextSamplingPackage.LOCATION,
-                      ContextSamplingPackage.WEATHER,
-                      ContextSamplingPackage.AIR_QUALITY,
-                    ],
-                  ))
-            // collect location and activity measures continously (event-based)
-            ..addTriggerTask(
-                ImmediateTrigger(),
-                Task()
-                  ..measures = SamplingSchema.common().getMeasureList(
-                    namespace: NameSpace.CARP,
-                    types: [
-                      ContextSamplingPackage.GEOLOCATION,
-                      ContextSamplingPackage.ACTIVITY,
-                    ],
-                  ))
-            // collect local weather and air quality as an app task
-            ..addTriggerTask(
-                ImmediateTrigger(),
-                AppTask(
-                  type: SensingUserTask.ONE_TIME_SENSING_TYPE,
-                  title: "Weather & Air Quality",
-                  description: "Collect local weather and air quality",
-                )..measures = SamplingSchema.common().getMeasureList(
-                    namespace: NameSpace.CARP,
-                    types: [
-                      ContextSamplingPackage.WEATHER,
-                      ContextSamplingPackage.AIR_QUALITY,
-                    ],
-                  ))
-            // collect demographics once when the study starts
-            ..addTriggerTask(
-                ImmediateTrigger(),
-                AppTask(
-                  type: SurveyUserTask.DEMOGRAPHIC_SURVEY_TYPE,
-                  title: surveys.demographics.title,
-                  description: surveys.demographics.description,
-                  minutesToComplete: surveys.demographics.minutesToComplete,
-                  expire: surveys.demographics.expire,
-                )
-                  ..measures.add(RPTaskMeasure(
-                    type: MeasureType(NameSpace.CARP, SurveySamplingPackage.SURVEY),
-                    name: surveys.demographics.title,
-                    enabled: true,
-                    surveyTask: surveys.demographics.survey,
-                  ))
-                  ..measures.add(SamplingSchema.common().measures[ContextSamplingPackage.LOCATION]))
-            // collect symptoms on a daily basis
-            ..addTriggerTask(
+        ..name = 'ERP App'
+        ..title = 'ERP App'
+        ..purpose = 'ERP App.'
+        ..pi = PrincipalInvestigator(
+          name: ' name',
+          title: 'some title',
+          email: 'name@email.dk',
+          affiliation: 'affiliation name',
+          address: 'some address',
+        )
+        ..description =
+            "Dette skema skal hjælpe dig at gennemføre en eksponeringsopgave for at få styr på OCD’en. I terapi, har du måske lært at for at få styr på OCD’en skal du sige fra overfor tvangstanker og tvangshandlinger. Det bliver du bedre til ved at øve dig i at gøre noget der fremkalder tvangstanker og lade være med at udføre tvangshandlinger. Hvis du ikke har gennemgået eksponeringsøvelser med din behandler, skal du ikke bruge denne app."
+        ..dataEndPoint = getDataEndpoint(DataEndPointTypes.FILE)
+        // collect basic device measures continously
+        ..addTriggerTask(
+            ImmediateTrigger(),
+            AutomaticTask()
+              ..measures = SamplingSchema.debug().getMeasureList(
+                namespace: NameSpace.CARP,
+                types: [
+                  SensorSamplingPackage.LIGHT,
+                  SensorSamplingPackage.PEDOMETER,
+                  // DeviceSamplingPackage.MEMORY,
+                  DeviceSamplingPackage.DEVICE,
+                  DeviceSamplingPackage.BATTERY,
+                  DeviceSamplingPackage.SCREEN,
+                ],
+              ))
+        // collect location, weather and air quality every 5 minutes
+        ..addTriggerTask(
+            PeriodicTrigger(period: Duration(minutes: 5)),
+            Task()
+              ..measures = SamplingSchema.common().getMeasureList(
+                namespace: NameSpace.CARP,
+                types: [
+                  ContextSamplingPackage.LOCATION,
+                  ContextSamplingPackage.WEATHER,
+                  ContextSamplingPackage.AIR_QUALITY,
+                ],
+              ))
+        // collect location and activity measures continously (event-based)
+        ..addTriggerTask(
+            ImmediateTrigger(),
+            Task()
+              ..measures = SamplingSchema.common().getMeasureList(
+                namespace: NameSpace.CARP,
+                types: [
+                  ContextSamplingPackage.GEOLOCATION,
+                  ContextSamplingPackage.ACTIVITY,
+                ],
+              ))
+        // collect local weather and air quality as an app task
+        ..addTriggerTask(
+            ImmediateTrigger(),
+            AppTask(
+              type: SensingUserTask.ONE_TIME_SENSING_TYPE,
+              title: "Weather & Air Quality",
+              description: "Collect local weather and air quality",
+            )..measures = SamplingSchema.common().getMeasureList(
+                namespace: NameSpace.CARP,
+                types: [
+                  ContextSamplingPackage.WEATHER,
+                  ContextSamplingPackage.AIR_QUALITY,
+                ],
+              ))
+        // collect demographics once when the study starts
+        ..addTriggerTask(
+            ImmediateTrigger(),
+            AppTask(
+              type: SurveyUserTask.DEMOGRAPHIC_SURVEY_TYPE,
+              title: surveys.demographics.title,
+              description: surveys.demographics.description,
+              minutesToComplete: surveys.demographics.minutesToComplete,
+              expire: surveys.demographics.expire,
+            )
+              ..measures.add(RPTaskMeasure(
+                type: MeasureType(NameSpace.CARP, SurveySamplingPackage.SURVEY),
+                name: surveys.demographics.title,
+                enabled: true,
+                surveyTask: surveys.demographics.survey,
+              ))
+              ..measures.add(SamplingSchema.common().measures[ContextSamplingPackage.LOCATION]))
+        // collect symptoms on a daily basis
+        /* ..addTriggerTask(
                 PeriodicTrigger(period: Duration(minutes: 5)),
                 AppTask(
                   type: SurveyUserTask.SURVEY_TYPE,
@@ -281,9 +290,52 @@ class LocalStudyManager implements StudyManager {
                     name: surveys.exposure.title,
                     enabled: true,
                     surveyTask: surveys.exposure.survey,
-                  )))
-          //
-          ;
+                  ))) */
+        ..addTriggerTask(
+            PeriodicTrigger(period: Duration(minutes: 5)),
+            AppTask(
+              type: SurveyUserTask.SURVEY_TYPE,
+              title: surveys.controlDa.title,
+              description: surveys.controlDa.description,
+              minutesToComplete: surveys.controlDa.minutesToComplete,
+              expire: surveys.controlDa.expire,
+            )..measures.add(RPTaskMeasure(
+                type: MeasureType(NameSpace.CARP, SurveySamplingPackage.SURVEY),
+                name: surveys.controlDa.title,
+                enabled: true,
+                surveyTask: surveys.controlDa.survey,
+              )))
+        ..addTriggerTask(
+            PeriodicTrigger(period: Duration(minutes: 5)),
+            AppTask(
+              type: SurveyUserTask.SURVEY_TYPE,
+              title: surveys.exposureDa.title,
+              description: surveys.exposureDa.description,
+              minutesToComplete: surveys.exposureDa.minutesToComplete,
+              expire: surveys.exposureDa.expire,
+            )..measures.add(RPTaskMeasure(
+                type: MeasureType(NameSpace.CARP, SurveySamplingPackage.SURVEY),
+                name: surveys.exposureDa.title,
+                enabled: true,
+                surveyTask: surveys.exposureDa.survey,
+              )))
+        ..addTriggerTask(
+            PeriodicTrigger(period: Duration(minutes: 5)),
+            AppTask(
+              type: SurveyUserTask.SURVEY_TYPE,
+              title: surveys.ecologicalDa.title,
+              description: surveys.ecologicalDa.description,
+              minutesToComplete: surveys.ecologicalDa.minutesToComplete,
+              expire: surveys.ecologicalDa.expire,
+            )..measures.add(RPTaskMeasure(
+                type: MeasureType(NameSpace.CARP, SurveySamplingPackage.SURVEY),
+                name: surveys.ecologicalDa.title,
+                enabled: true,
+                surveyTask: surveys.ecologicalDa.survey,
+              ))
+
+            //
+            );
     }
 
     return _study;

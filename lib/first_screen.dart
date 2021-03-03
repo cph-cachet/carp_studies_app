@@ -6,6 +6,7 @@ class CARPStudyApp extends StatelessWidget {
       supportedLocales: const [
         Locale('en'),
         Locale('da'),
+        Locale('es'),
       ],
       // These delegates make sure that the localization data for the proper language is loaded
       localizationsDelegates: [
@@ -96,9 +97,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 )))
             : Scaffold(
                 backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-                body: (bloc.hasInformedConsentBeenAccepted)
-                    ? CARPStudyAppHome()
-                    : InformedConsentPage(),
+                body: (bloc.hasInformedConsentBeenAccepted) ? CARPStudyAppHome() : InformedConsentPage(),
               ));
   }
 
@@ -113,8 +112,7 @@ class _SplashScreenState extends State<SplashScreen> {
         child: new Center(
             child: new Hero(
           tag: "tick",
-          child: new Image.asset('assets/images/splash_cachet.png',
-              width: 150.0, height: 150.0, scale: 1.0),
+          child: new Image.asset('assets/images/splash_cachet.png', width: 150.0, height: 150.0, scale: 1.0),
         )),
       );
 }

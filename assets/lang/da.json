@@ -32,9 +32,18 @@
     "Discard results and quit?": "Kassér resultaterne og afslut?",
     "NO": "NEJ",
     "YES": "JA",
-    "MY PROFILE": "MIN PROFIL",
+    "Profile": "Profil",
     "No description available.": "Beskrivelse ikke tilgængelig.",
     "The title of the study is": "Studiets titel er",
     "The purpose of this study is": "Formålet med studiet er",
-    "The Principle Investigator (PI) is": "Den ansvarlige forsker er"
+    "The Principle Investigator (PI) is": "Den ansvarlige forsker er",
+    "Back": "Tilbage",
+    "Username": "Bruger",
+    "Name": "Navn",
+    "Account Id": "Konto-id",
+    "Leave study": "Forlad Studie",
+    "Log out": "Log ud",
+    "You are about to log out. Are you sure?": "Du er ved at logge af. Er du sikker?",
+    "You are about to leave the study. Are you sure?": "Du er ved at forlade studiet. Er du sikker?",
+    "Contact researcher": "Kontakt forsker"
 }

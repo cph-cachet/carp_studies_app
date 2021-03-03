@@ -97,3 +97,6 @@ TextStyle audioTitleStyle = TextStyle(fontSize: 22, fontWeight: FontWeight.w700)
 TextStyle audioContentStyle = TextStyle(fontSize: 16, fontWeight: FontWeight.w500);
 TextStyle audioDescriptionStyle = TextStyle(fontSize: 14, fontWeight: FontWeight.w400);
 TextStyle audioInstructionStyle = TextStyle(fontSize: 16, fontWeight: FontWeight.w400);
+
+TextStyle profileTitleStyle = TextStyle(fontSize: 20, fontWeight: FontWeight.w400);
+TextStyle profileActionStyle = TextStyle(fontSize: 20, fontWeight: FontWeight.w600);

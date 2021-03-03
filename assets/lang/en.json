@@ -32,9 +32,18 @@
     "Discard results and quit?": "Discard results and quit?",
     "NO": "NO",
     "YES": "YES",
-    "MY PROFILE": "MY PROFILE",
+    "Profile": "Profile",
     "No description available.": "No description available.",
-    "The title of the study is":"The title of the study is",
-    "The purpose of this study is":"The purpose of this study is",
-    "The Principle Investigator (PI) is":"The Principle Investigator (PI) is"
+    "The title of the study is": "The title of the study is",
+    "The purpose of this study is": "The purpose of this study is",
+    "The Principle Investigator (PI) is": "The Principle Investigator (PI) is",
+    "Back": "Back",
+    "Username": "Username",
+    "Name": "Name",
+    "Account Id": "Account Id",
+    "Leave study": "Leave study",
+    "Log out": "Log out",
+    "You are about to log out. Are you sure?": "You are about to log out. Are you sure?",
+    "You are about to leave the study. Are you sure?": "You are about to leave the study. Are you sure?",
+    "Contact researcher": "Contact researcher"
 }

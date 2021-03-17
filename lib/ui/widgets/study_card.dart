@@ -9,13 +9,13 @@ class StudyCard extends StatelessWidget {
 
     String description() =>
         '${studyPageModel.description ?? locale.translate('No description available.')}\n\n'
-        '${locale.translate('The title of the study is')}: \"${bloc.study.title}\".\n\n'
+        '${locale.translate('The title of the study is')}: \"${bloc.study.title}\".\n'
         '${locale.translate('The purpose of this study is')}: \"${bloc.study.purpose}\".\n\n'
-        '${locale.translate('The Principle Investigator (PI) is')}:\n\n'
-        '${bloc.study.pi.name}, ${bloc.study.pi.title}\n'
-        '${bloc.study.pi.affiliation}\n'
+        '${locale.translate('The Principle Investigator (PI) is')}:\n'
+        '${bloc.study.pi.name}, ${bloc.study.pi.title}\n\n'
+        //'${bloc.study.pi.affiliation}\n'
         '${bloc.study.pi.address}\n'
-        '${bloc.study.pi.email}\n\n';
+        '${bloc.study.pi.email}\n';
 
     return Card(
       semanticContainer: true,
@@ -40,26 +40,24 @@ class StudyCard extends StatelessWidget {
                 children: [
                   SizedBox(width: 15),
                   Text(studyPageModel.name,
-                      style: aboutCardTitleStyle.copyWith(
-                          color: Theme.of(context).primaryColor)),
+                      style: aboutCardTitleStyle.copyWith(color: Theme.of(context).primaryColor)),
                   SizedBox(width: 15),
                   Text(studyPageModel.affiliation,
-                      style: aboutCardSubtitleStyle.copyWith(
-                          color: Theme.of(context).primaryColor)),
+                      style: aboutCardSubtitleStyle.copyWith(color: Theme.of(context).primaryColor)),
                 ],
               ),
               children: [
                 Row(children: [
                   SizedBox(width: 15),
-                  Expanded(
+                  Flexible(
+                      fit: FlexFit.loose,
                       child: Text(
-                    description(),
-                    style: aboutCardContentStyle,
-                    textAlign: TextAlign.justify,
-                  )),
+                        description(),
+                        style: aboutCardContentStyle,
+                        textAlign: TextAlign.justify,
+                      )),
                   SizedBox(width: 15),
                 ]),
-                SizedBox(height: 10),
               ]),
         ],
       ),

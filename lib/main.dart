@@ -28,6 +28,7 @@ import 'package:expandable/expandable.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:intl/intl.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:json_annotation/json_annotation.dart';
 
 part 'app.dart';
 part 'first_screen.dart';
@@ -37,6 +38,7 @@ part 'data/carp_backend.dart';
 part 'data/study_manager.dart';
 part 'data/surveys.dart';
 part 'data/message_manager.dart';
+part 'data/random_recurrent_trigger.dart';
 
 part 'models/data_model.dart';
 part 'models/tasklist_page_model.dart';

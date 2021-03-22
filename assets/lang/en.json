@@ -108,7 +108,8 @@
     "Is there anything else you would like to tell us about your experience wearing the wristband?": "Is there anything else you would like to tell us about your experience wearing the wristband?",
     "I remembered to push the button on the wristband every time OCD was bothering me.": "I remembered to push the button on the wristband every time OCD was bothering me.",
     "Wristband with biosensor": "Wristband with biosensor",
-    "Exposure and response prevention": "Exposure and response prevention",
+    "Weekly exposure and response prevention": "Weekly exposure and response prevention",
+    "Describe the obsession and / or the compulsion you are working on": "Describe the obsession and / or the compulsion you are working on",
     "Yes, I did a compulsion": "Yes, I did a compulsion",
     "Yes, I used another type of safety behavior": "Yes, I used another type of safety behavior",
     "No, I completed the task without any safety behaviors": "No, I completed the task without any safety behaviors",
@@ -155,5 +156,6 @@
     "Wrist Angel: A Wearable AI Feedback Tool for OCD Treatment and Research": "Wrist Angel: A Wearable AI Feedback Tool for OCD Treatment and Research",
     "We aim to improve assessment and psychotherapy for pediatric obsessive-compulsive disorder (OCD).": "We aim to improve assessment and psychotherapy for pediatric obsessive-compulsive disorder (OCD).",
     "Professor Anne Katrine Pagsberg1, Associate Professor Line Katrine Harder Clemmensen2 and Senior Researcher Nicole Nadine Lønfeldt1": "Professor Anne Katrine Pagsberg1, Associate Professor Line Katrine Harder Clemmensen2 and Senior Researcher Nicole Nadine Lønfeldt1",
-    "Hormone levels, measured in saliva, and physiological indicators of stress from children and parents are used as input to privacy preserving signal processing and machine learning algorithms. Signal processing will be used to extract acoustic and physiological features of importance for therapeutic response. The study includes children with an OCD diagnosis and children without a psychiatric diagnosis and their parents.": "Hormone levels, measured in saliva, and physiological indicators of stress from children and parents are used as input to privacy preserving signal processing and machine learning algorithms. Signal processing will be used to extract acoustic and physiological features of importance for therapeutic response. The study includes children with an OCD diagnosis and children without a psychiatric diagnosis and their parents."
+    "Hormone levels, measured in saliva, and physiological indicators of stress from children and parents are used as input to privacy preserving signal processing and machine learning algorithms. Signal processing will be used to extract acoustic and physiological features of importance for therapeutic response. The study includes children with an OCD diagnosis and children without a psychiatric diagnosis and their parents.": "Hormone levels, measured in saliva, and physiological indicators of stress from children and parents are used as input to privacy preserving signal processing and machine learning algorithms. Signal processing will be used to extract acoustic and physiological features of importance for therapeutic response. The study includes children with an OCD diagnosis and children without a psychiatric diagnosis and their parents.",
+    "Other": "Other"
 }

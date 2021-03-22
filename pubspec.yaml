@@ -36,7 +36,7 @@ dependencies:
   #carp_communication_package: ^0.6.1
   #carp_health_package: ^0.6.1
 
-  research_package: ^0.4.0
+  research_package: ^0.4.1
   url_launcher: ^5.7.10
   timeago: ^2.0.29
   expandable: ^4.1.4

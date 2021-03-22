@@ -62,7 +62,7 @@ class _EcologicalParentsDaSurvey implements Survey {
 
   String get description => ''; // TODO
 
-  Duration get expire => const Duration(days: 2);
+  Duration get expire => const Duration(days: 1);
 
   int get minutesToComplete => 15;
 
@@ -175,7 +175,7 @@ class _EcologicalDaSurvey implements Survey {
 
   String get description => ''; // TODO
 
-  Duration get expire => const Duration(days: 2);
+  Duration get expire => const Duration(days: 1);
 
   int get minutesToComplete => 15;
 
@@ -289,7 +289,7 @@ class _PatientParentsDaSurvey implements Survey {
 
   String get description =>
       "User experience: We would like to know what it was like for you to wear the wristband.";
-  Duration get expire => const Duration(days: 2);
+  Duration get expire => const Duration(days: 7);
 
   int get minutesToComplete => 5;
 
@@ -388,7 +388,7 @@ class _PatientDaSurvey implements Survey {
 
   String get description =>
       "User experience: We would like to know what it was like for you to wear the wristband.";
-  Duration get expire => const Duration(days: 2);
+  Duration get expire => const Duration(days: 7);
 
   int get minutesToComplete => 5;
 
@@ -487,7 +487,7 @@ class _ControlParentsDaSurvey implements Survey {
 
   String get description =>
       "User experience: We would like to know what it was like for you to wear the wristband.";
-  Duration get expire => const Duration(days: 2);
+  Duration get expire => const Duration(days: 7);
 
   int get minutesToComplete => 5;
 
@@ -586,7 +586,7 @@ class _ControlDaSurvey implements Survey {
 
   String get description =>
       "User experience: We would like to know what it was like for you to wear the wristband.";
-  Duration get expire => const Duration(days: 2);
+  Duration get expire => const Duration(days: 7);
 
   int get minutesToComplete => 5;
 
@@ -681,11 +681,11 @@ class _ControlDaSurvey implements Survey {
 }
 
 class _ExposureDaSurvey implements Survey {
-  String get title => "Exposure and response prevention";
+  String get title => "Weekly exposure and response prevention";
 
-  String get description => 'Skriv tvangstanken og/eller tvangshandlingen som du arbejder på';
+  String get description => 'Describe the obsession and / or the compulsion you are working on';
 
-  Duration get expire => const Duration(days: 2);
+  Duration get expire => const Duration(days: 7);
 
   int get minutesToComplete => 10; // TODO: review time
 
@@ -693,8 +693,7 @@ class _ExposureDaSurvey implements Survey {
     RPChoice.withParams("No", 0),
     RPChoice.withParams("Yes", 1),
   ]);
-  RPChoiceAnswerFormat choiceAnswerFormat2 =
-      RPChoiceAnswerFormat.withParams(ChoiceAnswerStyle.MultipleChoice, [
+  RPChoiceAnswerFormat choiceAnswerFormat2 = RPChoiceAnswerFormat.withParams(ChoiceAnswerStyle.SingleChoice, [
     RPChoice.withParams("Contamination (dirt, bacteria, sickness)", 0),
     RPChoice.withParams("Hurting myself or others (physically or emotionally)", 1),
     RPChoice.withParams("Sex, pregnancy or sexuality", 2),
@@ -707,10 +706,10 @@ class _ExposureDaSurvey implements Survey {
     RPChoice.withParams(
         "Ordering and arranging (things need to be arranged in a certain way or arranging things in a certain order.)",
         7),
+    RPChoice.withParams("Other", 8),
   ]);
 
-  RPChoiceAnswerFormat choiceAnswerFormat3 =
-      RPChoiceAnswerFormat.withParams(ChoiceAnswerStyle.MultipleChoice, [
+  RPChoiceAnswerFormat choiceAnswerFormat3 = RPChoiceAnswerFormat.withParams(ChoiceAnswerStyle.SingleChoice, [
     RPChoice.withParams("Washing or cleaning", 0),
     RPChoice.withParams("Checking (like checking the doors are locked)", 1),
     RPChoice.withParams("Repeating rituals (like turning on and off the lights repeatedly)", 2),
@@ -723,6 +722,7 @@ class _ExposureDaSurvey implements Survey {
     RPChoice.withParams(
         "Rituals involving others (like asking your mother or father the same question repeatedly or wash your clothes an excessive amount)",
         7),
+    RPChoice.withParams("Other", 8)
   ]);
   RPImageChoiceAnswerFormat _imageChoiceAnswerFormat = RPImageChoiceAnswerFormat.withParams([
     RPImageChoice.withParams(Image.asset('assets/icons/very-sad.png'), 0, "Unbearable"),

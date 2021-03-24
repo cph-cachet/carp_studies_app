@@ -174,21 +174,24 @@ class LocalStudyManager implements StudyManager {
     return _study;
   }
 
-  Future<Study> _getWristWatchStudy(String studyId) async {
+  Future<Study> _patientWristWatch(String studyId) async {
     if (_study == null) {
       _study = Study(id: studyId, userId: await settings.userId)
-        ..name = 'ERP App'
-        ..title = 'ERP App'
-        ..purpose = 'ERP App.'
+        ..name = 'Wrist Angel'
+        ..title = "Wrist Angel: A Wearable AI Feedback Tool for OCD Treatment and Research"
+        ..purpose =
+            "We aim to improve assessment and psychotherapy for pediatric obsessive-compulsive disorder (OCD)."
         ..pi = PrincipalInvestigator(
-          name: ' name',
-          title: 'some title',
-          email: 'name@email.dk',
-          affiliation: 'affiliation name',
-          address: 'some address',
+          name:
+              "Professor Anne Katrine Pagsberg1, Associate Professor Line Katrine Harder Clemmensen2 and Senior Researcher Nicole Nadine Lønfeldt1",
+          title: '',
+          email: 'nicole.nadine.loenfeldt@regionh.dk',
+          affiliation:
+              'Børne- og Ungdomspsykiatrisk Center – Forskningsenheden, Region Hovedstadens Psykiatri\nDTU Compute',
+          address: 'Gentoftehospitalsvej 28, 2900 Hellerup',
         )
         ..description =
-            "Dette skema skal hjælpe dig at gennemføre en eksponeringsopgave for at få styr på OCD’en. I terapi, har du måske lært at for at få styr på OCD’en skal du sige fra overfor tvangstanker og tvangshandlinger. Det bliver du bedre til ved at øve dig i at gøre noget der fremkalder tvangstanker og lade være med at udføre tvangshandlinger. Hvis du ikke har gennemgået eksponeringsøvelser med din behandler, skal du ikke bruge denne app."
+            "Hormone levels, measured in saliva, and physiological indicators of stress from children and parents are used as input to privacy preserving signal processing and machine learning algorithms. Signal processing will be used to extract acoustic and physiological features of importance for therapeutic response. The study includes children with an OCD diagnosis and children without a psychiatric diagnosis and their parents."
         ..dataEndPoint = getDataEndpoint(DataEndPointTypes.FILE)
         // collect basic device measures continously
         ..addTriggerTask(
@@ -259,6 +262,558 @@ class LocalStudyManager implements StudyManager {
                 surveyTask: surveys.demographics.survey,
               ))
               ..measures.add(SamplingSchema.common().measures[ContextSamplingPackage.LOCATION]))
+        ..addTriggerTask(
+            RecurrentScheduledTrigger(
+                type: RecurrentType.weekly, dayOfWeek: DateTime.sunday, time: Time(hour: 8, minute: 00)),
+            AppTask(
+              type: SurveyUserTask.SURVEY_TYPE,
+              title: surveys.patientDa.title,
+              description: surveys.patientDa.description,
+              minutesToComplete: surveys.patientDa.minutesToComplete,
+              expire: surveys.patientDa.expire,
+            )..measures.add(RPTaskMeasure(
+                type: MeasureType(NameSpace.CARP, SurveySamplingPackage.SURVEY),
+                name: surveys.patientDa.title,
+                enabled: true,
+                surveyTask: surveys.patientDa.survey,
+              )))
+
+        /// EXPOSURE at least 1/day
+        ..addTriggerTask(
+            PeriodicTrigger(period: Duration(minutes: 5)),
+            AppTask(
+              type: SurveyUserTask.SURVEY_TYPE,
+              title: surveys.exposureDa.title,
+              description: surveys.exposureDa.description,
+              minutesToComplete: surveys.exposureDa.minutesToComplete,
+              expire: surveys.exposureDa.expire,
+            )..measures.add(RPTaskMeasure(
+                type: MeasureType(NameSpace.CARP, SurveySamplingPackage.SURVEY),
+                name: surveys.exposureDa.title,
+                enabled: true,
+                surveyTask: surveys.exposureDa.survey,
+              )))
+        ..addTriggerTask(
+            PeriodicTrigger(period: Duration(minutes: 5)),
+            AppTask(
+              type: SurveyUserTask.SURVEY_TYPE,
+              title: surveys.ecologicalDa.title,
+              description: surveys.ecologicalDa.description,
+              minutesToComplete: surveys.ecologicalDa.minutesToComplete,
+              expire: surveys.ecologicalDa.expire,
+            )..measures.add(RPTaskMeasure(
+                type: MeasureType(NameSpace.CARP, SurveySamplingPackage.SURVEY),
+                name: surveys.ecologicalDa.title,
+                enabled: true,
+                surveyTask: surveys.ecologicalDa.survey,
+              )));
+    }
+
+    return _study;
+  }
+
+  Future<Study> _patientParentsWristWatch(String studyId) async {
+    if (_study == null) {
+      _study = Study(id: studyId, userId: await settings.userId)
+        ..name = 'Wrist Angel'
+        ..title = "Wrist Angel: A Wearable AI Feedback Tool for OCD Treatment and Research"
+        ..purpose =
+            "We aim to improve assessment and psychotherapy for pediatric obsessive-compulsive disorder (OCD)."
+        ..pi = PrincipalInvestigator(
+          name:
+              "Professor Anne Katrine Pagsberg1, Associate Professor Line Katrine Harder Clemmensen2 and Senior Researcher Nicole Nadine Lønfeldt1",
+          title: '',
+          email: 'nicole.nadine.loenfeldt@regionh.dk',
+          affiliation:
+              'Børne- og Ungdomspsykiatrisk Center – Forskningsenheden, Region Hovedstadens Psykiatri\nDTU Compute',
+          address: 'Gentoftehospitalsvej 28, 2900 Hellerup',
+        )
+        ..description =
+            "Hormone levels, measured in saliva, and physiological indicators of stress from children and parents are used as input to privacy preserving signal processing and machine learning algorithms. Signal processing will be used to extract acoustic and physiological features of importance for therapeutic response. The study includes children with an OCD diagnosis and children without a psychiatric diagnosis and their parents."
+        ..dataEndPoint = getDataEndpoint(DataEndPointTypes.FILE)
+        // collect basic device measures continously
+        ..addTriggerTask(
+            ImmediateTrigger(),
+            AutomaticTask()
+              ..measures = SamplingSchema.debug().getMeasureList(
+                namespace: NameSpace.CARP,
+                types: [
+                  SensorSamplingPackage.LIGHT,
+                  SensorSamplingPackage.PEDOMETER,
+                  // DeviceSamplingPackage.MEMORY,
+                  DeviceSamplingPackage.DEVICE,
+                  DeviceSamplingPackage.BATTERY,
+                  DeviceSamplingPackage.SCREEN,
+                ],
+              ))
+        // collect location, weather and air quality every 5 minutes
+        ..addTriggerTask(
+            PeriodicTrigger(period: Duration(minutes: 5)),
+            Task()
+              ..measures = SamplingSchema.common().getMeasureList(
+                namespace: NameSpace.CARP,
+                types: [
+                  ContextSamplingPackage.LOCATION,
+                  ContextSamplingPackage.WEATHER,
+                  ContextSamplingPackage.AIR_QUALITY,
+                ],
+              ))
+        // collect location and activity measures continously (event-based)
+        ..addTriggerTask(
+            ImmediateTrigger(),
+            Task()
+              ..measures = SamplingSchema.common().getMeasureList(
+                namespace: NameSpace.CARP,
+                types: [
+                  ContextSamplingPackage.GEOLOCATION,
+                  ContextSamplingPackage.ACTIVITY,
+                ],
+              ))
+        // collect local weather and air quality as an app task
+        ..addTriggerTask(
+            ImmediateTrigger(),
+            AppTask(
+              type: SensingUserTask.ONE_TIME_SENSING_TYPE,
+              title: "Weather & Air Quality",
+              description: "Collect local weather and air quality",
+            )..measures = SamplingSchema.common().getMeasureList(
+                namespace: NameSpace.CARP,
+                types: [
+                  ContextSamplingPackage.WEATHER,
+                  ContextSamplingPackage.AIR_QUALITY,
+                ],
+              ))
+        // collect demographics once when the study starts
+        ..addTriggerTask(
+            ImmediateTrigger(),
+            AppTask(
+              type: SurveyUserTask.DEMOGRAPHIC_SURVEY_TYPE,
+              title: surveys.demographics.title,
+              description: surveys.demographics.description,
+              minutesToComplete: surveys.demographics.minutesToComplete,
+              expire: surveys.demographics.expire,
+            )
+              ..measures.add(RPTaskMeasure(
+                type: MeasureType(NameSpace.CARP, SurveySamplingPackage.SURVEY),
+                name: surveys.demographics.title,
+                enabled: true,
+                surveyTask: surveys.demographics.survey,
+              ))
+              ..measures.add(SamplingSchema.common().measures[ContextSamplingPackage.LOCATION]))
+        ..addTriggerTask(
+            RecurrentScheduledTrigger(
+                type: RecurrentType.weekly, dayOfWeek: DateTime.sunday, time: Time(hour: 8, minute: 00)),
+            AppTask(
+              type: SurveyUserTask.SURVEY_TYPE,
+              title: surveys.patientParentsDa.title,
+              description: surveys.patientParentsDa.description,
+              minutesToComplete: surveys.patientParentsDa.minutesToComplete,
+              expire: surveys.patientParentsDa.expire,
+            )..measures.add(RPTaskMeasure(
+                type: MeasureType(NameSpace.CARP, SurveySamplingPackage.SURVEY),
+                name: surveys.patientParentsDa.title,
+                enabled: true,
+                surveyTask: surveys.patientParentsDa.survey,
+              )))
+
+        /// EXPOSURE at least 1/day
+        ..addTriggerTask(
+            PeriodicTrigger(period: Duration(minutes: 5)),
+            AppTask(
+              type: SurveyUserTask.SURVEY_TYPE,
+              title: surveys.exposureDa.title,
+              description: surveys.exposureDa.description,
+              minutesToComplete: surveys.exposureDa.minutesToComplete,
+              expire: surveys.exposureDa.expire,
+            )..measures.add(RPTaskMeasure(
+                type: MeasureType(NameSpace.CARP, SurveySamplingPackage.SURVEY),
+                name: surveys.exposureDa.title,
+                enabled: true,
+                surveyTask: surveys.exposureDa.survey,
+              )))
+        ..addTriggerTask(
+            PeriodicTrigger(period: Duration(minutes: 5)),
+            AppTask(
+              type: SurveyUserTask.SURVEY_TYPE,
+              title: surveys.ecologicalDa.title,
+              description: surveys.ecologicalDa.description,
+              minutesToComplete: surveys.ecologicalDa.minutesToComplete,
+              expire: surveys.ecologicalDa.expire,
+            )..measures.add(RPTaskMeasure(
+                type: MeasureType(NameSpace.CARP, SurveySamplingPackage.SURVEY),
+                name: surveys.ecologicalDa.title,
+                enabled: true,
+                surveyTask: surveys.ecologicalDa.survey,
+              )));
+    }
+
+    return _study;
+  }
+
+  Future<Study> _controlWristWatch(String studyId) async {
+    if (_study == null) {
+      _study = Study(id: studyId, userId: await settings.userId)
+        ..name = 'Wrist Angel'
+        ..title = "Wrist Angel: A Wearable AI Feedback Tool for OCD Treatment and Research"
+        ..purpose =
+            "We aim to improve assessment and psychotherapy for pediatric obsessive-compulsive disorder (OCD)."
+        ..pi = PrincipalInvestigator(
+          name:
+              "Professor Anne Katrine Pagsberg1, Associate Professor Line Katrine Harder Clemmensen2 and Senior Researcher Nicole Nadine Lønfeldt1",
+          title: '',
+          email: 'nicole.nadine.loenfeldt@regionh.dk',
+          affiliation:
+              'Børne- og Ungdomspsykiatrisk Center – Forskningsenheden, Region Hovedstadens Psykiatri\nDTU Compute',
+          address: 'Gentoftehospitalsvej 28, 2900 Hellerup',
+        )
+        ..description =
+            "Hormone levels, measured in saliva, and physiological indicators of stress from children and parents are used as input to privacy preserving signal processing and machine learning algorithms. Signal processing will be used to extract acoustic and physiological features of importance for therapeutic response. The study includes children with an OCD diagnosis and children without a psychiatric diagnosis and their parents."
+        ..dataEndPoint = getDataEndpoint(DataEndPointTypes.FILE)
+        // // collect basic device measures continously
+        // ..addTriggerTask(
+        //     ImmediateTrigger(),
+        //     AutomaticTask()
+        //       ..measures = SamplingSchema.debug().getMeasureList(
+        //         namespace: NameSpace.CARP,
+        //         types: [
+        //           SensorSamplingPackage.LIGHT,
+        //           SensorSamplingPackage.PEDOMETER,
+        //           // DeviceSamplingPackage.MEMORY,
+        //           DeviceSamplingPackage.DEVICE,
+        //           DeviceSamplingPackage.BATTERY,
+        //           DeviceSamplingPackage.SCREEN,
+        //         ],
+        //       ))
+        // // collect location, weather and air quality every 5 minutes
+        // ..addTriggerTask(
+        //     PeriodicTrigger(period: Duration(minutes: 5)),
+        //     Task()
+        //       ..measures = SamplingSchema.common().getMeasureList(
+        //         namespace: NameSpace.CARP,
+        //         types: [
+        //           ContextSamplingPackage.LOCATION,
+        //           ContextSamplingPackage.WEATHER,
+        //           ContextSamplingPackage.AIR_QUALITY,
+        //         ],
+        //       ))
+        // // collect location and activity measures continously (event-based)
+        // ..addTriggerTask(
+        //     ImmediateTrigger(),
+        //     Task()
+        //       ..measures = SamplingSchema.common().getMeasureList(
+        //         namespace: NameSpace.CARP,
+        //         types: [
+        //           ContextSamplingPackage.GEOLOCATION,
+        //           ContextSamplingPackage.ACTIVITY,
+        //         ],
+        //       ))
+        // // collect local weather and air quality as an app task
+        // ..addTriggerTask(
+        //     ImmediateTrigger(),
+        //     AppTask(
+        //       type: SensingUserTask.ONE_TIME_SENSING_TYPE,
+        //       title: "Weather & Air Quality",
+        //       description: "Collect local weather and air quality",
+        //     )..measures = SamplingSchema.common().getMeasureList(
+        //         namespace: NameSpace.CARP,
+        //         types: [
+        //           ContextSamplingPackage.WEATHER,
+        //           ContextSamplingPackage.AIR_QUALITY,
+        //         ],
+        //       ))
+        // // collect demographics once when the study starts
+        // ..addTriggerTask(
+        //     ImmediateTrigger(),
+        //     AppTask(
+        //       type: SurveyUserTask.DEMOGRAPHIC_SURVEY_TYPE,
+        //       title: surveys.demographics.title,
+        //       description: surveys.demographics.description,
+        //       minutesToComplete: surveys.demographics.minutesToComplete,
+        //       expire: surveys.demographics.expire,
+        //     )
+        //       ..measures.add(RPTaskMeasure(
+        //         type: MeasureType(NameSpace.CARP, SurveySamplingPackage.SURVEY),
+        //         name: surveys.demographics.title,
+        //         enabled: true,
+        //         surveyTask: surveys.demographics.survey,
+        //       ))
+        //       ..measures.add(SamplingSchema.common().measures[ContextSamplingPackage.LOCATION]))
+        ..addTriggerTask(
+            RecurrentScheduledTrigger(
+                type: RecurrentType.weekly, dayOfWeek: DateTime.sunday, time: Time(hour: 8, minute: 00)),
+            AppTask(
+              type: SurveyUserTask.SURVEY_TYPE,
+              title: surveys.controlDa.title,
+              description: surveys.controlDa.description,
+              minutesToComplete: surveys.controlDa.minutesToComplete,
+              expire: surveys.controlDa.expire,
+            )..measures.add(RPTaskMeasure(
+                type: MeasureType(NameSpace.CARP, SurveySamplingPackage.SURVEY),
+                name: surveys.controlDa.title,
+                enabled: true,
+                surveyTask: surveys.controlDa.survey,
+              )))
+        ..addTriggerTask(
+            PeriodicTrigger(period: Duration(minutes: 5)),
+            AppTask(
+              type: SurveyUserTask.SURVEY_TYPE,
+              title: surveys.exposureDa.title,
+              description: surveys.exposureDa.description,
+              minutesToComplete: surveys.exposureDa.minutesToComplete,
+              expire: surveys.exposureDa.expire,
+            )..measures.add(RPTaskMeasure(
+                type: MeasureType(NameSpace.CARP, SurveySamplingPackage.SURVEY),
+                name: surveys.exposureDa.title,
+                enabled: true,
+                surveyTask: surveys.exposureDa.survey,
+              )))
+
+        /// EXPOSURE at least 1/day
+        ..addTriggerTask(
+            PeriodicTrigger(period: Duration(minutes: 5)),
+            AppTask(
+              type: SurveyUserTask.SURVEY_TYPE,
+              title: surveys.ecologicalDa.title,
+              description: surveys.ecologicalDa.description,
+              minutesToComplete: surveys.ecologicalDa.minutesToComplete,
+              expire: surveys.ecologicalDa.expire,
+            )..measures.add(RPTaskMeasure(
+                type: MeasureType(NameSpace.CARP, SurveySamplingPackage.SURVEY),
+                name: surveys.ecologicalDa.title,
+                enabled: true,
+                surveyTask: surveys.ecologicalDa.survey,
+              )));
+    }
+    return _study;
+  }
+
+  Future<Study> _controlParentWristWatch(String studyId) async {
+    if (_study == null) {
+      _study = Study(id: studyId, userId: await settings.userId)
+        ..name = 'Wrist Angel'
+        ..title = "Wrist Angel: A Wearable AI Feedback Tool for OCD Treatment and Research"
+        ..purpose =
+            "We aim to improve assessment and psychotherapy for pediatric obsessive-compulsive disorder (OCD)."
+        ..pi = PrincipalInvestigator(
+          name:
+              "Professor Anne Katrine Pagsberg1, Associate Professor Line Katrine Harder Clemmensen2 and Senior Researcher Nicole Nadine Lønfeldt1",
+          title: '',
+          email: 'nicole.nadine.loenfeldt@regionh.dk',
+          affiliation:
+              'Børne- og Ungdomspsykiatrisk Center – Forskningsenheden, Region Hovedstadens Psykiatri\nDTU Compute',
+          address: 'Gentoftehospitalsvej 28, 2900 Hellerup',
+        )
+        ..description =
+            "Hormone levels, measured in saliva, and physiological indicators of stress from children and parents are used as input to privacy preserving signal processing and machine learning algorithms. Signal processing will be used to extract acoustic and physiological features of importance for therapeutic response. The study includes children with an OCD diagnosis and children without a psychiatric diagnosis and their parents."
+        ..dataEndPoint = getDataEndpoint(DataEndPointTypes.FILE)
+        // collect basic device measures continously
+        // ..addTriggerTask(
+        //     ImmediateTrigger(),
+        //     AutomaticTask()
+        //       ..measures = SamplingSchema.debug().getMeasureList(
+        //         namespace: NameSpace.CARP,
+        //         types: [
+        //           SensorSamplingPackage.LIGHT,
+        //           SensorSamplingPackage.PEDOMETER,
+        //           // DeviceSamplingPackage.MEMORY,
+        //           DeviceSamplingPackage.DEVICE,
+        //           DeviceSamplingPackage.BATTERY,
+        //           DeviceSamplingPackage.SCREEN,
+        //         ],
+        //       ))
+        // // collect location, weather and air quality every 5 minutes
+        // ..addTriggerTask(
+        //     PeriodicTrigger(period: Duration(minutes: 5)),
+        //     Task()
+        //       ..measures = SamplingSchema.common().getMeasureList(
+        //         namespace: NameSpace.CARP,
+        //         types: [
+        //           ContextSamplingPackage.LOCATION,
+        //           ContextSamplingPackage.WEATHER,
+        //           ContextSamplingPackage.AIR_QUALITY,
+        //         ],
+        //       ))
+        // // collect location and activity measures continously (event-based)
+        // ..addTriggerTask(
+        //     ImmediateTrigger(),
+        //     Task()
+        //       ..measures = SamplingSchema.common().getMeasureList(
+        //         namespace: NameSpace.CARP,
+        //         types: [
+        //           ContextSamplingPackage.GEOLOCATION,
+        //           ContextSamplingPackage.ACTIVITY,
+        //         ],
+        //       ))
+        // // collect local weather and air quality as an app task
+        // ..addTriggerTask(
+        //     ImmediateTrigger(),
+        //     AppTask(
+        //       type: SensingUserTask.ONE_TIME_SENSING_TYPE,
+        //       title: "Weather & Air Quality",
+        //       description: "Collect local weather and air quality",
+        //     )..measures = SamplingSchema.common().getMeasureList(
+        //         namespace: NameSpace.CARP,
+        //         types: [
+        //           ContextSamplingPackage.WEATHER,
+        //           ContextSamplingPackage.AIR_QUALITY,
+        //         ],
+        //       ))
+        // // collect demographics once when the study starts
+        // ..addTriggerTask(
+        //     ImmediateTrigger(),
+        //     AppTask(
+        //       type: SurveyUserTask.DEMOGRAPHIC_SURVEY_TYPE,
+        //       title: surveys.demographics.title,
+        //       description: surveys.demographics.description,
+        //       minutesToComplete: surveys.demographics.minutesToComplete,
+        //       expire: surveys.demographics.expire,
+        //     )
+        //       ..measures.add(RPTaskMeasure(
+        //         type: MeasureType(NameSpace.CARP, SurveySamplingPackage.SURVEY),
+        //         name: surveys.demographics.title,
+        //         enabled: true,
+        //         surveyTask: surveys.demographics.survey,
+        //       ))
+        //       ..measures.add(SamplingSchema.common().measures[ContextSamplingPackage.LOCATION]))
+        // ..addTriggerTask(
+        //     PeriodicTrigger(period: Duration(minutes: 5)),
+        //     /* RecurrentScheduledTrigger(
+        //         type: RecurrentType.weekly, dayOfWeek: DateTime.sunday, time: Time(hour: 8, minute: 00)), */
+        //     AppTask(
+        //       type: SurveyUserTask.SURVEY_TYPE,
+        //       title: surveys.controlParentsDa.title,
+        //       description: surveys.controlParentsDa.description,
+        //       minutesToComplete: surveys.controlParentsDa.minutesToComplete,
+        //       expire: surveys.controlParentsDa.expire,
+        //     )..measures.add(RPTaskMeasure(
+        //         type: MeasureType(NameSpace.CARP, SurveySamplingPackage.SURVEY),
+        //         name: surveys.controlParentsDa.title,
+        //         enabled: true,
+        //         surveyTask: surveys.controlParentsDa.survey,
+        //       )))
+
+        /// EXPOSURE at least 1/day
+        ..addTriggerTask(
+            PeriodicTrigger(period: Duration(minutes: 5)),
+            AppTask(
+              type: SurveyUserTask.SURVEY_TYPE,
+              title: surveys.exposureDa.title,
+              description: surveys.exposureDa.description,
+              minutesToComplete: surveys.exposureDa.minutesToComplete,
+              expire: surveys.exposureDa.expire,
+            )..measures.add(RPTaskMeasure(
+                type: MeasureType(NameSpace.CARP, SurveySamplingPackage.SURVEY),
+                name: surveys.exposureDa.title,
+                enabled: true,
+                surveyTask: surveys.exposureDa.survey,
+              )))
+        ..addTriggerTask(
+            PeriodicTrigger(period: Duration(minutes: 5)),
+            AppTask(
+              type: SurveyUserTask.SURVEY_TYPE,
+              title: surveys.ecologicalDa.title,
+              description: surveys.ecologicalDa.description,
+              minutesToComplete: surveys.ecologicalDa.minutesToComplete,
+              expire: surveys.ecologicalDa.expire,
+            )..measures.add(RPTaskMeasure(
+                type: MeasureType(NameSpace.CARP, SurveySamplingPackage.SURVEY),
+                name: surveys.ecologicalDa.title,
+                enabled: true,
+                surveyTask: surveys.ecologicalDa.survey,
+              )));
+    }
+
+    return _study;
+  }
+
+  Future<Study> _getWristWatchStudy(String studyId) async {
+    if (_study == null) {
+      _study = Study(id: studyId, userId: await settings.userId)
+        ..name = 'Wrist Angel'
+        ..title = "Wrist Angel: A Wearable AI Feedback Tool for OCD Treatment and Research"
+        ..purpose =
+            "We aim to improve assessment and psychotherapy for pediatric obsessive-compulsive disorder (OCD)."
+        ..pi = PrincipalInvestigator(
+          name:
+              "Professor Anne Katrine Pagsberg1, Associate Professor Line Katrine Harder Clemmensen2 and Senior Researcher Nicole Nadine Lønfeldt1",
+          title: '',
+          email: 'nicole.nadine.loenfeldt@regionh.dk',
+          affiliation:
+              'Børne - og Ungdomspsykiatrisk Center – Forskningsenheden, Region Hovedstadens Psykiatri\nDTU Compute',
+          address: 'Gentoftehospitalsvej 28, 2900 Hellerup',
+        )
+        ..description =
+            "Hormone levels, measured in saliva, and physiological indicators of stress from children and parents are used as input to privacy preserving signal processing and machine learning algorithms. Signal processing will be used to extract acoustic and physiological features of importance for therapeutic response. The study includes children with an OCD diagnosis and children without a psychiatric diagnosis and their parents."
+        ..dataEndPoint = getDataEndpoint(DataEndPointTypes.FILE)
+        // collect basic device measures continously
+        // ..addTriggerTask(
+        //     ImmediateTrigger(),
+        //     AutomaticTask()
+        //       ..measures = SamplingSchema.debug().getMeasureList(
+        //         namespace: NameSpace.CARP,
+        //         types: [
+        //           SensorSamplingPackage.LIGHT,
+        //           SensorSamplingPackage.PEDOMETER,
+        //           // DeviceSamplingPackage.MEMORY,
+        //           DeviceSamplingPackage.DEVICE,
+        //           DeviceSamplingPackage.BATTERY,
+        //           DeviceSamplingPackage.SCREEN,
+        //         ],
+        //       ))
+        // // collect location, weather and air quality every 5 minutes
+        // ..addTriggerTask(
+        //     PeriodicTrigger(period: Duration(minutes: 5)),
+        //     Task()
+        //       ..measures = SamplingSchema.common().getMeasureList(
+        //         namespace: NameSpace.CARP,
+        //         types: [
+        //           ContextSamplingPackage.LOCATION,
+        //           ContextSamplingPackage.WEATHER,
+        //           ContextSamplingPackage.AIR_QUALITY,
+        //         ],
+        //       ))
+        // // collect location and activity measures continously (event-based)
+        // ..addTriggerTask(
+        //     ImmediateTrigger(),
+        //     Task()
+        //       ..measures = SamplingSchema.common().getMeasureList(
+        //         namespace: NameSpace.CARP,
+        //         types: [
+        //           ContextSamplingPackage.GEOLOCATION,
+        //           ContextSamplingPackage.ACTIVITY,
+        //         ],
+        //       ))
+        // // collect local weather and air quality as an app task
+        // ..addTriggerTask(
+        //     ImmediateTrigger(),
+        //     AppTask(
+        //       type: SensingUserTask.ONE_TIME_SENSING_TYPE,
+        //       title: "Weather & Air Quality",
+        //       description: "Collect local weather and air quality",
+        //     )..measures = SamplingSchema.common().getMeasureList(
+        //         namespace: NameSpace.CARP,
+        //         types: [
+        //           ContextSamplingPackage.WEATHER,
+        //           ContextSamplingPackage.AIR_QUALITY,
+        //         ],
+        //       ))
+        // // collect demographics once when the study starts
+        // ..addTriggerTask(
+        //     ImmediateTrigger(),
+        //     AppTask(
+        //       type: SurveyUserTask.DEMOGRAPHIC_SURVEY_TYPE,
+        //       title: surveys.demographics.title,
+        //       description: surveys.demographics.description,
+        //       minutesToComplete: surveys.demographics.minutesToComplete,
+        //       expire: surveys.demographics.expire,
+        //     )
+        //       ..measures.add(RPTaskMeasure(
+        //         type: MeasureType(NameSpace.CARP, SurveySamplingPackage.SURVEY),
+        //         name: surveys.demographics.title,
+        //         enabled: true,
+        //         surveyTask: surveys.demographics.survey,
+        //       ))
+        //       ..measures.add(SamplingSchema.common().measures[ContextSamplingPackage.LOCATION]))
         // collect symptoms on a daily basis
         /* ..addTriggerTask(
                 PeriodicTrigger(period: Duration(minutes: 5)),
@@ -291,8 +846,13 @@ class LocalStudyManager implements StudyManager {
                     enabled: true,
                     surveyTask: surveys.exposure.survey,
                   ))) */
+
+        /////////////////////////////////////////////////////////////////
+        /// Depending on the user, show only 1 of this next 4 surveys ///
+        /////////////////////////////////////////////////////////////////
         ..addTriggerTask(
-            PeriodicTrigger(period: Duration(minutes: 5)),
+            RecurrentScheduledTrigger(
+                type: RecurrentType.weekly, dayOfWeek: DateTime.sunday, time: Time(hour: 8, minute: 00)),
             AppTask(
               type: SurveyUserTask.SURVEY_TYPE,
               title: surveys.controlDa.title,
@@ -305,6 +865,54 @@ class LocalStudyManager implements StudyManager {
                 enabled: true,
                 surveyTask: surveys.controlDa.survey,
               )))
+        ..addTriggerTask(
+            PeriodicTrigger(period: Duration(minutes: 5)),
+            /* RecurrentScheduledTrigger(
+                type: RecurrentType.weekly, dayOfWeek: DateTime.sunday, time: Time(hour: 8, minute: 00)), */
+            AppTask(
+              type: SurveyUserTask.SURVEY_TYPE,
+              title: surveys.controlParentsDa.title,
+              description: surveys.controlParentsDa.description,
+              minutesToComplete: surveys.controlParentsDa.minutesToComplete,
+              expire: surveys.controlParentsDa.expire,
+            )..measures.add(RPTaskMeasure(
+                type: MeasureType(NameSpace.CARP, SurveySamplingPackage.SURVEY),
+                name: surveys.controlParentsDa.title,
+                enabled: true,
+                surveyTask: surveys.controlParentsDa.survey,
+              )))
+        ..addTriggerTask(
+            RecurrentScheduledTrigger(
+                type: RecurrentType.weekly, dayOfWeek: DateTime.sunday, time: Time(hour: 8, minute: 00)),
+            AppTask(
+              type: SurveyUserTask.SURVEY_TYPE,
+              title: surveys.patientDa.title,
+              description: surveys.patientDa.description,
+              minutesToComplete: surveys.patientDa.minutesToComplete,
+              expire: surveys.patientDa.expire,
+            )..measures.add(RPTaskMeasure(
+                type: MeasureType(NameSpace.CARP, SurveySamplingPackage.SURVEY),
+                name: surveys.patientDa.title,
+                enabled: true,
+                surveyTask: surveys.patientDa.survey,
+              )))
+        ..addTriggerTask(
+            RecurrentScheduledTrigger(
+                type: RecurrentType.weekly, dayOfWeek: DateTime.sunday, time: Time(hour: 8, minute: 00)),
+            AppTask(
+              type: SurveyUserTask.SURVEY_TYPE,
+              title: surveys.patientParentsDa.title,
+              description: surveys.patientParentsDa.description,
+              minutesToComplete: surveys.patientParentsDa.minutesToComplete,
+              expire: surveys.patientParentsDa.expire,
+            )..measures.add(RPTaskMeasure(
+                type: MeasureType(NameSpace.CARP, SurveySamplingPackage.SURVEY),
+                name: surveys.patientParentsDa.title,
+                enabled: true,
+                surveyTask: surveys.patientParentsDa.survey,
+              )))
+
+        /// EXPOSURE at least 1/day
         ..addTriggerTask(
             PeriodicTrigger(period: Duration(minutes: 5)),
             AppTask(
@@ -332,10 +940,7 @@ class LocalStudyManager implements StudyManager {
                 name: surveys.ecologicalDa.title,
                 enabled: true,
                 surveyTask: surveys.ecologicalDa.survey,
-              ))
-
-            //
-            );
+              )));
     }
 
     return _study;

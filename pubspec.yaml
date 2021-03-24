@@ -29,14 +29,14 @@ dependencies:
 
   carp_mobile_sensing: ^0.12.0
   carp_context_package: ^0.12.0
-  carp_connectivity_package: ^0.12.0
-  carp_survey_package: ^0.12.0
+
+  carp_survey_package: ^0.12.2
   carp_audio_package: ^0.12.0
   carp_backend: ^0.13.0
   #carp_communication_package: ^0.6.1
   #carp_health_package: ^0.6.1
 
-  research_package: ^0.3.0
+  research_package: ^0.4.1
   url_launcher: ^5.7.10
   timeago: ^2.0.29
   expandable: ^4.1.4
@@ -72,6 +72,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  json_serializable: ^3.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

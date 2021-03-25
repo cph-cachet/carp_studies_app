@@ -745,107 +745,35 @@ class LocalStudyManager implements StudyManager {
         ..description =
             "Hormone levels, measured in saliva, and physiological indicators of stress from children and parents are used as input to privacy preserving signal processing and machine learning algorithms. Signal processing will be used to extract acoustic and physiological features of importance for therapeutic response. The study includes children with an OCD diagnosis and children without a psychiatric diagnosis and their parents."
         ..dataEndPoint = getDataEndpoint(DataEndPointTypes.FILE)
-        // collect basic device measures continously
-        // ..addTriggerTask(
-        //     ImmediateTrigger(),
-        //     AutomaticTask()
-        //       ..measures = SamplingSchema.debug().getMeasureList(
-        //         namespace: NameSpace.CARP,
-        //         types: [
-        //           SensorSamplingPackage.LIGHT,
-        //           SensorSamplingPackage.PEDOMETER,
-        //           // DeviceSamplingPackage.MEMORY,
-        //           DeviceSamplingPackage.DEVICE,
-        //           DeviceSamplingPackage.BATTERY,
-        //           DeviceSamplingPackage.SCREEN,
-        //         ],
-        //       ))
-        // // collect location, weather and air quality every 5 minutes
-        // ..addTriggerTask(
-        //     PeriodicTrigger(period: Duration(minutes: 5)),
-        //     Task()
-        //       ..measures = SamplingSchema.common().getMeasureList(
-        //         namespace: NameSpace.CARP,
-        //         types: [
-        //           ContextSamplingPackage.LOCATION,
-        //           ContextSamplingPackage.WEATHER,
-        //           ContextSamplingPackage.AIR_QUALITY,
-        //         ],
-        //       ))
-        // // collect location and activity measures continously (event-based)
-        // ..addTriggerTask(
-        //     ImmediateTrigger(),
-        //     Task()
-        //       ..measures = SamplingSchema.common().getMeasureList(
-        //         namespace: NameSpace.CARP,
-        //         types: [
-        //           ContextSamplingPackage.GEOLOCATION,
-        //           ContextSamplingPackage.ACTIVITY,
-        //         ],
-        //       ))
-        // // collect local weather and air quality as an app task
-        // ..addTriggerTask(
-        //     ImmediateTrigger(),
-        //     AppTask(
-        //       type: SensingUserTask.ONE_TIME_SENSING_TYPE,
-        //       title: "Weather & Air Quality",
-        //       description: "Collect local weather and air quality",
-        //     )..measures = SamplingSchema.common().getMeasureList(
-        //         namespace: NameSpace.CARP,
-        //         types: [
-        //           ContextSamplingPackage.WEATHER,
-        //           ContextSamplingPackage.AIR_QUALITY,
-        //         ],
-        //       ))
-        // // collect demographics once when the study starts
-        // ..addTriggerTask(
-        //     ImmediateTrigger(),
-        //     AppTask(
-        //       type: SurveyUserTask.DEMOGRAPHIC_SURVEY_TYPE,
-        //       title: surveys.demographics.title,
-        //       description: surveys.demographics.description,
-        //       minutesToComplete: surveys.demographics.minutesToComplete,
-        //       expire: surveys.demographics.expire,
-        //     )
-        //       ..measures.add(RPTaskMeasure(
-        //         type: MeasureType(NameSpace.CARP, SurveySamplingPackage.SURVEY),
-        //         name: surveys.demographics.title,
-        //         enabled: true,
-        //         surveyTask: surveys.demographics.survey,
-        //       ))
-        //       ..measures.add(SamplingSchema.common().measures[ContextSamplingPackage.LOCATION]))
-        // collect symptoms on a daily basis
-        /* ..addTriggerTask(
-                PeriodicTrigger(period: Duration(minutes: 5)),
-                AppTask(
-                  type: SurveyUserTask.SURVEY_TYPE,
-                  title: surveys.parnas.title,
-                  description: surveys.parnas.description,
-                  minutesToComplete: surveys.parnas.minutesToComplete,
-                  expire: surveys.parnas.expire,
-                )
-                  ..measures.add(RPTaskMeasure(
-                    type: MeasureType(NameSpace.CARP, SurveySamplingPackage.SURVEY),
-                    name: surveys.parnas.title,
-                    enabled: true,
-                    surveyTask: surveys.parnas.survey,
-                  ))
-                  ..measures.add(SamplingSchema.common().measures[ContextSamplingPackage.LOCATION])
-                  ..measures.add(SamplingSchema.common().measures[ContextSamplingPackage.WEATHER]))
-            ..addTriggerTask(
-                PeriodicTrigger(period: Duration(minutes: 5)),
-                AppTask(
-                  type: SurveyUserTask.SURVEY_TYPE,
-                  title: surveys.exposure.title,
-                  description: surveys.exposure.description,
-                  minutesToComplete: surveys.exposure.minutesToComplete,
-                  expire: surveys.exposure.expire,
-                )..measures.add(RPTaskMeasure(
-                    type: MeasureType(NameSpace.CARP, SurveySamplingPackage.SURVEY),
-                    name: surveys.exposure.title,
-                    enabled: true,
-                    surveyTask: surveys.exposure.survey,
-                  ))) */
+        // TODO: TRIGGER AFTER CHECKING RESULT FROM SURVEY
+        ..addTriggerTask(
+            PeriodicTrigger(period: Duration(days: 7)),
+            AppTask(
+              type: AudioUserTask.AUDIO_TYPE,
+              title: "User Experience: wristband",
+              description: 'Record yourself talking about how the wristband makes you feel',
+              instructions: 'Tell us about your experience wearing the wristband',
+              minutesToComplete: 5,
+            )..measures.add(AudioMeasure(
+                type: MeasureType(NameSpace.CARP, AudioSamplingPackage.AUDIO),
+                name: "UX_wristband",
+                studyId: studyId,
+              )))
+        // TODO: TRIGGER AFTER CHECKING RESULT FROM SURVEY
+        ..addTriggerTask(
+            PeriodicTrigger(period: Duration(days: 7)),
+            AppTask(
+              type: AudioUserTask.AUDIO_TYPE,
+              title: "Exposure exercise",
+              description: 'Describe the exposure exercise you are working on',
+              instructions:
+                  'Describe the exposure exercise: how will you work on the obsession or compulsion?',
+              minutesToComplete: 5,
+            )..measures.add(AudioMeasure(
+                type: MeasureType(NameSpace.CARP, AudioSamplingPackage.AUDIO),
+                name: "Exposure_exercise_description",
+                studyId: studyId,
+              )))
 
         /////////////////////////////////////////////////////////////////
         /// Depending on the user, show only 1 of this next 4 surveys ///

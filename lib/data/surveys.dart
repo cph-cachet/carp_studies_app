@@ -60,7 +60,7 @@ abstract class Survey {
 class _EcologicalParentsDaSurvey implements Survey {
   String get title => 'How are you feeling right now?';
 
-  String get description => ''; // TODO
+  String get description => 'We would like to know your current mood'; // TODO
 
   Duration get expire => const Duration(days: 1);
 
@@ -78,38 +78,23 @@ class _EcologicalParentsDaSurvey implements Survey {
     RPChoice.withParams("Extremely", 5),
   ]);
 
+  RPChoiceAnswerFormat choiceAnswerFormat3 =
+      RPChoiceAnswerFormat.withParams(ChoiceAnswerStyle.MultipleChoice, [
+    RPChoice.withParams("I am alone", 0),
+    RPChoice.withParams("I am with my child who is participating in the study", 1),
+    RPChoice.withParams("I am with my child(ren) who is/are not participating in the study", 2),
+    RPChoice.withParams("I am with my participating child’s other parent)", 3),
+    RPChoice.withParams("I am with my friends", 4),
+    RPChoice.withParams("I am with others we have not mentioned", 5)
+  ]);
+
   RPTask get survey => RPOrderedTask(
         "Ecological Momentary Assessment Child",
         [
           RPQuestionStep.withAnswerFormat(
             "question1",
             "Are you alone?",
-            choiceAnswerFormat1,
-          ),
-          RPQuestionStep.withAnswerFormat(
-            "question2",
-            "Are you with your child who is participating in the study?",
-            choiceAnswerFormat1,
-          ),
-          RPQuestionStep.withAnswerFormat(
-            "question3",
-            "Are you with your child(ren) who is/are not participating in the study?",
-            choiceAnswerFormat1,
-          ),
-          RPQuestionStep.withAnswerFormat(
-            "question4",
-            "Are you with your participating child’s other parent?",
-            choiceAnswerFormat1,
-          ),
-          RPQuestionStep.withAnswerFormat(
-            "question5",
-            "Are you with your friends?",
-            choiceAnswerFormat1,
-          ),
-          RPQuestionStep.withAnswerFormat(
-            "question6",
-            "Are you with others than the people previous mentioned?",
-            choiceAnswerFormat1,
+            choiceAnswerFormat3,
           ),
           RPInstructionStep(title: "")
             ..text = "Indicate the extent you have felt this way over the past week.",
@@ -173,7 +158,7 @@ class _EcologicalParentsDaSurvey implements Survey {
 class _EcologicalDaSurvey implements Survey {
   String get title => 'How are you feeling right now?';
 
-  String get description => ''; // TODO
+  String get description => 'We would like to know your current mood'; // TODO
 
   Duration get expire => const Duration(days: 1);
 
@@ -190,6 +175,15 @@ class _EcologicalDaSurvey implements Survey {
     RPChoice.withParams("Quite a bit", 4),
     RPChoice.withParams("Extremely", 5),
   ]);
+  RPChoiceAnswerFormat choiceAnswerFormat3 =
+      RPChoiceAnswerFormat.withParams(ChoiceAnswerStyle.MultipleChoice, [
+    RPChoice.withParams("I am alone", 0),
+    RPChoice.withParams("I am with my mother/father who is also participating in the study", 1),
+    RPChoice.withParams("I am  with my other parent who is not participating in the study", 2),
+    RPChoice.withParams("I am with my sister(s) and/ or brother(s)", 3),
+    RPChoice.withParams("I am with my friends", 4),
+    RPChoice.withParams("I am with others we have not mentioned", 5)
+  ]);
 
   RPTask get survey => RPOrderedTask(
         "Ecological Momentary Assessment Child",
@@ -197,36 +191,12 @@ class _EcologicalDaSurvey implements Survey {
           RPQuestionStep.withAnswerFormat(
             "question1",
             "Are you alone?",
-            choiceAnswerFormat1,
+            choiceAnswerFormat3,
           ),
-          RPQuestionStep.withAnswerFormat(
-            "question2",
-            "Are you with your mother/father who is also participating in the study?",
-            choiceAnswerFormat1,
-          ),
-          RPQuestionStep.withAnswerFormat(
-            "question3",
-            "Are you with your other parent who is not participating in the study?",
-            choiceAnswerFormat1,
-          ),
-          RPQuestionStep.withAnswerFormat(
-            "question4",
-            "Are you with your sister(s) and/ or brother(s)?",
-            choiceAnswerFormat1,
-          ),
-          RPQuestionStep.withAnswerFormat(
-            "question5",
-            "Are you with your friends?",
-            choiceAnswerFormat1,
-          ),
-          RPQuestionStep.withAnswerFormat(
-            "question6",
-            "Are you with others we have not mentioned?",
-            choiceAnswerFormat1,
-          ),
-          RPInstructionStep(title: "")
+          RPInstructionStep(
+              title: "We would like to know your current mood", imagePath: 'assets/icons/survey.png')
             ..text =
-                "Below are a list of different feelings and emotions.\nPlease read each feeling and choose the number that best matches how much you feel each feeling right now. Choose 1 if you feel the feeling, 'very slightly or not at all'. Choose 5 if you feel the feeling 'extremely'",
+                "Below are a list of different feelings and emotions.\n\nPlease read each feeling and choose the option that best matches how much you feel each feeling right now.",
           RPQuestionStep.withAnswerFormat(
             "question7",
             "Miserable",
@@ -287,8 +257,7 @@ class _EcologicalDaSurvey implements Survey {
 class _PatientParentsDaSurvey implements Survey {
   String get title => "Wristband with biosensor";
 
-  String get description =>
-      "User experience: We would like to know what it was like for you to wear the wristband.";
+  String get description => "We would like to know what it was like for you to wear the wristband.";
   Duration get expire => const Duration(days: 7);
 
   int get minutesToComplete => 5;
@@ -303,9 +272,9 @@ class _PatientParentsDaSurvey implements Survey {
   RPTask get survey => RPOrderedTask(
         "PATIENT_Brugerundersøgelse_biosensor_forældre_v1_29-10-2020",
         [
-          RPInstructionStep(title: "")
+          RPInstructionStep(title: "Wristband with biosensor", imagePath: 'assets/icons/wristwatch.png')
             ..text =
-                "We would like to know what it was like for you to wear the wristband.\nPlease read each statement and chose the number (0, 1, 2, or 3) that best describes how you feel.",
+                "We would like to know what it was like for you to wear the wristband.\n\nPlease read each statement and chose the option that best describes how you feel.",
           RPQuestionStep.withAnswerFormat(
             "question1",
             "I like how the wristband looks.",
@@ -386,8 +355,7 @@ class _PatientParentsDaSurvey implements Survey {
 class _PatientDaSurvey implements Survey {
   String get title => "Wristband with biosensor";
 
-  String get description =>
-      "User experience: We would like to know what it was like for you to wear the wristband.";
+  String get description => "We would like to know what it was like for you to wear the wristband.";
   Duration get expire => const Duration(days: 7);
 
   int get minutesToComplete => 5;
@@ -402,9 +370,9 @@ class _PatientDaSurvey implements Survey {
   RPTask get survey => RPOrderedTask(
         "PATIENT_Brugerundersøgelse_biosensor_barn_v1_29-10-2020",
         [
-          RPInstructionStep(title: "")
+          RPInstructionStep(title: "Wristband with biosensor", imagePath: 'assets/icons/wristwatch.png')
             ..text =
-                "We would like to know what it was like for you to wear the wristband.\nPlease read each statement and chose the number (0, 1, 2, or 3) that best describes how you feel.",
+                "We would like to know what it was like for you to wear the wristband.\n\nPlease read each statement and chose the option that best describes how you feel.",
           RPQuestionStep.withAnswerFormat(
             "question1",
             "I like how the wristband looks.",
@@ -485,8 +453,7 @@ class _PatientDaSurvey implements Survey {
 class _ControlParentsDaSurvey implements Survey {
   String get title => "Wristband with biosensor";
 
-  String get description =>
-      "User experience: We would like to know what it was like for you to wear the wristband.";
+  String get description => "We would like to know what it was like for you to wear the wristband.";
   Duration get expire => const Duration(days: 7);
 
   int get minutesToComplete => 5;
@@ -501,9 +468,9 @@ class _ControlParentsDaSurvey implements Survey {
   RPTask get survey => RPOrderedTask(
         "KONTROL_Brugerundersøgelse_biosensor_forældre_v1_29-10-2020",
         [
-          RPInstructionStep(title: "")
+          RPInstructionStep(title: "Wristband with biosensor", imagePath: 'assets/icons/wristwatch.png')
             ..text =
-                "We would like to know what it was like for you to wear the wristband.\nPlease read each statement and chose the number (0, 1, 2, or 3) that best describes how you feel.",
+                "We would like to know what it was like for you to wear the wristband.\n\nPlease read each statement and chose the option that best describes how you feel.",
           RPQuestionStep.withAnswerFormat(
             "question1",
             "I like how the wristband looks.",
@@ -584,8 +551,7 @@ class _ControlParentsDaSurvey implements Survey {
 class _ControlDaSurvey implements Survey {
   String get title => "Wristband with biosensor";
 
-  String get description =>
-      "User experience: We would like to know what it was like for you to wear the wristband.";
+  String get description => "We would like to know what it was like for you to wear the wristband.";
   Duration get expire => const Duration(days: 7);
 
   int get minutesToComplete => 5;
@@ -600,9 +566,9 @@ class _ControlDaSurvey implements Survey {
   RPTask get survey => RPOrderedTask(
         "KONTROL_Brugerundersøgelse_biosensor_barn_v1_29-10-2020",
         [
-          RPInstructionStep(title: "")
+          RPInstructionStep(title: "Wristband with biosensor", imagePath: 'assets/icons/wristwatch.png')
             ..text =
-                "We would like to know what it was like for you to wear the wristband.\nPlease read each statement and chose the number (0, 1, 2, or 3) that best describes how you feel.",
+                "We would like to know what it was like for you to wear the wristband.\n\nPlease read each statement and chose the option that best describes how you feel.",
           RPQuestionStep.withAnswerFormat(
             "question1",
             "I like how the wristband looks.",
@@ -683,7 +649,7 @@ class _ControlDaSurvey implements Survey {
 class _ExposureDaSurvey implements Survey {
   String get title => "Weekly exposure and response prevention";
 
-  String get description => 'Describe the obsession and / or the compulsion you are working on';
+  String get description => 'Describe the obsession and/or the compulsion you are working on';
 
   Duration get expire => const Duration(days: 7);
 
@@ -738,9 +704,9 @@ class _ExposureDaSurvey implements Survey {
   ]);
 
   RPTask get survey => RPOrderedTask("Exposure_SUDS_v1_26_02_2021", [
-        RPInstructionStep(title: "Exposure and response prevention")
+        RPInstructionStep(title: "Exposure and response prevention", imagePath: 'assets/icons/survey.png')
           ..text =
-              "This app is designed to help you practice fighting OCD. Your therapist may have taught you about exposure and response prevention. If your therapist has not taught you about exposure and response prevention, then you should not use this app. Exposure means approaching things or situations that you are afraid of a little at a time. Response prevention refers to not performing the OCD compulsions or rituals.",
+              "This survey is designed to help you practice fighting OCD.\n\nYour therapist may have taught you about exposure and response prevention. If your therapist has not taught you about exposure and response prevention, then you should not use this app.\n\nExposure means approaching things or situations that you are afraid of a little at a time.\n\nResponse prevention refers to not performing the OCD compulsions or rituals.",
         RPQuestionStep.withAnswerFormat(
           "question1",
           "My therapist has asked to practice exposure at home.",

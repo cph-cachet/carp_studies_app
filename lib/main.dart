@@ -59,6 +59,7 @@ part 'ui/pages/contact_page.dart';
 part 'ui/pages/profile_page.dart';
 part 'ui/pages/informed_consent_page.dart';
 part 'ui/pages/audio_task_page.dart';
+part 'ui/pages/timer_task_page.dart';
 
 part 'ui/widgets/study_banner.dart';
 part 'ui/widgets/card_header.dart';

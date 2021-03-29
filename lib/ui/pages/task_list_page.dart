@@ -73,7 +73,7 @@ class _TaskListPageState extends State<TaskListPage> {
         elevation: 5,
         child: ListTile(
           leading: CircleAvatar(
-            backgroundColor: Theme.of(context).accentColor,
+            backgroundColor: Theme.of(context).hoverColor,
             // child: taskTypeIcon[userTask.type],  // use a type icon
             child: measureTypeIcon[userTask.task.measures[0].type.name], // use the 1st measure as an icon
           ),
@@ -145,7 +145,7 @@ class _TaskListPageState extends State<TaskListPage> {
         return Expanded(
           child: Container(
             height: 110,
-            color: Theme.of(context).accentColor,
+            color: Theme.of(context).hoverColor,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,

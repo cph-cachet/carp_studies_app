@@ -38,6 +38,9 @@ class _Surveys {
 
   Survey _ecologicalParentsDa = _EcologicalParentsDaSurvey();
   Survey get ecologicalParentsDa => _ecologicalParentsDa;
+
+  Survey _appUX = _AppUXSurvey();
+  Survey get appUX => _appUX;
 }
 
 abstract class Survey {
@@ -55,6 +58,114 @@ abstract class Survey {
 
   /// The survey to fill out.
   RPTask get survey;
+}
+
+class _AppUXSurvey implements Survey {
+  String get title => 'User Experience with the Mobile App';
+
+  String get description => 'We would like to know your experience with the app'; // TODO
+
+  Duration get expire => const Duration(days: 1);
+
+  int get minutesToComplete => 2;
+
+  RPChoiceAnswerFormat choiceAnswerFormat1 = RPChoiceAnswerFormat.withParams(ChoiceAnswerStyle.SingleChoice, [
+    RPChoice.withParams("Extremely obstructive.", 0),
+    RPChoice.withParams("Mostly obstructive.", 1),
+    RPChoice.withParams("Mostly supportive.", 2),
+    RPChoice.withParams("Extremely supportive.", 3),
+  ]);
+  RPChoiceAnswerFormat choiceAnswerFormat2 = RPChoiceAnswerFormat.withParams(ChoiceAnswerStyle.SingleChoice, [
+    RPChoice.withParams("Extremely complicated.", 0),
+    RPChoice.withParams("Mostly complicated.", 1),
+    RPChoice.withParams("Mostly easy.", 2),
+    RPChoice.withParams("Extremely easy.", 3),
+  ]);
+  RPChoiceAnswerFormat choiceAnswerFormat3 = RPChoiceAnswerFormat.withParams(ChoiceAnswerStyle.SingleChoice, [
+    RPChoice.withParams("Extremely inefficient.", 0),
+    RPChoice.withParams("Mostly inefficient.", 1),
+    RPChoice.withParams("Mostly efficient.", 2),
+    RPChoice.withParams("Extremely efficient.", 3),
+  ]);
+  RPChoiceAnswerFormat choiceAnswerFormat4 = RPChoiceAnswerFormat.withParams(ChoiceAnswerStyle.SingleChoice, [
+    RPChoice.withParams("Extremely confusing.", 0),
+    RPChoice.withParams("Mostly confusing.", 1),
+    RPChoice.withParams("Mostly clear.", 2),
+    RPChoice.withParams("Extremely clear.", 3),
+  ]);
+  RPChoiceAnswerFormat choiceAnswerFormat5 = RPChoiceAnswerFormat.withParams(ChoiceAnswerStyle.SingleChoice, [
+    RPChoice.withParams("Extremely boring.", 0),
+    RPChoice.withParams("Mostly boring.", 1),
+    RPChoice.withParams("Mostly exciting.", 2),
+    RPChoice.withParams("Extremely exciting.", 3),
+  ]);
+  RPChoiceAnswerFormat choiceAnswerFormat6 = RPChoiceAnswerFormat.withParams(ChoiceAnswerStyle.SingleChoice, [
+    RPChoice.withParams("Extremely not interesting.", 0),
+    RPChoice.withParams("Mostly not interesting.", 1),
+    RPChoice.withParams("Mostly interesting.", 2),
+    RPChoice.withParams("Extremely interesting.", 3),
+  ]);
+  RPChoiceAnswerFormat choiceAnswerFormat7 = RPChoiceAnswerFormat.withParams(ChoiceAnswerStyle.SingleChoice, [
+    RPChoice.withParams("Extremely conventional.", 0),
+    RPChoice.withParams("Mostly conventional.", 1),
+    RPChoice.withParams("Mostly inventive.", 2),
+    RPChoice.withParams("Extremely inventive.", 3),
+  ]);
+  RPChoiceAnswerFormat choiceAnswerFormat8 = RPChoiceAnswerFormat.withParams(ChoiceAnswerStyle.SingleChoice, [
+    RPChoice.withParams("Extremely usual.", 0),
+    RPChoice.withParams("Mostly usual.", 1),
+    RPChoice.withParams("Mostly leading edge.", 2),
+    RPChoice.withParams("Extremely leading edge.", 3),
+  ]);
+
+  RPTask get survey => RPOrderedTask("User Experience with App", [
+        RPInstructionStep(title: "", imagePath: 'assets/icons/smartphone.png')
+          ..text =
+              "Please make your evaluation of this mobile app now.\n\nThe questionnaire consists of attributes that may apply to the app. You can express your agreement with the attributes by ticking the option that most closely reflects your impression.\n\nIt is your personal opinion that counts. Please remember: there is no wrong or right answer!",
+        RPQuestionStep.withAnswerFormat(
+          "question1",
+          "The app is:",
+          choiceAnswerFormat1,
+        ),
+        RPQuestionStep.withAnswerFormat(
+          "question2",
+          "The app is:",
+          choiceAnswerFormat2,
+        ),
+        RPQuestionStep.withAnswerFormat(
+          "question3",
+          "The app is:",
+          choiceAnswerFormat3,
+        ),
+        RPQuestionStep.withAnswerFormat(
+          "question4",
+          "The app is:",
+          choiceAnswerFormat4,
+        ),
+        RPQuestionStep.withAnswerFormat(
+          "question5",
+          "The app is:",
+          choiceAnswerFormat5,
+        ),
+        RPQuestionStep.withAnswerFormat(
+          "question6",
+          "The app is:",
+          choiceAnswerFormat6,
+        ),
+        RPQuestionStep.withAnswerFormat(
+          "question7",
+          "The app is:",
+          choiceAnswerFormat7,
+        ),
+        RPQuestionStep.withAnswerFormat(
+          "question8",
+          "The app is:",
+          choiceAnswerFormat8,
+        ),
+        RPCompletionStep("completion")
+          ..title = "Thank you for completing the product evaluation questionnaire!"
+          ..text = " "
+      ]);
 }
 
 class _EcologicalParentsDaSurvey implements Survey {
@@ -150,7 +261,7 @@ class _EcologicalParentsDaSurvey implements Survey {
           ),
           RPCompletionStep("completion")
             ..title = "Well done!"
-            ..text = "Well done!",
+            ..text = " ",
         ],
       );
 }
@@ -249,7 +360,7 @@ class _EcologicalDaSurvey implements Survey {
           ),
           RPCompletionStep("completion")
             ..title = "Well done!"
-            ..text = "Well done!",
+            ..text = " ",
         ],
       );
 }
@@ -344,10 +455,11 @@ class _PatientParentsDaSurvey implements Survey {
             "question14",
             "Is there anything else you would like to tell us about your experience wearing the wristband?",
             RPTextAnswerFormat.withParams(''),
+            optional: true,
           ),
           RPCompletionStep("completion")
             ..title = "Well done!"
-            ..text = "Well done!",
+            ..text = " ",
         ],
       );
 }
@@ -445,7 +557,7 @@ class _PatientDaSurvey implements Survey {
           ),
           RPCompletionStep("completion")
             ..title = "Well done!"
-            ..text = "Well done!",
+            ..text = " ",
         ],
       );
 }
@@ -543,7 +655,7 @@ class _ControlParentsDaSurvey implements Survey {
           ),
           RPCompletionStep("completion")
             ..title = "Well done!"
-            ..text = "Well done!",
+            ..text = " ",
         ],
       );
 }
@@ -638,10 +750,11 @@ class _ControlDaSurvey implements Survey {
             "question14",
             "Is there anything else you would like to tell us about your experience wearing the wristband?",
             RPTextAnswerFormat.withParams(''),
+            optional: true,
           ),
           RPCompletionStep("completion")
             ..title = "Well done!"
-            ..text = "Well done!",
+            ..text = " ",
         ],
       );
 }
@@ -788,7 +901,7 @@ class _ExposureDaSurvey implements Survey {
         ),
         RPCompletionStep("completion")
           ..title = "Well done!"
-          ..text = "Well done!",
+          ..text = " ",
       ]);
 }
 

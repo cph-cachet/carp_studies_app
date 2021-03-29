@@ -3,7 +3,8 @@ import 'package:charts_flutter/flutter.dart' as charts;
 
 ThemeData carpStudyTheme = ThemeData.light().copyWith(
   primaryColor: Color(0xFF206FA2),
-  accentColor: Color(0xFFF1F9FF),
+  accentColor: Color(0xffcce8fa),
+  hoverColor: Color(0xFFF1F9FF),
   textTheme:
       ThemeData.light().textTheme.apply(fontFamily: 'MuseoSans', bodyColor: Color.fromRGBO(112, 112, 112, 1)),
 );

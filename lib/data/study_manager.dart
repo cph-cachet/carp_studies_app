@@ -148,24 +148,6 @@ class LocalStudyManager implements StudyManager {
         ..description =
             "Hormone levels, measured in saliva, and physiological indicators of stress from children and parents are used as input to privacy preserving signal processing and machine learning algorithms. Signal processing will be used to extract acoustic and physiological features of importance for therapeutic response. The study includes children with an OCD diagnosis and children without a psychiatric diagnosis and their parents."
         ..dataEndPoint = getDataEndpoint(DataEndPointTypes.FILE)
-        ..addTriggerTask(
-            ImmediateTrigger(),
-            AppTask(
-              type: SurveyUserTask.DEMOGRAPHIC_SURVEY_TYPE,
-              title: surveys.demographics.title,
-              description: surveys.demographics.description,
-              minutesToComplete: surveys.demographics.minutesToComplete,
-            )
-              ..measures.add(RPTaskMeasure(
-                type: MeasureType(NameSpace.CARP, SurveySamplingPackage.SURVEY),
-                name: surveys.demographics.title,
-                enabled: true,
-                surveyTask: surveys.demographics.survey,
-              ))
-              ..measures.add(Measure(
-                type: MeasureType(NameSpace.CARP, ContextSamplingPackage.LOCATION),
-              )))
-
         // collect informed consent once when the study starts
         ..addTriggerTask(
             ImmediateTrigger(),
@@ -253,8 +235,8 @@ class LocalStudyManager implements StudyManager {
             AppTask(
               type: AudioUserTask.AUDIO_TYPE,
               title: "User Experience: wristband",
-              description: 'Record yourself talking about how the wristband makes you feel',
-              instructions: 'Tell us about your experience wearing the wristband',
+              description: "Record yourself talking about how the wristband makes you feel",
+              instructions: "Tell us about your experience wearing the wristband",
               minutesToComplete: 5,
             )..measures.add(AudioMeasure(
                 type: MeasureType(NameSpace.CARP, AudioSamplingPackage.AUDIO),

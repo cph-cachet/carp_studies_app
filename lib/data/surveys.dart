@@ -18,29 +18,32 @@ class _Surveys {
   Survey _exposure = _ExposureSurvey();
   Survey get exposure => _exposure;
 
-  Survey _exposureDa = _ExposureDaSurvey();
-  Survey get exposureDa => _exposureDa;
+  Survey _control = _ControlSurvey();
+  Survey get control => _control;
 
-  Survey _controlDa = _ControlDaSurvey();
-  Survey get controlDa => _controlDa;
+  Survey _controlParents = _ControlParentsSurvey();
+  Survey get controlParents => _controlParents;
 
-  Survey _controlParentsDa = _ControlParentsDaSurvey();
-  Survey get controlParentsDa => _controlParentsDa;
+  Survey _patient = _PatientSurvey();
+  Survey get patient => _patient;
 
-  Survey _patientDa = _PatientDaSurvey();
-  Survey get patientDa => _patientDa;
+  Survey _patientParents = _PatientParentsSurvey();
+  Survey get patientParents => _patientParents;
 
-  Survey _patientParentsDa = _PatientParentsDaSurvey();
-  Survey get patientParentsDa => _patientParentsDa;
+  Survey _ecological = _EcologicalSurvey();
+  Survey get ecological => _ecological;
 
-  Survey _ecologicalDa = _EcologicalDaSurvey();
-  Survey get ecologicalDa => _ecologicalDa;
-
-  Survey _ecologicalParentsDa = _EcologicalParentsDaSurvey();
-  Survey get ecologicalParentsDa => _ecologicalParentsDa;
+  Survey _ecologicalParents = _EcologicalParentsSurvey();
+  Survey get ecologicalParents => _ecologicalParents;
 
   Survey _appUX = _AppUXSurvey();
   Survey get appUX => _appUX;
+
+  Survey _informedConsent = _InformedConsentSurvey();
+  Survey get informedConsent => _informedConsent;
+
+  Survey _trustScale = _TrustScaleSurvey();
+  Survey get trustScale => _trustScale;
 }
 
 abstract class Survey {
@@ -60,12 +63,258 @@ abstract class Survey {
   RPTask get survey;
 }
 
+class _TrustScaleSurvey implements Survey {
+  String get title => 'Trust in the Mobile App';
+
+  String get description => 'We would like to know what it was like for you to use the mobile app'; // TODO
+
+  Duration get expire => const Duration(days: 7);
+
+  int get minutesToComplete => 2;
+
+  RPChoiceAnswerFormat choiceAnswerFormat1 = RPChoiceAnswerFormat.withParams(ChoiceAnswerStyle.SingleChoice, [
+    RPChoice.withParams("Strongly disagree", 0),
+    RPChoice.withParams("Slightly disagree", 1),
+    RPChoice.withParams("Agree", 2),
+    RPChoice.withParams("Strongly agree", 3),
+  ]);
+
+  RPTask get survey => RPOrderedTask("User Experience with App", [
+        RPInstructionStep(title: "", imagePath: 'assets/icons/smartphone.png')
+          ..text =
+              "We would like to know what it was like for you to use the mobile app.\n\nPlease read each statement and chose the number (0, 1, 2, or 3) that best describes how you feel.",
+        RPQuestionStep.withAnswerFormat(
+          "question1",
+          "I believe that there could be negative consequences when using this mobile app",
+          choiceAnswerFormat1,
+        ),
+        RPQuestionStep.withAnswerFormat(
+          "question2",
+          "I feel I must be cautious when using this mobile app",
+          choiceAnswerFormat1,
+        ),
+        RPQuestionStep.withAnswerFormat(
+          "question3",
+          "It is risky to interact with this mobile app",
+          choiceAnswerFormat1,
+        ),
+        RPQuestionStep.withAnswerFormat(
+          "question4",
+          "I think that this mobile app is competent and effective in supporting the research study",
+          choiceAnswerFormat1,
+        ),
+        RPQuestionStep.withAnswerFormat(
+          "question5",
+          "I think that this mobile app performs its role as a tool for research very well",
+          choiceAnswerFormat1,
+        ),
+        RPQuestionStep.withAnswerFormat(
+          "question6",
+          "I believe that this mobile app has all the functionalities I would expect from a research study app",
+          choiceAnswerFormat1,
+        ),
+        RPQuestionStep.withAnswerFormat(
+          "question7",
+          "When I use this mobile app, I feel I can count on it completely",
+          choiceAnswerFormat1,
+        ),
+        RPQuestionStep.withAnswerFormat(
+          "question8",
+          "I can always rely on the mobile app for guidance and assistance",
+          choiceAnswerFormat1,
+        ),
+        RPQuestionStep.withAnswerFormat(
+          "question9",
+          "I can trust the information presented to me by the mobile app",
+          choiceAnswerFormat1,
+        ),
+        RPQuestionStep.withAnswerFormat(
+          "question10",
+          "I believe that the mobile app provides me with benefits",
+          choiceAnswerFormat1,
+        ),
+        RPQuestionStep.withAnswerFormat(
+          "question11",
+          "I believe that the mobile app will show me how to get support if I need help",
+          choiceAnswerFormat1,
+        ),
+        RPQuestionStep.withAnswerFormat(
+          "question12",
+          "I believe that the mobile app attends to my needs and preferences",
+          choiceAnswerFormat1,
+        ),
+        RPQuestionStep.withAnswerFormat(
+          "question13",
+          "Is there anything else you would like to tell us about your experience?",
+          RPTextAnswerFormat.withParams(''),
+          optional: true,
+        ),
+        RPCompletionStep("completion")
+          ..title = "Thank you for completing the product evaluation questionnaire!"
+          ..text = " "
+      ]);
+}
+
+class _InformedConsentSurvey implements Survey {
+  String get title => 'Evaluation of the mobile app consent';
+
+  String get description => 'We would like to know your experience with the informed consent'; // TODO
+
+  Duration get expire => const Duration(days: 7);
+
+  int get minutesToComplete => 4;
+
+  RPChoiceAnswerFormat choiceAnswerFormat1 = RPChoiceAnswerFormat.withParams(ChoiceAnswerStyle.SingleChoice, [
+    RPChoice.withParams("Extremely not understandable.", 0),
+    RPChoice.withParams("Mostly not understandable.", 1),
+    RPChoice.withParams("Mostly understandable.", 2),
+    RPChoice.withParams("Extremely understandable.", 3),
+  ]);
+  RPChoiceAnswerFormat choiceAnswerFormat2 = RPChoiceAnswerFormat.withParams(ChoiceAnswerStyle.SingleChoice, [
+    RPChoice.withParams("Extremely easy to navigate.", 0),
+    RPChoice.withParams("Mostly easy to navigate.", 1),
+    RPChoice.withParams("Mostly difficult to navigate.", 2),
+    RPChoice.withParams("Extremely difficult to navigate.", 3),
+  ]);
+  RPChoiceAnswerFormat choiceAnswerFormat3 = RPChoiceAnswerFormat.withParams(ChoiceAnswerStyle.SingleChoice, [
+    RPChoice.withParams("Extremely valuable.", 0),
+    RPChoice.withParams("Mostly valuable.", 1),
+    RPChoice.withParams("Mostly inferior.", 2),
+    RPChoice.withParams("Extremely inferior.", 3),
+  ]);
+  RPChoiceAnswerFormat choiceAnswerFormat4 = RPChoiceAnswerFormat.withParams(ChoiceAnswerStyle.SingleChoice, [
+    RPChoice.withParams("Extremely boring.", 0),
+    RPChoice.withParams("Mostly boring.", 1),
+    RPChoice.withParams("Mostly exciting.", 2),
+    RPChoice.withParams("Extremely exciting.", 3),
+  ]);
+  RPChoiceAnswerFormat choiceAnswerFormat5 = RPChoiceAnswerFormat.withParams(ChoiceAnswerStyle.SingleChoice, [
+    RPChoice.withParams("Extremely not interesting.", 0),
+    RPChoice.withParams("Mostly not interesting.", 1),
+    RPChoice.withParams("Mostly interesting.", 2),
+    RPChoice.withParams("Extremely interesting.", 3),
+  ]);
+  RPChoiceAnswerFormat choiceAnswerFormat6 = RPChoiceAnswerFormat.withParams(ChoiceAnswerStyle.SingleChoice, [
+    RPChoice.withParams("Extremely fast.", 0),
+    RPChoice.withParams("Mostly fast.", 1),
+    RPChoice.withParams("Mostly slow.", 2),
+    RPChoice.withParams("Extremely slow.", 3),
+  ]);
+  RPChoiceAnswerFormat choiceAnswerFormat7 = RPChoiceAnswerFormat.withParams(ChoiceAnswerStyle.SingleChoice, [
+    RPChoice.withParams("Extremely complicated.", 0),
+    RPChoice.withParams("Mostly complicated.", 1),
+    RPChoice.withParams("Mostly  easy to understand.", 2),
+    RPChoice.withParams("Extremely  easy to understand.", 3),
+  ]);
+  RPChoiceAnswerFormat choiceAnswerFormat8 = RPChoiceAnswerFormat.withParams(ChoiceAnswerStyle.SingleChoice, [
+    RPChoice.withParams("Extremely motivating.", 0),
+    RPChoice.withParams("Mostly motivating.", 1),
+    RPChoice.withParams("Mostly demotivating.", 2),
+    RPChoice.withParams("Extremely demotivating.", 3),
+  ]);
+  RPChoiceAnswerFormat choiceAnswerFormat9 = RPChoiceAnswerFormat.withParams(ChoiceAnswerStyle.SingleChoice, [
+    RPChoice.withParams("Extremely inefficient.", 0),
+    RPChoice.withParams("Mostly inefficient.", 1),
+    RPChoice.withParams("Mostly efficient.", 2),
+    RPChoice.withParams("Extremely efficient.", 3),
+  ]);
+  RPChoiceAnswerFormat choiceAnswerFormat10 =
+      RPChoiceAnswerFormat.withParams(ChoiceAnswerStyle.SingleChoice, [
+    RPChoice.withParams("Extremely clear.", 0),
+    RPChoice.withParams("Mostly clear.", 1),
+    RPChoice.withParams("Mostly confusing.", 2),
+    RPChoice.withParams("Extremely confusing.", 3),
+  ]);
+  RPChoiceAnswerFormat choiceAnswerFormat11 =
+      RPChoiceAnswerFormat.withParams(ChoiceAnswerStyle.SingleChoice, [
+    RPChoice.withParams("Extremely impractical.", 0),
+    RPChoice.withParams("Mostly impractical.", 1),
+    RPChoice.withParams("Mostly practical.", 2),
+    RPChoice.withParams("Extremely practical.", 3),
+  ]);
+  RPChoiceAnswerFormat choiceAnswerFormat12 =
+      RPChoiceAnswerFormat.withParams(ChoiceAnswerStyle.SingleChoice, [
+    RPChoice.withParams("Extremely organized.", 0),
+    RPChoice.withParams("Mostly organized.", 1),
+    RPChoice.withParams("Mostly cluttered.", 2),
+    RPChoice.withParams("Extremely cluttered.", 3),
+  ]);
+  RPTask get survey => RPOrderedTask("Informed consent", [
+        RPInstructionStep(title: "", imagePath: 'assets/icons/smartphone.png')
+          ..text =
+              "Please make your evaluation of the app informed consent now.\n\nThe questionnaire consists of attributes that may apply to the app informed consent. You can express your agreement with the attributes by ticking the option that most closely reflects your impression.\n\nIt is your personal opinion that counts. Please remember: there is no wrong or right answer!",
+        RPQuestionStep.withAnswerFormat(
+          "question1",
+          "The app informed consent was:",
+          choiceAnswerFormat1,
+        ),
+        RPQuestionStep.withAnswerFormat(
+          "question2",
+          "The app informed consent was:",
+          choiceAnswerFormat2,
+        ),
+        RPQuestionStep.withAnswerFormat(
+          "question3",
+          "The app informed consent was:",
+          choiceAnswerFormat3,
+        ),
+        RPQuestionStep.withAnswerFormat(
+          "question4",
+          "The app informed consent was:",
+          choiceAnswerFormat4,
+        ),
+        RPQuestionStep.withAnswerFormat(
+          "question5",
+          "The app informed consent was:",
+          choiceAnswerFormat5,
+        ),
+        RPQuestionStep.withAnswerFormat(
+          "question6",
+          "The app informed consent was:",
+          choiceAnswerFormat6,
+        ),
+        RPQuestionStep.withAnswerFormat(
+          "question7",
+          "The app informed consent was:",
+          choiceAnswerFormat7,
+        ),
+        RPQuestionStep.withAnswerFormat(
+          "question8",
+          "The app informed consent was:",
+          choiceAnswerFormat8,
+        ),
+        RPQuestionStep.withAnswerFormat(
+          "question9",
+          "The app informed consent was:",
+          choiceAnswerFormat9,
+        ),
+        RPQuestionStep.withAnswerFormat(
+          "question10",
+          "The app informed consent was:",
+          choiceAnswerFormat10,
+        ),
+        RPQuestionStep.withAnswerFormat(
+          "question11",
+          "The app informed consent was:",
+          choiceAnswerFormat11,
+        ),
+        RPQuestionStep.withAnswerFormat(
+          "question11",
+          "The app informed consent was:",
+          choiceAnswerFormat12,
+        ),
+        RPCompletionStep("completion")
+          ..title = "Thank you for completing the product evaluation questionnaire!"
+          ..text = " "
+      ]);
+}
+
 class _AppUXSurvey implements Survey {
   String get title => 'User Experience with the Mobile App';
 
   String get description => 'We would like to know your experience with the app'; // TODO
 
-  Duration get expire => const Duration(days: 1);
+  Duration get expire => const Duration(days: 7);
 
   int get minutesToComplete => 2;
 
@@ -168,14 +417,14 @@ class _AppUXSurvey implements Survey {
       ]);
 }
 
-class _EcologicalParentsDaSurvey implements Survey {
+class _EcologicalParentsSurvey implements Survey {
   String get title => 'How are you feeling right now?';
 
   String get description => 'We would like to know your current mood'; // TODO
 
   Duration get expire => const Duration(days: 1);
 
-  int get minutesToComplete => 15;
+  int get minutesToComplete => 10;
 
   RPChoiceAnswerFormat choiceAnswerFormat1 = RPChoiceAnswerFormat.withParams(ChoiceAnswerStyle.SingleChoice, [
     RPChoice.withParams("No", 0),
@@ -266,14 +515,14 @@ class _EcologicalParentsDaSurvey implements Survey {
       );
 }
 
-class _EcologicalDaSurvey implements Survey {
+class _EcologicalSurvey implements Survey {
   String get title => 'How are you feeling right now?';
 
   String get description => 'We would like to know your current mood'; // TODO
 
   Duration get expire => const Duration(days: 1);
 
-  int get minutesToComplete => 15;
+  int get minutesToComplete => 10;
 
   RPChoiceAnswerFormat choiceAnswerFormat1 = RPChoiceAnswerFormat.withParams(ChoiceAnswerStyle.SingleChoice, [
     RPChoice.withParams("No", 0),
@@ -365,7 +614,7 @@ class _EcologicalDaSurvey implements Survey {
       );
 }
 
-class _PatientParentsDaSurvey implements Survey {
+class _PatientParentsSurvey implements Survey {
   String get title => "Wristband with biosensor";
 
   String get description => "We would like to know what it was like for you to wear the wristband.";
@@ -464,7 +713,7 @@ class _PatientParentsDaSurvey implements Survey {
       );
 }
 
-class _PatientDaSurvey implements Survey {
+class _PatientSurvey implements Survey {
   String get title => "Wristband with biosensor";
 
   String get description => "We would like to know what it was like for you to wear the wristband.";
@@ -562,7 +811,7 @@ class _PatientDaSurvey implements Survey {
       );
 }
 
-class _ControlParentsDaSurvey implements Survey {
+class _ControlParentsSurvey implements Survey {
   String get title => "Wristband with biosensor";
 
   String get description => "We would like to know what it was like for you to wear the wristband.";
@@ -660,7 +909,7 @@ class _ControlParentsDaSurvey implements Survey {
       );
 }
 
-class _ControlDaSurvey implements Survey {
+class _ControlSurvey implements Survey {
   String get title => "Wristband with biosensor";
 
   String get description => "We would like to know what it was like for you to wear the wristband.";
@@ -759,7 +1008,7 @@ class _ControlDaSurvey implements Survey {
       );
 }
 
-class _ExposureDaSurvey implements Survey {
+class _ExposureSurvey implements Survey {
   String get title => "Weekly exposure and response prevention";
 
   String get description => 'Describe the obsession and/or the compulsion you are working on';
@@ -861,51 +1110,49 @@ class _ExposureDaSurvey implements Survey {
         ),
 
         RPQuestionStep.withAnswerFormat(
-          "question7",
-          "Describe the compusion you will work on",
-          RPTextAnswerFormat.withParams(''),
-        ),
-        //TODO: AUDIO
+            "question7", "Describe the compusion you will work on", RPTextAnswerFormat.withParams(''),
+            optional: true),
+
         RPQuestionStep.withAnswerFormat(
-          "question8",
-          "Describe the exposure exercise (how will you work on the obsession or compulsion you described above?):",
-          RPTextAnswerFormat.withParams(''),
-        ),
-        RPQuestionStep.withAnswerFormat(
-          "question9",
-          "Write the exposure exercise start time",
-          RPDateTimeAnswerFormat.withParams(DateTimeAnswerStyle.TimeOfDay),
-        ),
-        RPInstructionStep(title: "")
-          ..text =
-              "During the exercise, use the “feeling thermometer” below to record how scared or upset you feel. The feeling thermometer is a scale from 0 to 10, in which 0 means no fear or upset and 10 means as scared or upset as you can imagine. Use the feeling thermometer to record how you are feeling just before starting the exposure exercise, after 5, 10 and 15 minutes.\nYour parents or therapist can help you keep track of the time and record how you are feeling.",
-        RPQuestionStep.withAnswerFormat(
-          "question10",
-          "Just before exposure",
-          _imageChoiceAnswerFormat,
-        ),
-        RPQuestionStep.withAnswerFormat(
-          "question11",
-          "After 5 minutes",
-          _imageChoiceAnswerFormat,
-        ),
-        RPQuestionStep.withAnswerFormat(
-          "question12",
-          "After 10 minutes",
-          _imageChoiceAnswerFormat,
-        ),
-        RPQuestionStep.withAnswerFormat(
-          "question13",
-          "After 15 minutes",
-          _imageChoiceAnswerFormat,
-        ),
+            "question8",
+            "Describe the exposure exercise (how will you work on the obsession or compulsion you described above?):",
+            RPTextAnswerFormat.withParams(''),
+            optional: true),
+        // RPQuestionStep.withAnswerFormat(
+        //   "question9",
+        //   "Write the exposure exercise start time",
+        //   RPDateTimeAnswerFormat.withParams(DateTimeAnswerStyle.TimeOfDay),
+        // ),
+        // RPInstructionStep(title: "")
+        //   ..text =
+        //       "During the exercise, use the “feeling thermometer” below to record how scared or upset you feel. The feeling thermometer is a scale from 0 to 10, in which 0 means no fear or upset and 10 means as scared or upset as you can imagine. Use the feeling thermometer to record how you are feeling just before starting the exposure exercise, after 5, 10 and 15 minutes.\nYour parents or therapist can help you keep track of the time and record how you are feeling.",
+        // RPQuestionStep.withAnswerFormat(
+        //   "question10",
+        //   "Just before exposure",
+        //   _imageChoiceAnswerFormat,
+        // ),
+        // RPQuestionStep.withAnswerFormat(
+        //   "question11",
+        //   "After 5 minutes",
+        //   _imageChoiceAnswerFormat,
+        // ),
+        // RPQuestionStep.withAnswerFormat(
+        //   "question12",
+        //   "After 10 minutes",
+        //   _imageChoiceAnswerFormat,
+        // ),
+        // RPQuestionStep.withAnswerFormat(
+        //   "question13",
+        //   "After 15 minutes",
+        //   _imageChoiceAnswerFormat,
+        // ),
         RPCompletionStep("completion")
           ..title = "Well done!"
-          ..text = " ",
+          ..text = "Whenever you are ready, go to the task list and start the timed exposure exercise.",
       ]);
 }
 
-class _ExposureSurvey implements Survey {
+class _ExposureOldSurvey implements Survey {
   String get title => 'Tvangstanker & -handlinger';
 
   String get description => 'Skriv tvangstanken og/eller tvangshandlingen som du arbejder på';

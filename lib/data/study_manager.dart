@@ -5,10 +5,10 @@ class LocalStudyManager implements StudyManager {
 
   Future<void> initialize() => null;
 
-  Future<Study> getStudy(String studyId) async => _study ??=
-      await _getWristWatchStudy(studyId); //_getGenericCARPStudy(studyId); // _getWristWatchStudy(studyId);
+  Future<Study> getStudy(String studyId) async => _study ??= await _getPatientParentsWristWatch(
+      studyId); //_getGenericCARPStudy(studyId); // _getWristWatchStudy(studyId);
 
-  Future<Study> _patientWristWatch(String studyId) async {
+  Future<Study> _getPatientWristWatch(String studyId) async {
     if (_study == null) {
       _study = Study(id: studyId, userId: await settings.userId)
         ..name = 'Wrist Angel'
@@ -27,58 +27,109 @@ class LocalStudyManager implements StudyManager {
         ..description =
             "Hormone levels, measured in saliva, and physiological indicators of stress from children and parents are used as input to privacy preserving signal processing and machine learning algorithms. Signal processing will be used to extract acoustic and physiological features of importance for therapeutic response. The study includes children with an OCD diagnosis and children without a psychiatric diagnosis and their parents."
         ..dataEndPoint = getDataEndpoint(DataEndPointTypes.FILE)
+
+        // collect App UX - triggers on end W1, mid W4, start W8 - TODO: use scheduled trigger
         ..addTriggerTask(
-            RecurrentScheduledTrigger(
-                type: RecurrentType.weekly, dayOfWeek: DateTime.sunday, time: Time(hour: 8, minute: 00)),
+            ImmediateTrigger(),
             AppTask(
               type: SurveyUserTask.SURVEY_TYPE,
-              title: surveys.patientDa.title,
-              description: surveys.patientDa.description,
-              minutesToComplete: surveys.patientDa.minutesToComplete,
-              expire: surveys.patientDa.expire,
+              title: surveys.appUX.title,
+              description: surveys.appUX.description,
+              minutesToComplete: surveys.appUX.minutesToComplete,
+              expire: surveys.appUX.expire,
             )..measures.add(RPTaskMeasure(
                 type: MeasureType(NameSpace.CARP, SurveySamplingPackage.SURVEY),
-                name: surveys.patientDa.title,
+                name: surveys.appUX.title,
                 enabled: true,
-                surveyTask: surveys.patientDa.survey,
+                surveyTask: surveys.appUX.survey,
               )))
 
-        /// EXPOSURE at least 1/day
+        // collect wristband UX - triggers weekly
         ..addTriggerTask(
             RecurrentScheduledTrigger(
                 type: RecurrentType.weekly, dayOfWeek: DateTime.sunday, time: Time(hour: 8, minute: 00)),
             AppTask(
               type: SurveyUserTask.SURVEY_TYPE,
-              title: surveys.exposureDa.title,
-              description: surveys.exposureDa.description,
-              minutesToComplete: surveys.exposureDa.minutesToComplete,
-              expire: surveys.exposureDa.expire,
+              title: surveys.patient.title,
+              description: surveys.patient.description,
+              minutesToComplete: surveys.patient.minutesToComplete,
+              expire: surveys.patient.expire,
             )..measures.add(RPTaskMeasure(
                 type: MeasureType(NameSpace.CARP, SurveySamplingPackage.SURVEY),
-                name: surveys.exposureDa.title,
+                name: surveys.patient.title,
                 enabled: true,
-                surveyTask: surveys.exposureDa.survey,
+                surveyTask: surveys.patient.survey,
               )))
+
+        /// collect exposure exercises - triggers weekly
         ..addTriggerTask(
-            PeriodicTrigger(period: Duration(minutes: 5)),
+            RecurrentScheduledTrigger(
+                type: RecurrentType.weekly, dayOfWeek: DateTime.sunday, time: Time(hour: 8, minute: 00)),
             AppTask(
               type: SurveyUserTask.SURVEY_TYPE,
-              title: surveys.ecologicalDa.title,
-              description: surveys.ecologicalDa.description,
-              minutesToComplete: surveys.ecologicalDa.minutesToComplete,
-              expire: surveys.ecologicalDa.expire,
+              title: surveys.exposure.title,
+              description: surveys.exposure.description,
+              minutesToComplete: surveys.exposure.minutesToComplete,
+              expire: surveys.exposure.expire,
             )..measures.add(RPTaskMeasure(
                 type: MeasureType(NameSpace.CARP, SurveySamplingPackage.SURVEY),
-                name: surveys.ecologicalDa.title,
+                name: surveys.exposure.title,
                 enabled: true,
-                surveyTask: surveys.ecologicalDa.survey,
+                surveyTask: surveys.exposure.survey,
+              )))
+
+        // collect how are you feeling - triggers randomly  - TODO: use random trigger
+        ..addTriggerTask(
+            ImmediateTrigger(),
+            AppTask(
+              type: SurveyUserTask.SURVEY_TYPE,
+              title: surveys.ecological.title,
+              description: surveys.ecological.description,
+              minutesToComplete: surveys.ecological.minutesToComplete,
+              expire: surveys.ecological.expire,
+            )..measures.add(RPTaskMeasure(
+                type: MeasureType(NameSpace.CARP, SurveySamplingPackage.SURVEY),
+                name: surveys.ecological.title,
+                enabled: true,
+                surveyTask: surveys.ecological.survey,
+              )))
+
+        // Audio task: Exposure exercise - TODO: TRIGGER AFTER CHECKING RESULT FROM SURVEY
+        ..addTriggerTask(
+            PeriodicTrigger(period: Duration(days: 7)),
+            AppTask(
+              type: AudioUserTask.AUDIO_TYPE,
+              title: "Exposure exercise",
+              description: 'Describe the exposure exercise you are working on',
+              instructions:
+                  'Describe the exposure exercise: how will you work on the obsession or compulsion?',
+              minutesToComplete: 5,
+            )..measures.add(AudioMeasure(
+                type: MeasureType(NameSpace.CARP, AudioSamplingPackage.AUDIO),
+                name: "Exposure_exercise_description",
+                studyId: studyId,
+              )))
+
+        // Audio task: Wristband UX - TODO: TRIGGER AFTER CHECKING RESULT FROM SURVEY
+        ..addTriggerTask(
+            PeriodicTrigger(period: Duration(days: 7)),
+            AppTask(
+              type: AudioUserTask.AUDIO_TYPE,
+              title: "User Experience: wristband",
+              description: 'Record yourself talking about how the wristband makes you feel',
+              instructions: 'Tell us about your experience wearing the wristband',
+              minutesToComplete: 5,
+            )..measures.add(AudioMeasure(
+                type: MeasureType(NameSpace.CARP, AudioSamplingPackage.AUDIO),
+                name: "UX_wristband",
+                studyId: studyId,
               )));
     }
 
     return _study;
   }
 
-  Future<Study> _patientParentsWristWatch(String studyId) async {
+  Future<Study> _getPatientParentsWristWatch(String studyId) async {
     if (_study == null) {
       _study = Study(id: studyId, userId: await settings.userId)
         ..name = 'Wrist Angel'
@@ -97,59 +148,6 @@ class LocalStudyManager implements StudyManager {
         ..description =
             "Hormone levels, measured in saliva, and physiological indicators of stress from children and parents are used as input to privacy preserving signal processing and machine learning algorithms. Signal processing will be used to extract acoustic and physiological features of importance for therapeutic response. The study includes children with an OCD diagnosis and children without a psychiatric diagnosis and their parents."
         ..dataEndPoint = getDataEndpoint(DataEndPointTypes.FILE)
-        // collect basic device measures continously
-        ..addTriggerTask(
-            ImmediateTrigger(),
-            AutomaticTask()
-              ..measures = SamplingSchema.debug().getMeasureList(
-                namespace: NameSpace.CARP,
-                types: [
-                  SensorSamplingPackage.LIGHT,
-                  SensorSamplingPackage.PEDOMETER,
-                  // DeviceSamplingPackage.MEMORY,
-                  DeviceSamplingPackage.DEVICE,
-                  DeviceSamplingPackage.BATTERY,
-                  DeviceSamplingPackage.SCREEN,
-                ],
-              ))
-        // collect location, weather and air quality every 5 minutes
-        ..addTriggerTask(
-            PeriodicTrigger(period: Duration(minutes: 5)),
-            Task()
-              ..measures = SamplingSchema.common().getMeasureList(
-                namespace: NameSpace.CARP,
-                types: [
-                  ContextSamplingPackage.LOCATION,
-                  ContextSamplingPackage.WEATHER,
-                  ContextSamplingPackage.AIR_QUALITY,
-                ],
-              ))
-        // collect location and activity measures continously (event-based)
-        ..addTriggerTask(
-            ImmediateTrigger(),
-            Task()
-              ..measures = SamplingSchema.common().getMeasureList(
-                namespace: NameSpace.CARP,
-                types: [
-                  ContextSamplingPackage.GEOLOCATION,
-                  ContextSamplingPackage.ACTIVITY,
-                ],
-              ))
-        // collect local weather and air quality as an app task
-        ..addTriggerTask(
-            ImmediateTrigger(),
-            AppTask(
-              type: SensingUserTask.ONE_TIME_SENSING_TYPE,
-              title: "Weather & Air Quality",
-              description: "Collect local weather and air quality",
-            )..measures = SamplingSchema.common().getMeasureList(
-                namespace: NameSpace.CARP,
-                types: [
-                  ContextSamplingPackage.WEATHER,
-                  ContextSamplingPackage.AIR_QUALITY,
-                ],
-              ))
-        // collect demographics once when the study starts
         ..addTriggerTask(
             ImmediateTrigger(),
             AppTask(
@@ -157,7 +155,6 @@ class LocalStudyManager implements StudyManager {
               title: surveys.demographics.title,
               description: surveys.demographics.description,
               minutesToComplete: surveys.demographics.minutesToComplete,
-              expire: surveys.demographics.expire,
             )
               ..measures.add(RPTaskMeasure(
                 type: MeasureType(NameSpace.CARP, SurveySamplingPackage.SURVEY),
@@ -165,58 +162,111 @@ class LocalStudyManager implements StudyManager {
                 enabled: true,
                 surveyTask: surveys.demographics.survey,
               ))
-              ..measures.add(SamplingSchema.common().measures[ContextSamplingPackage.LOCATION]))
+              ..measures.add(Measure(
+                type: MeasureType(NameSpace.CARP, ContextSamplingPackage.LOCATION),
+              )))
+
+        // collect informed consent once when the study starts
+        ..addTriggerTask(
+            ImmediateTrigger(),
+            AppTask(
+              type: SurveyUserTask.SURVEY_TYPE,
+              title: surveys.informedConsent.title,
+              description: surveys.informedConsent.description,
+              minutesToComplete: surveys.informedConsent.minutesToComplete,
+              expire: surveys.informedConsent.expire,
+            )..measures.add(RPTaskMeasure(
+                type: MeasureType(NameSpace.CARP, SurveySamplingPackage.SURVEY),
+                name: surveys.informedConsent.title,
+                enabled: true,
+                surveyTask: surveys.informedConsent.survey,
+              )))
+
+        // collect trust scale - triggers on W2, W4 - TODO: use scheduled trigger
+        ..addTriggerTask(
+            ImmediateTrigger(),
+            AppTask(
+              type: SurveyUserTask.SURVEY_TYPE,
+              title: surveys.trustScale.title,
+              description: surveys.trustScale.description,
+              minutesToComplete: surveys.trustScale.minutesToComplete,
+              expire: surveys.trustScale.expire,
+            )..measures.add(RPTaskMeasure(
+                type: MeasureType(NameSpace.CARP, SurveySamplingPackage.SURVEY),
+                name: surveys.trustScale.title,
+                enabled: true,
+                surveyTask: surveys.trustScale.survey,
+              )))
+
+        // collect App UX - triggers on end W1, mid W4, start W8 - TODO: use scheduled trigger
+        ..addTriggerTask(
+            ImmediateTrigger(),
+            AppTask(
+              type: SurveyUserTask.SURVEY_TYPE,
+              title: surveys.appUX.title,
+              description: surveys.appUX.description,
+              minutesToComplete: surveys.appUX.minutesToComplete,
+              expire: surveys.appUX.expire,
+            )..measures.add(RPTaskMeasure(
+                type: MeasureType(NameSpace.CARP, SurveySamplingPackage.SURVEY),
+                name: surveys.appUX.title,
+                enabled: true,
+                surveyTask: surveys.appUX.survey,
+              )))
+
+        // collect wristband UX - triggers weekly
         ..addTriggerTask(
             RecurrentScheduledTrigger(
                 type: RecurrentType.weekly, dayOfWeek: DateTime.sunday, time: Time(hour: 8, minute: 00)),
             AppTask(
               type: SurveyUserTask.SURVEY_TYPE,
-              title: surveys.patientParentsDa.title,
-              description: surveys.patientParentsDa.description,
-              minutesToComplete: surveys.patientParentsDa.minutesToComplete,
-              expire: surveys.patientParentsDa.expire,
+              title: surveys.patientParents.title,
+              description: surveys.patientParents.description,
+              minutesToComplete: surveys.patientParents.minutesToComplete,
+              expire: surveys.patientParents.expire,
             )..measures.add(RPTaskMeasure(
                 type: MeasureType(NameSpace.CARP, SurveySamplingPackage.SURVEY),
-                name: surveys.patientParentsDa.title,
+                name: surveys.patientParents.title,
                 enabled: true,
-                surveyTask: surveys.patientParentsDa.survey,
+                surveyTask: surveys.patientParents.survey,
               )))
 
-        /// EXPOSURE at least 1/day
+        // collect how are you feeling - triggers randomly  - TODO: use random trigger
         ..addTriggerTask(
-            PeriodicTrigger(period: Duration(minutes: 5)),
+            ImmediateTrigger(),
             AppTask(
               type: SurveyUserTask.SURVEY_TYPE,
-              title: surveys.exposureDa.title,
-              description: surveys.exposureDa.description,
-              minutesToComplete: surveys.exposureDa.minutesToComplete,
-              expire: surveys.exposureDa.expire,
+              title: surveys.ecologicalParents.title,
+              description: surveys.ecologicalParents.description,
+              minutesToComplete: surveys.ecologicalParents.minutesToComplete,
+              expire: surveys.ecologicalParents.expire,
             )..measures.add(RPTaskMeasure(
                 type: MeasureType(NameSpace.CARP, SurveySamplingPackage.SURVEY),
-                name: surveys.exposureDa.title,
+                name: surveys.ecologicalParents.title,
                 enabled: true,
-                surveyTask: surveys.exposureDa.survey,
+                surveyTask: surveys.ecologicalParents.survey,
               )))
+
+        // Audio task: Wristband UX - TODO: TRIGGER AFTER CHECKING RESULT FROM SURVEY
         ..addTriggerTask(
-            PeriodicTrigger(period: Duration(minutes: 5)),
+            PeriodicTrigger(period: Duration(days: 7)),
             AppTask(
-              type: SurveyUserTask.SURVEY_TYPE,
-              title: surveys.ecologicalDa.title,
-              description: surveys.ecologicalDa.description,
-              minutesToComplete: surveys.ecologicalDa.minutesToComplete,
-              expire: surveys.ecologicalDa.expire,
-            )..measures.add(RPTaskMeasure(
-                type: MeasureType(NameSpace.CARP, SurveySamplingPackage.SURVEY),
-                name: surveys.ecologicalDa.title,
-                enabled: true,
-                surveyTask: surveys.ecologicalDa.survey,
+              type: AudioUserTask.AUDIO_TYPE,
+              title: "User Experience: wristband",
+              description: 'Record yourself talking about how the wristband makes you feel',
+              instructions: 'Tell us about your experience wearing the wristband',
+              minutesToComplete: 5,
+            )..measures.add(AudioMeasure(
+                type: MeasureType(NameSpace.CARP, AudioSamplingPackage.AUDIO),
+                name: "UX_wristband",
+                studyId: studyId,
               )));
     }
 
     return _study;
   }
 
-  Future<Study> _controlWristWatch(String studyId) async {
+  Future<Study> _getControlWristWatch(String studyId) async {
     if (_study == null) {
       _study = Study(id: studyId, userId: await settings.userId)
         ..name = 'Wrist Angel'
@@ -235,125 +285,75 @@ class LocalStudyManager implements StudyManager {
         ..description =
             "Hormone levels, measured in saliva, and physiological indicators of stress from children and parents are used as input to privacy preserving signal processing and machine learning algorithms. Signal processing will be used to extract acoustic and physiological features of importance for therapeutic response. The study includes children with an OCD diagnosis and children without a psychiatric diagnosis and their parents."
         ..dataEndPoint = getDataEndpoint(DataEndPointTypes.FILE)
-        // // collect basic device measures continously
-        // ..addTriggerTask(
-        //     ImmediateTrigger(),
-        //     AutomaticTask()
-        //       ..measures = SamplingSchema.debug().getMeasureList(
-        //         namespace: NameSpace.CARP,
-        //         types: [
-        //           SensorSamplingPackage.LIGHT,
-        //           SensorSamplingPackage.PEDOMETER,
-        //           // DeviceSamplingPackage.MEMORY,
-        //           DeviceSamplingPackage.DEVICE,
-        //           DeviceSamplingPackage.BATTERY,
-        //           DeviceSamplingPackage.SCREEN,
-        //         ],
-        //       ))
-        // // collect location, weather and air quality every 5 minutes
-        // ..addTriggerTask(
-        //     PeriodicTrigger(period: Duration(minutes: 5)),
-        //     Task()
-        //       ..measures = SamplingSchema.common().getMeasureList(
-        //         namespace: NameSpace.CARP,
-        //         types: [
-        //           ContextSamplingPackage.LOCATION,
-        //           ContextSamplingPackage.WEATHER,
-        //           ContextSamplingPackage.AIR_QUALITY,
-        //         ],
-        //       ))
-        // // collect location and activity measures continously (event-based)
-        // ..addTriggerTask(
-        //     ImmediateTrigger(),
-        //     Task()
-        //       ..measures = SamplingSchema.common().getMeasureList(
-        //         namespace: NameSpace.CARP,
-        //         types: [
-        //           ContextSamplingPackage.GEOLOCATION,
-        //           ContextSamplingPackage.ACTIVITY,
-        //         ],
-        //       ))
-        // // collect local weather and air quality as an app task
-        // ..addTriggerTask(
-        //     ImmediateTrigger(),
-        //     AppTask(
-        //       type: SensingUserTask.ONE_TIME_SENSING_TYPE,
-        //       title: "Weather & Air Quality",
-        //       description: "Collect local weather and air quality",
-        //     )..measures = SamplingSchema.common().getMeasureList(
-        //         namespace: NameSpace.CARP,
-        //         types: [
-        //           ContextSamplingPackage.WEATHER,
-        //           ContextSamplingPackage.AIR_QUALITY,
-        //         ],
-        //       ))
-        // // collect demographics once when the study starts
-        // ..addTriggerTask(
-        //     ImmediateTrigger(),
-        //     AppTask(
-        //       type: SurveyUserTask.DEMOGRAPHIC_SURVEY_TYPE,
-        //       title: surveys.demographics.title,
-        //       description: surveys.demographics.description,
-        //       minutesToComplete: surveys.demographics.minutesToComplete,
-        //       expire: surveys.demographics.expire,
-        //     )
-        //       ..measures.add(RPTaskMeasure(
-        //         type: MeasureType(NameSpace.CARP, SurveySamplingPackage.SURVEY),
-        //         name: surveys.demographics.title,
-        //         enabled: true,
-        //         surveyTask: surveys.demographics.survey,
-        //       ))
-        //       ..measures.add(SamplingSchema.common().measures[ContextSamplingPackage.LOCATION]))
+
+        // collect App UX - triggers on end W1, mid W4, start W8 - TODO: use scheduled trigger
+        ..addTriggerTask(
+            ImmediateTrigger(),
+            AppTask(
+              type: SurveyUserTask.SURVEY_TYPE,
+              title: surveys.appUX.title,
+              description: surveys.appUX.description,
+              minutesToComplete: surveys.appUX.minutesToComplete,
+              expire: surveys.appUX.expire,
+            )..measures.add(RPTaskMeasure(
+                type: MeasureType(NameSpace.CARP, SurveySamplingPackage.SURVEY),
+                name: surveys.appUX.title,
+                enabled: true,
+                surveyTask: surveys.appUX.survey,
+              )))
+
+        // collect wristband UX - triggers weekly
         ..addTriggerTask(
             RecurrentScheduledTrigger(
                 type: RecurrentType.weekly, dayOfWeek: DateTime.sunday, time: Time(hour: 8, minute: 00)),
             AppTask(
               type: SurveyUserTask.SURVEY_TYPE,
-              title: surveys.controlDa.title,
-              description: surveys.controlDa.description,
-              minutesToComplete: surveys.controlDa.minutesToComplete,
-              expire: surveys.controlDa.expire,
+              title: surveys.control.title,
+              description: surveys.control.description,
+              minutesToComplete: surveys.control.minutesToComplete,
+              expire: surveys.control.expire,
             )..measures.add(RPTaskMeasure(
                 type: MeasureType(NameSpace.CARP, SurveySamplingPackage.SURVEY),
-                name: surveys.controlDa.title,
+                name: surveys.control.title,
                 enabled: true,
-                surveyTask: surveys.controlDa.survey,
-              )))
-        ..addTriggerTask(
-            PeriodicTrigger(period: Duration(minutes: 5)),
-            AppTask(
-              type: SurveyUserTask.SURVEY_TYPE,
-              title: surveys.exposureDa.title,
-              description: surveys.exposureDa.description,
-              minutesToComplete: surveys.exposureDa.minutesToComplete,
-              expire: surveys.exposureDa.expire,
-            )..measures.add(RPTaskMeasure(
-                type: MeasureType(NameSpace.CARP, SurveySamplingPackage.SURVEY),
-                name: surveys.exposureDa.title,
-                enabled: true,
-                surveyTask: surveys.exposureDa.survey,
+                surveyTask: surveys.control.survey,
               )))
 
-        /// EXPOSURE at least 1/day
+        // collect how are you feeling - triggers randomly  - TODO: use random trigger
         ..addTriggerTask(
             PeriodicTrigger(period: Duration(minutes: 5)),
             AppTask(
               type: SurveyUserTask.SURVEY_TYPE,
-              title: surveys.ecologicalDa.title,
-              description: surveys.ecologicalDa.description,
-              minutesToComplete: surveys.ecologicalDa.minutesToComplete,
-              expire: surveys.ecologicalDa.expire,
+              title: surveys.ecological.title,
+              description: surveys.ecological.description,
+              minutesToComplete: surveys.ecological.minutesToComplete,
+              expire: surveys.ecological.expire,
             )..measures.add(RPTaskMeasure(
                 type: MeasureType(NameSpace.CARP, SurveySamplingPackage.SURVEY),
-                name: surveys.ecologicalDa.title,
+                name: surveys.ecological.title,
                 enabled: true,
-                surveyTask: surveys.ecologicalDa.survey,
+                surveyTask: surveys.ecological.survey,
+              )))
+
+        // Audio task: Wristband UX - TODO: TRIGGER AFTER CHECKING RESULT FROM SURVEY
+        ..addTriggerTask(
+            PeriodicTrigger(period: Duration(days: 7)),
+            AppTask(
+              type: AudioUserTask.AUDIO_TYPE,
+              title: "User Experience: wristband",
+              description: 'Record yourself talking about how the wristband makes you feel',
+              instructions: 'Tell us about your experience wearing the wristband',
+              minutesToComplete: 5,
+            )..measures.add(AudioMeasure(
+                type: MeasureType(NameSpace.CARP, AudioSamplingPackage.AUDIO),
+                name: "UX_wristband",
+                studyId: studyId,
               )));
     }
     return _study;
   }
 
-  Future<Study> _controlParentWristWatch(String studyId) async {
+  Future<Study> _getControlParentWristWatch(String studyId) async {
     if (_study == null) {
       _study = Study(id: studyId, userId: await settings.userId)
         ..name = 'Wrist Angel'
@@ -372,126 +372,107 @@ class LocalStudyManager implements StudyManager {
         ..description =
             "Hormone levels, measured in saliva, and physiological indicators of stress from children and parents are used as input to privacy preserving signal processing and machine learning algorithms. Signal processing will be used to extract acoustic and physiological features of importance for therapeutic response. The study includes children with an OCD diagnosis and children without a psychiatric diagnosis and their parents."
         ..dataEndPoint = getDataEndpoint(DataEndPointTypes.FILE)
-        // collect basic device measures continously
-        // ..addTriggerTask(
-        //     ImmediateTrigger(),
-        //     AutomaticTask()
-        //       ..measures = SamplingSchema.debug().getMeasureList(
-        //         namespace: NameSpace.CARP,
-        //         types: [
-        //           SensorSamplingPackage.LIGHT,
-        //           SensorSamplingPackage.PEDOMETER,
-        //           // DeviceSamplingPackage.MEMORY,
-        //           DeviceSamplingPackage.DEVICE,
-        //           DeviceSamplingPackage.BATTERY,
-        //           DeviceSamplingPackage.SCREEN,
-        //         ],
-        //       ))
-        // // collect location, weather and air quality every 5 minutes
-        // ..addTriggerTask(
-        //     PeriodicTrigger(period: Duration(minutes: 5)),
-        //     Task()
-        //       ..measures = SamplingSchema.common().getMeasureList(
-        //         namespace: NameSpace.CARP,
-        //         types: [
-        //           ContextSamplingPackage.LOCATION,
-        //           ContextSamplingPackage.WEATHER,
-        //           ContextSamplingPackage.AIR_QUALITY,
-        //         ],
-        //       ))
-        // // collect location and activity measures continously (event-based)
-        // ..addTriggerTask(
-        //     ImmediateTrigger(),
-        //     Task()
-        //       ..measures = SamplingSchema.common().getMeasureList(
-        //         namespace: NameSpace.CARP,
-        //         types: [
-        //           ContextSamplingPackage.GEOLOCATION,
-        //           ContextSamplingPackage.ACTIVITY,
-        //         ],
-        //       ))
-        // // collect local weather and air quality as an app task
-        // ..addTriggerTask(
-        //     ImmediateTrigger(),
-        //     AppTask(
-        //       type: SensingUserTask.ONE_TIME_SENSING_TYPE,
-        //       title: "Weather & Air Quality",
-        //       description: "Collect local weather and air quality",
-        //     )..measures = SamplingSchema.common().getMeasureList(
-        //         namespace: NameSpace.CARP,
-        //         types: [
-        //           ContextSamplingPackage.WEATHER,
-        //           ContextSamplingPackage.AIR_QUALITY,
-        //         ],
-        //       ))
-        // // collect demographics once when the study starts
-        // ..addTriggerTask(
-        //     ImmediateTrigger(),
-        //     AppTask(
-        //       type: SurveyUserTask.DEMOGRAPHIC_SURVEY_TYPE,
-        //       title: surveys.demographics.title,
-        //       description: surveys.demographics.description,
-        //       minutesToComplete: surveys.demographics.minutesToComplete,
-        //       expire: surveys.demographics.expire,
-        //     )
-        //       ..measures.add(RPTaskMeasure(
-        //         type: MeasureType(NameSpace.CARP, SurveySamplingPackage.SURVEY),
-        //         name: surveys.demographics.title,
-        //         enabled: true,
-        //         surveyTask: surveys.demographics.survey,
-        //       ))
-        //       ..measures.add(SamplingSchema.common().measures[ContextSamplingPackage.LOCATION]))
-        // ..addTriggerTask(
-        //     PeriodicTrigger(period: Duration(minutes: 5)),
-        //     /* RecurrentScheduledTrigger(
-        //         type: RecurrentType.weekly, dayOfWeek: DateTime.sunday, time: Time(hour: 8, minute: 00)), */
-        //     AppTask(
-        //       type: SurveyUserTask.SURVEY_TYPE,
-        //       title: surveys.controlParentsDa.title,
-        //       description: surveys.controlParentsDa.description,
-        //       minutesToComplete: surveys.controlParentsDa.minutesToComplete,
-        //       expire: surveys.controlParentsDa.expire,
-        //     )..measures.add(RPTaskMeasure(
-        //         type: MeasureType(NameSpace.CARP, SurveySamplingPackage.SURVEY),
-        //         name: surveys.controlParentsDa.title,
-        //         enabled: true,
-        //         surveyTask: surveys.controlParentsDa.survey,
-        //       )))
-
-        /// EXPOSURE at least 1/day
+        // collect informed consent once when the study starts
         ..addTriggerTask(
-            PeriodicTrigger(period: Duration(minutes: 5)),
+            ImmediateTrigger(),
             AppTask(
               type: SurveyUserTask.SURVEY_TYPE,
-              title: surveys.exposureDa.title,
-              description: surveys.exposureDa.description,
-              minutesToComplete: surveys.exposureDa.minutesToComplete,
-              expire: surveys.exposureDa.expire,
+              title: surveys.informedConsent.title,
+              description: surveys.informedConsent.description,
+              minutesToComplete: surveys.informedConsent.minutesToComplete,
+              expire: surveys.informedConsent.expire,
             )..measures.add(RPTaskMeasure(
                 type: MeasureType(NameSpace.CARP, SurveySamplingPackage.SURVEY),
-                name: surveys.exposureDa.title,
+                name: surveys.informedConsent.title,
                 enabled: true,
-                surveyTask: surveys.exposureDa.survey,
+                surveyTask: surveys.informedConsent.survey,
               )))
+
+        // collect trust scale - triggers on W2, W4 - TODO: use scheduled trigger
         ..addTriggerTask(
-            PeriodicTrigger(period: Duration(minutes: 5)),
+            ImmediateTrigger(),
             AppTask(
               type: SurveyUserTask.SURVEY_TYPE,
-              title: surveys.ecologicalDa.title,
-              description: surveys.ecologicalDa.description,
-              minutesToComplete: surveys.ecologicalDa.minutesToComplete,
-              expire: surveys.ecologicalDa.expire,
+              title: surveys.trustScale.title,
+              description: surveys.trustScale.description,
+              minutesToComplete: surveys.trustScale.minutesToComplete,
+              expire: surveys.trustScale.expire,
             )..measures.add(RPTaskMeasure(
                 type: MeasureType(NameSpace.CARP, SurveySamplingPackage.SURVEY),
-                name: surveys.ecologicalDa.title,
+                name: surveys.trustScale.title,
                 enabled: true,
-                surveyTask: surveys.ecologicalDa.survey,
+                surveyTask: surveys.trustScale.survey,
+              )))
+
+        // collect App UX - triggers on end W1, mid W4, start W8 - TODO: use scheduled trigger
+        ..addTriggerTask(
+            ImmediateTrigger(),
+            AppTask(
+              type: SurveyUserTask.SURVEY_TYPE,
+              title: surveys.appUX.title,
+              description: surveys.appUX.description,
+              minutesToComplete: surveys.appUX.minutesToComplete,
+              expire: surveys.appUX.expire,
+            )..measures.add(RPTaskMeasure(
+                type: MeasureType(NameSpace.CARP, SurveySamplingPackage.SURVEY),
+                name: surveys.appUX.title,
+                enabled: true,
+                surveyTask: surveys.appUX.survey,
+              )))
+
+        // collect wristband UX - triggers weekly
+        ..addTriggerTask(
+            RecurrentScheduledTrigger(
+                type: RecurrentType.weekly, dayOfWeek: DateTime.sunday, time: Time(hour: 8, minute: 00)),
+            AppTask(
+              type: SurveyUserTask.SURVEY_TYPE,
+              title: surveys.controlParents.title,
+              description: surveys.controlParents.description,
+              minutesToComplete: surveys.controlParents.minutesToComplete,
+              expire: surveys.controlParents.expire,
+            )..measures.add(RPTaskMeasure(
+                type: MeasureType(NameSpace.CARP, SurveySamplingPackage.SURVEY),
+                name: surveys.controlParents.title,
+                enabled: true,
+                surveyTask: surveys.controlParents.survey,
+              )))
+
+        // collect how are you feeling - triggers randomly  - TODO: use random trigger
+        ..addTriggerTask(
+            ImmediateTrigger(),
+            AppTask(
+              type: SurveyUserTask.SURVEY_TYPE,
+              title: surveys.ecologicalParents.title,
+              description: surveys.ecologicalParents.description,
+              minutesToComplete: surveys.ecologicalParents.minutesToComplete,
+              expire: surveys.ecologicalParents.expire,
+            )..measures.add(RPTaskMeasure(
+                type: MeasureType(NameSpace.CARP, SurveySamplingPackage.SURVEY),
+                name: surveys.ecologicalParents.title,
+                enabled: true,
+                surveyTask: surveys.ecologicalParents.survey,
+              )))
+
+        // Audio task: Wristband UX - TODO: TRIGGER AFTER CHECKING RESULT FROM SURVEY
+        ..addTriggerTask(
+            PeriodicTrigger(period: Duration(days: 7)),
+            AppTask(
+              type: AudioUserTask.AUDIO_TYPE,
+              title: "User Experience: wristband",
+              description: 'Record yourself talking about how the wristband makes you feel',
+              instructions: 'Tell us about your experience wearing the wristband',
+              minutesToComplete: 5,
+            )..measures.add(AudioMeasure(
+                type: MeasureType(NameSpace.CARP, AudioSamplingPackage.AUDIO),
+                name: "UX_wristband",
+                studyId: studyId,
               )));
     }
 
     return _study;
   }
 
+  // GENERIC STUDY FOR TESTING
   Future<Study> _getWristWatchStudy(String studyId) async {
     if (_study == null) {
       _study = Study(id: studyId, userId: await settings.userId)
@@ -511,7 +492,7 @@ class LocalStudyManager implements StudyManager {
         ..description =
             "Hormone levels, measured in saliva, and physiological indicators of stress from children and parents are used as input to privacy preserving signal processing and machine learning algorithms. Signal processing will be used to extract acoustic and physiological features of importance for therapeutic response. The study includes children with an OCD diagnosis and children without a psychiatric diagnosis and their parents."
         ..dataEndPoint = getDataEndpoint(DataEndPointTypes.FILE)
-        // TODO: TRIGGER AFTER CHECKING RESULT FROM SURVEY
+        // Audio task: Wristband UX - TODO: TRIGGER AFTER CHECKING RESULT FROM SURVEY
         ..addTriggerTask(
             PeriodicTrigger(period: Duration(days: 7)),
             AppTask(
@@ -525,7 +506,7 @@ class LocalStudyManager implements StudyManager {
                 name: "UX_wristband",
                 studyId: studyId,
               )))
-        // TODO: TRIGGER AFTER CHECKING RESULT FROM SURVEY
+        // Audio task: Exposure exercise - TODO: TRIGGER AFTER CHECKING RESULT FROM SURVEY
         ..addTriggerTask(
             PeriodicTrigger(period: Duration(days: 7)),
             AppTask(
@@ -549,59 +530,59 @@ class LocalStudyManager implements StudyManager {
                 type: RecurrentType.weekly, dayOfWeek: DateTime.sunday, time: Time(hour: 8, minute: 00)),
             AppTask(
               type: SurveyUserTask.SURVEY_TYPE,
-              title: surveys.controlDa.title,
-              description: surveys.controlDa.description,
-              minutesToComplete: surveys.controlDa.minutesToComplete,
-              expire: surveys.controlDa.expire,
+              title: surveys.control.title,
+              description: surveys.control.description,
+              minutesToComplete: surveys.control.minutesToComplete,
+              expire: surveys.control.expire,
             )..measures.add(RPTaskMeasure(
                 type: MeasureType(NameSpace.CARP, SurveySamplingPackage.SURVEY),
-                name: surveys.controlDa.title,
+                name: surveys.control.title,
                 enabled: true,
-                surveyTask: surveys.controlDa.survey,
+                surveyTask: surveys.control.survey,
               )))
         ..addTriggerTask(
             PeriodicTrigger(period: Duration(days: 1)),
             AppTask(
               type: SurveyUserTask.SURVEY_TYPE,
-              title: surveys.controlParentsDa.title,
-              description: surveys.controlParentsDa.description,
-              minutesToComplete: surveys.controlParentsDa.minutesToComplete,
-              expire: surveys.controlParentsDa.expire,
+              title: surveys.controlParents.title,
+              description: surveys.controlParents.description,
+              minutesToComplete: surveys.controlParents.minutesToComplete,
+              expire: surveys.controlParents.expire,
             )..measures.add(RPTaskMeasure(
                 type: MeasureType(NameSpace.CARP, SurveySamplingPackage.SURVEY),
-                name: surveys.controlParentsDa.title,
+                name: surveys.controlParents.title,
                 enabled: true,
-                surveyTask: surveys.controlParentsDa.survey,
+                surveyTask: surveys.controlParents.survey,
               )))
         ..addTriggerTask(
             RecurrentScheduledTrigger(
                 type: RecurrentType.weekly, dayOfWeek: DateTime.sunday, time: Time(hour: 8, minute: 00)),
             AppTask(
               type: SurveyUserTask.SURVEY_TYPE,
-              title: surveys.patientDa.title,
-              description: surveys.patientDa.description,
-              minutesToComplete: surveys.patientDa.minutesToComplete,
-              expire: surveys.patientDa.expire,
+              title: surveys.patient.title,
+              description: surveys.patient.description,
+              minutesToComplete: surveys.patient.minutesToComplete,
+              expire: surveys.patient.expire,
             )..measures.add(RPTaskMeasure(
                 type: MeasureType(NameSpace.CARP, SurveySamplingPackage.SURVEY),
-                name: surveys.patientDa.title,
+                name: surveys.patient.title,
                 enabled: true,
-                surveyTask: surveys.patientDa.survey,
+                surveyTask: surveys.patient.survey,
               )))
         ..addTriggerTask(
             RecurrentScheduledTrigger(
                 type: RecurrentType.weekly, dayOfWeek: DateTime.sunday, time: Time(hour: 8, minute: 00)),
             AppTask(
               type: SurveyUserTask.SURVEY_TYPE,
-              title: surveys.patientParentsDa.title,
-              description: surveys.patientParentsDa.description,
-              minutesToComplete: surveys.patientParentsDa.minutesToComplete,
-              expire: surveys.patientParentsDa.expire,
+              title: surveys.patientParents.title,
+              description: surveys.patientParents.description,
+              minutesToComplete: surveys.patientParents.minutesToComplete,
+              expire: surveys.patientParents.expire,
             )..measures.add(RPTaskMeasure(
                 type: MeasureType(NameSpace.CARP, SurveySamplingPackage.SURVEY),
-                name: surveys.patientParentsDa.title,
+                name: surveys.patientParents.title,
                 enabled: true,
-                surveyTask: surveys.patientParentsDa.survey,
+                surveyTask: surveys.patientParents.survey,
               )))
 
         /// EXPOSURE at least 1/day
@@ -609,15 +590,15 @@ class LocalStudyManager implements StudyManager {
             PeriodicTrigger(period: Duration(minutes: 5)),
             AppTask(
               type: SurveyUserTask.SURVEY_TYPE,
-              title: surveys.exposureDa.title,
-              description: surveys.exposureDa.description,
-              minutesToComplete: surveys.exposureDa.minutesToComplete,
-              expire: surveys.exposureDa.expire,
+              title: surveys.exposure.title,
+              description: surveys.exposure.description,
+              minutesToComplete: surveys.exposure.minutesToComplete,
+              expire: surveys.exposure.expire,
             )..measures.add(RPTaskMeasure(
                 type: MeasureType(NameSpace.CARP, SurveySamplingPackage.SURVEY),
-                name: surveys.exposureDa.title,
+                name: surveys.exposure.title,
                 enabled: true,
-                surveyTask: surveys.exposureDa.survey,
+                surveyTask: surveys.exposure.survey,
               )))
         ..addTriggerTask(
             RandomRecurrentTrigger(
@@ -627,15 +608,15 @@ class LocalStudyManager implements StudyManager {
                 maxNumberOfSampling: 3),
             AppTask(
               type: SurveyUserTask.SURVEY_TYPE,
-              title: surveys.ecologicalDa.title,
-              description: surveys.ecologicalDa.description,
-              minutesToComplete: surveys.ecologicalDa.minutesToComplete,
-              expire: surveys.ecologicalDa.expire,
+              title: surveys.ecological.title,
+              description: surveys.ecological.description,
+              minutesToComplete: surveys.ecological.minutesToComplete,
+              expire: surveys.ecological.expire,
             )..measures.add(RPTaskMeasure(
                 type: MeasureType(NameSpace.CARP, SurveySamplingPackage.SURVEY),
-                name: surveys.ecologicalDa.title,
+                name: surveys.ecological.title,
                 enabled: true,
-                surveyTask: surveys.ecologicalDa.survey,
+                surveyTask: surveys.ecological.survey,
               )))
 
         /// UX APP- TODO get datetimes for end of week 1, half of week 4 and beginning of week 8, create one for each

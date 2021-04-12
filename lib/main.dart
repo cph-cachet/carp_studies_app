@@ -5,6 +5,7 @@ import 'dart:math';
 import 'dart:convert';
 
 import 'package:carp_mobile_sensing/carp_mobile_sensing.dart';
+import 'package:carp_study_app/data/random_recurrent_trigger.dart';
 import 'package:carp_webservices/carp_service/carp_service.dart';
 import 'package:carp_webservices/carp_auth/carp_auth.dart';
 import 'package:carp_webservices/carp_domain/carp_domain.dart';
@@ -28,7 +29,8 @@ import 'package:expandable/expandable.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:intl/intl.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:json_annotation/json_annotation.dart';
+
+//import 'package:json_annotation/json_annotation.dart';
 
 part 'app.dart';
 part 'first_screen.dart';
@@ -38,7 +40,6 @@ part 'data/carp_backend.dart';
 part 'data/study_manager.dart';
 part 'data/surveys.dart';
 part 'data/message_manager.dart';
-part 'data/random_recurrent_trigger.dart';
 
 part 'models/data_model.dart';
 part 'models/tasklist_page_model.dart';
@@ -59,6 +60,7 @@ part 'ui/pages/contact_page.dart';
 part 'ui/pages/profile_page.dart';
 part 'ui/pages/informed_consent_page.dart';
 part 'ui/pages/audio_task_page.dart';
+part 'ui/pages/timer_task_page.dart';
 
 part 'ui/widgets/study_banner.dart';
 part 'ui/widgets/card_header.dart';

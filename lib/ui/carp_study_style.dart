@@ -3,7 +3,8 @@ import 'package:charts_flutter/flutter.dart' as charts;
 
 ThemeData carpStudyTheme = ThemeData.light().copyWith(
   primaryColor: Color(0xFF206FA2),
-  accentColor: Color(0xFFF1F9FF),
+  accentColor: Color(0xffcce8fa),
+  hoverColor: Color(0xFFF1F9FF),
   textTheme:
       ThemeData.light().textTheme.apply(fontFamily: 'MuseoSans', bodyColor: Color.fromRGBO(112, 112, 112, 1)),
 );
@@ -100,3 +101,5 @@ TextStyle audioInstructionStyle = TextStyle(fontSize: 16, fontWeight: FontWeight
 
 TextStyle profileTitleStyle = TextStyle(fontSize: 20, fontWeight: FontWeight.w400);
 TextStyle profileActionStyle = TextStyle(fontSize: 20, fontWeight: FontWeight.w600);
+
+TextStyle timerStyle = TextStyle(fontSize: 36, fontWeight: FontWeight.w600);

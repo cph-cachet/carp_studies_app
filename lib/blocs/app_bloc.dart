@@ -3,14 +3,26 @@ part of carp_study_app;
 class AppBLoC {
   static const INFORMED_CONSENT_ACCEPTED_KEY = 'informed_consent_accepted';
 
-  final CARPBackend _backend = CARPBackend();
+  CAMSMasterDeviceDeployment _deployment;
+  String _studyDeploymentId;
   CARPBackend get backend => _backend;
   final CarpStydyAppDataModel _data = CarpStydyAppDataModel();
-  Study _study;
-  StudyController controller;
+  StudyDeploymentStatus _status;
+  StudyProtocol _protocol;
+  StudyDeploymentController _controller;
   DateTime _studyStartTimestamp;
-  DateTime get studyStartTimestamp => _studyStartTimestamp;
   List<Message> _messages;
+
+  String get studyDeploymentId => _studyDeploymentId;
+  CAMSMasterDeviceDeployment get deployment => _deployment;
+
+  /// Get the latest status of the study deployment.
+  StudyDeploymentStatus get status => _status;
+
+  final CARPBackend _backend = CARPBackend();
+  StudyProtocolManager manager;
+
+  DateTime get studyStartTimestamp => _studyStartTimestamp;
   List<Message> get messages => _messages;
 
   /// The overall data model for this app
@@ -33,6 +45,16 @@ class AppBLoC {
 
     // register the special-purpose audio user task factory
     AppTaskController().registerUserTaskFactory(AudioUserTaskFactory());
+
+    // first we will load the protcol locally
+    manager = LocalStudyProtocolManager();
+    // and use a dummy  studyDeploymentId
+    _studyDeploymentId = '1234';
+
+    // ... but later we will load it from CARP
+    // used for downloading the study protocol from the CARP server
+    // TODO - obtain deployment id from an invitaiton
+    // manager = CARPStudyProtocolManager();
   }
 
   Future<void> init() async {
@@ -42,42 +64,41 @@ class AppBLoC {
     info('$runtimeType initialized');
   }
 
+  /// Initialize and setup sensing.
   Future<void> initializeSensing() async {
-    // Get the study from the study manager
-    _study = await backend.getStudy();
+    // get the protocol from the study protocol manager based on the
+    // study deployment id
+    _protocol = await manager.getStudyProtocol(studyDeploymentId);
 
-    // Create a Study Controller that can manage this study and initialize it.
-    controller = StudyController(_study);
+    // deploy this protocol using the on-phone deployment service
+    // reuse the study deployment id, so we have the same id on the phone deployment
+    _status = await CAMSDeploymentService().createStudyDeployment(
+      _protocol,
+      studyDeploymentId,
+    );
+
+    // initialize the local device controller with the deployment status,
+    // which contains the list of needed devices
+    await DeviceController().initialize(_status, CAMSDeploymentService());
+
+    // now we're ready to get the device deployment configuration for this phone
+    _deployment = await CAMSDeploymentService()
+        .getDeviceDeployment(status.studyDeploymentId);
+
+    // create a study deployment controller that can manage this deployment
+    _controller = StudyDeploymentController(
+      deployment,
+      debugLevel: DebugLevel.DEBUG,
+      privacySchemaName: PrivacySchema.DEFAULT,
+    );
+
     data.init(controller);
-    await controller.initialize();
 
-    // This show how an app can listen to user task events.
-    // Is not used right now.
-    AppTaskController().userTaskEvents.listen((event) {
-      switch (event.state) {
-        case UserTaskState.initialized:
-          //
-          break;
-        case UserTaskState.enqueued:
-          //
-          break;
-        case UserTaskState.dequeued:
-          //
-          break;
-        case UserTaskState.started:
-          //
-          break;
-        case UserTaskState.canceled:
-          //
-          break;
-        case UserTaskState.done:
-          //
-          break;
-        case UserTaskState.undefined:
-          //
-          break;
-      }
-    });
+    // initialize the controller
+    await _controller.initialize();
+
+    // listening on the data stream and print them as json to the debug console
+    _controller.data.listen((data) => print(toJsonString(data)));
   }
 
   Future<void> leaveStudy() async {

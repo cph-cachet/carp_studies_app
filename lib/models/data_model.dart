@@ -2,13 +2,13 @@ part of carp_study_app;
 
 /// An abstract data model used for all other data models in the app.
 abstract class DataModel {
-  StudyController _controller;
+  StudyDeploymentController _controller;
 
-  StudyController get controller => _controller;
+  StudyDeploymentController get controller => _controller;
   DataModel();
 
   /// Call to initialize this data model
-  void init(StudyController ctrl) {
+  void init(StudyDeploymentController ctrl) {
     this._controller = ctrl;
   }
 }
@@ -26,7 +26,7 @@ class CarpStydyAppDataModel extends DataModel {
   StudyPageModel get studyPageModel => _studyPageModel;
   TaskListPageModel get taskListPageModel => _taskListPageModel;
 
-  void init(StudyController controller) {
+  void init(StudyDeploymentController controller) {
     super.init(controller);
     _dataPageModel.init(controller);
     _studyPageModel.init(controller);

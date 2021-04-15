@@ -29,6 +29,8 @@ import 'package:expandable/expandable.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:intl/intl.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:timer_count_down/timer_controller.dart';
+import 'package:timer_count_down/timer_count_down.dart';
 
 //import 'package:json_annotation/json_annotation.dart';
 
@@ -61,6 +63,7 @@ part 'ui/pages/profile_page.dart';
 part 'ui/pages/informed_consent_page.dart';
 part 'ui/pages/audio_task_page.dart';
 part 'ui/pages/timer_task_page.dart';
+part 'ui/pages/question.dart';
 
 part 'ui/widgets/study_banner.dart';
 part 'ui/widgets/card_header.dart';

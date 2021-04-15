@@ -13,6 +13,12 @@ class LocalMessageManager implements MessageManager {
   //TODO - messages should be fetched on a regular basis - daily / hourly?
   Future<List<Message>> get messages async => [
         Message(
+            type: MessageType.announcement,
+            title: 'Study overview',
+            subTitle: '',
+            message: 'Click here to get a preview of the WristAngel Study',
+            url: 'https://docdro.id/rk21nkz'),
+        Message(
           type: MessageType.announcement,
           title: 'New update coming soon',
           subTitle: '',

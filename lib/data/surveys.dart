@@ -44,6 +44,9 @@ class _Surveys {
 
   Survey _trustScale = _TrustScaleSurvey();
   Survey get trustScale => _trustScale;
+
+  Survey _timedExposure = _TimedExposureSurvey();
+  Survey get timedExposure => _timedExposure;
 }
 
 abstract class Survey {
@@ -61,6 +64,32 @@ abstract class Survey {
 
   /// The survey to fill out.
   RPTask get survey;
+}
+
+class _TimedExposureSurvey implements Survey {
+  String get title => "Weekly exposure and response prevention";
+
+  String get description => 'Describe the obsession and/or the compulsion you are working on';
+
+  Duration get expire => const Duration(days: 7);
+
+  int get minutesToComplete => 10; // TODO: review time
+
+  RPImageChoiceAnswerFormat _imageChoiceAnswerFormat = RPImageChoiceAnswerFormat.withParams([
+    RPImageChoice.withParams(Image.asset('assets/icons/very-sad.png'), 0, "Unbearable"),
+    RPImageChoice.withParams(Image.asset('assets/icons/sad.png'), 0, "Very great discomfort"),
+    RPImageChoice.withParams(Image.asset('assets/icons/ok.png'), 0, "Quite a lot of discomfort"),
+    RPImageChoice.withParams(Image.asset('assets/icons/happy.png'), 0, "A certain discomfort"),
+    RPImageChoice.withParams(Image.asset('assets/icons/very-happy.png'), 0, "Calm"),
+  ]);
+
+  RPTask get survey => RPOrderedTask("Timed_Exposure_exercise", [
+        RPQuestionStep.withAnswerFormat(
+          "question1",
+          "How scared or upset do you feel?",
+          _imageChoiceAnswerFormat,
+        ),
+      ]);
 }
 
 class _TrustScaleSurvey implements Survey {

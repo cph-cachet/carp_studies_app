@@ -50,7 +50,7 @@ class _StudyPageState extends State<StudyPage> {
       clipBehavior: Clip.antiAliasWithSaveLayer,
       child: InkWell(
         onTap: () async {
-          if (await canLaunch(message.url)) {
+          if (message.url != null) if (await canLaunch(message.url)) {
             await launch(message.url);
           } else {
             throw 'Could not launch $message.url';

@@ -5,12 +5,10 @@ class StudyPageModel extends DataModel {
   String get description => bloc.study.description;
   Image get image => Image.asset('assets/images/study.png');
   String get userID => bloc.study.userId;
-  String get affiliation =>
-      bloc.study.pi.affiliation ?? 'Copenhagen Center for Health Technology';
+  String get affiliation => bloc.study.pi.affiliation ?? 'Copenhagen Center for Health Technology';
 
   /// Events on the state of the study executor
-  Stream<ProbeState> get studyExecutorStateEvents =>
-      bloc.controller.executor.stateEvents;
+  Stream<ProbeState> get studyExecutorStateEvents => bloc.controller.executor.stateEvents;
 
   /// Current state of the study executor (e.g., resumed, paused, ...)
   ProbeState get studyState => bloc.controller.executor.state;
@@ -81,8 +79,7 @@ class Message {
   /// Image get image => Image.asset('assets/images/$type.png');
   ///
   /// Only articles have images, get it randomly
-  Image get image => Image.asset(
-      'assets/images/article_' + Random(10).nextInt(3).toString() + '.png',
+  Image get image => Image.asset('assets/images/article_' + Random(10).nextInt(3).toString() + '.png',
       fit: BoxFit.fitHeight);
 }
 

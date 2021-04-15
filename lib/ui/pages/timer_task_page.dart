@@ -6,6 +6,8 @@ class TimerTaskPage extends StatefulWidget {
 }
 
 class _TimerTaskPageState extends State<TimerTaskPage> {
+  final CountdownController _controller = new CountdownController();
+
   int currentStep = 0;
   List<int> steps = [0, 1, 2, 3, 4, 5, 6, 7];
 
@@ -45,7 +47,7 @@ class _TimerTaskPageState extends State<TimerTaskPage> {
       case 1:
         return _question();
       case 2:
-        startTimeout();
+        // startTimeout();
         return _timer();
       case 3:
         return _question();
@@ -138,46 +140,54 @@ class _TimerTaskPageState extends State<TimerTaskPage> {
         SizedBox(height: 35),
         Image(image: AssetImage('assets/images/timer.png'), width: 220, height: 220),
         SizedBox(height: 20),
-        Text(timerText, style: timerStyle.copyWith(color: Theme.of(context).primaryColor)),
+        _countdown(timerMaxSeconds)
+        // Text(timerText, style: timerStyle.copyWith(color: Theme.of(context).primaryColor)),
       ],
     );
   }
 
-  Widget _question() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: <Widget>[
-        SizedBox(height: 35),
-        _header(),
-        SizedBox(height: 35),
-        Text('THIS IS A QUESTION', style: timerStyle.copyWith(color: Theme.of(context).primaryColor)),
-        Expanded(
-          child: Align(
-            alignment: FractionalOffset.bottomRight,
-            child: Padding(
-              padding: EdgeInsets.only(bottom: 10.0),
-              child: ButtonTheme(
-                minWidth: 70,
-                child: FlatButton(
-                    color: Theme.of(context).primaryColor,
-                    padding: EdgeInsets.all(10.0),
-                    child: Text(
-                      "NEXT",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        currentStep += 1;
-                      });
-                      print(currentStep);
-                      _stepSelector(currentStep);
-                    }),
-              ),
-            ),
+  Widget _countdown(int seconds) {
+    return Countdown(
+      controller: _controller,
+      seconds: seconds,
+      build: (_, double time) {
+        int auxMinutes = (time / 60).truncate();
+        String auxSeconds = (time % 60).toInt().toString();
+        return Text(
+          '$auxMinutes:$auxSeconds',
+          style: TextStyle(
+            fontSize: 100,
           ),
-        )
-      ],
+        );
+      },
+      interval: Duration(milliseconds: 100),
+      onFinished: () {
+        print('Timer is done!');
+        setState(() {
+          currentStep += 1;
+        });
+        _stepSelector(currentStep);
+      },
     );
+  }
+
+  void updateResult(RPTaskResult result) {
+    // Do whatever you want with the result
+    // In this case we are just printing the result's keys
+    print(result.results.keys);
+  }
+
+  Widget _question() {
+    bool flag = false;
+    if (flag == false) {
+      return SurveyTaskRoute();
+    }
+    setState(() {
+      currentStep += 1;
+    });
+    _stepSelector(currentStep);
+    flag = true;
+    return SizedBox.shrink();
   }
 
   Widget _end() {

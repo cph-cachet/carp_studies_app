@@ -36,12 +36,12 @@ class DataVisualizationPage extends StatelessWidget {
     widgets.add(MeasuresCardWidget(model.measuresCardDataModel));
 
     // check which measures are in the study
-    model.controller.study.measures.forEach((measure) {
-      if (measure.type.name == SensorSamplingPackage.PEDOMETER)
+    model.controller.deployment.measures.forEach((measure) {
+      if (measure.type == SensorSamplingPackage.PEDOMETER)
         widgets.add(StepsOuterStatefulWidget(model.stepsCardDataModel));
-      if (measure.type.name == ContextSamplingPackage.MOBILITY)
+      if (measure.type == ContextSamplingPackage.MOBILITY)
         widgets.add(MobilityOuterStatefulWidget(model.mobilityCardDataModel));
-      if (measure.type.name == ContextSamplingPackage.ACTIVITY)
+      if (measure.type == ContextSamplingPackage.ACTIVITY)
         widgets.add(ActivityOuterStatefulWidget(model.activityCardDataModel));
     });
 

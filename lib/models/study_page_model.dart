@@ -1,12 +1,13 @@
 part of carp_study_app;
 
 class StudyPageModel extends DataModel {
-  String get name => bloc.study.name;
-  String get description => bloc.study.description;
+  String get name => bloc.deployment.name;
+  String get description => bloc.deployment.protocolDescription.description;
   Image get image => Image.asset('assets/images/study.png');
-  String get userID => bloc.study.userId;
+  String get userID => bloc.deployment.userId;
   String get affiliation =>
-      bloc.study.pi.affiliation ?? 'Copenhagen Center for Health Technology';
+      bloc.deployment.owner.affiliation ??
+      'Copenhagen Center for Health Technology';
 
   /// Events on the state of the study executor
   Stream<ProbeState> get studyExecutorStateEvents =>
@@ -15,8 +16,8 @@ class StudyPageModel extends DataModel {
   /// Current state of the study executor (e.g., resumed, paused, ...)
   ProbeState get studyState => bloc.controller.executor.state;
 
-  /// Get all sesing events (i.e. all [Datum] objects being collected).
-  Stream<Datum> get samplingEvents => bloc.controller.events;
+  /// Get all sesing events (i.e. all [DataPoint] objects being collected).
+  Stream<DataPoint> get samplingEvents => bloc.controller.data;
 
   /// The total sampling size so far since this study was started.
   int get samplingSize => bloc.controller.samplingSize;
@@ -26,7 +27,7 @@ class StudyPageModel extends DataModel {
 
   StudyPageModel();
 
-  void init(StudyController controller) {
+  void init(StudyDeploymentController controller) {
     super.init(controller);
   }
 }

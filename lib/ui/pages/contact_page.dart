@@ -54,7 +54,7 @@ class _ContactPageState extends State<ContactPage> {
   }
 
   Widget _entryField(String title, TextEditingController controllerName,
-      {bool isPassword = false, int maxLines = null}) {
+      {bool isPassword = false, int maxLines}) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
       child: Column(

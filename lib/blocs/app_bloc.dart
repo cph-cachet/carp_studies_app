@@ -4,13 +4,22 @@ class AppBLoC {
   static const INFORMED_CONSENT_ACCEPTED_KEY = 'informed_consent_accepted';
 
   final CARPBackend _backend = CARPBackend();
-  CARPBackend get backend => _backend;
+  CAMSMasterDeviceDeployment _deployment;
   final CarpStydyAppDataModel _data = CarpStydyAppDataModel();
-  Study _study;
-  StudyController controller;
+  StudyDeploymentStatus _status;
+  StudyProtocol _protocol;
   DateTime _studyStartTimestamp;
-  DateTime get studyStartTimestamp => _studyStartTimestamp;
   List<Message> _messages;
+
+  CARPBackend get backend => _backend;
+  StudyDeploymentController controller;
+  String get studyDeploymentId => backend?.studyDeploymentId;
+  CAMSMasterDeviceDeployment get deployment => _deployment;
+
+  /// Get the latest status of the study deployment.
+  StudyDeploymentStatus get status => _status;
+
+  DateTime get studyStartTimestamp => _studyStartTimestamp;
   List<Message> get messages => _messages;
 
   /// The overall data model for this app
@@ -42,42 +51,43 @@ class AppBLoC {
     info('$runtimeType initialized');
   }
 
+  /// Initialize and setup sensing.
   Future<void> initializeSensing() async {
-    // Get the study from the study manager
-    _study = await backend.getStudy();
+    // get the protocol from the study protocol manager based on the
+    // study deployment id
+    _protocol = await backend.getStudyProtocol();
 
-    // Create a Study Controller that can manage this study and initialize it.
-    controller = StudyController(_study);
+    // deploy this protocol using the on-phone deployment service
+    // reuse the study deployment id, so we have the same id on the phone deployment
+    _status = await CAMSDeploymentService().createStudyDeployment(
+      _protocol,
+      studyDeploymentId,
+    );
+
+    // initialize the local device controller with the deployment status,
+    // which contains the list of needed devices
+    await DeviceController().initialize(_status, CAMSDeploymentService());
+
+    // now we're ready to get the device deployment configuration for this phone
+    _deployment = await CAMSDeploymentService()
+        .getDeviceDeployment(status.studyDeploymentId);
+
+    // set the user id
+    // TODO : check wheter we want this to be part of the data upload - anonymous?
+    _deployment.userId = CarpService().currentUser.username;
+
+    // create a study deployment controller that can manage this deployment
+    controller = StudyDeploymentController(
+      deployment,
+      debugLevel: DebugLevel.DEBUG,
+      // privacySchemaName: PrivacySchema.DEFAULT,
+    );
+
+    // initialize thee data models
     data.init(controller);
-    await controller.initialize();
 
-    // This show how an app can listen to user task events.
-    // Is not used right now.
-    AppTaskController().userTaskEvents.listen((event) {
-      switch (event.state) {
-        case UserTaskState.initialized:
-          //
-          break;
-        case UserTaskState.enqueued:
-          //
-          break;
-        case UserTaskState.dequeued:
-          //
-          break;
-        case UserTaskState.started:
-          //
-          break;
-        case UserTaskState.canceled:
-          //
-          break;
-        case UserTaskState.done:
-          //
-          break;
-        case UserTaskState.undefined:
-          //
-          break;
-      }
-    });
+    // initialize the controller
+    await controller.initialize();
   }
 
   Future<void> leaveStudy() async {
@@ -106,8 +116,8 @@ class AppBLoC {
   set informedConsentAccepted(bool accepted) =>
       settings.preferences.setBool(_informedConsentAcceptedKey, accepted);
 
-  /// The currently running [Study].
-  Study get study => _study;
+  /// The [StudyProtocol] of the currently running study.
+  StudyProtocol get protocol => _protocol;
 
   /// The signed in user. Returns null if no user is signed in.
   CarpUser get user => backend?.user;
@@ -126,8 +136,8 @@ class AppBLoC {
     controller.resume();
     _studyStartTimestamp = await settings.studyStartTimestamp;
 
-    // listening on all data events from the study and print it (for debugging purpose).
-    controller.events.forEach(print);
+    // listening on the data stream and print them as json to the debug console
+    controller.data.listen((data) => print(toJsonString(data)));
   }
 
   // Pause sensing.
@@ -140,14 +150,15 @@ class AppBLoC {
   /// Once sensing is stopped, it cannot be (re)started.
   void stop() {
     controller.stop();
-    _study = null;
+    _protocol = null;
   }
 
   // Dispose the entire sensing.
   void dispose() => stop();
 
   /// Add a [Datum] object to the stream of events.
-  void addDatum(Datum datum) => controller.executor.addDatum(datum);
+  void addDatum(Datum datum) =>
+      controller.executor.addDataPoint(DataPoint.fromData(datum));
 
   /// Add a error to the stream of events.
   void addError(Object error, [StackTrace stacktrace]) =>

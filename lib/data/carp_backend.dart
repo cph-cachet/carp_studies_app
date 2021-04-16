@@ -28,7 +28,7 @@ class CARPBackend {
   OAuthToken _oauthToken;
   String _username;
   ActiveParticipationInvitation _invitation;
-  StudyManager studyManager = LocalStudyManager();
+  StudyProtocolManager studyProtocolManager;
   MessageManager messageManager = LocalMessageManager();
 
   CarpApp get app => _app;
@@ -86,8 +86,16 @@ class CARPBackend {
   factory CARPBackend() => _instance;
 
   Future<void> init() async {
+    // first we will load the protcol locally
+    studyProtocolManager = LocalStudyProtocolManager();
+
+    // ... but later we will load it from CARP
+    // used for downloading the study protocol from the CARP server
+    // TODO - obtain deployment id from an invitaiton
+    // manager = CARPStudyProtocolManager();
+
     // await settings.init();
-    await studyManager.initialize();
+    await studyProtocolManager.initialize();
     await messageManager.init();
 
     _app = CarpApp(
@@ -106,19 +114,26 @@ class CARPBackend {
   /// * else authenticate using the username / password dialogue
   /// * if successful, get the invitation & study
   Future<void> authenticate(BuildContext context) async {
+    info('Authenticating user...');
     if (username != null && oauthToken != null) {
-      await CarpService()
-          .authenticateWithToken(username: username, token: oauthToken);
+      info('Authenticating with saved token - token: $oauthToken');
+      try {
+        await CarpService()
+            .authenticateWithToken(username: username, token: oauthToken);
+      } catch (error) {
+        warning('Authentication with saved token unsuccessful - $error');
+      }
     }
 
-    // if authentication failed
     if (user == null) {
+      info('Authenticating with dialogue - username: $username');
       await CarpService().authenticateWithDialog(context, username: username);
       if (CarpService().authenticated) {
         username = CarpService().currentUser.username;
       }
     }
-    info('User authenticated: $user');
+
+    info('User authenticated - user: $user');
     // saving token on the phone
     oauthToken = user.token;
   }
@@ -137,12 +152,16 @@ class CARPBackend {
     info('Deployment ID: $studyDeploymentId');
   }
 
-  Future<Study> getStudy() async {
-    Study study = await studyManager.getStudy(studyDeploymentId);
-    // make sure to set the right study id (deployment id) and username
-    study.id = studyDeploymentId;
-    study.userId = CarpService().currentUser.username;
-    return study;
+  /// Get the study protocol from the study protocol manager based on the
+  /// current study deployment id
+  Future<StudyProtocol> getStudyProtocol() async {
+    StudyProtocol protocol =
+        await studyProtocolManager.getStudyProtocol(studyDeploymentId);
+
+    // set the study id (deployment id)
+    if (protocol is CAMSStudyProtocol) protocol.studyId = studyDeploymentId;
+
+    return protocol;
   }
 
   Future<ConsentDocument> uploadInformedConsent(RPTaskResult taskResult) async {

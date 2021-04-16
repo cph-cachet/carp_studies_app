@@ -4,11 +4,10 @@ import 'dart:async';
 import 'dart:math';
 import 'dart:convert';
 
+import 'package:carp_core/carp_core.dart';
 import 'package:carp_mobile_sensing/carp_mobile_sensing.dart';
-import 'package:carp_study_app/data/random_recurrent_trigger.dart';
-import 'package:carp_webservices/carp_service/carp_service.dart';
+import 'package:carp_webservices/carp_services/carp_services.dart';
 import 'package:carp_webservices/carp_auth/carp_auth.dart';
-import 'package:carp_webservices/carp_domain/carp_domain.dart';
 import 'package:carp_backend/carp_backend.dart';
 import 'package:carp_audio_package/audio.dart';
 //import 'package:carp_health_package/health_package.dart';
@@ -37,7 +36,7 @@ part 'first_screen.dart';
 part 'blocs/app_bloc.dart';
 
 part 'data/carp_backend.dart';
-part 'data/study_manager.dart';
+part 'data/study_protocol_manager.dart';
 part 'data/surveys.dart';
 part 'data/message_manager.dart';
 

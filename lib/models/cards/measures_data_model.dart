@@ -1,11 +1,10 @@
 part of carp_study_app;
 
 class MeasuresCardDataModel extends DataModel {
-  // StudyController _controller;
   final Map<String, int> _samplingTable = {};
 
-  /// Stream of measures, i.e. [Datum] measures.
-  Stream<Datum> get measureEvents => controller.events;
+  /// Stream of measures, i.e. [DataPoint] measures.
+  Stream<DataPoint> get measureEvents => controller.data;
 
   /// The total sampling size
   int get samplingSize => controller.samplingSize;
@@ -14,19 +13,22 @@ class MeasuresCardDataModel extends DataModel {
   Map<String, int> get samplingTable => _samplingTable;
 
   /// The list of measures
-  List<Measures> get measures =>
-      _samplingTable.entries.map((entry) => Measures(entry.key, entry.value)).toList();
+  List<Measures> get measures => _samplingTable.entries
+      .map((entry) => Measures(entry.key, entry.value))
+      .toList();
 
   MeasuresCardDataModel() : super();
 
-  void init(StudyController controller) {
+  void init(StudyDeploymentController controller) {
     super.init(controller);
 
     // initialize the sampling table
-    controller.study.measures.forEach((measure) => _samplingTable[measure.type.name] = 0);
+    controller.deployment.measures
+        .forEach((measure) => _samplingTable[measure.type.split('.').last] = 0);
 
     // listen to incoming events in order to count the measure types
-    controller.events.listen((datum) => _samplingTable[datum.format.name]++);
+    controller.data.listen(
+        (dataPoint) => _samplingTable[dataPoint.carpHeader.dataFormat.name]++);
   }
 
   String toString() {
@@ -37,7 +39,8 @@ class MeasuresCardDataModel extends DataModel {
 
   // Orders the measures based on the amount of entries to display those with more entries
   void orderedMeasures() {
-    var mapEntries = _samplingTable.entries.toList()..sort((b, a) => a.value.compareTo(b.value));
+    var mapEntries = _samplingTable.entries.toList()
+      ..sort((b, a) => a.value.compareTo(b.value));
     _samplingTable
       ..clear()
       ..addEntries(mapEntries);

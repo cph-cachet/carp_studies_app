@@ -38,7 +38,7 @@ class _MeasuresCardWidgetState extends State<MeasuresCardWidget> {
             children: <Widget>[
               StreamBuilder(
                 stream: widget.model.measureEvents,
-                builder: (context, AsyncSnapshot<Datum> snapshot) {
+                builder: (context, AsyncSnapshot<DataPoint> snapshot) {
                   return Column(
                     children: [
                       Container(

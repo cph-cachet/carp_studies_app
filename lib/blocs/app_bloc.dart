@@ -3,24 +3,21 @@ part of carp_study_app;
 class AppBLoC {
   static const INFORMED_CONSENT_ACCEPTED_KEY = 'informed_consent_accepted';
 
+  final CARPBackend _backend = CARPBackend();
   CAMSMasterDeviceDeployment _deployment;
-  String _studyDeploymentId;
-  CARPBackend get backend => _backend;
   final CarpStydyAppDataModel _data = CarpStydyAppDataModel();
   StudyDeploymentStatus _status;
   StudyProtocol _protocol;
-  StudyDeploymentController _controller;
   DateTime _studyStartTimestamp;
   List<Message> _messages;
 
-  String get studyDeploymentId => _studyDeploymentId;
+  CARPBackend get backend => _backend;
+  StudyDeploymentController controller;
+  String get studyDeploymentId => backend?.studyDeploymentId;
   CAMSMasterDeviceDeployment get deployment => _deployment;
 
   /// Get the latest status of the study deployment.
   StudyDeploymentStatus get status => _status;
-
-  final CARPBackend _backend = CARPBackend();
-  StudyProtocolManager manager;
 
   DateTime get studyStartTimestamp => _studyStartTimestamp;
   List<Message> get messages => _messages;
@@ -45,16 +42,6 @@ class AppBLoC {
 
     // register the special-purpose audio user task factory
     AppTaskController().registerUserTaskFactory(AudioUserTaskFactory());
-
-    // first we will load the protcol locally
-    manager = LocalStudyProtocolManager();
-    // and use a dummy  studyDeploymentId
-    _studyDeploymentId = '1234';
-
-    // ... but later we will load it from CARP
-    // used for downloading the study protocol from the CARP server
-    // TODO - obtain deployment id from an invitaiton
-    // manager = CARPStudyProtocolManager();
   }
 
   Future<void> init() async {
@@ -68,7 +55,7 @@ class AppBLoC {
   Future<void> initializeSensing() async {
     // get the protocol from the study protocol manager based on the
     // study deployment id
-    _protocol = await manager.getStudyProtocol(studyDeploymentId);
+    _protocol = await backend.getStudyProtocol();
 
     // deploy this protocol using the on-phone deployment service
     // reuse the study deployment id, so we have the same id on the phone deployment
@@ -85,20 +72,22 @@ class AppBLoC {
     _deployment = await CAMSDeploymentService()
         .getDeviceDeployment(status.studyDeploymentId);
 
+    // set the user id
+    // TODO : check wheter we want this to be part of the data upload - anonymous?
+    _deployment.userId = CarpService().currentUser.username;
+
     // create a study deployment controller that can manage this deployment
-    _controller = StudyDeploymentController(
+    controller = StudyDeploymentController(
       deployment,
       debugLevel: DebugLevel.DEBUG,
-      privacySchemaName: PrivacySchema.DEFAULT,
+      // privacySchemaName: PrivacySchema.DEFAULT,
     );
 
+    // initialize thee data models
     data.init(controller);
 
     // initialize the controller
-    await _controller.initialize();
-
-    // listening on the data stream and print them as json to the debug console
-    _controller.data.listen((data) => print(toJsonString(data)));
+    await controller.initialize();
   }
 
   Future<void> leaveStudy() async {
@@ -127,8 +116,8 @@ class AppBLoC {
   set informedConsentAccepted(bool accepted) =>
       settings.preferences.setBool(_informedConsentAcceptedKey, accepted);
 
-  /// The currently running [Study].
-  Study get study => _study;
+  /// The [StudyProtocol] of the currently running study.
+  StudyProtocol get protocol => _protocol;
 
   /// The signed in user. Returns null if no user is signed in.
   CarpUser get user => backend?.user;
@@ -147,8 +136,8 @@ class AppBLoC {
     controller.resume();
     _studyStartTimestamp = await settings.studyStartTimestamp;
 
-    // listening on all data events from the study and print it (for debugging purpose).
-    controller.events.forEach(print);
+    // listening on the data stream and print them as json to the debug console
+    controller.data.listen((data) => print(toJsonString(data)));
   }
 
   // Pause sensing.
@@ -161,14 +150,15 @@ class AppBLoC {
   /// Once sensing is stopped, it cannot be (re)started.
   void stop() {
     controller.stop();
-    _study = null;
+    _protocol = null;
   }
 
   // Dispose the entire sensing.
   void dispose() => stop();
 
   /// Add a [Datum] object to the stream of events.
-  void addDatum(Datum datum) => controller.executor.addDatum(datum);
+  void addDatum(Datum datum) =>
+      controller.executor.addDataPoint(DataPoint.fromData(datum));
 
   /// Add a error to the stream of events.
   void addError(Object error, [StackTrace stacktrace]) =>

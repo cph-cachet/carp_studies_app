@@ -20,7 +20,7 @@ class TaskListPageModel extends DataModel {
       .where((task) => task.state == UserTaskState.done)
       .length;
 
-  void init(StudyController controller) {
+  void init(StudyDeploymentController controller) {
     super.init(controller);
   }
 }

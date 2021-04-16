@@ -9,13 +9,13 @@ class StudyCard extends StatelessWidget {
 
     String description() =>
         '${studyPageModel.description ?? locale.translate('No description available.')}\n\n'
-        '${locale.translate('The title of the study is')}: \"${bloc.study.title}\".\n'
-        '${locale.translate('The purpose of this study is')}: \"${bloc.study.purpose}\".\n\n'
+        '${locale.translate('The title of the study is')}: \"${bloc.deployment.protocolDescription.title}\".\n'
+        '${locale.translate('The purpose of this study is')}: \"${bloc.deployment.protocolDescription.purpose}\".\n\n'
         '${locale.translate('The Principle Investigator (PI) is')}:\n'
-        '${bloc.study.pi.name}, ${bloc.study.pi.title}\n\n'
+        '${bloc.deployment.owner.name}, ${bloc.deployment.owner.title}\n\n'
         //'${bloc.study.pi.affiliation}\n'
-        '${bloc.study.pi.address}\n'
-        '${bloc.study.pi.email}\n';
+        '${bloc.deployment.owner.address}\n'
+        '${bloc.deployment.owner.email}\n';
 
     return Card(
       semanticContainer: true,
@@ -40,10 +40,12 @@ class StudyCard extends StatelessWidget {
                 children: [
                   SizedBox(width: 15),
                   Text(studyPageModel.name,
-                      style: aboutCardTitleStyle.copyWith(color: Theme.of(context).primaryColor)),
+                      style: aboutCardTitleStyle.copyWith(
+                          color: Theme.of(context).primaryColor)),
                   SizedBox(width: 15),
                   Text(studyPageModel.affiliation,
-                      style: aboutCardSubtitleStyle.copyWith(color: Theme.of(context).primaryColor)),
+                      style: aboutCardSubtitleStyle.copyWith(
+                          color: Theme.of(context).primaryColor)),
                 ],
               ),
               children: [

@@ -35,6 +35,12 @@ class DataVisualizationPage extends StatelessWidget {
     // always show overall measure stats
     widgets.add(MeasuresCardWidget(model.measuresCardDataModel));
 
+    // always show survey stats
+    widgets.add(SurveysCardWidget(model.surveysCardDataModel));
+
+    // always show audio stats
+    widgets.add(AudioCardWidget(model.audioCardDataModel));
+
     // check which measures are in the study
     model.controller.study.measures.forEach((measure) {
       if (measure.type.name == SensorSamplingPackage.PEDOMETER)

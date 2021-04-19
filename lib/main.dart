@@ -51,6 +51,9 @@ part 'models/cards/activity_data_model.dart';
 part 'models/cards/mobility_data_model.dart';
 part 'models/cards/steps_data_model.dart';
 part 'models/cards/measures_data_model.dart';
+part 'models/cards/surveys_data_model.dart';
+part 'models/cards/audio_data_model.dart';
+
 part 'models/audio_user_task.dart';
 part 'research_package_objects/informed_consent_objects.dart';
 
@@ -73,6 +76,8 @@ part 'ui/cards/steps_card.dart';
 part 'ui/cards/activity_card.dart';
 part 'ui/cards/mobility_card.dart';
 part 'ui/cards/measures_card.dart';
+part 'ui/cards/surveys_card.dart';
+part 'ui/cards/audio_card.dart';
 
 void main() async {
   runApp(CARPStudyApp());

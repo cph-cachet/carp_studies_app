@@ -5,8 +5,8 @@ class LocalStudyManager implements StudyManager {
 
   Future<void> initialize() => null;
 
-  Future<Study> getStudy(String studyId) async => _study ??= await _getPatientParentsWristWatch(
-      studyId); //_getGenericCARPStudy(studyId); // _getWristWatchStudy(studyId);
+  Future<Study> getStudy(String studyId) async => _study ??=
+      await _getPatientWristWatch(studyId); //_getGenericCARPStudy(studyId); // _getWristWatchStudy(studyId);
 
   Future<Study> _getPatientWristWatch(String studyId) async {
     if (_study == null) {
@@ -63,8 +63,7 @@ class LocalStudyManager implements StudyManager {
 
         /// collect exposure exercises - triggers weekly
         ..addTriggerTask(
-            RecurrentScheduledTrigger(
-                type: RecurrentType.weekly, dayOfWeek: DateTime.sunday, time: Time(hour: 8, minute: 00)),
+            ImmediateTrigger(),
             AppTask(
               type: SurveyUserTask.SURVEY_TYPE,
               title: surveys.exposure.title,
@@ -121,7 +120,7 @@ class LocalStudyManager implements StudyManager {
               minutesToComplete: 5,
             )..measures.add(AudioMeasure(
                 type: MeasureType(NameSpace.CARP, AudioSamplingPackage.AUDIO),
-                name: "UX_wristband",
+                name: "User Experience with the Wristband",
                 studyId: studyId,
               )));
     }
@@ -240,7 +239,7 @@ class LocalStudyManager implements StudyManager {
               minutesToComplete: 5,
             )..measures.add(AudioMeasure(
                 type: MeasureType(NameSpace.CARP, AudioSamplingPackage.AUDIO),
-                name: "UX_wristband",
+                name: "User Experience with the Wristband",
                 studyId: studyId,
               )));
     }
@@ -328,7 +327,7 @@ class LocalStudyManager implements StudyManager {
               minutesToComplete: 5,
             )..measures.add(AudioMeasure(
                 type: MeasureType(NameSpace.CARP, AudioSamplingPackage.AUDIO),
-                name: "UX_wristband",
+                name: "User Experience with the Wristband",
                 studyId: studyId,
               )));
     }
@@ -446,7 +445,7 @@ class LocalStudyManager implements StudyManager {
               minutesToComplete: 5,
             )..measures.add(AudioMeasure(
                 type: MeasureType(NameSpace.CARP, AudioSamplingPackage.AUDIO),
-                name: "UX_wristband",
+                name: "User Experience with the Wristband",
                 studyId: studyId,
               )));
     }
@@ -485,7 +484,7 @@ class LocalStudyManager implements StudyManager {
               minutesToComplete: 5,
             )..measures.add(AudioMeasure(
                 type: MeasureType(NameSpace.CARP, AudioSamplingPackage.AUDIO),
-                name: "UX_wristband",
+                name: "User Experience with the Wristband",
                 studyId: studyId,
               )))
         // Audio task: Exposure exercise - TODO: TRIGGER AFTER CHECKING RESULT FROM SURVEY

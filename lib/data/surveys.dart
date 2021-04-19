@@ -232,8 +232,8 @@ class _InformedConsentSurvey implements Survey {
   RPChoiceAnswerFormat choiceAnswerFormat7 = RPChoiceAnswerFormat.withParams(ChoiceAnswerStyle.SingleChoice, [
     RPChoice.withParams("Extremely complicated.", 0),
     RPChoice.withParams("Mostly complicated.", 1),
-    RPChoice.withParams("Mostly  easy to understand.", 2),
-    RPChoice.withParams("Extremely  easy to understand.", 3),
+    RPChoice.withParams("Mostly easy to understand.", 2),
+    RPChoice.withParams("Extremely easy to understand.", 3),
   ]);
   RPChoiceAnswerFormat choiceAnswerFormat8 = RPChoiceAnswerFormat.withParams(ChoiceAnswerStyle.SingleChoice, [
     RPChoice.withParams("Extremely motivating.", 0),

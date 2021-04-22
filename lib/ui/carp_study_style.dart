@@ -78,7 +78,7 @@ TextStyle aboutCardTitleStyle = TextStyle(fontSize: 20, fontWeight: FontWeight.w
 
 TextStyle aboutCardInfoStyle = TextStyle(fontSize: 14, fontStyle: FontStyle.italic);
 
-TextStyle aboutCardSubtitleStyle = TextStyle(fontSize: 16, fontWeight: FontWeight.w300);
+TextStyle aboutCardSubtitleStyle = TextStyle(fontSize: 16, fontWeight: FontWeight.w400);
 
 TextStyle aboutCardContentStyle = TextStyle(fontSize: 14, fontWeight: FontWeight.w300);
 

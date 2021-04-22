@@ -18,8 +18,8 @@ class _TaskListPageState extends State<TaskListPage> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           CarpAppBar(),
-          _scoreBoard(),
-          SizedBox(height: 15),
+          // _scoreBoard(),
+          // SizedBox(height: 15),
           Padding(
               padding: EdgeInsets.symmetric(horizontal: 15),
               child: Align(
@@ -134,57 +134,6 @@ class _TaskListPageState extends State<TaskListPage> {
           ),
         ),
       ),
-    );
-  }
-
-  Widget _scoreBoard() {
-    RPLocalizations locale = RPLocalizations.of(context);
-    return StreamBuilder<UserTask>(
-      stream: widget.model.userTaskEvents,
-      builder: (context, snapshot) {
-        return Expanded(
-          child: Container(
-            height: 110,
-            color: Theme.of(context).hoverColor,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(height: 15),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Column(
-                      children: [
-                        Text(widget.model.daysInStudy.toString(),
-                            style: scoreNumberStyle.copyWith(color: Theme.of(context).primaryColor)),
-                        Text(locale.translate('Days in study'),
-                            style: scoreTextStyle.copyWith(color: Theme.of(context).primaryColor)),
-                      ],
-                    ),
-                    Container(
-                        height: 66,
-                        child: VerticalDivider(
-                          color: Theme.of(context).primaryColor,
-                          width: 15,
-                        )),
-                    Column(
-                      children: [
-                        Text(widget.model.taskCompleted.toString(),
-                            style: scoreNumberStyle.copyWith(color: Theme.of(context).primaryColor)),
-                        Text(locale.translate('Tasks completed'),
-                            style: scoreTextStyle.copyWith(color: Theme.of(context).primaryColor)),
-                      ],
-                    )
-                  ],
-                ),
-                SizedBox(height: 15),
-              ],
-            ),
-          ),
-        );
-      },
     );
   }
 

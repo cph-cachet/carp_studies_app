@@ -56,13 +56,18 @@ class SurveysCardDataModel extends DataModel {
     print(_samplingTable);
   }
 
+  List<String> listId = [];
+
   void updateMeasures() {
+    print(listId);
     AppTaskController()
         .userTaskQueue
         .where((task) => task.state == UserTaskState.done && task.type == SurveyUserTask.SURVEY_TYPE)
         .forEach((task) {
-      print(task);
-      if (_samplingTable.containsKey(task.title)) _samplingTable[task.title]++;
+      if (!listId.contains(task.id) && _samplingTable.containsKey(task.title)) {
+        _samplingTable[task.title]++;
+        listId.add(task.id);
+      }
     });
   }
 }

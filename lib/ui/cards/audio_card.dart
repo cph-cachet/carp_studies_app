@@ -2,19 +2,18 @@ part of carp_study_app;
 
 class AudioCardWidget extends StatefulWidget {
   final AudioCardDataModel model;
-  AudioCardWidget(this.model);
+  final List<Color> colors;
+  AudioCardWidget(this.model, {this.colors = CACHET.COLOR_LIST});
   _AudioCardWidgetState createState() => _AudioCardWidgetState();
 }
 
 class _AudioCardWidgetState extends State<AudioCardWidget> {
   static List<charts.Series<Audio, String>> _createChartList(
-    BuildContext context,
-    AudioCardDataModel model,
-  ) =>
+          BuildContext context, AudioCardDataModel model, List<Color> colors) =>
       [
         charts.Series<Audio, String>(
-          colorFn: (_, index) =>
-              charts.MaterialPalette.blue.makeShades(min(7, model.samplingTable.length))[index],
+          colorFn: (_, index) => charts.ColorUtil.fromDartColor(colors[index]),
+          //charts.MaterialPalette.blue.makeShades(min(7, model.samplingTable.length))[index],
           id: 'TotalAudio',
           data: model.measures.sublist(0, min(7, model.samplingTable.length)),
           domainFn: (Audio datum, _) => datum.audioName,
@@ -52,6 +51,7 @@ class _AudioCardWidgetState extends State<AudioCardWidget> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
+                                  SizedBox(height: 5),
                                   Text('${widget.model.samplingSize} ' + locale.translate('AUDIOS'),
                                       //textAlign: TextAlign.center,
                                       style: dataCardTitleStyle),
@@ -62,12 +62,12 @@ class _AudioCardWidgetState extends State<AudioCardWidget> {
                         ),
                       ),
                       Container(
-                        height: 250,
+                        height: 200,
                         child: Stack(
                           alignment: Alignment.center,
                           children: [
                             charts.PieChart(
-                              _createChartList(context, widget.model),
+                              _createChartList(context, widget.model, CACHET.COLOR_LIST),
                               animate: true,
                               behaviors: [
                                 charts.DatumLegend(

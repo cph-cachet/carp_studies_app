@@ -33,15 +33,22 @@ class CACHET {
   static Color pie = createMaterialColor(Color.fromRGBO(225, 244, 250, 1));
 
   static const List<Color> COLOR_LIST = [
-    BLUE_1,
-    RED_1,
-    GREEN_1,
-    YELLOW,
-    PURPLE,
-    ORANGE,
-    BLUE_2,
-    RED_2,
-    LIGHT_GREEN
+    Color(0xFF7FC9E3),
+    Color(0xFF809AE5),
+    Color(0xFFC052A2),
+    Color(0xFFBA0022),
+    Color(0xFF6FB4E9),
+    Color(0xFFA379CE),
+    Color(0xFFCA2366),
+
+    //
+    // Color(0xFF82CEE9),
+    // Color(0xFFB00020),
+    // Color(0xFF1282B0),
+    // Color(0xFF630A1A),
+    // Color(0xFF054863),
+    // Color(0xFFB8566A),
+    // Color(0xFFC3E2EB)
   ];
 }
 

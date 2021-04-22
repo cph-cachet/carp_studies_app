@@ -2,34 +2,18 @@ part of carp_study_app;
 
 class MeasuresCardWidget extends StatefulWidget {
   final MeasuresCardDataModel model;
-  MeasuresCardWidget(this.model);
+  final List<Color> colors;
+  MeasuresCardWidget(this.model, {this.colors = CACHET.COLOR_LIST});
   _MeasuresCardWidgetState createState() => _MeasuresCardWidgetState();
 }
 
 class _MeasuresCardWidgetState extends State<MeasuresCardWidget> {
-  int hexOfRGBA(int r, int g, int b, {double opacity = 1}) {
-    r = (r < 0) ? -r : r;
-    g = (g < 0) ? -g : g;
-    b = (b < 0) ? -b : b;
-    opacity = (opacity < 0) ? -opacity : opacity;
-    opacity = (opacity > 1) ? 255 : opacity * 255;
-    r = (r > 255) ? 255 : r;
-    g = (g > 255) ? 255 : g;
-    b = (b > 255) ? 255 : b;
-    int a = opacity.toInt();
-    return int.parse(
-        '#${a.toRadixString(16)}${r.toRadixString(16)}${g.toRadixString(16)}${b.toRadixString(16)}');
-  }
-
   static List<charts.Series<Measures, String>> _createChartList(
-    BuildContext context,
-    MeasuresCardDataModel model,
-  ) =>
+          BuildContext context, MeasuresCardDataModel model, List<Color> colors) =>
       [
         charts.Series<Measures, String>(
-          colorFn:
-              (_, index) => //charts.Color.(hexOfRGBA(CACHET.COLOR_LIST[index].red,CACHET.COLOR_LIST[index].green,CACHET.COLOR_LIST[index].blue, CACHET.COLOR_LIST[index].opacity)),
-                  charts.MaterialPalette.blue.makeShades(min(7, model.samplingTable.length))[index],
+          colorFn: (_, index) => charts.ColorUtil.fromDartColor(colors[index]),
+          //charts.MaterialPalette.blue.makeShades(min(7, model.samplingTable.length))[index],
           id: 'TotalMeasures',
           data: model.measures.sublist(0, min(7, model.samplingTable.length)),
           domainFn: (Measures datum, _) => datum.measure,
@@ -65,13 +49,7 @@ class _MeasuresCardWidgetState extends State<MeasuresCardWidget> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
-                                  Text('${locale.translate('Hello')} ${bloc.user.firstName}',
-                                      style: aboutCardTitleStyle),
-                                  Text(
-                                      locale.translate(
-                                          'Thank you for participating in this study. This a summary of your contribution to the study.'),
-                                      style: aboutCardSubtitleStyle),
-                                  SizedBox(height: 10),
+                                  SizedBox(height: 5),
                                   Text('${widget.model.samplingSize} ' + locale.translate('MEASURES'),
                                       //textAlign: TextAlign.center,
                                       style: dataCardTitleStyle),
@@ -87,7 +65,7 @@ class _MeasuresCardWidgetState extends State<MeasuresCardWidget> {
                           alignment: Alignment.center,
                           children: [
                             charts.PieChart(
-                              _createChartList(context, widget.model),
+                              _createChartList(context, widget.model, CACHET.COLOR_LIST),
                               animate: true,
                               behaviors: [
                                 charts.DatumLegend(

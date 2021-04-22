@@ -105,7 +105,7 @@ class LocalStudyManager implements StudyManager {
               minutesToComplete: 5,
             )..measures.add(AudioMeasure(
                 type: MeasureType(NameSpace.CARP, AudioSamplingPackage.AUDIO),
-                name: "Exposure_exercise_description",
+                name: "Exposure exercise",
                 studyId: studyId,
               )))
 
@@ -114,7 +114,7 @@ class LocalStudyManager implements StudyManager {
             PeriodicTrigger(period: Duration(days: 7)),
             AppTask(
               type: AudioUserTask.AUDIO_TYPE,
-              title: "User Experience: wristband",
+              title: "User Experience with the Wristband",
               description: 'Record yourself talking about how the wristband makes you feel',
               instructions: 'Tell us about your experience wearing the wristband',
               minutesToComplete: 5,
@@ -233,7 +233,7 @@ class LocalStudyManager implements StudyManager {
             PeriodicTrigger(period: Duration(days: 7)),
             AppTask(
               type: AudioUserTask.AUDIO_TYPE,
-              title: "User Experience: wristband",
+              title: "User Experience with the Wristband",
               description: "Record yourself talking about how the wristband makes you feel",
               instructions: "Tell us about your experience wearing the wristband",
               minutesToComplete: 5,
@@ -321,7 +321,7 @@ class LocalStudyManager implements StudyManager {
             PeriodicTrigger(period: Duration(days: 7)),
             AppTask(
               type: AudioUserTask.AUDIO_TYPE,
-              title: "User Experience: wristband",
+              title: "User Experience with the Wristband",
               description: 'Record yourself talking about how the wristband makes you feel',
               instructions: 'Tell us about your experience wearing the wristband',
               minutesToComplete: 5,
@@ -439,7 +439,7 @@ class LocalStudyManager implements StudyManager {
             PeriodicTrigger(period: Duration(days: 7)),
             AppTask(
               type: AudioUserTask.AUDIO_TYPE,
-              title: "User Experience: wristband",
+              title: "User Experience with the Wristband",
               description: 'Record yourself talking about how the wristband makes you feel',
               instructions: 'Tell us about your experience wearing the wristband',
               minutesToComplete: 5,
@@ -478,7 +478,7 @@ class LocalStudyManager implements StudyManager {
             PeriodicTrigger(period: Duration(days: 7)),
             AppTask(
               type: AudioUserTask.AUDIO_TYPE,
-              title: "User Experience: wristband",
+              title: "User Experience with the Wristband",
               description: 'Record yourself talking about how the wristband makes you feel',
               instructions: 'Tell us about your experience wearing the wristband',
               minutesToComplete: 5,
@@ -499,7 +499,7 @@ class LocalStudyManager implements StudyManager {
               minutesToComplete: 5,
             )..measures.add(AudioMeasure(
                 type: MeasureType(NameSpace.CARP, AudioSamplingPackage.AUDIO),
-                name: "Exposure_exercise_description",
+                name: "Exposure exercise",
                 studyId: studyId,
               )))
 

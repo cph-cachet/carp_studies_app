@@ -2,19 +2,18 @@ part of carp_study_app;
 
 class SurveysCardWidget extends StatefulWidget {
   final SurveysCardDataModel model;
-  SurveysCardWidget(this.model);
+  final List<Color> colors;
+  SurveysCardWidget(this.model, {this.colors = CACHET.COLOR_LIST});
   _SurveysCardWidgetState createState() => _SurveysCardWidgetState();
 }
 
 class _SurveysCardWidgetState extends State<SurveysCardWidget> {
   static List<charts.Series<Surveys, String>> _createChartList(
-    BuildContext context,
-    SurveysCardDataModel model,
-  ) =>
+          BuildContext context, SurveysCardDataModel model, List<Color> colors) =>
       [
         charts.Series<Surveys, String>(
-          colorFn: (_, index) =>
-              charts.MaterialPalette.blue.makeShades(min(7, model.samplingTable.length))[index],
+          colorFn: (_, index) => charts.ColorUtil.fromDartColor(colors[index]),
+          // charts.MaterialPalette.blue.makeShades(min(7, model.samplingTable.length))[index],
           id: 'TotalSurveys',
           data: model.measures.sublist(0, min(7, model.samplingTable.length)),
           domainFn: (Surveys datum, _) => datum.surveyName,
@@ -52,6 +51,7 @@ class _SurveysCardWidgetState extends State<SurveysCardWidget> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
+                                  SizedBox(height: 5),
                                   Text('${widget.model.samplingSize} ' + locale.translate('SURVEYS'),
                                       //textAlign: TextAlign.center,
                                       style: dataCardTitleStyle),
@@ -62,12 +62,12 @@ class _SurveysCardWidgetState extends State<SurveysCardWidget> {
                         ),
                       ),
                       Container(
-                        height: 250,
+                        height: 200,
                         child: Stack(
                           alignment: Alignment.center,
                           children: [
                             charts.PieChart(
-                              _createChartList(context, widget.model),
+                              _createChartList(context, widget.model, CACHET.COLOR_LIST),
                               animate: true,
                               behaviors: [
                                 charts.DatumLegend(

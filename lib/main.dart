@@ -78,6 +78,7 @@ part 'ui/cards/mobility_card.dart';
 part 'ui/cards/measures_card.dart';
 part 'ui/cards/surveys_card.dart';
 part 'ui/cards/audio_card.dart';
+part 'ui/cards/scoreboard_card.dart';
 
 void main() async {
   runApp(CARPStudyApp());

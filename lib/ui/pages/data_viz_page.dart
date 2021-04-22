@@ -5,6 +5,7 @@ class DataVisualizationPage extends StatelessWidget {
   DataVisualizationPage(this.model);
 
   Widget build(BuildContext context) {
+    RPLocalizations locale = RPLocalizations.of(context);
     return Scaffold(
       body: Container(
         child: Column(
@@ -12,7 +13,29 @@ class DataVisualizationPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             CarpAppBar(),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 15),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '${locale.translate('Hello')} ${bloc.user.firstName}',
+                      style: sectionTitleStyle.copyWith(color: Theme.of(context).primaryColor),
+                    ),
+                    Text(
+                        locale.translate(
+                            'Thank you for participating in this study. This a summary of your contribution to the study.'),
+                        style: aboutCardSubtitleStyle),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(height: 15),
             Expanded(
+              flex: 4,
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -31,6 +54,9 @@ class DataVisualizationPage extends StatelessWidget {
   // TODO - this needs to adjusted when more measures can be visualized
   List<Widget> get _dataVizCards {
     final List<Widget> widgets = [];
+
+    // always show overall measure stats
+    widgets.add(ScoreboardCardWidget(model));
 
     // always show overall measure stats
     widgets.add(MeasuresCardWidget(model.measuresCardDataModel));

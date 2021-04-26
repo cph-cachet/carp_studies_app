@@ -92,6 +92,21 @@ class LocalStudyManager implements StudyManager {
                 enabled: true,
                 surveyTask: surveys.ecological.survey,
               )))
+        // collect symptoms hierarchy
+        ..addTriggerTask(
+            ImmediateTrigger(),
+            AppTask(
+              type: SurveyUserTask.SURVEY_TYPE,
+              title: surveys.symptomHierarchy.title,
+              description: surveys.symptomHierarchy.description,
+              minutesToComplete: surveys.symptomHierarchy.minutesToComplete,
+              expire: surveys.symptomHierarchy.expire,
+            )..measures.add(RPTaskMeasure(
+                type: MeasureType(NameSpace.CARP, SurveySamplingPackage.SURVEY),
+                name: surveys.symptomHierarchy.title,
+                enabled: true,
+                surveyTask: surveys.symptomHierarchy.survey,
+              )))
 
         // Audio task: Exposure exercise - TODO: TRIGGER AFTER CHECKING RESULT FROM SURVEY
         ..addTriggerTask(

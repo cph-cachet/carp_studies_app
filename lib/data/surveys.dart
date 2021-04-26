@@ -47,6 +47,9 @@ class _Surveys {
 
   Survey _timedExposure = _TimedExposureSurvey();
   Survey get timedExposure => _timedExposure;
+
+  Survey _symptomHierarchy = _SymptomHierarchySurvey();
+  Survey get symptomHierarchy => _symptomHierarchy;
 }
 
 abstract class Survey {
@@ -64,6 +67,134 @@ abstract class Survey {
 
   /// The survey to fill out.
   RPTask get survey;
+}
+
+class _SymptomHierarchySurvey implements Survey {
+  String get title => 'Symptom Hierarchy';
+
+  String get description =>
+      'This form is designed to help you keep track of how your obsessions and compulsions change from week to week.';
+
+  Duration get expire => const Duration(days: 7);
+
+  int get minutesToComplete => 5;
+
+  RPTask get survey => RPOrderedTask("Symptom Hierarchy", [
+        RPInstructionStep(
+          title: "Obsessions",
+        )..text =
+            "Symptom Hierarchy: Obsessions\n\n\nWe will start with obsessions. Obsessions are unwanted thoughts or images that keep popping into your head and that you can't stop thinking about, even though you want to be rid of them.\n\nOn the next pages, you will see obsessions that many people with OCD have. Tell us how upset or scared each obsession has been for you over the past week by choosing the number that best matches how you feel. 0 means that you have not had the obsession or that it is not at all unpleasant and 10 means that the obsession is so upsetting you can’t stand it.",
+        RPQuestionStep.withAnswerFormat(
+          "question1",
+          "Fear/ disgust of pollution, infection, dirt, bacteria, diseases",
+          RPSliderAnswerFormat.withParams(0, 10, divisions: 10),
+        ),
+        RPQuestionStep.withAnswerFormat(
+          "question2",
+          "Fear of harming yourself or others (body or feelings)",
+          RPSliderAnswerFormat.withParams(0, 10, divisions: 10),
+        ),
+        RPQuestionStep.withAnswerFormat(
+          "question3",
+          "Disturbing thoughts/ images about sex, pregnancy or sexuality",
+          RPSliderAnswerFormat.withParams(0, 10, divisions: 10),
+        ),
+        RPQuestionStep.withAnswerFormat(
+          "question4",
+          "Need to collect things or fear of losing something",
+          RPSliderAnswerFormat.withParams(0, 10, divisions: 10),
+        ),
+        RPQuestionStep.withAnswerFormat(
+          "question5",
+          "Magical/superstitious thoughts or actions (e.g. lucky numbers or words; stepping on a crack can break someone’s back)",
+          RPSliderAnswerFormat.withParams(0, 10, divisions: 10),
+        ),
+        RPQuestionStep.withAnswerFormat(
+          "question6",
+          "Worry about having a disease or that a body part or your appearance looks wrong)",
+          RPSliderAnswerFormat.withParams(0, 10, divisions: 10),
+        ),
+        RPQuestionStep.withAnswerFormat(
+          "question7",
+          "Fear of offending God or Satan or worry about what is right and wrong",
+          RPSliderAnswerFormat.withParams(0, 10, divisions: 10),
+        ),
+        RPQuestionStep.withAnswerFormat(
+          "question8",
+          "Symmetry and order (e.g. that things must lie in a certain way, or things must be in order)",
+          RPSliderAnswerFormat.withParams(0, 10, divisions: 10),
+        ),
+        RPQuestionStep.withAnswerFormat(
+          "question9",
+          "Needing to do something until it feels right or not wrong",
+          RPSliderAnswerFormat.withParams(0, 10, divisions: 10),
+        ),
+        RPQuestionStep.withAnswerFormat(
+          "question10",
+          "Here you can describe other obsessions that have not been mentioned",
+          RPTextAnswerFormat.withParams(""),
+          optional: true,
+        ),
+        RPInstructionStep(
+          title: "Compulsions",
+        )..text =
+            "Symptom hierarchy: Compulsions\n\n\nCompulsions are things that OCD wants you to do. If you try to resist doing these things or try not to do what OCD tells to, you may feel afraid, worried, frustrated, angry or upset.\n\nOn the next pages there will be some compulsions that many people with OCD have. Tell us how upset each compulsion (or trying to resist the compulsion) has been for you over the past week by choosing the number that best matches how you feel. 0 means that you do not have that compulsion or that does not bother you and 10 means that the compulsion upsets you so much that you can’t stand it.",
+        RPQuestionStep.withAnswerFormat(
+          "question11",
+          "Washing or cleaning",
+          RPSliderAnswerFormat.withParams(0, 10, divisions: 10),
+        ),
+        RPQuestionStep.withAnswerFormat(
+          "question12",
+          "Checking (like if you have remembered to lock the door)",
+          RPSliderAnswerFormat.withParams(0, 10, divisions: 10),
+        ),
+        RPQuestionStep.withAnswerFormat(
+          "question13",
+          "Repeating actions (like turning the lights on and off several times)",
+          RPSliderAnswerFormat.withParams(0, 10, divisions: 10),
+        ),
+        RPQuestionStep.withAnswerFormat(
+          "question14",
+          "Counting things",
+          RPSliderAnswerFormat.withParams(0, 10, divisions: 10),
+        ),
+        RPQuestionStep.withAnswerFormat(
+          "question15",
+          "Fixing things or try to get things the same or symmetrical",
+          RPSliderAnswerFormat.withParams(0, 10, divisions: 10),
+        ),
+        RPQuestionStep.withAnswerFormat(
+          "question16",
+          "Collecting things or difficulty throwing things away",
+          RPSliderAnswerFormat.withParams(0, 10, divisions: 10),
+        ),
+        RPQuestionStep.withAnswerFormat(
+          "question17",
+          "Magical/superstitious behavior (e.g. doing or saying things a certain number of times to prevent something terrible from happening)",
+          RPSliderAnswerFormat.withParams(0, 10, divisions: 10),
+        ),
+        RPQuestionStep.withAnswerFormat(
+          "question18",
+          "Involving others (like your parents) in a ritual or asking for reassurance",
+          RPSliderAnswerFormat.withParams(0, 10, divisions: 10),
+        ),
+        RPQuestionStep.withAnswerFormat(
+          "question19",
+          "Needing to do something until it feels right",
+          RPSliderAnswerFormat.withParams(0, 10, divisions: 10),
+        ),
+        RPQuestionStep.withAnswerFormat(
+          "question20",
+          "Here you can describe other compulsions that have not been mentioned",
+          RPTextAnswerFormat.withParams(""),
+          optional: true,
+        ),
+        RPCompletionStep("completion")
+          ..title = "Hurray!"
+          ..text =
+              "You are finished recording your obsessions and compulsions for this week. By keeping track of your obsessions and compulsions, you're taking back control, so OCD doesn't control you.",
+      ]);
 }
 
 class _TimedExposureSurvey implements Survey {
@@ -832,6 +963,7 @@ class _PatientSurvey implements Survey {
             "question14",
             "Is there anything else you would like to tell us about your experience wearing the wristband?",
             RPTextAnswerFormat.withParams(''),
+            optional: true,
           ),
           RPCompletionStep("completion")
             ..title = "Well done!"
@@ -930,6 +1062,7 @@ class _ControlParentsSurvey implements Survey {
             "question14",
             "Is there anything else you would like to tell us about your experience wearing the wristband?",
             RPTextAnswerFormat.withParams(''),
+            optional: true,
           ),
           RPCompletionStep("completion")
             ..title = "Well done!"
@@ -1038,148 +1171,348 @@ class _ControlSurvey implements Survey {
 }
 
 class _ExposureSurvey implements Survey {
-  String get title => "Weekly exposure and response prevention";
+  String get title => "Fight back against OCD";
 
   String get description => 'Describe the obsession and/or the compulsion you are working on';
 
   Duration get expire => const Duration(days: 7);
 
-  int get minutesToComplete => 10; // TODO: review time
+  int get minutesToComplete => 15; // TODO: review time
 
   RPChoiceAnswerFormat choiceAnswerFormat1 = RPChoiceAnswerFormat.withParams(ChoiceAnswerStyle.SingleChoice, [
-    RPChoice.withParams("No", 0),
-    RPChoice.withParams("Yes", 1),
+    RPChoice.withParams("My discomfort/fear/disgust will grow and grow until I can't take it any more", 0),
+    RPChoice.withParams("My discomfort/fear/disgust will not change", 1),
+    RPChoice.withParams("I will feel less discomfort/fear/disgust over time", 2),
   ]);
   RPChoiceAnswerFormat choiceAnswerFormat2 = RPChoiceAnswerFormat.withParams(ChoiceAnswerStyle.SingleChoice, [
-    RPChoice.withParams("Contamination (dirt, bacteria, sickness)", 0),
-    RPChoice.withParams("Hurting myself or others (physically or emotionally)", 1),
-    RPChoice.withParams("Sex, pregnancy or sexuality", 2),
-    RPChoice.withParams("Collecting things or fear of losing something", 3),
-    RPChoice.withParams("Magical thoughts or superstitions (un/lucky number)", 4),
-    RPChoice.withParams(
-        "My body (worry that I have a disease or that I or one of my body parts looks wrong)", 5),
-    RPChoice.withParams(
-        "Fear of offending a religous object (god or satan) or morality (right and wrong)", 6),
-    RPChoice.withParams(
-        "Ordering and arranging (things need to be arranged in a certain way or arranging things in a certain order.)",
-        7),
-    RPChoice.withParams("Other", 8),
+    RPChoice.withParams("Read an exciting book", 0),
+    RPChoice.withParams("Eat something delicious", 1),
+    RPChoice.withParams("Watch an episode of your favorite series", 2),
+    RPChoice.withParams("Do something fun with friends/ family (make a plan)", 2),
+    RPChoice.withParams("Play a game", 4),
+    RPChoice.withParams("Play a computer/videogame", 5),
+    RPChoice.withParams("I will do something not listed here", 6),
   ]);
 
   RPChoiceAnswerFormat choiceAnswerFormat3 = RPChoiceAnswerFormat.withParams(ChoiceAnswerStyle.SingleChoice, [
-    RPChoice.withParams("Washing or cleaning", 0),
-    RPChoice.withParams("Checking (like checking the doors are locked)", 1),
-    RPChoice.withParams("Repeating rituals (like turning on and off the lights repeatedly)", 2),
-    RPChoice.withParams("Counting", 3),
-    RPChoice.withParams("Arranging or putting this in order", 4),
-    RPChoice.withParams("Collecting or saving things", 5),
-    RPChoice.withParams(
-        "Superstitious behaviors (like avoiding stepping on cracks in the sidewalk to avoid something bad from happening)",
-        6),
-    RPChoice.withParams(
-        "Rituals involving others (like asking your mother or father the same question repeatedly or wash your clothes an excessive amount)",
-        7),
-    RPChoice.withParams("Other", 8)
-  ]);
-  RPImageChoiceAnswerFormat _imageChoiceAnswerFormat = RPImageChoiceAnswerFormat.withParams([
-    RPImageChoice.withParams(Image.asset('assets/icons/very-sad.png'), 0, "Unbearable"),
-    RPImageChoice.withParams(Image.asset('assets/icons/sad.png'), 0, "Very great discomfort"),
-    RPImageChoice.withParams(Image.asset('assets/icons/ok.png'), 0, "Quite a lot of discomfort"),
-    RPImageChoice.withParams(Image.asset('assets/icons/happy.png'), 0, "A certain discomfort"),
-    RPImageChoice.withParams(Image.asset('assets/icons/very-happy.png'), 0, "Calm"),
-  ]);
-  RPChoiceAnswerFormat choiceAnswerFormat4 = RPChoiceAnswerFormat.withParams(ChoiceAnswerStyle.SingleChoice, [
-    RPChoice.withParams("Yes, I did a compulsion", 0),
-    RPChoice.withParams("Yes, I used another type of safety behavior", 1),
-    RPChoice.withParams("No, I completed the task without any safety behaviors", 2),
+    RPChoice.withParams("No", 0),
+    RPChoice.withParams("Yes", 1),
   ]);
 
-  RPTask get survey => RPOrderedTask("Exposure_SUDS_v1_26_02_2021", [
+  RPChoiceAnswerFormat choiceAnswerFormat4 =
+      RPChoiceAnswerFormat.withParams(ChoiceAnswerStyle.MultipleChoice, [
+    RPChoice.withParams("Fear/ disgust of pollution, infection, dirt, bacteria, diseases", 0),
+    RPChoice.withParams("Fear of harming myself or others (physically or emotionally)", 1),
+    RPChoice.withParams("Disturbing thoughts/ images about sex, pregnancy or sexuality", 2),
+    RPChoice.withParams("Need to collect things or fear of losing something", 3),
+    RPChoice.withParams(
+        "Magical/superstitious thoughts or actions (e.g. lucky numbers or words; stepping on a crack can break someone’s back)",
+        4),
+    RPChoice.withParams(
+        "Worry about having a disease or that a body part or your appearance looks wrong)", 5),
+    RPChoice.withParams("Fear of offending God or Satan or worry about what is right and wrong", 6),
+    RPChoice.withParams(
+        "Symmetry and order (e.g. that things must lie in a certain way, or things must be in order)", 7),
+    RPChoice.withParams("Needing to do something until it feels right or not wrong", 8),
+  ]);
+
+  RPChoiceAnswerFormat choiceAnswerFormat5 =
+      RPChoiceAnswerFormat.withParams(ChoiceAnswerStyle.MultipleChoice, [
+    RPChoice.withParams("Washing or cleaning", 0),
+    RPChoice.withParams("Checking (like if you have remembered to lock the door)", 1),
+    RPChoice.withParams("Repeating actions (like turning the lights on and off several times)", 2),
+    RPChoice.withParams("Counting things", 3),
+    RPChoice.withParams("Fixing things or trying to get things in a certain place or symmetrical", 4),
+    RPChoice.withParams("Collecting things or difficulty throwing things away", 5),
+    RPChoice.withParams(
+        "Magical/superstitious behavior (like doing or saying things a certain number of times to prevent something bad from happening)",
+        6),
+    RPChoice.withParams("Involving your parents in a ritual or asking for reassurance", 7),
+    RPChoice.withParams("Doing something until it feels right ", 8),
+  ]);
+
+  RPChoiceAnswerFormat choiceAnswerFormat6 = RPChoiceAnswerFormat.withParams(ChoiceAnswerStyle.SingleChoice, [
+    RPChoice.withParams("My discomfort grew until I couldn’t stand it anymore", 0),
+    RPChoice.withParams("My discomfort went up and down", 1),
+    RPChoice.withParams("My discomfort did not really change ", 2),
+    RPChoice.withParams("I felt less discomfort with time", 3),
+  ]);
+
+  // RPImageChoiceAnswerFormat _imageChoiceAnswerFormat = RPImageChoiceAnswerFormat.withParams([
+  //   RPImageChoice.withParams(Image.asset('assets/icons/very-sad.png'), 0, "Unbearable"),
+  //   RPImageChoice.withParams(Image.asset('assets/icons/sad.png'), 0, "Very great discomfort"),
+  //   RPImageChoice.withParams(Image.asset('assets/icons/ok.png'), 0, "Quite a lot of discomfort"),
+  //   RPImageChoice.withParams(Image.asset('assets/icons/happy.png'), 0, "A certain discomfort"),
+  //   RPImageChoice.withParams(Image.asset('assets/icons/very-happy.png'), 0, "Calm"),
+  // ]);
+  // RPChoiceAnswerFormat choiceAnswerFormat4 = RPChoiceAnswerFormat.withParams(ChoiceAnswerStyle.SingleChoice, [
+  //   RPChoice.withParams("Yes, I did a compulsion", 0),
+  //   RPChoice.withParams("Yes, I used another type of safety behavior", 1),
+  //   RPChoice.withParams("No, I completed the task without any safety behaviors", 2),
+  // ]);
+
+  RPTask get survey => RPOrderedTask("Exposure_SUDS_v2_2021.04.22", [
         RPInstructionStep(title: "Exposure and response prevention", imagePath: 'assets/icons/survey.png')
           ..text =
-              "This survey is designed to help you practice fighting OCD.\n\nYour therapist may have taught you about exposure and response prevention. If your therapist has not taught you about exposure and response prevention, then you should not use this app.\n\nExposure means approaching things or situations that you are afraid of a little at a time.\n\nResponse prevention refers to not performing the OCD compulsions or rituals.",
+              "This survey is designed to help you practice fighting OCD. To take back control from OCD, you must do the opposite of what OCD wants you to do. For example, you may touch some food left over on your plate or say some “dangerous” words. Or, if the OCD tells you to touch things a certain number of times, don't do it. Going against OCD can be scary or upsetting. But, to take control back from OCD, you can’t run away from the discomfort or fear - you must tough it out.\n\nDuring the exercise, notice what happens to the feeling of discomfort for up to 15 minutes.\n\nWhile you practice going against OCD, your parents or your therapist can help you use this form.",
         RPQuestionStep.withAnswerFormat(
           "question1",
-          "My therapist has asked to practice exposure at home.",
+          "What do you think is going to happen to your feelings of discomfort, fear or disgust when you practice doing the opposite of what OCD wants you to do? ",
           choiceAnswerFormat1,
         ),
-        RPInstructionStep(title: "Obsession")
+        RPInstructionStep(title: " ")
           ..text =
-              "An obsession is a thought or picture that repeatedly pops up in your mind even though you do not want to think about it. The thought can be disturbing, scary, weird or embarrassing",
+              "Many children and adolescents think that their fear or discomfort will get worse and worse when they practice going against OCD, but that is not what happens.\n\nFor many children and adolescents, the fear/discomfort goes up and down during the exercise. For some people, the fear/discomfort becomes less during the exercise. Others find that their fear/discomfort does not really change during the exercise, but then they learn that fear and discomfort are not dangerous. With lots of practice, you should really notice that you feel less fear, disgust or discomfort.",
         RPQuestionStep.withAnswerFormat(
           "question2",
-          "I will work on an obsession",
-          choiceAnswerFormat1,
-        ),
-        // TODO: if question2 == 1
-        RPQuestionStep.withAnswerFormat(
-          "question3",
-          "The obsession I will work on is about:",
+          "Before you start practicing going against OCD, prepare for the exercise by answering some questions.\n\nYou're going to do something difficult and that should be rewarded. How will you reward yourself after the exercise of fighting OCD?",
           choiceAnswerFormat2,
         ),
 
         RPQuestionStep.withAnswerFormat(
-          "question4",
-          "Describe the obsession that you will work on",
-          RPTextAnswerFormat.withParams(''),
-        ),
-        RPInstructionStep(title: "Compulsion")
-          ..text =
-              "A compulsion is something you feel you have to do even though you may know it does not make sense. If you try to resist doing the compulsion, you may feel anxious, frustrated or angry.",
-        RPQuestionStep.withAnswerFormat(
-          "question5",
-          "I will work on a compulsion",
-          choiceAnswerFormat1,
-        ),
-        // TODO: if question5 == 1
-        RPQuestionStep.withAnswerFormat(
-          "question6",
-          "The compulsion I will work on is about:",
+          "question3",
+          "In the exercise, I will work on an obsession.\n\n(Obsessions are unwanted thoughts or images that keep popping into your head and that you can't stop thinking about, even though you want to be rid of them.)",
           choiceAnswerFormat3,
         ),
 
+        // TODO: if previous question is no skip
         RPQuestionStep.withAnswerFormat(
-            "question7", "Describe the compusion you will work on", RPTextAnswerFormat.withParams(''),
-            optional: true),
+          "question4",
+          "The obsession I want to work on now is about:",
+          choiceAnswerFormat4,
+          optional: true,
+        ),
+        RPQuestionStep.withAnswerFormat(
+          "question5",
+          "You can describe the obsession you want to work on here, if you would like to describe it detail or if you could not find an obsession in the list.",
+          RPTextAnswerFormat.withParams(""),
+          optional: true,
+        ),
+
+////////////////////////////////
+        RPQuestionStep.withAnswerFormat(
+          "question6",
+          "I want to work with a compulsion.\n\n\n(Compulsions are things that OCD wants you to do. If you try to resist doing these things or try not to do what OCD tells you to, you may feel afraid, worried, frustrated, angry or upset.)",
+          choiceAnswerFormat3,
+        ),
+
+        // TODO: if previous question is no skip
+        RPQuestionStep.withAnswerFormat(
+          "question7",
+          "The compulsion I will work on is about:",
+          choiceAnswerFormat5,
+          optional: true,
+        ),
 
         RPQuestionStep.withAnswerFormat(
-            "question8",
-            "Describe the exposure exercise (how will you work on the obsession or compulsion you described above?):",
+          "question8",
+          "You can describe the compulsion you want to work on here, if you would like to describe it detail or if you could not find a compulsion in the list.",
+          RPTextAnswerFormat.withParams(""),
+          optional: true,
+        ),
+
+        RPQuestionStep.withAnswerFormat(
+            "question9",
+            "Describe how you will practice going against OCD. How do you want to work on the obsession and/or compulsion (for example touching the toilet seat or making your desk messy):",
             RPTextAnswerFormat.withParams(''),
             optional: true),
-        // RPQuestionStep.withAnswerFormat(
-        //   "question9",
-        //   "Write the exposure exercise start time",
-        //   RPDateTimeAnswerFormat.withParams(DateTimeAnswerStyle.TimeOfDay),
-        // ),
-        // RPInstructionStep(title: "")
-        //   ..text =
-        //       "During the exercise, use the “feeling thermometer” below to record how scared or upset you feel. The feeling thermometer is a scale from 0 to 10, in which 0 means no fear or upset and 10 means as scared or upset as you can imagine. Use the feeling thermometer to record how you are feeling just before starting the exposure exercise, after 5, 10 and 15 minutes.\nYour parents or therapist can help you keep track of the time and record how you are feeling.",
-        // RPQuestionStep.withAnswerFormat(
-        //   "question10",
-        //   "Just before exposure",
-        //   _imageChoiceAnswerFormat,
-        // ),
-        // RPQuestionStep.withAnswerFormat(
-        //   "question11",
-        //   "After 5 minutes",
-        //   _imageChoiceAnswerFormat,
-        // ),
-        // RPQuestionStep.withAnswerFormat(
-        //   "question12",
-        //   "After 10 minutes",
-        //   _imageChoiceAnswerFormat,
-        // ),
-        // RPQuestionStep.withAnswerFormat(
-        //   "question13",
-        //   "After 15 minutes",
-        //   _imageChoiceAnswerFormat,
-        // ),
+
+        RPInstructionStep(title: "", imagePath: 'assets/images/timer_task.png')
+          ..text =
+              "On the next pages, you will be asked to note how much fear or discomfort you experience while you go against OCD.\n\nStart by noting how uncomfortable it is for you to think about doing the exercise you just described on a scale of 0 to 10. 0 means that you are completely calm or not at all afraid. 10 means that you are so scared or upset you can’t stand it.",
+
+        // TODO: TIMER STEP IN BETWEEN ALL OF THE FOLLOWING QUESTIONS
+        RPQuestionStep.withAnswerFormat(
+          "question10",
+          "How much discomfort do you feel after 1 minute?",
+          RPSliderAnswerFormat.withParams(0, 10, divisions: 10),
+          optional: true,
+        ),
+        RPQuestionStep.withAnswerFormat(
+          "question11",
+          "How much discomfort do you feel after 3 minutes?",
+          RPSliderAnswerFormat.withParams(0, 10, divisions: 10),
+          optional: true,
+        ),
+        RPQuestionStep.withAnswerFormat(
+          "question12",
+          "How much discomfort do you feel after 5 minutes?",
+          RPSliderAnswerFormat.withParams(0, 10, divisions: 10),
+          optional: true,
+        ),
+        RPQuestionStep.withAnswerFormat(
+          "question13",
+          "How much discomfort do you feel after 7 minutes?",
+          RPSliderAnswerFormat.withParams(0, 10, divisions: 10),
+          optional: true,
+        ),
+        RPQuestionStep.withAnswerFormat(
+          "question14",
+          "How much discomfort do you feel after 10 minutes?",
+          RPSliderAnswerFormat.withParams(0, 10, divisions: 10),
+          optional: true,
+        ),
+        RPQuestionStep.withAnswerFormat(
+          "question15",
+          "How much discomfort do you feel after 15 minutes?",
+          RPSliderAnswerFormat.withParams(0, 10, divisions: 10),
+          optional: true,
+        ),
+        RPQuestionStep.withAnswerFormat(
+            "question16",
+            "Well done! You stayed with some difficult feelings!\n\nWhat happened to those difficult feelings when you practiced doing the opposite of what OCD wants?",
+            choiceAnswerFormat6),
+
         RPCompletionStep("completion")
-          ..title = "Well done!"
-          ..text = "Whenever you are ready, go to the task list and start the timed exposure exercise.",
+          ..title = "You are done with the exercise!"
+          ..text = "Remember to give yourself that reward",
       ]);
 }
+
+// class _ExposureSurvey implements Survey {
+//   String get title => "Weekly exposure and response prevention";
+
+//   String get description => 'Describe the obsession and/or the compulsion you are working on';
+
+//   Duration get expire => const Duration(days: 7);
+
+//   int get minutesToComplete => 10; // TODO: review time
+
+//   RPChoiceAnswerFormat choiceAnswerFormat1 = RPChoiceAnswerFormat.withParams(ChoiceAnswerStyle.SingleChoice, [
+//     RPChoice.withParams("No", 0),
+//     RPChoice.withParams("Yes", 1),
+//   ]);
+//   RPChoiceAnswerFormat choiceAnswerFormat2 = RPChoiceAnswerFormat.withParams(ChoiceAnswerStyle.SingleChoice, [
+//     RPChoice.withParams("Contamination (dirt, bacteria, sickness)", 0),
+//     RPChoice.withParams("Hurting myself or others (physically or emotionally)", 1),
+//     RPChoice.withParams("Sex, pregnancy or sexuality", 2),
+//     RPChoice.withParams("Collecting things or fear of losing something", 3),
+//     RPChoice.withParams("Magical thoughts or superstitions (un/lucky number)", 4),
+//     RPChoice.withParams(
+//         "My body (worry that I have a disease or that I or one of my body parts looks wrong)", 5),
+//     RPChoice.withParams(
+//         "Fear of offending a religous object (god or satan) or morality (right and wrong)", 6),
+//     RPChoice.withParams(
+//         "Ordering and arranging (things need to be arranged in a certain way or arranging things in a certain order.)",
+//         7),
+//     RPChoice.withParams("Other", 8),
+//   ]);
+
+//   RPChoiceAnswerFormat choiceAnswerFormat3 = RPChoiceAnswerFormat.withParams(ChoiceAnswerStyle.SingleChoice, [
+//     RPChoice.withParams("Washing or cleaning", 0),
+//     RPChoice.withParams("Checking (like checking the doors are locked)", 1),
+//     RPChoice.withParams("Repeating rituals (like turning on and off the lights repeatedly)", 2),
+//     RPChoice.withParams("Counting", 3),
+//     RPChoice.withParams("Arranging or putting this in order", 4),
+//     RPChoice.withParams("Collecting or saving things", 5),
+//     RPChoice.withParams(
+//         "Superstitious behaviors (like avoiding stepping on cracks in the sidewalk to avoid something bad from happening)",
+//         6),
+//     RPChoice.withParams(
+//         "Rituals involving others (like asking your mother or father the same question repeatedly or wash your clothes an excessive amount)",
+//         7),
+//     RPChoice.withParams("Other", 8)
+//   ]);
+//   RPImageChoiceAnswerFormat _imageChoiceAnswerFormat = RPImageChoiceAnswerFormat.withParams([
+//     RPImageChoice.withParams(Image.asset('assets/icons/very-sad.png'), 0, "Unbearable"),
+//     RPImageChoice.withParams(Image.asset('assets/icons/sad.png'), 0, "Very great discomfort"),
+//     RPImageChoice.withParams(Image.asset('assets/icons/ok.png'), 0, "Quite a lot of discomfort"),
+//     RPImageChoice.withParams(Image.asset('assets/icons/happy.png'), 0, "A certain discomfort"),
+//     RPImageChoice.withParams(Image.asset('assets/icons/very-happy.png'), 0, "Calm"),
+//   ]);
+//   RPChoiceAnswerFormat choiceAnswerFormat4 = RPChoiceAnswerFormat.withParams(ChoiceAnswerStyle.SingleChoice, [
+//     RPChoice.withParams("Yes, I did a compulsion", 0),
+//     RPChoice.withParams("Yes, I used another type of safety behavior", 1),
+//     RPChoice.withParams("No, I completed the task without any safety behaviors", 2),
+//   ]);
+
+//   RPTask get survey => RPOrderedTask("Exposure_SUDS_v1_26_02_2021", [
+//         RPInstructionStep(title: "Exposure and response prevention", imagePath: 'assets/icons/survey.png')
+//           ..text =
+//               "This survey is designed to help you practice fighting OCD.\n\nYour therapist may have taught you about exposure and response prevention. If your therapist has not taught you about exposure and response prevention, then you should not use this app.\n\nExposure means approaching things or situations that you are afraid of a little at a time.\n\nResponse prevention refers to not performing the OCD compulsions or rituals.",
+//         RPQuestionStep.withAnswerFormat(
+//           "question1",
+//           "My therapist has asked to practice exposure at home.",
+//           choiceAnswerFormat1,
+//         ),
+//         RPInstructionStep(title: "Obsession")
+//           ..text =
+//               "An obsession is a thought or picture that repeatedly pops up in your mind even though you do not want to think about it. The thought can be disturbing, scary, weird or embarrassing",
+//         RPQuestionStep.withAnswerFormat(
+//           "question2",
+//           "I will work on an obsession",
+//           choiceAnswerFormat1,
+//         ),
+//         // TODO: if question2 == 1
+//         RPQuestionStep.withAnswerFormat(
+//           "question3",
+//           "The obsession I will work on is about:",
+//           choiceAnswerFormat2,
+//         ),
+
+//         RPQuestionStep.withAnswerFormat(
+//           "question4",
+//           "Describe the obsession that you will work on",
+//           RPTextAnswerFormat.withParams(''),
+//           optional: true,
+//         ),
+//         RPInstructionStep(title: "Compulsion")
+//           ..text =
+//               "A compulsion is something you feel you have to do even though you may know it does not make sense. If you try to resist doing the compulsion, you may feel anxious, frustrated or angry.",
+//         RPQuestionStep.withAnswerFormat(
+//           "question5",
+//           "I will work on a compulsion",
+//           choiceAnswerFormat1,
+//         ),
+//         // TODO: if question5 == 1
+//         RPQuestionStep.withAnswerFormat(
+//           "question6",
+//           "The compulsion I will work on is about:",
+//           choiceAnswerFormat3,
+//         ),
+
+//         RPQuestionStep.withAnswerFormat(
+//             "question7", "Describe the compusion you will work on", RPTextAnswerFormat.withParams(''),
+//             optional: true),
+
+//         RPQuestionStep.withAnswerFormat(
+//             "question8",
+//             "Describe the exposure exercise (how will you work on the obsession or compulsion you described above?):",
+//             RPTextAnswerFormat.withParams(''),
+//             optional: true),
+//         // RPQuestionStep.withAnswerFormat(
+//         //   "question9",
+//         //   "Write the exposure exercise start time",
+//         //   RPDateTimeAnswerFormat.withParams(DateTimeAnswerStyle.TimeOfDay),
+//         // ),
+//         // RPInstructionStep(title: "")
+//         //   ..text =
+//         //       "During the exercise, use the “feeling thermometer” below to record how scared or upset you feel. The feeling thermometer is a scale from 0 to 10, in which 0 means no fear or upset and 10 means as scared or upset as you can imagine. Use the feeling thermometer to record how you are feeling just before starting the exposure exercise, after 5, 10 and 15 minutes.\nYour parents or therapist can help you keep track of the time and record how you are feeling.",
+//         // RPQuestionStep.withAnswerFormat(
+//         //   "question10",
+//         //   "Just before exposure",
+//         //   _imageChoiceAnswerFormat,
+//         // ),
+//         // RPQuestionStep.withAnswerFormat(
+//         //   "question11",
+//         //   "After 5 minutes",
+//         //   _imageChoiceAnswerFormat,
+//         // ),
+//         // RPQuestionStep.withAnswerFormat(
+//         //   "question12",
+//         //   "After 10 minutes",
+//         //   _imageChoiceAnswerFormat,
+//         // ),
+//         // RPQuestionStep.withAnswerFormat(
+//         //   "question13",
+//         //   "After 15 minutes",
+//         //   _imageChoiceAnswerFormat,
+//         // ),
+//         RPCompletionStep("completion")
+//           ..title = "Well done!"
+//           ..text = "Whenever you are ready, go to the task list and start the timed exposure exercise.",
+//       ]);
+// }
 
 class _ExposureOldSurvey implements Survey {
   String get title => 'Tvangstanker & -handlinger';

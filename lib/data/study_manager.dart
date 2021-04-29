@@ -28,6 +28,20 @@ class LocalStudyManager implements StudyManager {
             "Hormone levels, measured in saliva, and physiological indicators of stress from children and parents are used as input to privacy preserving signal processing and machine learning algorithms. Signal processing will be used to extract acoustic and physiological features of importance for therapeutic response. The study includes children with an OCD diagnosis and children without a psychiatric diagnosis and their parents."
         ..dataEndPoint = getDataEndpoint(DataEndPointTypes.FILE)
 
+        // collect location
+        ..addTriggerTask(
+            ImmediateTrigger(),
+            AppTask(
+              type: SensingUserTask.ONE_TIME_SENSING_TYPE,
+              title: "Location",
+              description: "Collect current location",
+            )..measures = SamplingSchema.common().getMeasureList(
+                namespace: NameSpace.CARP,
+                types: [
+                  ContextSamplingPackage.LOCATION,
+                ],
+              ))
+
         // collect App UX - triggers on end W1, mid W4, start W8 - TODO: use scheduled trigger
         ..addTriggerTask(
             ImmediateTrigger(),

@@ -7,6 +7,7 @@ class DataVisualizationPageModel extends DataModel {
   final MobilityCardDataModel _mobilityCardDataModel = MobilityCardDataModel();
   final SurveysCardDataModel _surveysCardDataModel = SurveysCardDataModel();
   final AudioCardDataModel _audioCardDataModel = AudioCardDataModel();
+  final StudyProgressCardDataModel _studyProgressCardDataModel = StudyProgressCardDataModel();
 
   ActivityCardDataModel get activityCardDataModel => _activityCardDataModel;
   StepsCardDataModel get stepsCardDataModel => _stepsCardDataModel;
@@ -14,6 +15,7 @@ class DataVisualizationPageModel extends DataModel {
   MobilityCardDataModel get mobilityCardDataModel => _mobilityCardDataModel;
   SurveysCardDataModel get surveysCardDataModel => _surveysCardDataModel;
   AudioCardDataModel get audioCardDataModel => _audioCardDataModel;
+  StudyProgressCardDataModel get studyProgressCardDataModel => _studyProgressCardDataModel;
 
   /// A stream of [UserTask]s as they are generated.
   Stream<UserTask> get userTaskEvents => AppTaskController().userTaskEvents;
@@ -36,5 +38,6 @@ class DataVisualizationPageModel extends DataModel {
     _mobilityCardDataModel.init(controller);
     _surveysCardDataModel.init(controller);
     _audioCardDataModel.init(controller);
+    _studyProgressCardDataModel.init(controller);
   }
 }

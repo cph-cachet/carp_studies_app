@@ -12,7 +12,6 @@ class _TaskListPageState extends State<TaskListPage> {
   @override
   Widget build(BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context);
-
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,

@@ -111,7 +111,7 @@ class _SymptomHierarchySurvey implements Survey {
         ),
         RPQuestionStep.withAnswerFormat(
           "question6",
-          "Worry about having a disease or that a body part or your appearance looks wrong)",
+          "Worry about having a disease or that a body part or your appearance looks wrong",
           RPSliderAnswerFormat.withParams(0, 10, divisions: 10),
         ),
         RPQuestionStep.withAnswerFormat(
@@ -132,7 +132,7 @@ class _SymptomHierarchySurvey implements Survey {
         RPQuestionStep.withAnswerFormat(
           "question10",
           "Here you can describe other obsessions that have not been mentioned",
-          RPTextAnswerFormat.withParams(""),
+          RPTextAnswerFormat.withParams(" "),
           optional: true,
         ),
         RPInstructionStep(
@@ -187,7 +187,7 @@ class _SymptomHierarchySurvey implements Survey {
         RPQuestionStep.withAnswerFormat(
           "question20",
           "Here you can describe other compulsions that have not been mentioned",
-          RPTextAnswerFormat.withParams(""),
+          RPTextAnswerFormat.withParams(" "),
           optional: true,
         ),
         RPCompletionStep("completion")
@@ -240,7 +240,7 @@ class _TrustScaleSurvey implements Survey {
   ]);
 
   RPTask get survey => RPOrderedTask("User Experience with App", [
-        RPInstructionStep(title: "", imagePath: 'assets/icons/smartphone.png')
+        RPInstructionStep(title: " ", imagePath: 'assets/icons/smartphone.png')
           ..text =
               "We would like to know what it was like for you to use the mobile app.\n\nPlease read each statement and chose the number (0, 1, 2, or 3) that best describes how you feel.",
         RPQuestionStep.withAnswerFormat(
@@ -400,7 +400,7 @@ class _InformedConsentSurvey implements Survey {
     RPChoice.withParams("Extremely cluttered.", 3),
   ]);
   RPTask get survey => RPOrderedTask("Informed consent", [
-        RPInstructionStep(title: "", imagePath: 'assets/icons/smartphone.png')
+        RPInstructionStep(title: " ", imagePath: 'assets/icons/smartphone.png')
           ..text =
               "Please make your evaluation of the app informed consent now.\n\nThe questionnaire consists of attributes that may apply to the app informed consent. You can express your agreement with the attributes by ticking the option that most closely reflects your impression.\n\nIt is your personal opinion that counts. Please remember: there is no wrong or right answer!",
         RPQuestionStep.withAnswerFormat(
@@ -528,7 +528,7 @@ class _AppUXSurvey implements Survey {
   ]);
 
   RPTask get survey => RPOrderedTask("User Experience with App", [
-        RPInstructionStep(title: "", imagePath: 'assets/icons/smartphone.png')
+        RPInstructionStep(title: " ", imagePath: 'assets/icons/smartphone.png')
           ..text =
               "Please make your evaluation of this mobile app now.\n\nThe questionnaire consists of attributes that may apply to the app. You can express your agreement with the attributes by ticking the option that most closely reflects your impression.\n\nIt is your personal opinion that counts. Please remember: there is no wrong or right answer!",
         RPQuestionStep.withAnswerFormat(
@@ -616,7 +616,7 @@ class _EcologicalParentsSurvey implements Survey {
             "Are you alone?",
             choiceAnswerFormat3,
           ),
-          RPInstructionStep(title: "")
+          RPInstructionStep(title: " ")
             ..text = "Indicate the extent you have felt this way over the past week.",
           RPQuestionStep.withAnswerFormat(
             "question7",
@@ -1228,13 +1228,13 @@ class _ExposureSurvey implements Survey {
         "Magical/superstitious behavior (like doing or saying things a certain number of times to prevent something bad from happening)",
         6),
     RPChoice.withParams("Involving your parents in a ritual or asking for reassurance", 7),
-    RPChoice.withParams("Doing something until it feels right ", 8),
+    RPChoice.withParams("Doing something until it feels right", 8),
   ]);
 
   RPChoiceAnswerFormat choiceAnswerFormat6 = RPChoiceAnswerFormat.withParams(ChoiceAnswerStyle.SingleChoice, [
     RPChoice.withParams("My discomfort grew until I couldn’t stand it anymore", 0),
     RPChoice.withParams("My discomfort went up and down", 1),
-    RPChoice.withParams("My discomfort did not really change ", 2),
+    RPChoice.withParams("My discomfort did not really change", 2),
     RPChoice.withParams("I felt less discomfort with time", 3),
   ]);
 
@@ -1285,7 +1285,7 @@ class _ExposureSurvey implements Survey {
         RPQuestionStep.withAnswerFormat(
           "question5",
           "You can describe the obsession you want to work on here, if you would like to describe it detail or if you could not find an obsession in the list.",
-          RPTextAnswerFormat.withParams(""),
+          RPTextAnswerFormat.withParams(" "),
           optional: true,
         ),
 
@@ -1307,7 +1307,7 @@ class _ExposureSurvey implements Survey {
         RPQuestionStep.withAnswerFormat(
           "question8",
           "You can describe the compulsion you want to work on here, if you would like to describe it detail or if you could not find a compulsion in the list.",
-          RPTextAnswerFormat.withParams(""),
+          RPTextAnswerFormat.withParams(" "),
           optional: true,
         ),
 
@@ -1317,7 +1317,7 @@ class _ExposureSurvey implements Survey {
             RPTextAnswerFormat.withParams(''),
             optional: true),
 
-        RPInstructionStep(title: "", imagePath: 'assets/images/timer_task.png')
+        RPInstructionStep(title: " ", imagePath: 'assets/images/timer_task.png')
           ..text =
               "On the next pages, you will be asked to note how much fear or discomfort you experience while you go against OCD.\n\nStart by noting how uncomfortable it is for you to think about doing the exercise you just described on a scale of 0 to 10. 0 means that you are completely calm or not at all afraid. 10 means that you are so scared or upset you can’t stand it.",
 

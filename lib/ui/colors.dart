@@ -34,7 +34,11 @@ class CACHET {
 
   static const List<Color> COLOR_LIST = [
     Color(0xFF7FC9E3),
+    RED_1,
+    BLUE_1,
     Color(0xFF809AE5),
+    Color(0xFF630A1A),
+    Color(0xFF1282B0),
     Color(0xFFC052A2),
     Color(0xFFBA0022),
     Color(0xFF6FB4E9),

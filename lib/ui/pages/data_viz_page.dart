@@ -55,8 +55,11 @@ class DataVisualizationPage extends StatelessWidget {
   List<Widget> get _dataVizCards {
     final List<Widget> widgets = [];
 
-    // always show overall measure stats
+    // always show scoreboard
     widgets.add(ScoreboardCardWidget(model));
+
+    // always show tasks progress
+    widgets.add(StudyProgressCardWidget(model.studyProgressCardDataModel));
 
     // always show overall measure stats
     widgets.add(MeasuresCardWidget(model.measuresCardDataModel));

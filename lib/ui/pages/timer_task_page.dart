@@ -123,7 +123,6 @@ class _TimerTaskPageState extends State<TimerTaskPage> {
           onPressed: () {
             print("close");
             _showCancelConfirmationDialog();
-            // TODO: close confirmation
           },
         ),
       ],

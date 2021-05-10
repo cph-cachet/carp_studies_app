@@ -94,6 +94,9 @@ class _LoadingPageState extends State<LoadingPage> {
     await bloc.getMessages();
     await Sensing().initialize();
 
+    // initialize thee data models
+    bloc.data.init(Sensing().controller);
+
     // wait 10 sec and the start sampling
     // TODO - legally, we should not start sensing before informed consent is accepted...
     Timer(Duration(seconds: 10), () => bloc.start());

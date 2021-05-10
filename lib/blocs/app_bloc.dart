@@ -65,6 +65,9 @@ class AppBLoC {
   /// The signed in user. Returns null if no user is signed in.
   CarpUser get user => backend?.user;
 
+  /// The name used for friendly greating - '' if no user logged in.
+  String get friendlyUsername => (user != null) ? user.firstName : '';
+
   /// Is sensing running, i.e. has the study executor been resumed?
   bool get isRunning => Sensing().isRunning;
 

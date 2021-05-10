@@ -4,7 +4,6 @@ import 'dart:async';
 import 'dart:math';
 import 'dart:convert';
 
-import 'package:carp_core/carp_core.dart';
 import 'package:carp_mobile_sensing/carp_mobile_sensing.dart';
 import 'package:carp_webservices/carp_services/carp_services.dart';
 import 'package:carp_webservices/carp_auth/carp_auth.dart';
@@ -29,16 +28,17 @@ import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:intl/intl.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 
-//import 'package:json_annotation/json_annotation.dart';
-
 part 'app.dart';
-part 'first_screen.dart';
+part 'carp_study_app.dart';
 part 'blocs/app_bloc.dart';
+part 'blocs/common.dart';
 
 part 'data/carp_backend.dart';
-part 'data/study_protocol_manager.dart';
-part 'data/surveys.dart';
+part 'sensing/local_surveys.dart';
 part 'data/message_manager.dart';
+
+part 'sensing/local_study_protocol_manager.dart';
+part 'sensing/sensing.dart';
 
 part 'models/data_model.dart';
 part 'models/tasklist_page_model.dart';
@@ -49,7 +49,7 @@ part 'models/cards/mobility_data_model.dart';
 part 'models/cards/steps_data_model.dart';
 part 'models/cards/measures_data_model.dart';
 part 'models/audio_user_task.dart';
-part 'research_package_objects/informed_consent_objects.dart';
+part 'data/local_resource_manager.dart';
 
 part 'ui/colors.dart';
 part 'ui/pages/data_viz_page.dart';
@@ -71,5 +71,5 @@ part 'ui/cards/mobility_card.dart';
 part 'ui/cards/measures_card.dart';
 
 void main() async {
-  runApp(CARPStudyApp());
+  runApp(CarpStudyApp());
 }

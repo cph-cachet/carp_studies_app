@@ -23,7 +23,7 @@ class MeasuresCardDataModel extends DataModel {
     super.init(controller);
 
     // initialize the sampling table
-    controller.deployment.measures
+    bloc.deployment.measures
         .forEach((measure) => _samplingTable[measure.type.split('.').last] = 0);
 
     // listen to incoming events in order to count the measure types

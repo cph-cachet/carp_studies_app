@@ -1,6 +1,6 @@
 part of carp_study_app;
 
-class CARPStudyApp extends StatelessWidget {
+class CarpStudyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       supportedLocales: const [
@@ -47,7 +47,7 @@ class CARPStudyApp extends StatelessWidget {
       },
       theme: carpStudyTheme,
       darkTheme: carpStudyDarkTheme,
-      home: SplashScreen(),
+      home: LoadingPage(),
       routes: {
         '/HomePage': (context) => CARPStudyAppHome(),
         '/ConsentPage': (context) => InformedConsentPage(),
@@ -56,25 +56,43 @@ class CARPStudyApp extends StatelessWidget {
   }
 }
 
-class SplashScreen extends StatefulWidget {
-  _SplashScreenState createState() => new _SplashScreenState();
+class LoadingPage extends StatefulWidget {
+  _LoadingPageState createState() => new _LoadingPageState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
+class _LoadingPageState extends State<LoadingPage> {
   /// This methods is used to set up the entire app, including:
   ///  * initialize the bloc
   ///  * authenticate the user
   ///  * get the invitation
+  ///  * get the informed consent
   ///  * get the study
   ///  * initialize sensing
   ///  * start sensing
-  Future<bool> init(BuildContext context) async {
-    await bloc.init();
-    await bloc.backend.authenticate(context);
-    await bloc.backend.getStudyInvitation(context);
+  Future<bool> initialize(BuildContext context) async {
+    // initialize the bloc, setting the deployment mode (local or CARP)
+    await bloc.initialize(DeploymentMode.LOCAL);
 
+    // only initialize the CARP backend, if needed
+    if (bloc.deploymentMode == DeploymentMode.CARP) {
+      await bloc.backend.initialize();
+      await bloc.backend.authenticate(context);
+      await bloc.backend.getStudyInvitation(context);
+      await CarpResourceManager().initialize();
+    }
+
+    // find the right informed consent (if needed)
+    if (!bloc.hasInformedConsentBeenAccepted) {
+      if (bloc.deploymentMode == DeploymentMode.LOCAL) {
+        bloc.informedConsent = LocalResourceManager().getInformedConsent();
+      } else {
+        bloc.informedConsent = await CarpResourceManager().getInformedConsent();
+      }
+    }
+
+    await bloc.messageManager.init();
     await bloc.getMessages();
-    await bloc.initializeSensing();
+    await Sensing().initialize();
 
     // wait 10 sec and the start sampling
     // TODO - legally, we should not start sensing before informed consent is accepted...
@@ -86,7 +104,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: init(context),
+        future: initialize(context),
         builder: (context, snapshot) => (!snapshot.hasData)
             ? Scaffold(
                 backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -97,7 +115,9 @@ class _SplashScreenState extends State<SplashScreen> {
                 )))
             : Scaffold(
                 backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-                body: (bloc.hasInformedConsentBeenAccepted) ? CARPStudyAppHome() : InformedConsentPage(),
+                body: (bloc.hasInformedConsentBeenAccepted)
+                    ? CARPStudyAppHome()
+                    : InformedConsentPage(),
               ));
   }
 
@@ -112,7 +132,8 @@ class _SplashScreenState extends State<SplashScreen> {
         child: new Center(
             child: new Hero(
           tag: "tick",
-          child: new Image.asset('assets/images/splash_cachet.png', width: 150.0, height: 150.0, scale: 1.0),
+          child: new Image.asset('assets/images/splash_cachet.png',
+              width: 150.0, height: 150.0, scale: 1.0),
         )),
       );
 }

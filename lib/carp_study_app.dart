@@ -49,7 +49,7 @@ class CarpStudyApp extends StatelessWidget {
       darkTheme: carpStudyDarkTheme,
       home: LoadingPage(),
       routes: {
-        '/HomePage': (context) => CARPStudyAppHome(),
+        '/HomePage': (context) => CarpStudyAppHome(),
         '/ConsentPage': (context) => InformedConsentPage(),
       },
     );
@@ -70,11 +70,14 @@ class _LoadingPageState extends State<LoadingPage> {
   ///  * initialize sensing
   ///  * start sensing
   Future<bool> initialize(BuildContext context) async {
-    // initialize the bloc, setting the deployment mode (local or CARP)
+    // initialize the bloc, setting the deployment mode:
+    //  * LOCAL
+    //  * CARP_STAGGING
+    //  * CARP_PRODUCTION
     await bloc.initialize(DeploymentMode.LOCAL);
 
     // only initialize the CARP backend, if needed
-    if (bloc.deploymentMode == DeploymentMode.CARP) {
+    if (bloc.deploymentMode != DeploymentMode.LOCAL) {
       await bloc.backend.initialize();
       await bloc.backend.authenticate(context);
       await bloc.backend.getStudyInvitation(context);
@@ -119,7 +122,7 @@ class _LoadingPageState extends State<LoadingPage> {
             : Scaffold(
                 backgroundColor: Theme.of(context).scaffoldBackgroundColor,
                 body: (bloc.hasInformedConsentBeenAccepted)
-                    ? CARPStudyAppHome()
+                    ? CarpStudyAppHome()
                     : InformedConsentPage(),
               ));
   }

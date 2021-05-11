@@ -17,7 +17,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
 
   /// Create a new CAMS study protocol.
   Future<StudyProtocol> getStudyProtocol(String ignored) async =>
-      _protocol ??= await _getPatientWristWatch(ignored);
+      _protocol ??= await _getGenericCARPStudy(ignored);
 
   Future<StudyProtocol> _getPatientWristWatch(String studyId) async {
     if (_protocol == null) {

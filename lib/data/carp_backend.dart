@@ -5,9 +5,7 @@ part of carp_study_app;
 
 class CarpBackend {
   static const String PROD_URI = "https://cans.cachet.dk:443";
-  // static const String STAGING_URI = "https://cans.cachet.dk:443/stage"; // The staging server
-  // static const String TEST_URI = "https://cans.cachet.dk:443/test"; // The testing server
-  // static const String DEV_URI = "https://cans.cachet.dk:443/dev"; // The development server
+  static const String STAGING_URI = "https://cans.cachet.dk:443/stage";
   static const String CLIENT_ID = "carp";
   static const String CLIENT_SECRET = "carp";
 
@@ -34,7 +32,10 @@ class CarpBackend {
   /// The signed in user
   CarpUser get user => CarpService().currentUser;
 
-  String get uri => PROD_URI;
+  String get uri => (bloc.deploymentMode == DeploymentMode.CARP_PRODUCTION)
+      ? PROD_URI
+      : STAGING_URI;
+
   String get clientID => CLIENT_ID;
   String get clientSecret => CLIENT_SECRET;
 

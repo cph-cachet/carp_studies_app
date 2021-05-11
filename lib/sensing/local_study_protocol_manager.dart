@@ -17,7 +17,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
 
   /// Create a new CAMS study protocol.
   Future<StudyProtocol> getStudyProtocol(String ignored) async =>
-      _protocol ??= await _getPatientWristWatch(ignored);
+      _protocol ??= await _getGenericCARPStudy(ignored);
 
   Future<StudyProtocol> _getPatientWristWatch(String studyId) async {
     if (_protocol == null) {
@@ -39,8 +39,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           affiliation:
               'Børne- og Ungdomspsykiatrisk Center – Forskningsenheden, Region Hovedstadens Psykiatri\nDTU Compute',
           address: 'Gentoftehospitalsvej 28, 2900 Hellerup',
-        )
-        ..dataEndPoint = getDataEndpoint(DataEndPointTypes.FILE);
+        );
 
       // Define which devices are used for data collection.
       Smartphone phone = Smartphone();
@@ -176,8 +175,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           affiliation:
               'Børne- og Ungdomspsykiatrisk Center – Forskningsenheden, Region Hovedstadens Psykiatri\nDTU Compute',
           address: 'Gentoftehospitalsvej 28, 2900 Hellerup',
-        )
-        ..dataEndPoint = getDataEndpoint(DataEndPointTypes.FILE);
+        );
 
       // Define which devices are used for data collection.
       Smartphone phone = Smartphone();
@@ -311,8 +309,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           affiliation:
               'Børne- og Ungdomspsykiatrisk Center – Forskningsenheden, Region Hovedstadens Psykiatri\nDTU Compute',
           address: 'Gentoftehospitalsvej 28, 2900 Hellerup',
-        )
-        ..dataEndPoint = getDataEndpoint(DataEndPointTypes.FILE);
+        );
 
       // Define which devices are used for data collection.
       Smartphone phone = Smartphone();
@@ -710,8 +707,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           email: 'jakba@dtu.dk',
           affiliation: 'Technical University of Denmark',
           address: 'Ørsteds Plads, bygn. 349, DK-2800 Kg. Lyngby',
-        )
-        ..dataEndPoint = getDataEndpoint(DataEndPointTypes.FILE);
+        );
 
       // Define which devices are used for data collection.
       Smartphone phone = Smartphone();

@@ -3,11 +3,9 @@ part of carp_study_app;
 // String encode(Object object) =>
 //     const JsonEncoder.withIndent(' ').convert(object);
 
-class CARPBackend {
+class CarpBackend {
   static const String PROD_URI = "https://cans.cachet.dk:443";
-  // static const String STAGING_URI = "https://cans.cachet.dk:443/stage"; // The staging server
-  // static const String TEST_URI = "https://cans.cachet.dk:443/test"; // The testing server
-  // static const String DEV_URI = "https://cans.cachet.dk:443/dev"; // The development server
+  static const String STAGING_URI = "https://cans.cachet.dk:443/stage";
   static const String CLIENT_ID = "carp";
   static const String CLIENT_SECRET = "carp";
 
@@ -18,31 +16,32 @@ class CARPBackend {
   static const String STUDY_DEPLOYMENT_ID_KEY = "study_deployment_id";
 
   String get _oauthTokenKey =>
-      '${settings.appName}.$OAUTH_TOKEN_KEY'.toLowerCase();
-  String get _usernameKey => '${settings.appName}.$USERNAME_KEY'.toLowerCase();
-  String get _studyIdKey => '${settings.appName}.$STUDY_ID_KEY'.toLowerCase();
+      '${Settings().appName}.$OAUTH_TOKEN_KEY'.toLowerCase();
+  String get _usernameKey =>
+      '${Settings().appName}.$USERNAME_KEY'.toLowerCase();
+  String get _studyIdKey => '${Settings().appName}.$STUDY_ID_KEY'.toLowerCase();
   String get _studyDeploymentIdKey =>
-      '${settings.appName}.$STUDY_DEPLOYMENT_ID_KEY'.toLowerCase();
+      '${Settings().appName}.$STUDY_DEPLOYMENT_ID_KEY'.toLowerCase();
 
   CarpApp _app;
   OAuthToken _oauthToken;
   String _username;
-  ActiveParticipationInvitation _invitation;
-  StudyProtocolManager studyProtocolManager;
-  MessageManager messageManager = LocalMessageManager();
 
   CarpApp get app => _app;
 
   /// The signed in user
   CarpUser get user => CarpService().currentUser;
 
-  String get uri => PROD_URI;
+  String get uri => (bloc.deploymentMode == DeploymentMode.CARP_PRODUCTION)
+      ? PROD_URI
+      : STAGING_URI;
+
   String get clientID => CLIENT_ID;
   String get clientSecret => CLIENT_SECRET;
 
   OAuthToken get oauthToken {
     if (_oauthToken == null) {
-      String tokenString = settings.preferences.getString(_oauthTokenKey);
+      String tokenString = Settings().preferences.getString(_oauthTokenKey);
 
       _oauthToken = (tokenString != null)
           ? OAuthToken.fromJson(jsonDecode(tokenString))
@@ -53,51 +52,41 @@ class CARPBackend {
 
   set oauthToken(OAuthToken token) {
     _oauthToken = token;
-    settings.preferences.setString(_oauthTokenKey, jsonEncode(token.toJson()));
+    Settings()
+        .preferences
+        .setString(_oauthTokenKey, jsonEncode(token.toJson()));
   }
 
   String get username =>
-      _username ??= settings.preferences.getString(_usernameKey);
+      _username ??= Settings().preferences.getString(_usernameKey);
 
   set username(String username) {
     _username = username;
-    settings.preferences.setString(_usernameKey, username);
+    Settings().preferences.setString(_usernameKey, username);
   }
 
   String get studyId =>
-      app?.studyId ??= settings.preferences.getString(_studyIdKey);
+      app?.studyId ??= Settings().preferences.getString(_studyIdKey);
 
   set studyId(String id) {
     CarpService().app.studyId = id;
-    settings.preferences.setString(_studyIdKey, id);
+    Settings().preferences.setString(_studyIdKey, id);
   }
 
   String get studyDeploymentId => app?.studyDeploymentId ??=
-      settings.preferences.getString(_studyDeploymentIdKey);
+      Settings().preferences.getString(_studyDeploymentIdKey);
 
   set studyDeploymentId(String id) {
     CarpService().app.studyDeploymentId = id;
-    settings.preferences.setString(_studyDeploymentIdKey, id);
+    Settings().preferences.setString(_studyDeploymentIdKey, id);
   }
 
-  static CARPBackend _instance = CARPBackend._();
-  CARPBackend._() : super();
+  static CarpBackend _instance = CarpBackend._();
+  CarpBackend._() : super();
 
-  factory CARPBackend() => _instance;
+  factory CarpBackend() => _instance;
 
-  Future<void> init() async {
-    // first we will load the protcol locally
-    studyProtocolManager = LocalStudyProtocolManager();
-
-    // ... but later we will load it from CARP
-    // used for downloading the study protocol from the CARP server
-    // TODO - obtain deployment id from an invitaiton
-    // manager = CARPStudyProtocolManager();
-
-    // await settings.init();
-    await studyProtocolManager.initialize();
-    await messageManager.init();
-
+  Future<void> initialize() async {
     _app = CarpApp(
       name: "CANS Production @ DTU",
       uri: Uri.parse(uri),
@@ -136,13 +125,16 @@ class CARPBackend {
     info('User authenticated - user: $user');
     // saving token on the phone
     oauthToken = user.token;
+
+    // configure the participation service in order to get the invitations
+    CarpParticipationService().configureFrom(CarpService());
   }
 
   /// Get the study invitation.
   Future<void> getStudyInvitation(BuildContext context) async {
     if (studyId == null || studyDeploymentId == null) {
       ActiveParticipationInvitation _invitation =
-          await CarpService().getStudyInvitation(context);
+          await CarpParticipationService().getStudyInvitation(context);
       debug('CARP Study Invitation: $_invitation');
 
       studyId = _invitation?.studyId;
@@ -150,18 +142,6 @@ class CARPBackend {
     }
     info('Study ID: $studyId');
     info('Deployment ID: $studyDeploymentId');
-  }
-
-  /// Get the study protocol from the study protocol manager based on the
-  /// current study deployment id
-  Future<StudyProtocol> getStudyProtocol() async {
-    StudyProtocol protocol =
-        await studyProtocolManager.getStudyProtocol(studyDeploymentId);
-
-    // set the study id (deployment id)
-    if (protocol is CAMSStudyProtocol) protocol.studyId = studyDeploymentId;
-
-    return protocol;
   }
 
   Future<ConsentDocument> uploadInformedConsent(RPTaskResult taskResult) async {
@@ -186,14 +166,14 @@ class CARPBackend {
   }
 
   Future<void> leaveStudy() async {
-    await settings.preferences.remove(_studyIdKey);
-    await settings.preferences.remove(_studyDeploymentIdKey);
+    await Settings().preferences.remove(_studyIdKey);
+    await Settings().preferences.remove(_studyDeploymentIdKey);
   }
 
   Future<void> signOut() async {
     await CarpService().signOut();
 
-    await settings.preferences.remove(_usernameKey);
-    await settings.preferences.remove(_oauthTokenKey);
+    await Settings().preferences.remove(_usernameKey);
+    await Settings().preferences.remove(_oauthTokenKey);
   }
 }

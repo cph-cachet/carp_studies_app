@@ -11,16 +11,16 @@ class StudyPageModel extends DataModel {
 
   /// Events on the state of the study executor
   Stream<ProbeState> get studyExecutorStateEvents =>
-      bloc.controller.executor.stateEvents;
+      Sensing().controller.executor.stateEvents;
 
   /// Current state of the study executor (e.g., resumed, paused, ...)
-  ProbeState get studyState => bloc.controller.executor.state;
+  ProbeState get studyState => Sensing().controller.executor.state;
 
   /// Get all sesing events (i.e. all [DataPoint] objects being collected).
-  Stream<DataPoint> get samplingEvents => bloc.controller.data;
+  Stream<DataPoint> get samplingEvents => Sensing().controller.data;
 
   /// The total sampling size so far since this study was started.
-  int get samplingSize => bloc.controller.samplingSize;
+  int get samplingSize => Sensing().controller.samplingSize;
 
   /// The list of messages to be displayed.
   List<Message> get messages => bloc.messages;

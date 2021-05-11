@@ -32,7 +32,7 @@ class InformedConsentPage extends StatelessWidget {
         builder: (context) {
           return RPUITask(
             onSubmit: resultCallback,
-            task: informedConsentTask,
+            task: bloc.informedConsent,
           );
         },
       ),

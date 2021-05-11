@@ -3,18 +3,28 @@ part of carp_study_app;
 class AppBLoC {
   static const INFORMED_CONSENT_ACCEPTED_KEY = 'informed_consent_accepted';
 
-  final CARPBackend _backend = CARPBackend();
-  CAMSMasterDeviceDeployment _deployment;
+  final CarpBackend _backend = CarpBackend();
+  // CAMSMasterDeviceDeployment _deployment;
   final CarpStydyAppDataModel _data = CarpStydyAppDataModel();
   StudyDeploymentStatus _status;
-  StudyProtocol _protocol;
+  // StudyProtocol _protocol;
   DateTime _studyStartTimestamp;
   List<Message> _messages;
 
-  CARPBackend get backend => _backend;
-  StudyDeploymentController controller;
-  String get studyDeploymentId => backend?.studyDeploymentId;
-  CAMSMasterDeviceDeployment get deployment => _deployment;
+  /// What kind of deployment are we running - local or CARP?
+  DeploymentMode deploymentMode = DeploymentMode.LOCAL;
+
+  /// The informed consent to be shown to the user for this study.
+  RPOrderedTask informedConsent;
+
+  MessageManager messageManager = LocalMessageManager();
+
+  CarpBackend get backend => _backend;
+
+  String get studyDeploymentId => deployment?.studyDeploymentId;
+
+  /// The deployment running on this phone.
+  CAMSMasterDeviceDeployment get deployment => Sensing().controller?.deployment;
 
   /// Get the latest status of the study deployment.
   StudyDeploymentStatus get status => _status;
@@ -26,72 +36,79 @@ class AppBLoC {
   CarpStydyAppDataModel get data => _data;
 
   String get _informedConsentAcceptedKey =>
-      '${settings.appName}.$INFORMED_CONSENT_ACCEPTED_KEY'.toLowerCase();
+      '${Settings().appName}.$INFORMED_CONSENT_ACCEPTED_KEY'.toLowerCase();
 
-  AppBLoC() : super() {
-    // create and register external sampling packages
-    //SamplingPackageRegistry.register(ConnectivitySamplingPackage());
-    SamplingPackageRegistry().register(ContextSamplingPackage());
-    //SamplingPackageRegistry.register(CommunicationSamplingPackage());
-    SamplingPackageRegistry().register(AudioSamplingPackage());
-    SamplingPackageRegistry().register(SurveySamplingPackage());
-    //SamplingPackageRegistry.register(HealthSamplingPackage());
+  AppBLoC() : super();
 
-    // create and register external data managers
-    DataManagerRegistry().register(CarpDataManager());
-
-    // register the special-purpose audio user task factory
-    AppTaskController().registerUserTaskFactory(AudioUserTaskFactory());
-  }
-
-  Future<void> init() async {
-    globalDebugLevel = DebugLevel.DEBUG;
-    await settings.init();
-    await backend.init();
+  Future<void> initialize([DeploymentMode deploymentMode]) async {
+    this.deploymentMode = deploymentMode ?? DeploymentMode.LOCAL;
+    Settings().debugLevel = DebugLevel.DEBUG;
+    await Settings().init();
     info('$runtimeType initialized');
   }
 
-  /// Initialize and setup sensing.
-  Future<void> initializeSensing() async {
-    // get the protocol from the study protocol manager based on the
-    // study deployment id
-    _protocol = await backend.getStudyProtocol();
+  /// Has the informed consent been shown to, and accepted by the user?
+  bool get hasInformedConsentBeenAccepted =>
+      Settings().preferences.getBool(_informedConsentAcceptedKey) ?? false;
 
-    // deploy this protocol using the on-phone deployment service
-    // reuse the study deployment id, so we have the same id on the phone deployment
-    _status = await CAMSDeploymentService().createStudyDeployment(
-      _protocol,
-      studyDeploymentId,
-    );
+  /// Has the informed consent been handled?
+  /// This entails that it has been:
+  ///  * shown to the user
+  ///  * accepted by the user
+  ///  * successfully uploaded to CARP
+  set informedConsentAccepted(bool accepted) =>
+      Settings().preferences.setBool(_informedConsentAcceptedKey, accepted);
 
-    // initialize the local device controller with the deployment status,
-    // which contains the list of needed devices
-    await DeviceController().initialize(_status, CAMSDeploymentService());
+  Future<void> getMessages() async =>
+      _messages ??= await messageManager?.messages;
 
-    // now we're ready to get the device deployment configuration for this phone
-    _deployment = await CAMSDeploymentService()
-        .getDeviceDeployment(status.studyDeploymentId);
+  /// The signed in user. Returns null if no user is signed in.
+  CarpUser get user => backend?.user;
 
-    // set the user id
-    // TODO : check wheter we want this to be part of the data upload - anonymous?
-    _deployment.userId = CarpService().currentUser.username;
+  /// The name used for friendly greating - '' if no user logged in.
+  String get friendlyUsername => (user != null) ? user.firstName : '';
 
-    // create a study deployment controller that can manage this deployment
-    controller = StudyDeploymentController(
-      deployment,
-      debugLevel: DebugLevel.DEBUG,
-      // privacySchemaName: PrivacySchema.DEFAULT,
-    );
+  /// Is sensing running, i.e. has the study executor been resumed?
+  bool get isRunning => Sensing().isRunning;
 
-    // initialize thee data models
-    data.init(controller);
+  /// the list of running - i.e. used - probes in this study.
+  List<Probe> get runningProbes => (Sensing().controller != null)
+      ? Sensing().controller.executor.probes
+      : [];
 
-    // initialize the controller
-    await controller.initialize();
+  /// Start sensing. Should only be called once.
+  /// Use [resume] and [pause] if pausing/resuming sensing.
+  Future<void> start() async {
+    Sensing().controller.resume();
+    _studyStartTimestamp = await Settings().studyStartTimestamp;
+
+    // listening on the data stream and print them as json to the debug console
+    Sensing().controller.data.listen((data) => print(toJsonString(data)));
   }
 
+  // Pause sensing.
+  void pause() => Sensing().controller.pause();
+
+  /// Resume sensing.
+  void resume() => Sensing().controller.resume();
+
+  /// Stop sensing.
+  /// Once sensing is stopped, it cannot be (re)started.
+  void stop() => Sensing().controller.stop();
+
+  // Dispose the entire sensing.
+  void dispose() => stop();
+
+  /// Add a [Datum] object to the stream of events.
+  void addDatum(Datum datum) =>
+      Sensing().controller.executor.addDataPoint(DataPoint.fromData(datum));
+
+  /// Add a error to the stream of events.
+  void addError(Object error, [StackTrace stacktrace]) =>
+      Sensing().controller.executor.addError(error, stacktrace);
+
   Future<void> leaveStudy() async {
-    controller.stop();
+    Sensing().controller.stop();
     bloc.informedConsentAccepted = false;
     await backend.leaveStudy();
   }
@@ -100,69 +117,6 @@ class AppBLoC {
     await leaveStudy();
     await backend.signOut();
   }
-
-  Future<void> getMessages() async =>
-      _messages ??= await backend?.messageManager?.messages;
-
-  /// Has the informed consent been shown to, and accepted by the user?
-  bool get hasInformedConsentBeenAccepted =>
-      settings.preferences.getBool(_informedConsentAcceptedKey) ?? false;
-
-  /// Has the informed consent been handled?
-  /// This entails that it has been:
-  ///  * shown to the user
-  ///  * accepted by the user
-  ///  * successfully uploaded to CARP
-  set informedConsentAccepted(bool accepted) =>
-      settings.preferences.setBool(_informedConsentAcceptedKey, accepted);
-
-  /// The [StudyProtocol] of the currently running study.
-  StudyProtocol get protocol => _protocol;
-
-  /// The signed in user. Returns null if no user is signed in.
-  CarpUser get user => backend?.user;
-
-  /// Is sensing running, i.e. has the study executor been resumed?
-  bool get isRunning =>
-      (controller != null) && controller.executor.state == ProbeState.resumed;
-
-  /// the list of running - i.e. used - probes in this study.
-  List<Probe> get runningProbes =>
-      (controller != null) ? controller.executor.probes : List();
-
-  /// Start sensing. Should only be called once.
-  /// Use [resume] and [pause] if pausing/resuming sensing.
-  Future<void> start() async {
-    controller.resume();
-    _studyStartTimestamp = await settings.studyStartTimestamp;
-
-    // listening on the data stream and print them as json to the debug console
-    controller.data.listen((data) => print(toJsonString(data)));
-  }
-
-  // Pause sensing.
-  void pause() => controller.pause();
-
-  /// Resume sensing.
-  void resume() => controller.resume();
-
-  /// Stop sensing.
-  /// Once sensing is stopped, it cannot be (re)started.
-  void stop() {
-    controller.stop();
-    _protocol = null;
-  }
-
-  // Dispose the entire sensing.
-  void dispose() => stop();
-
-  /// Add a [Datum] object to the stream of events.
-  void addDatum(Datum datum) =>
-      controller.executor.addDataPoint(DataPoint.fromData(datum));
-
-  /// Add a error to the stream of events.
-  void addError(Object error, [StackTrace stacktrace]) =>
-      controller.executor.addError(error, stacktrace);
 }
 
 final bloc = AppBLoC();

@@ -35,8 +35,9 @@ class DataVisualizationPage extends StatelessWidget {
     // always show overall measure stats
     widgets.add(MeasuresCardWidget(model.measuresCardDataModel));
 
-    // check which measures are in the study
-    model.controller.deployment.measures.forEach((measure) {
+    // check which measures are in the study and load the
+    // coresponding data vizualization cards
+    bloc.deployment.measures.forEach((measure) {
       if (measure.type == SensorSamplingPackage.PEDOMETER)
         widgets.add(StepsOuterStatefulWidget(model.stepsCardDataModel));
       if (measure.type == ContextSamplingPackage.MOBILITY)
@@ -46,12 +47,5 @@ class DataVisualizationPage extends StatelessWidget {
     });
 
     return widgets;
-
-    // return <Widget>[
-    //   MeasuresCardWidget(model.measuresCardDataModel),
-    //   StepsOuterStatefulWidget(model.stepsCardDataModel),
-    //   MobilityOuterStatefulWidget(model.mobilityCardDataModel),
-    //   ActivityOuterStatefulWidget(model.activityCardDataModel),
-    // ];
   }
 }

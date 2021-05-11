@@ -175,7 +175,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 // Exit the Ordered Task
                 Navigator.of(context).pop();
                 Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (context) => SplashScreen()),
+                  MaterialPageRoute(builder: (context) => LoadingPage()),
                 );
               },
             )
@@ -214,7 +214,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 // Exit the Ordered Task
                 Navigator.of(context).pop();
                 Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (context) => SplashScreen()),
+                  MaterialPageRoute(builder: (context) => LoadingPage()),
                 );
               },
             )

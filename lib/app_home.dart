@@ -1,11 +1,11 @@
 part of carp_study_app;
 
-class CARPStudyAppHome extends StatefulWidget {
-  CARPStudyAppHome({Key key}) : super(key: key);
+class CarpStudyAppHome extends StatefulWidget {
+  CarpStudyAppHome({Key key}) : super(key: key);
   CARPStudyAppState createState() => CARPStudyAppState();
 }
 
-class CARPStudyAppState extends State<CARPStudyAppHome> {
+class CARPStudyAppState extends State<CarpStudyAppHome> {
   int _selectedIndex = 0;
   final _pages = [];
 

@@ -51,7 +51,7 @@ class _MeasuresCardWidgetState extends State<MeasuresCardWidget> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   Text(
-                                      '${locale.translate('Hello')} ${bloc.user.firstName}',
+                                      '${locale.translate('Hello')} ${bloc.friendlyUsername}',
                                       style: aboutCardTitleStyle),
                                   Text(
                                       locale.translate(

@@ -28,7 +28,7 @@ import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:intl/intl.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 
-part 'app.dart';
+part 'app_home.dart';
 part 'carp_study_app.dart';
 part 'blocs/app_bloc.dart';
 part 'blocs/common.dart';

@@ -48,8 +48,11 @@ class _Surveys {
   Survey _timedExposure = _TimedExposureSurvey();
   Survey get timedExposure => _timedExposure;
 
-  Survey _symptomHierarchy = _SymptomHierarchySurvey();
-  Survey get symptomHierarchy => _symptomHierarchy;
+  Survey _symptomHierarchyObsessions = _SymptomHierarchySurveyObsessions();
+  Survey get symptomHierarchyObsessions => _symptomHierarchyObsessions;
+
+  Survey _symptomHierarchyCompulsions = _SymptomHierarchySurveyCompulsions();
+  Survey get symptomHierarchyCoumpulsions => _symptomHierarchyCompulsions;
 }
 
 abstract class Survey {
@@ -69,65 +72,74 @@ abstract class Survey {
   RPTask get survey;
 }
 
-class _SymptomHierarchySurvey implements Survey {
-  String get title => 'Symptom Hierarchy';
+class _SymptomHierarchySurveyObsessions implements Survey {
+  String get title => 'Symptom Hierarchy: Obsessions';
 
   String get description =>
-      'This form is designed to help you keep track of how your obsessions and compulsions change from week to week.';
+      'This form is designed to help you keep track of how your obsessions change from week to week.';
 
   Duration get expire => const Duration(days: 7);
 
   int get minutesToComplete => 5;
 
-  RPTask get survey => RPOrderedTask("Symptom Hierarchy", [
+  RPTask get survey => RPOrderedTask("Symptom Hierarchy: Obsessions", [
         RPInstructionStep(
           title: "Obsessions",
         )..text =
-            "Symptom Hierarchy: Obsessions\n\n\nWe will start with obsessions. Obsessions are unwanted thoughts or images that keep popping into your head and that you can't stop thinking about, even though you want to be rid of them.\n\nOn the next pages, you will see obsessions that many people with OCD have. Tell us how upset or scared each obsession has been for you over the past week by choosing the number that best matches how you feel. 0 means that you have not had the obsession or that it is not at all unpleasant and 10 means that the obsession is so upsetting you can’t stand it.",
+            "Symptom Hierarchy: Obsessions\n\n\nObsessions are unwanted thoughts or images that keep popping into your head and that you can't stop thinking about, even though you want to be rid of them.\n\nOn the next pages, you will see obsessions that many people with OCD have. Tell us how upset or scared each obsession has been for you over the past week by choosing the number that best matches how you feel. 0 means that you have not had the obsession or that it is not at all unpleasant and 10 means that the obsession is so upsetting you can’t stand it.",
         RPQuestionStep.withAnswerFormat(
           "question1",
           "Fear/ disgust of pollution, infection, dirt, bacteria, diseases",
           RPSliderAnswerFormat.withParams(0, 10, divisions: 10),
+          optional: true,
         ),
         RPQuestionStep.withAnswerFormat(
           "question2",
           "Fear of harming yourself or others (body or feelings)",
           RPSliderAnswerFormat.withParams(0, 10, divisions: 10),
+          optional: true,
         ),
         RPQuestionStep.withAnswerFormat(
           "question3",
           "Disturbing thoughts/ images about sex, pregnancy or sexuality",
           RPSliderAnswerFormat.withParams(0, 10, divisions: 10),
+          optional: true,
         ),
         RPQuestionStep.withAnswerFormat(
           "question4",
           "Need to collect things or fear of losing something",
           RPSliderAnswerFormat.withParams(0, 10, divisions: 10),
+          optional: true,
         ),
         RPQuestionStep.withAnswerFormat(
           "question5",
           "Magical/superstitious thoughts or actions (e.g. lucky numbers or words; stepping on a crack can break someone’s back)",
           RPSliderAnswerFormat.withParams(0, 10, divisions: 10),
+          optional: true,
         ),
         RPQuestionStep.withAnswerFormat(
           "question6",
           "Worry about having a disease or that a body part or your appearance looks wrong",
           RPSliderAnswerFormat.withParams(0, 10, divisions: 10),
+          optional: true,
         ),
         RPQuestionStep.withAnswerFormat(
           "question7",
           "Fear of offending God or Satan or worry about what is right and wrong",
           RPSliderAnswerFormat.withParams(0, 10, divisions: 10),
+          optional: true,
         ),
         RPQuestionStep.withAnswerFormat(
           "question8",
           "Symmetry and order (e.g. that things must lie in a certain way, or things must be in order)",
           RPSliderAnswerFormat.withParams(0, 10, divisions: 10),
+          optional: true,
         ),
         RPQuestionStep.withAnswerFormat(
           "question9",
           "Needing to do something until it feels right or not wrong",
           RPSliderAnswerFormat.withParams(0, 10, divisions: 10),
+          optional: true,
         ),
         RPQuestionStep.withAnswerFormat(
           "question10",
@@ -135,57 +147,84 @@ class _SymptomHierarchySurvey implements Survey {
           RPTextAnswerFormat.withParams(" "),
           optional: true,
         ),
+        RPCompletionStep("completion")
+          ..title = "Hurray!"
+          ..text =
+              "You are finished recording your obsessions for this week. By keeping track of your obsessions and compulsions, you're taking back control, so OCD doesn't control you.",
+      ]);
+}
+
+class _SymptomHierarchySurveyCompulsions implements Survey {
+  String get title => 'Symptom Hierarchy: Compulsions';
+
+  String get description =>
+      'This form is designed to help you keep track of how your compulsions change from week to week.';
+
+  Duration get expire => const Duration(days: 7);
+
+  int get minutesToComplete => 5;
+
+  RPTask get survey => RPOrderedTask("Symptom Hierarchy: Compulsions", [
         RPInstructionStep(
           title: "Compulsions",
         )..text =
             "Symptom hierarchy: Compulsions\n\n\nCompulsions are things that OCD wants you to do. If you try to resist doing these things or try not to do what OCD tells to, you may feel afraid, worried, frustrated, angry or upset.\n\nOn the next pages there will be some compulsions that many people with OCD have. Tell us how upset each compulsion (or trying to resist the compulsion) has been for you over the past week by choosing the number that best matches how you feel. 0 means that you do not have that compulsion or that does not bother you and 10 means that the compulsion upsets you so much that you can’t stand it.",
         RPQuestionStep.withAnswerFormat(
-          "question11",
+          "question1",
           "Washing or cleaning",
           RPSliderAnswerFormat.withParams(0, 10, divisions: 10),
+          optional: true,
         ),
         RPQuestionStep.withAnswerFormat(
-          "question12",
+          "question2",
           "Checking (like if you have remembered to lock the door)",
           RPSliderAnswerFormat.withParams(0, 10, divisions: 10),
+          optional: true,
         ),
         RPQuestionStep.withAnswerFormat(
-          "question13",
+          "question3",
           "Repeating actions (like turning the lights on and off several times)",
           RPSliderAnswerFormat.withParams(0, 10, divisions: 10),
+          optional: true,
         ),
         RPQuestionStep.withAnswerFormat(
-          "question14",
+          "question4",
           "Counting things",
           RPSliderAnswerFormat.withParams(0, 10, divisions: 10),
+          optional: true,
         ),
         RPQuestionStep.withAnswerFormat(
-          "question15",
+          "question5",
           "Fixing things or try to get things the same or symmetrical",
           RPSliderAnswerFormat.withParams(0, 10, divisions: 10),
+          optional: true,
         ),
         RPQuestionStep.withAnswerFormat(
-          "question16",
+          "question6",
           "Collecting things or difficulty throwing things away",
           RPSliderAnswerFormat.withParams(0, 10, divisions: 10),
+          optional: true,
         ),
         RPQuestionStep.withAnswerFormat(
-          "question17",
+          "question7",
           "Magical/superstitious behavior (e.g. doing or saying things a certain number of times to prevent something terrible from happening)",
           RPSliderAnswerFormat.withParams(0, 10, divisions: 10),
+          optional: true,
         ),
         RPQuestionStep.withAnswerFormat(
-          "question18",
+          "question8",
           "Involving others (like your parents) in a ritual or asking for reassurance",
           RPSliderAnswerFormat.withParams(0, 10, divisions: 10),
+          optional: true,
         ),
         RPQuestionStep.withAnswerFormat(
-          "question19",
+          "question9",
           "Needing to do something until it feels right",
           RPSliderAnswerFormat.withParams(0, 10, divisions: 10),
+          optional: true,
         ),
         RPQuestionStep.withAnswerFormat(
-          "question20",
+          "question10",
           "Here you can describe other compulsions that have not been mentioned",
           RPTextAnswerFormat.withParams(" "),
           optional: true,
@@ -193,7 +232,7 @@ class _SymptomHierarchySurvey implements Survey {
         RPCompletionStep("completion")
           ..title = "Hurray!"
           ..text =
-              "You are finished recording your obsessions and compulsions for this week. By keeping track of your obsessions and compulsions, you're taking back control, so OCD doesn't control you.",
+              "You are finished recording your compulsions for this week. By keeping track of your obsessions and compulsions, you're taking back control, so OCD doesn't control you.",
       ]);
 }
 
@@ -669,8 +708,9 @@ class _EcologicalParentsSurvey implements Survey {
             choiceAnswerFormat2,
           ),
           RPCompletionStep("completion")
-            ..title = "Well done!"
-            ..text = " ",
+            ..title = "Well done!" // thank you for telling us how you feel
+            ..text = " ", // by telling us how you feel you are helping us learn what the of the wristband
+          //by answering this survey you are helping us connect feelings to physiological signals
         ],
       );
 }
@@ -768,8 +808,9 @@ class _EcologicalSurvey implements Survey {
             choiceAnswerFormat2,
           ),
           RPCompletionStep("completion")
-            ..title = "Well done!"
-            ..text = " ",
+            ..title = "Thank you for telling us how you feel" //
+            ..text =
+                "By answering this survey you are helping us connect how you feel to your bodily signals",
         ],
       );
 }
@@ -867,8 +908,9 @@ class _PatientParentsSurvey implements Survey {
             optional: true,
           ),
           RPCompletionStep("completion")
-            ..title = "Well done!"
-            ..text = " ",
+            ..title = "You are done!"
+            ..text =
+                "Thank you for telling us what you think about the wristband. Your answers will be taken into account"
         ],
       );
 }
@@ -966,8 +1008,9 @@ class _PatientSurvey implements Survey {
             optional: true,
           ),
           RPCompletionStep("completion")
-            ..title = "Well done!"
-            ..text = " ",
+            ..title = "You are done!"
+            ..text =
+                "Thank you for telling us what you think about the wristband. Your answers will help us make the wristband better",
         ],
       );
 }
@@ -1055,7 +1098,7 @@ class _ControlParentsSurvey implements Survey {
           ),
           RPQuestionStep.withAnswerFormat(
             "question13",
-            "I remembered to push the button on the wristband each time my child’s OCD bothered me.",
+            "I remembered to push the button on the wristband each time my child’s stress botheredme.",
             choiceAnswerFormat1,
           ),
           RPQuestionStep.withAnswerFormat(
@@ -1065,8 +1108,9 @@ class _ControlParentsSurvey implements Survey {
             optional: true,
           ),
           RPCompletionStep("completion")
-            ..title = "Well done!"
-            ..text = " ",
+            ..title = "You are done!" //
+            ..text =
+                "Thank you for telling us what you think about the wristband. Your answers will be taken into account",
         ],
       );
 }
@@ -1154,7 +1198,7 @@ class _ControlSurvey implements Survey {
           ),
           RPQuestionStep.withAnswerFormat(
             "question13",
-            "I remembered to push the button on the wristband every time OCD was bothering me.",
+            "I remembered to push the button on the wristband every time stress was bothering me.",
             choiceAnswerFormat1,
           ),
           RPQuestionStep.withAnswerFormat(
@@ -1164,8 +1208,9 @@ class _ControlSurvey implements Survey {
             optional: true,
           ),
           RPCompletionStep("completion")
-            ..title = "Well done!"
-            ..text = " ",
+            ..title = "You are done!"
+            ..text =
+                "Thank you for telling us what you think about the wristband. Your answers will help us make the wristband better",
         ],
       );
 }
@@ -1175,9 +1220,9 @@ class _ExposureSurvey implements Survey {
 
   String get description => 'Describe the obsession and/or the compulsion you are working on';
 
-  Duration get expire => const Duration(days: 7);
+  Duration get expire => const Duration(days: 1);
 
-  int get minutesToComplete => 15; // TODO: review time
+  int get minutesToComplete => 10; // TODO: review time
 
   RPChoiceAnswerFormat choiceAnswerFormat1 = RPChoiceAnswerFormat.withParams(ChoiceAnswerStyle.SingleChoice, [
     RPChoice.withParams("My discomfort/fear/disgust will grow and grow until I can't take it any more", 0),

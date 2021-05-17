@@ -19,13 +19,13 @@ class _StudyProgressCardWidgetState extends State<StudyProgressCardWidget> {
           BuildContext context, StudyProgressCardDataModel model, List<Color> colors) =>
       [
         charts.Series<StudyProgress, String>(
-          colorFn: (_, index) => charts.ColorUtil.fromDartColor(colors[index]),
-          //charts.MaterialPalette.blue.makeShades(min(7, model.samplingTable.length))[index],
-          id: 'completed',
-          data: model.progress,
-          domainFn: (StudyProgress datum, _) => datum.state,
-          measureFn: (StudyProgress datum, _) => datum.value,
-        ),
+            colorFn: (_, index) => charts.ColorUtil.fromDartColor(colors[index]),
+            //charts.MaterialPalette.blue.makeShades(min(7, model.samplingTable.length))[index],
+            id: 'completed',
+            data: model.progress,
+            domainFn: (StudyProgress datum, _) => datum.state,
+            measureFn: (StudyProgress datum, _) => datum.value,
+            labelAccessorFn: (StudyProgress datum, _) => '${datum.value}'),
         // charts.Series<StudyProgress, String>(
         //   colorFn: (_, index) => charts.ColorUtil.fromDartColor(colors[index]),
         //   //charts.MaterialPalette.blue.makeShades(min(7, model.samplingTable.length))[index],
@@ -90,6 +90,7 @@ class _StudyProgressCardWidgetState extends State<StudyProgressCardWidget> {
                           barGroupingType: charts.BarGroupingType.groupedStacked,
                           animate: true,
                           vertical: false,
+                          barRendererDecorator: charts.BarLabelDecorator<String>(),
                           //domainAxis: charts.OrdinalAxisSpec(renderSpec: renderSpecString),
                           //primaryMeasureAxis: charts.NumericAxisSpec(renderSpec: renderSpecNum),
                           //userManagedState: _myState,

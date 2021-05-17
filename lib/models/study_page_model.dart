@@ -64,12 +64,15 @@ class Message {
   /// A URL to redirect the user to for an online item
   String url;
 
+  String imagePath;
+
   Message({
     this.type = MessageType.announcement,
     this.title,
     this.subTitle,
     this.message,
     this.url,
+    this.imagePath,
   }) {
     timestamp = DateTime.now();
   }
@@ -79,8 +82,12 @@ class Message {
   /// Image get image => Image.asset('assets/images/$type.png');
   ///
   /// Only articles have images, get it randomly
-  Image get image => Image.asset('assets/images/article_' + Random(10).nextInt(3).toString() + '.png',
-      fit: BoxFit.fitHeight);
+  Image get image => obtainImage();
+
+  Image obtainImage() {
+    if (imagePath == null) imagePath = 'assets/images/article_' + Random(10).nextInt(3).toString() + '.png';
+    return Image.asset(imagePath, fit: BoxFit.fitHeight);
+  }
 }
 
 /// The different types of messages that can occur in the list of messages

@@ -1,5 +1,6 @@
 part of carp_study_app;
 
+// todo change text for survey progress
 class DataVisualizationPage extends StatelessWidget {
   final DataVisualizationPageModel model;
   DataVisualizationPage(this.model);
@@ -64,14 +65,15 @@ class DataVisualizationPage extends StatelessWidget {
     // always show overall measure stats
     widgets.add(MeasuresCardWidget(model.measuresCardDataModel));
 
-    // always show survey stats
-    widgets.add(SurveysCardWidget(model.surveysCardDataModel));
-
-    // always show audio stats
-    widgets.add(AudioCardWidget(model.audioCardDataModel));
+    // widgets.add(SurveysCardWidget(model.surveysCardDataModel));
+    // widgets.add(AudioCardWidget(model.audioCardDataModel));
 
     // check which measures are in the study
     model.controller.study.measures.forEach((measure) {
+      if (measure.type.name == SurveySamplingPackage.SURVEY && !widgets.contains(SurveysCardWidget))
+        widgets.add(SurveysCardWidget(model.surveysCardDataModel));
+      if (measure.type.name == AudioSamplingPackage.AUDIO && !widgets.contains(AudioCardWidget))
+        widgets.add(AudioCardWidget(model.audioCardDataModel));
       if (measure.type.name == SensorSamplingPackage.PEDOMETER)
         widgets.add(StepsOuterStatefulWidget(model.stepsCardDataModel));
       if (measure.type.name == ContextSamplingPackage.MOBILITY)
@@ -79,8 +81,9 @@ class DataVisualizationPage extends StatelessWidget {
       if (measure.type.name == ContextSamplingPackage.ACTIVITY)
         widgets.add(ActivityOuterStatefulWidget(model.activityCardDataModel));
     });
+    print(widgets);
 
-    return widgets;
+    return widgets.toSet().toList();
 
     // return <Widget>[
     //   MeasuresCardWidget(model.measuresCardDataModel),

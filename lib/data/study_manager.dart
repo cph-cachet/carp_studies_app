@@ -42,26 +42,11 @@ class LocalStudyManager implements StudyManager {
                 ],
               ))
 
-        // collect App UX - triggers on end W1, mid W4, start W8 - TODO: use scheduled trigger
-        ..addTriggerTask(
-            ImmediateTrigger(),
-            AppTask(
-              type: SurveyUserTask.SURVEY_TYPE,
-              title: surveys.appUX.title,
-              description: surveys.appUX.description,
-              minutesToComplete: surveys.appUX.minutesToComplete,
-              expire: surveys.appUX.expire,
-            )..measures.add(RPTaskMeasure(
-                type: MeasureType(NameSpace.CARP, SurveySamplingPackage.SURVEY),
-                name: surveys.appUX.title,
-                enabled: true,
-                surveyTask: surveys.appUX.survey,
-              )))
-
         // collect wristband UX - triggers weekly
         ..addTriggerTask(
-            RecurrentScheduledTrigger(
-                type: RecurrentType.weekly, dayOfWeek: DateTime.sunday, time: Time(hour: 8, minute: 00)),
+            ImmediateTrigger(),
+            // RecurrentScheduledTrigger(
+            //     type: RecurrentType.weekly, dayOfWeek: DateTime.monday, time: Time(hour: 7, minute: 00)),
             AppTask(
               type: SurveyUserTask.SURVEY_TYPE,
               title: surveys.patient.title,
@@ -75,9 +60,9 @@ class LocalStudyManager implements StudyManager {
                 surveyTask: surveys.patient.survey,
               )))
 
-        /// collect exposure exercises - triggers weekly
+        /// collect exposure exercises - triggers dayly
         ..addTriggerTask(
-            ImmediateTrigger(),
+            RecurrentScheduledTrigger(type: RecurrentType.daily, time: Time(hour: 7, minute: 00)),
             AppTask(
               type: SurveyUserTask.SURVEY_TYPE,
               title: surveys.exposure.title,
@@ -106,25 +91,42 @@ class LocalStudyManager implements StudyManager {
                 enabled: true,
                 surveyTask: surveys.ecological.survey,
               )))
-        // collect symptoms hierarchy
+        // collect symptoms hierarchy (obsessions)
         ..addTriggerTask(
             ImmediateTrigger(),
             AppTask(
               type: SurveyUserTask.SURVEY_TYPE,
-              title: surveys.symptomHierarchy.title,
-              description: surveys.symptomHierarchy.description,
-              minutesToComplete: surveys.symptomHierarchy.minutesToComplete,
-              expire: surveys.symptomHierarchy.expire,
+              title: surveys.symptomHierarchyObsessions.title,
+              description: surveys.symptomHierarchyObsessions.description,
+              minutesToComplete: surveys.symptomHierarchyObsessions.minutesToComplete,
+              expire: surveys.symptomHierarchyObsessions.expire,
             )..measures.add(RPTaskMeasure(
                 type: MeasureType(NameSpace.CARP, SurveySamplingPackage.SURVEY),
-                name: surveys.symptomHierarchy.title,
+                name: surveys.symptomHierarchyObsessions.title,
                 enabled: true,
-                surveyTask: surveys.symptomHierarchy.survey,
+                surveyTask: surveys.symptomHierarchyObsessions.survey,
+              )))
+
+        // collect symptoms hierarchy (compulsions)
+        ..addTriggerTask(
+            ImmediateTrigger(),
+            AppTask(
+              type: SurveyUserTask.SURVEY_TYPE,
+              title: surveys.symptomHierarchyCoumpulsions.title,
+              description: surveys.symptomHierarchyCoumpulsions.description,
+              minutesToComplete: surveys.symptomHierarchyCoumpulsions.minutesToComplete,
+              expire: surveys.symptomHierarchyCoumpulsions.expire,
+            )..measures.add(RPTaskMeasure(
+                type: MeasureType(NameSpace.CARP, SurveySamplingPackage.SURVEY),
+                name: surveys.symptomHierarchyCoumpulsions.title,
+                enabled: true,
+                surveyTask: surveys.symptomHierarchyCoumpulsions.survey,
               )))
 
         // Audio task: Exposure exercise - TODO: TRIGGER AFTER CHECKING RESULT FROM SURVEY
         ..addTriggerTask(
-            PeriodicTrigger(period: Duration(days: 7)),
+            ImmediateTrigger(),
+            // PeriodicTrigger(period: Duration(days: 1)),
             AppTask(
               type: AudioUserTask.AUDIO_TYPE,
               title: "Exposure exercise",
@@ -140,7 +142,8 @@ class LocalStudyManager implements StudyManager {
 
         // Audio task: Wristband UX - TODO: TRIGGER AFTER CHECKING RESULT FROM SURVEY
         ..addTriggerTask(
-            PeriodicTrigger(period: Duration(days: 7)),
+            ImmediateTrigger(),
+            //PeriodicTrigger(period: Duration(days: 7)),
             AppTask(
               type: AudioUserTask.AUDIO_TYPE,
               title: "User Experience with the Wristband",
@@ -208,8 +211,10 @@ class LocalStudyManager implements StudyManager {
                 surveyTask: surveys.trustScale.survey,
               )))
 
-        // collect App UX - triggers on end W1, mid W4, start W8 - TODO: use scheduled trigger
+        // collect App UX - triggers on end W1, start W8 - TODO: use scheduled trigger
         ..addTriggerTask(
+            //RecurrentScheduledTrigger(type: RecurrentType.weekly, dayOfWeek: DateTime.monday, separationCount: 6, time: Time(hour: 8, minute: 00)),
+
             ImmediateTrigger(),
             AppTask(
               type: SurveyUserTask.SURVEY_TYPE,
@@ -227,7 +232,7 @@ class LocalStudyManager implements StudyManager {
         // collect wristband UX - triggers weekly
         ..addTriggerTask(
             RecurrentScheduledTrigger(
-                type: RecurrentType.weekly, dayOfWeek: DateTime.sunday, time: Time(hour: 8, minute: 00)),
+                type: RecurrentType.weekly, dayOfWeek: DateTime.monday, time: Time(hour: 7, minute: 00)),
             AppTask(
               type: SurveyUserTask.SURVEY_TYPE,
               title: surveys.patientParents.title,
@@ -296,8 +301,9 @@ class LocalStudyManager implements StudyManager {
             "Hormone levels, measured in saliva, and physiological indicators of stress from children and parents are used as input to privacy preserving signal processing and machine learning algorithms. Signal processing will be used to extract acoustic and physiological features of importance for therapeutic response. The study includes children with an OCD diagnosis and children without a psychiatric diagnosis and their parents."
         ..dataEndPoint = getDataEndpoint(DataEndPointTypes.FILE)
 
-        // collect App UX - triggers on end W1, mid W4, start W8 - TODO: use scheduled trigger
+        // collect App UX - triggers on end W1, start W8 - TODO: use scheduled trigger
         ..addTriggerTask(
+            //RecurrentScheduledTrigger(type: RecurrentType.weekly, dayOfWeek: DateTime.monday, separationCount: 6, time: Time(hour: 8, minute: 00)),
             ImmediateTrigger(),
             AppTask(
               type: SurveyUserTask.SURVEY_TYPE,
@@ -315,7 +321,7 @@ class LocalStudyManager implements StudyManager {
         // collect wristband UX - triggers weekly
         ..addTriggerTask(
             RecurrentScheduledTrigger(
-                type: RecurrentType.weekly, dayOfWeek: DateTime.sunday, time: Time(hour: 8, minute: 00)),
+                type: RecurrentType.weekly, dayOfWeek: DateTime.monday, time: Time(hour: 7, minute: 00)),
             AppTask(
               type: SurveyUserTask.SURVEY_TYPE,
               title: surveys.control.title,
@@ -398,8 +404,9 @@ class LocalStudyManager implements StudyManager {
                 surveyTask: surveys.informedConsent.survey,
               )))
 
-        // collect trust scale - triggers on W2, W4 - TODO: use scheduled trigger
+        // collect trust scale - triggers on W4 - TODO: define specific date for W4
         ..addTriggerTask(
+            //ScheduledTrigger(schedule: DateTime(2021, 6, 7, 8, 0)),
             ImmediateTrigger(),
             AppTask(
               type: SurveyUserTask.SURVEY_TYPE,
@@ -414,8 +421,9 @@ class LocalStudyManager implements StudyManager {
                 surveyTask: surveys.trustScale.survey,
               )))
 
-        // collect App UX - triggers on end W1, mid W4, start W8 - TODO: use scheduled trigger
+        // collect App UX - triggers on end W1, start W8
         ..addTriggerTask(
+            //RecurrentScheduledTrigger(type: RecurrentType.weekly, dayOfWeek: DateTime.monday, separationCount: 6, time: Time(hour: 8, minute: 00)),
             ImmediateTrigger(),
             AppTask(
               type: SurveyUserTask.SURVEY_TYPE,
@@ -433,7 +441,7 @@ class LocalStudyManager implements StudyManager {
         // collect wristband UX - triggers weekly
         ..addTriggerTask(
             RecurrentScheduledTrigger(
-                type: RecurrentType.weekly, dayOfWeek: DateTime.sunday, time: Time(hour: 8, minute: 00)),
+                type: RecurrentType.weekly, dayOfWeek: DateTime.monday, time: Time(hour: 7, minute: 00)),
             AppTask(
               type: SurveyUserTask.SURVEY_TYPE,
               title: surveys.controlParents.title,
@@ -465,7 +473,8 @@ class LocalStudyManager implements StudyManager {
 
         // Audio task: Wristband UX - TODO: TRIGGER AFTER CHECKING RESULT FROM SURVEY
         ..addTriggerTask(
-            PeriodicTrigger(period: Duration(days: 7)),
+            RecurrentScheduledTrigger(
+                type: RecurrentType.weekly, dayOfWeek: DateTime.monday, time: Time(hour: 7, minute: 00)),
             AppTask(
               type: AudioUserTask.AUDIO_TYPE,
               title: "User Experience with the Wristband",
@@ -518,7 +527,7 @@ class LocalStudyManager implements StudyManager {
               )))
         // Audio task: Exposure exercise - TODO: TRIGGER AFTER CHECKING RESULT FROM SURVEY
         ..addTriggerTask(
-            PeriodicTrigger(period: Duration(days: 7)),
+            PeriodicTrigger(period: Duration(days: 1)),
             AppTask(
               type: AudioUserTask.AUDIO_TYPE,
               title: "Exposure exercise",

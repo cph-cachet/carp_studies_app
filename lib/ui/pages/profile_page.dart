@@ -118,6 +118,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   // Sends and email to the researcher with the name of the study + user id
   void _contactResearcher() async {
+    RPLocalizations locale = RPLocalizations.of(context);
     final Uri _emailLaunchUri = Uri(scheme: 'mailto', path: bloc.study.pi.email, queryParameters: {
       'subject': 'Support for study: ${bloc.study.name} - User: ${bloc.user.id.toString()}'
     });

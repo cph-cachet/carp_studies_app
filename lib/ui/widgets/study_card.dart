@@ -29,7 +29,7 @@ class StudyCard extends StatelessWidget {
                 child: Container(
               height: 120.0,
               color: Color(0xFFF1F9FF),
-              child: Image.asset('assets/images/study.png',
+              child: Image.asset('assets/images/park.png',
                   fit: BoxFit.fitHeight), //TODO get image from studyPageModel
             ))
           ]),

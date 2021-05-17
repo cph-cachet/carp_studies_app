@@ -1369,7 +1369,7 @@ class _ExposureOldSurvey implements Survey {
         RPChoice(text: "At samle ting eller miste noget", value: 6),
         RPChoice(
             text:
-                "Magiske/overtroiske tanker eller handlinger (fx ykketal/uheldstal, at blive forvandlet)",
+                "Magiske/overtroiske tanker eller handlinger (fx lykketal/uheldstal, at blive forvandlet)",
             value: 7),
         RPChoice(
             text:

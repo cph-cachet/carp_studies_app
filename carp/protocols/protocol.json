@@ -1,0 +1,673 @@
+{
+    "name": "CARP Study",
+    "creationDate": "2021-05-17T21:35:33.305353Z",
+    "masterDevices": [
+     {
+      "$type": "dk.cachet.carp.protocols.domain.devices.Smartphone",
+      "isMasterDevice": true,
+      "roleName": "masterphone",
+      "samplingConfiguration": {}
+     }
+    ],
+    "connectedDevices": [],
+    "connections": [],
+    "triggers": {
+     "0": {
+      "$type": "dk.cachet.carp.protocols.domain.triggers.ImmediateTrigger"
+     },
+     "1": {
+      "$type": "dk.cachet.carp.protocols.domain.triggers.PeriodicTrigger",
+      "period": 300000000,
+      "duration": 1000000
+     },
+     "2": {
+      "$type": "dk.cachet.carp.protocols.domain.triggers.ImmediateTrigger"
+     },
+     "3": {
+      "$type": "dk.cachet.carp.protocols.domain.triggers.ImmediateTrigger"
+     },
+     "4": {
+      "$type": "dk.cachet.carp.protocols.domain.triggers.ImmediateTrigger"
+     },
+     "5": {
+      "$type": "dk.cachet.carp.protocols.domain.triggers.PeriodicTrigger",
+      "period": 86400000000,
+      "duration": 1000000
+     },
+     "6": {
+      "$type": "dk.cachet.carp.protocols.domain.triggers.PeriodicTrigger",
+      "period": 60000000,
+      "duration": 1000000
+     },
+     "7": {
+      "$type": "dk.cachet.carp.protocols.domain.triggers.PeriodicTrigger",
+      "period": 60000000,
+      "duration": 1000000
+     },
+     "8": {
+      "$type": "dk.cachet.carp.protocols.domain.triggers.ConditionalSamplingEventTrigger",
+      "measureType": "dk.cachet.carp.audio"
+     }
+    },
+    "tasks": [
+     {
+      "$type": "dk.cachet.carp.protocols.domain.tasks.AutomaticTask",
+      "name": "Task #5",
+      "measures": [
+       {
+        "$type": "dk.cachet.carp.protocols.domain.tasks.measures.PeriodicMeasure",
+        "type": "dk.cachet.carp.light",
+        "name": "Ambient Light",
+        "description": "Collects ambient light from the light sensor on the phone.",
+        "enabled": true,
+        "configuration": {},
+        "frequency": 60000000,
+        "duration": 1000000
+       },
+       {
+        "$type": "dk.cachet.carp.protocols.domain.tasks.measures.CAMSMeasure",
+        "type": "dk.cachet.carp.pedometer",
+        "name": "Pedometer (Step Count)",
+        "description": "Collects step events from the onboard phone step sensor.",
+        "enabled": true,
+        "configuration": {}
+       },
+       {
+        "$type": "dk.cachet.carp.protocols.domain.tasks.measures.PeriodicMeasure",
+        "type": "dk.cachet.carp.memory",
+        "name": "Memory Usage",
+        "description": "Collects information about use of memory.",
+        "enabled": true,
+        "configuration": {},
+        "frequency": 60000000
+       },
+       {
+        "$type": "dk.cachet.carp.protocols.domain.tasks.measures.CAMSMeasure",
+        "type": "dk.cachet.carp.device",
+        "name": "Basic Device Info",
+        "description": "Collects basic information about the phone.",
+        "enabled": true,
+        "configuration": {}
+       },
+       {
+        "$type": "dk.cachet.carp.protocols.domain.tasks.measures.CAMSMeasure",
+        "type": "dk.cachet.carp.battery",
+        "name": "Battery",
+        "description": "Collects information about the battery charging level.",
+        "enabled": true,
+        "configuration": {}
+       },
+       {
+        "$type": "dk.cachet.carp.protocols.domain.tasks.measures.CAMSMeasure",
+        "type": "dk.cachet.carp.screen",
+        "name": "Screen Activity (lock/on/off)",
+        "description": "Collects information about lock/unlock event of the phone's screen.",
+        "enabled": true,
+        "configuration": {}
+       }
+      ]
+     },
+     {
+      "$type": "dk.cachet.carp.protocols.domain.tasks.AutomaticTask",
+      "name": "Task #6",
+      "measures": []
+     },
+     {
+      "$type": "dk.cachet.carp.protocols.domain.tasks.AutomaticTask",
+      "name": "Task #7",
+      "measures": []
+     },
+     {
+      "$type": "dk.cachet.carp.protocols.domain.tasks.AppTask",
+      "name": "Task #8",
+      "measures": [],
+      "type": "one_time_sensing",
+      "title": "Weather & Air Quality",
+      "description": "Collect local weather and air quality",
+      "notification": false
+     },
+     {
+      "$type": "dk.cachet.carp.protocols.domain.tasks.AppTask",
+      "name": "Task #9",
+      "measures": [
+       {
+        "$type": "dk.cachet.carp.protocols.domain.tasks.measures.RPTaskMeasure",
+        "type": "dk.cachet.carp.survey",
+        "name": "Demographics",
+        "enabled": true,
+        "configuration": {},
+        "surveyTask": {
+         "$type": "RPOrderedTask",
+         "identifier": "demo_survey",
+         "close_after_finished": true,
+         "steps": [
+          {
+           "$type": "RPQuestionStep",
+           "identifier": "demo_1",
+           "title": "Which is your biological sex?",
+           "optional": false,
+           "answer_format": {
+            "$type": "RPChoiceAnswerFormat",
+            "question_type": "SingleChoice",
+            "choices": [
+             {
+              "$type": "RPChoice",
+              "text": "Femal",
+              "value": 1,
+              "is_free_text": false
+             },
+             {
+              "$type": "RPChoice",
+              "text": "Male",
+              "value": 2,
+              "is_free_text": false
+             },
+             {
+              "$type": "RPChoice",
+              "text": "Other",
+              "value": 3,
+              "is_free_text": false
+             },
+             {
+              "$type": "RPChoice",
+              "text": "Prefer not to say",
+              "value": 4,
+              "is_free_text": false
+             }
+            ],
+            "answer_style": "SingleChoice"
+           }
+          },
+          {
+           "$type": "RPQuestionStep",
+           "identifier": "demo_2",
+           "title": "How old are you?",
+           "optional": false,
+           "answer_format": {
+            "$type": "RPChoiceAnswerFormat",
+            "question_type": "SingleChoice",
+            "choices": [
+             {
+              "$type": "RPChoice",
+              "text": "Under 20",
+              "value": 1,
+              "is_free_text": false
+             },
+             {
+              "$type": "RPChoice",
+              "text": "20-29",
+              "value": 2,
+              "is_free_text": false
+             },
+             {
+              "$type": "RPChoice",
+              "text": "30-39",
+              "value": 3,
+              "is_free_text": false
+             },
+             {
+              "$type": "RPChoice",
+              "text": "40-49",
+              "value": 4,
+              "is_free_text": false
+             },
+             {
+              "$type": "RPChoice",
+              "text": "50-59",
+              "value": 5,
+              "is_free_text": false
+             },
+             {
+              "$type": "RPChoice",
+              "text": "60-69",
+              "value": 6,
+              "is_free_text": false
+             },
+             {
+              "$type": "RPChoice",
+              "text": "70-79",
+              "value": 7,
+              "is_free_text": false
+             },
+             {
+              "$type": "RPChoice",
+              "text": "80-89",
+              "value": 8,
+              "is_free_text": false
+             },
+             {
+              "$type": "RPChoice",
+              "text": "90 and above",
+              "value": 9,
+              "is_free_text": false
+             },
+             {
+              "$type": "RPChoice",
+              "text": "Prefer not to say",
+              "value": 10,
+              "is_free_text": false
+             }
+            ],
+            "answer_style": "SingleChoice"
+           }
+          },
+          {
+           "$type": "RPQuestionStep",
+           "identifier": "demo_3",
+           "title": "Do you have any of these medical conditions?",
+           "optional": false,
+           "answer_format": {
+            "$type": "RPChoiceAnswerFormat",
+            "question_type": "MultipleChoice",
+            "choices": [
+             {
+              "$type": "RPChoice",
+              "text": "None",
+              "value": 1,
+              "is_free_text": false
+             },
+             {
+              "$type": "RPChoice",
+              "text": "Asthma",
+              "value": 2,
+              "is_free_text": false
+             },
+             {
+              "$type": "RPChoice",
+              "text": "Cystic fibrosis",
+              "value": 3,
+              "is_free_text": false
+             },
+             {
+              "$type": "RPChoice",
+              "text": "COPD/Emphysema",
+              "value": 4,
+              "is_free_text": false
+             },
+             {
+              "$type": "RPChoice",
+              "text": "Pulmonary fibrosis",
+              "value": 5,
+              "is_free_text": false
+             },
+             {
+              "$type": "RPChoice",
+              "text": "Other lung disease  ",
+              "value": 6,
+              "is_free_text": false
+             },
+             {
+              "$type": "RPChoice",
+              "text": "High Blood Pressure",
+              "value": 7,
+              "is_free_text": false
+             },
+             {
+              "$type": "RPChoice",
+              "text": "Angina",
+              "value": 8,
+              "is_free_text": false
+             },
+             {
+              "$type": "RPChoice",
+              "text": "Previous stroke or Transient ischaemic attack  ",
+              "value": 9,
+              "is_free_text": false
+             },
+             {
+              "$type": "RPChoice",
+              "text": "Valvular heart disease",
+              "value": 10,
+              "is_free_text": false
+             },
+             {
+              "$type": "RPChoice",
+              "text": "Previous heart attack",
+              "value": 11,
+              "is_free_text": false
+             },
+             {
+              "$type": "RPChoice",
+              "text": "Other heart disease",
+              "value": 12,
+              "is_free_text": false
+             },
+             {
+              "$type": "RPChoice",
+              "text": "Diabetes",
+              "value": 13,
+              "is_free_text": false
+             },
+             {
+              "$type": "RPChoice",
+              "text": "Cancer",
+              "value": 14,
+              "is_free_text": false
+             },
+             {
+              "$type": "RPChoice",
+              "text": "Previous organ transplant",
+              "value": 15,
+              "is_free_text": false
+             },
+             {
+              "$type": "RPChoice",
+              "text": "HIV or impaired immune system",
+              "value": 16,
+              "is_free_text": false
+             },
+             {
+              "$type": "RPChoice",
+              "text": "Other long-term condition",
+              "value": 17,
+              "is_free_text": false
+             },
+             {
+              "$type": "RPChoice",
+              "text": "Prefer not to say",
+              "value": 18,
+              "is_free_text": false
+             }
+            ],
+            "answer_style": "MultipleChoice"
+           }
+          },
+          {
+           "$type": "RPQuestionStep",
+           "identifier": "demo_4",
+           "title": "Do you, or have you, ever smoked (including e-cigarettes)?",
+           "optional": false,
+           "answer_format": {
+            "$type": "RPChoiceAnswerFormat",
+            "question_type": "SingleChoice",
+            "choices": [
+             {
+              "$type": "RPChoice",
+              "text": "Never smoked",
+              "value": 1,
+              "is_free_text": false
+             },
+             {
+              "$type": "RPChoice",
+              "text": "Ex-smoker",
+              "value": 2,
+              "is_free_text": false
+             },
+             {
+              "$type": "RPChoice",
+              "text": "Current smoker (less than once a day",
+              "value": 3,
+              "is_free_text": false
+             },
+             {
+              "$type": "RPChoice",
+              "text": "Current smoker (1-10 cigarettes pr day",
+              "value": 4,
+              "is_free_text": false
+             },
+             {
+              "$type": "RPChoice",
+              "text": "Current smoker (11-20 cigarettes pr day",
+              "value": 5,
+              "is_free_text": false
+             },
+             {
+              "$type": "RPChoice",
+              "text": "Current smoker (21+ cigarettes pr day",
+              "value": 6,
+              "is_free_text": false
+             },
+             {
+              "$type": "RPChoice",
+              "text": "Prefer not to say",
+              "value": 7,
+              "is_free_text": false
+             }
+            ],
+            "answer_style": "SingleChoice"
+           }
+          }
+         ]
+        }
+       },
+       null
+      ],
+      "type": "demographic",
+      "title": "Demographics",
+      "description": "A short 4-item survey on your background.",
+      "minutes_to_complete": 2,
+      "expire": 432000000000,
+      "notification": false
+     },
+     {
+      "$type": "dk.cachet.carp.protocols.domain.tasks.AppTask",
+      "name": "Task #10",
+      "measures": [
+       {
+        "$type": "dk.cachet.carp.protocols.domain.tasks.measures.RPTaskMeasure",
+        "type": "dk.cachet.carp.survey",
+        "name": "Symptoms",
+        "enabled": true,
+        "configuration": {},
+        "surveyTask": {
+         "$type": "RPOrderedTask",
+         "identifier": "symptoms_survey",
+         "close_after_finished": true,
+         "steps": [
+          {
+           "$type": "RPQuestionStep",
+           "identifier": "sym_1",
+           "title": "Do you have any of the following symptoms today?",
+           "optional": false,
+           "answer_format": {
+            "$type": "RPChoiceAnswerFormat",
+            "question_type": "MultipleChoice",
+            "choices": [
+             {
+              "$type": "RPChoice",
+              "text": "None",
+              "value": 1,
+              "is_free_text": false
+             },
+             {
+              "$type": "RPChoice",
+              "text": "Fever (warmer than usual)",
+              "value": 2,
+              "is_free_text": false
+             },
+             {
+              "$type": "RPChoice",
+              "text": "Dry cough",
+              "value": 3,
+              "is_free_text": false
+             },
+             {
+              "$type": "RPChoice",
+              "text": "Wet cough",
+              "value": 4,
+              "is_free_text": false
+             },
+             {
+              "$type": "RPChoice",
+              "text": "Sore throat, runny or blocked nose",
+              "value": 5,
+              "is_free_text": false
+             },
+             {
+              "$type": "RPChoice",
+              "text": "Loss of taste and smell",
+              "value": 6,
+              "is_free_text": false
+             },
+             {
+              "$type": "RPChoice",
+              "text": "Difficulty breathing or feeling short of breath",
+              "value": 7,
+              "is_free_text": false
+             },
+             {
+              "$type": "RPChoice",
+              "text": "Tightness in your chest",
+              "value": 8,
+              "is_free_text": false
+             },
+             {
+              "$type": "RPChoice",
+              "text": "Dizziness, confusion or vertigo",
+              "value": 9,
+              "is_free_text": false
+             },
+             {
+              "$type": "RPChoice",
+              "text": "Headache",
+              "value": 10,
+              "is_free_text": false
+             },
+             {
+              "$type": "RPChoice",
+              "text": "Muscle aches",
+              "value": 11,
+              "is_free_text": false
+             },
+             {
+              "$type": "RPChoice",
+              "text": "Chills",
+              "value": 12,
+              "is_free_text": false
+             },
+             {
+              "$type": "RPChoice",
+              "text": "Prefer not to say",
+              "value": 13,
+              "is_free_text": false
+             }
+            ],
+            "answer_style": "MultipleChoice"
+           }
+          }
+         ]
+        }
+       },
+       null
+      ],
+      "type": "survey",
+      "title": "Symptoms",
+      "description": "A short 1-item survey on your daily symptoms.",
+      "minutes_to_complete": 1,
+      "expire": 86400000000,
+      "notification": false
+     },
+     {
+      "$type": "dk.cachet.carp.protocols.domain.tasks.AppTask",
+      "name": "Task #11",
+      "measures": [
+       {
+        "$type": "dk.cachet.carp.protocols.domain.tasks.measures.CAMSMeasure",
+        "type": "dk.cachet.carp.audio",
+        "name": "Coughing",
+        "enabled": true,
+        "configuration": {}
+       },
+       null,
+       null,
+       null
+      ],
+      "type": "audio",
+      "title": "Coughing",
+      "description": "In this small exercise we would like to collect sound samples of coughing.",
+      "instructions": "Please cough 5 times.",
+      "minutes_to_complete": 1,
+      "notification": false
+     },
+     {
+      "$type": "dk.cachet.carp.protocols.domain.tasks.AppTask",
+      "name": "Task #12",
+      "measures": [
+       {
+        "$type": "dk.cachet.carp.protocols.domain.tasks.measures.CAMSMeasure",
+        "type": "dk.cachet.carp.audio",
+        "name": "Reading",
+        "enabled": true,
+        "configuration": {}
+       }
+      ],
+      "type": "audio",
+      "title": "Reading",
+      "description": "In this small exercise we would like to collect sound data while you are reading.",
+      "instructions": "Please read the following text aloud.\n\nMany, many years ago lived an emperor, who thought so much of new clothes that he spent all his money in order to obtain them; his only ambition was to be always well dressed. He did not care for his soldiers, and the theatre did not amuse him; the only thing, in fact, he thought anything of was to drive out and show a new suit of clothes. He had a coat for every hour of the day; and as one would say of a king \"He is in his cabinet,\" so one could say of him, \"The emperor is in his dressing-room.\"",
+      "minutes_to_complete": 3,
+      "notification": false
+     },
+     {
+      "$type": "dk.cachet.carp.protocols.domain.tasks.AppTask",
+      "name": "Task #13",
+      "measures": [],
+      "type": "one_time_sensing",
+      "title": "Location, Weather & Air Quality",
+      "description": "Collect location, weather and air quality",
+      "notification": false
+     }
+    ],
+    "triggeredTasks": [
+     {
+      "triggerId": 0,
+      "taskName": "Task #5",
+      "targetDeviceRoleName": "masterphone"
+     },
+     {
+      "triggerId": 1,
+      "taskName": "Task #6",
+      "targetDeviceRoleName": "masterphone"
+     },
+     {
+      "triggerId": 2,
+      "taskName": "Task #7",
+      "targetDeviceRoleName": "masterphone"
+     },
+     {
+      "triggerId": 3,
+      "taskName": "Task #8",
+      "targetDeviceRoleName": "masterphone"
+     },
+     {
+      "triggerId": 4,
+      "taskName": "Task #9",
+      "targetDeviceRoleName": "masterphone"
+     },
+     {
+      "triggerId": 5,
+      "taskName": "Task #10",
+      "targetDeviceRoleName": "masterphone"
+     },
+     {
+      "triggerId": 6,
+      "taskName": "Task #11",
+      "targetDeviceRoleName": "masterphone"
+     },
+     {
+      "triggerId": 7,
+      "taskName": "Task #12",
+      "targetDeviceRoleName": "masterphone"
+     },
+     {
+      "triggerId": 8,
+      "taskName": "Task #13",
+      "targetDeviceRoleName": "masterphone"
+     }
+    ],
+    "expectedParticipantData": [],
+    "protocolDescription": {
+     "$type": "StudyProtocolDescription",
+     "title": "CARP Study App Feasibility Study",
+     "description": "We would like to have you help in testing the technical stability and the usability of the CARP Mobile Sensing app. Your data will be collected and store anonymously.",
+     "purpose": "To investigate the technical stability and usability of the CARP Generic Study App."
+    },
+    "owner": {
+     "$type": "ProtocolOwner",
+     "name": "Jakob E. Bardram",
+     "title": "PhD, MSc",
+     "email": "jakba@dtu.dk",
+     "address": "Ørsteds Plads, bygn. 349, DK-2800 Kg. Lyngby",
+     "affiliation": "Technical University of Denmark"
+    }
+   }

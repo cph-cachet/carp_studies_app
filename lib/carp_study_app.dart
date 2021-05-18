@@ -74,30 +74,31 @@ class _LoadingPageState extends State<LoadingPage> {
     //  * LOCAL
     //  * CARP_STAGGING
     //  * CARP_PRODUCTION
-    await bloc.initialize(DeploymentMode.LOCAL);
+    await bloc.initialize(DeploymentMode.CARP_PRODUCTION);
 
-    // only initialize the CARP backend, if needed
+    // this is done in order to test the entire onboarding flow
+    // TODO - remove when done testing
+    await bloc.leaveStudyAndSignOut();
+
+    //  initialize the CARP backend, if needed
     if (bloc.deploymentMode != DeploymentMode.LOCAL) {
       await bloc.backend.initialize();
       await bloc.backend.authenticate(context);
       await bloc.backend.getStudyInvitation(context);
-      await CarpResourceManager().initialize();
     }
 
-    // find the right informed consent (if needed)
-    if (!bloc.hasInformedConsentBeenAccepted) {
-      if (bloc.deploymentMode == DeploymentMode.LOCAL) {
-        bloc.informedConsent = LocalResourceManager().getInformedConsent();
-      } else {
-        bloc.informedConsent = await CarpResourceManager().getInformedConsent();
-      }
-    }
+    // find the right informed consent, if needed
+    bloc.informedConsent = (!bloc.hasInformedConsentBeenAccepted)
+        ? await bloc.resourceManager.getInformedConsent()
+        : null;
 
     await bloc.messageManager.init();
     await bloc.getMessages();
     await Sensing().initialize();
 
-    // initialize thee data models
+    print(toJsonString(bloc.deployment));
+
+    // initialize the data models
     bloc.data.init(Sensing().controller);
 
     // wait 10 sec and the start sampling
@@ -121,9 +122,9 @@ class _LoadingPageState extends State<LoadingPage> {
                 )))
             : Scaffold(
                 backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-                body: (bloc.hasInformedConsentBeenAccepted)
-                    ? CarpStudyAppHome()
-                    : InformedConsentPage(),
+                body: (bloc.shouldInformedConsentBeShown)
+                    ? InformedConsentPage()
+                    : CarpStudyAppHome(),
               ));
   }
 

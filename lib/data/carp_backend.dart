@@ -171,9 +171,13 @@ class CarpBackend {
   }
 
   Future<void> signOut() async {
-    await CarpService().signOut();
+    print('#1.2.1');
+    if (CarpService().authenticated) await CarpService().signOut();
+    print('#1.2.2');
 
     await Settings().preferences.remove(_usernameKey);
+    print('#1.2.3');
     await Settings().preferences.remove(_oauthTokenKey);
+    print('#1.2.4');
   }
 }

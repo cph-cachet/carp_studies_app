@@ -22,13 +22,16 @@ class MeasuresCardDataModel extends DataModel {
   void init(StudyDeploymentController controller) {
     super.init(controller);
 
-    // initialize the sampling table
-    bloc.deployment.measures
-        .forEach((measure) => _samplingTable[measure.type.split('.').last] = 0);
+    // // initialize the sampling table
+    // bloc.deployment.measures
+    //     .forEach((measure) => _samplingTable[measure.type.split('.').last] = 0);
 
     // listen to incoming events in order to count the measure types
-    controller.data.listen(
-        (dataPoint) => _samplingTable[dataPoint.carpHeader.dataFormat.name]++);
+    controller.data.listen((dataPoint) {
+      final String key = dataPoint.carpHeader.dataFormat.name;
+      if (!_samplingTable.containsKey(key)) _samplingTable[key] = 0;
+      _samplingTable[key]++;
+    });
   }
 
   String toString() {

@@ -1,6 +1,7 @@
 {
-    "name": "CARP Study",
-    "creationDate": "2021-05-17T21:35:33.305353Z",
+    "name": "CARP Study App Feasibility Study",
+    "description": "A generic protocol testing different parts of the CAMS Study App.",
+    "creationDate": "2021-05-18T22:35:04.585294Z",
     "masterDevices": [
      {
       "$type": "dk.cachet.carp.protocols.domain.devices.Smartphone",
@@ -13,39 +14,57 @@
     "connections": [],
     "triggers": {
      "0": {
-      "$type": "dk.cachet.carp.protocols.domain.triggers.ImmediateTrigger"
+      "$type": "dk.cachet.carp.protocols.domain.triggers.ImmediateTrigger",
+      "sourceDeviceRoleName": "masterphone",
+      "requiresMasterDevice": true
      },
      "1": {
       "$type": "dk.cachet.carp.protocols.domain.triggers.PeriodicTrigger",
+      "sourceDeviceRoleName": "masterphone",
+      "requiresMasterDevice": true,
       "period": 300000000,
       "duration": 1000000
      },
      "2": {
-      "$type": "dk.cachet.carp.protocols.domain.triggers.ImmediateTrigger"
+      "$type": "dk.cachet.carp.protocols.domain.triggers.ImmediateTrigger",
+      "sourceDeviceRoleName": "masterphone",
+      "requiresMasterDevice": true
      },
      "3": {
-      "$type": "dk.cachet.carp.protocols.domain.triggers.ImmediateTrigger"
+      "$type": "dk.cachet.carp.protocols.domain.triggers.ImmediateTrigger",
+      "sourceDeviceRoleName": "masterphone",
+      "requiresMasterDevice": true
      },
      "4": {
-      "$type": "dk.cachet.carp.protocols.domain.triggers.ImmediateTrigger"
+      "$type": "dk.cachet.carp.protocols.domain.triggers.ImmediateTrigger",
+      "sourceDeviceRoleName": "masterphone",
+      "requiresMasterDevice": true
      },
      "5": {
       "$type": "dk.cachet.carp.protocols.domain.triggers.PeriodicTrigger",
+      "sourceDeviceRoleName": "masterphone",
+      "requiresMasterDevice": true,
       "period": 86400000000,
       "duration": 1000000
      },
      "6": {
       "$type": "dk.cachet.carp.protocols.domain.triggers.PeriodicTrigger",
+      "sourceDeviceRoleName": "masterphone",
+      "requiresMasterDevice": true,
       "period": 60000000,
       "duration": 1000000
      },
      "7": {
       "$type": "dk.cachet.carp.protocols.domain.triggers.PeriodicTrigger",
+      "sourceDeviceRoleName": "masterphone",
+      "requiresMasterDevice": true,
       "period": 60000000,
       "duration": 1000000
      },
      "8": {
       "$type": "dk.cachet.carp.protocols.domain.triggers.ConditionalSamplingEventTrigger",
+      "sourceDeviceRoleName": "masterphone",
+      "requiresMasterDevice": true,
       "measureType": "dk.cachet.carp.audio"
      }
     },
@@ -110,17 +129,95 @@
      {
       "$type": "dk.cachet.carp.protocols.domain.tasks.AutomaticTask",
       "name": "Task #6",
-      "measures": []
+      "measures": [
+       {
+        "$type": "dk.cachet.carp.protocols.domain.tasks.measures.CAMSMeasure",
+        "type": "dk.cachet.carp.location",
+        "name": "Location",
+        "description": "Collects location from the phone's GPS sensor",
+        "enabled": true,
+        "configuration": {}
+       },
+       {
+        "$type": "dk.cachet.carp.protocols.domain.tasks.measures.WeatherMeasure",
+        "type": "dk.cachet.carp.weather",
+        "name": "Weather",
+        "description": "Collects local weather from the WeatherAPI web service",
+        "enabled": true,
+        "configuration": {},
+        "apiKey": "12b6e28582eb9298577c734a31ba9f4f"
+       },
+       {
+        "$type": "dk.cachet.carp.protocols.domain.tasks.measures.AirQualityMeasure",
+        "type": "dk.cachet.carp.air_quality",
+        "name": "Air Quality",
+        "description": "Collects local air quality from the OpenWeatherMap (OWM) web service",
+        "enabled": true,
+        "configuration": {},
+        "apiKey": "9e538456b2b85c92647d8b65090e29f957638c77"
+       }
+      ]
      },
      {
       "$type": "dk.cachet.carp.protocols.domain.tasks.AutomaticTask",
       "name": "Task #7",
-      "measures": []
+      "measures": [
+       {
+        "$type": "dk.cachet.carp.protocols.domain.tasks.measures.LocationMeasure",
+        "type": "dk.cachet.carp.geolocation",
+        "name": "Geo-location",
+        "description": "Collects location from the phone's GPS sensor",
+        "enabled": true,
+        "configuration": {},
+        "frequency": 30000000,
+        "accuracy": "low",
+        "distance": 3.0
+       },
+       {
+        "$type": "dk.cachet.carp.protocols.domain.tasks.measures.CAMSMeasure",
+        "type": "dk.cachet.carp.activity",
+        "name": "Activity Recognition",
+        "description": "Collects activity type from the phone's activity recognition module",
+        "enabled": true,
+        "configuration": {}
+       },
+       {
+        "$type": "dk.cachet.carp.protocols.domain.tasks.measures.MobilityMeasure",
+        "type": "dk.cachet.carp.mobility",
+        "name": "Mobility Features",
+        "description": "Extracts mobility features based on location tracking",
+        "enabled": true,
+        "configuration": {},
+        "usePriorContexts": true,
+        "stopRadius": 25.0,
+        "placeRadius": 50.0,
+        "stopDuration": 180000000
+       }
+      ]
      },
      {
       "$type": "dk.cachet.carp.protocols.domain.tasks.AppTask",
       "name": "Task #8",
-      "measures": [],
+      "measures": [
+       {
+        "$type": "dk.cachet.carp.protocols.domain.tasks.measures.WeatherMeasure",
+        "type": "dk.cachet.carp.weather",
+        "name": "Weather",
+        "description": "Collects local weather from the WeatherAPI web service",
+        "enabled": true,
+        "configuration": {},
+        "apiKey": "12b6e28582eb9298577c734a31ba9f4f"
+       },
+       {
+        "$type": "dk.cachet.carp.protocols.domain.tasks.measures.AirQualityMeasure",
+        "type": "dk.cachet.carp.air_quality",
+        "name": "Air Quality",
+        "description": "Collects local air quality from the OpenWeatherMap (OWM) web service",
+        "enabled": true,
+        "configuration": {},
+        "apiKey": "9e538456b2b85c92647d8b65090e29f957638c77"
+       }
+      ],
       "type": "one_time_sensing",
       "title": "Weather & Air Quality",
       "description": "Collect local weather and air quality",
@@ -430,7 +527,14 @@
          ]
         }
        },
-       null
+       {
+        "$type": "dk.cachet.carp.protocols.domain.tasks.measures.CAMSMeasure",
+        "type": "dk.cachet.carp.location",
+        "name": "Location",
+        "description": "Collects location from the phone's GPS sensor",
+        "enabled": true,
+        "configuration": {}
+       }
       ],
       "type": "demographic",
       "title": "Demographics",
@@ -548,7 +652,14 @@
          ]
         }
        },
-       null
+       {
+        "$type": "dk.cachet.carp.protocols.domain.tasks.measures.CAMSMeasure",
+        "type": "dk.cachet.carp.location",
+        "name": "Location",
+        "description": "Collects location from the phone's GPS sensor",
+        "enabled": true,
+        "configuration": {}
+       }
       ],
       "type": "survey",
       "title": "Symptoms",
@@ -568,9 +679,32 @@
         "enabled": true,
         "configuration": {}
        },
-       null,
-       null,
-       null
+       {
+        "$type": "dk.cachet.carp.protocols.domain.tasks.measures.CAMSMeasure",
+        "type": "dk.cachet.carp.location",
+        "name": "Location",
+        "description": "Collects location from the phone's GPS sensor",
+        "enabled": true,
+        "configuration": {}
+       },
+       {
+        "$type": "dk.cachet.carp.protocols.domain.tasks.measures.WeatherMeasure",
+        "type": "dk.cachet.carp.weather",
+        "name": "Weather",
+        "description": "Collects local weather from the WeatherAPI web service",
+        "enabled": true,
+        "configuration": {},
+        "apiKey": "12b6e28582eb9298577c734a31ba9f4f"
+       },
+       {
+        "$type": "dk.cachet.carp.protocols.domain.tasks.measures.AirQualityMeasure",
+        "type": "dk.cachet.carp.air_quality",
+        "name": "Air Quality",
+        "description": "Collects local air quality from the OpenWeatherMap (OWM) web service",
+        "enabled": true,
+        "configuration": {},
+        "apiKey": "9e538456b2b85c92647d8b65090e29f957638c77"
+       }
       ],
       "type": "audio",
       "title": "Coughing",
@@ -601,7 +735,34 @@
      {
       "$type": "dk.cachet.carp.protocols.domain.tasks.AppTask",
       "name": "Task #13",
-      "measures": [],
+      "measures": [
+       {
+        "$type": "dk.cachet.carp.protocols.domain.tasks.measures.CAMSMeasure",
+        "type": "dk.cachet.carp.location",
+        "name": "Location",
+        "description": "Collects location from the phone's GPS sensor",
+        "enabled": true,
+        "configuration": {}
+       },
+       {
+        "$type": "dk.cachet.carp.protocols.domain.tasks.measures.WeatherMeasure",
+        "type": "dk.cachet.carp.weather",
+        "name": "Weather",
+        "description": "Collects local weather from the WeatherAPI web service",
+        "enabled": true,
+        "configuration": {},
+        "apiKey": "12b6e28582eb9298577c734a31ba9f4f"
+       },
+       {
+        "$type": "dk.cachet.carp.protocols.domain.tasks.measures.AirQualityMeasure",
+        "type": "dk.cachet.carp.air_quality",
+        "name": "Air Quality",
+        "description": "Collects local air quality from the OpenWeatherMap (OWM) web service",
+        "enabled": true,
+        "configuration": {},
+        "apiKey": "9e538456b2b85c92647d8b65090e29f957638c77"
+       }
+      ],
       "type": "one_time_sensing",
       "title": "Location, Weather & Air Quality",
       "description": "Collect location, weather and air quality",
@@ -656,14 +817,15 @@
      }
     ],
     "expectedParticipantData": [],
+    "studyId": "1234",
     "protocolDescription": {
      "$type": "StudyProtocolDescription",
      "title": "CARP Study App Feasibility Study",
      "description": "We would like to have you help in testing the technical stability and the usability of the CARP Mobile Sensing app. Your data will be collected and store anonymously.",
      "purpose": "To investigate the technical stability and usability of the CARP Generic Study App."
     },
-    "owner": {
-     "$type": "ProtocolOwner",
+    "responsible": {
+     "$type": "StudyProtocolReponsible",
      "name": "Jakob E. Bardram",
      "title": "PhD, MSc",
      "email": "jakba@dtu.dk",

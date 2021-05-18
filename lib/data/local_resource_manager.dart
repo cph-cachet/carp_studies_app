@@ -3,29 +3,44 @@ part of carp_study_app;
 /// A local resource manager handling:
 ///  * informed consent
 ///  * localization
-class LocalResourceManager {
+class LocalResourceManager implements ResourceManager {
   RPOrderedTask _informedConsent;
 
-  RPOrderedTask getInformedConsent() {
+  static final LocalResourceManager _instance = LocalResourceManager._();
+  factory LocalResourceManager() => _instance;
+
+  LocalResourceManager._() {
+    RPOrderedTask('', []); // to initialize json serialization for RP classes
+  }
+
+  @override
+  Future initialize() async {}
+
+  @override
+  Future<RPOrderedTask> getInformedConsent() async {
     if (_informedConsent == null) {
+      // get the local protocol - studyId is ignored
+      CAMSStudyProtocol protocol =
+          await LocalStudyProtocolManager().getStudyProtocol('');
+
       RPConsentSection overviewSection = RPConsentSection(
           RPConsentSectionType.Custom)
-        ..title = bloc.deployment.name
-        ..summary = bloc.deployment.protocolDescription.description
+        ..title = protocol.name
+        ..summary = protocol.protocolDescription.description
         ..content = "You are being asked to take part in a research study. "
             "Before you decide to participate in this study, it is important that you understand why the research is being done and what it will involve. "
             "Please read the following information carefully. "
             "Please ask if there is anything that is not clear or if you need more information.\n\n"
-            "The title of the study is: \"${bloc.deployment.protocolDescription.title}\".\n\n"
-            "The purpose of this study is: \"${bloc.deployment.protocolDescription.purpose}\".\n\n"
+            "The title of the study is: \"${protocol.protocolDescription.title}\".\n\n"
+            "The purpose of this study is: \"${protocol.protocolDescription.purpose}\".\n\n"
             "You will be asked to use the CARP smartphone app for up to two months. "
             "During this period, the system will collect different kinds of data related to your movements, activities, and health. "
             "You will also be asked to fill in different questionnaires.\n\n\n"
             "The Principle Investigator (PI) is:\n\n"
-            "${bloc.deployment.owner.name}, ${bloc.deployment.owner.title}\n"
-            "${bloc.deployment.owner.affiliation}\n"
-            "${bloc.deployment.owner.address}\n"
-            "${bloc.deployment.owner.email}\n\n"
+            "${protocol.responsible.name}, ${protocol.responsible.title}\n"
+            "${protocol.responsible.affiliation}\n"
+            "${protocol.responsible.address}\n"
+            "${protocol.responsible.email}\n\n"
             "You can contact the principal investigator if you have any questions.";
 
       RPConsentSection dataGatheringSection = RPConsentSection(
@@ -81,7 +96,7 @@ class LocalResourceManager {
             "This is NOT a clinical study and you will NOT receive any clinical feedback on the recordings done as part of this study. "
                 "If you in any way feel uncomfortable or ill during the study, you should contact your regular healthcare professional."
         ..content = "This study is NOT a clinical study. "
-            "The purpose of this study is \"${bloc.deployment.protocolDescription.purpose}\". "
+            "The purpose of this study is \"${protocol.protocolDescription.purpose}\". "
             "You will NOT receive any clinical feedback on the recordings being done, and there is NO doctor looking at these recordings.\n\n"
             "IF YOU IN ANY WAY FEEL UNCOMFORTABLE OR ILL DURING THE STUDY, YOU SHOULD CONTACT YOUR REGULAR HEALTHCARE PROFESSIONAL.\n\n"
             "After the study, data may be analyzed by the medical researchers in the Copenhagen Center for Health Technolocy (CACHET). "
@@ -140,5 +155,40 @@ class LocalResourceManager {
       );
     }
     return _informedConsent;
+  }
+
+  @override
+  Future<bool> deleteInformedConsent() {
+    // TODO: implement deleteInformedConsent
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<bool> deleteLocalizations(Locale locale) {
+    // TODO: implement deleteLocalizations
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Map<String, String>> getLocalizations(Locale locale) {
+    // TODO: implement getLocalizations
+    throw UnimplementedError();
+  }
+
+  @override
+  // TODO: implement informedConsent
+  RPOrderedTask get informedConsent => throw UnimplementedError();
+
+  @override
+  Future<bool> setInformedConsent(RPOrderedTask informedConsent) {
+    // TODO: implement setInformedConsent
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<bool> setLocalizations(
+      Locale locale, Map<String, dynamic> localizations) {
+    // TODO: implement setLocalizations
+    throw UnimplementedError();
   }
 }

@@ -17,6 +17,11 @@ class AppBLoC {
   /// The informed consent to be shown to the user for this study.
   RPOrderedTask informedConsent;
 
+  ResourceManager get resourceManager =>
+      (deploymentMode == DeploymentMode.LOCAL)
+          ? LocalResourceManager()
+          : CarpResourceManager();
+
   MessageManager messageManager = LocalMessageManager();
 
   CarpBackend get backend => _backend;
@@ -44,12 +49,17 @@ class AppBLoC {
     this.deploymentMode = deploymentMode ?? DeploymentMode.LOCAL;
     Settings().debugLevel = DebugLevel.DEBUG;
     await Settings().init();
+    await resourceManager.initialize();
     info('$runtimeType initialized');
   }
 
   /// Has the informed consent been shown to, and accepted by the user?
   bool get hasInformedConsentBeenAccepted =>
       Settings().preferences.getBool(_informedConsentAcceptedKey) ?? false;
+
+  /// Should the informed consent be shown to the user?
+  bool get shouldInformedConsentBeShown =>
+      (informedConsent != null && !hasInformedConsentBeenAccepted);
 
   /// Has the informed consent been handled?
   /// This entails that it has been:
@@ -108,8 +118,8 @@ class AppBLoC {
       Sensing().controller.executor.addError(error, stacktrace);
 
   Future<void> leaveStudy() async {
-    Sensing().controller.stop();
-    bloc.informedConsentAccepted = false;
+    if (Sensing().isRunning) Sensing().controller.stop();
+    informedConsentAccepted = false;
     await backend.leaveStudy();
   }
 

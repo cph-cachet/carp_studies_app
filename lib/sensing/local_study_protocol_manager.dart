@@ -31,7 +31,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           description:
               "Hormone levels, measured in saliva, and physiological indicators of stress from children and parents are used as input to privacy preserving signal processing and machine learning algorithms. Signal processing will be used to extract acoustic and physiological features of importance for therapeutic response. The study includes children with an OCD diagnosis and children without a psychiatric diagnosis and their parents.",
         )
-        ..owner = ProtocolOwner(
+        ..responsible = StudyProtocolReponsible(
           name:
               "Professor Anne Katrine Pagsberg1, Associate Professor Line Katrine Harder Clemmensen2 and Senior Researcher Nicole Nadine Lønfeldt1",
           title: '',
@@ -167,7 +167,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           description:
               "Hormone levels, measured in saliva, and physiological indicators of stress from children and parents are used as input to privacy preserving signal processing and machine learning algorithms. Signal processing will be used to extract acoustic and physiological features of importance for therapeutic response. The study includes children with an OCD diagnosis and children without a psychiatric diagnosis and their parents.",
         )
-        ..owner = ProtocolOwner(
+        ..responsible = StudyProtocolReponsible(
           name:
               "Professor Anne Katrine Pagsberg1, Associate Professor Line Katrine Harder Clemmensen2 and Senior Researcher Nicole Nadine Lønfeldt1",
           title: '',
@@ -301,7 +301,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           description:
               "Hormone levels, measured in saliva, and physiological indicators of stress from children and parents are used as input to privacy preserving signal processing and machine learning algorithms. Signal processing will be used to extract acoustic and physiological features of importance for therapeutic response. The study includes children with an OCD diagnosis and children without a psychiatric diagnosis and their parents.",
         )
-        ..owner = ProtocolOwner(
+        ..responsible = StudyProtocolReponsible(
           name:
               "Professor Anne Katrine Pagsberg1, Associate Professor Line Katrine Harder Clemmensen2 and Senior Researcher Nicole Nadine Lønfeldt1",
           title: '',
@@ -692,7 +692,10 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
   Future<StudyProtocol> _getGenericCARPStudy(String studyId) async {
     if (_protocol == null) {
       _protocol = CAMSStudyProtocol()
-        ..name = 'CARP Study'
+        ..studyId = studyId
+        ..name = 'CARP Study App Feasibility Study'
+        ..description =
+            'A generic protocol testing different parts of the CAMS Study App.'
         ..protocolDescription = StudyProtocolDescription(
           title: 'CARP Study App Feasibility Study',
           purpose:
@@ -701,7 +704,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
               "We would like to have you help in testing the technical stability and the usability of the CARP Mobile Sensing app. "
               "Your data will be collected and store anonymously.",
         )
-        ..owner = ProtocolOwner(
+        ..responsible = StudyProtocolReponsible(
           name: 'Jakob E. Bardram',
           title: 'PhD, MSc',
           email: 'jakba@dtu.dk',

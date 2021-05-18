@@ -30,8 +30,8 @@ class StepsCardDataModel extends DataModel {
     // listen for pedometer events and count them
     controller.data
         .where((dataPoint) => dataPoint.data is PedometerDatum)
-        .listen((datum) {
-      PedometerDatum _step = datum as PedometerDatum;
+        .listen((pedometerDataPoint) {
+      PedometerDatum _step = pedometerDataPoint.data as PedometerDatum;
       _weeklySteps[DateTime.now().weekday] +=
           (_lastStep != null) ? _step.stepCount - _lastStep.stepCount : 0;
       _lastStep = _step;

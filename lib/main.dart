@@ -4,29 +4,28 @@ import 'dart:async';
 import 'dart:math';
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
+import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:timeago/timeago.dart' as timeago;
+import 'package:expandable/expandable.dart';
+import 'package:intl/intl.dart';
+import 'package:activity_recognition_flutter/activity_recognition_flutter.dart';
+
 import 'package:carp_mobile_sensing/carp_mobile_sensing.dart';
-import 'package:carp_webservices/carp_services/carp_services.dart';
-import 'package:carp_webservices/carp_auth/carp_auth.dart';
-import 'package:carp_backend/carp_backend.dart';
 import 'package:carp_audio_package/audio.dart';
 //import 'package:carp_health_package/health_package.dart';
 //import 'package:carp_connectivity_package/connectivity.dart';
 //import 'package:carp_communication_package/communication.dart';
 import 'package:carp_context_package/context.dart';
-import 'package:activity_recognition_flutter/activity_recognition_flutter.dart';
-import 'package:carp_study_app/ui/carp_study_style.dart';
-import 'package:carp_study_app/ui/widgets/carp_app_bar.dart';
 import 'package:carp_survey_package/survey.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
+
+import 'package:carp_webservices/carp_services/carp_services.dart';
+import 'package:carp_webservices/carp_auth/carp_auth.dart';
+import 'package:carp_backend/carp_backend.dart';
 
 import 'package:research_package/research_package.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:timeago/timeago.dart' as timeago;
-import 'package:expandable/expandable.dart';
-import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:intl/intl.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
 
 part 'app_home.dart';
 part 'carp_study_app.dart';
@@ -51,6 +50,8 @@ part 'models/cards/measures_data_model.dart';
 part 'models/audio_user_task.dart';
 part 'data/local_resource_manager.dart';
 
+part 'ui/widgets/carp_app_bar.dart';
+part 'ui/carp_study_style.dart';
 part 'ui/colors.dart';
 part 'ui/pages/data_viz_page.dart';
 part 'ui/pages/study_page.dart';

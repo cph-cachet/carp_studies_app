@@ -69,12 +69,12 @@ class DataVisualizationPage extends StatelessWidget {
     // widgets.add(AudioCardWidget(model.audioCardDataModel));
 
     // check which measures are in the study
-    model.controller.study.measures.forEach((measure) {
-      if (measure.type.name == SurveySamplingPackage.SURVEY && !widgets.contains(SurveysCardWidget))
+    bloc.deployment.measures.forEach((measure) {
+      if (measure.type == SurveySamplingPackage.SURVEY && !widgets.contains(SurveysCardWidget))
         widgets.add(SurveysCardWidget(model.surveysCardDataModel));
-      if (measure.type.name == AudioSamplingPackage.AUDIO && !widgets.contains(AudioCardWidget))
+      if (measure.type == AudioSamplingPackage.AUDIO && !widgets.contains(AudioCardWidget))
         widgets.add(AudioCardWidget(model.audioCardDataModel));
-      if (measure.type.name == SensorSamplingPackage.PEDOMETER)
+      if (measure.type == SensorSamplingPackage.PEDOMETER)
         widgets.add(StepsOuterStatefulWidget(model.stepsCardDataModel));
       if (measure.type == ContextSamplingPackage.MOBILITY)
         widgets.add(MobilityOuterStatefulWidget(model.mobilityCardDataModel));

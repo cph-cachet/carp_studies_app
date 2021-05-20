@@ -1,23 +1,23 @@
 part of carp_study_app;
 
-class MeasuresCardWidget extends StatefulWidget {
-  final MeasuresCardDataModel model;
+class AudioCardWidget extends StatefulWidget {
+  final AudioCardDataModel model;
   final List<Color> colors;
-  MeasuresCardWidget(this.model, {this.colors = CACHET.COLOR_LIST});
-  _MeasuresCardWidgetState createState() => _MeasuresCardWidgetState();
+  AudioCardWidget(this.model, {this.colors = CACHET.COLOR_LIST});
+  _AudioCardWidgetState createState() => _AudioCardWidgetState();
 }
 
-class _MeasuresCardWidgetState extends State<MeasuresCardWidget> {
-  static List<charts.Series<Measures, String>> _createChartList(
-          BuildContext context, MeasuresCardDataModel model, List<Color> colors) =>
+class _AudioCardWidgetState extends State<AudioCardWidget> {
+  static List<charts.Series<Audio, String>> _createChartList(
+          BuildContext context, AudioCardDataModel model, List<Color> colors) =>
       [
-        charts.Series<Measures, String>(
+        charts.Series<Audio, String>(
           colorFn: (_, index) => charts.ColorUtil.fromDartColor(colors[index]),
           //charts.MaterialPalette.blue.makeShades(min(7, model.samplingTable.length))[index],
-          id: 'TotalMeasures',
+          id: 'TotalAudio',
           data: model.measures.sublist(0, min(7, model.samplingTable.length)),
-          domainFn: (Measures datum, _) => datum.measure,
-          measureFn: (Measures datum, _) => datum.size,
+          domainFn: (Audio datum, _) => datum.audioName,
+          measureFn: (Audio datum, _) => datum.size,
         )
       ];
 
@@ -25,7 +25,9 @@ class _MeasuresCardWidgetState extends State<MeasuresCardWidget> {
     RPLocalizations locale = RPLocalizations.of(context);
 
     // Get the measures with more events to prioritize which ones to show
+    widget.model.updateMeasures();
     widget.model.orderedMeasures();
+
     return Padding(
       padding: const EdgeInsets.all(5.0),
       child: Card(
@@ -37,7 +39,7 @@ class _MeasuresCardWidgetState extends State<MeasuresCardWidget> {
             children: <Widget>[
               StreamBuilder(
                 stream: widget.model.measureEvents,
-                builder: (context, AsyncSnapshot<DataPoint> snapshot) {
+                builder: (context, AsyncSnapshot<Datum> snapshot) {
                   return Column(
                     children: [
                       Container(
@@ -50,7 +52,7 @@ class _MeasuresCardWidgetState extends State<MeasuresCardWidget> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   SizedBox(height: 5),
-                                  Text('${widget.model.samplingSize} ' + locale.translate('MEASURES'),
+                                  Text('${widget.model.samplingSize} ' + locale.translate('AUDIOS'),
                                       //textAlign: TextAlign.center,
                                       style: dataCardTitleStyle),
                                 ],
@@ -60,7 +62,7 @@ class _MeasuresCardWidgetState extends State<MeasuresCardWidget> {
                         ),
                       ),
                       Container(
-                        height: 160,
+                        height: 200,
                         child: Stack(
                           alignment: Alignment.center,
                           children: [
@@ -69,9 +71,10 @@ class _MeasuresCardWidgetState extends State<MeasuresCardWidget> {
                               animate: true,
                               behaviors: [
                                 charts.DatumLegend(
-                                  position: charts.BehaviorPosition.end,
-                                  desiredMaxRows: 7,
-                                  //entryTextStyle: charts.TextStyleSpec(fontSize: 10),
+                                  position: charts.BehaviorPosition.bottom,
+                                  //desiredMaxRows: 7,
+                                  desiredMaxColumns: 1,
+                                  entryTextStyle: charts.TextStyleSpec(fontSize: 12),
                                   cellPadding: EdgeInsets.only(right: 3.0, bottom: 2.0),
                                   showMeasures: true,
                                   legendDefaultMeasure: charts.LegendDefaultMeasure.firstValue,

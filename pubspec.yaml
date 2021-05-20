@@ -41,6 +41,9 @@ dependencies:
   charts_flutter: ^0.10.0
   intl: ^0.17.0
   flutter_markdown: ^0.5.2
+  timer_count_down: 1.0.4
+
+
 
   flutter_localizations:
     sdk: flutter

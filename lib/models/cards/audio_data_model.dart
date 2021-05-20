@@ -1,11 +1,10 @@
 part of carp_study_app;
 
 class AudioCardDataModel extends DataModel {
-  // StudyController _controller;
   final Map<String, int> _samplingTable = {};
 
-  /// Stream of measures, i.e. [Datum] measures.
-  Stream<Datum> get measureEvents => controller.events;
+  /// Stream of audio measures, i.e. [DataPoint] measures.
+  Stream<DataPoint> get measureEvents => controller.data;
 
   /// The total sampling size
   int get samplingSize => audioTaskCompleted;
@@ -18,24 +17,28 @@ class AudioCardDataModel extends DataModel {
 
   AudioCardDataModel() : super();
 
-  void init(StudyController controller) {
+  void init(StudyDeploymentController controller) {
     super.init(controller);
 
     // initialize the sampling table
     // controller.study.tasks.forEach((task) => _samplingTable[task.name] = 0);
-    controller.study.measures
-        .where((measure) => measure.type == MeasureType(NameSpace.CARP, AudioSamplingPackage.AUDIO))
-        .forEach((measure) => _samplingTable[measure.name] = 0);
+    // controller.data
+    //     .where((measure) => measure.type == MeasureType(NameSpace.CARP, AudioSamplingPackage.AUDIO))
+    //     .forEach((measure) => _samplingTable[measure.name] = 0);
 
     // listen to incoming events in order to count the measure types
     // controller.events.listen((datum) => _samplingTable[datum.format.name]++);
-    controller.events.listen((datum) {
-      if (_samplingTable.containsKey(datum.format.name)) _samplingTable[datum.format.name]++;
+    controller.data.listen((dataPoint) {
+      print("Data Point: ");
+      print(dataPoint);
+      final String key = dataPoint.carpHeader.dataFormat.name;
+      if (!_samplingTable.containsKey(key)) _samplingTable[key] = 0;
+      _samplingTable[key]++;
     });
   }
 
   String toString() {
-    String _str = 'MEASURE\t| #\n';
+    String _str = 'AUDIO\t| #\n';
     _samplingTable.forEach((type, no) => _str += '$type\t| $no\n');
     return _str;
   }

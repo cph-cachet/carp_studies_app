@@ -27,7 +27,7 @@ class StudyProgressCardDataModel extends DataModel {
 
   StudyProgressCardDataModel() : super();
 
-  void init(StudyController controller) {
+  void init(StudyDeploymentController controller) {
     super.init(controller);
     updateProgress();
   }

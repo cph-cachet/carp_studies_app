@@ -32,7 +32,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
         )
         ..responsible = StudyProtocolReponsible(
           name:
-              "Professor Anne Katrine Pagsberg1, Associate Professor Line Katrine Harder Clemmensen2 and Senior Researcher Nicole Nadine Lønfeldt1",
+              "Professor Anne Katrine Pagsberg1, Associate Professor Line Katrine Harder Clemmensen2 and Senior Researcher Nicole Nadine Lønfeldt",
           title: '',
           email: 'nicole.nadine.loenfeldt@regionh.dk',
           affiliation:

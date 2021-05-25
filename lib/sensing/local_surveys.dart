@@ -516,7 +516,7 @@ class _InformedConsentSurvey implements Survey {
           answerFormat: choiceAnswerFormat11,
         ),
         RPQuestionStep(
-          "question11",
+          "question12",
           title: "The app informed consent was:",
           answerFormat: choiceAnswerFormat12,
         ),
@@ -788,52 +788,52 @@ class _EcologicalSurvey implements Survey {
             ..text =
                 "Below are a list of different feelings and emotions.\n\nPlease read each feeling and choose the option that best matches how much you feel each feeling right now.",
           RPQuestionStep(
-            "question7",
+            "question2",
             title: "Miserable",
             answerFormat: choiceAnswerFormat2,
           ),
           RPQuestionStep(
-            "question8",
+            "question3",
             title: "Mad",
             answerFormat: choiceAnswerFormat2,
           ),
           RPQuestionStep(
-            "question9",
+            "question4",
             title: "Lively",
             answerFormat: choiceAnswerFormat2,
           ),
           RPQuestionStep(
-            "question10",
+            "question5",
             title: "Sad",
             answerFormat: choiceAnswerFormat2,
           ),
           RPQuestionStep(
-            "question11",
+            "question6",
             title: "Joyful",
             answerFormat: choiceAnswerFormat2,
           ),
           RPQuestionStep(
-            "question12",
+            "question7",
             title: "Scared",
             answerFormat: choiceAnswerFormat2,
           ),
           RPQuestionStep(
-            "question13",
+            "question8",
             title: "Cheerful",
             answerFormat: choiceAnswerFormat2,
           ),
           RPQuestionStep(
-            "question14",
+            "question9",
             title: "Happy",
             answerFormat: choiceAnswerFormat2,
           ),
           RPQuestionStep(
-            "question15",
+            "question10",
             title: "Afraid",
             answerFormat: choiceAnswerFormat2,
           ),
           RPQuestionStep(
-            "question16",
+            "question11",
             title: "Proud",
             answerFormat: choiceAnswerFormat2,
           ),
@@ -1332,21 +1332,8 @@ class _ExposureSurvey implements Survey {
     RPChoice(text: "I felt less discomfort with time", value: 3),
   ]);
 
-  // RPImageChoiceAnswerFormat _imageChoiceAnswerFormat = RPImageChoiceAnswerFormat([
-  //   RPImageChoice(Image.asset('assets/icons/very-sad.png'), 0, "Unbearable"),
-  //   RPImageChoice(Image.asset('assets/icons/sad.png'), 0, "Very great discomfort"),
-  //   RPImageChoice(Image.asset('assets/icons/ok.png'), 0, "Quite a lot of discomfort"),
-  //   RPImageChoice(Image.asset('assets/icons/happy.png'), 0, "A certain discomfort"),
-  //   RPImageChoice(Image.asset('assets/icons/very-happy.png'), 0, "Calm"),
-  // ]);
-  // RPChoiceAnswerFormat choiceAnswerFormat4 = RPChoiceAnswerFormat(ChoiceAnswerStyle.SingleChoice, [
-  //   RPChoice("Yes, I did a compulsion", 0),
-  //   RPChoice("Yes, I used another type of safety behavior", 1),
-  //   RPChoice("No, I completed the task without any safety behaviors", 2),
-  // ]);
-
   RPTask get survey => RPOrderedTask("Exposure_SUDS_v2_2021.04.22", [
-        RPInstructionStep("instruction",
+        RPInstructionStep("instruction1",
             title: "Exposure and response prevention", imagePath: 'assets/icons/survey.png')
           ..text =
               "This survey is designed to help you practice fighting OCD. To take back control from OCD, you must do the opposite of what OCD wants you to do. For example, you may touch some food left over on your plate or say some “dangerous” words. Or, if the OCD tells you to touch things a certain number of times, don't do it. Going against OCD can be scary or upsetting. But, to take control back from OCD, you can’t run away from the discomfort or fear - you must tough it out.\n\nDuring the exercise, notice what happens to the feeling of discomfort for up to 15 minutes.\n\nWhile you practice going against OCD, your parents or your therapist can help you use this form.",
@@ -1356,7 +1343,7 @@ class _ExposureSurvey implements Survey {
               "What do you think is going to happen to your feelings of discomfort, fear or disgust when you practice doing the opposite of what OCD wants you to do? ",
           answerFormat: choiceAnswerFormat1,
         ),
-        RPInstructionStep("instruction", title: " ")
+        RPInstructionStep("instruction2", title: " ")
           ..text =
               "Many children and adolescents think that their fear or discomfort will get worse and worse when they practice going against OCD, but that is not what happens.\n\nFor many children and adolescents, the fear/discomfort goes up and down during the exercise. For some people, the fear/discomfort becomes less during the exercise. Others find that their fear/discomfort does not really change during the exercise, but then they learn that fear and discomfort are not dangerous. With lots of practice, you should really notice that you feel less fear, disgust or discomfort.",
         RPQuestionStep(
@@ -1481,10 +1468,10 @@ class _ExposureOldSurvey implements Survey {
 
   RPImageChoiceAnswerFormat _imageChoiceAnswerFormat = RPImageChoiceAnswerFormat(choices: [
     RPImageChoice(image: Image.asset('assets/icons/very-sad.png'), value: 0, description: 'Uudholdelig'),
-    RPImageChoice(image: Image.asset('assets/icons/sad.png'), value: 0, description: 'Meget stor ubehag'),
-    RPImageChoice(image: Image.asset('assets/icons/ok.png'), value: 0, description: 'Ret stor ubehag'),
-    RPImageChoice(image: Image.asset('assets/icons/happy.png'), value: 0, description: 'En vis ubehag'),
-    RPImageChoice(image: Image.asset('assets/icons/very-happy.png'), value: 0, description: 'Rolig'),
+    RPImageChoice(image: Image.asset('assets/icons/sad.png'), value: 1, description: 'Meget stor ubehag'),
+    RPImageChoice(image: Image.asset('assets/icons/ok.png'), value: 2, description: 'Ret stor ubehag'),
+    RPImageChoice(image: Image.asset('assets/icons/happy.png'), value: 3, description: 'En vis ubehag'),
+    RPImageChoice(image: Image.asset('assets/icons/very-happy.png'), value: 4, description: 'Rolig'),
   ]);
 
   RPChoiceAnswerFormat choiceAnswerFormat1 =

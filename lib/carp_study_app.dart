@@ -74,7 +74,7 @@ class _LoadingPageState extends State<LoadingPage> {
     //  * LOCAL
     //  * CARP_STAGGING
     //  * CARP_PRODUCTION
-    await bloc.initialize(DeploymentMode.CARP_PRODUCTION);
+    await bloc.initialize(DeploymentMode.LOCAL);
 
     // this is done in order to test the entire onboarding flow
     // TODO - remove when done testing
@@ -88,9 +88,8 @@ class _LoadingPageState extends State<LoadingPage> {
     }
 
     // find the right informed consent, if needed
-    bloc.informedConsent = (!bloc.hasInformedConsentBeenAccepted)
-        ? await bloc.resourceManager.getInformedConsent()
-        : null;
+    bloc.informedConsent =
+        (!bloc.hasInformedConsentBeenAccepted) ? await bloc.resourceManager.getInformedConsent() : null;
 
     await bloc.messageManager.init();
     await bloc.getMessages();
@@ -122,9 +121,7 @@ class _LoadingPageState extends State<LoadingPage> {
                 )))
             : Scaffold(
                 backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-                body: (bloc.shouldInformedConsentBeShown)
-                    ? InformedConsentPage()
-                    : CarpStudyAppHome(),
+                body: (bloc.shouldInformedConsentBeShown) ? InformedConsentPage() : CarpStudyAppHome(),
               ));
   }
 
@@ -139,8 +136,7 @@ class _LoadingPageState extends State<LoadingPage> {
         child: new Center(
             child: new Hero(
           tag: "tick",
-          child: new Image.asset('assets/images/splash_cachet.png',
-              width: 150.0, height: 150.0, scale: 1.0),
+          child: new Image.asset('assets/images/splash_cachet.png', width: 150.0, height: 150.0, scale: 1.0),
         )),
       );
 }

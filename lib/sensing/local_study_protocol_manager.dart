@@ -693,9 +693,9 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
     if (_protocol == null) {
       _protocol = CAMSStudyProtocol()
         ..studyId = studyId
-        ..name = 'CARP Study App Feasibility Study'
+        ..name = 'CARP Study App 2nd Protocol'
         ..description =
-            'A generic protocol testing different parts of the CAMS Study App.'
+            'A super generic 2nd protocol testing different parts of the CAMS Study App.'
         ..protocolDescription = StudyProtocolDescription(
           title: 'CARP Study App Feasibility Study',
           purpose:

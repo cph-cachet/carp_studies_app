@@ -10,6 +10,8 @@ class CarpStudyApp extends StatelessWidget {
       ],
       // These delegates make sure that the localization data for the proper language is loaded
       localizationsDelegates: [
+        // A class which loads the translations from CARP files
+        CarpLocalizations.delegate,
         // A class which loads the translations from JSON files
         RPLocalizations.delegate,
         // Built-in localization of basic text for Cupertino widgets
@@ -74,7 +76,7 @@ class _LoadingPageState extends State<LoadingPage> {
     //  * LOCAL
     //  * CARP_STAGGING
     //  * CARP_PRODUCTION
-    await bloc.initialize(DeploymentMode.CARP_PRODUCTION);
+    await bloc.initialize(DeploymentMode.CARP_STAGGING);
 
     // this is done in order to test the entire onboarding flow
     // TODO - remove when done testing

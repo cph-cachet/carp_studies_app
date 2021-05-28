@@ -57,7 +57,6 @@
 		<string>external-accessory</string>
 		<string>fetch</string>
 		<string>location</string>
-		<string>audio</string>
 	</array>
 	<key>UIFileSharingEnabled</key>
 	<true/>

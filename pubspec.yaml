@@ -39,7 +39,7 @@ dependencies:
   timeago: ^2.0.29
   expandable: ^4.1.4
   charts_flutter: ^0.10.0
-  intl: ^0.17.0
+  intl: ^0.16.1
   flutter_markdown: ^0.5.2
 
   flutter_localizations:
@@ -66,6 +66,10 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.0
+  
+# dependency_overrides:
+#   intl: ^0.17.0-nullsafety.2
+
 
 dev_dependencies:
   flutter_test:

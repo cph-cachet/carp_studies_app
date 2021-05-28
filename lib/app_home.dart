@@ -15,6 +15,7 @@ class CARPStudyAppState extends State<CarpStudyAppHome> {
 
     _pages.add(TaskListPage(bloc.data.taskListPageModel));
     _pages.add(StudyPage(bloc.data.studyPageModel));
+    //_pages.add(TimerTaskPage());
     _pages.add(DataVisualizationPage(bloc.data.dataPageModel));
   }
 

@@ -83,7 +83,6 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
           onPressed: () {
             print("close");
             _showCancelConfirmationDialog();
-            // TODO: close confirmation
           },
         ),
       ],

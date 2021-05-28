@@ -93,7 +93,7 @@ class Sensing {
 
         break;
       case DeploymentMode.CARP_PRODUCTION:
-      case DeploymentMode.CARP_STAGGING:
+      case DeploymentMode.CARP_STAGING:
         assert(CarpService().authenticated,
             'No used is authenticated. Call CarpService().authenticate() before using a CARP deployment service.');
         assert(bloc.backend.studyDeploymentId != null,

@@ -31,6 +31,29 @@ class CACHET {
   static const Color GREEN_1 = Color(0xFF90D88F);
 
   static Color pie = createMaterialColor(Color.fromRGBO(225, 244, 250, 1));
+
+  static const List<Color> COLOR_LIST = [
+    Color(0xFF7FC9E3),
+    RED_1,
+    BLUE_1,
+    Color(0xFF809AE5),
+    Color(0xFF630A1A),
+    Color(0xFF1282B0),
+    Color(0xFFC052A2),
+    Color(0xFFBA0022),
+    Color(0xFF6FB4E9),
+    Color(0xFFA379CE),
+    Color(0xFFCA2366),
+
+    //
+    // Color(0xFF82CEE9),
+    // Color(0xFFB00020),
+    // Color(0xFF1282B0),
+    // Color(0xFF630A1A),
+    // Color(0xFF054863),
+    // Color(0xFFB8566A),
+    // Color(0xFFC3E2EB)
+  ];
 }
 
 MaterialColor createMaterialColor(Color color) {

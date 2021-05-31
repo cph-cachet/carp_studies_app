@@ -74,7 +74,7 @@ class _StudyProgressCardWidgetState extends State<StudyProgressCardWidget> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   SizedBox(height: 5),
-                                  Text(locale.translate('TASKS PROGRESS'),
+                                  Text(locale.translate('cards.study_progress.title'),
                                       //textAlign: TextAlign.center,
                                       style: dataCardTitleStyle),
                                 ],

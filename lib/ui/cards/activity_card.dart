@@ -73,13 +73,13 @@ class _ActivityCardWidgetState extends State<ActivityCardWidget> {
           child: Column(
             children: <Widget>[
               CardHeader(
-                title: locale.translate('Activity'),
+                title: locale.translate('cards.activity.title'),
                 iconAssetName: Icon(Icons.fitness_center, color: Theme.of(context).primaryColor),
                 heroTag: 'activity-card',
                 values: [
-                  '$_walk ' + locale.translate('min walking'),
-                  '$_run ' + locale.translate('min running'),
-                  '$_cycle ' + locale.translate('min cycling')
+                  '$_walk ' + locale.translate('cards.activity.walking'),
+                  '$_run ' + locale.translate('cards.activity.running'),
+                  '$_cycle ' + locale.translate('cards.activity.cycling')
                 ],
                 colors: widget.colors,
               ),

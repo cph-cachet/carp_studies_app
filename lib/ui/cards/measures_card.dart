@@ -50,7 +50,7 @@ class _MeasuresCardWidgetState extends State<MeasuresCardWidget> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   SizedBox(height: 5),
-                                  Text('${widget.model.samplingSize} ' + locale.translate('MEASURES'),
+                                  Text('${widget.model.samplingSize} ' + locale.translate('cards.measures.title'),
                                       //textAlign: TextAlign.center,
                                       style: dataCardTitleStyle),
                                 ],

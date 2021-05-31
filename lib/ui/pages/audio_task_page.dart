@@ -124,9 +124,7 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
             SizedBox(height: 40),
             Text(audioUserTask.title, style: audioTitleStyle),
             SizedBox(height: 10),
-            Text(
-                '${audioUserTask.description}\n\n' +
-                    locale.translate('Please press the button below when ready.'),
+            Text('${audioUserTask.description}\n\n' + locale.translate('pages.audio_task.play'),
                 style: audioDescriptionStyle),
             Expanded(
               child: Align(
@@ -167,7 +165,7 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
             SizedBox(height: 35),
             Image(image: AssetImage('assets/images/audio.png'), width: 220, height: 220),
             SizedBox(height: 40),
-            Text(locale.translate("Recording..."), style: audioTitleStyle),
+            Text(locale.translate("pages.audio_task.recording"), style: audioTitleStyle),
             SizedBox(height: 10),
             // If instructions are too long, create scrollable card for the extra instructions
             Text(audioUserTask.instructions.split('\n\n')[0], style: audioContentStyle),
@@ -249,10 +247,7 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
             SizedBox(height: 40),
             Text(locale.translate("Done!"), style: audioTitleStyle),
             SizedBox(height: 10),
-            Text(
-                locale.translate(
-                    'Recording completed. Press the green button to save this recording.\n\nIf you want to redo the recording, then press the button on the left.'),
-                style: audioDescriptionStyle),
+            Text(locale.translate('pages.audio_task.recording_completed'), style: audioDescriptionStyle),
             Expanded(
               child: Align(
                 alignment: FractionalOffset.bottomCenter,
@@ -297,7 +292,7 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(locale.translate("Discard results and quit?")),
+          title: Text(locale.translate("pages.audio_task.discard")),
           actions: <Widget>[
             FlatButton(
               child: Text(locale.translate("NO")),

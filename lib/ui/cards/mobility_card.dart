@@ -80,13 +80,13 @@ class _MobilityCardWidgetState extends State<MobilityCardWidget> {
           child: Column(
             children: <Widget>[
               CardHeader(
-                title: locale.translate('Mobility'),
+                title: locale.translate('cards.mobility.title'),
                 iconAssetName: Icon(Icons.emoji_transportation, color: Theme.of(context).primaryColor),
                 heroTag: 'mobility-card',
                 values: [
-                  '${_measures['weeklyDistanceTraveled'][0]} ' + locale.translate('km travelled'),
-                  '${_measures['weeklyHomeStay'][1]} ' + locale.translate('% homestay'),
-                  '${_measures['weeklyPlaces'][2]} ' + locale.translate('places'),
+                  '${_measures['weeklyDistanceTraveled'][0]} ' + locale.translate('cards.mobility.distance'),
+                  '${_measures['weeklyHomeStay'][1]} ' + locale.translate('cards.mobility.homestay'),
+                  '${_measures['weeklyPlaces'][2]} ' + locale.translate('cards.mobility.places'),
                 ],
                 colors: widget.colors,
               ),

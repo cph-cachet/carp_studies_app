@@ -23,13 +23,10 @@ class DataVisualizationPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '${locale.translate('Hello')} ${bloc.user.firstName}',
+                      '${locale.translate('pages.data_viz.hello')} ${bloc.user.firstName}',
                       style: sectionTitleStyle.copyWith(color: Theme.of(context).primaryColor),
                     ),
-                    Text(
-                        locale.translate(
-                            'Thank you for participating in this study. This a summary of your contribution to the study.'),
-                        style: aboutCardSubtitleStyle),
+                    Text(locale.translate('pages.data_viz.thanks'), style: aboutCardSubtitleStyle),
                   ],
                 ),
               ),

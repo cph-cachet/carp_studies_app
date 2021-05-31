@@ -34,16 +34,16 @@ class CARPStudyAppState extends State<CarpStudyAppHome> {
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.playlist_add_check_outlined),
-            label: locale.translate('Tasks'),
+            label: locale.translate('app_home.nav_bar_item.tasks'),
             activeIcon: Icon(Icons.playlist_add_check),
           ),
           BottomNavigationBarItem(
               icon: Icon(Icons.announcement_outlined),
-              label: locale.translate('About'),
+              label: locale.translate('app_home.nav_bar_item.about'),
               activeIcon: Icon(Icons.announcement)),
           BottomNavigationBarItem(
               icon: Icon(Icons.leaderboard_outlined),
-              label: locale.translate('Data'),
+              label: locale.translate('app_home.nav_bar_item.data'),
               activeIcon: Icon(Icons.leaderboard)),
         ],
         currentIndex: _selectedIndex,

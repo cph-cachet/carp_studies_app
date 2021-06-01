@@ -11,7 +11,7 @@ class StudyCard extends StatelessWidget {
         '${studyPageModel.description ?? locale.translate('widgets.study_card.no_description')}\n\n'
         '${locale.translate('widgets.study_card.title')}: \"${bloc.deployment.protocolDescription.title}\".\n'
         '${locale.translate('widgets.study_card.purpose')}: \"${bloc.deployment.protocolDescription.purpose}\".\n\n'
-        '${locale.translate('widgets.study_card.responsible')}:\n'
+        '${locale.translate('widgets.study_card.responsibles')}:\n'
         '${bloc.deployment.owner.name}, ${bloc.deployment.owner.title}\n\n'
         //'${bloc.study.pi.affiliation}\n'
         '${bloc.deployment.owner.address}\n'

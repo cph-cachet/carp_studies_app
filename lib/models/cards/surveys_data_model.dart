@@ -30,10 +30,9 @@ class SurveysCardDataModel extends DataModel {
     // listen to incoming events in order to count the measure types
     //controller.events.listen((datum) => _samplingTable[datum.format.name]++);
     controller.data.listen((dataPoint) {
-      print("Data Point: ");
-      print(dataPoint);
+      String type = dataPoint.data.format.toString().split(".")[3];
       final String key = dataPoint.carpHeader.dataFormat.name;
-      if (!_samplingTable.containsKey(key)) _samplingTable[key] = 0;
+      if (!_samplingTable.containsKey(key) && type == SurveyUserTask.SURVEY_TYPE) _samplingTable[key] = 0;
       _samplingTable[key]++;
     });
   }

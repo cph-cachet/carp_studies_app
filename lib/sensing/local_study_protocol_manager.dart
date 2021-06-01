@@ -83,7 +83,11 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
 
       // Ecological Momentary Assesment: collect how are you feeling - triggers randomly  - TODO: use random trigger
       _protocol.addTriggeredTask(
-          ImmediateTrigger(),
+          RandomRecurrentTrigger(
+              maxNumberOfTriggers: 3,
+              minNumberOfTriggers: 0,
+              startTime: Time(hour: 8, minute: 00),
+              endTime: Time(hour: 20, minute: 00)),
           AppTask(
             type: SurveyUserTask.SURVEY_TYPE,
             title: surveys.ecological.title,

@@ -41,7 +41,7 @@ dependencies:
   timeago: ^2.0.29
   expandable: ^4.1.4
   charts_flutter: ^0.10.0
-  intl: ^0.16.1
+  intl: ^0.17.0
   flutter_markdown: ^0.5.2
 
   flutter_localizations:

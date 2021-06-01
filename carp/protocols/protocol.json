@@ -1,7 +1,7 @@
 {
     "name": "Wrist Angel: Patient",
     "description": "Protocol testing for patients",
-    "creationDate": "2021-05-31T09:41:15.447176Z",
+    "creationDate": "2021-06-01T13:59:46.358462Z",
     "masterDevices": [
         {
             "$type": "dk.cachet.carp.protocols.domain.devices.Smartphone",
@@ -47,9 +47,24 @@
             "period": 86400000000
         },
         "2": {
-            "$type": "dk.cachet.carp.protocols.domain.triggers.ImmediateTrigger",
+            "$type": "dk.cachet.carp.protocols.domain.triggers.RandomRecurrentTrigger",
             "sourceDeviceRoleName": "masterphone",
-            "requiresMasterDevice": true
+            "requiresMasterDevice": true,
+            "startTime": {
+                "$type": "Time",
+                "hour": 8,
+                "minute": 0,
+                "second": 0
+            },
+            "endTime": {
+                "$type": "Time",
+                "hour": 20,
+                "minute": 0,
+                "second": 0
+            },
+            "minNumberOfTriggers": 0,
+            "maxNumberOfTriggers": 3,
+            "duration": 2000000
         },
         "3": {
             "$type": "dk.cachet.carp.protocols.domain.triggers.RecurrentScheduledTrigger",

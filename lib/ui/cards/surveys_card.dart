@@ -52,7 +52,9 @@ class _SurveysCardWidgetState extends State<SurveysCardWidget> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   SizedBox(height: 5),
-                                  Text('${widget.model.samplingSize} ' + locale.translate('SURVEYS'),
+                                  Text(
+                                      '${widget.model.samplingSize} ' +
+                                          locale.translate('cards.survey.title'),
                                       //textAlign: TextAlign.center,
                                       style: dataCardTitleStyle),
                                 ],

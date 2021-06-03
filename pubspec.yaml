@@ -20,6 +20,7 @@ version: 0.21.0
 environment:
   sdk: ">=2.7.0 <3.0.0"
 
+
 dependencies:
   flutter:
     sdk: flutter
@@ -28,6 +29,7 @@ dependencies:
   carp_survey_package: ^0.21.0
   carp_audio_package: ^0.21.0
   carp_backend: ^0.21.0
+
   #carp_communication_package: ^0.6.1
   #carp_health_package: ^0.6.1
   research_package: ^0.5.3
@@ -72,12 +74,12 @@ dependencies:
 
 
 dev_dependencies:
-  flutter_test:
-    sdk: flutter
+  # flutter_test:
+  #   sdk: flutter
   json_serializable: ^3.5.0
   build_runner: ^1.10.1
-  test: ^1.14.3
-  carp_study_generator: ^0.21.0
+  test: 
+  carp_study_generator:
   #carp_study_generator: 
   #    path: ../carp/carp.sensing-flutter/utilities/carp_study_generator/
 
@@ -94,7 +96,7 @@ dev_dependencies:
 flutter_icons:
   android: true
   ios: true
-  image_path: "assets/cachet_logo.png"
+  image_path: "assets/logo.png"
 
 # The following section is specific to Flutter.
 flutter:

@@ -17,12 +17,14 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
 
   /// Create a new CAMS study protocol.
   Future<StudyProtocol> getStudyProtocol(String ignored) async =>
-      _protocol ??= await _getGenericCARPStudy(ignored);
+      _protocol ??= await _getPatientWristWatch(ignored);
 
   Future<StudyProtocol> _getPatientWristWatch(String studyId) async {
     if (_protocol == null) {
       _protocol = CAMSStudyProtocol()
-        ..name = 'Wrist Angel'
+        ..name = 'Wrist Angel: Patient'
+        ..studyId = studyId
+        ..description = 'Protocol testing for patients'
         ..protocolDescription = StudyProtocolDescription(
           title: "Wrist Angel: A Wearable AI Feedback Tool for OCD Treatment and Research",
           purpose:
@@ -33,7 +35,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
         ..responsible = StudyProtocolReponsible(
           name:
               "Professor Anne Katrine Pagsberg1, Associate Professor Line Katrine Harder Clemmensen2 and Senior Researcher Nicole Nadine Lønfeldt",
-          title: '',
+          title: ' ',
           email: 'nicole.nadine.loenfeldt@regionh.dk',
           affiliation:
               'Børne- og Ungdomspsykiatrisk Center – Forskningsenheden, Region Hovedstadens Psykiatri\nDTU Compute',
@@ -81,7 +83,11 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
 
       // Ecological Momentary Assesment: collect how are you feeling - triggers randomly  - TODO: use random trigger
       _protocol.addTriggeredTask(
-          ImmediateTrigger(),
+          RandomRecurrentTrigger(
+              maxNumberOfTriggers: 3,
+              minNumberOfTriggers: 0,
+              startTime: Time(hour: 8, minute: 00),
+              endTime: Time(hour: 20, minute: 00)),
           AppTask(
             type: SurveyUserTask.SURVEY_TYPE,
             title: surveys.ecological.title,
@@ -687,8 +693,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
       _protocol = CAMSStudyProtocol()
         ..studyId = studyId
         ..name = 'CARP Study App 2nd Protocol'
-        ..description =
-            'A super generic 2nd protocol testing different parts of the CAMS Study App.'
+        ..description = 'A super generic 2nd protocol testing different parts of the CAMS Study App.'
         ..protocolDescription = StudyProtocolDescription(
           title: 'CARP Study App Feasibility Study',
           purpose: 'To investigate the technical stability and usability of the CARP Generic Study App.',

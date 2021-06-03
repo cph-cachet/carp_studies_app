@@ -23,13 +23,10 @@ class DataVisualizationPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '${locale.translate('Hello')} ${bloc.user.firstName}',
+                      '${locale.translate('pages.data_viz.hello')} ${bloc.user.firstName}',
                       style: sectionTitleStyle.copyWith(color: Theme.of(context).primaryColor),
                     ),
-                    Text(
-                        locale.translate(
-                            'Thank you for participating in this study. This a summary of your contribution to the study.'),
-                        style: aboutCardSubtitleStyle),
+                    Text(locale.translate('pages.data_viz.thanks'), style: aboutCardSubtitleStyle),
                   ],
                 ),
               ),
@@ -65,15 +62,11 @@ class DataVisualizationPage extends StatelessWidget {
     // always show overall measure stats
     widgets.add(MeasuresCardWidget(model.measuresCardDataModel));
 
-    // widgets.add(SurveysCardWidget(model.surveysCardDataModel));
-    // widgets.add(AudioCardWidget(model.audioCardDataModel));
+    widgets.add(SurveysCardWidget(model.surveysCardDataModel));
+    widgets.add(AudioCardWidget(model.audioCardDataModel));
 
     // check which measures are in the study
     bloc.deployment.measures.forEach((measure) {
-      if (measure.type == SurveySamplingPackage.SURVEY && !widgets.contains(SurveysCardWidget))
-        widgets.add(SurveysCardWidget(model.surveysCardDataModel));
-      if (measure.type == AudioSamplingPackage.AUDIO && !widgets.contains(AudioCardWidget))
-        widgets.add(AudioCardWidget(model.audioCardDataModel));
       if (measure.type == SensorSamplingPackage.PEDOMETER)
         widgets.add(StepsOuterStatefulWidget(model.stepsCardDataModel));
       if (measure.type == ContextSamplingPackage.MOBILITY)

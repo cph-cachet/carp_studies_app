@@ -62,12 +62,12 @@ class _StepsCardWidgetState extends State<StepsCardWidget> {
                   return Column(
                     children: [
                       CardHeader(
-                        title: locale.translate('Steps'),
+                        title: locale.translate('cards.steps.title'),
                         iconAssetName: Icon(Icons.directions_walk,
                             color: Theme.of(context).primaryColor),
                         heroTag: 'steps-card',
                         values: [
-                          '$_selectedSteps ' + locale.translate('steps')
+                          '$_selectedSteps ' + locale.translate('cards.steps.steps')
                         ],
                         colors: widget.colors,
                       ),

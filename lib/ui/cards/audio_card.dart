@@ -52,7 +52,8 @@ class _AudioCardWidgetState extends State<AudioCardWidget> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   SizedBox(height: 5),
-                                  Text('${widget.model.samplingSize} ' + locale.translate('AUDIOS'),
+                                  Text(
+                                      '${widget.model.samplingSize} ' + locale.translate('cards.audio.title'),
                                       //textAlign: TextAlign.center,
                                       style: dataCardTitleStyle),
                                 ],

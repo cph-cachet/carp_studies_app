@@ -72,13 +72,16 @@ class _StudyPageState extends State<StudyPage> {
                     : SizedBox.shrink()
               ]),
               SizedBox(height: 10),
-              Row(crossAxisAlignment: CrossAxisAlignment.baseline, children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.baseline, 
+                textBaseline: TextBaseline.ideographic, 
+                children: [
                 SizedBox(width: 15),
                 Expanded(
                     child: Text(message.title,
                         style: aboutCardTitleStyle.copyWith(
                             color: Theme.of(context).primaryColor))),
-              ]),
+              ],),
               SizedBox(height: 5),
               Row(children: [
                 SizedBox(width: 15),

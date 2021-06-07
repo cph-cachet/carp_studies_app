@@ -101,7 +101,7 @@ class CarpBackend {
   /// * check if a local username and token is saved on the phone
   /// * if so, use this and try to authenticate
   /// * else authenticate using the username / password dialogue
-  /// * if successful, get the invitation & study
+  /// * if successful, save the token locally
   Future<void> authenticate(BuildContext context) async {
     info('Authenticating user...');
     if (username != null && oauthToken != null) {

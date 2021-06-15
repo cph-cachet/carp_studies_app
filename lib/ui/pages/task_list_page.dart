@@ -34,27 +34,55 @@ class _TaskListPageState extends State<TaskListPage> {
             child: StreamBuilder<UserTask>(
               stream: widget.model.userTaskEvents,
               builder: (context, snapshot) {
-                // TODO: refresh list when done
-                return CustomScrollView(
-                  slivers: <Widget>[
-                    SliverList(
-                      delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
-                        if (widget.model.tasks[index].state != UserTaskState.done)
-                          return _buildTaskCard(context, widget.model.tasks[index]);
-                        else
-                          return SizedBox.shrink();
-                      }, childCount: widget.model.tasks.length),
-                    ),
-                    SliverList(
-                      delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
-                        if (widget.model.tasks[index].state == UserTaskState.done)
-                          return _buildDoneTaskCard(context, widget.model.tasks[index]);
-                        else
-                          return SizedBox.shrink();
-                      }, childCount: widget.model.tasks.length),
-                    ),
-                  ],
-                );
+                if (!snapshot.hasData) {
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Ink(
+                        width: 60,
+                        height: 60,
+                        decoration: const ShapeDecoration(
+                          color: CACHET.GREY_1,
+                          shape: CircleBorder(),
+                        ),
+                        child: Icon(
+                          Icons.playlist_add_check,
+                          color: Colors.white,
+                        ),
+                      ),
+                      Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                          child: Text(
+                            "There are no tasks for you at the moment.\nCheck again later",
+                            style: aboutCardSubtitleStyle,
+                            textAlign: TextAlign.center,
+                          ))
+                    ],
+                  );
+                } else {
+                  // TODO: refresh list when done
+                  return CustomScrollView(
+                    slivers: <Widget>[
+                      SliverList(
+                        delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
+                          if (widget.model.tasks[index].state != UserTaskState.done)
+                            return _buildTaskCard(context, widget.model.tasks[index]);
+                          else
+                            return SizedBox.shrink();
+                        }, childCount: widget.model.tasks.length),
+                      ),
+                      SliverList(
+                        delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
+                          if (widget.model.tasks[index].state == UserTaskState.done)
+                            return _buildDoneTaskCard(context, widget.model.tasks[index]);
+                          else
+                            return SizedBox.shrink();
+                        }, childCount: widget.model.tasks.length),
+                      ),
+                    ],
+                  );
+                }
               },
             ),
           ),

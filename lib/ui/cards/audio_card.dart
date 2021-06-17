@@ -8,18 +8,18 @@ class AudioCardWidget extends StatefulWidget {
 }
 
 class _AudioCardWidgetState extends State<AudioCardWidget> {
-  static List<charts.Series<Audio, String>> _createChartList(
-          BuildContext context, AudioCardDataModel model, List<Color> colors) =>
-      [
-        charts.Series<Audio, String>(
-          colorFn: (_, index) => charts.ColorUtil.fromDartColor(colors[index]),
-          //charts.MaterialPalette.blue.makeShades(min(7, model.samplingTable.length))[index],
-          id: 'TotalAudio',
-          data: model.measures.sublist(0, min(7, model.samplingTable.length)),
-          domainFn: (Audio datum, _) => datum.audioName,
-          measureFn: (Audio datum, _) => datum.size,
-        )
-      ];
+  // static List<charts.Series<Audio, String>> _createChartList(
+  //         BuildContext context, AudioCardDataModel model, List<Color> colors) =>
+  //     [
+  //       charts.Series<Audio, String>(
+  //         colorFn: (_, index) => charts.ColorUtil.fromDartColor(colors[index]),
+  //         //charts.MaterialPalette.blue.makeShades(min(7, model.samplingTable.length))[index],
+  //         id: 'TotalAudio',
+  //         data: model.measures.sublist(0, min(7, model.samplingTable.length)),
+  //         domainFn: (Audio datum, _) => datum.audioName,
+  //         measureFn: (Audio datum, _) => datum.size,
+  //       )
+  //     ];
 
   Widget build(BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context);
@@ -63,42 +63,46 @@ class _AudioCardWidgetState extends State<AudioCardWidget> {
                         ),
                       ),
                       Container(
-                        height: 200,
-                        child: Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            charts.PieChart(
-                              _createChartList(context, widget.model, CACHET.COLOR_LIST),
-                              animate: true,
-                              behaviors: [
-                                charts.DatumLegend(
-                                  position: charts.BehaviorPosition.bottom,
-                                  //desiredMaxRows: 7,
-                                  desiredMaxColumns: 1,
-                                  entryTextStyle: charts.TextStyleSpec(fontSize: 12),
-                                  cellPadding: EdgeInsets.only(right: 3.0, bottom: 2.0),
-                                  showMeasures: true,
-                                  legendDefaultMeasure: charts.LegendDefaultMeasure.firstValue,
-                                  measureFormatter: (num value) {
-                                    return value == null ? '-' : '$value';
-                                  },
-                                ),
-                              ],
-                              defaultRenderer: charts.ArcRendererConfig(
-                                arcWidth: 20,
-                              ),
-                            ),
-                            /* Positioned(
-                              left: 92,
-                              child: Text(
-                                '${widget.model.samplingSize} \nmeasures',
-                                textAlign: TextAlign.center,
-                                style: measuresStyle.copyWith(color: Theme.of(context).primaryColor),
-                              ),
-                            ), */
-                          ],
-                        ),
-                      ),
+                          height: 200,
+                          // child: Stack(
+                          //   alignment: Alignment.center,
+                          //   children: [
+                          //     charts.PieChart(
+                          //       _createChartList(context, widget.model, CACHET.COLOR_LIST),
+                          //       animate: true,
+                          //       behaviors: [
+                          //         charts.DatumLegend(
+                          //           position: charts.BehaviorPosition.bottom,
+                          //           //desiredMaxRows: 7,
+                          //           desiredMaxColumns: 1,
+                          //           entryTextStyle: charts.TextStyleSpec(fontSize: 12),
+                          //           cellPadding: EdgeInsets.only(right: 3.0, bottom: 2.0),
+                          //           showMeasures: true,
+                          //           legendDefaultMeasure: charts.LegendDefaultMeasure.firstValue,
+                          //           measureFormatter: (num value) {
+                          //             return value == null ? '-' : '$value';
+                          //           },
+                          //         ),
+                          //       ],
+                          //       defaultRenderer: charts.ArcRendererConfig(
+                          //         arcWidth: 20,
+                          //       ),
+                          //     ),
+                          //     /* Positioned(
+                          //       left: 92,
+                          //       child: Text(
+                          //         '${widget.model.samplingSize} \nmeasures',
+                          //         textAlign: TextAlign.center,
+                          //         style: measuresStyle.copyWith(color: Theme.of(context).primaryColor),
+                          //       ),
+                          //     ), */
+                          //   ],
+                          // ),
+                          // ),
+                          child: HorizontalBar(
+                              names: this.widget.model.measures.map((audio) => audio.audioName).toList(),
+                              values: this.widget.model.measures.map((audio) => audio.size).toList(),
+                              colors: CACHET.COLOR_LIST)),
                     ],
                   );
                 },

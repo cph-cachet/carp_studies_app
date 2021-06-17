@@ -32,7 +32,7 @@ class AudioCardDataModel extends DataModel {
       String type = dataPoint.data.format.toString().split(".")[3];
       final String key = dataPoint.carpHeader.dataFormat.name;
       if (!_samplingTable.containsKey(key) && type == AudioUserTask.AUDIO_TYPE) _samplingTable[key] = 0;
-      _samplingTable[key]++;
+      _samplingTable[key] += 1;
     });
   }
 

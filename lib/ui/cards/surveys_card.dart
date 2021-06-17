@@ -8,18 +8,18 @@ class SurveysCardWidget extends StatefulWidget {
 }
 
 class _SurveysCardWidgetState extends State<SurveysCardWidget> {
-  static List<charts.Series<Surveys, String>> _createChartList(
-          BuildContext context, SurveysCardDataModel model, List<Color> colors) =>
-      [
-        charts.Series<Surveys, String>(
-          colorFn: (_, index) => charts.ColorUtil.fromDartColor(colors[index]),
-          // charts.MaterialPalette.blue.makeShades(min(7, model.samplingTable.length))[index],
-          id: 'TotalSurveys',
-          data: model.measures.sublist(0, min(7, model.samplingTable.length)),
-          domainFn: (Surveys datum, _) => datum.surveyName,
-          measureFn: (Surveys datum, _) => datum.size,
-        )
-      ];
+  // static List<charts.Series<Surveys, String>> _createChartList(
+  //         BuildContext context, SurveysCardDataModel model, List<Color> colors) =>
+  //     [
+  //       charts.Series<Surveys, String>(
+  //         colorFn: (_, index) => charts.ColorUtil.fromDartColor(colors[index]),
+  //         // charts.MaterialPalette.blue.makeShades(min(7, model.samplingTable.length))[index],
+  //         id: 'TotalSurveys',
+  //         data: model.measures.sublist(0, min(7, model.samplingTable.length)),
+  //         domainFn: (Surveys datum, _) => datum.surveyName,
+  //         measureFn: (Surveys datum, _) => datum.size,
+  //       )
+  //     ];
 
   Widget build(BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context);

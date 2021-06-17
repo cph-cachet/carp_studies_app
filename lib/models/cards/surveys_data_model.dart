@@ -32,7 +32,7 @@ class SurveysCardDataModel extends DataModel {
     controller.data.listen((dataPoint) {
       String type = dataPoint.carpHeader.dataFormat.name; //data.format.toString().split(".")[3];
       print("key");
-      print(dataPoint.carpBody['survey_result'].results);
+      //print(dataPoint.carpBody['survey_result'].values.first); TODO: GET REAL NAME OF SURVEY
       final String key = dataPoint.carpHeader.dataFormat.name;
 
       if (!_samplingTable.containsKey(key) && type == SurveyUserTask.SURVEY_TYPE) _samplingTable[key] = 0;

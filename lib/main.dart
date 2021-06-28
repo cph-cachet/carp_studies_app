@@ -74,8 +74,6 @@ part 'ui/cards/steps_card.dart';
 part 'ui/cards/activity_card.dart';
 part 'ui/cards/mobility_card.dart';
 part 'ui/cards/measures_card.dart';
-part 'ui/cards/surveys_card.dart';
-part 'ui/cards/audio_card.dart';
 part 'ui/cards/task_card.dart';
 part 'ui/cards/scoreboard_card.dart';
 part 'ui/cards/study_progress_card.dart';

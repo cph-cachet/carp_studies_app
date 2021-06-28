@@ -118,9 +118,12 @@ class _ProfilePageState extends State<ProfilePage> {
 
   // Sends and email to the researcher with the name of the study + user id
   void _contactResearcher() async {
-    final Uri _emailLaunchUri = Uri(scheme: 'mailto', path: bloc.deployment.owner.email, queryParameters: {
-      'subject': 'Support for study: ${bloc.deployment.name} - User: ${bloc.user.id.toString()}'
-    });
+    final Uri _emailLaunchUri = Uri(
+        scheme: 'mailto',
+        path: bloc.deployment.responsible.email,
+        queryParameters: {
+          'subject': 'Support for study: ${bloc.deployment.name} - User: ${bloc.user.id.toString()}'
+        });
 
     var url = _emailLaunchUri.toString().replaceAll("+", "%20");
 
@@ -178,11 +181,11 @@ class _ProfilePageState extends State<ProfilePage> {
         return AlertDialog(
           title: Text(locale.translate("pages.profile.leave_study.confirmation")),
           actions: <Widget>[
-            FlatButton(
+            TextButton(
               child: Text(locale.translate("NO")),
               onPressed: () => Navigator.of(context).pop(), // Dismissing the pop-up
             ),
-            FlatButton(
+            TextButton(
               child: Text(locale.translate("YES")),
               onPressed: () {
                 // Calling the onCancel method with which the developer can for e.g. save the result on the device.

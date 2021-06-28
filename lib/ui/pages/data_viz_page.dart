@@ -6,7 +6,7 @@ class DataVisualizationPage extends StatelessWidget {
   DataVisualizationPage(this.model);
 
   Widget build(BuildContext context) {
-    RPLocalizations locale = RPLocalizations.of(context);
+    AssetLocalizations locale = AssetLocalizations.of(context);
     return Scaffold(
       body: Container(
         child: Column(
@@ -23,10 +23,12 @@ class DataVisualizationPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '${locale.translate('pages.data_viz.hello')} ${bloc.user.firstName}',
-                      style: sectionTitleStyle.copyWith(color: Theme.of(context).primaryColor),
+                      '${locale.translate('pages.data_viz.hello')} ${bloc.friendlyUsername}',
+                      style: sectionTitleStyle.copyWith(
+                          color: Theme.of(context).primaryColor),
                     ),
-                    Text(locale.translate('pages.data_viz.thanks'), style: aboutCardSubtitleStyle),
+                    Text(locale.translate('pages.data_viz.thanks'),
+                        style: aboutCardSubtitleStyle),
                   ],
                 ),
               ),
@@ -62,27 +64,18 @@ class DataVisualizationPage extends StatelessWidget {
     // always show overall measure stats
     widgets.add(MeasuresCardWidget(model.measuresCardDataModel));
 
-    widgets.add(SurveysCardWidget(model.surveysCardDataModel));
-    widgets.add(AudioCardWidget(model.audioCardDataModel));
-
     // check which measures are in the study
-    bloc.deployment.measures.forEach((measure) {
-      if (measure.type == SensorSamplingPackage.PEDOMETER)
-        widgets.add(StepsOuterStatefulWidget(model.stepsCardDataModel));
-      if (measure.type == ContextSamplingPackage.MOBILITY)
-        widgets.add(MobilityOuterStatefulWidget(model.mobilityCardDataModel));
-      if (measure.type == ContextSamplingPackage.ACTIVITY)
-        widgets.add(ActivityOuterStatefulWidget(model.activityCardDataModel));
-    });
-    print(widgets);
+    if (bloc.hasMeasure(SurveySamplingPackage.SURVEY))
+      widgets.add(TaskCardWidget(model.surveysCardDataModel));
+    if (bloc.hasMeasure(AudioSamplingPackage.AUDIO))
+      widgets.add(TaskCardWidget(model.audioCardDataModel));
+    if (bloc.hasMeasure(SensorSamplingPackage.PEDOMETER))
+      widgets.add(StepsOuterStatefulWidget(model.stepsCardDataModel));
+    if (bloc.hasMeasure(ContextSamplingPackage.MOBILITY))
+      widgets.add(MobilityOuterStatefulWidget(model.mobilityCardDataModel));
+    if (bloc.hasMeasure(ContextSamplingPackage.ACTIVITY))
+      widgets.add(ActivityOuterStatefulWidget(model.activityCardDataModel));
 
     return widgets.toSet().toList();
-
-    // return <Widget>[
-    //   MeasuresCardWidget(model.measuresCardDataModel),
-    //   StepsOuterStatefulWidget(model.stepsCardDataModel),
-    //   MobilityOuterStatefulWidget(model.mobilityCardDataModel),
-    //   ActivityOuterStatefulWidget(model.activityCardDataModel),
-    // ];
   }
 }

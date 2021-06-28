@@ -32,7 +32,7 @@ dependencies:
 
   #carp_communication_package: ^0.6.1
   #carp_health_package: ^0.6.1
-  research_package: ^0.5.3
+  research_package: ^0.5.4
 
   flutter_launcher_icons: ^0.8.0
   uuid: ^2.0.0

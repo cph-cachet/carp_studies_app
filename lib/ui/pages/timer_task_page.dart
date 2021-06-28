@@ -82,7 +82,7 @@ part of carp_study_app;
 //   }
 
 //   Widget _header() {
-//     RPLocalizations locale = RPLocalizations.of(context);
+//     AssetLocalizations locale = AssetLocalizations.of(context);
 //     return Row(
 //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
 //       children: [
@@ -273,7 +273,7 @@ part of carp_study_app;
 
 //   // Taken from RP
 //   Future _showCancelConfirmationDialog() {
-//     RPLocalizations locale = RPLocalizations.of(context);
+//     AssetLocalizations locale = AssetLocalizations.of(context);
 //     return showDialog(
 //       context: context,
 //       barrierDismissible: false,

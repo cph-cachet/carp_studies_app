@@ -144,11 +144,11 @@ class _ProfilePageState extends State<ProfilePage> {
         return AlertDialog(
           title: Text(locale.translate("pages.profile.log_out.confirmation")),
           actions: <Widget>[
-            FlatButton(
+            TextButton(
               child: Text(locale.translate("NO")),
               onPressed: () => Navigator.of(context).pop(), // Dismissing the pop-up
             ),
-            FlatButton(
+            TextButton(
               child: Text(locale.translate("YES")),
               onPressed: () {
                 // Calling the onCancel method with which the developer can for e.g. save the result on the device.

@@ -11,6 +11,8 @@ class CARPStudyAppState extends State<CarpStudyAppHome> {
 
   void initState() {
     super.initState();
+
+    // start the sensing
     bloc.start();
 
     _pages.add(TaskListPage(bloc.data.taskListPageModel));

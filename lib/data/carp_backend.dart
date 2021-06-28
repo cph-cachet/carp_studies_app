@@ -159,7 +159,6 @@ class CarpBackend {
     } on Exception catch (e) {
       bloc.informedConsentAccepted = false;
       warning('Informed consent upload failed for username: $username');
-      throw e;
     }
 
     return document;
@@ -171,13 +170,8 @@ class CarpBackend {
   }
 
   Future<void> signOut() async {
-    print('#1.2.1');
     if (CarpService().authenticated) await CarpService().signOut();
-    print('#1.2.2');
-
     await Settings().preferences.remove(_usernameKey);
-    print('#1.2.3');
     await Settings().preferences.remove(_oauthTokenKey);
-    print('#1.2.4');
   }
 }

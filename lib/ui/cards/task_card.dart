@@ -1,21 +1,20 @@
 part of carp_study_app;
 
-class SurveysCardWidget extends StatefulWidget {
-  // final SurveysCardDataModel model;
+class TaskCardWidget extends StatefulWidget {
   final TaskCardDataModel model;
   final List<Color> colors;
-  SurveysCardWidget(this.model, {this.colors = CACHET.COLOR_LIST});
-  _SurveysCardWidgetState createState() => _SurveysCardWidgetState();
+  TaskCardWidget(this.model, {this.colors = CACHET.COLOR_LIST});
+  _TaskCardWidgetState createState() => _TaskCardWidgetState();
 }
 
-class _SurveysCardWidgetState extends State<SurveysCardWidget> {
+class _TaskCardWidgetState extends State<TaskCardWidget> {
   static List<charts.Series<TaskCount, String>> _createChartList(
           BuildContext context, TaskCardDataModel model, List<Color> colors) =>
       [
         charts.Series<TaskCount, String>(
           colorFn: (_, index) => charts.ColorUtil.fromDartColor(colors[index]),
           // charts.MaterialPalette.blue.makeShades(min(7, model.samplingTable.length))[index],
-          id: 'TotalSurveys',
+          id: 'TotalTasks',
           data: model.taskCount.sublist(0, min(7, model.tasksTable.length)),
           domainFn: (TaskCount taskCount, _) => taskCount.title,
           measureFn: (TaskCount taskCount, _) => taskCount.size,
@@ -25,10 +24,6 @@ class _SurveysCardWidgetState extends State<SurveysCardWidget> {
   Widget build(BuildContext context) {
     AssetLocalizations locale = AssetLocalizations.of(context);
 
-    // Get the measures with more events to prioritize which ones to show
-    // widget.model.updateMeasures();
-    // widget.model.orderedMeasures();
-    //print(widget.model.samplingTable);
     return Padding(
       padding: const EdgeInsets.all(5.0),
       child: Card(
@@ -52,7 +47,8 @@ class _SurveysCardWidgetState extends State<SurveysCardWidget> {
                               SizedBox(height: 5),
                               Text(
                                   '${widget.model.tasksDone} ' +
-                                      locale.translate('cards.survey.title'),
+                                      locale.translate(
+                                          'cards.${widget.model.taskType}.title'),
                                   //textAlign: TextAlign.center,
                                   style: dataCardTitleStyle),
                             ],

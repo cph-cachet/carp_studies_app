@@ -22,10 +22,6 @@ class MeasuresCardDataModel extends DataModel {
   void init(StudyDeploymentController controller) {
     super.init(controller);
 
-    // // initialize the sampling table
-    // bloc.deployment.measures
-    //     .forEach((measure) => _samplingTable[measure.type.split('.').last] = 0);
-
     // listen to incoming events in order to count the measure types
     controller.data.listen((dataPoint) {
       final String key = dataPoint.carpHeader.dataFormat.name;

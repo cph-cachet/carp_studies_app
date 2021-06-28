@@ -25,7 +25,7 @@ class CARPStudyAppState extends State<CarpStudyAppHome> {
   }
 
   Widget build(BuildContext context) {
-    RPLocalizations locale = RPLocalizations.of(context);
+    AssetLocalizations locale = AssetLocalizations.of(context);
 
     return Scaffold(
       body: _pages[_selectedIndex],

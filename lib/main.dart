@@ -47,8 +47,7 @@ part 'models/cards/activity_data_model.dart';
 part 'models/cards/mobility_data_model.dart';
 part 'models/cards/steps_data_model.dart';
 part 'models/cards/measures_data_model.dart';
-part 'models/cards/surveys_data_model.dart';
-part 'models/cards/audio_data_model.dart';
+part 'models/cards/task_data_model.dart';
 part 'models/cards/study_progress_data_model.dart';
 
 part 'models/audio_user_task.dart';
@@ -77,6 +76,7 @@ part 'ui/cards/mobility_card.dart';
 part 'ui/cards/measures_card.dart';
 part 'ui/cards/surveys_card.dart';
 part 'ui/cards/audio_card.dart';
+part 'ui/cards/task_card.dart';
 part 'ui/cards/scoreboard_card.dart';
 part 'ui/cards/study_progress_card.dart';
 

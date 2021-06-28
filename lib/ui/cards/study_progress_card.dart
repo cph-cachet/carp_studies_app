@@ -4,10 +4,12 @@ class StudyProgressCardWidget extends StatefulWidget {
   final StudyProgressCardDataModel model;
 
   final List<Color> colors;
-  StudyProgressCardWidget(this.model, {this.colors = const [CACHET.BLUE_1, CACHET.BLUE_2, CACHET.BLUE_3]});
+  StudyProgressCardWidget(this.model,
+      {this.colors = const [CACHET.BLUE_1, CACHET.BLUE_2, CACHET.BLUE_3]});
 
   @override
-  _StudyProgressCardWidgetState createState() => _StudyProgressCardWidgetState();
+  _StudyProgressCardWidgetState createState() =>
+      _StudyProgressCardWidgetState();
 }
 
 class _StudyProgressCardWidgetState extends State<StudyProgressCardWidget> {
@@ -16,10 +18,13 @@ class _StudyProgressCardWidgetState extends State<StudyProgressCardWidget> {
   charts.RenderSpec<String> renderSpecString = AxisTheme.axisThemeOrdinal();
 
   static List<charts.Series<StudyProgress, String>> _createChartList(
-          BuildContext context, StudyProgressCardDataModel model, List<Color> colors) =>
+          BuildContext context,
+          StudyProgressCardDataModel model,
+          List<Color> colors) =>
       [
         charts.Series<StudyProgress, String>(
-            colorFn: (_, index) => charts.ColorUtil.fromDartColor(colors[index]),
+            colorFn: (_, index) =>
+                charts.ColorUtil.fromDartColor(colors[index]),
             //charts.MaterialPalette.blue.makeShades(min(7, model.samplingTable.length))[index],
             id: 'completed',
             data: model.progress,
@@ -46,7 +51,7 @@ class _StudyProgressCardWidgetState extends State<StudyProgressCardWidget> {
 
   @override
   Widget build(BuildContext context) {
-    RPLocalizations locale = RPLocalizations.of(context);
+    AssetLocalizations locale = AssetLocalizations.of(context);
     widget.model.updateProgress();
     widget.model.toString();
 
@@ -74,7 +79,9 @@ class _StudyProgressCardWidgetState extends State<StudyProgressCardWidget> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   SizedBox(height: 5),
-                                  Text(locale.translate('cards.study_progress.title'),
+                                  Text(
+                                      locale.translate(
+                                          'cards.study_progress.title'),
                                       //textAlign: TextAlign.center,
                                       style: dataCardTitleStyle),
                                 ],
@@ -86,17 +93,22 @@ class _StudyProgressCardWidgetState extends State<StudyProgressCardWidget> {
                       Container(
                         height: 160,
                         child: charts.BarChart(
-                          _createChartList(context, widget.model, CACHET.COLOR_LIST),
-                          barGroupingType: charts.BarGroupingType.groupedStacked,
+                          _createChartList(
+                              context, widget.model, CACHET.COLOR_LIST),
+                          barGroupingType:
+                              charts.BarGroupingType.groupedStacked,
                           animate: true,
                           vertical: false,
-                          barRendererDecorator: charts.BarLabelDecorator<String>(),
+                          barRendererDecorator:
+                              charts.BarLabelDecorator<String>(),
                           //domainAxis: charts.OrdinalAxisSpec(renderSpec: renderSpecString),
                           //primaryMeasureAxis: charts.NumericAxisSpec(renderSpec: renderSpecNum),
                           //userManagedState: _myState,
                           defaultInteractions: true,
                           behaviors: [
-                            charts.SelectNearest(eventTrigger: charts.SelectionTrigger.tapAndDrag),
+                            charts.SelectNearest(
+                                eventTrigger:
+                                    charts.SelectionTrigger.tapAndDrag),
                             charts.DomainHighlighter(),
                           ],
                         ),

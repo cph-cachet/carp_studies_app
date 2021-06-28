@@ -6,7 +6,7 @@ class DataVisualizationPage extends StatelessWidget {
   DataVisualizationPage(this.model);
 
   Widget build(BuildContext context) {
-    RPLocalizations locale = RPLocalizations.of(context);
+    AssetLocalizations locale = AssetLocalizations.of(context);
     return Scaffold(
       body: Container(
         child: Column(
@@ -24,9 +24,11 @@ class DataVisualizationPage extends StatelessWidget {
                   children: [
                     Text(
                       '${locale.translate('pages.data_viz.hello')} ${bloc.user.firstName}',
-                      style: sectionTitleStyle.copyWith(color: Theme.of(context).primaryColor),
+                      style: sectionTitleStyle.copyWith(
+                          color: Theme.of(context).primaryColor),
                     ),
-                    Text(locale.translate('pages.data_viz.thanks'), style: aboutCardSubtitleStyle),
+                    Text(locale.translate('pages.data_viz.thanks'),
+                        style: aboutCardSubtitleStyle),
                   ],
                 ),
               ),
@@ -62,8 +64,10 @@ class DataVisualizationPage extends StatelessWidget {
     // always show overall measure stats
     widgets.add(MeasuresCardWidget(model.measuresCardDataModel));
 
-    widgets.add(SurveysCardWidget(model.surveysCardDataModel));
-    widgets.add(AudioCardWidget(model.audioCardDataModel));
+    // widgets.add(SurveysCardWidget(model.surveysCardDataModel));
+    // widgets.add(AudioCardWidget(model.audioCardDataModel));
+    widgets.add(TaskCardWidget(model.surveysCardDataModel));
+    widgets.add(TaskCardWidget(model.audioCardDataModel));
 
     // check which measures are in the study
     bloc.deployment.measures.forEach((measure) {

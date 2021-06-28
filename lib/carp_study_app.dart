@@ -81,11 +81,11 @@ class _LoadingPageState extends State<LoadingPage> {
     //  * LOCAL
     //  * CARP_STAGGING
     //  * CARP_PRODUCTION
-    await bloc.initialize(DeploymentMode.CARP_STAGING);
+    await bloc.initialize(DeploymentMode.LOCAL);
 
     // this is done in order to test the entire onboarding flow
     // TODO - remove when done testing
-    //await bloc.leaveStudyAndSignOut();
+    await bloc.leaveStudyAndSignOut();
 
     //  initialize the CARP backend, if needed
     if (bloc.deploymentMode != DeploymentMode.LOCAL) {
@@ -107,10 +107,6 @@ class _LoadingPageState extends State<LoadingPage> {
 
     // initialize the data models
     bloc.data.init(Sensing().controller);
-
-    // wait 10 sec and then start sampling
-    // TODO - legally, we should not start sensing before informed consent is accepted...
-    Timer(Duration(seconds: 10), () => bloc.start());
 
     return true;
   }

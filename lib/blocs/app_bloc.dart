@@ -40,6 +40,14 @@ class AppBLoC {
   /// The overall data model for this app
   CarpStydyAppDataModel get data => _data;
 
+  /// Does this [deployment] have the measure of [type].
+  bool hasMeasure(String type) {
+    if (deployment == null) return false;
+    return (deployment.measures
+            .firstWhere((measure) => measure.type == type, orElse: null) !=
+        null);
+  }
+
   String get _informedConsentAcceptedKey =>
       '${Settings().appName}.$INFORMED_CONSENT_ACCEPTED_KEY'.toLowerCase();
 
@@ -51,6 +59,19 @@ class AppBLoC {
     await Settings().init();
     await resourceManager.initialize();
     info('$runtimeType initialized');
+  }
+
+  /// Called when the informed consent been accepted by the user.
+  /// This entails that it has been:
+  ///  * shown to the user
+  ///  * accepted by the user
+  Future<void> informedConsentHasBeenAccepted(
+    RPTaskResult informedConsentResult,
+  ) async {
+    info('Informed consent has been accepted by user.');
+    informedConsentAccepted = true;
+    if (bloc.deploymentMode != DeploymentMode.LOCAL)
+      await backend.uploadInformedConsent(informedConsentResult);
   }
 
   /// Has the informed consent been shown to, and accepted by the user?

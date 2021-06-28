@@ -23,7 +23,7 @@ class DataVisualizationPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '${locale.translate('pages.data_viz.hello')} ${bloc.user.firstName}',
+                      '${locale.translate('pages.data_viz.hello')} ${bloc.friendlyUsername}',
                       style: sectionTitleStyle.copyWith(
                           color: Theme.of(context).primaryColor),
                     ),
@@ -65,18 +65,16 @@ class DataVisualizationPage extends StatelessWidget {
     widgets.add(MeasuresCardWidget(model.measuresCardDataModel));
 
     // check which measures are in the study
-    bloc.deployment.measures.forEach((measure) {
-      if (measure.type == SurveySamplingPackage.SURVEY)
-        widgets.add(TaskCardWidget(model.surveysCardDataModel));
-      if (measure.type == AudioSamplingPackage.AUDIO)
-        widgets.add(TaskCardWidget(model.audioCardDataModel));
-      if (measure.type == SensorSamplingPackage.PEDOMETER)
-        widgets.add(StepsOuterStatefulWidget(model.stepsCardDataModel));
-      if (measure.type == ContextSamplingPackage.MOBILITY)
-        widgets.add(MobilityOuterStatefulWidget(model.mobilityCardDataModel));
-      if (measure.type == ContextSamplingPackage.ACTIVITY)
-        widgets.add(ActivityOuterStatefulWidget(model.activityCardDataModel));
-    });
+    if (bloc.hasMeasure(SurveySamplingPackage.SURVEY))
+      widgets.add(TaskCardWidget(model.surveysCardDataModel));
+    if (bloc.hasMeasure(AudioSamplingPackage.AUDIO))
+      widgets.add(TaskCardWidget(model.audioCardDataModel));
+    if (bloc.hasMeasure(SensorSamplingPackage.PEDOMETER))
+      widgets.add(StepsOuterStatefulWidget(model.stepsCardDataModel));
+    if (bloc.hasMeasure(ContextSamplingPackage.MOBILITY))
+      widgets.add(MobilityOuterStatefulWidget(model.mobilityCardDataModel));
+    if (bloc.hasMeasure(ContextSamplingPackage.ACTIVITY))
+      widgets.add(ActivityOuterStatefulWidget(model.activityCardDataModel));
 
     return widgets.toSet().toList();
   }

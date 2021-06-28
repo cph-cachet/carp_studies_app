@@ -24,20 +24,7 @@ class HorizontalBar extends StatelessWidget {
 
     return Center(
       child: MyAssetsBar(
-          width: width * .9,
-          background: colorFromHex("CFD8DC"),
-          //height: 50,
-          //radius: 10,
-          order: OrderType.Descending,
-          assets: _assetList()
-          // [
-          //   MyAsset(size: 30, color: colorFromHex("29B6F6"), name: "hi"),
-          //   MyAsset(size: 25, color: colorFromHex("E53935"), name: "hi"),
-          //   MyAsset(size: 70, color: colorFromHex("4CAF50"), name: "hi"),
-          //   MyAsset(size: 50, color: colorFromHex("8E24AA"), name: "hi"),
-          //   MyAsset(size: 20, color: colorFromHex("FBC02D"), name: "hi")
-          // ],
-          ),
+          width: width * .9, background: Color(0xCFD8DC), order: OrderType.Descending, assets: _assetList()),
     );
   }
 }

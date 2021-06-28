@@ -64,13 +64,12 @@ class DataVisualizationPage extends StatelessWidget {
     // always show overall measure stats
     widgets.add(MeasuresCardWidget(model.measuresCardDataModel));
 
-    // widgets.add(SurveysCardWidget(model.surveysCardDataModel));
-    // widgets.add(AudioCardWidget(model.audioCardDataModel));
-    widgets.add(TaskCardWidget(model.surveysCardDataModel));
-    widgets.add(TaskCardWidget(model.audioCardDataModel));
-
     // check which measures are in the study
     bloc.deployment.measures.forEach((measure) {
+      if (measure.type == SurveySamplingPackage.SURVEY)
+        widgets.add(TaskCardWidget(model.surveysCardDataModel));
+      if (measure.type == AudioSamplingPackage.AUDIO)
+        widgets.add(TaskCardWidget(model.audioCardDataModel));
       if (measure.type == SensorSamplingPackage.PEDOMETER)
         widgets.add(StepsOuterStatefulWidget(model.stepsCardDataModel));
       if (measure.type == ContextSamplingPackage.MOBILITY)
@@ -78,15 +77,7 @@ class DataVisualizationPage extends StatelessWidget {
       if (measure.type == ContextSamplingPackage.ACTIVITY)
         widgets.add(ActivityOuterStatefulWidget(model.activityCardDataModel));
     });
-    print(widgets);
 
     return widgets.toSet().toList();
-
-    // return <Widget>[
-    //   MeasuresCardWidget(model.measuresCardDataModel),
-    //   StepsOuterStatefulWidget(model.stepsCardDataModel),
-    //   MobilityOuterStatefulWidget(model.mobilityCardDataModel),
-    //   ActivityOuterStatefulWidget(model.activityCardDataModel),
-    // ];
   }
 }

@@ -5,25 +5,9 @@ class InformedConsentPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final snackBar = SnackBar(
-      content: Text("Saving informed consent failed. Please restart the app."),
-      action: SnackBarAction(
-          onPressed: () {
-            //TODO: restart the app?
-            print("Restarting the app....");
-          },
-          label: "RESTART"),
-    );
-
     void resultCallback(RPTaskResult result) async {
+      await bloc.informedConsentHasBeenAccepted(result);
       Navigator.of(context).pushReplacementNamed('/HomePage');
-
-      // Upload consent document
-      try {
-        await bloc.backend.uploadInformedConsent(result);
-      } catch (e) {
-        _scaffoldKey.currentState.showSnackBar(snackBar);
-      }
     }
 
     return Scaffold(

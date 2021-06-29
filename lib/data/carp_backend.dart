@@ -101,7 +101,7 @@ class CarpBackend {
   /// * check if a local username and token is saved on the phone
   /// * if so, use this and try to authenticate
   /// * else authenticate using the username / password dialogue
-  /// * if successful, get the invitation & study
+  /// * if successful, save the token locally
   Future<void> authenticate(BuildContext context) async {
     info('Authenticating user...');
     if (username != null && oauthToken != null) {
@@ -159,7 +159,6 @@ class CarpBackend {
     } on Exception catch (e) {
       bloc.informedConsentAccepted = false;
       warning('Informed consent upload failed for username: $username');
-      throw e;
     }
 
     return document;
@@ -171,13 +170,8 @@ class CarpBackend {
   }
 
   Future<void> signOut() async {
-    print('#1.2.1');
     if (CarpService().authenticated) await CarpService().signOut();
-    print('#1.2.2');
-
     await Settings().preferences.remove(_usernameKey);
-    print('#1.2.3');
     await Settings().preferences.remove(_oauthTokenKey);
-    print('#1.2.4');
   }
 }

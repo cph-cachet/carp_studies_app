@@ -6,12 +6,14 @@ import 'package:carp_audio_package/audio.dart';
 //import 'package:carp_communication_package/communication.dart';
 import 'package:carp_context_package/context.dart';
 import 'package:carp_survey_package/survey.dart';
+import 'package:research_package/research_package.dart';
 
 import '../lib/main.dart';
 
 void main() {
   // creating an empty protocol to initialize json serialization
   CAMSStudyProtocol protocol = CAMSStudyProtocol();
+  RPOrderedTask informedConsent;
 
   setUp(() async {
     // create and register external sampling packages
@@ -30,6 +32,11 @@ void main() {
     test('protocol -> JSON', () async {
       protocol = await LocalStudyProtocolManager().getStudyProtocol('1234');
       print(toJsonString(protocol));
+    });
+
+    test('informed consent -> JSON', () async {
+      informedConsent = await LocalResourceManager().getInformedConsent();
+      print(toJsonString(informedConsent));
     });
   });
 }

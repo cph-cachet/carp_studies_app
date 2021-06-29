@@ -10,11 +10,15 @@ class CarpStudyApp extends StatelessWidget {
       ],
       // These delegates make sure that the localization data for the proper language is loaded
       localizationsDelegates: [
-        // A class which loads the translations from CARP files
-        // TODO - implement localization from CARP - but; requires autentication first....
-        // CarpLocalizations.delegate,
-        // A class which loads the translations from JSON files
+        // App translations
+        //  - the translations of app text is located in the 'assets/lang/' folder
+        AssetLocalizations.delegate,
+
+        // Research Package translations
+        //  - the translations of informed consent and surveys are to be
+        //    downloaded from CARP
         RPLocalizations.delegate,
+
         // Built-in localization of basic text for Cupertino widgets
         GlobalCupertinoLocalizations.delegate,
         // Built-in localization of basic text for Material widgets
@@ -77,7 +81,7 @@ class _LoadingPageState extends State<LoadingPage> {
     //  * LOCAL
     //  * CARP_STAGGING
     //  * CARP_PRODUCTION
-    await bloc.initialize(DeploymentMode.CARP_STAGING);
+    await bloc.initialize(DeploymentMode.LOCAL);
 
     // this is done in order to test the entire onboarding flow
     // TODO - remove when done testing
@@ -103,10 +107,6 @@ class _LoadingPageState extends State<LoadingPage> {
 
     // initialize the data models
     bloc.data.init(Sensing().controller);
-
-    // wait 10 sec and the start sampling
-    // TODO - legally, we should not start sensing before informed consent is accepted...
-    Timer(Duration(seconds: 10), () => bloc.start());
 
     return true;
   }

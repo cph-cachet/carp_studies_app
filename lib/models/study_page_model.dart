@@ -6,7 +6,7 @@ class StudyPageModel extends DataModel {
   Image get image => Image.asset('assets/images/study.png');
   String get userID => bloc.deployment.userId;
   String get affiliation =>
-      bloc.deployment.owner.affiliation ??
+      bloc.deployment.responsible.affiliation ??
       'Copenhagen Center for Health Technology';
 
   /// Events on the state of the study executor
@@ -88,7 +88,9 @@ class Message {
   Image get image => obtainImage();
 
   Image obtainImage() {
-    if (imagePath == null) imagePath = 'assets/images/article_' + Random(10).nextInt(3).toString() + '.png';
+    if (imagePath == null)
+      imagePath =
+          'assets/images/article_' + Random(10).nextInt(3).toString() + '.png';
     return Image.asset(imagePath, fit: BoxFit.fitHeight);
   }
 }

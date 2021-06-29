@@ -4,8 +4,7 @@ class StudyProgressCardWidget extends StatefulWidget {
   final StudyProgressCardDataModel model;
 
   final List<Color> colors;
-  StudyProgressCardWidget(this.model,
-      {this.colors = const [CACHET.BLUE_1, CACHET.BLUE_2, CACHET.BLUE_3]});
+  StudyProgressCardWidget(this.model, {this.colors = const [CACHET.BLUE_1, CACHET.RED_1, CACHET.BLUE_3]});
 
   @override
   _StudyProgressCardWidgetState createState() =>
@@ -17,37 +16,19 @@ class _StudyProgressCardWidgetState extends State<StudyProgressCardWidget> {
   charts.RenderSpec<DateTime> renderSpecTime = AxisTheme.axisThemeDateTime();
   charts.RenderSpec<String> renderSpecString = AxisTheme.axisThemeOrdinal();
 
-  static List<charts.Series<StudyProgress, String>> _createChartList(
-          BuildContext context,
-          StudyProgressCardDataModel model,
-          List<Color> colors) =>
-      [
-        charts.Series<StudyProgress, String>(
-            colorFn: (_, index) =>
-                charts.ColorUtil.fromDartColor(colors[index]),
-            //charts.MaterialPalette.blue.makeShades(min(7, model.samplingTable.length))[index],
-            id: 'completed',
-            data: model.progress,
-            domainFn: (StudyProgress datum, _) => datum.state,
-            measureFn: (StudyProgress datum, _) => datum.value,
-            labelAccessorFn: (StudyProgress datum, _) => '${datum.value}'),
-        // charts.Series<StudyProgress, String>(
-        //   colorFn: (_, index) => charts.ColorUtil.fromDartColor(colors[index]),
-        //   //charts.MaterialPalette.blue.makeShades(min(7, model.samplingTable.length))[index],
-        //   id: 'expired',
-        //   data: model.progress,
-        //   domainFn: (StudyProgress datum, _) => datum.state,
-        //   measureFn: (StudyProgress datum, _) => datum.value,
-        // ),
-        // charts.Series<StudyProgress, String>(
-        //   colorFn: (_, index) => charts.ColorUtil.fromDartColor(colors[index]),
-        //   //charts.MaterialPalette.blue.makeShades(min(7, model.samplingTable.length))[index],
-        //   id: 'pending',
-        //   data: model.progress,
-        //   domainFn: (StudyProgress datum, _) => datum.state,
-        //   measureFn: (StudyProgress datum, _) => datum.value,
-        // )
-      ];
+  // static List<charts.Series<StudyProgress, String>> _createChartList(
+  //         BuildContext context, StudyProgressCardDataModel model, List<Color> colors) =>
+  //     [
+  //       charts.Series<StudyProgress, String>(
+  //           colorFn: (_, index) => charts.ColorUtil.fromDartColor(colors[index]),
+  //           //charts.MaterialPalette.blue.makeShades(min(7, model.samplingTable.length))[index],
+  //           id: 'progress',
+  //           data: model.progress,
+  //           domainFn: (StudyProgress datum, _) => datum.state,
+  //           measureFn: (StudyProgress datum, _) => datum.value,
+  //           labelAccessorFn: (StudyProgress datum, _) => '${datum.value}'),
+
+  //     ];
 
   @override
   Widget build(BuildContext context) {
@@ -91,28 +72,26 @@ class _StudyProgressCardWidgetState extends State<StudyProgressCardWidget> {
                         ),
                       ),
                       Container(
-                        height: 160,
-                        child: charts.BarChart(
-                          _createChartList(
-                              context, widget.model, CACHET.COLOR_LIST),
-                          barGroupingType:
-                              charts.BarGroupingType.groupedStacked,
-                          animate: true,
-                          vertical: false,
-                          barRendererDecorator:
-                              charts.BarLabelDecorator<String>(),
-                          //domainAxis: charts.OrdinalAxisSpec(renderSpec: renderSpecString),
-                          //primaryMeasureAxis: charts.NumericAxisSpec(renderSpec: renderSpecNum),
-                          //userManagedState: _myState,
-                          defaultInteractions: true,
-                          behaviors: [
-                            charts.SelectNearest(
-                                eventTrigger:
-                                    charts.SelectionTrigger.tapAndDrag),
-                            charts.DomainHighlighter(),
-                          ],
-                        ),
-                      ),
+                          height: 160,
+                          // child: charts.BarChart(
+                          //   _createChartList(context, widget.model, CACHET.COLOR_LIST),
+                          //   barGroupingType: charts.BarGroupingType.groupedStacked,
+                          //   animate: true,
+                          //   vertical: false,
+                          //   barRendererDecorator: charts.BarLabelDecorator<String>(),
+                          //   //domainAxis: charts.OrdinalAxisSpec(renderSpec: renderSpecString),
+                          //   //primaryMeasureAxis: charts.NumericAxisSpec(renderSpec: renderSpecNum),
+                          //   //userManagedState: _myState,
+                          //   defaultInteractions: true,
+                          //   behaviors: [
+                          //     charts.SelectNearest(eventTrigger: charts.SelectionTrigger.tapAndDrag),
+                          //     charts.DomainHighlighter(),
+                          //   ],
+                          // ),
+                          child: HorizontalBar(
+                              names: this.widget.model.progress.map((progress) => progress.state).toList(),
+                              values: this.widget.model.progress.map((progress) => progress.value).toList(),
+                              colors: CACHET.COLOR_LIST)),
                     ],
                   );
                 },

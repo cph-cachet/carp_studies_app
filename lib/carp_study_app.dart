@@ -83,7 +83,7 @@ class _LoadingPageState extends State<LoadingPage> {
     //  * LOCAL
     //  * CARP_STAGGING
     //  * CARP_PRODUCTION
-    await bloc.initialize(DeploymentMode.LOCAL);
+    await bloc.initialize(DeploymentMode.CARP_STAGING);
 
     // this is done in order to test the entire onboarding flow
     // TODO - remove when done testing

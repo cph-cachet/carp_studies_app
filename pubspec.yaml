@@ -96,7 +96,7 @@ dev_dependencies:
 flutter_icons:
   android: true
   ios: true
-  image_path: "assets/logo.png"
+  image_path: "assets/logo.jpg"
 
 # The following section is specific to Flutter.
 flutter:
@@ -111,7 +111,7 @@ flutter:
     - assets/images/
     - assets/icons/
     - assets/cachet_logo.png
-    - assets/logo.png
+    - assets/logo.jpg
     - assets/lang/en.json
     - assets/lang/da.json
     - assets/lang/es.json

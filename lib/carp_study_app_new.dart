@@ -1,6 +1,6 @@
 part of carp_study_app;
 
-class CarpStudyApp extends StatelessWidget {
+class NewCarpStudyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       supportedLocales: const [
@@ -56,18 +56,16 @@ class CarpStudyApp extends StatelessWidget {
       darkTheme: carpStudyDarkTheme,
       home: LoadingPage(),
       routes: {
-        '/HomePage': (context) => CarpStudyAppHome(),
+        '/LoadingPage': (context) => LoadingPage(),
         '/ConsentPage': (context) => InformedConsentPage(),
+        '/HomePage': (context) => HomePage(),
       },
+      // initialRoute: '/LoadingPage',
     );
   }
 }
 
-class LoadingPage extends StatefulWidget {
-  _LoadingPageState createState() => new _LoadingPageState();
-}
-
-class _LoadingPageState extends State<LoadingPage> {
+class NewLoadingPage extends StatelessWidget {
   /// This methods is used to set up the entire app, including:
   ///  * initialize the bloc
   ///  * authenticate the user
@@ -94,6 +92,14 @@ class _LoadingPageState extends State<LoadingPage> {
       await bloc.backend.getStudyInvitation(context);
     }
 
+    // TODO - at this point, the localization should be fetched before showing the informed consent
+
+    // RPLocalizationsDelegate delegate =
+    //     RPLocalizationsDelegate(loader: FileLocalizationLoader());
+
+    // MaterialApp app = this.context.findAncestorWidgetOfExactType<MaterialApp>();
+    // app.localizationsDelegates.any((element) => false)
+
     // find the right informed consent, if needed
     bloc.informedConsent = (!bloc.hasInformedConsentBeenAccepted)
         ? await bloc.resourceManager.getInformedConsent()
@@ -117,20 +123,29 @@ class _LoadingPageState extends State<LoadingPage> {
   Widget build(BuildContext context) {
     return FutureBuilder(
         future: initialize(context),
-        builder: (context, snapshot) => (!snapshot.hasData)
-            ? Scaffold(
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return Scaffold(
                 backgroundColor: Theme.of(context).scaffoldBackgroundColor,
                 body: Center(
                     child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [CircularProgressIndicator()],
-                )))
-            : Scaffold(
+                )));
+          } else {
+            Navigator.of(context).pushReplacementNamed(
+                (bloc.shouldInformedConsentBeShown)
+                    ? '/ConsentPage '
+                    : '/HomePage');
+            return Scaffold(
                 backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-                body: (bloc.shouldInformedConsentBeShown)
-                    ? InformedConsentPage()
-                    : CarpStudyAppHome(),
-              ));
+                body: Center(
+                    child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [CircularProgressIndicator()],
+                )));
+          }
+        });
   }
 
   // TODO - Not used right now - should we?

@@ -27,8 +27,6 @@ import 'package:carp_backend/carp_backend.dart';
 
 import 'package:research_package/research_package.dart';
 
-part 'app_home.dart';
-part 'carp_study_app.dart';
 part 'blocs/app_bloc.dart';
 part 'blocs/common.dart';
 
@@ -53,6 +51,13 @@ part 'models/cards/study_progress_data_model.dart';
 part 'models/audio_user_task.dart';
 part 'data/local_resource_manager.dart';
 
+part 'carp_study_app.dart';
+part 'carp_study_app_new.dart';
+part 'app_home.dart';
+part 'ui/pages/informed_consent_page.dart';
+// part 'ui/pages/loading_page.dart';
+part 'ui/pages/home_page.dart';
+
 part 'ui/widgets/carp_app_bar.dart';
 part 'ui/carp_study_style.dart';
 part 'ui/colors.dart';
@@ -61,7 +66,6 @@ part 'ui/pages/study_page.dart';
 part 'ui/pages/task_list_page.dart';
 part 'ui/pages/contact_page.dart';
 part 'ui/pages/profile_page.dart';
-part 'ui/pages/informed_consent_page.dart';
 part 'ui/pages/audio_task_page.dart';
 part 'ui/pages/timer_task_page.dart';
 part 'ui/pages/question.dart';
@@ -80,4 +84,39 @@ part 'ui/cards/study_progress_card.dart';
 
 void main() async {
   runApp(CarpStudyApp());
+}
+
+// class CarpStudyApp extends StatelessWidget {
+//   Widget build(BuildContext context) {}
+// }
+
+// class MyApp extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: const Text('Welcome to Flutter'),
+//       ),
+//       body: const Center(
+//         child: Text('Hello World'),
+//       ),
+//     );
+//   }
+// }
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Welcome to Flutter',
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Welcome to Flutter'),
+        ),
+        body: const Center(
+          child: Text('Hello World'),
+        ),
+      ),
+    );
+  }
 }

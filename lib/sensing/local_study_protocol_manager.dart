@@ -15,8 +15,8 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
 
   /// Create a new CAMS study protocol.
   Future<StudyProtocol> getStudyProtocol(String ignored) async =>
-      // _protocol ??= await _getGenericCARPStudy(ignored);
-      _protocol ??= await _getPatientWristWatch(ignored);
+      _protocol ??= await _getGenericCARPStudy(ignored);
+  // _protocol ??= await _getPatientWristWatch(ignored);
 
   // TODO: remove as soon as the uploading localization is ready
   Map<String, String> protocolInformation = {
@@ -35,21 +35,42 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
   };
 
   Future<StudyProtocol> _getPatientWristWatch(String studyId) async {
+    // if (_protocol == null) {
+    //   _protocol = CAMSStudyProtocol()
+    //     ..name = 'Wrist Angel: Patient'
+    //     ..studyId = studyId
+    //     ..description = 'Protocol testing for patients'
+    //     ..protocolDescription = StudyProtocolDescription(
+    //         title: protocolInformation['protocol.description.title'],
+    //         purpose: protocolInformation['protocol.description.purpose'],
+    //         description: protocolInformation['protocol.description.description'])
+    //     ..responsible = StudyProtocolReponsible(
+    //       name: protocolInformation['protocol.responsible.name'],
+    //       title: protocolInformation['protocol.responsible.title'],
+    //       email: protocolInformation['protocol.responsible.email'],
+    //       affiliation: protocolInformation['protocol.responsible.affiliation'],
+    //       address: protocolInformation['protocol.responsible.address'],
+    //     );
     if (_protocol == null) {
       _protocol = CAMSStudyProtocol()
-        ..name = 'Wrist Angel: Patient'
+        ..name = 'Wrist Angel: Patient (Loc)'
         ..studyId = studyId
         ..description = 'Protocol testing for patients'
         ..protocolDescription = StudyProtocolDescription(
-            title: protocolInformation['protocol.description.title'],
-            purpose: protocolInformation['protocol.description.purpose'],
-            description: protocolInformation['protocol.description.description'])
+          title: "Wrist Angel: A Wearable AI Feedback Tool for OCD Treatment and Research",
+          purpose:
+              "We aim to improve assessment and psychotherapy for pediatric obsessive-compulsive disorder (OCD).",
+          description:
+              "Hormone levels, measured in saliva, and physiological indicators of stress from children and parents are used as input to privacy preserving signal processing and machine learning algorithms. Signal processing will be used to extract acoustic and physiological features of importance for therapeutic response. The study includes children with an OCD diagnosis and children without a psychiatric diagnosis and their parents.",
+        )
         ..responsible = StudyProtocolReponsible(
-          name: protocolInformation['protocol.responsible.name'],
-          title: protocolInformation['protocol.responsible.title'],
-          email: protocolInformation['protocol.responsible.email'],
-          affiliation: protocolInformation['protocol.responsible.affiliation'],
-          address: protocolInformation['protocol.responsible.address'],
+          name:
+              "Professor Anne Katrine Pagsberg1, Associate Professor Line Katrine Harder Clemmensen2 and Senior Researcher Nicole Nadine Lønfeldt",
+          title: ' ',
+          email: 'nicole.nadine.loenfeldt@regionh.dk',
+          affiliation:
+              'Børne- og Ungdomspsykiatrisk Center – Forskningsenheden, Region Hovedstadens Psykiatri\nDTU Compute',
+          address: 'Gentoftehospitalsvej 28, 2900 Hellerup',
         );
 
       // Define which devices are used for data collection.

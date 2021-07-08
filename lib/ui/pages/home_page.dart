@@ -1,14 +1,16 @@
 part of carp_study_app;
 
 class HomePage extends StatefulWidget {
+  final HomePageState state = HomePageState();
   HomePage({Key key}) : super(key: key);
-  HomePageState createState() => HomePageState();
+  HomePageState createState() => state;
 }
 
 class HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
   final _pages = [];
 
+  @override
   void initState() {
     super.initState();
 

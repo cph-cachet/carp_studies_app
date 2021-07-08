@@ -1,18 +1,44 @@
 part of carp_study_app;
 
-class AppBLoC {
+enum StudyAppState {
+  /// The BLOC is created (initial state)
+  created,
+
+  /// The BLOC is initialized via the [initialized] method.
+  initialized,
+
+  /// The BLOC is in the process of being configured.
+  configuring,
+
+  /// The BLOC is configured and ready to use.
+  configured,
+}
+
+class StudyAppBLoC {
   static const INFORMED_CONSENT_ACCEPTED_KEY = 'informed_consent_accepted';
 
+  StudyAppState _state = StudyAppState.created;
   final CarpBackend _backend = CarpBackend();
-  // CAMSMasterDeviceDeployment _deployment;
   final CarpStydyAppDataModel _data = CarpStydyAppDataModel();
   StudyDeploymentStatus _status;
-  // StudyProtocol _protocol;
   DateTime _studyStartTimestamp;
   List<Message> _messages;
 
+  StudyAppState get state => _state;
+  bool get isInitialized => _state.index >= 1;
+  bool get isConfiguring => _state.index >= 2;
+  bool get isConfigured => _state.index >= 3;
+
+  /// Debug level for this app (and CAMS).
+  int debugLevel;
+
   /// What kind of deployment are we running - local or CARP?
-  DeploymentMode deploymentMode = DeploymentMode.LOCAL;
+  final DeploymentMode deploymentMode;
+
+  StudyAppBLoC({
+    this.debugLevel = DebugLevel.INFO,
+    this.deploymentMode = DeploymentMode.LOCAL,
+  }) : super();
 
   /// The informed consent to be shown to the user for this study.
   RPOrderedTask informedConsent;
@@ -21,6 +47,9 @@ class AppBLoC {
       (deploymentMode == DeploymentMode.LOCAL)
           ? LocalResourceManager()
           : CarpResourceManager();
+
+  LocalizationLoader get localizationLoader =>
+      ResourceLocalizationLoader(resourceManager);
 
   MessageManager messageManager = LocalMessageManager();
 
@@ -51,17 +80,66 @@ class AppBLoC {
   String get _informedConsentAcceptedKey =>
       '${Settings().appName}.$INFORMED_CONSENT_ACCEPTED_KEY'.toLowerCase();
 
-  AppBLoC() : super();
-
-  Future<void> initialize([DeploymentMode deploymentMode]) async {
-    this.deploymentMode = deploymentMode ?? DeploymentMode.LOCAL;
-    Settings().debugLevel = DebugLevel.DEBUG;
+  /// Initialize this BLOC. Called before being used for anything.
+  Future<void> initialize() async {
+    if (isInitialized) return;
+    print('$runtimeType initializing...');
+    Settings().debugLevel = debugLevel;
     await Settings().init();
     await resourceManager.initialize();
+    _state = StudyAppState.initialized;
     info('$runtimeType initialized');
   }
 
-  /// Called when the informed consent been accepted by the user.
+  /// This methods is used to configure the entire app, including:
+  ///  * initialize the bloc
+  ///  * authenticate the user
+  ///  * get the invitation
+  ///  * get the informed consent
+  ///  * get the study
+  ///  * initialize sensing
+  ///
+  /// This method is used in the [LoadingPage].
+  Future<void> configure([BuildContext context]) async {
+    // make sure to initialize the bloc, if not already done
+    await bloc.initialize();
+
+    // early out if already configuring (e.g. waiting for user authentication)
+    if (isConfiguring) return;
+
+    _state = StudyAppState.configuring;
+    print('$runtimeType configuring...');
+
+    // this is done in order to test the entire onboarding flow
+    // TODO - remove when done testing
+    await bloc.leaveStudyAndSignOut();
+
+    //  initialize the CARP backend, if needed
+    if (bloc.deploymentMode != DeploymentMode.LOCAL) {
+      await bloc.backend.initialize();
+      await bloc.backend.authenticate(context);
+      await bloc.backend.getStudyInvitation(context);
+    }
+
+    // find the right informed consent, if needed
+    bloc.informedConsent = (!bloc.hasInformedConsentBeenAccepted)
+        ? await bloc.resourceManager.getInformedConsent()
+        : null;
+
+    await bloc.messageManager.init();
+    await bloc.getMessages();
+    await Sensing().initialize();
+
+    // print(toJsonString(bloc.deployment));
+
+    // initialize the data models
+    bloc.data.init(Sensing().controller);
+
+    debug('$runtimeType configuration done.');
+    _state = StudyAppState.configured;
+  }
+
+  /// Called when the informed consent has been accepted by the user.
   /// This entails that it has been:
   ///  * shown to the user
   ///  * accepted by the user
@@ -82,7 +160,7 @@ class AppBLoC {
   bool get shouldInformedConsentBeShown =>
       (informedConsent != null && !hasInformedConsentBeenAccepted);
 
-  /// Has the informed consent been handled?
+  /// Specify if the informed consent been handled.
   /// This entails that it has been:
   ///  * shown to the user
   ///  * accepted by the user
@@ -149,5 +227,3 @@ class AppBLoC {
     await backend.signOut();
   }
 }
-
-final bloc = AppBLoC();

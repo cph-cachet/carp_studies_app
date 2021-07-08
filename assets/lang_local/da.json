@@ -1,5 +1,5 @@
 {
-    "ic.overview.title" : "Velkommen fra CARP!",
+    "ic.overview.title" : "Velkommen!",
     "ic.overview.summary" : "I denne app har du du adgang til de opgaver og øvelser, som du skal udføre som en del af WristAngel-studiet.",
     "ic.overview.content" : "Velkommen til WristAngel studiet.\n\nI denne app har du du adgang til opgaverne og øvelserne som du skal udføre som en del af WristAngel-studiet. Inden vi begynder, vil vi fortælle dig om appen og din deltagelse. Hvis du er under 18, skal du gennemgå dette med dine forældre.",
 
@@ -28,9 +28,11 @@
     "ic.summary.content" : "You are above 18 years old. If you are not, please go through this with your parent. \n\nYou have read and understood the provided information and have had the opportunity to ask questions.\n\nYou understand your rights: your participation is voluntary, and you are free to withdraw at any time.\n\nYou understand and agree with how your data is collected, stored and used.",
 
     "ic.review.title" : "Informeret samtykke",
-    "ic.review.reason" : "Har du læst og forstået betingelserne for at anvende denne app til WristAngel studiet?",
-    "ic.review.text" : "Ja",
+    "ic.review.reason" : "Have you read, understood and agreed with using this app for the study as explained?",
+    "ic.review.text" : "Enig?",
 
     "ic.completion.title" : "Tak!",
-    "ic.completion.text" : "Vi har nu gemt dit samtykke."
+    "ic.completion.text" : "Vi har nu gemt dit samtykke.",
+
+    "":""
 }

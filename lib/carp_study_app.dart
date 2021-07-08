@@ -1,6 +1,17 @@
 part of carp_study_app;
 
 class CarpStudyApp extends StatelessWidget {
+  final LoadingPage loadingPage = LoadingPage();
+  final HomePage homePage = HomePage();
+  final InformedConsentPage consentPage = InformedConsentPage();
+
+  /// Research Package translations, incl. the translations of informed consent
+  /// and surveys are to be downloaded from CARP
+  final RPLocalizationsDelegate rpLocalizationsDelegate =
+      RPLocalizationsDelegate(loader: bloc.localizationLoader);
+
+  CarpStudyApp();
+
   Widget build(BuildContext context) {
     return MaterialApp(
       supportedLocales: const [
@@ -8,16 +19,15 @@ class CarpStudyApp extends StatelessWidget {
         Locale('da'),
         Locale('es'),
       ],
-      // These delegates make sure that the localization data for the proper language is loaded
+      // These delegates make sure that localization for the phone language is loaded
       localizationsDelegates: [
-        // App translations
-        //  - the translations of app text is located in the 'assets/lang/' folder
+        // app translations - located in the 'assets/lang/' folder
         AssetLocalizations.delegate,
 
         // Research Package translations
         //  - the translations of informed consent and surveys are to be
         //    downloaded from CARP
-        RPLocalizations.delegate,
+        rpLocalizationsDelegate,
 
         // Built-in localization of basic text for Cupertino widgets
         GlobalCupertinoLocalizations.delegate,
@@ -54,11 +64,13 @@ class CarpStudyApp extends StatelessWidget {
       },
       theme: carpStudyTheme,
       darkTheme: carpStudyDarkTheme,
-      home: LoadingPage(),
+      // home: loadingPage,
       routes: {
-        '/HomePage': (context) => CarpStudyAppHome(),
-        '/ConsentPage': (context) => InformedConsentPage(),
+        '/LoadingPage': (context) => loadingPage,
+        '/HomePage': (context) => homePage,
+        '/ConsentPage': (context) => consentPage,
       },
+      initialRoute: '/LoadingPage',
     );
   }
 }
@@ -68,67 +80,49 @@ class LoadingPage extends StatefulWidget {
 }
 
 class _LoadingPageState extends State<LoadingPage> {
-  /// This methods is used to set up the entire app, including:
-  ///  * initialize the bloc
-  ///  * authenticate the user
-  ///  * get the invitation
-  ///  * get the informed consent
-  ///  * get the study
-  ///  * initialize sensing
-  ///  * start sensing
-  Future<bool> initialize(BuildContext context) async {
-    // initialize the bloc, setting the deployment mode:
-    //  * LOCAL
-    //  * CARP_STAGGING
-    //  * CARP_PRODUCTION
-    await bloc.initialize(DeploymentMode.LOCAL);
-
-    // this is done in order to test the entire onboarding flow
-    // TODO - remove when done testing
-    await bloc.leaveStudyAndSignOut();
-
-    //  initialize the CARP backend, if needed
-    if (bloc.deploymentMode != DeploymentMode.LOCAL) {
-      await bloc.backend.initialize();
-      await bloc.backend.authenticate(context);
-      await bloc.backend.getStudyInvitation(context);
-    }
-
-    // find the right informed consent, if needed
-    bloc.informedConsent = (!bloc.hasInformedConsentBeenAccepted)
-        ? await bloc.resourceManager.getInformedConsent()
-        : null;
-
-    await bloc.messageManager.init();
-    await bloc.getMessages();
-    await Sensing().initialize();
-
-    print(toJsonString(bloc.deployment));
-
-    // initialize the data models
-    bloc.data.init(Sensing().controller);
-
-    return true;
+  @override
+  initState() {
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: initialize(context),
-        builder: (context, snapshot) => (!snapshot.hasData)
-            ? Scaffold(
-                backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-                body: Center(
-                    child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [CircularProgressIndicator()],
-                )))
-            : Scaffold(
-                backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-                body: (bloc.shouldInformedConsentBeShown)
-                    ? InformedConsentPage()
-                    : CarpStudyAppHome(),
-              ));
+    // configure the BLOC if not already done or in progress
+    // note that this build() method can be called several time, but we only
+    // want the bloc to be configured once.
+    //
+    // the only reason to call it here - instead of in the initState() method -
+    // is to have a handle to the context object, which is to be used in the
+    // pop-up windows from CARP
+    //
+    // HOWEVER - all of this seems broken - we should maybe have our own login
+    // page for this app....
+    //
+    // TODO - make app-specific login page?
+    if (!bloc.isConfiguring) {
+      bloc.configure(context).then((_) {
+        // when the setup is done, the localizations should have been downloaded
+        // and we can ask the delegate to reload
+        app.rpLocalizationsDelegate.reload();
+
+        // TODO - here the app should somehow be told to reload the
+        // localizations -- BUT simply cannot make this happen.....??????
+        print(
+            ' >> reload? - ${app.rpLocalizationsDelegate.shouldReload(app.rpLocalizationsDelegate)}');
+
+        // then navigate to the right screen
+        Navigator.of(context).pushReplacementNamed(
+            (bloc.shouldInformedConsentBeShown) ? '/ConsentPage' : '/HomePage');
+      });
+    }
+
+    return Scaffold(
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        body: Center(
+            child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [CircularProgressIndicator()],
+        )));
   }
 
   // TODO - Not used right now - should we?

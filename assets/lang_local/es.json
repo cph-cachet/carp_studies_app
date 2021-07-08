@@ -1,36 +1,39 @@
 {
-    "ic.overview.title" : "Velkommen fra CARP!",
-    "ic.overview.summary" : "I denne app har du du adgang til de opgaver og øvelser, som du skal udføre som en del af WristAngel-studiet.",
-    "ic.overview.content" : "Velkommen til WristAngel studiet.\n\nI denne app har du du adgang til opgaverne og øvelserne som du skal udføre som en del af WristAngel-studiet. Inden vi begynder, vil vi fortælle dig om appen og din deltagelse. Hvis du er under 18, skal du gennemgå dette med dine forældre.",
+    "ic.overview.title" : "Hello!",
+    "ic.overview.summary" : "Welcome to the WristAngel study",
+    "ic.overview.content" : "Welcome to the WristAngel study.\n\nIn this app you will have access to the tasks and exercises of the WristAngel study.\nBefore we begin, we want to tell you about the study and your participation.\nIf you are under 18, please go through this with your parent.\n",
 
-    "ic.who.title" : "Hem er vi?",
+    "ic.who.title" : "Who are we?",
     "ic.who.summary" : "This study is conducted by researchers and clinicians from the Child and Adolescent Mental Health Center, Capital Region of Denmark and the Technical University of Denmark.\n\nThe main contact person is clinical psychologist Nicole Lønfeldt.",
     "ic.who.content" : "This research is done in collaboration between the Child and Adolescent Mental Health Center, Research Unit, Capital Region of Denmark and the Copenhagen Center for Health Technology (CACHET) at the Technical University of Denmark (DTU).\n\nThe investigators directly working with this study include: \n - Professor Anne Katrine Pagsberg and Senior Scientist Nicole Lønfeldt from the research unit of the Child and Adolescent Mental Health Center\n - Professor Line Clemmensen and Postdoc Sneha Das from the DTU Compute\n - Professor Jakob E. Bardram and PhD student Giovanna Nunes Vilaza from DTU HealthTech\n\nThis study is funded by the Novo Nordisk Foundation’s Exploratory Interdisciplinary Synergy Program. The grant reference number is NNF19OC0056795. The investigators have no financial connection to funders.",
 
-    "ic.tasks.title" : "Hvad skal du gøre?",
+    "ic.tasks.title" : "What will we ask you to do?",
     "ic.tasks.summary" : "",
     "ic.tasks.content" : "",
 
-    "ic.duration.title" : "Hvornår kan du se dine svar?",
+    "ic.duration.title" : "When can we see your answers?",
     "ic.duration.summary" : "",
     "ic.duration.content" : "",
 
-    "ic.data.title" : "Hvad sker der med dine data?",
+    "ic.data.title" : "What do we do with your data?",
     "ic.data.summary" : "",
     "ic.data.content" : "",
 
-    "ic.rights.title" : "Hvad er dine rettigheder?",
+    "ic.rights.title" : "What are your rights?",
     "ic.rights.summary" : "",
     "ic.rights.content" : "",
 
-    "ic.summary.title" : "Opsummering",
+    "ic.summary.title" : "Summary before consent",
     "ic.summary.summary" : "You are above 18 years old. If you are not, please go through this with your parent. \n\nYou have read and understood the provided information and have had the opportunity to ask questions.",
     "ic.summary.content" : "You are above 18 years old. If you are not, please go through this with your parent. \n\nYou have read and understood the provided information and have had the opportunity to ask questions.\n\nYou understand your rights: your participation is voluntary, and you are free to withdraw at any time.\n\nYou understand and agree with how your data is collected, stored and used.",
 
-    "ic.review.title" : "Informeret samtykke",
-    "ic.review.reason" : "Har du læst og forstået betingelserne for at anvende denne app til WristAngel studiet?",
-    "ic.review.text" : "Ja",
+    "ic.review.title" : "Informed Consent",
+    "ic.review.reason" : "Have you read, understood and agreed with using this app for the study as explained?",
+    "ic.review.text" : "Agree?",
 
-    "ic.completion.title" : "Tak!",
-    "ic.completion.text" : "Vi har nu gemt dit samtykke."
+    "ic.completion.title" : "Thank you!",
+    "ic.completion.text" : "We have saved your consent document.",
+
+    "":""
+
 }

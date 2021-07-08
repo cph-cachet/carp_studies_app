@@ -4,6 +4,8 @@ import 'dart:async';
 import 'dart:math';
 import 'dart:convert';
 
+import 'package:flutter/services.dart';
+
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -31,9 +33,10 @@ part 'blocs/app_bloc.dart';
 part 'blocs/common.dart';
 
 part 'data/carp_backend.dart';
-part 'sensing/local_surveys.dart';
 part 'data/message_manager.dart';
+part 'data/localization_loader.dart';
 
+part 'sensing/local_surveys.dart';
 part 'sensing/local_study_protocol_manager.dart';
 part 'sensing/sensing.dart';
 
@@ -52,10 +55,8 @@ part 'models/audio_user_task.dart';
 part 'data/local_resource_manager.dart';
 
 part 'carp_study_app.dart';
-part 'carp_study_app_new.dart';
 part 'app_home.dart';
 part 'ui/pages/informed_consent_page.dart';
-// part 'ui/pages/loading_page.dart';
 part 'ui/pages/home_page.dart';
 
 part 'ui/widgets/carp_app_bar.dart';
@@ -82,41 +83,17 @@ part 'ui/cards/task_card.dart';
 part 'ui/cards/scoreboard_card.dart';
 part 'ui/cards/study_progress_card.dart';
 
+CarpStudyApp app;
 void main() async {
-  runApp(CarpStudyApp());
+  app = CarpStudyApp();
+  runApp(app);
 }
 
-// class CarpStudyApp extends StatelessWidget {
-//   Widget build(BuildContext context) {}
-// }
-
-// class MyApp extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text('Welcome to Flutter'),
-//       ),
-//       body: const Center(
-//         child: Text('Hello World'),
-//       ),
-//     );
-//   }
-// }
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Welcome to Flutter',
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Welcome to Flutter'),
-        ),
-        body: const Center(
-          child: Text('Hello World'),
-        ),
-      ),
-    );
-  }
-}
+/// The singleton BLOC.
+///
+/// Configure the debug level and deployment mode here before running the app
+/// or deploying it.
+final bloc = StudyAppBLoC(
+  debugLevel: DebugLevel.DEBUG,
+  deploymentMode: DeploymentMode.CARP_PRODUCTION,
+);

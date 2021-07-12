@@ -15,7 +15,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 0.21.0
+version: 0.21.2
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
@@ -38,7 +38,7 @@ dependencies:
   flutter_launcher_icons: ^0.8.0
   uuid: ^2.0.0
   shared_preferences: '>=0.5.7 <2.0.0'
-  url_launcher: ^5.7.10
+  url_launcher: ^6.0.5
   timeago: ^2.0.29
   expandable: ^4.1.4
   charts_flutter: ^0.10.0
@@ -79,9 +79,9 @@ dev_dependencies:
   json_serializable: ^3.5.0
   build_runner: ^1.10.1
   test: 
-  #carp_study_generator:
-  carp_study_generator: 
-      path: ../carp/carp.sensing-flutter/utilities/carp_study_generator/
+  carp_study_generator:
+  # carp_study_generator: 
+  #     path: ../carp/carp.sensing-flutter/utilities/carp_study_generator/
 
 
 # For information on the generic Dart part of this file, see the
@@ -96,7 +96,7 @@ dev_dependencies:
 flutter_icons:
   android: true
   ios: true
-  image_path: "assets/logo.png"
+  image_path: "assets/logo.jpg"
 
 # The following section is specific to Flutter.
 flutter:
@@ -113,7 +113,7 @@ flutter:
     - assets/lang/
     - assets/lang_local/
     - assets/cachet_logo.png
-    - assets/logo.png
+    - assets/logo.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

@@ -136,8 +136,7 @@ class _LoadingPageState extends State<LoadingPage> {
         child: new Center(
             child: new Hero(
           tag: "tick",
-          child: new Image.asset('assets/images/splash_cachet.png',
-              width: 150.0, height: 150.0, scale: 1.0),
+          child: new Image.asset('assets/images/splash_cachet.png', width: 150.0, height: 150.0, scale: 1.0),
         )),
       );
 }

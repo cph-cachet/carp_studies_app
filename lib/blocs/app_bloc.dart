@@ -44,12 +44,9 @@ class StudyAppBLoC {
   RPOrderedTask informedConsent;
 
   ResourceManager get resourceManager =>
-      (deploymentMode == DeploymentMode.LOCAL)
-          ? LocalResourceManager()
-          : CarpResourceManager();
+      (deploymentMode == DeploymentMode.LOCAL) ? LocalResourceManager() : CarpResourceManager();
 
-  LocalizationLoader get localizationLoader =>
-      ResourceLocalizationLoader(resourceManager);
+  LocalizationLoader get localizationLoader => ResourceLocalizationLoader(resourceManager);
 
   MessageManager messageManager = LocalMessageManager();
 
@@ -72,9 +69,7 @@ class StudyAppBLoC {
   /// Does this [deployment] have the measure of [type].
   bool hasMeasure(String type) {
     if (deployment == null) return false;
-    return (deployment.measures
-            .firstWhere((measure) => measure.type == type, orElse: null) !=
-        null);
+    return (deployment.measures.firstWhere((measure) => measure.type == type, orElse: () => null) != null);
   }
 
   String get _informedConsentAcceptedKey =>
@@ -122,9 +117,8 @@ class StudyAppBLoC {
     }
 
     // find the right informed consent, if needed
-    bloc.informedConsent = (!bloc.hasInformedConsentBeenAccepted)
-        ? await bloc.resourceManager.getInformedConsent()
-        : null;
+    bloc.informedConsent =
+        (!bloc.hasInformedConsentBeenAccepted) ? await bloc.resourceManager.getInformedConsent() : null;
 
     await bloc.messageManager.init();
     await bloc.getMessages();
@@ -157,8 +151,7 @@ class StudyAppBLoC {
       Settings().preferences.getBool(_informedConsentAcceptedKey) ?? false;
 
   /// Should the informed consent be shown to the user?
-  bool get shouldInformedConsentBeShown =>
-      (informedConsent != null && !hasInformedConsentBeenAccepted);
+  bool get shouldInformedConsentBeShown => (informedConsent != null && !hasInformedConsentBeenAccepted);
 
   /// Specify if the informed consent been handled.
   /// This entails that it has been:
@@ -168,8 +161,7 @@ class StudyAppBLoC {
   set informedConsentAccepted(bool accepted) =>
       Settings().preferences.setBool(_informedConsentAcceptedKey, accepted);
 
-  Future<void> getMessages() async =>
-      _messages ??= await messageManager?.messages;
+  Future<void> getMessages() async => _messages ??= await messageManager?.messages;
 
   /// The signed in user. Returns null if no user is signed in.
   CarpUser get user => backend?.user;
@@ -181,9 +173,7 @@ class StudyAppBLoC {
   bool get isRunning => Sensing().isRunning;
 
   /// the list of running - i.e. used - probes in this study.
-  List<Probe> get runningProbes => (Sensing().controller != null)
-      ? Sensing().controller.executor.probes
-      : [];
+  List<Probe> get runningProbes => (Sensing().controller != null) ? Sensing().controller.executor.probes : [];
 
   /// Start sensing. Should only be called once.
   /// Use [resume] and [pause] if pausing/resuming sensing.
@@ -209,8 +199,7 @@ class StudyAppBLoC {
   void dispose() => stop();
 
   /// Add a [Datum] object to the stream of events.
-  void addDatum(Datum datum) =>
-      Sensing().controller.executor.addDataPoint(DataPoint.fromData(datum));
+  void addDatum(Datum datum) => Sensing().controller.executor.addDataPoint(DataPoint.fromData(datum));
 
   /// Add a error to the stream of events.
   void addError(Object error, [StackTrace stacktrace]) =>

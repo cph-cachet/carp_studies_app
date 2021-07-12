@@ -15,8 +15,8 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
 
   /// Create a new CAMS study protocol.
   Future<StudyProtocol> getStudyProtocol(String ignored) async =>
-      _protocol ??= await _getGenericCARPStudy(ignored);
-  // _protocol ??= await _getPatientWristWatch(ignored);
+      //  _protocol ??= await _getGenericCARPStudy(ignored);
+      _protocol ??= await _getPatientWristWatch(ignored);
 
   // TODO: remove as soon as the uploading localization is ready
   Map<String, String> protocolInformation = {
@@ -53,7 +53,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
     //     );
     if (_protocol == null) {
       _protocol = CAMSStudyProtocol()
-        ..name = 'Wrist Angel: Patient (Loc)'
+        ..name = 'Wrist Angel: Patient (TEST)'
         ..studyId = studyId
         ..description = 'Protocol testing for patients'
         ..protocolDescription = StudyProtocolDescription(
@@ -114,11 +114,12 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
 
       // Ecological Momentary Assesment: collect how are you feeling - triggers randomly  - TODO: use random trigger
       _protocol.addTriggeredTask(
-          RandomRecurrentTrigger(
-              maxNumberOfTriggers: 3,
-              minNumberOfTriggers: 0,
-              startTime: Time(hour: 8, minute: 00),
-              endTime: Time(hour: 20, minute: 00)),
+          ImmediateTrigger(),
+          // RandomRecurrentTrigger(
+          //     maxNumberOfTriggers: 3,
+          //     minNumberOfTriggers: 0,
+          //     startTime: Time(hour: 8, minute: 00),
+          //     endTime: Time(hour: 20, minute: 00)),
           AppTask(
             type: SurveyUserTask.SURVEY_TYPE,
             title: surveys.ecological.title,

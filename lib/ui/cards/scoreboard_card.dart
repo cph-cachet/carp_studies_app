@@ -22,8 +22,8 @@ class _ScoreboardCardWidgetState extends State<ScoreboardCardWidget> {
             child: StreamBuilder<UserTask>(
               stream: widget.model.userTaskEvents,
               builder: (context, snapshot) {
-                return Expanded(
-                  child: Column(
+                return 
+                  Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -62,7 +62,6 @@ class _ScoreboardCardWidgetState extends State<ScoreboardCardWidget> {
                       ),
                       SizedBox(height: 15),
                     ],
-                  ),
                 );
               },
             ),

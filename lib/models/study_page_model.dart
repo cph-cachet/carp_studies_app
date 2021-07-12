@@ -6,12 +6,10 @@ class StudyPageModel extends DataModel {
   Image get image => Image.asset('assets/images/study.png');
   String get userID => bloc.deployment.userId;
   String get affiliation =>
-      bloc.deployment.responsible.affiliation ??
-      'Copenhagen Center for Health Technology';
+      bloc.deployment.responsible.affiliation ?? 'Copenhagen Center for Health Technology';
 
   /// Events on the state of the study executor
-  Stream<ProbeState> get studyExecutorStateEvents =>
-      Sensing().controller.executor.stateEvents;
+  Stream<ProbeState> get studyExecutorStateEvents => Sensing().controller.executor.stateEvents;
 
   /// Current state of the study executor (e.g., resumed, paused, ...)
   ProbeState get studyState => Sensing().controller.executor.state;

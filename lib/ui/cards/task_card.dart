@@ -47,8 +47,7 @@ class _TaskCardWidgetState extends State<TaskCardWidget> {
                               SizedBox(height: 5),
                               Text(
                                   '${widget.model.tasksDone} ' +
-                                      locale.translate(
-                                          'cards.${widget.model.taskType}.title'),
+                                      locale.translate('cards.${widget.model.taskType}.title'),
                                   //textAlign: TextAlign.center,
                                   style: dataCardTitleStyle),
                             ],
@@ -59,28 +58,33 @@ class _TaskCardWidgetState extends State<TaskCardWidget> {
                   ),
                   Container(
                     height: 200,
-                    child: charts.PieChart(
-                      _createChartList(
-                          context, widget.model, CACHET.COLOR_LIST),
-                      animate: true,
-                      behaviors: [
-                        charts.DatumLegend(
-                          position: charts.BehaviorPosition.bottom,
-                          //desiredMaxRows: 7,
-                          desiredMaxColumns: 1,
-                          entryTextStyle: charts.TextStyleSpec(fontSize: 12),
-                          cellPadding: EdgeInsets.only(right: 3.0, bottom: 2.0),
-                          showMeasures: true,
-                          legendDefaultMeasure:
-                              charts.LegendDefaultMeasure.firstValue,
-                          measureFormatter: (num value) {
-                            return value == null ? '-' : '$value';
-                          },
-                        ),
-                      ],
-                      defaultRenderer: charts.ArcRendererConfig(
-                        arcWidth: 20,
-                      ),
+                    // child: charts.PieChart(
+                    //   _createChartList(
+                    //       context, widget.model, CACHET.COLOR_LIST),
+                    //   animate: true,
+                    //   behaviors: [
+                    //     charts.DatumLegend(
+                    //       position: charts.BehaviorPosition.bottom,
+                    //       //desiredMaxRows: 7,
+                    //       desiredMaxColumns: 1,
+                    //       entryTextStyle: charts.TextStyleSpec(fontSize: 12),
+                    //       cellPadding: EdgeInsets.only(right: 3.0, bottom: 2.0),
+                    //       showMeasures: true,
+                    //       legendDefaultMeasure:
+                    //           charts.LegendDefaultMeasure.firstValue,
+                    //       measureFormatter: (num value) {
+                    //         return value == null ? '-' : '$value';
+                    //       },
+                    //     ),
+                    //   ],
+                    //   defaultRenderer: charts.ArcRendererConfig(
+                    //     arcWidth: 20,
+                    //   ),
+                    // ),
+                    child: HorizontalBar(
+                      names: this.widget.model.taskCount.map((task) => task.title).toList(),
+                      values: this.widget.model.taskCount.map((task) => task.size).toList(),
+                      colors: CACHET.COLOR_LIST,
                     ),
                   ),
                 ],

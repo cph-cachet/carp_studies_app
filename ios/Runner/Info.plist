@@ -41,6 +41,8 @@
 	<string>CARP uses Apple Music</string>
 	<key>NSBluetoothAlwaysUsageDescription</key>
 	<string>CARP uses bluetooth to connect to wearable devices</string>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>CARP uses bluetooth to connect to wearable devices</string>
 	<key>NSCalendarsUsageDescription</key>
 	<string>CARP collects calendar events to see how busy you are</string>
 	<key>NSContactsUsageDescription</key>
@@ -66,7 +68,6 @@
 		<string>audio</string>
 		<string>bluetooth-central</string>
 		<string>bluetooth-peripheral</string>
-		<string>external-accessory</string>
 		<string>fetch</string>
 		<string>location</string>
 	</array>

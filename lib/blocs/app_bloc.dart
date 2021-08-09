@@ -30,7 +30,7 @@ class StudyAppBLoC {
   bool get isConfigured => _state.index >= 3;
 
   /// Debug level for this app (and CAMS).
-  int debugLevel;
+  DebugLevel debugLevel;
 
   /// What kind of deployment are we running - local or CARP?
   final DeploymentMode deploymentMode;

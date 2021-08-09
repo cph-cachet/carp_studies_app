@@ -25,17 +25,14 @@ class _ProfilePageState extends State<ProfilePage> {
                   Row(
                     children: [
                       IconButton(
-                          icon: Icon(Icons.account_circle,
-                              color: Theme.of(context).primaryColor, size: 30),
+                          icon: Icon(Icons.account_circle, color: Theme.of(context).primaryColor, size: 30),
                           onPressed: () {}),
                       Text(locale.translate('pages.profile.title'),
-                          style: sectionTitleStyle.copyWith(
-                              color: Theme.of(context).primaryColor)),
+                          style: sectionTitleStyle.copyWith(color: Theme.of(context).primaryColor)),
                     ],
                   ),
                   IconButton(
-                      icon: Icon(Icons.close,
-                          color: Theme.of(context).primaryColor, size: 30),
+                      icon: Icon(Icons.close, color: Theme.of(context).primaryColor, size: 30),
                       tooltip: locale.translate('Back'),
                       onPressed: () {
                         Navigator.of(context).pop();
@@ -55,8 +52,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(locale.translate('pages.profile.username'),
-                            style: aboutCardSubtitleStyle.copyWith(
-                                color: Theme.of(context).primaryColor)),
+                            style: aboutCardSubtitleStyle.copyWith(color: Theme.of(context).primaryColor)),
                         Text(bloc.user.username, style: profileTitleStyle),
                       ],
                     ),
@@ -67,8 +63,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(locale.translate('pages.profile.name'),
-                            style: aboutCardSubtitleStyle.copyWith(
-                                color: Theme.of(context).primaryColor)),
+                            style: aboutCardSubtitleStyle.copyWith(color: Theme.of(context).primaryColor)),
                         Text(bloc.user.firstName + ' ' + bloc.user.lastName,
                             style: profileTitleStyle), // TODO add full name
                       ],
@@ -80,18 +75,15 @@ class _ProfilePageState extends State<ProfilePage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(locale.translate('pages.profile.account_id'),
-                            style: aboutCardSubtitleStyle.copyWith(
-                                color: Theme.of(context).primaryColor)),
+                            style: aboutCardSubtitleStyle.copyWith(color: Theme.of(context).primaryColor)),
                         Text(bloc.user.id.toString(), style: profileTitleStyle),
                       ],
                     ),
                   ),
                   ListTile(
-                    leading: Icon(Icons.support_agent,
-                        color: Theme.of(context).primaryColor),
+                    leading: Icon(Icons.support_agent, color: Theme.of(context).primaryColor),
                     title: Text(locale.translate('pages.profile.contact'),
-                        style: profileActionStyle.copyWith(
-                            color: Theme.of(context).primaryColor)),
+                        style: profileActionStyle.copyWith(color: Theme.of(context).primaryColor)),
                     onTap: () {
                       print("contact researcher");
                       _contactResearcher();
@@ -100,19 +92,16 @@ class _ProfilePageState extends State<ProfilePage> {
                   ListTile(
                     leading: Icon(Icons.logout, color: CACHET.RED_1),
                     title: Text(locale.translate('pages.profile.leave_study'),
-                        style:
-                            profileActionStyle.copyWith(color: CACHET.RED_1)),
+                        style: profileActionStyle.copyWith(color: CACHET.RED_1)),
                     onTap: () {
                       print("leaving study");
                       _showLeaveStudyConfirmationDialog();
                     },
                   ),
                   ListTile(
-                    leading:
-                        Icon(Icons.power_settings_new, color: CACHET.RED_1),
+                    leading: Icon(Icons.power_settings_new, color: CACHET.RED_1),
                     title: Text(locale.translate('pages.profile.log_out'),
-                        style:
-                            profileActionStyle.copyWith(color: CACHET.RED_1)),
+                        style: profileActionStyle.copyWith(color: CACHET.RED_1)),
                     onTap: () {
                       print("log out");
                       _showLogoutConfirmationDialog();
@@ -129,12 +118,11 @@ class _ProfilePageState extends State<ProfilePage> {
 
   // Sends and email to the researcher with the name of the study + user id
   void _contactResearcher() async {
-    final Uri _emailLaunchUri = Uri(
-        scheme: 'mailto',
-        path: bloc.deployment.responsible.email,
-        queryParameters: {
-          'subject': 'Support for study: ${bloc.deployment.name} - User: ${bloc.user.id.toString()}'
-        });
+    final Uri _emailLaunchUri =
+        Uri(scheme: 'mailto', path: bloc.deployment.responsible.email, queryParameters: {
+      'subject':
+          'Support for study: ${bloc.deployment.protocolDescription.title} - User: ${bloc.user.id.toString()}'
+    });
 
     var url = _emailLaunchUri.toString().replaceAll("+", "%20");
 
@@ -157,8 +145,7 @@ class _ProfilePageState extends State<ProfilePage> {
           actions: <Widget>[
             TextButton(
               child: Text(locale.translate("NO")),
-              onPressed: () =>
-                  Navigator.of(context).pop(), // Dismissing the pop-up
+              onPressed: () => Navigator.of(context).pop(), // Dismissing the pop-up
             ),
             TextButton(
               child: Text(locale.translate("YES")),
@@ -193,13 +180,11 @@ class _ProfilePageState extends State<ProfilePage> {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          title:
-              Text(locale.translate("pages.profile.leave_study.confirmation")),
+          title: Text(locale.translate("pages.profile.leave_study.confirmation")),
           actions: <Widget>[
             TextButton(
               child: Text(locale.translate("NO")),
-              onPressed: () =>
-                  Navigator.of(context).pop(), // Dismissing the pop-up
+              onPressed: () => Navigator.of(context).pop(), // Dismissing the pop-up
             ),
             TextButton(
               child: Text(locale.translate("YES")),

@@ -7,12 +7,17 @@ import 'package:carp_audio_package/audio.dart';
 import 'package:carp_context_package/context.dart';
 import 'package:carp_survey_package/survey.dart';
 import 'package:research_package/research_package.dart';
+import 'package:carp_core/carp_common/carp_core_common.dart';
+import 'package:carp_core/carp_protocols/carp_core_protocols.dart';
+import 'package:carp_core/carp_deployment/carp_core_deployment.dart';
+import 'package:carp_core/carp_client/carp_core_client.dart';
+import 'package:carp_core/carp_data/carp_core_data.dart';
 
 import '../lib/main.dart';
 
 void main() {
   // creating an empty protocol to initialize json serialization
-  CAMSStudyProtocol protocol = CAMSStudyProtocol();
+  StudyProtocol protocol = StudyProtocol();
   RPOrderedTask informedConsent;
 
   setUp(() async {

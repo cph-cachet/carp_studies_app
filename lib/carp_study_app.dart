@@ -4,6 +4,7 @@ class CarpStudyApp extends StatelessWidget {
   final LoadingPage loadingPage = LoadingPage();
   final HomePage homePage = HomePage();
   final InformedConsentPage consentPage = InformedConsentPage();
+  final FailedLoginPage failedLoginPage = FailedLoginPage();
 
   /// Research Package translations, incl. the translations of informed consent
   /// and surveys are to be downloaded from CARP
@@ -69,6 +70,7 @@ class CarpStudyApp extends StatelessWidget {
         '/LoadingPage': (context) => loadingPage,
         '/HomePage': (context) => homePage,
         '/ConsentPage': (context) => consentPage,
+        '/FailedLoginPage': (context) => failedLoginPage,
       },
       initialRoute: '/LoadingPage',
     );
@@ -107,12 +109,11 @@ class _LoadingPageState extends State<LoadingPage> {
 
         // TODO - here the app should somehow be told to reload the
         // localizations -- BUT simply cannot make this happen.....??????
-        print(
-            ' >> reload? - ${app.rpLocalizationsDelegate.shouldReload(app.rpLocalizationsDelegate)}');
+        print(' >> reload? - ${app.rpLocalizationsDelegate.shouldReload(app.rpLocalizationsDelegate)}');
 
         // then navigate to the right screen
-        Navigator.of(context).pushReplacementNamed(
-            (bloc.shouldInformedConsentBeShown) ? '/ConsentPage' : '/HomePage');
+        Navigator.of(context)
+            .pushReplacementNamed((bloc.shouldInformedConsentBeShown) ? '/ConsentPage' : '/HomePage');
       });
     }
 

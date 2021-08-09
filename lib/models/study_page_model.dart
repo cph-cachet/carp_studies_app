@@ -1,7 +1,7 @@
 part of carp_study_app;
 
 class StudyPageModel extends DataModel {
-  String get name => bloc.deployment.name;
+  String get name => bloc.deployment.protocolDescription.title;
   String get description => bloc.deployment.protocolDescription.description;
   Image get image => Image.asset('assets/images/study.png');
   String get userID => bloc.deployment.userId;
@@ -86,9 +86,7 @@ class Message {
   Image get image => obtainImage();
 
   Image obtainImage() {
-    if (imagePath == null)
-      imagePath =
-          'assets/images/article_' + Random(10).nextInt(3).toString() + '.png';
+    if (imagePath == null) imagePath = 'assets/images/article_' + Random(10).nextInt(3).toString() + '.png';
     return Image.asset(imagePath, fit: BoxFit.fitHeight);
   }
 }

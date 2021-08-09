@@ -26,6 +26,11 @@ import 'package:carp_survey_package/survey.dart';
 import 'package:carp_webservices/carp_services/carp_services.dart';
 import 'package:carp_webservices/carp_auth/carp_auth.dart';
 import 'package:carp_backend/carp_backend.dart';
+import 'package:carp_core/carp_common/carp_core_common.dart';
+import 'package:carp_core/carp_protocols/carp_core_protocols.dart';
+import 'package:carp_core/carp_deployment/carp_core_deployment.dart';
+import 'package:carp_core/carp_client/carp_core_client.dart';
+import 'package:carp_core/carp_data/carp_core_data.dart';
 
 import 'package:research_package/research_package.dart';
 

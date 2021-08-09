@@ -5,7 +5,7 @@ part of carp_study_app;
 /// This is used for loading the [StudyProtocol] from a local in-memory
 /// Dart definition.
 class LocalStudyProtocolManager implements StudyProtocolManager {
-  CAMSStudyProtocol _protocol;
+  StudyProtocol _protocol;
 
   Future initialize() async {}
 
@@ -52,26 +52,27 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
     //       address: protocolInformation['protocol.responsible.address'],
     //     );
     if (_protocol == null) {
-      _protocol = CAMSStudyProtocol()
-        ..name = 'Wrist Angel: Patient (TEST)'
-        ..studyId = studyId
-        ..description = 'Protocol testing for patients'
-        ..protocolDescription = StudyProtocolDescription(
-          title: "Wrist Angel: A Wearable AI Feedback Tool for OCD Treatment and Research",
-          purpose:
-              "We aim to improve assessment and psychotherapy for pediatric obsessive-compulsive disorder (OCD).",
-          description:
-              "Hormone levels, measured in saliva, and physiological indicators of stress from children and parents are used as input to privacy preserving signal processing and machine learning algorithms. Signal processing will be used to extract acoustic and physiological features of importance for therapeutic response. The study includes children with an OCD diagnosis and children without a psychiatric diagnosis and their parents.",
-        )
-        ..responsible = StudyProtocolReponsible(
-          name:
-              "Professor Anne Katrine Pagsberg1, Associate Professor Line Katrine Harder Clemmensen2 and Senior Researcher Nicole Nadine Lønfeldt",
-          title: ' ',
-          email: 'nicole.nadine.loenfeldt@regionh.dk',
-          affiliation:
-              'Børne- og Ungdomspsykiatrisk Center – Forskningsenheden, Region Hovedstadens Psykiatri\nDTU Compute',
-          address: 'Gentoftehospitalsvej 28, 2900 Hellerup',
-        );
+      _protocol = StudyProtocol(
+        name: 'Wrist Angel: Patient (TEST)',
+        ownerId: studyId,
+        description: 'Protocol testing for patients',
+        // TODO: fix
+        // protocolDescription: StudyProtocolDescription(
+        //   title: "Wrist Angel: A Wearable AI Feedback Tool for OCD Treatment and Research",
+        //   purpose:
+        //       "We aim to improve assessment and psychotherapy for pediatric obsessive-compulsive disorder (OCD).",
+        //   description:
+        //       "Hormone levels, measured in saliva, and physiological indicators of stress from children and parents are used as input to privacy preserving signal processing and machine learning algorithms. Signal processing will be used to extract acoustic and physiological features of importance for therapeutic response. The study includes children with an OCD diagnosis and children without a psychiatric diagnosis and their parents.",
+        // )..responsible = StudyProtocolReponsible(
+        //     name:
+        //         "Professor Anne Katrine Pagsberg1, Associate Professor Line Katrine Harder Clemmensen2 and Senior Researcher Nicole Nadine Lønfeldt",
+        //     title: ' ',
+        //     email: 'nicole.nadine.loenfeldt@regionh.dk',
+        //     affiliation:
+        //         'Børne- og Ungdomspsykiatrisk Center – Forskningsenheden, Region Hovedstadens Psykiatri\nDTU Compute',
+        //     address: 'Gentoftehospitalsvej 28, 2900 Hellerup',
+        //   )
+      );
 
       // Define which devices are used for data collection.
       Smartphone phone = Smartphone();
@@ -207,21 +208,23 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
 
   Future<StudyProtocol> _getPatientParentsWristWatch(String studyId) async {
     if (_protocol == null) {
-      _protocol = CAMSStudyProtocol()
-        ..name = 'Wrist Angel: Patient Parent'
-        ..studyId = studyId
-        ..description = 'Protocol testing for patient parents'
-        ..protocolDescription = StudyProtocolDescription(
-            title: protocolInformation['protocol.description.title'],
-            purpose: protocolInformation['protocol.description.purpose'],
-            description: protocolInformation['protocol.description.description'])
-        ..responsible = StudyProtocolReponsible(
-          name: protocolInformation['protocol.responsible.name'],
-          title: protocolInformation['protocol.responsible.title'],
-          email: protocolInformation['protocol.responsible.email'],
-          affiliation: protocolInformation['protocol.responsible.affiliation'],
-          address: protocolInformation['protocol.responsible.address'],
-        );
+      _protocol = StudyProtocol(
+        name: 'Wrist Angel: Patient Parent',
+        ownerId: studyId,
+        description: 'Protocol testing for patient parents',
+        // TODO: FIX
+        // protocolDescription: StudyProtocolDescription(
+        //     title: protocolInformation['protocol.description.title'],
+        //     purpose: protocolInformation['protocol.description.purpose'],
+        //     description: protocolInformation['protocol.description.description'])
+        //   ..responsible = StudyProtocolReponsible(
+        //     name: protocolInformation['protocol.responsible.name'],
+        //     title: protocolInformation['protocol.responsible.title'],
+        //     email: protocolInformation['protocol.responsible.email'],
+        //     affiliation: protocolInformation['protocol.responsible.affiliation'],
+        //     address: protocolInformation['protocol.responsible.address'],
+        //   )
+      );
 
       // Define which devices are used for data collection.
       Smartphone phone = Smartphone();
@@ -334,21 +337,23 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
 
   Future<StudyProtocol> _getControlWristWatch(String studyId) async {
     if (_protocol == null) {
-      _protocol = CAMSStudyProtocol()
-        ..name = 'Wrist Angel: Control'
-        ..studyId = studyId
-        ..description = 'Protocol testing for the control group'
-        ..protocolDescription = StudyProtocolDescription(
-            title: protocolInformation['protocol.description.title'],
-            purpose: protocolInformation['protocol.description.purpose'],
-            description: protocolInformation['protocol.description.description'])
-        ..responsible = StudyProtocolReponsible(
-          name: protocolInformation['protocol.responsible.name'],
-          title: protocolInformation['protocol.responsible.title'],
-          email: protocolInformation['protocol.responsible.email'],
-          affiliation: protocolInformation['protocol.responsible.affiliation'],
-          address: protocolInformation['protocol.responsible.address'],
-        );
+      _protocol = StudyProtocol(
+        name: 'Wrist Angel: Control',
+        ownerId: studyId,
+        description: 'Protocol testing for the control group',
+        // TODO: fix
+        // protocolDescription: StudyProtocolDescription(
+        //     title: protocolInformation['protocol.description.title'],
+        //     purpose: protocolInformation['protocol.description.purpose'],
+        //     description: protocolInformation['protocol.description.description'])
+        //   ..responsible = StudyProtocolReponsible(
+        //     name: protocolInformation['protocol.responsible.name'],
+        //     title: protocolInformation['protocol.responsible.title'],
+        //     email: protocolInformation['protocol.responsible.email'],
+        //     affiliation: protocolInformation['protocol.responsible.affiliation'],
+        //     address: protocolInformation['protocol.responsible.address'],
+        //   )
+      );
 
       // Define which devices are used for data collection.
       Smartphone phone = Smartphone();
@@ -409,21 +414,23 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
 
   Future<StudyProtocol> _getControlParentWristWatch(String studyId) async {
     if (_protocol == null) {
-      _protocol = CAMSStudyProtocol()
-        ..name = 'Wrist Angel: Control Parents'
-        ..studyId = studyId
-        ..description = 'Protocol testing for parents of the control group'
-        ..protocolDescription = StudyProtocolDescription(
-            title: protocolInformation['protocol.description.title'],
-            purpose: protocolInformation['protocol.description.purpose'],
-            description: protocolInformation['protocol.description.description'])
-        ..responsible = StudyProtocolReponsible(
-          name: protocolInformation['protocol.responsible.name'],
-          title: protocolInformation['protocol.responsible.title'],
-          email: protocolInformation['protocol.responsible.email'],
-          affiliation: protocolInformation['protocol.responsible.affiliation'],
-          address: protocolInformation['address'],
-        );
+      _protocol = StudyProtocol(
+        name: 'Wrist Angel: Control Parents',
+        ownerId: studyId,
+        description: 'Protocol testing for parents of the control group',
+        // TODO: fix
+        // protocolDescription: StudyProtocolDescription(
+        //     title: protocolInformation['protocol.description.title'],
+        //     purpose: protocolInformation['protocol.description.purpose'],
+        //     description: protocolInformation['protocol.description.description'])
+        //   ..responsible = StudyProtocolReponsible(
+        //     name: protocolInformation['protocol.responsible.name'],
+        //     title: protocolInformation['protocol.responsible.title'],
+        //     email: protocolInformation['protocol.responsible.email'],
+        //     affiliation: protocolInformation['protocol.responsible.affiliation'],
+        //     address: protocolInformation['address'],
+        //   ),
+      );
 
       // Define which devices are used for data collection.
       Smartphone phone = Smartphone();
@@ -713,24 +720,25 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
 
   Future<StudyProtocol> _getGenericCARPStudy(String studyId) async {
     if (_protocol == null) {
-      _protocol = CAMSStudyProtocol()
-        ..studyId = studyId
-        ..name = 'CARP Study App 2nd Protocol'
-        ..description = 'A super generic 2nd protocol testing different parts of the CAMS Study App.'
-        ..protocolDescription = StudyProtocolDescription(
-          title: 'CARP Study App Feasibility Study',
-          purpose: 'To investigate the technical stability and usability of the CARP Generic Study App.',
-          description:
-              "We would like to have you help in testing the technical stability and the usability of the CARP Mobile Sensing app. "
-              "Your data will be collected and store anonymously.",
-        )
-        ..responsible = StudyProtocolReponsible(
-          name: 'Jakob E. Bardram',
-          title: 'PhD, MSc',
-          email: 'jakba@dtu.dk',
-          affiliation: 'Technical University of Denmark',
-          address: 'Ørsteds Plads, bygn. 349, DK-2800 Kg. Lyngby',
-        );
+      _protocol = StudyProtocol(
+        ownerId: studyId,
+        name: 'CARP Study App 2nd Protocol',
+        description: 'A super generic 2nd protocol testing different parts of the CAMS Study App.',
+        // TODO: fix
+        // protocolDescription: StudyProtocolDescription(
+        //   title: 'CARP Study App Feasibility Study',
+        //   purpose: 'To investigate the technical stability and usability of the CARP Generic Study App.',
+        //   description:
+        //       "We would like to have you help in testing the technical stability and the usability of the CARP Mobile Sensing app. "
+        //       "Your data will be collected and store anonymously.",
+        // )..responsible = StudyProtocolReponsible(
+        //     name: 'Jakob E. Bardram',
+        //     title: 'PhD, MSc',
+        //     email: 'jakba@dtu.dk',
+        //     affiliation: 'Technical University of Denmark',
+        //     address: 'Ørsteds Plads, bygn. 349, DK-2800 Kg. Lyngby',
+        //   )
+      );
 
       // Define which devices are used for data collection.
       Smartphone phone = Smartphone();

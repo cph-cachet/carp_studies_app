@@ -70,6 +70,7 @@ part 'ui/pages/profile_page.dart';
 part 'ui/pages/audio_task_page.dart';
 part 'ui/pages/timer_task_page.dart';
 part 'ui/pages/question.dart';
+part 'ui/pages/failed_login_page.dart';
 
 part 'ui/widgets/study_banner.dart';
 part 'ui/widgets/card_header.dart';

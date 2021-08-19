@@ -1,27 +1,27 @@
 part of carp_study_app;
 
 class StudyPageModel extends DataModel {
-  String get name => bloc.deployment.protocolDescription.title;
-  String get description => bloc.deployment.protocolDescription.description;
+  String get name => bloc.deployment?.protocolDescription?.title ?? 'Unnamed';
+  String? get description => bloc.deployment?.protocolDescription!.description;
   Image get image => Image.asset('assets/images/study.png');
-  String get userID => bloc.deployment.userId;
+  String? get userID => bloc.deployment?.userId;
   String get affiliation =>
-      bloc.deployment.responsible.affiliation ?? 'Copenhagen Center for Health Technology';
+      bloc.deployment!.responsible?.affiliation ?? 'Copenhagen Center for Health Technology';
 
   /// Events on the state of the study executor
-  Stream<ProbeState> get studyExecutorStateEvents => Sensing().controller.executor.stateEvents;
+  Stream<ProbeState> get studyExecutorStateEvents => Sensing().controller!.executor!.stateEvents;
 
   /// Current state of the study executor (e.g., resumed, paused, ...)
-  ProbeState get studyState => Sensing().controller.executor.state;
+  ProbeState get studyState => Sensing().controller!.executor!.state;
 
   /// Get all sesing events (i.e. all [DataPoint] objects being collected).
-  Stream<DataPoint> get samplingEvents => Sensing().controller.data;
+  Stream<DataPoint> get samplingEvents => Sensing().controller!.data;
 
   /// The total sampling size so far since this study was started.
-  int get samplingSize => Sensing().controller.samplingSize;
+  int get samplingSize => Sensing().controller!.samplingSize;
 
   /// The list of messages to be displayed.
-  List<Message> get messages => bloc.messages;
+  List<Message>? get messages => bloc.messages;
 
   StudyPageModel();
 
@@ -51,21 +51,21 @@ class Message {
   }
 
   /// Creation timestamp
-  DateTime timestamp;
+  late DateTime timestamp;
 
   /// A short title
-  String title;
+  String? title;
 
   /// A short sub title
-  String subTitle;
+  String? subTitle;
 
   /// A longer detailed message
-  String message;
+  String? message;
 
   /// A URL to redirect the user to for an online item
-  String url;
+  String? url;
 
-  String imagePath;
+  String? imagePath;
 
   Message({
     this.type = MessageType.announcement,
@@ -87,7 +87,7 @@ class Message {
 
   Image obtainImage() {
     if (imagePath == null) imagePath = 'assets/images/article_' + Random(10).nextInt(3).toString() + '.png';
-    return Image.asset(imagePath, fit: BoxFit.fitHeight);
+    return Image.asset(imagePath!, fit: BoxFit.fitHeight);
   }
 }
 

@@ -6,7 +6,7 @@ abstract class MessageManager {
 }
 
 class LocalMessageManager implements MessageManager {
-  Future<void> init() {
+  Future<void> init() async {
     info('$runtimeType initialized');
   }
 

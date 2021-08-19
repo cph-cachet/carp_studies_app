@@ -1,3 +1,4 @@
+//import 'package:carp_backend/carp_backend.dart';
 import 'package:test/test.dart';
 import 'package:carp_mobile_sensing/carp_mobile_sensing.dart';
 import 'package:carp_audio_package/audio.dart';
@@ -9,15 +10,15 @@ import 'package:carp_survey_package/survey.dart';
 import 'package:research_package/research_package.dart';
 import 'package:carp_core/carp_common/carp_core_common.dart';
 import 'package:carp_core/carp_protocols/carp_core_protocols.dart';
-import 'package:carp_core/carp_deployment/carp_core_deployment.dart';
-import 'package:carp_core/carp_client/carp_core_client.dart';
-import 'package:carp_core/carp_data/carp_core_data.dart';
+// import 'package:carp_core/carp_deployment/carp_core_deployment.dart';
+// import 'package:carp_core/carp_client/carp_core_client.dart';
+// import 'package:carp_core/carp_data/carp_core_data.dart';
 
 import '../lib/main.dart';
 
 void main() {
   // creating an empty protocol to initialize json serialization
-  StudyProtocol protocol = StudyProtocol();
+  StudyProtocol protocol;
   RPOrderedTask informedConsent;
 
   setUp(() async {
@@ -35,12 +36,12 @@ void main() {
 
     /// Generates and prints the local study protocol as json
     test('protocol -> JSON', () async {
-      protocol = await LocalStudyProtocolManager().getStudyProtocol('1234');
+      protocol = await LocalStudyProtocolManager().getStudyProtocol('1234') as StudyProtocol;
       print(toJsonString(protocol));
     });
 
     test('informed consent -> JSON', () async {
-      informedConsent = await LocalResourceManager().getInformedConsent();
+      informedConsent = await LocalResourceManager().getInformedConsent() as RPOrderedTask;
       print(toJsonString(informedConsent));
     });
   });

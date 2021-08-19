@@ -1,7 +1,7 @@
 part of carp_study_app;
 
 class StepsCardDataModel extends DataModel {
-  PedometerDatum _lastStep;
+  PedometerDatum? _lastStep;
   final Map<int, int> _weeklySteps = {};
 
   /// A map of weekly steps organized by the day of the week.
@@ -13,9 +13,7 @@ class StepsCardDataModel extends DataModel {
   Map<int, int> get weeklySteps => _weeklySteps;
 
   /// The list of steps.
-  List<Steps> get steps => _weeklySteps.entries
-      .map((entry) => Steps(entry.key, entry.value))
-      .toList();
+  List<Steps> get steps => _weeklySteps.entries.map((entry) => Steps(entry.key, entry.value)).toList();
 
   StepsCardDataModel();
 
@@ -28,12 +26,13 @@ class StepsCardDataModel extends DataModel {
     }
 
     // listen for pedometer events and count them
-    controller.data
-        .where((dataPoint) => dataPoint.data is PedometerDatum)
-        .listen((pedometerDataPoint) {
-      PedometerDatum _step = pedometerDataPoint.data as PedometerDatum;
-      _weeklySteps[DateTime.now().weekday] +=
-          (_lastStep != null) ? _step.stepCount - _lastStep.stepCount : 0;
+    controller.data.where((dataPoint) => dataPoint.data is PedometerDatum).listen((pedometerDataPoint) {
+      PedometerDatum? _step = pedometerDataPoint.data as PedometerDatum?;
+      if (_lastStep != null)
+        _weeklySteps[DateTime.now().weekday] =
+            _weeklySteps[DateTime.now().weekday]! + _step!.stepCount! - _lastStep!.stepCount!;
+      else
+        _weeklySteps[DateTime.now().weekday] = 0;
       _lastStep = _step;
     });
   }
@@ -52,7 +51,6 @@ class Steps {
   Steps(this.day, this.steps);
 
   /// Get the localilzed name of the [day].
-  String toString() => DateFormat('EEEE')
-      .format(DateTime(2021, 2, 7).add(Duration(days: day)))
-      .substring(0, 3);
+  String toString() =>
+      DateFormat('EEEE').format(DateTime(2021, 2, 7).add(Duration(days: day))).substring(0, 3);
 }

@@ -4,18 +4,17 @@ class MeasuresCardDataModel extends DataModel {
   final Map<String, int> _samplingTable = {};
 
   /// Stream of measures, i.e. [DataPoint] measures.
-  Stream<DataPoint> get measureEvents => controller.data;
+  Stream<DataPoint> get measureEvents => controller!.data;
 
   /// The total sampling size
-  int get samplingSize => controller.samplingSize;
+  int get samplingSize => controller!.samplingSize;
 
   /// A table with sampling size of each measure type
   Map<String, int> get samplingTable => _samplingTable;
 
   /// The list of measures
-  List<Measures> get measures => _samplingTable.entries
-      .map((entry) => Measures(entry.key, entry.value))
-      .toList();
+  List<Measures> get measures =>
+      _samplingTable.entries.map((entry) => Measures(entry.key, entry.value)).toList();
 
   MeasuresCardDataModel() : super();
 
@@ -26,7 +25,7 @@ class MeasuresCardDataModel extends DataModel {
     controller.data.listen((dataPoint) {
       final String key = dataPoint.carpHeader.dataFormat.name;
       if (!_samplingTable.containsKey(key)) _samplingTable[key] = 0;
-      _samplingTable[key]++;
+      _samplingTable[key] = _samplingTable[key]! + 1;
     });
   }
 
@@ -38,8 +37,7 @@ class MeasuresCardDataModel extends DataModel {
 
   // Orders the measures based on the amount of entries to display those with more entries
   void orderedMeasures() {
-    var mapEntries = _samplingTable.entries.toList()
-      ..sort((b, a) => a.value.compareTo(b.value));
+    var mapEntries = _samplingTable.entries.toList()..sort((b, a) => a.value.compareTo(b.value));
     _samplingTable
       ..clear()
       ..addEntries(mapEntries);

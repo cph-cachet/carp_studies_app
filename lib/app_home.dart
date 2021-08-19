@@ -1,7 +1,7 @@
 part of carp_study_app;
 
 class CarpStudyAppHome extends StatefulWidget {
-  CarpStudyAppHome({Key key}) : super(key: key);
+  CarpStudyAppHome({Key? key}) : super(key: key);
   CARPStudyAppState createState() => CARPStudyAppState();
 }
 
@@ -27,7 +27,7 @@ class CARPStudyAppState extends State<CarpStudyAppHome> {
   }
 
   Widget build(BuildContext context) {
-    AssetLocalizations locale = AssetLocalizations.of(context);
+    AssetLocalizations locale = AssetLocalizations.of(context)!;
 
     return Scaffold(
       body: _pages[_selectedIndex],

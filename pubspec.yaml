@@ -18,7 +18,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 0.21.2
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: '>=2.12.0 <3.0.0'
 
 
 dependencies:
@@ -52,6 +52,7 @@ dependencies:
 
 # Overriding carp libraries to use the local or github copy
 # Remove this before release of app
+  collection: ^1.15.0-nullsafety.4
 dependency_overrides:
 #  carp_mobile_sensing:
 #    path: ../carp/carp.sensing-flutter/carp_mobile_sensing/

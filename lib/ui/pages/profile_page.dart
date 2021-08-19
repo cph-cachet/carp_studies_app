@@ -8,7 +8,7 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
-    AssetLocalizations locale = AssetLocalizations.of(context);
+    AssetLocalizations locale = AssetLocalizations.of(context)!;
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -53,7 +53,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       children: [
                         Text(locale.translate('pages.profile.username'),
                             style: aboutCardSubtitleStyle.copyWith(color: Theme.of(context).primaryColor)),
-                        Text(bloc.user.username, style: profileTitleStyle),
+                        Text(bloc.user!.username, style: profileTitleStyle),
                       ],
                     ),
                   ),
@@ -64,7 +64,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       children: [
                         Text(locale.translate('pages.profile.name'),
                             style: aboutCardSubtitleStyle.copyWith(color: Theme.of(context).primaryColor)),
-                        Text(bloc.user.firstName + ' ' + bloc.user.lastName,
+                        Text(bloc.user!.firstName! + ' ' + bloc.user!.lastName!,
                             style: profileTitleStyle), // TODO add full name
                       ],
                     ),
@@ -76,7 +76,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       children: [
                         Text(locale.translate('pages.profile.account_id'),
                             style: aboutCardSubtitleStyle.copyWith(color: Theme.of(context).primaryColor)),
-                        Text(bloc.user.id.toString(), style: profileTitleStyle),
+                        Text(bloc.user!.id.toString(), style: profileTitleStyle),
                       ],
                     ),
                   ),
@@ -119,9 +119,9 @@ class _ProfilePageState extends State<ProfilePage> {
   // Sends and email to the researcher with the name of the study + user id
   void _contactResearcher() async {
     final Uri _emailLaunchUri =
-        Uri(scheme: 'mailto', path: bloc.deployment.responsible.email, queryParameters: {
+        Uri(scheme: 'mailto', path: bloc.deployment!.responsible!.email, queryParameters: {
       'subject':
-          'Support for study: ${bloc.deployment.protocolDescription.title} - User: ${bloc.user.id.toString()}'
+          'Support for study: ${bloc.deployment!.protocolDescription!.title} - User: ${bloc.user!.id.toString()}'
     });
 
     var url = _emailLaunchUri.toString().replaceAll("+", "%20");
@@ -135,13 +135,13 @@ class _ProfilePageState extends State<ProfilePage> {
 
   // TODO: Navigate to log in page
   Future _showLogoutConfirmationDialog() {
-    AssetLocalizations locale = AssetLocalizations.of(context);
+    AssetLocalizations? locale = AssetLocalizations.of(context);
     return showDialog(
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(locale.translate("pages.profile.log_out.confirmation")),
+          title: Text(locale!.translate("pages.profile.log_out.confirmation")),
           actions: <Widget>[
             TextButton(
               child: Text(locale.translate("NO")),
@@ -174,13 +174,13 @@ class _ProfilePageState extends State<ProfilePage> {
 
   // TODO: Leave study
   Future _showLeaveStudyConfirmationDialog() {
-    AssetLocalizations locale = AssetLocalizations.of(context);
+    AssetLocalizations? locale = AssetLocalizations.of(context);
     return showDialog(
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(locale.translate("pages.profile.leave_study.confirmation")),
+          title: Text(locale!.translate("pages.profile.leave_study.confirmation")),
           actions: <Widget>[
             TextButton(
               child: Text(locale.translate("NO")),

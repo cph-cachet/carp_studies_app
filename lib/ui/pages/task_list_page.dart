@@ -11,7 +11,7 @@ class TaskListPage extends StatefulWidget {
 class _TaskListPageState extends State<TaskListPage> {
   @override
   Widget build(BuildContext context) {
-    AssetLocalizations locale = AssetLocalizations.of(context);
+    AssetLocalizations locale = AssetLocalizations.of(context)!;
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -68,7 +68,7 @@ class _TaskListPageState extends State<TaskListPage> {
   }
 
   Widget _buildTaskCard(BuildContext context, UserTask userTask) {
-    AssetLocalizations locale = AssetLocalizations.of(context);
+    AssetLocalizations locale = AssetLocalizations.of(context)!;
     return Center(
       child: Card(
         margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
@@ -101,13 +101,13 @@ class _TaskListPageState extends State<TaskListPage> {
   }
 
   String _subtitle(UserTask userTask) {
-    AssetLocalizations locale = AssetLocalizations.of(context);
-    String str = (userTask?.task?.minutesToComplete != null)
-        ? '${userTask.task.minutesToComplete} ' + locale.translate('pages.task_list.task.time_to_complete')
+    AssetLocalizations? locale = AssetLocalizations.of(context);
+    String str = (userTask.task.minutesToComplete != null)
+        ? '${userTask.task.minutesToComplete} ' + locale!.translate('pages.task_list.task.time_to_complete')
         : '';
 
     str += (userTask.expiresIn != null)
-        ? ' - ${userTask.expiresIn.inDays + 1} ' + locale.translate('pages.task_list.task.days_remaining')
+        ? ' - ${userTask.expiresIn!.inDays + 1} ' + locale!.translate('pages.task_list.task.days_remaining')
         : '';
 
     str = (str.isEmpty) ? userTask.description : str;
@@ -116,8 +116,8 @@ class _TaskListPageState extends State<TaskListPage> {
   }
 
   String _description(UserTask userTask) {
-    AssetLocalizations locale = AssetLocalizations.of(context);
-    String str = (userTask?.description != null) ? locale.translate(userTask.description) : '';
+    AssetLocalizations? locale = AssetLocalizations.of(context);
+    String str = (userTask.description != null) ? locale!.translate(userTask.description) : '';
 
     return str;
   }
@@ -141,7 +141,7 @@ class _TaskListPageState extends State<TaskListPage> {
   }
 
   Widget _noTasks(BuildContext context) {
-    AssetLocalizations locale = AssetLocalizations.of(context);
+    AssetLocalizations locale = AssetLocalizations.of(context)!;
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,

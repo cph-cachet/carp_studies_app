@@ -9,12 +9,10 @@ class MeasuresCardWidget extends StatefulWidget {
 
 class _MeasuresCardWidgetState extends State<MeasuresCardWidget> {
   static List<charts.Series<Measures, String>> _createChartList(
-          BuildContext context,
-          MeasuresCardDataModel model,
-          List<Color> colors) =>
+          BuildContext context, MeasuresCardDataModel model, List<Color> colors) =>
       [
         charts.Series<Measures, String>(
-          colorFn: (_, index) => charts.ColorUtil.fromDartColor(colors[index]),
+          colorFn: (_, index) => charts.ColorUtil.fromDartColor(colors[index!]),
           //charts.MaterialPalette.blue.makeShades(min(7, model.samplingTable.length))[index],
           id: 'TotalMeasures',
           data: model.measures.sublist(0, min(7, model.samplingTable.length)),
@@ -24,7 +22,7 @@ class _MeasuresCardWidgetState extends State<MeasuresCardWidget> {
       ];
 
   Widget build(BuildContext context) {
-    AssetLocalizations locale = AssetLocalizations.of(context);
+    AssetLocalizations locale = AssetLocalizations.of(context)!;
 
     // Get the measures with more events to prioritize which ones to show
     widget.model.orderedMeasures();
@@ -54,8 +52,7 @@ class _MeasuresCardWidgetState extends State<MeasuresCardWidget> {
                                   SizedBox(height: 5),
                                   Text(
                                       '${widget.model.samplingSize} ' +
-                                          locale.translate(
-                                              'cards.measures.title'),
+                                          locale.translate('cards.measures.title'),
                                       //textAlign: TextAlign.center,
                                       style: dataCardTitleStyle),
                                 ],
@@ -69,21 +66,18 @@ class _MeasuresCardWidgetState extends State<MeasuresCardWidget> {
                         child: Stack(
                           alignment: Alignment.center,
                           children: [
-                            charts.PieChart(
-                              _createChartList(
-                                  context, widget.model, CACHET.COLOR_LIST),
+                            charts.PieChart<String>(
+                              _createChartList(context, widget.model, CACHET.COLOR_LIST),
                               animate: true,
                               behaviors: [
                                 charts.DatumLegend(
                                   position: charts.BehaviorPosition.end,
                                   desiredMaxRows: 7,
                                   //entryTextStyle: charts.TextStyleSpec(fontSize: 10),
-                                  cellPadding:
-                                      EdgeInsets.only(right: 3.0, bottom: 2.0),
+                                  cellPadding: EdgeInsets.only(right: 3.0, bottom: 2.0),
                                   showMeasures: true,
-                                  legendDefaultMeasure:
-                                      charts.LegendDefaultMeasure.firstValue,
-                                  measureFormatter: (num value) {
+                                  legendDefaultMeasure: charts.LegendDefaultMeasure.firstValue,
+                                  measureFormatter: (num? value) {
                                     return value == null ? '-' : '$value';
                                   },
                                 ),

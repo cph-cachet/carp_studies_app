@@ -17,38 +17,35 @@ part of carp_study_app;
 /// But, CAMS supports that several studies are added to the [client].
 class Sensing {
   static final Sensing _instance = Sensing._();
-  StudyDeploymentStatus _status;
-  StudyDeploymentController _controller;
+  StudyDeploymentStatus? _status;
+  StudyDeploymentController? _controller;
 
-  DeploymentService deploymentService;
-  SmartPhoneClientManager client;
+  DeploymentService? deploymentService;
+  SmartPhoneClientManager? client;
 
   /// The deployment running on this phone.
-  CAMSMasterDeviceDeployment get deployment => _controller?.deployment;
+  CAMSMasterDeviceDeployment? get deployment => _controller?.deployment as CAMSMasterDeviceDeployment?;
 
   /// Get the latest status of the study deployment.
-  StudyDeploymentStatus get status => _status;
+  StudyDeploymentStatus? get status => _status;
 
   /// The role name of this device in the deployed study
-  String get deviceRolename => _status?.masterDeviceStatus?.device?.roleName;
+  String? get deviceRolename => _status?.masterDeviceStatus?.device.roleName;
 
   /// The study deployment id of the deployment running on this phone.
-  String get studyDeploymentId => _status?.studyDeploymentId;
+  String? get studyDeploymentId => _status?.studyDeploymentId;
 
   /// The study runtime controller for this deployment
-  StudyDeploymentController get controller => _controller;
+  StudyDeploymentController? get controller => _controller;
 
   /// Is sensing running, i.e. has the study executor been resumed?
-  bool get isRunning =>
-      (controller != null) && controller.executor.state == ProbeState.resumed;
+  bool get isRunning => (controller != null) && controller!.executor!.state == ProbeState.resumed;
 
   /// the list of running - i.e. used - probes in this study.
-  List<Probe> get runningProbes =>
-      (_controller != null) ? _controller.executor.probes : [];
+  List<Probe> get runningProbes => (_controller != null) ? _controller!.executor!.probes : [];
 
   /// The list of connected devices.
-  List<DeviceManager> get runningDevices =>
-      client?.deviceRegistry?.devices?.values?.toList();
+  List<DeviceManager>? get runningDevices => client?.deviceRegistry.devices.values.toList();
 
   /// The singleton sensing instance
   factory Sensing() => _instance;
@@ -83,12 +80,11 @@ class Sensing {
 
         // get the protocol from the local study protocol manager
         // note that the study id is not used
-        StudyProtocol protocol =
-            await LocalStudyProtocolManager().getStudyProtocol('');
+        StudyProtocol? protocol = await (LocalStudyProtocolManager().getStudyProtocol(''));
 
         // deploy this protocol using the on-phone deployment service
         _status = await SmartphoneDeploymentService().createStudyDeployment(
-          protocol,
+          protocol!,
         );
 
         break;
@@ -103,8 +99,8 @@ class Sensing {
         deploymentService = CustomProtocolDeploymentService();
 
         // get the study deployment status
-        _status = await CustomProtocolDeploymentService()
-            .getStudyDeploymentStatus(bloc.backend.studyDeploymentId);
+        _status =
+            await CustomProtocolDeploymentService().getStudyDeploymentStatus(bloc.backend.studyDeploymentId!);
 
         // now register the CARP data manager for uploading data back to CARP
         DataManagerRegistry().register(CarpDataManager());
@@ -117,19 +113,19 @@ class Sensing {
       deploymentService: deploymentService,
       deviceRegistry: DeviceController(),
     );
-    await client.configure();
+    await client!.configure();
 
     // add and deploy this deployment
-    _controller = await client.addStudy(studyDeploymentId, deviceRolename);
+    _controller = await client!.addStudy(studyDeploymentId!, deviceRolename!);
 
     // configure the controller with the default privacy schema
-    await _controller.configure(
+    await _controller!.configure(
       privacySchemaName: PrivacySchema.DEFAULT,
     );
     // controller.resume();
 
     // listening on the data stream and print them as json to the debug console
-    _controller.data.listen((data) => print(toJsonString(data)));
+    _controller!.data.listen((data) => print(toJsonString(data)));
 
     info('$runtimeType initialized');
   }

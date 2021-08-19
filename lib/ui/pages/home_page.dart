@@ -2,7 +2,7 @@ part of carp_study_app;
 
 class HomePage extends StatefulWidget {
   final HomePageState state = HomePageState();
-  HomePage({Key key}) : super(key: key);
+  HomePage({Key? key}) : super(key: key);
   HomePageState createState() => state;
 }
 
@@ -29,7 +29,7 @@ class HomePageState extends State<HomePage> {
   }
 
   Widget build(BuildContext context) {
-    AssetLocalizations locale = AssetLocalizations.of(context);
+    AssetLocalizations locale = AssetLocalizations.of(context)!;
 
     return Scaffold(
       body: _pages[_selectedIndex],

@@ -2,9 +2,9 @@ part of carp_study_app;
 
 /// An abstract data model used for all other data models in the app.
 abstract class DataModel {
-  StudyDeploymentController _controller;
+  StudyDeploymentController? _controller;
 
-  StudyDeploymentController get controller => _controller;
+  StudyDeploymentController? get controller => _controller;
   DataModel();
 
   /// Call to initialize this data model

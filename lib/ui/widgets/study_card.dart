@@ -5,17 +5,17 @@ class StudyCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    AssetLocalizations locale = AssetLocalizations.of(context);
+    AssetLocalizations locale = AssetLocalizations.of(context)!;
 
     String description() =>
-        '${studyPageModel.description ?? locale.translate('widgets.study_card.no_description')}\n\n'
-        '${locale.translate('widgets.study_card.title')}: \"${bloc.deployment.protocolDescription.title}\".\n'
-        '${locale.translate('widgets.study_card.purpose')}: \"${bloc.deployment.protocolDescription.purpose}\".\n\n'
+        '${bloc.deployment?.protocolDescription?.description ?? locale.translate('widgets.study_card.no_description')}\n\n'
+        '${locale.translate('widgets.study_card.title')}: \"${bloc.deployment?.protocolDescription?.title}\".\n'
+        '${locale.translate('widgets.study_card.purpose')}: \"${bloc.deployment?.protocolDescription?.purpose}\".\n\n'
         '${locale.translate('widgets.study_card.responsibles')}:\n'
-        '${bloc.deployment.responsible.name}, ${bloc.deployment.responsible.title}\n\n'
+        '${bloc.deployment?.responsible!.name}, ${bloc.deployment?.responsible?.title}\n\n'
         //'${bloc.study.pi.affiliation}\n'
-        '${bloc.deployment.responsible.address}\n'
-        '${bloc.deployment.responsible.email}\n';
+        '${bloc.deployment?.responsible?.address}\n'
+        '${bloc.deployment?.responsible?.email}\n';
 
     return Card(
       semanticContainer: true,
@@ -40,12 +40,10 @@ class StudyCard extends StatelessWidget {
                 children: [
                   SizedBox(width: 15),
                   Text(studyPageModel.name,
-                      style: aboutCardTitleStyle.copyWith(
-                          color: Theme.of(context).primaryColor)),
+                      style: aboutCardTitleStyle.copyWith(color: Theme.of(context).primaryColor)),
                   SizedBox(width: 15),
                   Text(studyPageModel.affiliation,
-                      style: aboutCardSubtitleStyle.copyWith(
-                          color: Theme.of(context).primaryColor)),
+                      style: aboutCardSubtitleStyle.copyWith(color: Theme.of(context).primaryColor)),
                 ],
               ),
               children: [
@@ -54,7 +52,8 @@ class StudyCard extends StatelessWidget {
                   Flexible(
                       fit: FlexFit.loose,
                       child: Text(
-                        description(),
+                        "HI",
+                        //description(),
                         style: aboutCardContentStyle,
                         textAlign: TextAlign.justify,
                       )),

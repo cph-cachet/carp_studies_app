@@ -13,7 +13,7 @@ class StudyProgressCardWidget extends StatefulWidget {
 class _StudyProgressCardWidgetState extends State<StudyProgressCardWidget> {
   @override
   Widget build(BuildContext context) {
-    AssetLocalizations locale = AssetLocalizations.of(context);
+    AssetLocalizations locale = AssetLocalizations.of(context)!;
     widget.model.updateProgress();
     widget.model.toString();
 

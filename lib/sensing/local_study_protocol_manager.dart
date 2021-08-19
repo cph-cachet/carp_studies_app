@@ -5,7 +5,7 @@ part of carp_study_app;
 /// This is used for loading the [StudyProtocol] from a local in-memory
 /// Dart definition.
 class LocalStudyProtocolManager implements StudyProtocolManager {
-  StudyProtocol _protocol;
+  StudyProtocol? _protocol;
 
   Future initialize() async {}
 
@@ -14,7 +14,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
   }
 
   /// Create a new CAMS study protocol.
-  Future<StudyProtocol> getStudyProtocol(String ignored) async =>
+  Future<StudyProtocol?> getStudyProtocol(String ignored) async =>
       //  _protocol ??= await _getGenericCARPStudy(ignored);
       _protocol ??= await _getPatientWristWatch(ignored);
 
@@ -34,7 +34,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
     'protocol.responsible.address': 'Gentoftehospitalsvej 28, 2900 Hellerup',
   };
 
-  Future<StudyProtocol> _getPatientWristWatch(String studyId) async {
+  Future<StudyProtocol?> _getPatientWristWatch(String studyId) async {
     // if (_protocol == null) {
     //   _protocol = CAMSStudyProtocol()
     //     ..name = 'Wrist Angel: Patient'
@@ -76,10 +76,10 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
 
       // Define which devices are used for data collection.
       Smartphone phone = Smartphone();
-      _protocol.addMasterDevice(phone);
+      _protocol!.addMasterDevice(phone);
 
       // Biosensor experience: collect wristband UX - triggers on week 7 (TODO)
-      _protocol.addTriggeredTask(
+      _protocol!.addTriggeredTask(
           RecurrentScheduledTrigger(
               type: RecurrentType.weekly, dayOfWeek: DateTime.sunday, time: Time(hour: 8, minute: 00)),
           AppTask(
@@ -97,7 +97,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           phone);
 
       /// collect exposure exercises - triggers daily
-      _protocol.addTriggeredTask(
+      _protocol!.addTriggeredTask(
           RecurrentScheduledTrigger(type: RecurrentType.daily, time: Time(hour: 7, minute: 00)),
           AppTask(
             type: SurveyUserTask.SURVEY_TYPE,
@@ -114,7 +114,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           phone);
 
       // Ecological Momentary Assesment: collect how are you feeling - triggers randomly  - TODO: use random trigger
-      _protocol.addTriggeredTask(
+      _protocol!.addTriggeredTask(
           ImmediateTrigger(),
           // RandomRecurrentTrigger(
           //     maxNumberOfTriggers: 3,
@@ -136,7 +136,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           phone);
 
       // collect symptoms hierarchy (obsessions)
-      _protocol.addTriggeredTask(
+      _protocol!.addTriggeredTask(
           RecurrentScheduledTrigger(
               type: RecurrentType.weekly, dayOfWeek: DateTime.sunday, time: Time(hour: 8, minute: 00)),
           AppTask(
@@ -154,7 +154,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           phone);
 
       // collect symptoms hierarchy (compulsions)
-      _protocol.addTriggeredTask(
+      _protocol!.addTriggeredTask(
           RecurrentScheduledTrigger(
               type: RecurrentType.weekly, dayOfWeek: DateTime.sunday, time: Time(hour: 8, minute: 00)),
           AppTask(
@@ -172,7 +172,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           phone);
 
       // Audio task: Exposure exercise
-      _protocol.addTriggeredTask(
+      _protocol!.addTriggeredTask(
           RecurrentScheduledTrigger(type: RecurrentType.daily, time: Time(hour: 7, minute: 00)),
           AppTask(
             type: AudioUserTask.AUDIO_TYPE,
@@ -187,7 +187,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           phone);
 
       // Audio task: Wristband UX -  triggers on week 7 (TODO)
-      _protocol.addTriggeredTask(
+      _protocol!.addTriggeredTask(
           RecurrentScheduledTrigger(
               type: RecurrentType.weekly, dayOfWeek: DateTime.sunday, time: Time(hour: 8, minute: 00)),
           AppTask(
@@ -206,7 +206,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
     return _protocol;
   }
 
-  Future<StudyProtocol> _getPatientParentsWristWatch(String studyId) async {
+  Future<StudyProtocol?> _getPatientParentsWristWatch(String studyId) async {
     if (_protocol == null) {
       _protocol = StudyProtocol(
         name: 'Wrist Angel: Patient Parent',
@@ -228,10 +228,10 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
 
       // Define which devices are used for data collection.
       Smartphone phone = Smartphone();
-      _protocol.addMasterDevice(phone);
+      _protocol!.addMasterDevice(phone);
 
       // collect informed consent once when the study starts - W0
-      _protocol.addTriggeredTask(
+      _protocol!.addTriggeredTask(
           ImmediateTrigger(),
           AppTask(
             type: SurveyUserTask.SURVEY_TYPE,
@@ -248,7 +248,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           phone);
 
       // collect trust scale - triggers on W4 (TODO: use scheduled trigger)
-      _protocol.addTriggeredTask(
+      _protocol!.addTriggeredTask(
           ImmediateTrigger(),
           AppTask(
             type: SurveyUserTask.SURVEY_TYPE,
@@ -265,7 +265,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           phone);
 
       // collect App UX - triggers on W1, W8 - TODO: use scheduled trigger
-      _protocol.addTriggeredTask(
+      _protocol!.addTriggeredTask(
           ImmediateTrigger(),
           AppTask(
             type: SurveyUserTask.SURVEY_TYPE,
@@ -282,7 +282,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           phone);
 
       // Biosensor experience: collect wristband UX - triggers W7 - TODO: use scheduled trigger
-      _protocol.addTriggeredTask(
+      _protocol!.addTriggeredTask(
           RecurrentScheduledTrigger(
               type: RecurrentType.weekly, dayOfWeek: DateTime.sunday, time: Time(hour: 8, minute: 00)),
           AppTask(
@@ -300,7 +300,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           phone);
 
       // Ecological Momentary Assesment: collect how are you feeling - triggers randomly  - TODO: use random trigger
-      _protocol.addTriggeredTask(
+      _protocol!.addTriggeredTask(
           ImmediateTrigger(),
           AppTask(
             type: SurveyUserTask.SURVEY_TYPE,
@@ -317,7 +317,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           phone);
 
       // Audio task: Wristband UX - triggers W7 - TODO: use scheduled trigger
-      _protocol.addTriggeredTask(
+      _protocol!.addTriggeredTask(
           PeriodicTrigger(period: Duration(days: 7)),
           AppTask(
             type: AudioUserTask.AUDIO_TYPE,
@@ -335,7 +335,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
     return _protocol;
   }
 
-  Future<StudyProtocol> _getControlWristWatch(String studyId) async {
+  Future<StudyProtocol?> _getControlWristWatch(String studyId) async {
     if (_protocol == null) {
       _protocol = StudyProtocol(
         name: 'Wrist Angel: Control',
@@ -357,10 +357,10 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
 
       // Define which devices are used for data collection.
       Smartphone phone = Smartphone();
-      _protocol.addMasterDevice(phone);
+      _protocol!.addMasterDevice(phone);
 
       // collect wristband UX - - triggers W7 - TODO: use scheduled trigger
-      _protocol.addTriggeredTask(
+      _protocol!.addTriggeredTask(
           RecurrentScheduledTrigger(
               type: RecurrentType.weekly, dayOfWeek: DateTime.sunday, time: Time(hour: 8, minute: 00)),
           AppTask(
@@ -378,7 +378,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           phone);
 
       // collect how are you feeling - triggers randomly  - TODO: use random trigger
-      _protocol.addTriggeredTask(
+      _protocol!.addTriggeredTask(
           PeriodicTrigger(period: Duration(minutes: 5)),
           AppTask(
             type: SurveyUserTask.SURVEY_TYPE,
@@ -395,7 +395,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           phone);
 
       // Audio task: Wristband UX - triggers W7 - TODO: use scheduled trigger
-      _protocol.addTriggeredTask(
+      _protocol!.addTriggeredTask(
           PeriodicTrigger(period: Duration(days: 7)),
           AppTask(
             type: AudioUserTask.AUDIO_TYPE,
@@ -412,7 +412,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
     return _protocol;
   }
 
-  Future<StudyProtocol> _getControlParentWristWatch(String studyId) async {
+  Future<StudyProtocol?> _getControlParentWristWatch(String studyId) async {
     if (_protocol == null) {
       _protocol = StudyProtocol(
         name: 'Wrist Angel: Control Parents',
@@ -434,10 +434,10 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
 
       // Define which devices are used for data collection.
       Smartphone phone = Smartphone();
-      _protocol.addMasterDevice(phone);
+      _protocol!.addMasterDevice(phone);
 
       // collect informed consent once when the study starts - W0
-      _protocol.addTriggeredTask(
+      _protocol!.addTriggeredTask(
           ImmediateTrigger(),
           AppTask(
             type: SurveyUserTask.SURVEY_TYPE,
@@ -454,7 +454,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           phone);
 
       // collect trust scale - triggers on W4 - TODO: use scheduled trigger
-      _protocol.addTriggeredTask(
+      _protocol!.addTriggeredTask(
           ImmediateTrigger(),
           AppTask(
             type: SurveyUserTask.SURVEY_TYPE,
@@ -471,7 +471,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           phone);
 
       // collect App UX - triggers on W1, W8 - TODO: use scheduled trigger
-      _protocol.addTriggeredTask(
+      _protocol!.addTriggeredTask(
           ImmediateTrigger(),
           AppTask(
             type: SurveyUserTask.SURVEY_TYPE,
@@ -488,7 +488,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           phone);
 
       // Biosensor experience: collect wristband UX - triggers w7 - TODO: use scheduled trigger
-      _protocol.addTriggeredTask(
+      _protocol!.addTriggeredTask(
           RecurrentScheduledTrigger(
               type: RecurrentType.weekly, dayOfWeek: DateTime.sunday, time: Time(hour: 8, minute: 00)),
           AppTask(
@@ -506,7 +506,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           phone);
 
       // collect how are you feeling - triggers randomly  - TODO: use random trigger
-      _protocol.addTriggeredTask(
+      _protocol!.addTriggeredTask(
           ImmediateTrigger(),
           AppTask(
             type: SurveyUserTask.SURVEY_TYPE,
@@ -523,7 +523,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           phone);
 
       // Audio task: Wristband UX - triggers w7 - TODO: use scheduled trigger
-      _protocol.addTriggeredTask(
+      _protocol!.addTriggeredTask(
           PeriodicTrigger(period: Duration(days: 7)),
           AppTask(
             type: AudioUserTask.AUDIO_TYPE,
@@ -718,7 +718,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
   //   return _study;
   // }
 
-  Future<StudyProtocol> _getGenericCARPStudy(String studyId) async {
+  Future<StudyProtocol?> _getGenericCARPStudy(String studyId) async {
     if (_protocol == null) {
       _protocol = StudyProtocol(
         ownerId: studyId,
@@ -742,9 +742,9 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
 
       // Define which devices are used for data collection.
       Smartphone phone = Smartphone();
-      _protocol.addMasterDevice(phone);
+      _protocol!.addMasterDevice(phone);
 
-      _protocol.addTriggeredTask(
+      _protocol!.addTriggeredTask(
           ImmediateTrigger(),
           AutomaticTask()
             ..measures = SamplingPackageRegistry().common().getMeasureList(
@@ -760,7 +760,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           phone);
 
       // collect location, weather and air quality every 5 minutes
-      _protocol.addTriggeredTask(
+      _protocol!.addTriggeredTask(
           PeriodicTrigger(period: Duration(minutes: 5)),
           AutomaticTask()
             ..measures = SamplingPackageRegistry().common().getMeasureList(
@@ -773,7 +773,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           phone);
 
       // collect location, activity, mobility measures continously (event-based)
-      _protocol.addTriggeredTask(
+      _protocol!.addTriggeredTask(
           ImmediateTrigger(),
           AutomaticTask()
             ..measures = SamplingPackageRegistry().common().getMeasureList(
@@ -786,7 +786,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           phone);
 
       // collect local weather and air quality as an app task
-      _protocol.addTriggeredTask(
+      _protocol!.addTriggeredTask(
           ImmediateTrigger(),
           AppTask(
             type: SensingUserTask.ONE_TIME_SENSING_TYPE,
@@ -801,7 +801,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           phone);
 
       // collect demographics once when the study starts
-      _protocol.addTriggeredTask(
+      _protocol!.addTriggeredTask(
           ImmediateTrigger(),
           AppTask(
             // type: SurveyUserTask.DEMOGRAPHIC_SURVEY_TYPE,
@@ -817,11 +817,11 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
               enabled: true,
               surveyTask: surveys.demographics.survey,
             ))
-            ..measures.add(SamplingPackageRegistry().common().measures[ContextSamplingPackage.LOCATION]),
+            ..measures.add(SamplingPackageRegistry().common().measures[ContextSamplingPackage.LOCATION]!),
           phone);
 
       // collect symptoms on a daily basis
-      _protocol.addTriggeredTask(
+      _protocol!.addTriggeredTask(
           PeriodicTrigger(period: Duration(days: 1)),
           AppTask(
             type: SurveyUserTask.SURVEY_TYPE,
@@ -836,12 +836,12 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
               enabled: true,
               surveyTask: surveys.symptoms.survey,
             ))
-            ..measures.add(SamplingPackageRegistry().common().measures[ContextSamplingPackage.LOCATION]),
+            ..measures.add(SamplingPackageRegistry().common().measures[ContextSamplingPackage.LOCATION]!),
           phone);
 
       // collect a coughing sample on a daily basis
       // also collect location, and local weather and air quality of this sample
-      _protocol.addTriggeredTask(
+      _protocol!.addTriggeredTask(
           PeriodicTrigger(period: Duration(minutes: 1)),
           AppTask(
             type: AudioUserTask.AUDIO_TYPE,
@@ -854,13 +854,13 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
               type: AudioSamplingPackage.AUDIO,
               name: "Coughing",
             ))
-            ..measures.add(SamplingPackageRegistry().common().measures[ContextSamplingPackage.LOCATION])
-            ..measures.add(SamplingPackageRegistry().common().measures[ContextSamplingPackage.WEATHER])
-            ..measures.add(SamplingPackageRegistry().common().measures[ContextSamplingPackage.AIR_QUALITY]),
+            ..measures.add(SamplingPackageRegistry().common().measures[ContextSamplingPackage.LOCATION]!)
+            ..measures.add(SamplingPackageRegistry().common().measures[ContextSamplingPackage.WEATHER]!)
+            ..measures.add(SamplingPackageRegistry().common().measures[ContextSamplingPackage.AIR_QUALITY]!),
           phone);
 
       // collect a reading / audio sample on a daily basis
-      _protocol.addTriggeredTask(
+      _protocol!.addTriggeredTask(
           PeriodicTrigger(period: Duration(minutes: 1)),
           AppTask(
             type: AudioUserTask.AUDIO_TYPE,
@@ -879,7 +879,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
 
       // when the reading (audio) measure is collected, the add a user task to
       // collect location, and local weather and air quality
-      _protocol.addTriggeredTask(
+      _protocol!.addTriggeredTask(
           ConditionalSamplingEventTrigger(
             measureType: AudioSamplingPackage.AUDIO,
             resumeCondition: (DataPoint dataPoint) => true,
@@ -1031,7 +1031,6 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
 
   /// Return a [DataEndPoint] of the specified type.
   DataEndPoint getDataEndpoint(String type) {
-    assert(type != null);
     switch (type) {
       case DataEndPointTypes.PRINT:
         return new DataEndPoint(type: DataEndPointTypes.PRINT);
@@ -1041,9 +1040,10 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           zip: true,
           encrypt: false,
         );
-      case DataEndPointTypes.CARP:
-        // for now, upload each data point separately
-        return CarpDataEndPoint(uploadMethod: CarpUploadMethod.DATA_POINT);
+      // TODO - Add name, clientId, clientSecret and uri
+      // case DataEndPointTypes.CARP:
+      //   // for now, upload each data point separately
+      //   return CarpDataEndPoint(uploadMethod: CarpUploadMethod.DATA_POINT,name:, clientId: , clientSecret:, uri:)
       // TODO - change to using batch upload once this is working (again)
       // return CarpDataEndPoint(
       //   uploadMethod: CarpUploadMethod.BATCH_DATA_POINT,

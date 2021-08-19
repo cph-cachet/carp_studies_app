@@ -2,7 +2,7 @@ part of carp_study_app;
 
 class InformedConsentPage extends StatefulWidget {
   final InformedConsentState state = InformedConsentState();
-  InformedConsentPage({Key key}) : super(key: key);
+  InformedConsentPage({Key? key}) : super(key: key);
   InformedConsentState createState() => state;
 }
 
@@ -23,7 +23,7 @@ class InformedConsentState extends State<InformedConsentPage> {
       body: Builder(
         builder: (context) {
           return RPUITask(
-            task: bloc.informedConsent,
+            task: bloc.informedConsent!,
             onSubmit: resultCallback,
           );
         },

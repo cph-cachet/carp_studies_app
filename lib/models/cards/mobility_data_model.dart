@@ -1,9 +1,9 @@
 part of carp_study_app;
 
 class MobilityCardDataModel extends DataModel {
-  final Map<int, double> _weeklyHomeStay = {};
-  final Map<int, int> _weeklyPlaces = {};
-  final Map<int, double> _weeklyDistanceTraveled = {};
+  final Map<int, double?> _weeklyHomeStay = {};
+  final Map<int, int?> _weeklyPlaces = {};
+  final Map<int, double?> _weeklyDistanceTraveled = {};
 
   /// A map of weekly home stays (%) organized by the day of the week.
   ///
@@ -11,7 +11,7 @@ class MobilityCardDataModel extends DataModel {
   ///
   /// In accordance with Dart [DateTime] a week starts with Monday,
   /// which has the value 1.
-  Map<int, double> get weeklyHomeStay => _weeklyHomeStay;
+  Map<int, double?> get weeklyHomeStay => _weeklyHomeStay;
 
   /// The list of [Mobility] object representing home stay.
   List<Mobility> get homeStay => _weeklyHomeStay.entries
@@ -24,7 +24,7 @@ class MobilityCardDataModel extends DataModel {
   ///
   /// In accordance with Dart [DateTime] a week starts with Monday,
   /// which has the value 1.
-  Map<int, int> get weeklyPlaces => _weeklyPlaces;
+  Map<int, int?> get weeklyPlaces => _weeklyPlaces;
 
   /// The list of [Mobility] object representing the places visited.
   List<Mobility> get places => _weeklyPlaces.entries
@@ -37,7 +37,7 @@ class MobilityCardDataModel extends DataModel {
   ///
   /// In accordance with Dart [DateTime] a week starts with Monday,
   /// which has the value 1.
-  Map<int, double> get weeklyDistanceTraveled => _weeklyDistanceTraveled;
+  Map<int, double?> get weeklyDistanceTraveled => _weeklyDistanceTraveled;
 
   /// The list of [Mobility] object representing distance traveled.
   List<Mobility> get distance => _weeklyDistanceTraveled.entries
@@ -75,9 +75,9 @@ class MobilityCardDataModel extends DataModel {
 
 class Mobility {
   final int day;
-  final int places;
-  final double homeStay;
-  final double distance;
+  final int? places;
+  final double? homeStay;
+  final double? distance;
 
   Mobility(this.day, this.places, this.homeStay, this.distance);
 

@@ -1,18 +1,18 @@
 part of carp_study_app;
 
 class AudioTaskPage extends StatefulWidget {
-  final AudioUserTask audioUserTask;
-  AudioTaskPage({Key key, this.audioUserTask}) : super(key: key);
+  final AudioUserTask? audioUserTask;
+  AudioTaskPage({Key? key, this.audioUserTask}) : super(key: key);
 
   @override
   _AudioTaskPageState createState() => _AudioTaskPageState(audioUserTask);
 }
 
 class _AudioTaskPageState extends State<AudioTaskPage> {
-  final AudioUserTask audioUserTask;
+  final AudioUserTask? audioUserTask;
 
   int get _currentStep {
-    switch (audioUserTask.state) {
+    switch (audioUserTask!.state) {
       case UserTaskState.started:
         return 1;
       case UserTaskState.done:
@@ -29,7 +29,7 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () async => _showCancelConfirmationDialog(),
+      onWillPop: (() async => _showCancelConfirmationDialog() as FutureOr<bool>),
       child: Scaffold(
         body: Container(
           padding: EdgeInsets.symmetric(horizontal: 15),
@@ -40,14 +40,13 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
   }
 
   Widget _header() {
-    AssetLocalizations locale = AssetLocalizations.of(context);
+    AssetLocalizations locale = AssetLocalizations.of(context)!;
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         IconButton(
-          icon: Icon(Icons.help_outline,
-              color: Theme.of(context).primaryColor, size: 30),
+          icon: Icon(Icons.help_outline, color: Theme.of(context).primaryColor, size: 30),
           tooltip: locale.translate('Help'),
           onPressed: () {
             print("Help");
@@ -58,7 +57,7 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
         Expanded(
             flex: 2,
             child: StreamBuilder<UserTaskState>(
-              stream: audioUserTask.stateEvents,
+              stream: audioUserTask!.stateEvents,
               builder: (context, AsyncSnapshot<UserTaskState> snapshot) => Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: steps.asMap().entries.map(
@@ -72,17 +71,14 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
                           shape: BoxShape.circle,
                           color: index <= _currentStep
                               ? Theme.of(context).primaryColor
-                              : Theme.of(context)
-                                  .primaryColor
-                                  .withOpacity(0.5)),
+                              : Theme.of(context).primaryColor.withOpacity(0.5)),
                     );
                   },
                 ).toList(),
               ),
             )),
         IconButton(
-          icon: Icon(Icons.close,
-              color: Theme.of(context).primaryColor, size: 30),
+          icon: Icon(Icons.close, color: Theme.of(context).primaryColor, size: 30),
           tooltip: locale.translate('Close'),
           onPressed: () {
             print("close");
@@ -95,7 +91,7 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
 
   Widget _stepSelector() {
     return StreamBuilder<UserTaskState>(
-        stream: audioUserTask.stateEvents,
+        stream: audioUserTask!.stateEvents,
         initialData: UserTaskState.enqueued,
         builder: (context, AsyncSnapshot<UserTaskState> snapshot) {
           switch (snapshot.data) {
@@ -112,10 +108,10 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
   }
 
   Widget _stepOne() {
-    AssetLocalizations locale = AssetLocalizations.of(context);
+    AssetLocalizations? locale = AssetLocalizations.of(context);
 
     return StreamBuilder<UserTaskState>(
-      stream: audioUserTask.stateEvents,
+      stream: audioUserTask!.stateEvents,
       initialData: UserTaskState.enqueued,
       builder: (context, AsyncSnapshot<UserTaskState> snapshot) {
         return Column(
@@ -124,16 +120,11 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
             SizedBox(height: 35),
             _header(),
             SizedBox(height: 35),
-            Image(
-                image: AssetImage('assets/images/audio.png'),
-                width: 220,
-                height: 220),
+            Image(image: AssetImage('assets/images/audio.png'), width: 220, height: 220),
             SizedBox(height: 40),
-            Text(audioUserTask.title, style: audioTitleStyle),
+            Text(audioUserTask!.title, style: audioTitleStyle),
             SizedBox(height: 10),
-            Text(
-                '${audioUserTask.description}\n\n' +
-                    locale.translate('pages.audio_task.play'),
+            Text('${audioUserTask!.description}\n\n' + locale!.translate('pages.audio_task.play'),
                 style: audioDescriptionStyle),
             Expanded(
               child: Align(
@@ -144,7 +135,7 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
                     radius: 30,
                     backgroundColor: CACHET.RED_1,
                     child: IconButton(
-                      onPressed: () => audioUserTask.onRecordStart(),
+                      onPressed: () => audioUserTask!.onRecordStart(),
                       padding: EdgeInsets.all(0),
                       icon: Icon(Icons.mic, color: Colors.white, size: 30),
                     ),
@@ -159,11 +150,11 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
   }
 
   Widget _stepTwo() {
-    AssetLocalizations locale = AssetLocalizations.of(context);
+    AssetLocalizations? locale = AssetLocalizations.of(context);
 
     // TODO: split the instructions in the model instead of here
     return StreamBuilder<UserTaskState>(
-      stream: audioUserTask.stateEvents,
+      stream: audioUserTask!.stateEvents,
       initialData: UserTaskState.enqueued,
       builder: (context, AsyncSnapshot<UserTaskState> snapshot) {
         return Column(
@@ -172,19 +163,14 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
             SizedBox(height: 35),
             _header(),
             SizedBox(height: 35),
-            Image(
-                image: AssetImage('assets/images/audio.png'),
-                width: 220,
-                height: 220),
+            Image(image: AssetImage('assets/images/audio.png'), width: 220, height: 220),
             SizedBox(height: 40),
-            Text(locale.translate("pages.audio_task.recording"),
-                style: audioTitleStyle),
+            Text(locale!.translate("pages.audio_task.recording"), style: audioTitleStyle),
             SizedBox(height: 10),
             // If instructions are too long, create scrollable card for the extra instructions
-            Text(audioUserTask.instructions.split('\n\n')[0],
-                style: audioContentStyle),
+            Text(audioUserTask!.instructions.split('\n\n')[0], style: audioContentStyle),
             SizedBox(height: 10),
-            audioUserTask.instructions.split('\n\n').length > 1
+            audioUserTask!.instructions.split('\n\n').length > 1
                 ? Expanded(
                     flex: 3,
                     child: Card(
@@ -197,8 +183,7 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
                           scrollDirection: Axis.vertical, //.horizontal
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                                audioUserTask.instructions.split('\n\n')[1],
+                            child: Text(audioUserTask!.instructions.split('\n\n')[1],
                                 style: audioInstructionStyle),
                           ),
                         ),
@@ -229,7 +214,7 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
                         radius: 30,
                         backgroundColor: CACHET.RED_1,
                         child: IconButton(
-                          onPressed: () => audioUserTask.onRecordStop(),
+                          onPressed: () => audioUserTask!.onRecordStop(),
                           padding: EdgeInsets.all(0),
                           icon: Icon(Icons.stop, color: Colors.white, size: 30),
                         ),
@@ -246,10 +231,10 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
   }
 
   Widget _stepThree() {
-    AssetLocalizations locale = AssetLocalizations.of(context);
+    AssetLocalizations? locale = AssetLocalizations.of(context);
 
     return StreamBuilder<UserTaskState>(
-      stream: audioUserTask.stateEvents,
+      stream: audioUserTask!.stateEvents,
       initialData: UserTaskState.enqueued,
       builder: (context, AsyncSnapshot<UserTaskState> snapshot) {
         return Column(
@@ -258,15 +243,11 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
             SizedBox(height: 35),
             _header(),
             SizedBox(height: 35),
-            Image(
-                image: AssetImage('assets/images/audio.png'),
-                width: 220,
-                height: 220),
+            Image(image: AssetImage('assets/images/audio.png'), width: 220, height: 220),
             SizedBox(height: 40),
-            Text(locale.translate("Done!"), style: audioTitleStyle),
+            Text(locale!.translate("Done!"), style: audioTitleStyle),
             SizedBox(height: 10),
-            Text(locale.translate('pages.audio_task.recording_completed'),
-                style: audioDescriptionStyle),
+            Text(locale.translate('pages.audio_task.recording_completed'), style: audioDescriptionStyle),
             Expanded(
               child: Align(
                 alignment: FractionalOffset.bottomCenter,
@@ -277,10 +258,9 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
                     children: [
                       SizedBox(width: 30),
                       IconButton(
-                        onPressed: () => audioUserTask.onRecordStart(),
+                        onPressed: () => audioUserTask!.onRecordStart(),
                         padding: EdgeInsets.all(0),
-                        icon:
-                            Icon(Icons.replay, size: 25, color: CACHET.GREY_5),
+                        icon: Icon(Icons.replay, size: 25, color: CACHET.GREY_5),
                       ),
                       CircleAvatar(
                         radius: 30,
@@ -288,8 +268,7 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
                         child: IconButton(
                           onPressed: () => Navigator.pop(context),
                           padding: EdgeInsets.all(0),
-                          icon: Icon(Icons.check_circle_outline,
-                              color: Colors.white, size: 30),
+                          icon: Icon(Icons.check_circle_outline, color: Colors.white, size: 30),
                         ),
                       ),
                       SizedBox(width: 50),
@@ -307,18 +286,17 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
 
   // Taken from RP
   Future _showCancelConfirmationDialog() {
-    AssetLocalizations locale = AssetLocalizations.of(context);
+    AssetLocalizations? locale = AssetLocalizations.of(context);
     return showDialog(
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(locale.translate("pages.audio_task.discard")),
+          title: Text(locale!.translate("pages.audio_task.discard")),
           actions: <Widget>[
             TextButton(
               child: Text(locale.translate("NO")),
-              onPressed: () =>
-                  Navigator.of(context).pop(), // Dismissing the pop-up
+              onPressed: () => Navigator.of(context).pop(), // Dismissing the pop-up
             ),
             TextButton(
               child: Text(locale.translate("YES")),

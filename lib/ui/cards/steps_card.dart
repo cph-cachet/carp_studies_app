@@ -33,7 +33,7 @@ class _StepsCardWidgetState extends State<StepsCardWidget> {
   charts.RenderSpec<num> renderSpecNum = AxisTheme.axisThemeNum();
   charts.RenderSpec<String> renderSpecString = AxisTheme.axisThemeOrdinal();
 
-  int _selectedSteps = 0;
+  int? _selectedSteps = 0;
 
   @override
   void initState() {
@@ -44,7 +44,7 @@ class _StepsCardWidgetState extends State<StepsCardWidget> {
 
   @override
   Widget build(BuildContext context) {
-    AssetLocalizations locale = AssetLocalizations.of(context);
+    AssetLocalizations locale = AssetLocalizations.of(context)!;
 
     return Padding(
       padding: const EdgeInsets.all(5.0),
@@ -56,7 +56,7 @@ class _StepsCardWidgetState extends State<StepsCardWidget> {
           child: Column(
             children: <Widget>[
               StreamBuilder(
-                stream: widget.model.controller.data,
+                stream: widget.model.controller!.data,
                 builder: (context, AsyncSnapshot<DataPoint> snapshot) {
                   return Column(
                     children: [
@@ -105,7 +105,7 @@ class _StepsCardWidgetState extends State<StepsCardWidget> {
   void _infoSelectionModelChanged(charts.SelectionModel model) {
     if (model.hasDatumSelection)
       setState(() {
-        _selectedSteps = model.selectedSeries[0].measureFn(model.selectedDatum[0].index);
+        _selectedSteps = model.selectedSeries[0].measureFn(model.selectedDatum[0].index) as int?;
       });
   }
 }

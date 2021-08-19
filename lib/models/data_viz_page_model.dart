@@ -26,7 +26,7 @@ class DataVisualizationPageModel extends DataModel {
 
   /// The number of days the user has been part of this study.
   int get daysInStudy => (bloc.studyStartTimestamp != null)
-      ? DateTime.now().difference(bloc.studyStartTimestamp).inDays + 1
+      ? DateTime.now().difference(bloc.studyStartTimestamp!).inDays + 1
       : 0;
 
   /// The number of tasks completed so far.

@@ -4,7 +4,7 @@ part of carp_study_app;
 ///  * informed consent
 ///  * localization
 class LocalResourceManager implements ResourceManager {
-  RPOrderedTask _informedConsent;
+  RPOrderedTask? _informedConsent;
 
   static final LocalResourceManager _instance = LocalResourceManager._();
   factory LocalResourceManager() => _instance;
@@ -17,10 +17,10 @@ class LocalResourceManager implements ResourceManager {
   Future initialize() async {}
 
   @override
-  RPOrderedTask get informedConsent => _informedConsent;
+  RPOrderedTask? get informedConsent => _informedConsent;
 
   @override
-  Future<RPOrderedTask> getInformedConsent() async {
+  Future<RPOrderedTask?> getInformedConsent() async {
     if (_informedConsent == null) {
       RPConsentSection overviewSection = RPConsentSection(
           type: RPConsentSectionType.Welcome,

@@ -14,6 +14,7 @@ import 'package:timeago/timeago.dart' as timeago;
 import 'package:expandable/expandable.dart';
 import 'package:intl/intl.dart';
 import 'package:activity_recognition_flutter/activity_recognition_flutter.dart';
+import 'package:collection/collection.dart' show IterableExtension;
 
 import 'package:carp_mobile_sensing/carp_mobile_sensing.dart';
 import 'package:carp_audio_package/audio.dart';
@@ -29,7 +30,6 @@ import 'package:carp_backend/carp_backend.dart';
 import 'package:carp_core/carp_common/carp_core_common.dart';
 import 'package:carp_core/carp_protocols/carp_core_protocols.dart';
 import 'package:carp_core/carp_deployment/carp_core_deployment.dart';
-import 'package:carp_core/carp_client/carp_core_client.dart';
 import 'package:carp_core/carp_data/carp_core_data.dart';
 
 import 'package:research_package/research_package.dart';
@@ -90,7 +90,7 @@ part 'ui/cards/task_card.dart';
 part 'ui/cards/scoreboard_card.dart';
 part 'ui/cards/study_progress_card.dart';
 
-CarpStudyApp app;
+late CarpStudyApp app;
 void main() async {
   app = CarpStudyApp();
   runApp(app);
@@ -102,5 +102,5 @@ void main() async {
 /// or deploying it.
 final bloc = StudyAppBLoC(
   debugLevel: DebugLevel.DEBUG,
-  deploymentMode: DeploymentMode.CARP_STAGING,
+  deploymentMode: DeploymentMode.LOCAL,
 );

@@ -29,6 +29,8 @@ void main() {
     SamplingPackageRegistry().register(AudioSamplingPackage());
     SamplingPackageRegistry().register(SurveySamplingPackage());
     //SamplingPackageRegistry.register(HealthSamplingPackage());
+
+    Settings().saveAppTaskQueue = false;
   });
 
   group("JSON Generator Scripts", () {
@@ -36,12 +38,15 @@ void main() {
 
     /// Generates and prints the local study protocol as json
     test('protocol -> JSON', () async {
-      protocol = await LocalStudyProtocolManager().getStudyProtocol('1234') as StudyProtocol;
+      protocol = await LocalStudyProtocolManager().getStudyProtocol('1234')
+          as StudyProtocol;
       print(toJsonString(protocol));
     });
 
+    /// Generates and prints the local informed consent as json
     test('informed consent -> JSON', () async {
-      informedConsent = await LocalResourceManager().getInformedConsent() as RPOrderedTask;
+      informedConsent =
+          await LocalResourceManager().getInformedConsent() as RPOrderedTask;
       print(toJsonString(informedConsent));
     });
   });

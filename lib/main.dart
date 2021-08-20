@@ -96,7 +96,7 @@ void main() async {
   runApp(app);
 }
 
-/// The singleton BLOC.
+/// The singleton BLoC.
 ///
 /// Configure the debug level and deployment mode here before running the app
 /// or deploying it.

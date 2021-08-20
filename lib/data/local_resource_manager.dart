@@ -10,7 +10,9 @@ class LocalResourceManager implements ResourceManager {
   factory LocalResourceManager() => _instance;
 
   LocalResourceManager._() {
-    RPOrderedTask(identifier: '', steps: []); // to initialize json serialization for RP classes
+    RPOrderedTask(
+        identifier: '',
+        steps: []); // to initialize json serialization for RP classes
   }
 
   @override
@@ -52,6 +54,12 @@ class LocalResourceManager implements ResourceManager {
           summary: "ic.data.summary",
           content: "ic.data.content");
 
+      RPConsentSection locationSection = RPConsentSection(
+          type: RPConsentSectionType.Location,
+          title: "ic.location.title",
+          summary: "ic.location.summary",
+          content: "ic.location.content");
+
       RPConsentSection rightsSection = RPConsentSection(
           type: RPConsentSectionType.YourRights,
           title: "ic.rights.title",
@@ -64,30 +72,35 @@ class LocalResourceManager implements ResourceManager {
           summary: "ic.summary.summary",
           content: "ic.summary.content");
 
-      RPConsentSignature signature = RPConsentSignature(identifier: "signatureID");
+      RPConsentSignature signature =
+          RPConsentSignature(identifier: "signatureID");
 
-      RPConsentDocument consentDocument = RPConsentDocument(title: 'CACHET Research Platfom', sections: [
+      RPConsentDocument consentDocument =
+          RPConsentDocument(title: 'CACHET Research Platfom', sections: [
         overviewSection,
         whoAreWeSection,
         tasksSection,
         durationSection,
         dataHandlingSection,
+        locationSection,
         rightsSection,
         summarySection,
       ])
-        ..addSignature(signature);
+            ..addSignature(signature);
 
-      RPConsentReviewStep consentReviewStep =
-          RPConsentReviewStep(identifier: "consentreviewstepID", consentDocument: consentDocument)
-            ..title = "ic.review.title"
-            ..reasonForConsent = "ic.review.reason"
-            ..text = "ic.review.text";
+      RPConsentReviewStep consentReviewStep = RPConsentReviewStep(
+          identifier: "consentreviewstepID", consentDocument: consentDocument)
+        ..title = "ic.review.title"
+        ..reasonForConsent = "ic.review.reason"
+        ..text = "ic.review.text";
 
-      RPVisualConsentStep consentVisualStep =
-          RPVisualConsentStep(identifier: "visualStep", consentDocument: consentDocument);
+      RPVisualConsentStep consentVisualStep = RPVisualConsentStep(
+          identifier: "visualStep", consentDocument: consentDocument);
 
       RPCompletionStep completionStep = RPCompletionStep(
-          identifier: "completionID", title: "ic.completion.title", text: "ic.completion.text");
+          identifier: "completionID",
+          title: "ic.completion.title",
+          text: "ic.completion.text");
 
       _informedConsent = RPOrderedTask(
         identifier: "consentTaskID",
@@ -123,7 +136,8 @@ class LocalResourceManager implements ResourceManager {
     String jsonString = await rootBundle.loadString(path);
 
     Map<String, dynamic> jsonMap = json.decode(jsonString);
-    Map<String, String> translations = jsonMap.map((key, value) => MapEntry(key, value.toString()));
+    Map<String, String> translations =
+        jsonMap.map((key, value) => MapEntry(key, value.toString()));
 
     return translations;
   }
@@ -135,7 +149,8 @@ class LocalResourceManager implements ResourceManager {
   }
 
   @override
-  Future<bool> setLocalizations(Locale locale, Map<String, dynamic> localizations) {
+  Future<bool> setLocalizations(
+      Locale locale, Map<String, dynamic> localizations) {
     // TODO: implement setLocalizations
     throw UnimplementedError();
   }

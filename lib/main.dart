@@ -48,6 +48,7 @@ part 'sensing/sensing.dart';
 part 'models/data_model.dart';
 part 'models/tasklist_page_model.dart';
 part 'models/study_page_model.dart';
+part 'models/profile_page_model.dart';
 part 'models/data_viz_page_model.dart';
 part 'models/cards/activity_data_model.dart';
 part 'models/cards/mobility_data_model.dart';

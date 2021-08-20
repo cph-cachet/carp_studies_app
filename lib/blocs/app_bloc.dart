@@ -175,6 +175,10 @@ class StudyAppBLoC {
   /// The signed in user. Returns null if no user is signed in.
   CarpUser? get user => backend.user;
 
+  String get username => (user != null)
+      ? user!.username
+      : Sensing().controller!.masterDeployment!.userId!;
+
   /// The name used for friendly greating - '' if no user logged in.
   String? get friendlyUsername => (user != null) ? user!.firstName : '';
 

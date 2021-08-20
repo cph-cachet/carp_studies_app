@@ -1,6 +1,9 @@
 part of carp_study_app;
 
 class ProfilePage extends StatefulWidget {
+  final ProfilePageModel model;
+  const ProfilePage(this.model);
+
   @override
   _ProfilePageState createState() => _ProfilePageState();
 }
@@ -25,14 +28,17 @@ class _ProfilePageState extends State<ProfilePage> {
                   Row(
                     children: [
                       IconButton(
-                          icon: Icon(Icons.account_circle, color: Theme.of(context).primaryColor, size: 30),
+                          icon: Icon(Icons.account_circle,
+                              color: Theme.of(context).primaryColor, size: 30),
                           onPressed: () {}),
                       Text(locale.translate('pages.profile.title'),
-                          style: sectionTitleStyle.copyWith(color: Theme.of(context).primaryColor)),
+                          style: sectionTitleStyle.copyWith(
+                              color: Theme.of(context).primaryColor)),
                     ],
                   ),
                   IconButton(
-                      icon: Icon(Icons.close, color: Theme.of(context).primaryColor, size: 30),
+                      icon: Icon(Icons.close,
+                          color: Theme.of(context).primaryColor, size: 30),
                       tooltip: locale.translate('Back'),
                       onPressed: () {
                         Navigator.of(context).pop();
@@ -52,8 +58,9 @@ class _ProfilePageState extends State<ProfilePage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(locale.translate('pages.profile.username'),
-                            style: aboutCardSubtitleStyle.copyWith(color: Theme.of(context).primaryColor)),
-                        Text(bloc.user!.username, style: profileTitleStyle),
+                            style: aboutCardSubtitleStyle.copyWith(
+                                color: Theme.of(context).primaryColor)),
+                        Text(widget.model.username, style: profileTitleStyle),
                       ],
                     ),
                   ),
@@ -63,8 +70,12 @@ class _ProfilePageState extends State<ProfilePage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(locale.translate('pages.profile.name'),
-                            style: aboutCardSubtitleStyle.copyWith(color: Theme.of(context).primaryColor)),
-                        Text(bloc.user!.firstName! + ' ' + bloc.user!.lastName!,
+                            style: aboutCardSubtitleStyle.copyWith(
+                                color: Theme.of(context).primaryColor)),
+                        Text(
+                            widget.model.firstname +
+                                ' ' +
+                                widget.model.lastname,
                             style: profileTitleStyle), // TODO add full name
                       ],
                     ),
@@ -75,33 +86,42 @@ class _ProfilePageState extends State<ProfilePage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(locale.translate('pages.profile.account_id'),
-                            style: aboutCardSubtitleStyle.copyWith(color: Theme.of(context).primaryColor)),
-                        Text(bloc.user!.id.toString(), style: profileTitleStyle),
+                            style: aboutCardSubtitleStyle.copyWith(
+                                color: Theme.of(context).primaryColor)),
+                        Text(widget.model.userid, style: profileTitleStyle),
                       ],
                     ),
                   ),
                   ListTile(
-                    leading: Icon(Icons.support_agent, color: Theme.of(context).primaryColor),
+                    leading: Icon(Icons.support_agent,
+                        color: Theme.of(context).primaryColor),
                     title: Text(locale.translate('pages.profile.contact'),
-                        style: profileActionStyle.copyWith(color: Theme.of(context).primaryColor)),
+                        style: profileActionStyle.copyWith(
+                            color: Theme.of(context).primaryColor)),
                     onTap: () {
                       print("contact researcher");
-                      _contactResearcher();
+                      _contactResearcher(
+                        widget.model.responsibleEmail,
+                        'Support for study: ${widget.model.studyTitle} - User: ${widget.model.username}',
+                      );
                     },
                   ),
                   ListTile(
                     leading: Icon(Icons.logout, color: CACHET.RED_1),
                     title: Text(locale.translate('pages.profile.leave_study'),
-                        style: profileActionStyle.copyWith(color: CACHET.RED_1)),
+                        style:
+                            profileActionStyle.copyWith(color: CACHET.RED_1)),
                     onTap: () {
                       print("leaving study");
                       _showLeaveStudyConfirmationDialog();
                     },
                   ),
                   ListTile(
-                    leading: Icon(Icons.power_settings_new, color: CACHET.RED_1),
+                    leading:
+                        Icon(Icons.power_settings_new, color: CACHET.RED_1),
                     title: Text(locale.translate('pages.profile.log_out'),
-                        style: profileActionStyle.copyWith(color: CACHET.RED_1)),
+                        style:
+                            profileActionStyle.copyWith(color: CACHET.RED_1)),
                     onTap: () {
                       print("log out");
                       _showLogoutConfirmationDialog();
@@ -117,12 +137,9 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   // Sends and email to the researcher with the name of the study + user id
-  void _contactResearcher() async {
-    final Uri _emailLaunchUri =
-        Uri(scheme: 'mailto', path: bloc.deployment!.responsible!.email, queryParameters: {
-      'subject':
-          'Support for study: ${bloc.deployment!.protocolDescription!.title} - User: ${bloc.user!.id.toString()}'
-    });
+  void _contactResearcher(String email, String subject) async {
+    final Uri _emailLaunchUri = Uri(
+        scheme: 'mailto', path: email, queryParameters: {'subject': subject});
 
     var url = _emailLaunchUri.toString().replaceAll("+", "%20");
 
@@ -145,7 +162,8 @@ class _ProfilePageState extends State<ProfilePage> {
           actions: <Widget>[
             TextButton(
               child: Text(locale.translate("NO")),
-              onPressed: () => Navigator.of(context).pop(), // Dismissing the pop-up
+              onPressed: () =>
+                  Navigator.of(context).pop(), // Dismissing the pop-up
             ),
             TextButton(
               child: Text(locale.translate("YES")),
@@ -159,6 +177,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 Navigator.of(context).pop();
                 // Exit the Ordered Task
                 Navigator.of(context).pop();
+
                 // TODO - not sure this works - test
                 Navigator.of(context).pushReplacementNamed('/LoadingPage');
                 // Navigator.of(context).pushReplacement(
@@ -180,11 +199,13 @@ class _ProfilePageState extends State<ProfilePage> {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(locale!.translate("pages.profile.leave_study.confirmation")),
+          title:
+              Text(locale!.translate("pages.profile.leave_study.confirmation")),
           actions: <Widget>[
             TextButton(
               child: Text(locale.translate("NO")),
-              onPressed: () => Navigator.of(context).pop(), // Dismissing the pop-up
+              onPressed: () =>
+                  Navigator.of(context).pop(), // Dismissing the pop-up
             ),
             TextButton(
               child: Text(locale.translate("YES")),

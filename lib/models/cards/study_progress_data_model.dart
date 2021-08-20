@@ -7,23 +7,21 @@ class StudyProgressCardDataModel extends DataModel {
   Stream<UserTask> get userTaskEvents => AppTaskController().userTaskEvents;
 
   /// The number of tasks completed so far.
-  int get taskCompleted =>
-      AppTaskController().userTaskQueue.where((task) => task.state == UserTaskState.done).length;
+  int get taskCompleted => AppTaskController().taskCompleted;
 
   /// The number of tasks expired so far.
-  int get taskExpired =>
-      AppTaskController().userTaskQueue.where((task) => task.state == UserTaskState.dequeued).length;
+  int get taskExpired => AppTaskController().taskExpired;
 
   /// The number of tasks pending so far.
-  int get taskPending =>
-      AppTaskController().userTaskQueue.where((task) => task.state == UserTaskState.enqueued).length;
+  int get taskPending => AppTaskController().taskPending;
 
   /// A table with sampling size of each measure type
   Map<String, int> get progressTable => _progressTable;
 
   /// The list of measures
-  List<StudyProgress> get progress =>
-      _progressTable.entries.map((entry) => StudyProgress(entry.key, entry.value)).toList();
+  List<StudyProgress> get progress => _progressTable.entries
+      .map((entry) => StudyProgress(entry.key, entry.value))
+      .toList();
 
   StudyProgressCardDataModel() : super();
 

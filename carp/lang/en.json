@@ -19,6 +19,10 @@
     "ic.data.summary" : "",
     "ic.data.content" : "",
 
+    "ic.location.title" : "Why is location enabled?",
+    "ic.location.summary" : "This study DO NOT collect location data but uses the location service on the phone.",
+    "ic.location.content" : "This study DOES NOT collect location data.\n\nBut we ask you to enable the location service on the phone by ALLOW tracking of location ALWAYS, since the location service is used to keep the app running in the background.\n\nThe location sercie is used to make sure that the questionnaires are triggered when needed.",
+
     "ic.rights.title" : "What are your rights?",
     "ic.rights.summary" : "",
     "ic.rights.content" : "",

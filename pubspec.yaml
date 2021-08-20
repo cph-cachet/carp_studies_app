@@ -15,7 +15,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 0.21.2
+version: 0.30.0
 
 environment:
   sdk: '>=2.12.0 <3.0.0'
@@ -25,12 +25,13 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  carp_mobile_sensing: ^0.30.2
+
+  carp_core: ^0.30.1
+  #carp_mobile_sensing: ^0.30.3
   carp_context_package: ^0.30.0
   carp_survey_package: ^0.30.0
   carp_audio_package: ^0.30.1
-  carp_backend: ^0.30.0
-  carp_core: ^0.30.1
+  #carp_backend: ^0.30.0
 
   #carp_communication_package: ^0.6.1
   #carp_health_package: ^0.6.1
@@ -47,6 +48,10 @@ dependencies:
   intl: ^0.17.0
   flutter_markdown: ^0.6.4
 
+  # The following adds the Cupertino Icons font to your application.
+  # Use with the CupertinoIcons class for iOS style icons.
+  cupertino_icons: ^1.0.0
+
   flutter_localizations:
     sdk: flutter
 
@@ -54,26 +59,20 @@ dependencies:
 # Overriding carp libraries to use the local or github copy
 # Remove this before release of app
 dependency_overrides:
-#  carp_mobile_sensing:
-#    path: ../carp/carp.sensing-flutter/carp_mobile_sensing/
+  carp_mobile_sensing:
+    path: ../carp/carp.sensing-flutter/carp_mobile_sensing/
 #  carp_context_package:
 #    path: ../carp/carp.sensing-flutter/packages/carp_context_package/
 #  carp_survey_package:
 #    path: ../carp/carp.sensing-flutter/packages/carp_survey_package/
 #  carp_audio_package:
 #    path: ../carp/carp.sensing-flutter/packages/carp_audio_package/
-#  carp_backend:
-#    path: ../carp/carp.sensing-flutter/backends/carp_backend/
+  carp_backend:
+    path: ../carp/carp.sensing-flutter/backends/carp_backend/
 #  carp_webservices:
 #    path: ../carp/carp.sensing-flutter/backends/carp_webservices/
 #  research_package:
 #    path: ../research.package/
-
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.0
-  
 
 dev_dependencies:
   # flutter_test:

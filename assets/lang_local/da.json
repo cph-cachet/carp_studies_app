@@ -19,6 +19,10 @@
     "ic.data.summary" : "",
     "ic.data.content" : "",
 
+    "ic.location.title" : "Hvorfor bruger vi lokalisering?",
+    "ic.location.summary" : "I dette studie indsamler vi IKKE lokaliseringsdata men vi anvender lokaliseringstjenesten på telefonen.",
+    "ic.location.content" : "This study DOES NOT collect location data.\n\nBut we ask you to enable the location service on the phone by ALLOW tracking of location ALWAYS, since the location service is used to keep the app running in the background.\n\nThe location service is used to make sure that the questionnaires are triggered when needed.",
+
     "ic.rights.title" : "Hvad er dine rettigheder?",
     "ic.rights.summary" : "",
     "ic.rights.content" : "",
@@ -28,11 +32,9 @@
     "ic.summary.content" : "You are above 18 years old. If you are not, please go through this with your parent. \n\nYou have read and understood the provided information and have had the opportunity to ask questions.\n\nYou understand your rights: your participation is voluntary, and you are free to withdraw at any time.\n\nYou understand and agree with how your data is collected, stored and used.",
 
     "ic.review.title" : "Informeret samtykke",
-    "ic.review.reason" : "Have you read, understood and agreed with using this app for the study as explained?",
-    "ic.review.text" : "Enig?",
+    "ic.review.reason" : "Har du læst og forstået betingelserne for at anvende denne app til WristAngel studiet?",
+    "ic.review.text" : "Ja",
 
     "ic.completion.title" : "Tak!",
-    "ic.completion.text" : "Vi har nu gemt dit samtykke.",
-
-    "":""
+    "ic.completion.text" : "Vi har nu gemt dit samtykke."
 }

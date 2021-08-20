@@ -109,11 +109,12 @@ class _LoadingPageState extends State<LoadingPage> {
 
         // TODO - here the app should somehow be told to reload the
         // localizations -- BUT simply cannot make this happen.....??????
-        print(' >> reload? - ${app.rpLocalizationsDelegate.shouldReload(app.rpLocalizationsDelegate)}');
+        print(
+            ' >> reload? - ${app.rpLocalizationsDelegate.shouldReload(app.rpLocalizationsDelegate)}');
 
         // then navigate to the right screen
-        Navigator.of(context)
-            .pushReplacementNamed((bloc.shouldInformedConsentBeShown) ? '/ConsentPage' : '/HomePage');
+        Navigator.of(context).pushReplacementNamed(
+            (bloc.shouldInformedConsentBeShown) ? '/ConsentPage' : '/HomePage');
       });
     }
 
@@ -137,7 +138,8 @@ class _LoadingPageState extends State<LoadingPage> {
         child: new Center(
             child: new Hero(
           tag: "tick",
-          child: new Image.asset('assets/images/splash_cachet.png', width: 150.0, height: 150.0, scale: 1.0),
+          child: new Image.asset('assets/images/splash_cachet.png',
+              width: 150.0, height: 150.0, scale: 1.0),
         )),
       );
 }

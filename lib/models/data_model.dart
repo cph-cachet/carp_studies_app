@@ -19,17 +19,20 @@ class CarpStydyAppDataModel extends DataModel {
       DataVisualizationPageModel();
   final StudyPageModel _studyPageModel = StudyPageModel();
   final TaskListPageModel _taskListPageModel = TaskListPageModel();
+  final ProfilePageModel _profilePageModel = ProfilePageModel();
 
   CarpStydyAppDataModel() : super();
 
   DataVisualizationPageModel get dataPageModel => _dataPageModel;
   StudyPageModel get studyPageModel => _studyPageModel;
   TaskListPageModel get taskListPageModel => _taskListPageModel;
+  ProfilePageModel get profilePageModel => _profilePageModel;
 
   void init(StudyDeploymentController controller) {
     super.init(controller);
     _dataPageModel.init(controller);
     _studyPageModel.init(controller);
     _taskListPageModel.init(controller);
+    _profilePageModel.init(controller);
   }
 }

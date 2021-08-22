@@ -36,5 +36,15 @@
     "ic.review.text" : "Ja",
 
     "ic.completion.title" : "Tak!",
-    "ic.completion.text" : "Vi har nu gemt dit samtykke."
-}
+    "ic.completion.text" : "Vi har nu gemt dit samtykke.",
+
+    "study.description.title": "Wrist Angel: A Wearable AI Feedback Tool for OCD Treatment and Research",
+    "study.description.purpose":
+        "We aim to improve assessment and psychotherapy for pediatric obsessive-compulsive disorder (OCD).",
+    "study.description.description":
+        "Hormone levels, measured in saliva, and physiological indicators of stress from children and parents are used as input to privacy preserving signal processing and machine learning algorithms. Signal processing will be used to extract acoustic and physiological features of importance for therapeutic response. The study includes children with an OCD diagnosis and children without a psychiatric diagnosis and their parents.",
+    "study.responsible.name": "Nicole Nadine Lønfeldt",
+    "study.responsible.title": "Seniorforsker",
+    "study.responsible.email": "nicole.nadine.loenfeldt@regionh.dk",
+    "study.responsible.affiliation": "Børne- og Ungdomspsykiatrisk Center – Forskningsenheden, Region Hovedstadens Psykiatri",
+    "study.responsible.address": "Gentoftehospitalsvej 28, 2900 Hellerup"}

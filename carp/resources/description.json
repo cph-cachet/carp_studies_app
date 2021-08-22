@@ -1,0 +1,15 @@
+{
+    "$type": "StudyDescription",
+    "title": "study.description.title",
+    "description": "study.description.description",
+    "purpose": "study.description.purpose",
+    "responsible": {
+     "$type": "StudyReponsible",
+     "id": "study.responsible.id",
+     "name": "study.responsible.name",
+     "title": "study.responsible.title",
+     "email": "study.responsible.email",
+     "address": "study.responsible.address",
+     "affiliation": "study.responsible.affiliation"
+    }
+   }

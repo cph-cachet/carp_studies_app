@@ -20,8 +20,11 @@ void main() {
   // creating an empty protocol to initialize json serialization
   StudyProtocol protocol;
   RPOrderedTask informedConsent;
+  StudyDescription description;
 
   setUp(() async {
+    Settings().saveAppTaskQueue = false;
+
     // create and register external sampling packages
     //SamplingPackageRegistry.register(ConnectivitySamplingPackage());
     SamplingPackageRegistry().register(ContextSamplingPackage());
@@ -29,8 +32,6 @@ void main() {
     SamplingPackageRegistry().register(AudioSamplingPackage());
     SamplingPackageRegistry().register(SurveySamplingPackage());
     //SamplingPackageRegistry.register(HealthSamplingPackage());
-
-    Settings().saveAppTaskQueue = false;
   });
 
   group("JSON Generator Scripts", () {
@@ -41,6 +42,13 @@ void main() {
       protocol = await LocalStudyProtocolManager().getStudyProtocol('1234')
           as StudyProtocol;
       print(toJsonString(protocol));
+    });
+
+    /// Generates and prints the local study description as json
+    test('study description -> JSON', () async {
+      description = await LocalResourceManager().getStudyDescription()
+          as StudyDescription;
+      print(toJsonString(description));
     });
 
     /// Generates and prints the local informed consent as json

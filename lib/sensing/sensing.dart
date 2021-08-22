@@ -74,6 +74,8 @@ class Sensing {
   Future<void> initialize() async {
     info('Initializing $runtimeType - mode: ${bloc.deploymentMode}');
 
+    StudyDescription? description;
+
     // set up the devices available on this phone
     DeviceController().registerAllAvailableDevices();
 
@@ -86,6 +88,9 @@ class Sensing {
         // note that the study id is not used
         StudyProtocol? protocol =
             await (LocalStudyProtocolManager().getStudyProtocol(''));
+
+        // get the local study description
+        description = await LocalResourceManager().getStudyDescription();
 
         // deploy this protocol using the on-phone deployment service
         _status = await SmartphoneDeploymentService().createStudyDeployment(
@@ -123,9 +128,11 @@ class Sensing {
     // add and deploy this deployment
     _controller = await client!.addStudy(studyDeploymentId!, deviceRolename!);
 
+    // set the study description, if available
+    deployment!.protocolDescription ??= description;
+
     // configure the controller
     await _controller!.configure();
-    // controller.resume();
 
     // listening on the data stream and print them as json to the debug console
     _controller!.data.listen((data) => print(toJsonString(data)));

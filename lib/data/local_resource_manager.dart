@@ -5,6 +5,7 @@ part of carp_study_app;
 ///  * localization
 class LocalResourceManager implements ResourceManager {
   RPOrderedTask? _informedConsent;
+  StudyDescription? _description;
 
   static final LocalResourceManager _instance = LocalResourceManager._();
   factory LocalResourceManager() => _instance;
@@ -152,6 +153,41 @@ class LocalResourceManager implements ResourceManager {
   Future<bool> setLocalizations(
       Locale locale, Map<String, dynamic> localizations) {
     // TODO: implement setLocalizations
+    throw UnimplementedError();
+  }
+
+  @override
+  StudyDescription? get studyDescription => _description;
+
+  @override
+  Future<StudyDescription?> getStudyDescription() async {
+    if (_description == null) {
+      _description = StudyDescription(
+          title: 'study.description.title',
+          description: 'study.description.description',
+          purpose: 'study.description.purpose',
+          responsible: StudyReponsible(
+            id: 'study.responsible.id',
+            title: 'study.responsible.title',
+            address: 'study.responsible.address',
+            affiliation: 'study.responsible.affiliation',
+            email: 'study.responsible.email',
+            name: 'study.responsible.name',
+          ));
+    }
+
+    return _description;
+  }
+
+  @override
+  Future<bool> setStudyDescription(StudyDescription description) {
+    // TODO: implement setStudyDescription
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<bool> deleteStudyDescription() {
+    // TODO: implement deleteStudyDescription
     throw UnimplementedError();
   }
 }

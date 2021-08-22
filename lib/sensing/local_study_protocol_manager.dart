@@ -18,60 +18,12 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
       //  _protocol ??= await _getGenericCARPStudy(ignored);
       _protocol ??= await _getPatientWristWatch(ignored);
 
-  // TODO: remove as soon as the uploading localization is ready
-  Map<String, String> protocolInformation = {
-    'protocol.description.title': 'Wrist Angel: A Wearable AI Feedback Tool for OCD Treatment and Research',
-    'protocol.description.purpose':
-        'We aim to improve assessment and psychotherapy for pediatric obsessive-compulsive disorder (OCD).',
-    'protocol.description.description':
-        'Hormone levels, measured in saliva, and physiological indicators of stress from children and parents are used as input to privacy preserving signal processing and machine learning algorithms. Signal processing will be used to extract acoustic and physiological features of importance for therapeutic response. The study includes children with an OCD diagnosis and children without a psychiatric diagnosis and their parents.',
-    'protocol.responsible.name':
-        'Professor Anne Katrine Pagsberg1, Associate Professor Line Katrine Harder Clemmensen2 and Senior Researcher Nicole Nadine Lønfeldt',
-    'protocol.responsible.title': ' ',
-    'protocol.responsible.email': 'nicole.nadine.loenfeldt@regionh.dk',
-    'protocol.responsible.affiliation':
-        'Børne- og Ungdomspsykiatrisk Center – Forskningsenheden, Region Hovedstadens Psykiatri\nDTU Compute',
-    'protocol.responsible.address': 'Gentoftehospitalsvej 28, 2900 Hellerup',
-  };
-
   Future<StudyProtocol?> _getPatientWristWatch(String studyId) async {
-    // if (_protocol == null) {
-    //   _protocol = CAMSStudyProtocol()
-    //     ..name = 'Wrist Angel: Patient'
-    //     ..studyId = studyId
-    //     ..description = 'Protocol testing for patients'
-    //     ..protocolDescription = StudyProtocolDescription(
-    //         title: protocolInformation['protocol.description.title'],
-    //         purpose: protocolInformation['protocol.description.purpose'],
-    //         description: protocolInformation['protocol.description.description'])
-    //     ..responsible = StudyProtocolReponsible(
-    //       name: protocolInformation['protocol.responsible.name'],
-    //       title: protocolInformation['protocol.responsible.title'],
-    //       email: protocolInformation['protocol.responsible.email'],
-    //       affiliation: protocolInformation['protocol.responsible.affiliation'],
-    //       address: protocolInformation['protocol.responsible.address'],
-    //     );
     if (_protocol == null) {
       _protocol = StudyProtocol(
         name: 'Wrist Angel: Patient (TEST)',
         ownerId: studyId,
         description: 'Protocol testing for patients',
-        // TODO: fix
-        // protocolDescription: StudyProtocolDescription(
-        //   title: "Wrist Angel: A Wearable AI Feedback Tool for OCD Treatment and Research",
-        //   purpose:
-        //       "We aim to improve assessment and psychotherapy for pediatric obsessive-compulsive disorder (OCD).",
-        //   description:
-        //       "Hormone levels, measured in saliva, and physiological indicators of stress from children and parents are used as input to privacy preserving signal processing and machine learning algorithms. Signal processing will be used to extract acoustic and physiological features of importance for therapeutic response. The study includes children with an OCD diagnosis and children without a psychiatric diagnosis and their parents.",
-        // )..responsible = StudyProtocolReponsible(
-        //     name:
-        //         "Professor Anne Katrine Pagsberg1, Associate Professor Line Katrine Harder Clemmensen2 and Senior Researcher Nicole Nadine Lønfeldt",
-        //     title: ' ',
-        //     email: 'nicole.nadine.loenfeldt@regionh.dk',
-        //     affiliation:
-        //         'Børne- og Ungdomspsykiatrisk Center – Forskningsenheden, Region Hovedstadens Psykiatri\nDTU Compute',
-        //     address: 'Gentoftehospitalsvej 28, 2900 Hellerup',
-        //   )
       );
 
       // Define which devices are used for data collection.
@@ -81,7 +33,9 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
       // Biosensor experience: collect wristband UX - triggers on week 7 (TODO)
       _protocol!.addTriggeredTask(
           RecurrentScheduledTrigger(
-              type: RecurrentType.weekly, dayOfWeek: DateTime.sunday, time: Time(hour: 8, minute: 00)),
+              type: RecurrentType.weekly,
+              dayOfWeek: DateTime.sunday,
+              time: Time(hour: 8, minute: 00)),
           AppTask(
             type: SurveyUserTask.SURVEY_TYPE,
             title: surveys.patient.title,
@@ -98,7 +52,8 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
 
       /// collect exposure exercises - triggers daily
       _protocol!.addTriggeredTask(
-          RecurrentScheduledTrigger(type: RecurrentType.daily, time: Time(hour: 7, minute: 00)),
+          RecurrentScheduledTrigger(
+              type: RecurrentType.daily, time: Time(hour: 7, minute: 00)),
           AppTask(
             type: SurveyUserTask.SURVEY_TYPE,
             title: surveys.exposure.title,
@@ -138,12 +93,15 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
       // collect symptoms hierarchy (obsessions)
       _protocol!.addTriggeredTask(
           RecurrentScheduledTrigger(
-              type: RecurrentType.weekly, dayOfWeek: DateTime.sunday, time: Time(hour: 8, minute: 00)),
+              type: RecurrentType.weekly,
+              dayOfWeek: DateTime.sunday,
+              time: Time(hour: 8, minute: 00)),
           AppTask(
             type: SurveyUserTask.SURVEY_TYPE,
             title: surveys.symptomHierarchyObsessions.title,
             description: surveys.symptomHierarchyObsessions.description,
-            minutesToComplete: surveys.symptomHierarchyObsessions.minutesToComplete,
+            minutesToComplete:
+                surveys.symptomHierarchyObsessions.minutesToComplete,
             expire: surveys.symptomHierarchyObsessions.expire,
           )..measures.add(RPTaskMeasure(
               type: SurveySamplingPackage.SURVEY,
@@ -156,12 +114,15 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
       // collect symptoms hierarchy (compulsions)
       _protocol!.addTriggeredTask(
           RecurrentScheduledTrigger(
-              type: RecurrentType.weekly, dayOfWeek: DateTime.sunday, time: Time(hour: 8, minute: 00)),
+              type: RecurrentType.weekly,
+              dayOfWeek: DateTime.sunday,
+              time: Time(hour: 8, minute: 00)),
           AppTask(
             type: SurveyUserTask.SURVEY_TYPE,
             title: surveys.symptomHierarchyCoumpulsions.title,
             description: surveys.symptomHierarchyCoumpulsions.description,
-            minutesToComplete: surveys.symptomHierarchyCoumpulsions.minutesToComplete,
+            minutesToComplete:
+                surveys.symptomHierarchyCoumpulsions.minutesToComplete,
             expire: surveys.symptomHierarchyCoumpulsions.expire,
           )..measures.add(RPTaskMeasure(
               type: SurveySamplingPackage.SURVEY,
@@ -173,12 +134,14 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
 
       // Audio task: Exposure exercise
       _protocol!.addTriggeredTask(
-          RecurrentScheduledTrigger(type: RecurrentType.daily, time: Time(hour: 7, minute: 00)),
+          RecurrentScheduledTrigger(
+              type: RecurrentType.daily, time: Time(hour: 7, minute: 00)),
           AppTask(
             type: AudioUserTask.AUDIO_TYPE,
             title: "Exposure exercise",
             description: 'Describe the exposure exercise you are working on',
-            instructions: 'Describe the exposure exercise: how will you work on the obsession or compulsion?',
+            instructions:
+                'Describe the exposure exercise: how will you work on the obsession or compulsion?',
             minutesToComplete: 5,
           )..measures.add(CAMSMeasure(
               type: AudioSamplingPackage.AUDIO,
@@ -189,11 +152,14 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
       // Audio task: Wristband UX -  triggers on week 7 (TODO)
       _protocol!.addTriggeredTask(
           RecurrentScheduledTrigger(
-              type: RecurrentType.weekly, dayOfWeek: DateTime.sunday, time: Time(hour: 8, minute: 00)),
+              type: RecurrentType.weekly,
+              dayOfWeek: DateTime.sunday,
+              time: Time(hour: 8, minute: 00)),
           AppTask(
             type: AudioUserTask.AUDIO_TYPE,
             title: "User Experience with the Wristband",
-            description: 'Record yourself talking about how the wristband makes you feel',
+            description:
+                'Record yourself talking about how the wristband makes you feel',
             instructions: 'Tell us about your experience wearing the wristband',
             minutesToComplete: 5,
           )..measures.add(CAMSMeasure(
@@ -212,18 +178,6 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
         name: 'Wrist Angel: Patient Parent',
         ownerId: studyId,
         description: 'Protocol testing for patient parents',
-        // TODO: FIX
-        // protocolDescription: StudyProtocolDescription(
-        //     title: protocolInformation['protocol.description.title'],
-        //     purpose: protocolInformation['protocol.description.purpose'],
-        //     description: protocolInformation['protocol.description.description'])
-        //   ..responsible = StudyProtocolReponsible(
-        //     name: protocolInformation['protocol.responsible.name'],
-        //     title: protocolInformation['protocol.responsible.title'],
-        //     email: protocolInformation['protocol.responsible.email'],
-        //     affiliation: protocolInformation['protocol.responsible.affiliation'],
-        //     address: protocolInformation['protocol.responsible.address'],
-        //   )
       );
 
       // Define which devices are used for data collection.
@@ -284,7 +238,9 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
       // Biosensor experience: collect wristband UX - triggers W7 - TODO: use scheduled trigger
       _protocol!.addTriggeredTask(
           RecurrentScheduledTrigger(
-              type: RecurrentType.weekly, dayOfWeek: DateTime.sunday, time: Time(hour: 8, minute: 00)),
+              type: RecurrentType.weekly,
+              dayOfWeek: DateTime.sunday,
+              time: Time(hour: 8, minute: 00)),
           AppTask(
             type: SurveyUserTask.SURVEY_TYPE,
             title: surveys.patientParents.title,
@@ -322,7 +278,8 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           AppTask(
             type: AudioUserTask.AUDIO_TYPE,
             title: "User Experience with the Wristband",
-            description: "Record yourself talking about how the wristband makes you feel",
+            description:
+                "Record yourself talking about how the wristband makes you feel",
             instructions: "Tell us about your experience wearing the wristband",
             minutesToComplete: 5,
           )..measures.add(CAMSMeasure(
@@ -341,18 +298,6 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
         name: 'Wrist Angel: Control',
         ownerId: studyId,
         description: 'Protocol testing for the control group',
-        // TODO: fix
-        // protocolDescription: StudyProtocolDescription(
-        //     title: protocolInformation['protocol.description.title'],
-        //     purpose: protocolInformation['protocol.description.purpose'],
-        //     description: protocolInformation['protocol.description.description'])
-        //   ..responsible = StudyProtocolReponsible(
-        //     name: protocolInformation['protocol.responsible.name'],
-        //     title: protocolInformation['protocol.responsible.title'],
-        //     email: protocolInformation['protocol.responsible.email'],
-        //     affiliation: protocolInformation['protocol.responsible.affiliation'],
-        //     address: protocolInformation['protocol.responsible.address'],
-        //   )
       );
 
       // Define which devices are used for data collection.
@@ -362,7 +307,9 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
       // collect wristband UX - - triggers W7 - TODO: use scheduled trigger
       _protocol!.addTriggeredTask(
           RecurrentScheduledTrigger(
-              type: RecurrentType.weekly, dayOfWeek: DateTime.sunday, time: Time(hour: 8, minute: 00)),
+              type: RecurrentType.weekly,
+              dayOfWeek: DateTime.sunday,
+              time: Time(hour: 8, minute: 00)),
           AppTask(
             type: SurveyUserTask.SURVEY_TYPE,
             title: surveys.control.title,
@@ -400,7 +347,8 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           AppTask(
             type: AudioUserTask.AUDIO_TYPE,
             title: "User Experience with the Wristband",
-            description: 'Record yourself talking about how the wristband makes you feel',
+            description:
+                'Record yourself talking about how the wristband makes you feel',
             instructions: 'Tell us about your experience wearing the wristband',
             minutesToComplete: 5,
           )..measures.add(CAMSMeasure(
@@ -418,18 +366,6 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
         name: 'Wrist Angel: Control Parents',
         ownerId: studyId,
         description: 'Protocol testing for parents of the control group',
-        // TODO: fix
-        // protocolDescription: StudyProtocolDescription(
-        //     title: protocolInformation['protocol.description.title'],
-        //     purpose: protocolInformation['protocol.description.purpose'],
-        //     description: protocolInformation['protocol.description.description'])
-        //   ..responsible = StudyProtocolReponsible(
-        //     name: protocolInformation['protocol.responsible.name'],
-        //     title: protocolInformation['protocol.responsible.title'],
-        //     email: protocolInformation['protocol.responsible.email'],
-        //     affiliation: protocolInformation['protocol.responsible.affiliation'],
-        //     address: protocolInformation['address'],
-        //   ),
       );
 
       // Define which devices are used for data collection.
@@ -490,7 +426,9 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
       // Biosensor experience: collect wristband UX - triggers w7 - TODO: use scheduled trigger
       _protocol!.addTriggeredTask(
           RecurrentScheduledTrigger(
-              type: RecurrentType.weekly, dayOfWeek: DateTime.sunday, time: Time(hour: 8, minute: 00)),
+              type: RecurrentType.weekly,
+              dayOfWeek: DateTime.sunday,
+              time: Time(hour: 8, minute: 00)),
           AppTask(
             type: SurveyUserTask.SURVEY_TYPE,
             title: surveys.controlParents.title,
@@ -528,7 +466,8 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           AppTask(
             type: AudioUserTask.AUDIO_TYPE,
             title: "User Experience with the Wristband",
-            description: 'Record yourself talking about how the wristband makes you feel',
+            description:
+                'Record yourself talking about how the wristband makes you feel',
             instructions: 'Tell us about your experience wearing the wristband',
             minutesToComplete: 5,
           )..measures.add(CAMSMeasure(
@@ -723,7 +662,8 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
       _protocol = StudyProtocol(
         ownerId: studyId,
         name: 'CARP Study App 2nd Protocol',
-        description: 'A super generic 2nd protocol testing different parts of the CAMS Study App.',
+        description:
+            'A super generic 2nd protocol testing different parts of the CAMS Study App.',
         // TODO: fix
         // protocolDescription: StudyProtocolDescription(
         //   title: 'CARP Study App Feasibility Study',
@@ -817,7 +757,9 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
               enabled: true,
               surveyTask: surveys.demographics.survey,
             ))
-            ..measures.add(SamplingPackageRegistry().common().measures[ContextSamplingPackage.LOCATION]!),
+            ..measures.add(SamplingPackageRegistry()
+                .common()
+                .measures[ContextSamplingPackage.LOCATION]!),
           phone);
 
       // collect symptoms on a daily basis
@@ -836,7 +778,9 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
               enabled: true,
               surveyTask: surveys.symptoms.survey,
             ))
-            ..measures.add(SamplingPackageRegistry().common().measures[ContextSamplingPackage.LOCATION]!),
+            ..measures.add(SamplingPackageRegistry()
+                .common()
+                .measures[ContextSamplingPackage.LOCATION]!),
           phone);
 
       // collect a coughing sample on a daily basis
@@ -846,7 +790,8 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           AppTask(
             type: AudioUserTask.AUDIO_TYPE,
             title: "Coughing",
-            description: 'In this small exercise we would like to collect sound samples of coughing.',
+            description:
+                'In this small exercise we would like to collect sound samples of coughing.',
             instructions: 'Please cough 5 times.',
             minutesToComplete: 1,
           )
@@ -854,9 +799,15 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
               type: AudioSamplingPackage.AUDIO,
               name: "Coughing",
             ))
-            ..measures.add(SamplingPackageRegistry().common().measures[ContextSamplingPackage.LOCATION]!)
-            ..measures.add(SamplingPackageRegistry().common().measures[ContextSamplingPackage.WEATHER]!)
-            ..measures.add(SamplingPackageRegistry().common().measures[ContextSamplingPackage.AIR_QUALITY]!),
+            ..measures.add(SamplingPackageRegistry()
+                .common()
+                .measures[ContextSamplingPackage.LOCATION]!)
+            ..measures.add(SamplingPackageRegistry()
+                .common()
+                .measures[ContextSamplingPackage.WEATHER]!)
+            ..measures.add(SamplingPackageRegistry()
+                .common()
+                .measures[ContextSamplingPackage.AIR_QUALITY]!),
           phone);
 
       // collect a reading / audio sample on a daily basis
@@ -865,7 +816,8 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           AppTask(
             type: AudioUserTask.AUDIO_TYPE,
             title: "Reading",
-            description: 'In this small exercise we would like to collect sound data while you are reading.',
+            description:
+                'In this small exercise we would like to collect sound data while you are reading.',
             instructions: 'Please read the following text aloud.\n\n'
                 'Many, many years ago lived an emperor, who thought so much of new clothes that he spent all his money in order to obtain them; his only ambition was to be always well dressed. '
                 'He did not care for his soldiers, and the theatre did not amuse him; the only thing, in fact, he thought anything of was to drive out and show a new suit of clothes. '

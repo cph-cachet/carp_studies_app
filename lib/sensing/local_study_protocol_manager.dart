@@ -32,10 +32,11 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
 
       // Biosensor experience: collect wristband UX - triggers on week 7 (TODO)
       _protocol!.addTriggeredTask(
-          RecurrentScheduledTrigger(
-              type: RecurrentType.weekly,
-              dayOfWeek: DateTime.sunday,
-              time: Time(hour: 8, minute: 00)),
+          ScheduledTrigger(
+            time: TimeOfDay(hour: 6, minute: 0),
+            recurrenceRule: RecurrenceRule(Frequency.WEEKLY, interval: 1),
+          ),
+          //type: RecurrentType.weekly, dayOfWeek: DateTime.sunday, time: Time(hour: 8, minute: 00)),
           AppTask(
             type: SurveyUserTask.SURVEY_TYPE,
             title: surveys.patient.title,
@@ -52,8 +53,10 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
 
       /// collect exposure exercises - triggers daily
       _protocol!.addTriggeredTask(
-          RecurrentScheduledTrigger(
-              type: RecurrentType.daily, time: Time(hour: 7, minute: 00)),
+          ScheduledTrigger(
+            time: TimeOfDay(hour: 6, minute: 00),
+            recurrenceRule: RecurrenceRule(Frequency.DAILY),
+          ),
           AppTask(
             type: SurveyUserTask.SURVEY_TYPE,
             title: surveys.exposure.title,
@@ -68,13 +71,13 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
             )),
           phone);
 
-      // Ecological Momentary Assesment: collect how are you feeling - triggers randomly  - TODO: use random trigger
+      // Ecological Momentary Assesment: collect how are you feeling - triggers randomly  - TODO: use random trigger, set it to expire as soon as the next one appears
       _protocol!.addTriggeredTask(
           ImmediateTrigger(),
           // RandomRecurrentTrigger(
           //     maxNumberOfTriggers: 3,
           //     minNumberOfTriggers: 0,
-          //     startTime: Time(hour: 8, minute: 00),
+          //     startTime: Time(hour: 6, minute: 00),
           //     endTime: Time(hour: 20, minute: 00)),
           AppTask(
             type: SurveyUserTask.SURVEY_TYPE,
@@ -90,18 +93,17 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
             )),
           phone);
 
-      // collect symptoms hierarchy (obsessions)
+      // collect symptoms hierarchy (obsessions) - triggers weekly
       _protocol!.addTriggeredTask(
-          RecurrentScheduledTrigger(
-              type: RecurrentType.weekly,
-              dayOfWeek: DateTime.sunday,
-              time: Time(hour: 8, minute: 00)),
+          ScheduledTrigger(
+            time: TimeOfDay(hour: 6, minute: 00),
+            recurrenceRule: RecurrenceRule(Frequency.WEEKLY),
+          ),
           AppTask(
             type: SurveyUserTask.SURVEY_TYPE,
             title: surveys.symptomHierarchyObsessions.title,
             description: surveys.symptomHierarchyObsessions.description,
-            minutesToComplete:
-                surveys.symptomHierarchyObsessions.minutesToComplete,
+            minutesToComplete: surveys.symptomHierarchyObsessions.minutesToComplete,
             expire: surveys.symptomHierarchyObsessions.expire,
           )..measures.add(RPTaskMeasure(
               type: SurveySamplingPackage.SURVEY,
@@ -111,18 +113,17 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
             )),
           phone);
 
-      // collect symptoms hierarchy (compulsions)
+      // collect symptoms hierarchy (compulsions) - triggers weekly
       _protocol!.addTriggeredTask(
-          RecurrentScheduledTrigger(
-              type: RecurrentType.weekly,
-              dayOfWeek: DateTime.sunday,
-              time: Time(hour: 8, minute: 00)),
+          ScheduledTrigger(
+            time: TimeOfDay(hour: 6, minute: 00),
+            recurrenceRule: RecurrenceRule(Frequency.WEEKLY),
+          ),
           AppTask(
             type: SurveyUserTask.SURVEY_TYPE,
             title: surveys.symptomHierarchyCoumpulsions.title,
             description: surveys.symptomHierarchyCoumpulsions.description,
-            minutesToComplete:
-                surveys.symptomHierarchyCoumpulsions.minutesToComplete,
+            minutesToComplete: surveys.symptomHierarchyCoumpulsions.minutesToComplete,
             expire: surveys.symptomHierarchyCoumpulsions.expire,
           )..measures.add(RPTaskMeasure(
               type: SurveySamplingPackage.SURVEY,
@@ -134,14 +135,15 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
 
       // Audio task: Exposure exercise
       _protocol!.addTriggeredTask(
-          RecurrentScheduledTrigger(
-              type: RecurrentType.daily, time: Time(hour: 7, minute: 00)),
+          ScheduledTrigger(
+            time: TimeOfDay(hour: 6, minute: 00),
+            recurrenceRule: RecurrenceRule(Frequency.DAILY),
+          ),
           AppTask(
             type: AudioUserTask.AUDIO_TYPE,
             title: "Exposure exercise",
             description: 'Describe the exposure exercise you are working on',
-            instructions:
-                'Describe the exposure exercise: how will you work on the obsession or compulsion?',
+            instructions: 'Describe the exposure exercise: how will you work on the obsession or compulsion?',
             minutesToComplete: 5,
           )..measures.add(CAMSMeasure(
               type: AudioSamplingPackage.AUDIO,
@@ -151,15 +153,14 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
 
       // Audio task: Wristband UX -  triggers on week 7 (TODO)
       _protocol!.addTriggeredTask(
-          RecurrentScheduledTrigger(
-              type: RecurrentType.weekly,
-              dayOfWeek: DateTime.sunday,
-              time: Time(hour: 8, minute: 00)),
+          ScheduledTrigger(
+            time: TimeOfDay(hour: 6, minute: 00),
+            recurrenceRule: RecurrenceRule(Frequency.WEEKLY),
+          ),
           AppTask(
             type: AudioUserTask.AUDIO_TYPE,
             title: "User Experience with the Wristband",
-            description:
-                'Record yourself talking about how the wristband makes you feel',
+            description: 'Record yourself talking about how the wristband makes you feel',
             instructions: 'Tell us about your experience wearing the wristband',
             minutesToComplete: 5,
           )..measures.add(CAMSMeasure(
@@ -184,7 +185,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
       Smartphone phone = Smartphone();
       _protocol!.addMasterDevice(phone);
 
-      // collect informed consent once when the study starts - W0
+      // collect app consent UX - triggers when the study starts - W0
       _protocol!.addTriggeredTask(
           ImmediateTrigger(),
           AppTask(
@@ -201,7 +202,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
             )),
           phone);
 
-      // collect trust scale - triggers on W4 (TODO: use scheduled trigger)
+      // collect trust scale - triggers on W8 (TODO: use scheduled trigger)
       _protocol!.addTriggeredTask(
           ImmediateTrigger(),
           AppTask(
@@ -237,10 +238,10 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
 
       // Biosensor experience: collect wristband UX - triggers W7 - TODO: use scheduled trigger
       _protocol!.addTriggeredTask(
-          RecurrentScheduledTrigger(
-              type: RecurrentType.weekly,
-              dayOfWeek: DateTime.sunday,
-              time: Time(hour: 8, minute: 00)),
+          ScheduledTrigger(
+            time: TimeOfDay(hour: 6, minute: 00),
+            recurrenceRule: RecurrenceRule(Frequency.WEEKLY),
+          ),
           AppTask(
             type: SurveyUserTask.SURVEY_TYPE,
             title: surveys.patientParents.title,
@@ -255,7 +256,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
             )),
           phone);
 
-      // Ecological Momentary Assesment: collect how are you feeling - triggers randomly  - TODO: use random trigger
+      // Ecological Momentary Assesment: collect how are you feeling - triggers randomly  - TODO: use random trigger - starts W0
       _protocol!.addTriggeredTask(
           ImmediateTrigger(),
           AppTask(
@@ -272,14 +273,13 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
             )),
           phone);
 
-      // Audio task: Wristband UX - triggers W7 - TODO: use scheduled trigger
+      // Audio task: Biosensor experience: - triggers W7 - TODO: use scheduled trigger
       _protocol!.addTriggeredTask(
           PeriodicTrigger(period: Duration(days: 7)),
           AppTask(
             type: AudioUserTask.AUDIO_TYPE,
             title: "User Experience with the Wristband",
-            description:
-                "Record yourself talking about how the wristband makes you feel",
+            description: "Record yourself talking about how the wristband makes you feel",
             instructions: "Tell us about your experience wearing the wristband",
             minutesToComplete: 5,
           )..measures.add(CAMSMeasure(
@@ -304,12 +304,10 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
       Smartphone phone = Smartphone();
       _protocol!.addMasterDevice(phone);
 
-      // collect wristband UX - - triggers W7 - TODO: use scheduled trigger
+      // collect Biosensor experience: - triggers W7 - TODO: use scheduled trigger
       _protocol!.addTriggeredTask(
-          RecurrentScheduledTrigger(
-              type: RecurrentType.weekly,
-              dayOfWeek: DateTime.sunday,
-              time: Time(hour: 8, minute: 00)),
+          ScheduledTrigger(
+              time: TimeOfDay(hour: 6, minute: 00), recurrenceRule: RecurrenceRule(Frequency.WEEKLY)),
           AppTask(
             type: SurveyUserTask.SURVEY_TYPE,
             title: surveys.control.title,
@@ -324,7 +322,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
             )),
           phone);
 
-      // collect how are you feeling - triggers randomly  - TODO: use random trigger
+      // Ecological Momentary Assesment: collect how are you feeling - triggers randomly  - TODO: use random trigger - w0, 6am, set it to expire as soon as the next one appears
       _protocol!.addTriggeredTask(
           PeriodicTrigger(period: Duration(minutes: 5)),
           AppTask(
@@ -341,14 +339,13 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
             )),
           phone);
 
-      // Audio task: Wristband UX - triggers W7 - TODO: use scheduled trigger
+      // Audio task: Biosensor experience: - triggers W7 - TODO: use scheduled trigger
       _protocol!.addTriggeredTask(
           PeriodicTrigger(period: Duration(days: 7)),
           AppTask(
             type: AudioUserTask.AUDIO_TYPE,
             title: "User Experience with the Wristband",
-            description:
-                'Record yourself talking about how the wristband makes you feel',
+            description: 'Record yourself talking about how the wristband makes you feel',
             instructions: 'Tell us about your experience wearing the wristband',
             minutesToComplete: 5,
           )..measures.add(CAMSMeasure(
@@ -389,7 +386,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
             )),
           phone);
 
-      // collect trust scale - triggers on W4 - TODO: use scheduled trigger
+      // collect trust scale - triggers on W7 - TODO: use scheduled trigger
       _protocol!.addTriggeredTask(
           ImmediateTrigger(),
           AppTask(
@@ -425,10 +422,10 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
 
       // Biosensor experience: collect wristband UX - triggers w7 - TODO: use scheduled trigger
       _protocol!.addTriggeredTask(
-          RecurrentScheduledTrigger(
-              type: RecurrentType.weekly,
-              dayOfWeek: DateTime.sunday,
-              time: Time(hour: 8, minute: 00)),
+          ScheduledTrigger(
+            time: TimeOfDay(hour: 6, minute: 00),
+            recurrenceRule: RecurrenceRule(Frequency.WEEKLY),
+          ),
           AppTask(
             type: SurveyUserTask.SURVEY_TYPE,
             title: surveys.controlParents.title,
@@ -443,7 +440,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
             )),
           phone);
 
-      // collect how are you feeling - triggers randomly  - TODO: use random trigger
+      // Ecological Momentary Assesment: collect how are you feeling - triggers randomly  - TODO: use random trigger - w0, 6am, set it to expire as soon as the next one appears
       _protocol!.addTriggeredTask(
           ImmediateTrigger(),
           AppTask(
@@ -460,14 +457,13 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
             )),
           phone);
 
-      // Audio task: Wristband UX - triggers w7 - TODO: use scheduled trigger
+      // Audio task: Biosensor experience-  Wristband UX - triggers w7 - TODO: use scheduled trigger
       _protocol!.addTriggeredTask(
           PeriodicTrigger(period: Duration(days: 7)),
           AppTask(
             type: AudioUserTask.AUDIO_TYPE,
             title: "User Experience with the Wristband",
-            description:
-                'Record yourself talking about how the wristband makes you feel',
+            description: 'Record yourself talking about how the wristband makes you feel',
             instructions: 'Tell us about your experience wearing the wristband',
             minutesToComplete: 5,
           )..measures.add(CAMSMeasure(
@@ -540,7 +536,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
   //           RecurrentScheduledTrigger(
   //               type: RecurrentType.weekly,
   //               dayOfWeek: DateTime.sunday,
-  //               time: Time(hour: 8, minute: 00)),
+  //               time: Time(hour: 6, minute: 00)),
   //           AppTask(
   //             type: SurveyUserTask.SURVEY_TYPE,
   //             title: surveys.control.title,
@@ -571,7 +567,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
   //           RecurrentScheduledTrigger(
   //               type: RecurrentType.weekly,
   //               dayOfWeek: DateTime.sunday,
-  //               time: Time(hour: 8, minute: 00)),
+  //               time: Time(hour: 6, minute: 00)),
   //           AppTask(
   //             type: SurveyUserTask.SURVEY_TYPE,
   //             title: surveys.patient.title,
@@ -588,7 +584,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
   //           RecurrentScheduledTrigger(
   //               type: RecurrentType.weekly,
   //               dayOfWeek: DateTime.sunday,
-  //               time: Time(hour: 8, minute: 00)),
+  //               time: Time(hour: 6, minute: 00)),
   //           AppTask(
   //             type: SurveyUserTask.SURVEY_TYPE,
   //             title: surveys.patientParents.title,
@@ -662,8 +658,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
       _protocol = StudyProtocol(
         ownerId: studyId,
         name: 'CARP Study App 2nd Protocol',
-        description:
-            'A super generic 2nd protocol testing different parts of the CAMS Study App.',
+        description: 'A super generic 2nd protocol testing different parts of the CAMS Study App.',
         // TODO: fix
         // protocolDescription: StudyProtocolDescription(
         //   title: 'CARP Study App Feasibility Study',
@@ -757,9 +752,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
               enabled: true,
               surveyTask: surveys.demographics.survey,
             ))
-            ..measures.add(SamplingPackageRegistry()
-                .common()
-                .measures[ContextSamplingPackage.LOCATION]!),
+            ..measures.add(SamplingPackageRegistry().common().measures[ContextSamplingPackage.LOCATION]!),
           phone);
 
       // collect symptoms on a daily basis
@@ -778,9 +771,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
               enabled: true,
               surveyTask: surveys.symptoms.survey,
             ))
-            ..measures.add(SamplingPackageRegistry()
-                .common()
-                .measures[ContextSamplingPackage.LOCATION]!),
+            ..measures.add(SamplingPackageRegistry().common().measures[ContextSamplingPackage.LOCATION]!),
           phone);
 
       // collect a coughing sample on a daily basis
@@ -790,8 +781,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           AppTask(
             type: AudioUserTask.AUDIO_TYPE,
             title: "Coughing",
-            description:
-                'In this small exercise we would like to collect sound samples of coughing.',
+            description: 'In this small exercise we would like to collect sound samples of coughing.',
             instructions: 'Please cough 5 times.',
             minutesToComplete: 1,
           )
@@ -799,15 +789,9 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
               type: AudioSamplingPackage.AUDIO,
               name: "Coughing",
             ))
-            ..measures.add(SamplingPackageRegistry()
-                .common()
-                .measures[ContextSamplingPackage.LOCATION]!)
-            ..measures.add(SamplingPackageRegistry()
-                .common()
-                .measures[ContextSamplingPackage.WEATHER]!)
-            ..measures.add(SamplingPackageRegistry()
-                .common()
-                .measures[ContextSamplingPackage.AIR_QUALITY]!),
+            ..measures.add(SamplingPackageRegistry().common().measures[ContextSamplingPackage.LOCATION]!)
+            ..measures.add(SamplingPackageRegistry().common().measures[ContextSamplingPackage.WEATHER]!)
+            ..measures.add(SamplingPackageRegistry().common().measures[ContextSamplingPackage.AIR_QUALITY]!),
           phone);
 
       // collect a reading / audio sample on a daily basis
@@ -816,8 +800,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           AppTask(
             type: AudioUserTask.AUDIO_TYPE,
             title: "Reading",
-            description:
-                'In this small exercise we would like to collect sound data while you are reading.',
+            description: 'In this small exercise we would like to collect sound data while you are reading.',
             instructions: 'Please read the following text aloud.\n\n'
                 'Many, many years ago lived an emperor, who thought so much of new clothes that he spent all his money in order to obtain them; his only ambition was to be always well dressed. '
                 'He did not care for his soldiers, and the theatre did not amuse him; the only thing, in fact, he thought anything of was to drive out and show a new suit of clothes. '

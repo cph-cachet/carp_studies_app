@@ -7,8 +7,7 @@ class StudyCard extends StatelessWidget {
   Widget build(BuildContext context) {
     AssetLocalizations locale = AssetLocalizations.of(context)!;
 
-    String studyDescription() =>
-        '${locale.translate(studyPageModel.description)}\n\n'
+    String studyDescription() => '${locale.translate(studyPageModel.description)}\n\n'
         '${locale.translate('widgets.study_card.title')}: \"${locale.translate(studyPageModel.title)}\".\n'
         '${locale.translate('widgets.study_card.purpose')}: \"${locale.translate(studyPageModel.purpose)}\".\n\n'
         '${locale.translate('widgets.study_card.responsibles')}:\n'
@@ -27,40 +26,44 @@ class StudyCard extends StatelessWidget {
           Row(children: [
             Expanded(
                 child: Container(
-              height: 120.0,
+              height: MediaQuery.of(context).size.height * 0.2,
               color: Color(0xFFF1F9FF),
               child: Image.asset('assets/images/park.png',
                   fit: BoxFit.fitHeight), //TODO get image from studyPageModel
             ))
           ]),
           ExpansionTile(
-              title: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(width: 15),
-                  Text(locale.translate(studyPageModel.title),
-                      style: aboutCardTitleStyle.copyWith(
-                          color: Theme.of(context).primaryColor)),
-                  SizedBox(width: 15),
-                  Text(locale.translate(studyPageModel.piAffiliation),
-                      style: aboutCardSubtitleStyle.copyWith(
-                          color: Theme.of(context).primaryColor)),
-                ],
-              ),
+            title: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Row(children: [
-                  SizedBox(width: 15),
-                  Flexible(
-                      fit: FlexFit.loose,
+                SizedBox(width: 15),
+                Text(locale.translate(studyPageModel.title),
+                    style: aboutCardTitleStyle.copyWith(color: Theme.of(context).primaryColor)),
+                SizedBox(width: 15),
+                Text(locale.translate(studyPageModel.piAffiliation),
+                    style: aboutCardSubtitleStyle.copyWith(color: Theme.of(context).primaryColor)),
+              ],
+            ),
+            children: [
+              Container(
+                height: MediaQuery.of(context).size.height * 0.3,
+                child: Scrollbar(
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.vertical,
+                    child: Padding(
+                      padding: const EdgeInsets.all(15.0),
                       child: Text(
                         studyDescription(),
                         style: aboutCardContentStyle,
                         textAlign: TextAlign.justify,
-                      )),
-                  SizedBox(width: 15),
-                ]),
-              ]),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ],
       ),
       shape: RoundedRectangleBorder(

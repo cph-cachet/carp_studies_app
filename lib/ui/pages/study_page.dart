@@ -17,7 +17,6 @@ class _StudyPageState extends State<StudyPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             CarpAppBar(),
-            //StudyBanner(),
             StudyCard(),
             Flexible(
               child: StreamBuilder<DataPoint>(

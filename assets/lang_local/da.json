@@ -1,50 +1,39 @@
 {
-    "ic.overview.title" : "Velkommen!",
-    "ic.overview.summary" : "I denne app har du du adgang til de opgaver og øvelser, som du skal udføre som en del af WristAngel-studiet.",
-    "ic.overview.content" : "Velkommen til WristAngel studiet.\n\nI denne app har du du adgang til opgaverne og øvelserne som du skal udføre som en del af WristAngel-studiet. Inden vi begynder, vil vi fortælle dig om appen og din deltagelse. Hvis du er under 18, skal du gennemgå dette med dine forældre.",
-
-    "ic.who.title" : "Hem er vi?",
-    "ic.who.summary" : "This study is conducted by researchers and clinicians from the Child and Adolescent Mental Health Center, Capital Region of Denmark and the Technical University of Denmark.\n\nThe main contact person is clinical psychologist Nicole Lønfeldt.",
-    "ic.who.content" : "This research is done in collaboration between the Child and Adolescent Mental Health Center, Research Unit, Capital Region of Denmark and the Copenhagen Center for Health Technology (CACHET) at the Technical University of Denmark (DTU).\n\nThe investigators directly working with this study include: \n - Professor Anne Katrine Pagsberg and Senior Scientist Nicole Lønfeldt from the research unit of the Child and Adolescent Mental Health Center\n - Professor Line Clemmensen and Postdoc Sneha Das from the DTU Compute\n - Professor Jakob E. Bardram and PhD student Giovanna Nunes Vilaza from DTU HealthTech\n\nThis study is funded by the Novo Nordisk Foundation’s Exploratory Interdisciplinary Synergy Program. The grant reference number is NNF19OC0056795. The investigators have no financial connection to funders.",
-
-    "ic.tasks.title" : "Hvad skal du gøre?",
-    "ic.tasks.summary" : "",
-    "ic.tasks.content" : "",
-
-    "ic.duration.title" : "Hvornår kan du se dine svar?",
-    "ic.duration.summary" : "",
-    "ic.duration.content" : "",
-
-    "ic.data.title" : "Hvad sker der med dine data?",
-    "ic.data.summary" : "",
-    "ic.data.content" : "",
-
-    "ic.location.title" : "Hvorfor bruger vi lokalisering?",
-    "ic.location.summary" : "I dette studie indsamler vi IKKE lokaliseringsdata men vi anvender lokaliseringstjenesten på telefonen.",
-    "ic.location.content" : "This study DOES NOT collect location data.\n\nBut we ask you to enable the location service on the phone by ALLOW tracking of location ALWAYS, since the location service is used to keep the app running in the background.\n\nThe location service is used to make sure that the questionnaires are triggered when needed.",
-
-    "ic.rights.title" : "Hvad er dine rettigheder?",
-    "ic.rights.summary" : "",
-    "ic.rights.content" : "",
-
-    "ic.summary.title" : "Opsummering",
-    "ic.summary.summary" : "You are above 18 years old. If you are not, please go through this with your parent. \n\nYou have read and understood the provided information and have had the opportunity to ask questions.",
-    "ic.summary.content" : "You are above 18 years old. If you are not, please go through this with your parent. \n\nYou have read and understood the provided information and have had the opportunity to ask questions.\n\nYou understand your rights: your participation is voluntary, and you are free to withdraw at any time.\n\nYou understand and agree with how your data is collected, stored and used.",
-
-    "ic.review.title" : "Informeret samtykke",
-    "ic.review.reason" : "Har du læst og forstået betingelserne for at anvende denne app til WristAngel studiet?",
-    "ic.review.text" : "Ja",
-
-    "ic.completion.title" : "Tak!",
-    "ic.completion.text" : "Vi har nu gemt dit samtykke.",
-
+    "ic.overview.title": "Velkommen!",
+    "ic.overview.summary": "I denne app har du du adgang til de opgaver og øvelser, som du skal udføre som en del af WristAngel-studiet.",
+    "ic.overview.content": "Velkommen til WristAngel studiet.\n\nI denne app har du du adgang til opgaverne og øvelserne som du skal udføre som en del af WristAngel-studiet. Inden vi begynder, vil vi fortælle dig om appen og din deltagelse. Hvis du er under 18, skal du gennemgå dette med dine forældre.",
+    "ic.who.title": "Hem er vi?",
+    "ic.who.summary": "This study is conducted by researchers and clinicians from the Child and Adolescent Mental Health Center, Capital Region of Denmark and the Technical University of Denmark.\n\nThe main contact person is clinical psychologist Nicole Lønfeldt.",
+    "ic.who.content": "This research is done in collaboration between the Child and Adolescent Mental Health Center, Research Unit, Capital Region of Denmark and the Copenhagen Center for Health Technology (CACHET) at the Technical University of Denmark (DTU).\n\nThe investigators directly working with this study include: \n - Professor Anne Katrine Pagsberg and Senior Scientist Nicole Lønfeldt from the research unit of the Child and Adolescent Mental Health Center\n - Professor Line Clemmensen and Postdoc Sneha Das from the DTU Compute\n - Professor Jakob E. Bardram and PhD student Giovanna Nunes Vilaza from DTU HealthTech\n\nThis study is funded by the Novo Nordisk Foundation’s Exploratory Interdisciplinary Synergy Program. The grant reference number is NNF19OC0056795. The investigators have no financial connection to funders.",
+    "ic.tasks.title": "Hvad skal du gøre?",
+    "ic.tasks.summary": "",
+    "ic.tasks.content": "",
+    "ic.duration.title": "Hvornår kan du se dine svar?",
+    "ic.duration.summary": "",
+    "ic.duration.content": "",
+    "ic.data.title": "Hvad sker der med dine data?",
+    "ic.data.summary": "",
+    "ic.data.content": "",
+    "ic.location.title": "Hvorfor bruger vi lokalisering?",
+    "ic.location.summary": "I dette studie indsamler vi IKKE lokaliseringsdata men vi anvender lokaliseringstjenesten på telefonen.",
+    "ic.location.content": "This study DOES NOT collect location data.\n\nBut we ask you to enable the location service on the phone by ALLOW tracking of location ALWAYS, since the location service is used to keep the app running in the background.\n\nThe location service is used to make sure that the questionnaires are triggered when needed.",
+    "ic.rights.title": "Hvad er dine rettigheder?",
+    "ic.rights.summary": "",
+    "ic.rights.content": "",
+    "ic.summary.title": "Opsummering",
+    "ic.summary.summary": "You are above 18 years old. If you are not, please go through this with your parent. \n\nYou have read and understood the provided information and have had the opportunity to ask questions.",
+    "ic.summary.content": "You are above 18 years old. If you are not, please go through this with your parent. \n\nYou have read and understood the provided information and have had the opportunity to ask questions.\n\nYou understand your rights: your participation is voluntary, and you are free to withdraw at any time.\n\nYou understand and agree with how your data is collected, stored and used.",
+    "ic.review.title": "Informeret samtykke",
+    "ic.review.reason": "Har du læst og forstået betingelserne for at anvende denne app til WristAngel studiet?",
+    "ic.review.text": "Ja",
+    "ic.completion.title": "Tak!",
+    "ic.completion.text": "Vi har nu gemt dit samtykke.",
     "study.description.title": "Wrist Angel: A Wearable AI Feedback Tool for OCD Treatment and Research",
-    "study.description.purpose":
-        "We aim to improve assessment and psychotherapy for pediatric obsessive-compulsive disorder (OCD).",
-    "study.description.description":
-        "Hormone levels, measured in saliva, and physiological indicators of stress from children and parents are used as input to privacy preserving signal processing and machine learning algorithms. Signal processing will be used to extract acoustic and physiological features of importance for therapeutic response. The study includes children with an OCD diagnosis and children without a psychiatric diagnosis and their parents.",
+    "study.description.purpose": "We aim to improve assessment and psychotherapy for pediatric obsessive-compulsive disorder (OCD).",
+    "study.description.description": "Hormone levels, measured in saliva, and physiological indicators of stress from children and parents are used as input to privacy preserving signal processing and machine learning algorithms. Signal processing will be used to extract acoustic and physiological features of importance for therapeutic response. The study includes children with an OCD diagnosis and children without a psychiatric diagnosis and their parents.",
     "study.responsible.name": "Nicole Nadine Lønfeldt",
     "study.responsible.title": "Seniorforsker",
-    "study.responsible.email": "nicole.nadine.loenfeldt@regionh.dk",
+    "study.responsible.email": "rhp-fp-wrist-angel@regionh.dk",
     "study.responsible.affiliation": "Børne- og Ungdomspsykiatrisk Center – Forskningsenheden, Region Hovedstadens Psykiatri",
-    "study.responsible.address": "Gentoftehospitalsvej 28, 2900 Hellerup"}
+    "study.responsible.address": "Gentoftehospitalsvej 28, 2900 Hellerup"
+}

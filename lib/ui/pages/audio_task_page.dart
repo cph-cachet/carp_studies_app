@@ -125,20 +125,49 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
             Text(audioUserTask!.title, style: audioTitleStyle),
             SizedBox(height: 10),
             Text('${audioUserTask!.description}\n\n' + locale!.translate('pages.audio_task.play'),
-                style: audioDescriptionStyle),
+                style: audioContentStyle),
             Expanded(
               child: Align(
                 alignment: FractionalOffset.bottomCenter,
                 child: Padding(
+                  // padding: EdgeInsets.only(bottom: 30.0),
+                  // child: CircleAvatar(
+                  //   radius: 30,
+                  //   backgroundColor: CACHET.RED_1,
+                  //   child: IconButton(
+                  //     onPressed: () => audioUserTask!.onRecordStart(),
+                  //     padding: EdgeInsets.all(0),
+                  //     icon: Icon(Icons.mic, color: Colors.white, size: 30),
+                  //   ),
+                  // ),
                   padding: EdgeInsets.only(bottom: 30.0),
-                  child: CircleAvatar(
-                    radius: 30,
-                    backgroundColor: CACHET.RED_1,
-                    child: IconButton(
-                      onPressed: () => audioUserTask!.onRecordStart(),
-                      padding: EdgeInsets.all(0),
-                      icon: Icon(Icons.mic, color: Colors.white, size: 30),
-                    ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      SizedBox(width: 50),
+                      SizedBox(width: 30),
+                      CircleAvatar(
+                        radius: 30,
+                        backgroundColor: CACHET.RED_1,
+                        child: IconButton(
+                          onPressed: () => audioUserTask!.onRecordStart(),
+                          padding: EdgeInsets.all(0),
+                          icon: Icon(Icons.mic, color: Colors.white, size: 30),
+                        ),
+                      ),
+                      InkWell(
+                        child: Text(
+                          'Skip',
+                          style: aboutCardTitleStyle.copyWith(color: Theme.of(context).primaryColor),
+                        ),
+                        onTap: () {
+                          audioUserTask!.onDone(context);
+                          //audioUserTask!.onCancel(context);
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                      SizedBox(width: 30),
+                    ],
                   ),
                 ),
               ),
@@ -247,7 +276,7 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
             SizedBox(height: 40),
             Text(locale!.translate("Done!"), style: audioTitleStyle),
             SizedBox(height: 10),
-            Text(locale.translate('pages.audio_task.recording_completed'), style: audioDescriptionStyle),
+            Text(locale.translate('pages.audio_task.recording_completed'), style: audioContentStyle),
             Expanded(
               child: Align(
                 alignment: FractionalOffset.bottomCenter,

@@ -28,7 +28,7 @@ class StudyCard extends StatelessWidget {
                 child: Container(
               height: MediaQuery.of(context).size.height * 0.2,
               color: Color(0xFFF1F9FF),
-              child: Image.asset('assets/images/park.png',
+              child: Image.asset('assets/images/books.png',
                   fit: BoxFit.fitHeight), //TODO get image from studyPageModel
             ))
           ]),

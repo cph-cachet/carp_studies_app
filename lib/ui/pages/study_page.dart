@@ -102,6 +102,10 @@ class _StudyPageState extends State<StudyPage> {
                   Expanded(
                       child: Text(message.subTitle!,
                           style: aboutCardContentStyle.copyWith(color: Theme.of(context).primaryColor))),
+              ]),
+              SizedBox(height: 5),
+              Row(children: [
+                SizedBox(width: 15),
                 if (message.message!.isNotEmpty)
                   Expanded(
                       child: Text(

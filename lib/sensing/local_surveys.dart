@@ -82,7 +82,8 @@ class _SymptomHierarchySurveyObsessions implements Survey {
 
   int get minutesToComplete => 5;
 
-  RPTask get survey => RPOrderedTask(identifier: "Symptom Hierarchy: Obsessions", steps: [
+  RPTask get survey =>
+      RPOrderedTask(identifier: "Symptom Hierarchy: Obsessions", steps: [
         RPInstructionStep(
             identifier: "instruction",
             title: "Obsessions",
@@ -90,63 +91,77 @@ class _SymptomHierarchySurveyObsessions implements Survey {
                 "Symptom Hierarchy: Obsessions\n\n\nObsessions are unwanted thoughts or images that keep popping into your head and that you can't stop thinking about, even though you want to be rid of them.\n\nOn the next pages, you will see obsessions that many people with OCD have. Tell us how upset or scared each obsession has been for you over the past week by choosing the number that best matches how you feel. 0 means that you have not had the obsession or that it is not at all unpleasant and 10 means that the obsession is so upsetting you can’t stand it."),
         RPQuestionStep(
           identifier: "question1",
-          title: "Fear/ disgust of pollution, infection, dirt, bacteria, diseases",
-          answerFormat: RPSliderAnswerFormat(minValue: 0, maxValue: 10, divisions: 10),
+          title:
+              "Fear/ disgust of pollution, infection, dirt, bacteria, diseases",
+          answerFormat:
+              RPSliderAnswerFormat(minValue: 0, maxValue: 10, divisions: 10),
           optional: true,
         ),
         RPQuestionStep(
           identifier: "question2",
           title: "Fear of harming yourself or others (body or feelings)",
-          answerFormat: RPSliderAnswerFormat(minValue: 0, maxValue: 10, divisions: 10),
+          answerFormat:
+              RPSliderAnswerFormat(minValue: 0, maxValue: 10, divisions: 10),
           optional: true,
         ),
         RPQuestionStep(
           identifier: "question3",
-          title: "Disturbing thoughts/ images about sex, pregnancy or sexuality",
-          answerFormat: RPSliderAnswerFormat(minValue: 0, maxValue: 10, divisions: 10),
+          title:
+              "Disturbing thoughts/ images about sex, pregnancy or sexuality",
+          answerFormat:
+              RPSliderAnswerFormat(minValue: 0, maxValue: 10, divisions: 10),
           optional: true,
         ),
         RPQuestionStep(
           identifier: "question4",
           title: "Need to collect things or fear of losing something",
-          answerFormat: RPSliderAnswerFormat(minValue: 0, maxValue: 10, divisions: 10),
+          answerFormat:
+              RPSliderAnswerFormat(minValue: 0, maxValue: 10, divisions: 10),
           optional: true,
         ),
         RPQuestionStep(
           identifier: "question5",
           title:
               "Magical/superstitious thoughts or actions (e.g. lucky numbers or words; stepping on a crack can break someone’s back)",
-          answerFormat: RPSliderAnswerFormat(minValue: 0, maxValue: 10, divisions: 10),
+          answerFormat:
+              RPSliderAnswerFormat(minValue: 0, maxValue: 10, divisions: 10),
           optional: true,
         ),
         RPQuestionStep(
           identifier: "question6",
-          title: "Worry about having a disease or that a body part or your appearance looks wrong",
-          answerFormat: RPSliderAnswerFormat(minValue: 0, maxValue: 10, divisions: 10),
+          title:
+              "Worry about having a disease or that a body part or your appearance looks wrong",
+          answerFormat:
+              RPSliderAnswerFormat(minValue: 0, maxValue: 10, divisions: 10),
           optional: true,
         ),
         RPQuestionStep(
           identifier: "question7",
-          title: "Fear of offending God or Satan or worry about what is right and wrong",
-          answerFormat: RPSliderAnswerFormat(minValue: 0, maxValue: 10, divisions: 10),
+          title:
+              "Fear of offending God or Satan or worry about what is right and wrong",
+          answerFormat:
+              RPSliderAnswerFormat(minValue: 0, maxValue: 10, divisions: 10),
           optional: true,
         ),
         RPQuestionStep(
           identifier: "question8",
           title:
               "Symmetry and order (e.g. that things must lie in a certain way, or things must be in order)",
-          answerFormat: RPSliderAnswerFormat(minValue: 0, maxValue: 10, divisions: 10),
+          answerFormat:
+              RPSliderAnswerFormat(minValue: 0, maxValue: 10, divisions: 10),
           optional: true,
         ),
         RPQuestionStep(
           identifier: "question9",
           title: "Needing to do something until it feels right or not wrong",
-          answerFormat: RPSliderAnswerFormat(minValue: 0, maxValue: 10, divisions: 10),
+          answerFormat:
+              RPSliderAnswerFormat(minValue: 0, maxValue: 10, divisions: 10),
           optional: true,
         ),
         RPQuestionStep(
           identifier: "question10",
-          title: "Here you can describe other obsessions that have not been mentioned",
+          title:
+              "Here you can describe other obsessions that have not been mentioned",
           answerFormat: RPTextAnswerFormat(),
           optional: true,
         ),
@@ -169,7 +184,8 @@ class _SymptomHierarchySurveyCompulsions implements Survey {
 
   int get minutesToComplete => 5;
 
-  RPTask get survey => RPOrderedTask(identifier: "Symptom Hierarchy: Compulsions", steps: [
+  RPTask get survey =>
+      RPOrderedTask(identifier: "Symptom Hierarchy: Compulsions", steps: [
         RPInstructionStep(
             identifier: "instruction",
             title: "Compulsions",
@@ -178,61 +194,73 @@ class _SymptomHierarchySurveyCompulsions implements Survey {
         RPQuestionStep(
           identifier: "question1",
           title: "Washing or cleaning",
-          answerFormat: RPSliderAnswerFormat(minValue: 0, maxValue: 10, divisions: 10),
+          answerFormat:
+              RPSliderAnswerFormat(minValue: 0, maxValue: 10, divisions: 10),
           optional: true,
         ),
         RPQuestionStep(
           identifier: "question2",
           title: "Checking (like if you have remembered to lock the door)",
-          answerFormat: RPSliderAnswerFormat(minValue: 0, maxValue: 10, divisions: 10),
+          answerFormat:
+              RPSliderAnswerFormat(minValue: 0, maxValue: 10, divisions: 10),
           optional: true,
         ),
         RPQuestionStep(
           identifier: "question3",
-          title: "Repeating actions (like turning the lights on and off several times)",
-          answerFormat: RPSliderAnswerFormat(minValue: 0, maxValue: 10, divisions: 10),
+          title:
+              "Repeating actions (like turning the lights on and off several times)",
+          answerFormat:
+              RPSliderAnswerFormat(minValue: 0, maxValue: 10, divisions: 10),
           optional: true,
         ),
         RPQuestionStep(
           identifier: "question4",
           title: "Counting things",
-          answerFormat: RPSliderAnswerFormat(minValue: 0, maxValue: 10, divisions: 10),
+          answerFormat:
+              RPSliderAnswerFormat(minValue: 0, maxValue: 10, divisions: 10),
           optional: true,
         ),
         RPQuestionStep(
           identifier: "question5",
           title: "Fixing things or try to get things the same or symmetrical",
-          answerFormat: RPSliderAnswerFormat(minValue: 0, maxValue: 10, divisions: 10),
+          answerFormat:
+              RPSliderAnswerFormat(minValue: 0, maxValue: 10, divisions: 10),
           optional: true,
         ),
         RPQuestionStep(
           identifier: "question6",
           title: "Collecting things or difficulty throwing things away",
-          answerFormat: RPSliderAnswerFormat(minValue: 0, maxValue: 10, divisions: 10),
+          answerFormat:
+              RPSliderAnswerFormat(minValue: 0, maxValue: 10, divisions: 10),
           optional: true,
         ),
         RPQuestionStep(
           identifier: "question7",
           title:
               "Magical/superstitious behavior (e.g. doing or saying things a certain number of times to prevent something terrible from happening)",
-          answerFormat: RPSliderAnswerFormat(minValue: 0, maxValue: 10, divisions: 10),
+          answerFormat:
+              RPSliderAnswerFormat(minValue: 0, maxValue: 10, divisions: 10),
           optional: true,
         ),
         RPQuestionStep(
           identifier: "question8",
-          title: "Involving others (like your parents) in a ritual or asking for reassurance",
-          answerFormat: RPSliderAnswerFormat(minValue: 0, maxValue: 10, divisions: 10),
+          title:
+              "Involving others (like your parents) in a ritual or asking for reassurance",
+          answerFormat:
+              RPSliderAnswerFormat(minValue: 0, maxValue: 10, divisions: 10),
           optional: true,
         ),
         RPQuestionStep(
           identifier: "question9",
           title: "Needing to do something until it feels right",
-          answerFormat: RPSliderAnswerFormat(minValue: 0, maxValue: 10, divisions: 10),
+          answerFormat:
+              RPSliderAnswerFormat(minValue: 0, maxValue: 10, divisions: 10),
           optional: true,
         ),
         RPQuestionStep(
           identifier: "question10",
-          title: "Here you can describe other compulsions that have not been mentioned",
+          title:
+              "Here you can describe other compulsions that have not been mentioned",
           answerFormat: RPTextAnswerFormat(),
           optional: true,
         ),
@@ -248,21 +276,37 @@ class _SymptomHierarchySurveyCompulsions implements Survey {
 class _TimedExposureSurvey implements Survey {
   String get title => "Weekly exposure and response prevention";
 
-  String get description => 'Describe the obsession and/or the compulsion you are working on';
+  String get description =>
+      'Describe the obsession and/or the compulsion you are working on';
 
   Duration get expire => const Duration(days: 7);
 
   int get minutesToComplete => 10; // TODO: review time
 
-  RPImageChoiceAnswerFormat _imageChoiceAnswerFormat = RPImageChoiceAnswerFormat(choices: [
-    RPImageChoice(imageUrl: 'assets/icons/very-sad.png', value: 4, description: "Unbearable"),
-    RPImageChoice(imageUrl: 'assets/icons/sad.png', value: 3, description: "Very great discomfort"),
-    RPImageChoice(imageUrl: 'assets/icons/ok.png', value: 2, description: "Quite a lot of discomfort"),
-    RPImageChoice(imageUrl: 'assets/icons/happy.png', value: 1, description: "A certain discomfort"),
-    RPImageChoice(imageUrl: 'assets/icons/very-happy.png', value: 0, description: "Calm"),
+  RPImageChoiceAnswerFormat _imageChoiceAnswerFormat =
+      RPImageChoiceAnswerFormat(choices: [
+    RPImageChoice(
+        imageUrl: 'assets/icons/very-sad.png',
+        value: 4,
+        description: "Unbearable"),
+    RPImageChoice(
+        imageUrl: 'assets/icons/sad.png',
+        value: 3,
+        description: "Very great discomfort"),
+    RPImageChoice(
+        imageUrl: 'assets/icons/ok.png',
+        value: 2,
+        description: "Quite a lot of discomfort"),
+    RPImageChoice(
+        imageUrl: 'assets/icons/happy.png',
+        value: 1,
+        description: "A certain discomfort"),
+    RPImageChoice(
+        imageUrl: 'assets/icons/very-happy.png', value: 0, description: "Calm"),
   ]);
 
-  RPTask get survey => RPOrderedTask(identifier: "Timed_Exposure_exercise", steps: [
+  RPTask get survey =>
+      RPOrderedTask(identifier: "Timed_Exposure_exercise", steps: [
         RPQuestionStep(
           identifier: "question1",
           title: "How scared or upset do you feel?",
@@ -274,21 +318,24 @@ class _TimedExposureSurvey implements Survey {
 class _TrustScaleSurvey implements Survey {
   String get title => 'Trust in the Mobile App';
 
-  String get description => 'We would like to know what it was like for you to use the mobile app'; // TODO
+  String get description =>
+      'We would like to know what it was like for you to use the mobile app'; // TODO
 
   Duration get expire => const Duration(days: 7);
 
   int get minutesToComplete => 2;
 
-  RPChoiceAnswerFormat choiceAnswerFormat1 =
-      RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.SingleChoice, choices: [
-    RPChoice(text: "Strongly disagree", value: 0),
-    RPChoice(text: "Slightly disagree", value: 1),
-    RPChoice(text: "Agree", value: 2),
-    RPChoice(text: "Strongly agree", value: 3),
-  ]);
+  RPChoiceAnswerFormat choiceAnswerFormat1 = RPChoiceAnswerFormat(
+      answerStyle: RPChoiceAnswerStyle.SingleChoice,
+      choices: [
+        RPChoice(text: "Strongly disagree", value: 0),
+        RPChoice(text: "Slightly disagree", value: 1),
+        RPChoice(text: "Agree", value: 2),
+        RPChoice(text: "Strongly agree", value: 3),
+      ]);
 
-  RPTask get survey => RPOrderedTask(identifier: "User Experience with App", steps: [
+  RPTask get survey =>
+      RPOrderedTask(identifier: "User Experience with App", steps: [
         RPInstructionStep(
             identifier: "instruction",
             title: " ",
@@ -297,7 +344,8 @@ class _TrustScaleSurvey implements Survey {
                 "We would like to know what it was like for you to use the mobile app.\n\nPlease read each statement and chose the number (0, 1, 2, or 3) that best describes how you feel."),
         RPQuestionStep(
           identifier: "question1",
-          title: "I believe that there could be negative consequences when using this mobile app",
+          title:
+              "I believe that there could be negative consequences when using this mobile app",
           answerFormat: choiceAnswerFormat1,
         ),
         RPQuestionStep(
@@ -312,12 +360,14 @@ class _TrustScaleSurvey implements Survey {
         ),
         RPQuestionStep(
           identifier: "question4",
-          title: "I think that this mobile app is competent and effective in supporting the research study",
+          title:
+              "I think that this mobile app is competent and effective in supporting the research study",
           answerFormat: choiceAnswerFormat1,
         ),
         RPQuestionStep(
           identifier: "question5",
-          title: "I think that this mobile app performs its role as a tool for research very well",
+          title:
+              "I think that this mobile app performs its role as a tool for research very well",
           answerFormat: choiceAnswerFormat1,
         ),
         RPQuestionStep(
@@ -328,17 +378,20 @@ class _TrustScaleSurvey implements Survey {
         ),
         RPQuestionStep(
           identifier: "question7",
-          title: "When I use this mobile app, I feel I can count on it completely",
+          title:
+              "When I use this mobile app, I feel I can count on it completely",
           answerFormat: choiceAnswerFormat1,
         ),
         RPQuestionStep(
           identifier: "question8",
-          title: "I can always rely on the mobile app for guidance and assistance",
+          title:
+              "I can always rely on the mobile app for guidance and assistance",
           answerFormat: choiceAnswerFormat1,
         ),
         RPQuestionStep(
           identifier: "question9",
-          title: "I can trust the information presented to me by the mobile app",
+          title:
+              "I can trust the information presented to me by the mobile app",
           answerFormat: choiceAnswerFormat1,
         ),
         RPQuestionStep(
@@ -348,23 +401,27 @@ class _TrustScaleSurvey implements Survey {
         ),
         RPQuestionStep(
           identifier: "question11",
-          title: "I believe that the mobile app will show me how to get support if I need help",
+          title:
+              "I believe that the mobile app will show me how to get support if I need help",
           answerFormat: choiceAnswerFormat1,
         ),
         RPQuestionStep(
           identifier: "question12",
-          title: "I believe that the mobile app attends to my needs and preferences",
+          title:
+              "I believe that the mobile app attends to my needs and preferences",
           answerFormat: choiceAnswerFormat1,
         ),
         RPQuestionStep(
           identifier: "question13",
-          title: "Is there anything else you would like to tell us about your experience?",
+          title:
+              "Is there anything else you would like to tell us about your experience?",
           answerFormat: RPTextAnswerFormat(),
           optional: true,
         ),
         RPCompletionStep(
             identifier: "completion",
-            title: "Thank you for completing the product evaluation questionnaire!",
+            title:
+                "Thank you for completing the product evaluation questionnaire!",
             text: " ")
       ]);
 }
@@ -372,96 +429,109 @@ class _TrustScaleSurvey implements Survey {
 class _InformedConsentSurvey implements Survey {
   String get title => 'Evaluation of the mobile app consent';
 
-  String get description => 'We would like to know your experience with the informed consent'; // TODO
+  String get description =>
+      'We would like to know your experience with the informed consent'; // TODO
 
   Duration get expire => const Duration(days: 7);
 
   int get minutesToComplete => 4;
 
-  RPChoiceAnswerFormat choiceAnswerFormat1 =
-      RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.SingleChoice, choices: [
-    RPChoice(text: "Extremely not understandable.", value: 0),
-    RPChoice(text: "Mostly not understandable.", value: 1),
-    RPChoice(text: "Mostly understandable.", value: 2),
-    RPChoice(text: "Extremely understandable.", value: 3),
-  ]);
-  RPChoiceAnswerFormat choiceAnswerFormat2 =
-      RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.SingleChoice, choices: [
-    RPChoice(text: "Extremely easy to navigate.", value: 0),
-    RPChoice(text: "Mostly easy to navigate.", value: 1),
-    RPChoice(text: "Mostly difficult to navigate.", value: 2),
-    RPChoice(text: "Extremely difficult to navigate.", value: 3),
-  ]);
-  RPChoiceAnswerFormat choiceAnswerFormat3 =
-      RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.SingleChoice, choices: [
-    RPChoice(text: "Extremely valuable.", value: 0),
-    RPChoice(text: "Mostly valuable.", value: 1),
-    RPChoice(text: "Mostly inferior.", value: 2),
-    RPChoice(text: "Extremely inferior.", value: 3),
-  ]);
-  RPChoiceAnswerFormat choiceAnswerFormat4 =
-      RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.SingleChoice, choices: [
-    RPChoice(text: "Extremely boring.", value: 0),
-    RPChoice(text: "Mostly boring.", value: 1),
-    RPChoice(text: "Mostly exciting.", value: 2),
-    RPChoice(text: "Extremely exciting.", value: 3),
-  ]);
-  RPChoiceAnswerFormat choiceAnswerFormat5 =
-      RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.SingleChoice, choices: [
-    RPChoice(text: "Extremely not interesting.", value: 0),
-    RPChoice(text: "Mostly not interesting.", value: 1),
-    RPChoice(text: "Mostly interesting.", value: 2),
-    RPChoice(text: "Extremely interesting.", value: 3),
-  ]);
-  RPChoiceAnswerFormat choiceAnswerFormat6 =
-      RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.SingleChoice, choices: [
-    RPChoice(text: "Extremely fast.", value: 0),
-    RPChoice(text: "Mostly fast.", value: 1),
-    RPChoice(text: "Mostly slow.", value: 2),
-    RPChoice(text: "Extremely slow.", value: 3),
-  ]);
-  RPChoiceAnswerFormat choiceAnswerFormat7 =
-      RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.SingleChoice, choices: [
-    RPChoice(text: "Extremely complicated.", value: 0),
-    RPChoice(text: "Mostly complicated.", value: 1),
-    RPChoice(text: "Mostly easy to understand.", value: 2),
-    RPChoice(text: "Extremely easy to understand.", value: 3),
-  ]);
-  RPChoiceAnswerFormat choiceAnswerFormat8 =
-      RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.SingleChoice, choices: [
-    RPChoice(text: "Extremely motivating.", value: 0),
-    RPChoice(text: "Mostly motivating.", value: 1),
-    RPChoice(text: "Mostly demotivating.", value: 2),
-    RPChoice(text: "Extremely demotivating.", value: 3),
-  ]);
-  RPChoiceAnswerFormat choiceAnswerFormat9 =
-      RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.SingleChoice, choices: [
-    RPChoice(text: "Extremely inefficient.", value: 0),
-    RPChoice(text: "Mostly inefficient.", value: 1),
-    RPChoice(text: "Mostly efficient.", value: 2),
-    RPChoice(text: "Extremely efficient.", value: 3),
-  ]);
-  RPChoiceAnswerFormat choiceAnswerFormat10 =
-      RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.SingleChoice, choices: [
-    RPChoice(text: "Extremely clear.", value: 0),
-    RPChoice(text: "Mostly clear.", value: 1),
-    RPChoice(text: "Mostly confusing.", value: 2),
-    RPChoice(text: "Extremely confusing.", value: 3),
-  ]);
-  RPChoiceAnswerFormat choiceAnswerFormat11 =
-      RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.SingleChoice, choices: [
-    RPChoice(text: "Extremely impractical.", value: 0),
-    RPChoice(text: "Mostly impractical.", value: 1),
-    RPChoice(text: "Mostly practical.", value: 2),
-    RPChoice(text: "Extremely practical.", value: 3),
-  ]);
-  RPChoiceAnswerFormat choiceAnswerFormat12 =
-      RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.SingleChoice, choices: [
-    RPChoice(text: "Extremely organized.", value: 0),
-    RPChoice(text: "Mostly organized.", value: 1),
-    RPChoice(text: "Mostly cluttered.", value: 2),
-    RPChoice(text: "Extremely cluttered.", value: 3),
-  ]);
+  RPChoiceAnswerFormat choiceAnswerFormat1 = RPChoiceAnswerFormat(
+      answerStyle: RPChoiceAnswerStyle.SingleChoice,
+      choices: [
+        RPChoice(text: "Extremely not understandable.", value: 0),
+        RPChoice(text: "Mostly not understandable.", value: 1),
+        RPChoice(text: "Mostly understandable.", value: 2),
+        RPChoice(text: "Extremely understandable.", value: 3),
+      ]);
+  RPChoiceAnswerFormat choiceAnswerFormat2 = RPChoiceAnswerFormat(
+      answerStyle: RPChoiceAnswerStyle.SingleChoice,
+      choices: [
+        RPChoice(text: "Extremely easy to navigate.", value: 0),
+        RPChoice(text: "Mostly easy to navigate.", value: 1),
+        RPChoice(text: "Mostly difficult to navigate.", value: 2),
+        RPChoice(text: "Extremely difficult to navigate.", value: 3),
+      ]);
+  RPChoiceAnswerFormat choiceAnswerFormat3 = RPChoiceAnswerFormat(
+      answerStyle: RPChoiceAnswerStyle.SingleChoice,
+      choices: [
+        RPChoice(text: "Extremely valuable.", value: 0),
+        RPChoice(text: "Mostly valuable.", value: 1),
+        RPChoice(text: "Mostly inferior.", value: 2),
+        RPChoice(text: "Extremely inferior.", value: 3),
+      ]);
+  RPChoiceAnswerFormat choiceAnswerFormat4 = RPChoiceAnswerFormat(
+      answerStyle: RPChoiceAnswerStyle.SingleChoice,
+      choices: [
+        RPChoice(text: "Extremely boring.", value: 0),
+        RPChoice(text: "Mostly boring.", value: 1),
+        RPChoice(text: "Mostly exciting.", value: 2),
+        RPChoice(text: "Extremely exciting.", value: 3),
+      ]);
+  RPChoiceAnswerFormat choiceAnswerFormat5 = RPChoiceAnswerFormat(
+      answerStyle: RPChoiceAnswerStyle.SingleChoice,
+      choices: [
+        RPChoice(text: "Extremely not interesting.", value: 0),
+        RPChoice(text: "Mostly not interesting.", value: 1),
+        RPChoice(text: "Mostly interesting.", value: 2),
+        RPChoice(text: "Extremely interesting.", value: 3),
+      ]);
+  RPChoiceAnswerFormat choiceAnswerFormat6 = RPChoiceAnswerFormat(
+      answerStyle: RPChoiceAnswerStyle.SingleChoice,
+      choices: [
+        RPChoice(text: "Extremely fast.", value: 0),
+        RPChoice(text: "Mostly fast.", value: 1),
+        RPChoice(text: "Mostly slow.", value: 2),
+        RPChoice(text: "Extremely slow.", value: 3),
+      ]);
+  RPChoiceAnswerFormat choiceAnswerFormat7 = RPChoiceAnswerFormat(
+      answerStyle: RPChoiceAnswerStyle.SingleChoice,
+      choices: [
+        RPChoice(text: "Extremely complicated.", value: 0),
+        RPChoice(text: "Mostly complicated.", value: 1),
+        RPChoice(text: "Mostly easy to understand.", value: 2),
+        RPChoice(text: "Extremely easy to understand.", value: 3),
+      ]);
+  RPChoiceAnswerFormat choiceAnswerFormat8 = RPChoiceAnswerFormat(
+      answerStyle: RPChoiceAnswerStyle.SingleChoice,
+      choices: [
+        RPChoice(text: "Extremely motivating.", value: 0),
+        RPChoice(text: "Mostly motivating.", value: 1),
+        RPChoice(text: "Mostly demotivating.", value: 2),
+        RPChoice(text: "Extremely demotivating.", value: 3),
+      ]);
+  RPChoiceAnswerFormat choiceAnswerFormat9 = RPChoiceAnswerFormat(
+      answerStyle: RPChoiceAnswerStyle.SingleChoice,
+      choices: [
+        RPChoice(text: "Extremely inefficient.", value: 0),
+        RPChoice(text: "Mostly inefficient.", value: 1),
+        RPChoice(text: "Mostly efficient.", value: 2),
+        RPChoice(text: "Extremely efficient.", value: 3),
+      ]);
+  RPChoiceAnswerFormat choiceAnswerFormat10 = RPChoiceAnswerFormat(
+      answerStyle: RPChoiceAnswerStyle.SingleChoice,
+      choices: [
+        RPChoice(text: "Extremely clear.", value: 0),
+        RPChoice(text: "Mostly clear.", value: 1),
+        RPChoice(text: "Mostly confusing.", value: 2),
+        RPChoice(text: "Extremely confusing.", value: 3),
+      ]);
+  RPChoiceAnswerFormat choiceAnswerFormat11 = RPChoiceAnswerFormat(
+      answerStyle: RPChoiceAnswerStyle.SingleChoice,
+      choices: [
+        RPChoice(text: "Extremely impractical.", value: 0),
+        RPChoice(text: "Mostly impractical.", value: 1),
+        RPChoice(text: "Mostly practical.", value: 2),
+        RPChoice(text: "Extremely practical.", value: 3),
+      ]);
+  RPChoiceAnswerFormat choiceAnswerFormat12 = RPChoiceAnswerFormat(
+      answerStyle: RPChoiceAnswerStyle.SingleChoice,
+      choices: [
+        RPChoice(text: "Extremely organized.", value: 0),
+        RPChoice(text: "Mostly organized.", value: 1),
+        RPChoice(text: "Mostly cluttered.", value: 2),
+        RPChoice(text: "Extremely cluttered.", value: 3),
+      ]);
   RPTask get survey => RPOrderedTask(identifier: "Informed consent", steps: [
         RPInstructionStep(
             identifier: "instruction",
@@ -531,7 +601,8 @@ class _InformedConsentSurvey implements Survey {
         ),
         RPCompletionStep(
             identifier: "completion",
-            title: "Thank you for completing the product evaluation questionnaire!",
+            title:
+                "Thank you for completing the product evaluation questionnaire!",
             text: " ")
       ]);
 }
@@ -539,70 +610,80 @@ class _InformedConsentSurvey implements Survey {
 class _AppUXSurvey implements Survey {
   String get title => 'User Experience with the Mobile App';
 
-  String get description => 'We would like to know your experience with the app'; // TODO
+  String get description =>
+      'We would like to know your experience with the app'; // TODO
 
   Duration get expire => const Duration(days: 7);
 
   int get minutesToComplete => 2;
 
-  RPChoiceAnswerFormat choiceAnswerFormat1 =
-      RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.SingleChoice, choices: [
-    RPChoice(text: "Extremely obstructive.", value: 0),
-    RPChoice(text: "Mostly obstructive.", value: 1),
-    RPChoice(text: "Mostly supportive.", value: 2),
-    RPChoice(text: "Extremely supportive.", value: 3),
-  ]);
-  RPChoiceAnswerFormat choiceAnswerFormat2 =
-      RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.SingleChoice, choices: [
-    RPChoice(text: "Extremely complicated.", value: 0),
-    RPChoice(text: "Mostly complicated.", value: 1),
-    RPChoice(text: "Mostly easy.", value: 2),
-    RPChoice(text: "Extremely easy.", value: 3),
-  ]);
-  RPChoiceAnswerFormat choiceAnswerFormat3 =
-      RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.SingleChoice, choices: [
-    RPChoice(text: "Extremely inefficient.", value: 0),
-    RPChoice(text: "Mostly inefficient.", value: 1),
-    RPChoice(text: "Mostly efficient.", value: 2),
-    RPChoice(text: "Extremely efficient.", value: 3),
-  ]);
-  RPChoiceAnswerFormat choiceAnswerFormat4 =
-      RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.SingleChoice, choices: [
-    RPChoice(text: "Extremely confusing.", value: 0),
-    RPChoice(text: "Mostly confusing.", value: 1),
-    RPChoice(text: "Mostly clear.", value: 2),
-    RPChoice(text: "Extremely clear.", value: 3),
-  ]);
-  RPChoiceAnswerFormat choiceAnswerFormat5 =
-      RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.SingleChoice, choices: [
-    RPChoice(text: "Extremely boring.", value: 0),
-    RPChoice(text: "Mostly boring.", value: 1),
-    RPChoice(text: "Mostly exciting.", value: 2),
-    RPChoice(text: "Extremely exciting.", value: 3),
-  ]);
-  RPChoiceAnswerFormat choiceAnswerFormat6 =
-      RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.SingleChoice, choices: [
-    RPChoice(text: "Extremely not interesting.", value: 0),
-    RPChoice(text: "Mostly not interesting.", value: 1),
-    RPChoice(text: "Mostly interesting.", value: 2),
-    RPChoice(text: "Extremely interesting.", value: 3),
-  ]);
-  RPChoiceAnswerFormat choiceAnswerFormat7 =
-      RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.SingleChoice, choices: [
-    RPChoice(text: "Extremely conventional.", value: 0),
-    RPChoice(text: "Mostly conventional.", value: 1),
-    RPChoice(text: "Mostly inventive.", value: 2),
-    RPChoice(text: "Extremely inventive.", value: 3),
-  ]);
-  RPChoiceAnswerFormat choiceAnswerFormat8 =
-      RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.SingleChoice, choices: [
-    RPChoice(text: "Extremely usual.", value: 0),
-    RPChoice(text: "Mostly usual.", value: 1),
-    RPChoice(text: "Mostly leading edge.", value: 2),
-    RPChoice(text: "Extremely leading edge.", value: 3),
-  ]);
+  RPChoiceAnswerFormat choiceAnswerFormat1 = RPChoiceAnswerFormat(
+      answerStyle: RPChoiceAnswerStyle.SingleChoice,
+      choices: [
+        RPChoice(text: "Extremely obstructive.", value: 0),
+        RPChoice(text: "Mostly obstructive.", value: 1),
+        RPChoice(text: "Mostly supportive.", value: 2),
+        RPChoice(text: "Extremely supportive.", value: 3),
+      ]);
+  RPChoiceAnswerFormat choiceAnswerFormat2 = RPChoiceAnswerFormat(
+      answerStyle: RPChoiceAnswerStyle.SingleChoice,
+      choices: [
+        RPChoice(text: "Extremely complicated.", value: 0),
+        RPChoice(text: "Mostly complicated.", value: 1),
+        RPChoice(text: "Mostly easy.", value: 2),
+        RPChoice(text: "Extremely easy.", value: 3),
+      ]);
+  RPChoiceAnswerFormat choiceAnswerFormat3 = RPChoiceAnswerFormat(
+      answerStyle: RPChoiceAnswerStyle.SingleChoice,
+      choices: [
+        RPChoice(text: "Extremely inefficient.", value: 0),
+        RPChoice(text: "Mostly inefficient.", value: 1),
+        RPChoice(text: "Mostly efficient.", value: 2),
+        RPChoice(text: "Extremely efficient.", value: 3),
+      ]);
+  RPChoiceAnswerFormat choiceAnswerFormat4 = RPChoiceAnswerFormat(
+      answerStyle: RPChoiceAnswerStyle.SingleChoice,
+      choices: [
+        RPChoice(text: "Extremely confusing.", value: 0),
+        RPChoice(text: "Mostly confusing.", value: 1),
+        RPChoice(text: "Mostly clear.", value: 2),
+        RPChoice(text: "Extremely clear.", value: 3),
+      ]);
+  RPChoiceAnswerFormat choiceAnswerFormat5 = RPChoiceAnswerFormat(
+      answerStyle: RPChoiceAnswerStyle.SingleChoice,
+      choices: [
+        RPChoice(text: "Extremely boring.", value: 0),
+        RPChoice(text: "Mostly boring.", value: 1),
+        RPChoice(text: "Mostly exciting.", value: 2),
+        RPChoice(text: "Extremely exciting.", value: 3),
+      ]);
+  RPChoiceAnswerFormat choiceAnswerFormat6 = RPChoiceAnswerFormat(
+      answerStyle: RPChoiceAnswerStyle.SingleChoice,
+      choices: [
+        RPChoice(text: "Extremely not interesting.", value: 0),
+        RPChoice(text: "Mostly not interesting.", value: 1),
+        RPChoice(text: "Mostly interesting.", value: 2),
+        RPChoice(text: "Extremely interesting.", value: 3),
+      ]);
+  RPChoiceAnswerFormat choiceAnswerFormat7 = RPChoiceAnswerFormat(
+      answerStyle: RPChoiceAnswerStyle.SingleChoice,
+      choices: [
+        RPChoice(text: "Extremely conventional.", value: 0),
+        RPChoice(text: "Mostly conventional.", value: 1),
+        RPChoice(text: "Mostly inventive.", value: 2),
+        RPChoice(text: "Extremely inventive.", value: 3),
+      ]);
+  RPChoiceAnswerFormat choiceAnswerFormat8 = RPChoiceAnswerFormat(
+      answerStyle: RPChoiceAnswerStyle.SingleChoice,
+      choices: [
+        RPChoice(text: "Extremely usual.", value: 0),
+        RPChoice(text: "Mostly usual.", value: 1),
+        RPChoice(text: "Mostly leading edge.", value: 2),
+        RPChoice(text: "Extremely leading edge.", value: 3),
+      ]);
 
-  RPTask get survey => RPOrderedTask(identifier: "User Experience with App", steps: [
+  RPTask get survey =>
+      RPOrderedTask(identifier: "User Experience with App", steps: [
         RPInstructionStep(
             identifier: "instruction",
             title: " ",
@@ -651,7 +732,8 @@ class _AppUXSurvey implements Survey {
         ),
         RPCompletionStep(
             identifier: "completion",
-            title: "Thank you for completing the product evaluation questionnaire!",
+            title:
+                "Thank you for completing the product evaluation questionnaire!",
             text: " ")
       ]);
 }
@@ -665,29 +747,38 @@ class _EcologicalParentsSurvey implements Survey {
 
   int get minutesToComplete => 10;
 
-  RPChoiceAnswerFormat choiceAnswerFormat1 =
-      RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.SingleChoice, choices: [
-    RPChoice(text: "No", value: 0),
-    RPChoice(text: "Yes", value: 1),
-  ]);
-  RPChoiceAnswerFormat choiceAnswerFormat2 =
-      RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.SingleChoice, choices: [
-    RPChoice(text: "Very slightly or not at all", value: 1),
-    RPChoice(text: "A little", value: 2),
-    RPChoice(text: "Moderately", value: 3),
-    RPChoice(text: "Quite a bit", value: 4),
-    RPChoice(text: "Extremely", value: 5),
-  ]);
+  RPChoiceAnswerFormat choiceAnswerFormat1 = RPChoiceAnswerFormat(
+      answerStyle: RPChoiceAnswerStyle.SingleChoice,
+      choices: [
+        RPChoice(text: "No", value: 0),
+        RPChoice(text: "Yes", value: 1),
+      ]);
+  RPChoiceAnswerFormat choiceAnswerFormat2 = RPChoiceAnswerFormat(
+      answerStyle: RPChoiceAnswerStyle.SingleChoice,
+      choices: [
+        RPChoice(text: "Very slightly or not at all", value: 1),
+        RPChoice(text: "A little", value: 2),
+        RPChoice(text: "Moderately", value: 3),
+        RPChoice(text: "Quite a bit", value: 4),
+        RPChoice(text: "Extremely", value: 5),
+      ]);
 
-  RPChoiceAnswerFormat choiceAnswerFormat3 =
-      RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.MultipleChoice, choices: [
-    RPChoice(text: "I am alone", value: 0),
-    RPChoice(text: "I am with my child who is participating in the study", value: 1),
-    RPChoice(text: "I am with my child(ren) who is/are not participating in the study", value: 2),
-    RPChoice(text: "I am with my participating child’s other parent)", value: 3),
-    RPChoice(text: "I am with my friends", value: 4),
-    RPChoice(text: "I am with others we have not mentioned", value: 5)
-  ]);
+  RPChoiceAnswerFormat choiceAnswerFormat3 = RPChoiceAnswerFormat(
+      answerStyle: RPChoiceAnswerStyle.MultipleChoice,
+      choices: [
+        RPChoice(text: "I am alone", value: 0),
+        RPChoice(
+            text: "I am with my child who is participating in the study",
+            value: 1),
+        RPChoice(
+            text:
+                "I am with my child(ren) who is/are not participating in the study",
+            value: 2),
+        RPChoice(
+            text: "I am with my participating child’s other parent)", value: 3),
+        RPChoice(text: "I am with my friends", value: 4),
+        RPChoice(text: "I am with others we have not mentioned", value: 5)
+      ]);
 
   RPTask get survey => RPOrderedTask(
         identifier: "Ecological Momentary Assessment Parent",
@@ -700,7 +791,8 @@ class _EcologicalParentsSurvey implements Survey {
           RPInstructionStep(
               identifier: "instruction",
               title: " ",
-              text: "Indicate the extent you have felt this way over the past week."),
+              text:
+                  "Indicate the extent you have felt this way over the past week."),
           RPQuestionStep(
             identifier: "question7",
             title: "Upset",
@@ -754,7 +846,8 @@ class _EcologicalParentsSurvey implements Survey {
           RPCompletionStep(
             identifier: "completion",
             title: "Thank you for telling us how you feel",
-            text: "by answering this survey you are helping us connect feelings to physiological signals",
+            text:
+                "by answering this survey you are helping us connect feelings to physiological signals",
           )
         ],
       );
@@ -769,28 +862,37 @@ class _EcologicalSurvey implements Survey {
 
   int get minutesToComplete => 10;
 
-  RPChoiceAnswerFormat choiceAnswerFormat1 =
-      RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.SingleChoice, choices: [
-    RPChoice(text: "No", value: 0),
-    RPChoice(text: "Yes", value: 1),
-  ]);
-  RPChoiceAnswerFormat choiceAnswerFormat2 =
-      RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.SingleChoice, choices: [
-    RPChoice(text: "Very slightly or not at all", value: 1),
-    RPChoice(text: "A little", value: 2),
-    RPChoice(text: "Moderately", value: 3),
-    RPChoice(text: "Quite a bit", value: 4),
-    RPChoice(text: "Extremely", value: 5),
-  ]);
-  RPChoiceAnswerFormat choiceAnswerFormat3 =
-      RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.MultipleChoice, choices: [
-    RPChoice(text: "I am alone", value: 0),
-    RPChoice(text: "I am with my mother/father who is also participating in the study", value: 1),
-    RPChoice(text: "I am  with my other parent who is not participating in the study", value: 2),
-    RPChoice(text: "I am with my sister(s) and/ or brother(s)", value: 3),
-    RPChoice(text: "I am with my friends", value: 4),
-    RPChoice(text: "I am with others we have not mentioned", value: 5)
-  ]);
+  RPChoiceAnswerFormat choiceAnswerFormat1 = RPChoiceAnswerFormat(
+      answerStyle: RPChoiceAnswerStyle.SingleChoice,
+      choices: [
+        RPChoice(text: "No", value: 0),
+        RPChoice(text: "Yes", value: 1),
+      ]);
+  RPChoiceAnswerFormat choiceAnswerFormat2 = RPChoiceAnswerFormat(
+      answerStyle: RPChoiceAnswerStyle.SingleChoice,
+      choices: [
+        RPChoice(text: "Very slightly or not at all", value: 1),
+        RPChoice(text: "A little", value: 2),
+        RPChoice(text: "Moderately", value: 3),
+        RPChoice(text: "Quite a bit", value: 4),
+        RPChoice(text: "Extremely", value: 5),
+      ]);
+  RPChoiceAnswerFormat choiceAnswerFormat3 = RPChoiceAnswerFormat(
+      answerStyle: RPChoiceAnswerStyle.MultipleChoice,
+      choices: [
+        RPChoice(text: "I am alone", value: 0),
+        RPChoice(
+            text:
+                "I am with my mother/father who is also participating in the study",
+            value: 1),
+        RPChoice(
+            text:
+                "I am  with my other parent who is not participating in the study",
+            value: 2),
+        RPChoice(text: "I am with my sister(s) and/ or brother(s)", value: 3),
+        RPChoice(text: "I am with my friends", value: 4),
+        RPChoice(text: "I am with others we have not mentioned", value: 5)
+      ]);
 
   RPTask get survey => RPOrderedTask(
         identifier: "Ecological Momentary Assessment Child",
@@ -859,7 +961,8 @@ class _EcologicalSurvey implements Survey {
           RPCompletionStep(
             identifier: "completion",
             title: "Thank you for telling us how you feel",
-            text: "By answering this survey you are helping us connect how you feel to your bodily signals",
+            text:
+                "By answering this survey you are helping us connect how you feel to your bodily signals",
           )
         ],
       );
@@ -868,21 +971,24 @@ class _EcologicalSurvey implements Survey {
 class _PatientParentsSurvey implements Survey {
   String get title => "Wristband with biosensor";
 
-  String get description => "We would like to know what it was like for you to wear the wristband.";
+  String get description =>
+      "We would like to know what it was like for you to wear the wristband.";
   Duration get expire => const Duration(days: 7);
 
   int get minutesToComplete => 5;
 
-  RPChoiceAnswerFormat choiceAnswerFormat1 =
-      RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.SingleChoice, choices: [
-    RPChoice(text: "Strongly disagree", value: 0),
-    RPChoice(text: "Slightly disagree", value: 1),
-    RPChoice(text: "Agree", value: 2),
-    RPChoice(text: "Strongly agree", value: 3),
-  ]);
+  RPChoiceAnswerFormat choiceAnswerFormat1 = RPChoiceAnswerFormat(
+      answerStyle: RPChoiceAnswerStyle.SingleChoice,
+      choices: [
+        RPChoice(text: "Strongly disagree", value: 0),
+        RPChoice(text: "Slightly disagree", value: 1),
+        RPChoice(text: "Agree", value: 2),
+        RPChoice(text: "Strongly agree", value: 3),
+      ]);
 
   RPTask get survey => RPOrderedTask(
-        identifier: "PATIENT_Brugerundersøgelse_biosensor_forældre_v1_29-10-2020",
+        identifier:
+            "PATIENT_Brugerundersøgelse_biosensor_forældre_v1_29-10-2020",
         steps: [
           RPInstructionStep(
               identifier: "instruction",
@@ -952,7 +1058,8 @@ class _PatientParentsSurvey implements Survey {
           ),
           RPQuestionStep(
             identifier: "question13",
-            title: "I remembered to push the button on the wristband each time my child’s OCD bothered me.",
+            title:
+                "I remembered to push the button on the wristband each time my child’s OCD bothered me.",
             answerFormat: choiceAnswerFormat1,
           ),
           RPQuestionStep(
@@ -974,18 +1081,20 @@ class _PatientParentsSurvey implements Survey {
 class _PatientSurvey implements Survey {
   String get title => "Wristband with biosensor";
 
-  String get description => "We would like to know what it was like for you to wear the wristband.";
+  String get description =>
+      "We would like to know what it was like for you to wear the wristband.";
   Duration get expire => const Duration(days: 7);
 
   int get minutesToComplete => 5;
 
-  RPChoiceAnswerFormat choiceAnswerFormat1 =
-      RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.SingleChoice, choices: [
-    RPChoice(text: "Strongly disagree", value: 0),
-    RPChoice(text: "Slightly disagree", value: 1),
-    RPChoice(text: "Agree", value: 2),
-    RPChoice(text: "Strongly agree", value: 3),
-  ]);
+  RPChoiceAnswerFormat choiceAnswerFormat1 = RPChoiceAnswerFormat(
+      answerStyle: RPChoiceAnswerStyle.SingleChoice,
+      choices: [
+        RPChoice(text: "Strongly disagree", value: 0),
+        RPChoice(text: "Slightly disagree", value: 1),
+        RPChoice(text: "Agree", value: 2),
+        RPChoice(text: "Strongly agree", value: 3),
+      ]);
 
   RPTask get survey => RPOrderedTask(
         identifier: "PATIENT_Brugerundersøgelse_biosensor_barn_v1_29-10-2020",
@@ -1058,7 +1167,8 @@ class _PatientSurvey implements Survey {
           ),
           RPQuestionStep(
             identifier: "question13",
-            title: "I remembered to push the button on the wristband every time OCD was bothering me.",
+            title:
+                "I remembered to push the button on the wristband every time OCD was bothering me.",
             answerFormat: choiceAnswerFormat1,
           ),
           RPQuestionStep(
@@ -1081,21 +1191,24 @@ class _PatientSurvey implements Survey {
 class _ControlParentsSurvey implements Survey {
   String get title => "Wristband with biosensor";
 
-  String get description => "We would like to know what it was like for you to wear the wristband.";
+  String get description =>
+      "We would like to know what it was like for you to wear the wristband.";
   Duration get expire => const Duration(days: 7);
 
   int get minutesToComplete => 5;
 
-  RPChoiceAnswerFormat choiceAnswerFormat1 =
-      RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.SingleChoice, choices: [
-    RPChoice(text: "Strongly disagree", value: 0),
-    RPChoice(text: "Slightly disagree", value: 1),
-    RPChoice(text: "Agree", value: 2),
-    RPChoice(text: "Strongly agree", value: 3),
-  ]);
+  RPChoiceAnswerFormat choiceAnswerFormat1 = RPChoiceAnswerFormat(
+      answerStyle: RPChoiceAnswerStyle.SingleChoice,
+      choices: [
+        RPChoice(text: "Strongly disagree", value: 0),
+        RPChoice(text: "Slightly disagree", value: 1),
+        RPChoice(text: "Agree", value: 2),
+        RPChoice(text: "Strongly agree", value: 3),
+      ]);
 
   RPTask get survey => RPOrderedTask(
-        identifier: "KONTROL_Brugerundersøgelse_biosensor_forældre_v1_29-10-2020",
+        identifier:
+            "KONTROL_Brugerundersøgelse_biosensor_forældre_v1_29-10-2020",
         steps: [
           RPInstructionStep(
               identifier: "instruction",
@@ -1165,7 +1278,8 @@ class _ControlParentsSurvey implements Survey {
           ),
           RPQuestionStep(
             identifier: "question13",
-            title: "I remembered to push the button on the wristband each time my child’s stress botheredme.",
+            title:
+                "I remembered to push the button on the wristband each time my child’s stress botheredme.",
             answerFormat: choiceAnswerFormat1,
           ),
           RPQuestionStep(
@@ -1188,18 +1302,20 @@ class _ControlParentsSurvey implements Survey {
 class _ControlSurvey implements Survey {
   String get title => "Wristband with biosensor";
 
-  String get description => "We would like to know what it was like for you to wear the wristband.";
+  String get description =>
+      "We would like to know what it was like for you to wear the wristband.";
   Duration get expire => const Duration(days: 7);
 
   int get minutesToComplete => 5;
 
-  RPChoiceAnswerFormat choiceAnswerFormat1 =
-      RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.SingleChoice, choices: [
-    RPChoice(text: "Strongly disagree", value: 0),
-    RPChoice(text: "Slightly disagree", value: 1),
-    RPChoice(text: "Agree", value: 2),
-    RPChoice(text: "Strongly agree", value: 3),
-  ]);
+  RPChoiceAnswerFormat choiceAnswerFormat1 = RPChoiceAnswerFormat(
+      answerStyle: RPChoiceAnswerStyle.SingleChoice,
+      choices: [
+        RPChoice(text: "Strongly disagree", value: 0),
+        RPChoice(text: "Slightly disagree", value: 1),
+        RPChoice(text: "Agree", value: 2),
+        RPChoice(text: "Strongly agree", value: 3),
+      ]);
 
   RPTask get survey => RPOrderedTask(
         identifier: "KONTROL_Brugerundersøgelse_biosensor_barn_v1_29-10-2020",
@@ -1272,7 +1388,8 @@ class _ControlSurvey implements Survey {
           ),
           RPQuestionStep(
             identifier: "question13",
-            title: "I remembered to push the button on the wristband every time stress was bothering me.",
+            title:
+                "I remembered to push the button on the wristband every time stress was bothering me.",
             answerFormat: choiceAnswerFormat1,
           ),
           RPQuestionStep(
@@ -1295,79 +1412,128 @@ class _ControlSurvey implements Survey {
 class _ExposureSurvey implements Survey {
   String get title => "Fight back against OCD";
 
-  String get description => 'Describe the obsession and/or the compulsion you are working on';
+  String get description =>
+      'Describe the obsession and/or the compulsion you are working on';
 
   Duration get expire => const Duration(days: 1);
 
   int get minutesToComplete => 10; // TODO: review time
 
-  RPChoiceAnswerFormat choiceAnswerFormat1 =
-      RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.SingleChoice, choices: [
-    RPChoice(text: "My discomfort/fear/disgust will grow and grow until I can't take it any more", value: 0),
-    RPChoice(text: "My discomfort/fear/disgust will not change", value: 1),
-    RPChoice(text: "I will feel less discomfort/fear/disgust over time", value: 2),
-  ]);
-  RPChoiceAnswerFormat choiceAnswerFormat2 =
-      RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.SingleChoice, choices: [
-    RPChoice(text: "Read an exciting book", value: 0),
-    RPChoice(text: "Eat something delicious", value: 1),
-    RPChoice(text: "Watch an episode of your favorite series", value: 2),
-    RPChoice(text: "Do something fun with friends/ family (make a plan)", value: 3),
-    RPChoice(text: "Play a game", value: 4),
-    RPChoice(text: "Play a computer/videogame", value: 5),
-    RPChoice(text: "I will do something not listed here", value: 6),
-  ]);
+  RPChoiceAnswerFormat choiceAnswerFormat1 = RPChoiceAnswerFormat(
+      answerStyle: RPChoiceAnswerStyle.SingleChoice,
+      choices: [
+        RPChoice(
+            text:
+                "My discomfort/fear/disgust will grow and grow until I can't take it any more",
+            value: 0),
+        RPChoice(text: "My discomfort/fear/disgust will not change", value: 1),
+        RPChoice(
+            text: "I will feel less discomfort/fear/disgust over time",
+            value: 2),
+      ]);
+  RPChoiceAnswerFormat choiceAnswerFormat2 = RPChoiceAnswerFormat(
+      answerStyle: RPChoiceAnswerStyle.SingleChoice,
+      choices: [
+        RPChoice(text: "Read an exciting book", value: 0),
+        RPChoice(text: "Eat something delicious", value: 1),
+        RPChoice(text: "Watch an episode of your favorite series", value: 2),
+        RPChoice(
+            text: "Do something fun with friends/ family (make a plan)",
+            value: 3),
+        RPChoice(text: "Play a game", value: 4),
+        RPChoice(text: "Play a computer/videogame", value: 5),
+        RPChoice(text: "I will do something not listed here", value: 6),
+      ]);
 
-  RPChoiceAnswerFormat choiceAnswerFormat3 =
-      RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.SingleChoice, choices: [
-    RPChoice(text: "No", value: 0),
-    RPChoice(text: "Yes", value: 1),
-  ]);
+  RPChoiceAnswerFormat choiceAnswerFormat3 = RPChoiceAnswerFormat(
+      answerStyle: RPChoiceAnswerStyle.SingleChoice,
+      choices: [
+        RPChoice(text: "No", value: 0),
+        RPChoice(text: "Yes", value: 1),
+      ]);
 
-  RPChoiceAnswerFormat choiceAnswerFormat4 =
-      RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.MultipleChoice, choices: [
-    RPChoice(text: "Fear/ disgust of pollution, infection, dirt, bacteria, diseases", value: 0),
-    RPChoice(text: "Fear of harming myself or others (physically or emotionally)", value: 1),
-    RPChoice(text: "Disturbing thoughts/ images about sex, pregnancy or sexuality", value: 2),
-    RPChoice(text: "Need to collect things or fear of losing something", value: 3),
-    RPChoice(
-        text:
-            "Magical/superstitious thoughts or actions (e.g. lucky numbers or words; stepping on a crack can break someone’s back)",
-        value: 4),
-    RPChoice(
-        text: "Worry about having a disease or that a body part or your appearance looks wrong)", value: 5),
-    RPChoice(text: "Fear of offending God or Satan or worry about what is right and wrong", value: 6),
-    RPChoice(
-        text: "Symmetry and order (e.g. that things must lie in a certain way, or things must be in order)",
-        value: 7),
-    RPChoice(text: "Needing to do something until it feels right or not wrong", value: 8),
-  ]);
+  RPChoiceAnswerFormat choiceAnswerFormat4 = RPChoiceAnswerFormat(
+      answerStyle: RPChoiceAnswerStyle.MultipleChoice,
+      choices: [
+        RPChoice(
+            text:
+                "Fear/ disgust of pollution, infection, dirt, bacteria, diseases",
+            value: 0),
+        RPChoice(
+            text:
+                "Fear of harming myself or others (physically or emotionally)",
+            value: 1),
+        RPChoice(
+            text:
+                "Disturbing thoughts/ images about sex, pregnancy or sexuality",
+            value: 2),
+        RPChoice(
+            text: "Need to collect things or fear of losing something",
+            value: 3),
+        RPChoice(
+            text:
+                "Magical/superstitious thoughts or actions (e.g. lucky numbers or words; stepping on a crack can break someone’s back)",
+            value: 4),
+        RPChoice(
+            text:
+                "Worry about having a disease or that a body part or your appearance looks wrong)",
+            value: 5),
+        RPChoice(
+            text:
+                "Fear of offending God or Satan or worry about what is right and wrong",
+            value: 6),
+        RPChoice(
+            text:
+                "Symmetry and order (e.g. that things must lie in a certain way, or things must be in order)",
+            value: 7),
+        RPChoice(
+            text: "Needing to do something until it feels right or not wrong",
+            value: 8),
+      ]);
 
-  RPChoiceAnswerFormat choiceAnswerFormat5 =
-      RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.MultipleChoice, choices: [
-    RPChoice(text: "Washing or cleaning", value: 0),
-    RPChoice(text: "Checking (like if you have remembered to lock the door)", value: 1),
-    RPChoice(text: "Repeating actions (like turning the lights on and off several times)", value: 2),
-    RPChoice(text: "Counting things", value: 3),
-    RPChoice(text: "Fixing things or trying to get things in a certain place or symmetrical", value: 4),
-    RPChoice(text: "Collecting things or difficulty throwing things away", value: 5),
-    RPChoice(
-        text:
-            "Magical/superstitious behavior (like doing or saying things a certain number of times to prevent something bad from happening)",
-        value: 6),
-    RPChoice(text: "Involving your parents in a ritual or asking for reassurance", value: 7),
-    RPChoice(text: "Doing something until it feels right", value: 8),
-  ]);
+  RPChoiceAnswerFormat choiceAnswerFormat5 = RPChoiceAnswerFormat(
+      answerStyle: RPChoiceAnswerStyle.MultipleChoice,
+      choices: [
+        RPChoice(text: "Washing or cleaning", value: 0),
+        RPChoice(
+            text: "Checking (like if you have remembered to lock the door)",
+            value: 1),
+        RPChoice(
+            text:
+                "Repeating actions (like turning the lights on and off several times)",
+            value: 2),
+        RPChoice(text: "Counting things", value: 3),
+        RPChoice(
+            text:
+                "Fixing things or trying to get things in a certain place or symmetrical",
+            value: 4),
+        RPChoice(
+            text: "Collecting things or difficulty throwing things away",
+            value: 5),
+        RPChoice(
+            text:
+                "Magical/superstitious behavior (like doing or saying things a certain number of times to prevent something bad from happening)",
+            value: 6),
+        RPChoice(
+            text:
+                "Involving your parents in a ritual or asking for reassurance",
+            value: 7),
+        RPChoice(text: "Doing something until it feels right", value: 8),
+      ]);
 
-  RPChoiceAnswerFormat choiceAnswerFormat6 =
-      RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.SingleChoice, choices: [
-    RPChoice(text: "My discomfort grew until I couldn’t stand it anymore", value: 0),
-    RPChoice(text: "My discomfort went up and down", value: 1),
-    RPChoice(text: "My discomfort did not really change", value: 2),
-    RPChoice(text: "I felt less discomfort with time", value: 3),
-  ]);
+  RPChoiceAnswerFormat choiceAnswerFormat6 = RPChoiceAnswerFormat(
+      answerStyle: RPChoiceAnswerStyle.SingleChoice,
+      choices: [
+        RPChoice(
+            text: "My discomfort grew until I couldn’t stand it anymore",
+            value: 0),
+        RPChoice(text: "My discomfort went up and down", value: 1),
+        RPChoice(text: "My discomfort did not really change", value: 2),
+        RPChoice(text: "I felt less discomfort with time", value: 3),
+      ]);
 
-  RPTask get survey => RPOrderedTask(identifier: "Exposure_SUDS_v2_2021.04.22", steps: [
+  RPTask get survey =>
+      RPOrderedTask(identifier: "Exposure_SUDS_v2_2021.04.22", steps: [
         RPInstructionStep(
             identifier: "instruction1",
             title: "Exposure and response prevention",
@@ -1456,37 +1622,43 @@ class _ExposureSurvey implements Survey {
         RPQuestionStep(
           identifier: "question10",
           title: "How much discomfort do you feel after 1 minute?",
-          answerFormat: RPSliderAnswerFormat(minValue: 0, maxValue: 10, divisions: 10),
+          answerFormat:
+              RPSliderAnswerFormat(minValue: 0, maxValue: 10, divisions: 10),
           optional: true,
         ),
         RPQuestionStep(
           identifier: "question11",
           title: "How much discomfort do you feel after 3 minutes?",
-          answerFormat: RPSliderAnswerFormat(minValue: 0, maxValue: 10, divisions: 10),
+          answerFormat:
+              RPSliderAnswerFormat(minValue: 0, maxValue: 10, divisions: 10),
           optional: true,
         ),
         RPQuestionStep(
           identifier: "question12",
           title: "How much discomfort do you feel after 5 minutes?",
-          answerFormat: RPSliderAnswerFormat(minValue: 0, maxValue: 10, divisions: 10),
+          answerFormat:
+              RPSliderAnswerFormat(minValue: 0, maxValue: 10, divisions: 10),
           optional: true,
         ),
         RPQuestionStep(
           identifier: "question13",
           title: "How much discomfort do you feel after 7 minutes?",
-          answerFormat: RPSliderAnswerFormat(minValue: 0, maxValue: 10, divisions: 10),
+          answerFormat:
+              RPSliderAnswerFormat(minValue: 0, maxValue: 10, divisions: 10),
           optional: true,
         ),
         RPQuestionStep(
           identifier: "question14",
           title: "How much discomfort do you feel after 10 minutes?",
-          answerFormat: RPSliderAnswerFormat(minValue: 0, maxValue: 10, divisions: 10),
+          answerFormat:
+              RPSliderAnswerFormat(minValue: 0, maxValue: 10, divisions: 10),
           optional: true,
         ),
         RPQuestionStep(
           identifier: "question15",
           title: "How much discomfort do you feel after 15 minutes?",
-          answerFormat: RPSliderAnswerFormat(minValue: 0, maxValue: 10, divisions: 10),
+          answerFormat:
+              RPSliderAnswerFormat(minValue: 0, maxValue: 10, divisions: 10),
           optional: true,
         ),
         RPQuestionStep(
@@ -1506,97 +1678,130 @@ class _ExposureSurvey implements Survey {
 class _ExposureOldSurvey implements Survey {
   String get title => 'Tvangstanker & -handlinger';
 
-  String get description => 'Skriv tvangstanken og/eller tvangshandlingen som du arbejder på';
+  String get description =>
+      'Skriv tvangstanken og/eller tvangshandlingen som du arbejder på';
 
   Duration get expire => const Duration(days: 2);
 
   int get minutesToComplete => 10;
 
-  RPImageChoiceAnswerFormat _imageChoiceAnswerFormat = RPImageChoiceAnswerFormat(choices: [
-    RPImageChoice(imageUrl: 'assets/icons/very-sad.png', value: 0, description: 'Uudholdelig'),
-    RPImageChoice(imageUrl: 'assets/icons/sad.png', value: 1, description: 'Meget stor ubehag'),
-    RPImageChoice(imageUrl: 'assets/icons/ok.png', value: 2, description: 'Ret stor ubehag'),
-    RPImageChoice(imageUrl: 'assets/icons/happy.png', value: 3, description: 'En vis ubehag'),
-    RPImageChoice(imageUrl: 'assets/icons/very-happy.png', value: 4, description: 'Rolig'),
+  RPImageChoiceAnswerFormat _imageChoiceAnswerFormat =
+      RPImageChoiceAnswerFormat(choices: [
+    RPImageChoice(
+        imageUrl: 'assets/icons/very-sad.png',
+        value: 0,
+        description: 'Uudholdelig'),
+    RPImageChoice(
+        imageUrl: 'assets/icons/sad.png',
+        value: 1,
+        description: 'Meget stor ubehag'),
+    RPImageChoice(
+        imageUrl: 'assets/icons/ok.png',
+        value: 2,
+        description: 'Ret stor ubehag'),
+    RPImageChoice(
+        imageUrl: 'assets/icons/happy.png',
+        value: 3,
+        description: 'En vis ubehag'),
+    RPImageChoice(
+        imageUrl: 'assets/icons/very-happy.png',
+        value: 4,
+        description: 'Rolig'),
   ]);
 
-  RPChoiceAnswerFormat choiceAnswerFormat1 =
-      RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.SingleChoice, choices: [
-    RPChoice(text: "Nej", value: 0),
-    RPChoice(text: "Ja", value: 1),
-  ]);
+  RPChoiceAnswerFormat choiceAnswerFormat1 = RPChoiceAnswerFormat(
+      answerStyle: RPChoiceAnswerStyle.SingleChoice,
+      choices: [
+        RPChoice(text: "Nej", value: 0),
+        RPChoice(text: "Ja", value: 1),
+      ]);
 
-  RPChoiceAnswerFormat choiceAnswerFormat2 =
-      RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.MultipleChoice, choices: [
-    RPChoice(
-        text: "Denne eksponeringsopgave handler ikke om en tvangstanke",
-        value: 0), // TODO: if 0 is selected, no other option is available
-    RPChoice(text: "Forurening/kontaminering (snavs, bakterier, sygdomme)", value: 1),
-    RPChoice(text: "At skade dig selv eller andre (fysisk eller følelsesmæssigt)", value: 2),
-    RPChoice(text: "At gøre noget du ikke vil (fx stjæle noget)", value: 3),
-    RPChoice(text: "Voldsomme eller uhyggelige billeder", value: 4),
-    RPChoice(text: "Sex, graviditet, eller seksualitet", value: 5),
-    RPChoice(text: "At samle ting eller miste noget", value: 6),
-    RPChoice(
-        text: "Magiske/overtroiske tanker eller handlinger (fx lykketal/uheldstal, at blive forvandlet)",
-        value: 7),
-    RPChoice(
-        text:
-            "Bekymring for at have en sygdom eller at en kropsdel eller udseende er mærkeligt eller grimt ud",
-        value: 8),
-    RPChoice(
-        text:
-            "Frygt for at fornærme religiøse objekter eller optaget af, hvad der er rigtigt/forkert og moral",
-        value: 9),
-    RPChoice(text: "Symmetri og orden", value: 10),
-    RPChoice(text: "Behov for at vide eller huske", value: 11),
-    RPChoice(text: "Frygt for at sige visse ord", value: 12),
-    RPChoice(text: "Frygt for ikke præcist at sige det rigtige", value: 13),
-    RPChoice(text: "Påtrængende billeder, forestillinger, lyde, ord, musik eller tal", value: 14),
-    RPChoice(
-        text:
-            "Ubehagelig fornemmelse af, at det ikke føles rigtigt, føles ufuldstændigt eller tomhedsfornemmelse, når ritualer ikke udføres på en bestemt måde",
-        value: 15),
-    RPChoice(text: "Andet", value: 16), // TODO: textbox to describe
-  ]);
+  RPChoiceAnswerFormat choiceAnswerFormat2 = RPChoiceAnswerFormat(
+      answerStyle: RPChoiceAnswerStyle.MultipleChoice,
+      choices: [
+        RPChoice(
+            text: "Denne eksponeringsopgave handler ikke om en tvangstanke",
+            value: 0), // TODO: if 0 is selected, no other option is available
+        RPChoice(
+            text: "Forurening/kontaminering (snavs, bakterier, sygdomme)",
+            value: 1),
+        RPChoice(
+            text:
+                "At skade dig selv eller andre (fysisk eller følelsesmæssigt)",
+            value: 2),
+        RPChoice(text: "At gøre noget du ikke vil (fx stjæle noget)", value: 3),
+        RPChoice(text: "Voldsomme eller uhyggelige billeder", value: 4),
+        RPChoice(text: "Sex, graviditet, eller seksualitet", value: 5),
+        RPChoice(text: "At samle ting eller miste noget", value: 6),
+        RPChoice(
+            text:
+                "Magiske/overtroiske tanker eller handlinger (fx lykketal/uheldstal, at blive forvandlet)",
+            value: 7),
+        RPChoice(
+            text:
+                "Bekymring for at have en sygdom eller at en kropsdel eller udseende er mærkeligt eller grimt ud",
+            value: 8),
+        RPChoice(
+            text:
+                "Frygt for at fornærme religiøse objekter eller optaget af, hvad der er rigtigt/forkert og moral",
+            value: 9),
+        RPChoice(text: "Symmetri og orden", value: 10),
+        RPChoice(text: "Behov for at vide eller huske", value: 11),
+        RPChoice(text: "Frygt for at sige visse ord", value: 12),
+        RPChoice(text: "Frygt for ikke præcist at sige det rigtige", value: 13),
+        RPChoice(
+            text:
+                "Påtrængende billeder, forestillinger, lyde, ord, musik eller tal",
+            value: 14),
+        RPChoice(
+            text:
+                "Ubehagelig fornemmelse af, at det ikke føles rigtigt, føles ufuldstændigt eller tomhedsfornemmelse, når ritualer ikke udføres på en bestemt måde",
+            value: 15),
+        RPChoice(text: "Andet", value: 16), // TODO: textbox to describe
+      ]);
 
-  RPChoiceAnswerFormat choiceAnswerFormat3 =
-      RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.MultipleChoice, choices: [
-    RPChoice(
-        text: "Denne eksponeringsopgave handler ikke om en tvangstanke",
-        value: 0), // TODO: if 0 is selected, no other option is available
-    RPChoice(text: "Renlighed eller rengøring", value: 1),
-    RPChoice(text: "Kontrollere eller tjekke", value: 2),
-    RPChoice(text: "Gentage", value: 3),
-    RPChoice(text: "Tælle ting", value: 4),
-    RPChoice(text: "Ordne ting eller søge at få ting ens", value: 5),
-    RPChoice(text: "Samle ting eller svært ved at smide ting væk", value: 6),
-    RPChoice(text: "Magisk/overtroisk adfærd", value: 7),
-    RPChoice(
-        text:
-            "Behov for at involvere andre i et ritual, beroligende forsikringer eller få dine forældrene til at medvirke i eller udføre dine kontroltvang",
-        value: 8),
-    RPChoice(
-        text:
-            "Mentale ritualer (fremsige fraser eller remser eller gennemgå noget, som man har gjort, sagt eller tænkt igen og igen i tankerne)",
-        value: 9),
-    RPChoice(text: "Berette, spørge, bekende", value: 10),
-    RPChoice(text: "Ritualiseret spisemønster", value: 11),
-    RPChoice(text: "Skrive lister", value: 12),
-    RPChoice(text: "Føle, banke, gnide", value: 13),
-    RPChoice(text: "Gøre ting, indtil det føles rigtigt", value: 14),
-    RPChoice(text: "Ritualer, der involverer blinken eller stirren", value: 15),
-    RPChoice(text: "Trække hår ud", value: 16),
-    RPChoice(text: "Anden selvskadende eller selvdestruktiv adfærd", value: 17),
-    RPChoice(text: "Andet", value: 18), // TODO: textbox to describe
-  ]);
+  RPChoiceAnswerFormat choiceAnswerFormat3 = RPChoiceAnswerFormat(
+      answerStyle: RPChoiceAnswerStyle.MultipleChoice,
+      choices: [
+        RPChoice(
+            text: "Denne eksponeringsopgave handler ikke om en tvangstanke",
+            value: 0), // TODO: if 0 is selected, no other option is available
+        RPChoice(text: "Renlighed eller rengøring", value: 1),
+        RPChoice(text: "Kontrollere eller tjekke", value: 2),
+        RPChoice(text: "Gentage", value: 3),
+        RPChoice(text: "Tælle ting", value: 4),
+        RPChoice(text: "Ordne ting eller søge at få ting ens", value: 5),
+        RPChoice(
+            text: "Samle ting eller svært ved at smide ting væk", value: 6),
+        RPChoice(text: "Magisk/overtroisk adfærd", value: 7),
+        RPChoice(
+            text:
+                "Behov for at involvere andre i et ritual, beroligende forsikringer eller få dine forældrene til at medvirke i eller udføre dine kontroltvang",
+            value: 8),
+        RPChoice(
+            text:
+                "Mentale ritualer (fremsige fraser eller remser eller gennemgå noget, som man har gjort, sagt eller tænkt igen og igen i tankerne)",
+            value: 9),
+        RPChoice(text: "Berette, spørge, bekende", value: 10),
+        RPChoice(text: "Ritualiseret spisemønster", value: 11),
+        RPChoice(text: "Skrive lister", value: 12),
+        RPChoice(text: "Føle, banke, gnide", value: 13),
+        RPChoice(text: "Gøre ting, indtil det føles rigtigt", value: 14),
+        RPChoice(
+            text: "Ritualer, der involverer blinken eller stirren", value: 15),
+        RPChoice(text: "Trække hår ud", value: 16),
+        RPChoice(
+            text: "Anden selvskadende eller selvdestruktiv adfærd", value: 17),
+        RPChoice(text: "Andet", value: 18), // TODO: textbox to describe
+      ]);
 
-  RPChoiceAnswerFormat choiceAnswerFormat6 =
-      RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.SingleChoice, choices: [
-    RPChoice(text: "Ja, jeg udført en tvangshandling", value: 0),
-    RPChoice(text: "Ja, udført en anden slags sikkerhedsadfærd", value: 1),
-    RPChoice(text: "Nej", value: 2),
-  ]);
+  RPChoiceAnswerFormat choiceAnswerFormat6 = RPChoiceAnswerFormat(
+      answerStyle: RPChoiceAnswerStyle.SingleChoice,
+      choices: [
+        RPChoice(text: "Ja, jeg udført en tvangshandling", value: 0),
+        RPChoice(text: "Ja, udført en anden slags sikkerhedsadfærd", value: 1),
+        RPChoice(text: "Nej", value: 2),
+      ]);
 
   RPTask get survey => RPOrderedTask(identifier: "demo_survey", steps: [
         RPQuestionStep(
@@ -1624,7 +1829,8 @@ class _ExposureOldSurvey implements Survey {
         RPQuestionStep(
           identifier: "questionStep5ID",
           title: "Skriv tiden når du starter med eksponeringsøvelsen:",
-          answerFormat: RPDateTimeAnswerFormat(dateTimeAnswerStyle: RPDateTimeAnswerStyle.TimeOfDay),
+          answerFormat: RPDateTimeAnswerFormat(
+              dateTimeAnswerStyle: RPDateTimeAnswerStyle.TimeOfDay),
         ),
         RPInstructionStep(
             identifier: "",
@@ -1693,30 +1899,35 @@ class _PARNASSurvey implements Survey {
 
   int get minutesToComplete => 4;
 
-  final RPChoiceAnswerFormat _locationChoices =
-      RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.MultipleChoice, choices: [
-    RPChoice(text: "Alone", value: 1),
-    RPChoice(text: "With my other children who are not part of the study", value: 2),
-    RPChoice(text: "With my child who is part of the study", value: 3),
-    RPChoice(text: "With the child's other parent", value: 3),
-    RPChoice(text: "With my friends", value: 4),
-    RPChoice(text: "With others", value: 5),
-  ]);
+  final RPChoiceAnswerFormat _locationChoices = RPChoiceAnswerFormat(
+      answerStyle: RPChoiceAnswerStyle.MultipleChoice,
+      choices: [
+        RPChoice(text: "Alone", value: 1),
+        RPChoice(
+            text: "With my other children who are not part of the study",
+            value: 2),
+        RPChoice(text: "With my child who is part of the study", value: 3),
+        RPChoice(text: "With the child's other parent", value: 3),
+        RPChoice(text: "With my friends", value: 4),
+        RPChoice(text: "With others", value: 5),
+      ]);
 
-  final RPChoiceAnswerFormat _parnasAnswerFormat =
-      RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.SingleChoice, choices: [
-    RPChoice(text: "Much", value: 5),
-    RPChoice(text: "Pretty much", value: 4),
-    RPChoice(text: "Moderate", value: 3),
-    RPChoice(text: "A little", value: 2),
-    RPChoice(text: "Not at all", value: 1),
-  ]);
+  final RPChoiceAnswerFormat _parnasAnswerFormat = RPChoiceAnswerFormat(
+      answerStyle: RPChoiceAnswerStyle.SingleChoice,
+      choices: [
+        RPChoice(text: "Much", value: 5),
+        RPChoice(text: "Pretty much", value: 4),
+        RPChoice(text: "Moderate", value: 3),
+        RPChoice(text: "A little", value: 2),
+        RPChoice(text: "Not at all", value: 1),
+      ]);
 
   RPTask get survey => RPOrderedTask(identifier: "demo_survey", steps: [
         RPInstructionStep(
             identifier: "parnas_instrux",
             title: "Where are you?",
-            text: "In the following question, please indicate where you are, and who you are with."),
+            text:
+                "In the following question, please indicate where you are, and who you are with."),
         RPQuestionStep(
           identifier: "location",
           title: "Right now I am...",
@@ -1795,8 +2006,8 @@ class _WHO5Survey implements Survey {
     RPChoice(text: "At no time", value: 0),
   ];
 
-  final RPChoiceAnswerFormat _choiceAnswerFormat =
-      RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.SingleChoice, choices: _choices);
+  final RPChoiceAnswerFormat _choiceAnswerFormat = RPChoiceAnswerFormat(
+      answerStyle: RPChoiceAnswerStyle.SingleChoice, choices: _choices);
 
   RPTask get survey => RPOrderedTask(identifier: "who5_survey", steps: [
         RPInstructionStep(
@@ -1846,60 +2057,65 @@ class _DemographicSurvey implements Survey {
   int get minutesToComplete => 2;
   Duration get expire => const Duration(days: 5);
 
-  final RPChoiceAnswerFormat _sexChoices =
-      RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.SingleChoice, choices: [
-    RPChoice(text: "Femal", value: 1),
-    RPChoice(text: "Male", value: 2),
-    RPChoice(text: "Other", value: 3),
-    RPChoice(text: "Prefer not to say", value: 4),
-  ]);
+  final RPChoiceAnswerFormat _sexChoices = RPChoiceAnswerFormat(
+      answerStyle: RPChoiceAnswerStyle.SingleChoice,
+      choices: [
+        RPChoice(text: "Femal", value: 1),
+        RPChoice(text: "Male", value: 2),
+        RPChoice(text: "Other", value: 3),
+        RPChoice(text: "Prefer not to say", value: 4),
+      ]);
 
-  final RPChoiceAnswerFormat _ageChoices =
-      RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.SingleChoice, choices: [
-    RPChoice(text: "Under 20", value: 1),
-    RPChoice(text: "20-29", value: 2),
-    RPChoice(text: "30-39", value: 3),
-    RPChoice(text: "40-49", value: 4),
-    RPChoice(text: "50-59", value: 5),
-    RPChoice(text: "60-69", value: 6),
-    RPChoice(text: "70-79", value: 7),
-    RPChoice(text: "80-89", value: 8),
-    RPChoice(text: "90 and above", value: 9),
-    RPChoice(text: "Prefer not to say", value: 10),
-  ]);
+  final RPChoiceAnswerFormat _ageChoices = RPChoiceAnswerFormat(
+      answerStyle: RPChoiceAnswerStyle.SingleChoice,
+      choices: [
+        RPChoice(text: "Under 20", value: 1),
+        RPChoice(text: "20-29", value: 2),
+        RPChoice(text: "30-39", value: 3),
+        RPChoice(text: "40-49", value: 4),
+        RPChoice(text: "50-59", value: 5),
+        RPChoice(text: "60-69", value: 6),
+        RPChoice(text: "70-79", value: 7),
+        RPChoice(text: "80-89", value: 8),
+        RPChoice(text: "90 and above", value: 9),
+        RPChoice(text: "Prefer not to say", value: 10),
+      ]);
 
-  final RPChoiceAnswerFormat _medicalChoices =
-      RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.MultipleChoice, choices: [
-    RPChoice(text: "None", value: 1),
-    RPChoice(text: "Asthma", value: 2),
-    RPChoice(text: "Cystic fibrosis", value: 3),
-    RPChoice(text: "COPD/Emphysema", value: 4),
-    RPChoice(text: "Pulmonary fibrosis", value: 5),
-    RPChoice(text: "Other lung disease  ", value: 6),
-    RPChoice(text: "High Blood Pressure", value: 7),
-    RPChoice(text: "Angina", value: 8),
-    RPChoice(text: "Previous stroke or Transient ischaemic attack  ", value: 9),
-    RPChoice(text: "Valvular heart disease", value: 10),
-    RPChoice(text: "Previous heart attack", value: 11),
-    RPChoice(text: "Other heart disease", value: 12),
-    RPChoice(text: "Diabetes", value: 13),
-    RPChoice(text: "Cancer", value: 14),
-    RPChoice(text: "Previous organ transplant", value: 15),
-    RPChoice(text: "HIV or impaired immune system", value: 16),
-    RPChoice(text: "Other long-term condition", value: 17),
-    RPChoice(text: "Prefer not to say", value: 18),
-  ]);
+  final RPChoiceAnswerFormat _medicalChoices = RPChoiceAnswerFormat(
+      answerStyle: RPChoiceAnswerStyle.MultipleChoice,
+      choices: [
+        RPChoice(text: "None", value: 1),
+        RPChoice(text: "Asthma", value: 2),
+        RPChoice(text: "Cystic fibrosis", value: 3),
+        RPChoice(text: "COPD/Emphysema", value: 4),
+        RPChoice(text: "Pulmonary fibrosis", value: 5),
+        RPChoice(text: "Other lung disease  ", value: 6),
+        RPChoice(text: "High Blood Pressure", value: 7),
+        RPChoice(text: "Angina", value: 8),
+        RPChoice(
+            text: "Previous stroke or Transient ischaemic attack  ", value: 9),
+        RPChoice(text: "Valvular heart disease", value: 10),
+        RPChoice(text: "Previous heart attack", value: 11),
+        RPChoice(text: "Other heart disease", value: 12),
+        RPChoice(text: "Diabetes", value: 13),
+        RPChoice(text: "Cancer", value: 14),
+        RPChoice(text: "Previous organ transplant", value: 15),
+        RPChoice(text: "HIV or impaired immune system", value: 16),
+        RPChoice(text: "Other long-term condition", value: 17),
+        RPChoice(text: "Prefer not to say", value: 18),
+      ]);
 
-  final RPChoiceAnswerFormat _smokeChoices =
-      RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.SingleChoice, choices: [
-    RPChoice(text: "Never smoked", value: 1),
-    RPChoice(text: "Ex-smoker", value: 2),
-    RPChoice(text: "Current smoker (less than once a day", value: 3),
-    RPChoice(text: "Current smoker (1-10 cigarettes pr day", value: 4),
-    RPChoice(text: "Current smoker (11-20 cigarettes pr day", value: 5),
-    RPChoice(text: "Current smoker (21+ cigarettes pr day", value: 6),
-    RPChoice(text: "Prefer not to say", value: 7),
-  ]);
+  final RPChoiceAnswerFormat _smokeChoices = RPChoiceAnswerFormat(
+      answerStyle: RPChoiceAnswerStyle.SingleChoice,
+      choices: [
+        RPChoice(text: "Never smoked", value: 1),
+        RPChoice(text: "Ex-smoker", value: 2),
+        RPChoice(text: "Current smoker (less than once a day", value: 3),
+        RPChoice(text: "Current smoker (1-10 cigarettes pr day", value: 4),
+        RPChoice(text: "Current smoker (11-20 cigarettes pr day", value: 5),
+        RPChoice(text: "Current smoker (21+ cigarettes pr day", value: 6),
+        RPChoice(text: "Prefer not to say", value: 7),
+      ]);
 
   RPTask get survey => RPOrderedTask(identifier: "demo_survey", steps: [
         RPQuestionStep(
@@ -1931,22 +2147,24 @@ class _SymptomsSurvey implements Survey {
   int get minutesToComplete => 1;
   Duration get expire => const Duration(days: 1);
 
-  RPChoiceAnswerFormat _symptomsChoices =
-      RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.MultipleChoice, choices: [
-    RPChoice(text: "None", value: 1),
-    RPChoice(text: "Fever (warmer than usual)", value: 2),
-    RPChoice(text: "Dry cough", value: 3),
-    RPChoice(text: "Wet cough", value: 4),
-    RPChoice(text: "Sore throat, runny or blocked nose", value: 5),
-    RPChoice(text: "Loss of taste and smell", value: 6),
-    RPChoice(text: "Difficulty breathing or feeling short of breath", value: 7),
-    RPChoice(text: "Tightness in your chest", value: 8),
-    RPChoice(text: "Dizziness, confusion or vertigo", value: 9),
-    RPChoice(text: "Headache", value: 10),
-    RPChoice(text: "Muscle aches", value: 11),
-    RPChoice(text: "Chills", value: 12),
-    RPChoice(text: "Prefer not to say", value: 13),
-  ]);
+  RPChoiceAnswerFormat _symptomsChoices = RPChoiceAnswerFormat(
+      answerStyle: RPChoiceAnswerStyle.MultipleChoice,
+      choices: [
+        RPChoice(text: "None", value: 1),
+        RPChoice(text: "Fever (warmer than usual)", value: 2),
+        RPChoice(text: "Dry cough", value: 3),
+        RPChoice(text: "Wet cough", value: 4),
+        RPChoice(text: "Sore throat, runny or blocked nose", value: 5),
+        RPChoice(text: "Loss of taste and smell", value: 6),
+        RPChoice(
+            text: "Difficulty breathing or feeling short of breath", value: 7),
+        RPChoice(text: "Tightness in your chest", value: 8),
+        RPChoice(text: "Dizziness, confusion or vertigo", value: 9),
+        RPChoice(text: "Headache", value: 10),
+        RPChoice(text: "Muscle aches", value: 11),
+        RPChoice(text: "Chills", value: 12),
+        RPChoice(text: "Prefer not to say", value: 13),
+      ]);
 
   RPTask get survey => RPOrderedTask(identifier: "symptoms_survey", steps: [
         RPQuestionStep(

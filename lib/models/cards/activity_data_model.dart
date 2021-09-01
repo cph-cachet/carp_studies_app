@@ -10,8 +10,10 @@ class ActivityCardDataModel extends DataModel {
   ///
   Map<ActivityType, Map<int, int>> get activities => _activities;
 
-  List<Activity> activitiesByType(ActivityType type) =>
-      _activities[type]!.entries.map((entry) => Activity(entry.key, entry.value)).toList();
+  List<Activity> activitiesByType(ActivityType type) => _activities[type]!
+      .entries
+      .map((entry) => Activity(entry.key, entry.value))
+      .toList();
 
   ActivityCardDataModel() : super();
 
@@ -29,7 +31,9 @@ class ActivityCardDataModel extends DataModel {
     }
 
     // listen for activity events and count the minutes
-    controller.data.where((dataPoint) => dataPoint.data is ActivityDatum).listen((datum) {
+    controller.data
+        .where((dataPoint) => dataPoint.data is ActivityDatum)
+        .listen((datum) {
       ActivityDatum _activity = datum as ActivityDatum;
 
       if (_activity.type != _lastActivity.type) {
@@ -37,7 +41,9 @@ class ActivityCardDataModel extends DataModel {
         // add the minutes to the last know activity type
         _activities[_lastActivity.type]![DateTime.now().weekday] =
             _activities[_lastActivity.type]![DateTime.now().weekday]! +
-                _activity.timestamp!.difference(_lastActivity.timestamp!).inMinutes;
+                _activity.timestamp!
+                    .difference(_lastActivity.timestamp!)
+                    .inMinutes;
         // and then save the new activity
         _lastActivity = _activity;
       }
@@ -46,8 +52,8 @@ class ActivityCardDataModel extends DataModel {
 
   String toString() {
     String _str = '  TYPE\t| day | min.\n';
-    activities.forEach((type, data) =>
-        data.forEach((day, minutes) => _str += '${type.toString().split(".").last}\t|  $day  |  $minutes\n'));
+    activities.forEach((type, data) => data.forEach((day, minutes) =>
+        _str += '${type.toString().split(".").last}\t|  $day  |  $minutes\n'));
     return _str;
   }
 }
@@ -63,6 +69,7 @@ class Activity {
   Activity(this.day, this.minutes);
 
   /// Get the localilzed name of the [day].
-  String toString() =>
-      DateFormat('EEEE').format(DateTime(2021, 2, 7).add(Duration(days: day))).substring(0, 3);
+  String toString() => DateFormat('EEEE')
+      .format(DateTime(2021, 2, 7).add(Duration(days: day)))
+      .substring(0, 3);
 }

@@ -32,12 +32,20 @@ class StudyAppBLoC {
   /// Debug level for this app (and CAMS).
   DebugLevel debugLevel;
 
-  /// What kind of deployment are we running - local or CARP?
+  /// What kind of deployment are we running - LOCAL or CARP?
   final DeploymentMode deploymentMode;
 
+  /// Force the app to refresh the user credentials and study information?
+  final bool forceSignOutAndStudyReload;
+
+  /// Create the BLoC for the app specifying:
+  ///  * debug level
+  ///  * deployment mode (LOCAL or CARP)
+  ///  * whether to use the locally stored credentials
   StudyAppBLoC({
     this.debugLevel = DebugLevel.INFO,
     this.deploymentMode = DeploymentMode.LOCAL,
+    this.forceSignOutAndStudyReload = false,
   }) : super();
 
   /// The informed consent to be shown to the user for this study.
@@ -111,9 +119,8 @@ class StudyAppBLoC {
     _state = StudyAppState.configuring;
     print('$runtimeType configuring...');
 
-    // this is done in order to test the entire onboarding flow
-    // TODO - remove when done testing
-    // await bloc.leaveStudyAndSignOut();
+    // force the app to refresh the user credentials and study information?
+    if (forceSignOutAndStudyReload) await bloc.leaveStudyAndSignOut();
 
     //  initialize the CARP backend, if needed
     if (bloc.deploymentMode != DeploymentMode.LOCAL) {
@@ -127,13 +134,15 @@ class StudyAppBLoC {
         ? await bloc.resourceManager.getInformedConsent()
         : null;
 
+    // set up the messaging part
     await bloc.messageManager.init();
     await bloc.getMessages();
-    await Sensing().initialize();
 
+    // set up and initialize sensing
+    await Sensing().initialize();
     // print(toJsonString(bloc.deployment));
 
-    // initialize the data models
+    // initialize the UI data models
     bloc.data.init(Sensing().controller!);
 
     debug('$runtimeType configuration done.');

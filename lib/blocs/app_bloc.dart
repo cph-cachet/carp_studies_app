@@ -87,7 +87,7 @@ class StudyAppBLoC {
   }
 
   String get _informedConsentAcceptedKey =>
-      '${Settings().appName}.$INFORMED_CONSENT_ACCEPTED_KEY'.toLowerCase();
+      '$studyDeploymentId.$INFORMED_CONSENT_ACCEPTED_KEY'.toLowerCase();
 
   /// Initialize this BLOC. Called before being used for anything.
   Future<void> initialize() async {

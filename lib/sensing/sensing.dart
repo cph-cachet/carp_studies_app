@@ -121,6 +121,9 @@ class Sensing {
         break;
     }
 
+    // make sure to store the deployment id locally on the phone
+    bloc.backend.studyDeploymentId = studyDeploymentId!;
+
     // create and configure a client manager for this phone
     client = SmartPhoneClientManager(
       deploymentService: deploymentService,

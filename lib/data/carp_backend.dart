@@ -77,7 +77,7 @@ class CarpBackend {
       Settings().preferences!.getString(_studyDeploymentIdKey))!;
 
   set studyDeploymentId(String? id) {
-    CarpService().app!.studyDeploymentId = id;
+    if (CarpService().isConfigured) CarpService().app!.studyDeploymentId = id;
     Settings().preferences!.setString(_studyDeploymentIdKey, id!);
   }
 

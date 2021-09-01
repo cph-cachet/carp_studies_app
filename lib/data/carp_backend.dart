@@ -15,10 +15,13 @@ class CarpBackend {
   static const String STUDY_ID_KEY = 'study_id';
   static const String STUDY_DEPLOYMENT_ID_KEY = "study_deployment_id";
 
-  String get _oauthTokenKey => '${Settings().appName}.$OAUTH_TOKEN_KEY'.toLowerCase();
-  String get _usernameKey => '${Settings().appName}.$USERNAME_KEY'.toLowerCase();
+  String get _oauthTokenKey =>
+      '${Settings().appName}.$OAUTH_TOKEN_KEY'.toLowerCase();
+  String get _usernameKey =>
+      '${Settings().appName}.$USERNAME_KEY'.toLowerCase();
   String get _studyIdKey => '${Settings().appName}.$STUDY_ID_KEY'.toLowerCase();
-  String get _studyDeploymentIdKey => '${Settings().appName}.$STUDY_DEPLOYMENT_ID_KEY'.toLowerCase();
+  String get _studyDeploymentIdKey =>
+      '${Settings().appName}.$STUDY_DEPLOYMENT_ID_KEY'.toLowerCase();
 
   CarpApp? _app;
   OAuthToken? _oauthToken;
@@ -29,7 +32,9 @@ class CarpBackend {
   /// The signed in user
   CarpUser? get user => CarpService().currentUser;
 
-  String get uri => (bloc.deploymentMode == DeploymentMode.CARP_PRODUCTION) ? PROD_URI : STAGING_URI;
+  String get uri => (bloc.deploymentMode == DeploymentMode.CARP_PRODUCTION)
+      ? PROD_URI
+      : STAGING_URI;
 
   String get clientID => CLIENT_ID;
   String get clientSecret => CLIENT_SECRET;
@@ -38,32 +43,38 @@ class CarpBackend {
     if (_oauthToken == null) {
       String? tokenString = Settings().preferences!.getString(_oauthTokenKey);
 
-      _oauthToken = (tokenString != null) ? OAuthToken.fromJson(jsonDecode(tokenString)) : null;
+      _oauthToken = (tokenString != null)
+          ? OAuthToken.fromJson(jsonDecode(tokenString))
+          : null;
     }
     return _oauthToken!;
   }
 
   set oauthToken(OAuthToken? token) {
     _oauthToken = token;
-    Settings().preferences!.setString(_oauthTokenKey, jsonEncode(token?.toJson()));
+    Settings()
+        .preferences!
+        .setString(_oauthTokenKey, jsonEncode(token?.toJson()));
   }
 
-  String? get username => (_username ??= Settings().preferences!.getString(_usernameKey));
+  String? get username =>
+      (_username ??= Settings().preferences!.getString(_usernameKey));
 
   set username(String? username) {
     _username = username;
     Settings().preferences!.setString(_usernameKey, username!);
   }
 
-  String? get studyId => (app?.studyId ??= Settings().preferences!.getString(_studyIdKey));
+  String? get studyId =>
+      (app?.studyId ??= Settings().preferences!.getString(_studyIdKey));
 
   set studyId(String? id) {
     CarpService().app!.studyId = id;
     Settings().preferences!.setString(_studyIdKey, id!);
   }
 
-  String? get studyDeploymentId =>
-      (app?.studyDeploymentId ??= Settings().preferences!.getString(_studyDeploymentIdKey))!;
+  String? get studyDeploymentId => (app?.studyDeploymentId ??=
+      Settings().preferences!.getString(_studyDeploymentIdKey))!;
 
   set studyDeploymentId(String? id) {
     CarpService().app!.studyDeploymentId = id;
@@ -91,12 +102,13 @@ class CarpBackend {
   /// * if so, use this and try to authenticate
   /// * else authenticate using the username / password dialogue
   /// * if successful, save the token locally
-  Future<void> authenticate(BuildContext? context) async {
+  Future<void> authenticate(BuildContext context) async {
     info('Authenticating user...');
     if (username != null && oauthToken != null) {
       info('Authenticating with saved token - token: $oauthToken');
       try {
-        await CarpService().authenticateWithToken(username: username!, token: oauthToken!);
+        await CarpService()
+            .authenticateWithToken(username: username!, token: oauthToken!);
       } catch (error) {
         warning('Authentication with saved token unsuccessful - $error');
       }
@@ -104,7 +116,7 @@ class CarpBackend {
 
     if (user == null) {
       info('Authenticating with dialogue - username: $username');
-      await CarpService().authenticateWithDialog(context!, username: username);
+      await CarpService().authenticateWithDialog(context, username: username);
       if (CarpService().authenticated) {
         username = CarpService().currentUser!.username;
       }
@@ -119,10 +131,10 @@ class CarpBackend {
   }
 
   /// Get the study invitation.
-  Future<void> getStudyInvitation(BuildContext? context) async {
+  Future<void> getStudyInvitation(BuildContext context) async {
     if (studyId == null || studyDeploymentId == null) {
       ActiveParticipationInvitation? _invitation =
-          await CarpParticipationService().getStudyInvitation(context!);
+          await CarpParticipationService().getStudyInvitation(context);
       debug('CARP Study Invitation: $_invitation');
 
       studyId = _invitation?.studyId! as String;
@@ -132,7 +144,8 @@ class CarpBackend {
     info('Deployment ID: $studyDeploymentId');
   }
 
-  Future<ConsentDocument?> uploadInformedConsent(RPTaskResult taskResult) async {
+  Future<ConsentDocument?> uploadInformedConsent(
+      RPTaskResult taskResult) async {
     RPConsentSignatureResult signatureResult =
         taskResult.results["consentreviewstepID"].results["signatureID"];
     signatureResult.userID = username;
@@ -141,7 +154,8 @@ class CarpBackend {
     ConsentDocument? document;
     try {
       document = await CarpService().createConsentDocument(informedConsent);
-      info('Informed consent document uploaded successfully - id: ${document.id}');
+      info(
+          'Informed consent document uploaded successfully - id: ${document.id}');
       bloc.informedConsentAccepted = true;
     } on Exception catch (e) {
       bloc.informedConsentAccepted = false;

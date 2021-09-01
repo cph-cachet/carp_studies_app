@@ -13,8 +13,9 @@ class MeasuresCardDataModel extends DataModel {
   Map<String, int> get samplingTable => _samplingTable;
 
   /// The list of measures
-  List<Measures> get measures =>
-      _samplingTable.entries.map((entry) => Measures(entry.key, entry.value)).toList();
+  List<Measures> get measures => _samplingTable.entries
+      .map((entry) => Measures(entry.key, entry.value))
+      .toList();
 
   MeasuresCardDataModel() : super();
 
@@ -37,7 +38,8 @@ class MeasuresCardDataModel extends DataModel {
 
   // Orders the measures based on the amount of entries to display those with more entries
   void orderedMeasures() {
-    var mapEntries = _samplingTable.entries.toList()..sort((b, a) => a.value.compareTo(b.value));
+    var mapEntries = _samplingTable.entries.toList()
+      ..sort((b, a) => a.value.compareTo(b.value));
     _samplingTable
       ..clear()
       ..addEntries(mapEntries);

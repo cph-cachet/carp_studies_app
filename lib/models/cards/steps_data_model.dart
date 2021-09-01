@@ -13,7 +13,9 @@ class StepsCardDataModel extends DataModel {
   Map<int, int> get weeklySteps => _weeklySteps;
 
   /// The list of steps.
-  List<Steps> get steps => _weeklySteps.entries.map((entry) => Steps(entry.key, entry.value)).toList();
+  List<Steps> get steps => _weeklySteps.entries
+      .map((entry) => Steps(entry.key, entry.value))
+      .toList();
 
   StepsCardDataModel();
 
@@ -26,11 +28,15 @@ class StepsCardDataModel extends DataModel {
     }
 
     // listen for pedometer events and count them
-    controller.data.where((dataPoint) => dataPoint.data is PedometerDatum).listen((pedometerDataPoint) {
+    controller.data
+        .where((dataPoint) => dataPoint.data is PedometerDatum)
+        .listen((pedometerDataPoint) {
       PedometerDatum? _step = pedometerDataPoint.data as PedometerDatum?;
       if (_lastStep != null)
         _weeklySteps[DateTime.now().weekday] =
-            _weeklySteps[DateTime.now().weekday]! + _step!.stepCount! - _lastStep!.stepCount!;
+            _weeklySteps[DateTime.now().weekday]! +
+                _step!.stepCount! -
+                _lastStep!.stepCount!;
       else
         _weeklySteps[DateTime.now().weekday] = 0;
       _lastStep = _step;
@@ -51,6 +57,7 @@ class Steps {
   Steps(this.day, this.steps);
 
   /// Get the localilzed name of the [day].
-  String toString() =>
-      DateFormat('EEEE').format(DateTime(2021, 2, 7).add(Duration(days: day))).substring(0, 3);
+  String toString() => DateFormat('EEEE')
+      .format(DateTime(2021, 2, 7).add(Duration(days: day)))
+      .substring(0, 3);
 }

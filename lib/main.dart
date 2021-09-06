@@ -94,6 +94,9 @@ part 'ui/cards/study_progress_card.dart';
 
 late CarpStudyApp app;
 void main() async {
+  // make sure that the json functions are loaded
+  DomainJsonFactory();
+
   app = CarpStudyApp();
   runApp(app);
 }
@@ -105,5 +108,5 @@ void main() async {
 final bloc = StudyAppBLoC(
   debugLevel: DebugLevel.DEBUG,
   deploymentMode: DeploymentMode.LOCAL,
-  forceSignOutAndStudyReload: true,
+  forceSignOutAndStudyReload: false,
 );

@@ -27,8 +27,7 @@ class _StudyPageState extends State<StudyPage> {
                           itemCount: widget.model.messages!.length,
                           padding: EdgeInsets.symmetric(vertical: 5.0),
                           itemBuilder: (context, index) {
-                            return _aboutStudyCard(
-                                context, widget.model.messages![index]);
+                            return _aboutStudyCard(context, widget.model.messages![index]);
                           }),
                     );
                   }),
@@ -77,42 +76,32 @@ class _StudyPageState extends State<StudyPage> {
                 children: [
                   SizedBox(width: 15),
                   Expanded(
-                      child: Text(message.title!,
-                          style: aboutCardTitleStyle.copyWith(
-                              color: Theme.of(context).primaryColor))),
+                      child: Text(locale.translate(message.title!),
+                          style: aboutCardTitleStyle.copyWith(color: Theme.of(context).primaryColor))),
                 ],
               ),
               SizedBox(height: 5),
               Row(children: [
                 SizedBox(width: 15),
                 Text(
-                    locale.translate(message.type
-                                .toString()
-                                .split('.')[1][0]
-                                .toUpperCase() +
-                            message.type
-                                .toString()
-                                .split('.')[1]
-                                .substring(1)) +
+                    locale.translate(message.type.toString().split('.')[1][0].toUpperCase() +
+                            message.type.toString().split('.')[1].substring(1)) +
                         ' - ' +
                         timeago.format(
                             DateTime.now().subtract(Duration(
                                 days: message.timestamp.day,
                                 hours: message.timestamp.hour,
                                 minutes: message.timestamp.minute)),
-                            locale:
-                                Localizations.localeOf(context).languageCode),
-                    style: aboutCardSubtitleStyle.copyWith(
-                        color: Theme.of(context).primaryColor)),
+                            locale: Localizations.localeOf(context).languageCode),
+                    style: aboutCardSubtitleStyle.copyWith(color: Theme.of(context).primaryColor)),
               ]),
               SizedBox(height: 5),
               Row(children: [
                 SizedBox(width: 15),
                 if (message.subTitle!.isNotEmpty)
                   Expanded(
-                      child: Text(message.subTitle!,
-                          style: aboutCardContentStyle.copyWith(
-                              color: Theme.of(context).primaryColor))),
+                      child: Text(locale.translate(message.subTitle!),
+                          style: aboutCardContentStyle.copyWith(color: Theme.of(context).primaryColor))),
               ]),
               SizedBox(height: 5),
               Row(children: [
@@ -120,7 +109,7 @@ class _StudyPageState extends State<StudyPage> {
                 if (message.message!.isNotEmpty)
                   Expanded(
                       child: Text(
-                    message.message!,
+                    locale.translate(message.message!),
                     style: aboutCardContentStyle,
                     textAlign: TextAlign.justify,
                   )),

@@ -103,7 +103,8 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
             type: SurveyUserTask.SURVEY_TYPE,
             title: surveys.symptomHierarchyObsessions.title,
             description: surveys.symptomHierarchyObsessions.description,
-            minutesToComplete: surveys.symptomHierarchyObsessions.minutesToComplete,
+            minutesToComplete:
+                surveys.symptomHierarchyObsessions.minutesToComplete,
             expire: surveys.symptomHierarchyObsessions.expire,
           )..measures.add(RPTaskMeasure(
               type: SurveySamplingPackage.SURVEY,
@@ -123,7 +124,8 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
             type: SurveyUserTask.SURVEY_TYPE,
             title: surveys.symptomHierarchyCoumpulsions.title,
             description: surveys.symptomHierarchyCoumpulsions.description,
-            minutesToComplete: surveys.symptomHierarchyCoumpulsions.minutesToComplete,
+            minutesToComplete:
+                surveys.symptomHierarchyCoumpulsions.minutesToComplete,
             expire: surveys.symptomHierarchyCoumpulsions.expire,
           )..measures.add(RPTaskMeasure(
               type: SurveySamplingPackage.SURVEY,
@@ -143,7 +145,8 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
             type: AudioUserTask.AUDIO_TYPE,
             title: "Exposure exercise",
             description: 'Describe the exposure exercise you are working on',
-            instructions: 'Describe the exposure exercise: how will you work on the obsession or compulsion?',
+            instructions:
+                'Describe the exposure exercise: how will you work on the obsession or compulsion?',
             minutesToComplete: 5,
           )..measures.add(CAMSMeasure(
               type: AudioSamplingPackage.AUDIO,
@@ -160,7 +163,8 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           AppTask(
             type: AudioUserTask.AUDIO_TYPE,
             title: "User Experience with the Wristband",
-            description: 'Record yourself talking about how the wristband makes you feel',
+            description:
+                'Record yourself talking about how the wristband makes you feel',
             instructions: 'Tell us about your experience wearing the wristband',
             minutesToComplete: 5,
           )..measures.add(CAMSMeasure(
@@ -279,7 +283,8 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           AppTask(
             type: AudioUserTask.AUDIO_TYPE,
             title: "User Experience with the Wristband",
-            description: "Record yourself talking about how the wristband makes you feel",
+            description:
+                "Record yourself talking about how the wristband makes you feel",
             instructions: "Tell us about your experience wearing the wristband",
             minutesToComplete: 5,
           )..measures.add(CAMSMeasure(
@@ -307,7 +312,8 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
       // collect Biosensor experience: - triggers W7 - TODO: use scheduled trigger
       _protocol!.addTriggeredTask(
           ScheduledTrigger(
-              time: TimeOfDay(hour: 6, minute: 00), recurrenceRule: RecurrenceRule(Frequency.WEEKLY)),
+              time: TimeOfDay(hour: 6, minute: 00),
+              recurrenceRule: RecurrenceRule(Frequency.WEEKLY)),
           AppTask(
             type: SurveyUserTask.SURVEY_TYPE,
             title: surveys.control.title,
@@ -345,7 +351,8 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           AppTask(
             type: AudioUserTask.AUDIO_TYPE,
             title: "User Experience with the Wristband",
-            description: 'Record yourself talking about how the wristband makes you feel',
+            description:
+                'Record yourself talking about how the wristband makes you feel',
             instructions: 'Tell us about your experience wearing the wristband',
             minutesToComplete: 5,
           )..measures.add(CAMSMeasure(
@@ -463,7 +470,8 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           AppTask(
             type: AudioUserTask.AUDIO_TYPE,
             title: "User Experience with the Wristband",
-            description: 'Record yourself talking about how the wristband makes you feel',
+            description:
+                'Record yourself talking about how the wristband makes you feel',
             instructions: 'Tell us about your experience wearing the wristband',
             minutesToComplete: 5,
           )..measures.add(CAMSMeasure(
@@ -658,7 +666,8 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
       _protocol = StudyProtocol(
         ownerId: studyId,
         name: 'CARP Study App 2nd Protocol',
-        description: 'A super generic 2nd protocol testing different parts of the CAMS Study App.',
+        description:
+            'A super generic 2nd protocol testing different parts of the CAMS Study App.',
         // TODO: fix
         // protocolDescription: StudyProtocolDescription(
         //   title: 'CARP Study App Feasibility Study',
@@ -752,7 +761,9 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
               enabled: true,
               surveyTask: surveys.demographics.survey,
             ))
-            ..measures.add(SamplingPackageRegistry().common().measures[ContextSamplingPackage.LOCATION]!),
+            ..measures.add(SamplingPackageRegistry()
+                .common()
+                .measures[ContextSamplingPackage.LOCATION]!),
           phone);
 
       // collect symptoms on a daily basis
@@ -771,7 +782,9 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
               enabled: true,
               surveyTask: surveys.symptoms.survey,
             ))
-            ..measures.add(SamplingPackageRegistry().common().measures[ContextSamplingPackage.LOCATION]!),
+            ..measures.add(SamplingPackageRegistry()
+                .common()
+                .measures[ContextSamplingPackage.LOCATION]!),
           phone);
 
       // collect a coughing sample on a daily basis
@@ -781,7 +794,8 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           AppTask(
             type: AudioUserTask.AUDIO_TYPE,
             title: "Coughing",
-            description: 'In this small exercise we would like to collect sound samples of coughing.',
+            description:
+                'In this small exercise we would like to collect sound samples of coughing.',
             instructions: 'Please cough 5 times.',
             minutesToComplete: 1,
           )
@@ -789,9 +803,15 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
               type: AudioSamplingPackage.AUDIO,
               name: "Coughing",
             ))
-            ..measures.add(SamplingPackageRegistry().common().measures[ContextSamplingPackage.LOCATION]!)
-            ..measures.add(SamplingPackageRegistry().common().measures[ContextSamplingPackage.WEATHER]!)
-            ..measures.add(SamplingPackageRegistry().common().measures[ContextSamplingPackage.AIR_QUALITY]!),
+            ..measures.add(SamplingPackageRegistry()
+                .common()
+                .measures[ContextSamplingPackage.LOCATION]!)
+            ..measures.add(SamplingPackageRegistry()
+                .common()
+                .measures[ContextSamplingPackage.WEATHER]!)
+            ..measures.add(SamplingPackageRegistry()
+                .common()
+                .measures[ContextSamplingPackage.AIR_QUALITY]!),
           phone);
 
       // collect a reading / audio sample on a daily basis
@@ -800,7 +820,8 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           AppTask(
             type: AudioUserTask.AUDIO_TYPE,
             title: "Reading",
-            description: 'In this small exercise we would like to collect sound data while you are reading.',
+            description:
+                'In this small exercise we would like to collect sound data while you are reading.',
             instructions: 'Please read the following text aloud.\n\n'
                 'Many, many years ago lived an emperor, who thought so much of new clothes that he spent all his money in order to obtain them; his only ambition was to be always well dressed. '
                 'He did not care for his soldiers, and the theatre did not amuse him; the only thing, in fact, he thought anything of was to drive out and show a new suit of clothes. '

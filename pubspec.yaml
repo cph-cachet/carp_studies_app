@@ -26,8 +26,8 @@ dependencies:
   flutter:
     sdk: flutter
 
-  carp_core: ^0.30.1
-  carp_mobile_sensing: ^0.30.3
+  carp_core: ^0.30.1+1
+  carp_mobile_sensing: ^0.30.3+1
   carp_context_package: ^0.30.0
   carp_survey_package: ^0.30.0
   carp_audio_package: ^0.30.1
@@ -36,7 +36,7 @@ dependencies:
   #carp_communication_package: ^0.6.1
   #carp_health_package: ^0.6.1
   
-  research_package: ^0.6.1
+  research_package: ^0.6.3
 
   flutter_launcher_icons: ^0.9.1
   uuid: ^3.0.4

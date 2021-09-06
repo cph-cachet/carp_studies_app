@@ -9,15 +9,23 @@ ThemeData carpStudyTheme = ThemeData.light().copyWith(
       .copyWith(
         caption: ThemeData.light().textTheme.caption!.copyWith(
               fontWeight: FontWeight.w500,
-              fontSize: 30.0,
+              fontSize: 14.0,
             ),
         bodyText1: ThemeData.light().textTheme.bodyText1!.copyWith(
               fontWeight: FontWeight.w500,
-              fontSize: 20.0,
+              fontSize: 18.0,
             ),
         bodyText2: ThemeData.light().textTheme.bodyText2!.copyWith(
               fontWeight: FontWeight.w400,
               fontSize: 16.0,
+            ),
+        subtitle1: ThemeData.light()
+            .textTheme
+            .bodyText2!
+            .copyWith(fontWeight: FontWeight.w600, fontSize: 20.0, color: Color(0xFF206FA2)),
+        headline6: ThemeData.light().textTheme.bodyText2!.copyWith(
+              fontWeight: FontWeight.w600,
+              fontSize: 24.0,
             ),
       )
       .apply(
@@ -35,7 +43,7 @@ ThemeData carpStudyDarkTheme = ThemeData.dark().copyWith(
       .copyWith(
         caption: ThemeData.dark().textTheme.caption!.copyWith(
               fontWeight: FontWeight.w500,
-              fontSize: 22.0,
+              fontSize: 14.0,
             ),
         bodyText1: ThemeData.dark().textTheme.bodyText1!.copyWith(
               fontWeight: FontWeight.w500,
@@ -44,6 +52,15 @@ ThemeData carpStudyDarkTheme = ThemeData.dark().copyWith(
         bodyText2: ThemeData.dark().textTheme.bodyText2!.copyWith(
               fontWeight: FontWeight.w400,
               fontSize: 16.0,
+            ),
+        subtitle1: ThemeData.dark().textTheme.bodyText2!.copyWith(
+              fontWeight: FontWeight.w600,
+              fontSize: 20.0,
+              color: Color(0xff81C7F3),
+            ),
+        headline6: ThemeData.dark().textTheme.bodyText2!.copyWith(
+              fontWeight: FontWeight.w600,
+              fontSize: 24.0,
             ),
       )
       .apply(

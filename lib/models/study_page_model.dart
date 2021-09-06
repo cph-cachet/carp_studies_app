@@ -2,8 +2,7 @@ part of carp_study_app;
 
 class StudyPageModel extends DataModel {
   String get title => bloc.deployment?.protocolDescription?.title ?? 'Unnamed';
-  String get description =>
-      bloc.deployment?.protocolDescription?.description ?? '';
+  String get description => bloc.deployment?.protocolDescription?.description ?? '';
   String get purpose => bloc.deployment?.protocolDescription?.purpose ?? '';
   Image get image => Image.asset('assets/images/study.png');
   String? get userID => bloc.deployment?.userId;
@@ -13,12 +12,10 @@ class StudyPageModel extends DataModel {
   String get piAddress => bloc.deployment?.responsible?.address ?? '';
   String get piEmail => bloc.deployment?.responsible?.email ?? '';
   String get piAffiliation =>
-      bloc.deployment?.responsible?.affiliation ??
-      'Copenhagen Center for Health Technology';
+      bloc.deployment?.responsible?.affiliation ?? 'Copenhagen Center for Health Technology';
 
   /// Events on the state of the study executor
-  Stream<ProbeState> get studyExecutorStateEvents =>
-      Sensing().controller!.executor!.stateEvents;
+  Stream<ProbeState> get studyExecutorStateEvents => Sensing().controller!.executor!.stateEvents;
 
   /// Current state of the study executor (e.g., resumed, paused, ...)
   ProbeState get studyState => Sensing().controller!.executor!.state;
@@ -44,7 +41,6 @@ class Message {
   /// Type of message
   MessageType type;
 
-  //TODO - these has to be updated to the correct ones picked by @gonzalo
   /// The icon for this type of message
   Icon get typeIcon {
     switch (type) {
@@ -87,17 +83,11 @@ class Message {
     timestamp = DateTime.now();
   }
 
-  // TODO - add the defult images to the assets/images folder
-  /// The default image based on the [type] of message.
-  /// Image get image => Image.asset('assets/images/$type.png');
-  ///
-  /// Only articles have images, get it randomly
+  /// Only articles have images, if not specified, get it randomly
   Image get image => obtainImage();
 
   Image obtainImage() {
-    if (imagePath == null)
-      imagePath =
-          'assets/images/article_' + Random(10).nextInt(3).toString() + '.png';
+    if (imagePath == null) imagePath = 'assets/images/article_' + Random(10).nextInt(3).toString() + '.png';
     return Image.asset(imagePath!, fit: BoxFit.fitHeight);
   }
 }

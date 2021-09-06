@@ -5,44 +5,47 @@ part of carp_study_app;
 class AudioUserTask extends UserTask {
   static const String AUDIO_TYPE = 'audio';
 
-  StreamController<int> _countDownController;
-  Stream<int> get countDownEvents => _countDownController?.stream;
+  StreamController<int>? _countDownController;
+  Stream<int>? get countDownEvents => _countDownController?.stream;
 
   /// Total duration of audio recording in seconds.
   int recordingDuration = 60;
 
   /// Seconds left in ongoing recording
-  int ongoingRecordingDuration;
+  int? ongoingRecordingDuration;
 
   AudioUserTask(AppTaskExecutor executor) : super(executor) {
-    recordingDuration =
-        (executor.appTask.minutesToComplete != null) ? executor.appTask.minutesToComplete * 60 : 60;
+    recordingDuration = (executor.appTask.minutesToComplete != null)
+        ? executor.appTask.minutesToComplete! * 60
+        : 60;
   }
 
   void onStart(BuildContext context) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => AudioTaskPage(audioUserTask: this)),
+      MaterialPageRoute(
+          builder: (context) => AudioTaskPage(audioUserTask: this)),
     );
   }
 
-  Timer timer;
+  Timer? timer;
 
   /// Callback when recording is to start.
   void onRecordStart() {
     _countDownController = StreamController.broadcast();
     ongoingRecordingDuration = recordingDuration;
     state = UserTaskState.started;
-    executor?.resume();
+    executor.resume();
 
     timer = Timer.periodic(new Duration(seconds: 1), (timer) {
-      _countDownController.add(--ongoingRecordingDuration);
+      if (ongoingRecordingDuration != null)
+        _countDownController!.add(ongoingRecordingDuration! - 1);
 
       if (ongoingRecordingDuration == 0) {
-        timer?.cancel();
-        _countDownController.close();
+        timer.cancel();
+        _countDownController!.close();
 
-        executor?.pause();
+        executor.pause();
         state = UserTaskState.done;
       }
     });
@@ -51,9 +54,9 @@ class AudioUserTask extends UserTask {
   /// Callback when recording is to stop.
   void onRecordStop() {
     timer?.cancel();
-    _countDownController.close();
+    _countDownController!.close();
 
-    executor?.pause();
+    executor.pause();
     state = UserTaskState.done;
   }
 }

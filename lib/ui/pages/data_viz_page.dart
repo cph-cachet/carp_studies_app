@@ -6,7 +6,7 @@ class DataVisualizationPage extends StatelessWidget {
   DataVisualizationPage(this.model);
 
   Widget build(BuildContext context) {
-    AssetLocalizations locale = AssetLocalizations.of(context);
+    AssetLocalizations locale = AssetLocalizations.of(context)!;
     return Scaffold(
       body: Container(
         child: Column(

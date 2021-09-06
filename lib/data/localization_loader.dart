@@ -12,7 +12,8 @@ class ResourceLocalizationLoader implements LocalizationLoader {
     // if using the CARP resource mananger, the initial call to load will
     // fail since the user is not authenticated - but will re-load later
     try {
-      translations = await resourceManager.getLocalizations(locale);
+      translations = await (resourceManager.getLocalizations(locale)
+          as FutureOr<Map<String, String>>);
       print(
           "$runtimeType - translations for ´$locale' loaded! - $translations");
     } catch (error) {

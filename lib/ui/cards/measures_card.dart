@@ -14,7 +14,7 @@ class _MeasuresCardWidgetState extends State<MeasuresCardWidget> {
           List<Color> colors) =>
       [
         charts.Series<Measures, String>(
-          colorFn: (_, index) => charts.ColorUtil.fromDartColor(colors[index]),
+          colorFn: (_, index) => charts.ColorUtil.fromDartColor(colors[index!]),
           //charts.MaterialPalette.blue.makeShades(min(7, model.samplingTable.length))[index],
           id: 'TotalMeasures',
           data: model.measures.sublist(0, min(7, model.samplingTable.length)),
@@ -24,7 +24,7 @@ class _MeasuresCardWidgetState extends State<MeasuresCardWidget> {
       ];
 
   Widget build(BuildContext context) {
-    AssetLocalizations locale = AssetLocalizations.of(context);
+    AssetLocalizations locale = AssetLocalizations.of(context)!;
 
     // Get the measures with more events to prioritize which ones to show
     widget.model.orderedMeasures();
@@ -69,7 +69,7 @@ class _MeasuresCardWidgetState extends State<MeasuresCardWidget> {
                         child: Stack(
                           alignment: Alignment.center,
                           children: [
-                            charts.PieChart(
+                            charts.PieChart<String>(
                               _createChartList(
                                   context, widget.model, CACHET.COLOR_LIST),
                               animate: true,
@@ -83,7 +83,7 @@ class _MeasuresCardWidgetState extends State<MeasuresCardWidget> {
                                   showMeasures: true,
                                   legendDefaultMeasure:
                                       charts.LegendDefaultMeasure.firstValue,
-                                  measureFormatter: (num value) {
+                                  measureFormatter: (num? value) {
                                     return value == null ? '-' : '$value';
                                   },
                                 ),

@@ -1,27 +1,33 @@
 part of carp_study_app;
 
 class StudyPageModel extends DataModel {
-  String get name => bloc.deployment.name;
-  String get description => bloc.deployment.protocolDescription.description;
+  String get title => bloc.deployment?.protocolDescription?.title ?? 'Unnamed';
+  String get description => bloc.deployment?.protocolDescription?.description ?? '';
+  String get purpose => bloc.deployment?.protocolDescription?.purpose ?? '';
   Image get image => Image.asset('assets/images/study.png');
-  String get userID => bloc.deployment.userId;
-  String get affiliation =>
-      bloc.deployment.responsible.affiliation ?? 'Copenhagen Center for Health Technology';
+  String? get userID => bloc.deployment?.userId;
+
+  String get piTitle => bloc.deployment?.responsible?.title ?? '';
+  String get piName => bloc.deployment?.responsible?.name ?? '';
+  String get piAddress => bloc.deployment?.responsible?.address ?? '';
+  String get piEmail => bloc.deployment?.responsible?.email ?? '';
+  String get piAffiliation =>
+      bloc.deployment?.responsible?.affiliation ?? 'Copenhagen Center for Health Technology';
 
   /// Events on the state of the study executor
-  Stream<ProbeState> get studyExecutorStateEvents => Sensing().controller.executor.stateEvents;
+  Stream<ProbeState> get studyExecutorStateEvents => Sensing().controller!.executor!.stateEvents;
 
   /// Current state of the study executor (e.g., resumed, paused, ...)
-  ProbeState get studyState => Sensing().controller.executor.state;
+  ProbeState get studyState => Sensing().controller!.executor!.state;
 
   /// Get all sesing events (i.e. all [DataPoint] objects being collected).
-  Stream<DataPoint> get samplingEvents => Sensing().controller.data;
+  Stream<DataPoint> get samplingEvents => Sensing().controller!.data;
 
   /// The total sampling size so far since this study was started.
-  int get samplingSize => Sensing().controller.samplingSize;
+  int get samplingSize => Sensing().controller!.samplingSize;
 
   /// The list of messages to be displayed.
-  List<Message> get messages => bloc.messages;
+  List<Message>? get messages => bloc.messages;
 
   StudyPageModel();
 
@@ -35,7 +41,6 @@ class Message {
   /// Type of message
   MessageType type;
 
-  //TODO - these has to be updated to the correct ones picked by @gonzalo
   /// The icon for this type of message
   Icon get typeIcon {
     switch (type) {
@@ -51,21 +56,21 @@ class Message {
   }
 
   /// Creation timestamp
-  DateTime timestamp;
+  late DateTime timestamp;
 
   /// A short title
-  String title;
+  String? title;
 
   /// A short sub title
-  String subTitle;
+  String? subTitle;
 
   /// A longer detailed message
-  String message;
+  String? message;
 
   /// A URL to redirect the user to for an online item
-  String url;
+  String? url;
 
-  String imagePath;
+  String? imagePath;
 
   Message({
     this.type = MessageType.announcement,
@@ -78,18 +83,12 @@ class Message {
     timestamp = DateTime.now();
   }
 
-  // TODO - add the defult images to the assets/images folder
-  /// The default image based on the [type] of message.
-  /// Image get image => Image.asset('assets/images/$type.png');
-  ///
-  /// Only articles have images, get it randomly
+  /// Only articles have images, if not specified, get it randomly
   Image get image => obtainImage();
 
   Image obtainImage() {
-    if (imagePath == null)
-      imagePath =
-          'assets/images/article_' + Random(10).nextInt(3).toString() + '.png';
-    return Image.asset(imagePath, fit: BoxFit.fitHeight);
+    if (imagePath == null) imagePath = 'assets/images/article_' + Random(10).nextInt(3).toString() + '.png';
+    return Image.asset(imagePath!, fit: BoxFit.fitHeight);
   }
 }
 

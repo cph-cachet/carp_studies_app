@@ -52,7 +52,7 @@ class _MobilityCardWidgetState extends State<MobilityCardWidget> {
   charts.RenderSpec<String> renderSpecString = AxisTheme.axisThemeOrdinal();
 
   // TODO: refactor
-  final _measures = <String, List<num>>{
+  final _measures = <String?, List<num?>>{
     'weeklyDistanceTraveled': [0, 0, 0],
     'weeklyHomeStay': [0, 0, 0],
     'weeklyPlaces': [0, 0, 0],
@@ -61,11 +61,11 @@ class _MobilityCardWidgetState extends State<MobilityCardWidget> {
   @override
   void initState() {
     // Get current day mobility // TODO: REFACTOR
-    _measures['weeklyHomeStay'][1] =
+    _measures['weeklyHomeStay']![1] =
         widget.model.weeklyHomeStay[DateTime.now().weekday];
-    _measures['weeklyDistanceTraveled'][0] =
+    _measures['weeklyDistanceTraveled']![0] =
         widget.model.weeklyDistanceTraveled[DateTime.now().weekday];
-    _measures['weeklyPlaces'][2] =
+    _measures['weeklyPlaces']![2] =
         widget.model.weeklyPlaces[DateTime.now().weekday];
 
     super.initState();
@@ -73,7 +73,7 @@ class _MobilityCardWidgetState extends State<MobilityCardWidget> {
 
   @override
   Widget build(BuildContext context) {
-    AssetLocalizations locale = AssetLocalizations.of(context);
+    AssetLocalizations locale = AssetLocalizations.of(context)!;
 
     return Padding(
       padding: const EdgeInsets.all(5.0),
@@ -90,11 +90,11 @@ class _MobilityCardWidgetState extends State<MobilityCardWidget> {
                     color: Theme.of(context).primaryColor),
                 heroTag: 'mobility-card',
                 values: [
-                  '${_measures['weeklyDistanceTraveled'][0]} ' +
+                  '${_measures['weeklyDistanceTraveled']![0]} ' +
                       locale.translate('cards.mobility.distance'),
-                  '${_measures['weeklyHomeStay'][1]} ' +
+                  '${_measures['weeklyHomeStay']![1]} ' +
                       locale.translate('cards.mobility.homestay'),
-                  '${_measures['weeklyPlaces'][2]} ' +
+                  '${_measures['weeklyPlaces']![2]} ' +
                       locale.translate('cards.mobility.places'),
                 ],
                 colors: widget.colors,

@@ -4,15 +4,69 @@ ThemeData carpStudyTheme = ThemeData.light().copyWith(
   primaryColor: Color(0xFF206FA2),
   accentColor: Color(0xffcce8fa),
   hoverColor: Color(0xFFF1F9FF),
-  textTheme:
-      ThemeData.light().textTheme.apply(fontFamily: 'MuseoSans', bodyColor: Color.fromRGBO(112, 112, 112, 1)),
+  textTheme: ThemeData.light()
+      .textTheme
+      .copyWith(
+        caption: ThemeData.light().textTheme.caption!.copyWith(
+              fontWeight: FontWeight.w500,
+              fontSize: 14.0,
+            ),
+        bodyText1: ThemeData.light().textTheme.bodyText1!.copyWith(
+              fontWeight: FontWeight.w500,
+              fontSize: 18.0,
+            ),
+        bodyText2: ThemeData.light().textTheme.bodyText2!.copyWith(
+              fontWeight: FontWeight.w400,
+              fontSize: 16.0,
+            ),
+        subtitle1: ThemeData.light()
+            .textTheme
+            .bodyText2!
+            .copyWith(fontWeight: FontWeight.w600, fontSize: 20.0, color: Color(0xFF206FA2)),
+        headline6: ThemeData.light().textTheme.bodyText2!.copyWith(
+              fontWeight: FontWeight.w600,
+              fontSize: 24.0,
+            ),
+      )
+      .apply(
+        fontFamily: 'MuseoSans',
+        bodyColor: Color.fromRGBO(112, 112, 112, 1),
+      ),
 );
 
 ThemeData carpStudyDarkTheme = ThemeData.dark().copyWith(
   primaryColor: Color(0xff81C7F3),
   accentColor: Color(0xff4C4C4C),
   disabledColor: Color(0xffcce8fa),
-  textTheme: ThemeData.dark().textTheme.apply(fontFamily: 'MuseoSans', bodyColor: Colors.grey.shade50),
+  textTheme: ThemeData.dark()
+      .textTheme
+      .copyWith(
+        caption: ThemeData.dark().textTheme.caption!.copyWith(
+              fontWeight: FontWeight.w500,
+              fontSize: 14.0,
+            ),
+        bodyText1: ThemeData.dark().textTheme.bodyText1!.copyWith(
+              fontWeight: FontWeight.w500,
+              fontSize: 18.0,
+            ),
+        bodyText2: ThemeData.dark().textTheme.bodyText2!.copyWith(
+              fontWeight: FontWeight.w400,
+              fontSize: 16.0,
+            ),
+        subtitle1: ThemeData.dark().textTheme.bodyText2!.copyWith(
+              fontWeight: FontWeight.w600,
+              fontSize: 20.0,
+              color: Color(0xff81C7F3),
+            ),
+        headline6: ThemeData.dark().textTheme.bodyText2!.copyWith(
+              fontWeight: FontWeight.w600,
+              fontSize: 24.0,
+            ),
+      )
+      .apply(
+        fontFamily: 'MuseoSans',
+        bodyColor: Colors.grey.shade50,
+      ),
 );
 
 // ButtonTheme roundedFilledButtonTheme = ButtonTheme(
@@ -77,9 +131,9 @@ TextStyle aboutCardTitleStyle = TextStyle(fontSize: 20, fontWeight: FontWeight.w
 
 TextStyle aboutCardInfoStyle = TextStyle(fontSize: 14, fontStyle: FontStyle.italic);
 
-TextStyle aboutCardSubtitleStyle = TextStyle(fontSize: 16, fontWeight: FontWeight.w400);
+TextStyle aboutCardSubtitleStyle = TextStyle(fontSize: 16, fontWeight: FontWeight.w600);
 
-TextStyle aboutCardContentStyle = TextStyle(fontSize: 14, fontWeight: FontWeight.w300);
+TextStyle aboutCardContentStyle = TextStyle(fontSize: 16, fontWeight: FontWeight.w400);
 
 TextStyle sectionTitleStyle = TextStyle(fontSize: 18, fontWeight: FontWeight.w700);
 

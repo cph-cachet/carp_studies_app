@@ -8,21 +8,21 @@ class TaskCardWidget extends StatefulWidget {
 }
 
 class _TaskCardWidgetState extends State<TaskCardWidget> {
-  static List<charts.Series<TaskCount, String>> _createChartList(
-          BuildContext context, TaskCardDataModel model, List<Color> colors) =>
-      [
-        charts.Series<TaskCount, String>(
-          colorFn: (_, index) => charts.ColorUtil.fromDartColor(colors[index]),
-          // charts.MaterialPalette.blue.makeShades(min(7, model.samplingTable.length))[index],
-          id: 'TotalTasks',
-          data: model.taskCount.sublist(0, min(7, model.tasksTable.length)),
-          domainFn: (TaskCount taskCount, _) => taskCount.title,
-          measureFn: (TaskCount taskCount, _) => taskCount.size,
-        )
-      ];
+  // static List<charts.Series<TaskCount, String>> _createChartList(
+  //         BuildContext context, TaskCardDataModel model, List<Color> colors) =>
+  //     [
+  //       charts.Series<TaskCount, String>(
+  //         colorFn: (_, index) => charts.ColorUtil.fromDartColor(colors[index!]),
+  //         // charts.MaterialPalette.blue.makeShades(min(7, model.samplingTable.length))[index],
+  //         id: 'TotalTasks',
+  //         data: model.taskCount.sublist(0, min(7, model.tasksTable.length)),
+  //         domainFn: (TaskCount taskCount, _) => taskCount.title,
+  //         measureFn: (TaskCount taskCount, _) => taskCount.size,
+  //       )
+  //     ];
 
   Widget build(BuildContext context) {
-    AssetLocalizations locale = AssetLocalizations.of(context);
+    AssetLocalizations locale = AssetLocalizations.of(context)!;
 
     return Padding(
       padding: const EdgeInsets.all(5.0),
@@ -47,7 +47,8 @@ class _TaskCardWidgetState extends State<TaskCardWidget> {
                               SizedBox(height: 5),
                               Text(
                                   '${widget.model.tasksDone} ' +
-                                      locale.translate('cards.${widget.model.taskType}.title'),
+                                      locale.translate(
+                                          'cards.${widget.model.taskType}.title'),
                                   //textAlign: TextAlign.center,
                                   style: dataCardTitleStyle),
                             ],
@@ -82,8 +83,18 @@ class _TaskCardWidgetState extends State<TaskCardWidget> {
                     //   ),
                     // ),
                     child: HorizontalBar(
-                      names: this.widget.model.taskCount.map((task) => task.title).toList(),
-                      values: this.widget.model.taskCount.map((task) => task.size).toList(),
+                      names: this
+                          .widget
+                          .model
+                          .taskCount
+                          .map((task) => task.title)
+                          .toList(),
+                      values: this
+                          .widget
+                          .model
+                          .taskCount
+                          .map((task) => task.size)
+                          .toList(),
                       colors: CACHET.COLOR_LIST,
                     ),
                   ),

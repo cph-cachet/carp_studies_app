@@ -1,9 +1,7 @@
 part of carp_study_app;
 
 class ActivityCardDataModel extends DataModel {
-  ActivityDatum _lastActivity = ActivityDatum()
-    ..type = ActivityType.STILL
-    ..confidence = 100;
+  ActivityDatum _lastActivity = new ActivityDatum(ActivityType.STILL, 100);
   final Map<ActivityType, Map<int, int>> _activities = {};
 
   /// A map of activities oganized first by type and then by day of week.
@@ -12,7 +10,7 @@ class ActivityCardDataModel extends DataModel {
   ///
   Map<ActivityType, Map<int, int>> get activities => _activities;
 
-  List<Activity> activitiesByType(ActivityType type) => _activities[type]
+  List<Activity> activitiesByType(ActivityType type) => _activities[type]!
       .entries
       .map((entry) => Activity(entry.key, entry.value))
       .toList();
@@ -27,7 +25,7 @@ class ActivityCardDataModel extends DataModel {
       ActivityType.values.forEach(
         (type) {
           _activities[type] = {};
-          for (int i = 1; i <= 7; i++) _activities[type][i] = 0;
+          for (int i = 1; i <= 7; i++) _activities[type]![i] = 0;
         },
       );
     }
@@ -41,8 +39,11 @@ class ActivityCardDataModel extends DataModel {
       if (_activity.type != _lastActivity.type) {
         // if we have a new type of activity
         // add the minutes to the last know activity type
-        _activities[_lastActivity.type][DateTime.now().weekday] +=
-            _activity.timestamp.difference(_lastActivity.timestamp).inMinutes;
+        _activities[_lastActivity.type]![DateTime.now().weekday] =
+            _activities[_lastActivity.type]![DateTime.now().weekday]! +
+                _activity.timestamp!
+                    .difference(_lastActivity.timestamp!)
+                    .inMinutes;
         // and then save the new activity
         _lastActivity = _activity;
       }
@@ -60,7 +61,7 @@ class ActivityCardDataModel extends DataModel {
 class Activity {
   final int day;
   final int minutes;
-  ActivityType type;
+  ActivityType? type;
 
   /// Activity [type] as a string.
   String get typeString => type.toString().split(".").last;

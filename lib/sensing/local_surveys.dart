@@ -73,208 +73,205 @@ abstract class Survey {
 }
 
 class _SymptomHierarchySurveyObsessions implements Survey {
-  String get title => 'Symptom Hierarchy: Obsessions';
+  String get title => "survey.symptoms.obsessions.title";
 
-  String get description =>
-      'This form is designed to help you keep track of how your obsessions change from week to week.';
-
+  String get description => "survey.symptoms.obsessions.description";
   Duration get expire => const Duration(days: 7);
 
   int get minutesToComplete => 5;
 
-  RPTask get survey => RPOrderedTask(identifier: "Symptom Hierarchy: Obsessions", steps: [
+  RPTask get survey => RPOrderedTask(identifier: "survey.symptoms.obsessions.title", steps: [
         RPInstructionStep(
-            identifier: "instruction",
-            title: "Obsessions",
-            text:
-                "Symptom Hierarchy: Obsessions\n\n\nObsessions are unwanted thoughts or images that keep popping into your head and that you can't stop thinking about, even though you want to be rid of them.\n\nOn the next pages, you will see obsessions that many people with OCD have. Tell us how upset or scared each obsession has been for you over the past week by choosing the number that best matches how you feel. 0 means that you have not had the obsession or that it is not at all unpleasant and 10 means that the obsession is so upsetting you can’t stand it."),
+            identifier: "survey.symptoms.obsessions.instruction.id",
+            title: "survey.symptoms.obsessions.instruction.title",
+            text: "survey.symptoms.obsessions.instruction.text"),
         RPQuestionStep(
-          identifier: "question1",
-          title: "Fear/ disgust of pollution, infection, dirt, bacteria, diseases",
+          identifier: "survey.symptoms.obsessions.question.1.id",
+          title: "survey.symptoms.obsessions.question.1.title",
           answerFormat: RPSliderAnswerFormat(minValue: 0, maxValue: 10, divisions: 10),
           optional: true,
         ),
         RPQuestionStep(
-          identifier: "question2",
-          title: "Fear of harming yourself or others (body or feelings)",
+          identifier: "survey.symptoms.obsessions.question.2.id",
+          title: "survey.symptoms.obsessions.question.2.title",
           answerFormat: RPSliderAnswerFormat(minValue: 0, maxValue: 10, divisions: 10),
           optional: true,
         ),
         RPQuestionStep(
-          identifier: "question3",
-          title: "Disturbing thoughts/ images about sex, pregnancy or sexuality",
+          identifier: "survey.symptoms.obsessions.question.3.id",
+          title: "survey.symptoms.obsessions.question.3.title",
           answerFormat: RPSliderAnswerFormat(minValue: 0, maxValue: 10, divisions: 10),
           optional: true,
         ),
         RPQuestionStep(
-          identifier: "question4",
-          title: "Need to collect things or fear of losing something",
+          identifier: "survey.symptoms.obsessions.question.4.id",
+          title: "survey.symptoms.obsessions.question.4.title",
           answerFormat: RPSliderAnswerFormat(minValue: 0, maxValue: 10, divisions: 10),
           optional: true,
         ),
         RPQuestionStep(
-          identifier: "question5",
-          title:
-              "Magical/superstitious thoughts or actions (e.g. lucky numbers or words; stepping on a crack can break someone’s back)",
+          identifier: "survey.symptoms.obsessions.question.5.id",
+          title: "survey.symptoms.obsessions.question.5.title",
           answerFormat: RPSliderAnswerFormat(minValue: 0, maxValue: 10, divisions: 10),
           optional: true,
         ),
         RPQuestionStep(
-          identifier: "question6",
-          title: "Worry about having a disease or that a body part or your appearance looks wrong",
+          identifier: "survey.symptoms.obsessions.question.6.id",
+          title: "survey.symptoms.obsessions.question.6.title",
           answerFormat: RPSliderAnswerFormat(minValue: 0, maxValue: 10, divisions: 10),
           optional: true,
         ),
         RPQuestionStep(
-          identifier: "question7",
-          title: "Fear of offending God or Satan or worry about what is right and wrong",
+          identifier: "survey.symptoms.obsessions.question.7.id",
+          title: "survey.symptoms.obsessions.question.7.title",
           answerFormat: RPSliderAnswerFormat(minValue: 0, maxValue: 10, divisions: 10),
           optional: true,
         ),
         RPQuestionStep(
-          identifier: "question8",
-          title:
-              "Symmetry and order (e.g. that things must lie in a certain way, or things must be in order)",
+          identifier: "survey.symptoms.obsessions.question.8.id",
+          title: "survey.symptoms.obsessions.question.8.title",
           answerFormat: RPSliderAnswerFormat(minValue: 0, maxValue: 10, divisions: 10),
           optional: true,
         ),
         RPQuestionStep(
-          identifier: "question9",
-          title: "Needing to do something until it feels right or not wrong",
+          identifier: "survey.symptoms.obsessions.question.9.id",
+          title: "survey.symptoms.obsessions.question.9.title",
           answerFormat: RPSliderAnswerFormat(minValue: 0, maxValue: 10, divisions: 10),
           optional: true,
         ),
         RPQuestionStep(
-          identifier: "question10",
-          title: "Here you can describe other obsessions that have not been mentioned",
+          identifier: "survey.symptoms.obsessions.question.10.id",
+          title: "survey.symptoms.obsessions.question.10.title",
           answerFormat: RPTextAnswerFormat(),
           optional: true,
         ),
         RPCompletionStep(
-          identifier: "completion",
-          title: "Hurray!",
-          text:
-              "You are finished recording your obsessions for this week. By keeping track of your obsessions and compulsions, you're taking back control, so OCD doesn't control you.",
-        )
+            identifier: "survey.symptoms.obsessions.completition.id",
+            title: "survey.symptoms.obsessions.completition.title",
+            text: "survey.symptoms.obsessions.completition.text")
       ]);
 }
 
 class _SymptomHierarchySurveyCompulsions implements Survey {
-  String get title => 'Symptom Hierarchy: Compulsions';
+  String get title => "survey.symptoms.compulsions.title";
 
-  String get description =>
-      'This form is designed to help you keep track of how your compulsions change from week to week.';
-
+  String get description => "survey.symptoms.compulsions.description";
   Duration get expire => const Duration(days: 7);
 
   int get minutesToComplete => 5;
 
-  RPTask get survey => RPOrderedTask(identifier: "Symptom Hierarchy: Compulsions", steps: [
+  RPTask get survey => RPOrderedTask(identifier: "survey.symptoms.compulsions.title", steps: [
         RPInstructionStep(
-            identifier: "instruction",
-            title: "Compulsions",
-            text:
-                "Symptom hierarchy: Compulsions\n\n\nCompulsions are things that OCD wants you to do. If you try to resist doing these things or try not to do what OCD tells to, you may feel afraid, worried, frustrated, angry or upset.\n\nOn the next pages there will be some compulsions that many people with OCD have. Tell us how upset each compulsion (or trying to resist the compulsion) has been for you over the past week by choosing the number that best matches how you feel. 0 means that you do not have that compulsion or that does not bother you and 10 means that the compulsion upsets you so much that you can’t stand it."),
+            identifier: "survey.symptoms.compulsions.instruction.id",
+            title: "survey.symptoms.compulsions.instruction.title",
+            text: "survey.symptoms.compulsions.instruction.text"),
         RPQuestionStep(
-          identifier: "question1",
-          title: "Washing or cleaning",
+          identifier: "survey.symptoms.compulsions.question.1.id",
+          title: "survey.symptoms.compulsions.question.1.title",
           answerFormat: RPSliderAnswerFormat(minValue: 0, maxValue: 10, divisions: 10),
           optional: true,
         ),
         RPQuestionStep(
-          identifier: "question2",
-          title: "Checking (like if you have remembered to lock the door)",
+          identifier: "survey.symptoms.compulsions.question.2.id",
+          title: "survey.symptoms.compulsions.question.2.title",
           answerFormat: RPSliderAnswerFormat(minValue: 0, maxValue: 10, divisions: 10),
           optional: true,
         ),
         RPQuestionStep(
-          identifier: "question3",
-          title: "Repeating actions (like turning the lights on and off several times)",
+          identifier: "survey.symptoms.compulsions.question.3.id",
+          title: "survey.symptoms.compulsions.question.3.title",
           answerFormat: RPSliderAnswerFormat(minValue: 0, maxValue: 10, divisions: 10),
           optional: true,
         ),
         RPQuestionStep(
-          identifier: "question4",
-          title: "Counting things",
+          identifier: "survey.symptoms.compulsions.question.4.id",
+          title: "survey.symptoms.compulsions.question.4.title",
           answerFormat: RPSliderAnswerFormat(minValue: 0, maxValue: 10, divisions: 10),
           optional: true,
         ),
         RPQuestionStep(
-          identifier: "question5",
-          title: "Fixing things or try to get things the same or symmetrical",
+          identifier: "survey.symptoms.compulsions.question.5.id",
+          title: "survey.symptoms.compulsions.question.5.title",
           answerFormat: RPSliderAnswerFormat(minValue: 0, maxValue: 10, divisions: 10),
           optional: true,
         ),
         RPQuestionStep(
-          identifier: "question6",
-          title: "Collecting things or difficulty throwing things away",
+          identifier: "survey.symptoms.compulsions.question.6.id",
+          title: "survey.symptoms.compulsions.question.6.title",
           answerFormat: RPSliderAnswerFormat(minValue: 0, maxValue: 10, divisions: 10),
           optional: true,
         ),
         RPQuestionStep(
-          identifier: "question7",
-          title:
-              "Magical/superstitious behavior (e.g. doing or saying things a certain number of times to prevent something terrible from happening)",
+          identifier: "survey.symptoms.compulsions.question.7.id",
+          title: "survey.symptoms.compulsions.question.7.title",
           answerFormat: RPSliderAnswerFormat(minValue: 0, maxValue: 10, divisions: 10),
           optional: true,
         ),
         RPQuestionStep(
-          identifier: "question8",
-          title: "Involving others (like your parents) in a ritual or asking for reassurance",
+          identifier: "survey.symptoms.compulsions.question.8.id",
+          title: "survey.symptoms.compulsions.question.8.title",
           answerFormat: RPSliderAnswerFormat(minValue: 0, maxValue: 10, divisions: 10),
           optional: true,
         ),
         RPQuestionStep(
-          identifier: "question9",
-          title: "Needing to do something until it feels right",
+          identifier: "survey.symptoms.compulsions.question.9.id",
+          title: "survey.symptoms.compulsions.question.9.title",
           answerFormat: RPSliderAnswerFormat(minValue: 0, maxValue: 10, divisions: 10),
           optional: true,
         ),
         RPQuestionStep(
-          identifier: "question10",
-          title: "Here you can describe other compulsions that have not been mentioned",
+          identifier: "survey.symptoms.compulsions.question.10.id",
+          title: "survey.symptoms.compulsions.question.10.title",
           answerFormat: RPTextAnswerFormat(),
           optional: true,
         ),
         RPCompletionStep(
-          identifier: "completion",
-          title: "Hurray!",
-          text:
-              "You are finished recording your compulsions for this week. By keeping track of your obsessions and compulsions, you're taking back control, so OCD doesn't control you.",
+          identifier: "survey.symptoms.compulsions.completition.id",
+          title: "survey.symptoms.compulsions.completition.title",
+          text: "survey.symptoms.compulsions.completition.text",
         )
       ]);
 }
 
 class _TimedExposureSurvey implements Survey {
-  String get title => "Weekly exposure and response prevention";
+  String get title => "survey.symptoms.exposure.title";
 
-  String get description => 'Describe the obsession and/or the compulsion you are working on';
+  String get description => "survey.symptoms.exposure.description";
 
   Duration get expire => const Duration(days: 7);
 
-  int get minutesToComplete => 10; // TODO: review time
+  int get minutesToComplete => 10;
 
   RPImageChoiceAnswerFormat _imageChoiceAnswerFormat = RPImageChoiceAnswerFormat(choices: [
-    RPImageChoice(imageUrl: 'assets/icons/very-sad.png', value: 4, description: "Unbearable"),
-    RPImageChoice(imageUrl: 'assets/icons/sad.png', value: 3, description: "Very great discomfort"),
-    RPImageChoice(imageUrl: 'assets/icons/ok.png', value: 2, description: "Quite a lot of discomfort"),
-    RPImageChoice(imageUrl: 'assets/icons/happy.png', value: 1, description: "A certain discomfort"),
-    RPImageChoice(imageUrl: 'assets/icons/very-happy.png', value: 0, description: "Calm"),
+    RPImageChoice(
+        imageUrl: 'assets/icons/very-sad.png',
+        value: 4,
+        description: "survey.answerFormat.discomfort.unbearable"),
+    RPImageChoice(
+        imageUrl: 'assets/icons/sad.png', value: 3, description: "survey.answerFormat.discomfort.very"),
+    RPImageChoice(
+        imageUrl: 'assets/icons/ok.png', value: 2, description: "survey.answerFormat.discomfort.quite"),
+    RPImageChoice(
+        imageUrl: 'assets/icons/happy.png', value: 1, description: "survey.answerFormat.discomfort.certain"),
+    RPImageChoice(
+        imageUrl: 'assets/icons/very-happy.png',
+        value: 0,
+        description: "survey.answerFormat.discomfort.calm"),
   ]);
 
-  RPTask get survey => RPOrderedTask(identifier: "Timed_Exposure_exercise", steps: [
+  RPTask get survey => RPOrderedTask(identifier: "survey.symptoms.exposure.title", steps: [
         RPQuestionStep(
-          identifier: "question1",
-          title: "How scared or upset do you feel?",
+          identifier: "survey.symptoms.exposure.question.1.id",
+          title: "survey.symptoms.exposure.question.1.text",
           answerFormat: _imageChoiceAnswerFormat,
         ),
       ]);
 }
 
 class _TrustScaleSurvey implements Survey {
-  String get title => 'Trust in the Mobile App';
+  String get title => "survey.trustscale.title";
 
-  String get description => 'We would like to know what it was like for you to use the mobile app'; // TODO
+  String get description => "survey.trustscale.description";
 
   Duration get expire => const Duration(days: 7);
 
@@ -282,97 +279,95 @@ class _TrustScaleSurvey implements Survey {
 
   RPChoiceAnswerFormat choiceAnswerFormat1 =
       RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.SingleChoice, choices: [
-    RPChoice(text: "Strongly disagree", value: 0),
-    RPChoice(text: "Slightly disagree", value: 1),
-    RPChoice(text: "Agree", value: 2),
-    RPChoice(text: "Strongly agree", value: 3),
+    RPChoice(text: "survey.answerFormat.agreement.strongly.disagree", value: 0),
+    RPChoice(text: "survey.answerFormat.agreement.disagree", value: 1),
+    RPChoice(text: "survey.answerFormat.agreement.agree", value: 2),
+    RPChoice(text: "survey.answerFormat.agreement.strongly.agree", value: 3),
   ]);
 
-  RPTask get survey => RPOrderedTask(identifier: "User Experience with App", steps: [
+  RPTask get survey => RPOrderedTask(identifier: "survey.trustscale.title", steps: [
         RPInstructionStep(
-            identifier: "instruction",
-            title: " ",
+            identifier: "survey.trustscale.instruction.id",
+            title: "survey.trustscale.instruction.title",
             imagePath: 'assets/icons/smartphone.png',
-            text:
-                "We would like to know what it was like for you to use the mobile app.\n\nPlease read each statement and chose the number (0, 1, 2, or 3) that best describes how you feel."),
+            text: "survey.trustscale.instruction.text"),
         RPQuestionStep(
-          identifier: "question1",
-          title: "I believe that there could be negative consequences when using this mobile app",
+          identifier: "survey.trustscale.question.1.id",
+          title: "survey.trustscale.question.1.title",
           answerFormat: choiceAnswerFormat1,
         ),
         RPQuestionStep(
-          identifier: "question2",
-          title: "I feel I must be cautious when using this mobile app",
+          identifier: "survey.trustscale.question.2.id",
+          title: "survey.trustscale.question.2.title",
           answerFormat: choiceAnswerFormat1,
         ),
         RPQuestionStep(
-          identifier: "question3",
-          title: "It is risky to interact with this mobile app",
+          identifier: "survey.trustscale.question.3.id",
+          title: "survey.trustscale.question.3.title",
           answerFormat: choiceAnswerFormat1,
         ),
         RPQuestionStep(
-          identifier: "question4",
-          title: "I think that this mobile app is competent and effective in supporting the research study",
+          identifier: "survey.trustscale.question.4.id",
+          title: "survey.trustscale.question.4.title",
           answerFormat: choiceAnswerFormat1,
         ),
         RPQuestionStep(
-          identifier: "question5",
-          title: "I think that this mobile app performs its role as a tool for research very well",
+          identifier: "survey.trustscale.question.5.id",
+          title: "survey.trustscale.question.5.title",
           answerFormat: choiceAnswerFormat1,
         ),
         RPQuestionStep(
-          identifier: "question6",
-          title:
-              "I believe that this mobile app has all the functionalities I would expect from a research study app",
+          identifier: "survey.trustscale.question.6.id",
+          title: "survey.trustscale.question.6.title",
           answerFormat: choiceAnswerFormat1,
         ),
         RPQuestionStep(
-          identifier: "question7",
-          title: "When I use this mobile app, I feel I can count on it completely",
+          identifier: "survey.trustscale.question.7.id",
+          title: "survey.trustscale.question.7.title",
           answerFormat: choiceAnswerFormat1,
         ),
         RPQuestionStep(
-          identifier: "question8",
-          title: "I can always rely on the mobile app for guidance and assistance",
+          identifier: "survey.trustscale.question.8.id",
+          title: "survey.trustscale.question.8.title",
           answerFormat: choiceAnswerFormat1,
         ),
         RPQuestionStep(
-          identifier: "question9",
-          title: "I can trust the information presented to me by the mobile app",
+          identifier: "survey.trustscale.question.9.id",
+          title: "survey.trustscale.question.9.title",
           answerFormat: choiceAnswerFormat1,
         ),
         RPQuestionStep(
-          identifier: "question10",
-          title: "I believe that the mobile app provides me with benefits",
+          identifier: "survey.trustscale.question.10.id",
+          title: "survey.trustscale.question.10.title",
           answerFormat: choiceAnswerFormat1,
         ),
         RPQuestionStep(
-          identifier: "question11",
-          title: "I believe that the mobile app will show me how to get support if I need help",
+          identifier: "survey.trustscale.question.11.id",
+          title: "survey.trustscale.question.11.title",
           answerFormat: choiceAnswerFormat1,
         ),
         RPQuestionStep(
-          identifier: "question12",
-          title: "I believe that the mobile app attends to my needs and preferences",
+          identifier: "survey.trustscale.question.12.id",
+          title: "survey.trustscale.question.12.title",
           answerFormat: choiceAnswerFormat1,
         ),
         RPQuestionStep(
-          identifier: "question13",
-          title: "Is there anything else you would like to tell us about your experience?",
+          identifier: "survey.trustscale.question.13.id",
+          title: "survey.trustscale.question.13.title",
           answerFormat: RPTextAnswerFormat(),
           optional: true,
         ),
         RPCompletionStep(
-            identifier: "completion",
-            title: "Thank you for completing the product evaluation questionnaire!",
-            text: " ")
+            identifier: "survey.trustscale.completition.id",
+            title: "survey.trustscale.completition.title",
+            text: "survey.trustscale.completition.text")
       ]);
 }
 
 class _InformedConsentSurvey implements Survey {
-  String get title => 'Evaluation of the mobile app consent';
+  String get title => "survey.informedconsent.title";
 
-  String get description => 'We would like to know your experience with the informed consent'; // TODO
+  String get description => "survey.informedconsent.description";
 
   Duration get expire => const Duration(days: 7);
 
@@ -380,166 +375,165 @@ class _InformedConsentSurvey implements Survey {
 
   RPChoiceAnswerFormat choiceAnswerFormat1 =
       RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.SingleChoice, choices: [
-    RPChoice(text: "Extremely not understandable.", value: 0),
-    RPChoice(text: "Mostly not understandable.", value: 1),
-    RPChoice(text: "Mostly understandable.", value: 2),
-    RPChoice(text: "Extremely understandable.", value: 3),
+    RPChoice(text: "survey.answerFormat.understandable.extremely.not", value: 0),
+    RPChoice(text: "survey.answerFormat.understandable.mostly.not", value: 1),
+    RPChoice(text: "survey.answerFormat.understandable.mostly.yes", value: 2),
+    RPChoice(text: "survey.answerFormat.understandable.extremely.yes", value: 3),
   ]);
   RPChoiceAnswerFormat choiceAnswerFormat2 =
       RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.SingleChoice, choices: [
-    RPChoice(text: "Extremely easy to navigate.", value: 0),
-    RPChoice(text: "Mostly easy to navigate.", value: 1),
-    RPChoice(text: "Mostly difficult to navigate.", value: 2),
-    RPChoice(text: "Extremely difficult to navigate.", value: 3),
+    RPChoice(text: "survey.answerFormat.navigable.extremely.easy", value: 0),
+    RPChoice(text: "survey.answerFormat.navigable.mostly.easy", value: 1),
+    RPChoice(text: "survey.answerFormat.navigable.mostly.difficult", value: 2),
+    RPChoice(text: "survey.answerFormat.navigable.extremely.difficult", value: 3),
   ]);
   RPChoiceAnswerFormat choiceAnswerFormat3 =
       RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.SingleChoice, choices: [
-    RPChoice(text: "Extremely valuable.", value: 0),
-    RPChoice(text: "Mostly valuable.", value: 1),
-    RPChoice(text: "Mostly inferior.", value: 2),
-    RPChoice(text: "Extremely inferior.", value: 3),
+    RPChoice(text: "survey.answerFormat.value.extremely.valuable", value: 0),
+    RPChoice(text: "survey.answerFormat.value.mostly.valuable", value: 1),
+    RPChoice(text: "survey.answerFormat.value.mostly.inferior", value: 2),
+    RPChoice(text: "survey.answerFormat.value.extremely.inferior", value: 3),
   ]);
   RPChoiceAnswerFormat choiceAnswerFormat4 =
       RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.SingleChoice, choices: [
-    RPChoice(text: "Extremely boring.", value: 0),
-    RPChoice(text: "Mostly boring.", value: 1),
-    RPChoice(text: "Mostly exciting.", value: 2),
-    RPChoice(text: "Extremely exciting.", value: 3),
+    RPChoice(text: "survey.answerFormat.excitement.extremely.boring", value: 0),
+    RPChoice(text: "survey.answerFormat.excitement.mostly.boring", value: 1),
+    RPChoice(text: "survey.answerFormat.excitement.mostly.yes", value: 2),
+    RPChoice(text: "survey.answerFormat.excitement.extremely.yes", value: 3),
   ]);
   RPChoiceAnswerFormat choiceAnswerFormat5 =
       RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.SingleChoice, choices: [
-    RPChoice(text: "Extremely not interesting.", value: 0),
-    RPChoice(text: "Mostly not interesting.", value: 1),
-    RPChoice(text: "Mostly interesting.", value: 2),
-    RPChoice(text: "Extremely interesting.", value: 3),
+    RPChoice(text: "survey.answerFormat.interesting.extremely.not", value: 0),
+    RPChoice(text: "survey.answerFormat.interesting.mostly.not", value: 1),
+    RPChoice(text: "survey.answerFormat.interesting.mostly.yes", value: 2),
+    RPChoice(text: "survey.answerFormat.interesting.extremely.yes", value: 3),
   ]);
   RPChoiceAnswerFormat choiceAnswerFormat6 =
       RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.SingleChoice, choices: [
-    RPChoice(text: "Extremely fast.", value: 0),
-    RPChoice(text: "Mostly fast.", value: 1),
-    RPChoice(text: "Mostly slow.", value: 2),
-    RPChoice(text: "Extremely slow.", value: 3),
+    RPChoice(text: "survey.answerFormat.speed.extremely.fast", value: 0),
+    RPChoice(text: "survey.answerFormat.speed.mostly.fast", value: 1),
+    RPChoice(text: "survey.answerFormat.speed.mostly.slow", value: 2),
+    RPChoice(text: "survey.answerFormat.speed.extremely.slow", value: 3),
   ]);
   RPChoiceAnswerFormat choiceAnswerFormat7 =
       RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.SingleChoice, choices: [
-    RPChoice(text: "Extremely complicated.", value: 0),
-    RPChoice(text: "Mostly complicated.", value: 1),
-    RPChoice(text: "Mostly easy to understand.", value: 2),
-    RPChoice(text: "Extremely easy to understand.", value: 3),
+    RPChoice(text: "survey.answerFormat.complexity.extremely.complicated", value: 0),
+    RPChoice(text: "survey.answerFormat.complexity.mostly.complicated", value: 1),
+    RPChoice(text: "survey.answerFormat.complexity.mostly.easy", value: 2),
+    RPChoice(text: "survey.answerFormat.complexity.extremely.easy", value: 3),
   ]);
   RPChoiceAnswerFormat choiceAnswerFormat8 =
       RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.SingleChoice, choices: [
-    RPChoice(text: "Extremely motivating.", value: 0),
-    RPChoice(text: "Mostly motivating.", value: 1),
-    RPChoice(text: "Mostly demotivating.", value: 2),
-    RPChoice(text: "Extremely demotivating.", value: 3),
+    RPChoice(text: "survey.answerFormat.motivation.extremely.yes", value: 0),
+    RPChoice(text: "survey.answerFormat.motivation.mostly.yes", value: 1),
+    RPChoice(text: "survey.answerFormat.motivation.mostly.not", value: 2),
+    RPChoice(text: "survey.answerFormat.motivation.extremely.not", value: 3),
   ]);
   RPChoiceAnswerFormat choiceAnswerFormat9 =
       RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.SingleChoice, choices: [
-    RPChoice(text: "Extremely inefficient.", value: 0),
-    RPChoice(text: "Mostly inefficient.", value: 1),
-    RPChoice(text: "Mostly efficient.", value: 2),
-    RPChoice(text: "Extremely efficient.", value: 3),
+    RPChoice(text: "survey.answerFormat.efficiency.extremely.not", value: 0),
+    RPChoice(text: "survey.answerFormat.efficiency.mostly.not", value: 1),
+    RPChoice(text: "survey.answerFormat.efficiency.mostly.yes", value: 2),
+    RPChoice(text: "survey.answerFormat.efficiency.extremely.yes", value: 3),
   ]);
   RPChoiceAnswerFormat choiceAnswerFormat10 =
       RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.SingleChoice, choices: [
-    RPChoice(text: "Extremely clear.", value: 0),
-    RPChoice(text: "Mostly clear.", value: 1),
-    RPChoice(text: "Mostly confusing.", value: 2),
-    RPChoice(text: "Extremely confusing.", value: 3),
+    RPChoice(text: "survey.answerFormat.clarity.extremely.clear", value: 0),
+    RPChoice(text: "survey.answerFormat.clarity.mostly.clear", value: 1),
+    RPChoice(text: "survey.answerFormat.clarity.mostly.confusing", value: 2),
+    RPChoice(text: "survey.answerFormat.clarity.extremely.confusing", value: 3),
   ]);
   RPChoiceAnswerFormat choiceAnswerFormat11 =
       RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.SingleChoice, choices: [
-    RPChoice(text: "Extremely impractical.", value: 0),
-    RPChoice(text: "Mostly impractical.", value: 1),
-    RPChoice(text: "Mostly practical.", value: 2),
-    RPChoice(text: "Extremely practical.", value: 3),
+    RPChoice(text: "survey.answerFormat.practicality.extremely.not", value: 0),
+    RPChoice(text: "survey.answerFormat.practicality.mostly.not", value: 1),
+    RPChoice(text: "survey.answerFormat.practicality.mostly.yes", value: 2),
+    RPChoice(text: "survey.answerFormat.practicality.extremely.yes", value: 3),
   ]);
   RPChoiceAnswerFormat choiceAnswerFormat12 =
       RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.SingleChoice, choices: [
-    RPChoice(text: "Extremely organized.", value: 0),
-    RPChoice(text: "Mostly organized.", value: 1),
-    RPChoice(text: "Mostly cluttered.", value: 2),
-    RPChoice(text: "Extremely cluttered.", value: 3),
+    RPChoice(text: "survey.answerFormat.organization.extremely.organized", value: 0),
+    RPChoice(text: "survey.answerFormat.organization.mostly.organized", value: 1),
+    RPChoice(text: "survey.answerFormat.organization.mostly.cluttered", value: 2),
+    RPChoice(text: "survey.answerFormat.organization.extremely.cluttered", value: 3),
   ]);
-  RPTask get survey => RPOrderedTask(identifier: "Informed consent", steps: [
+  RPTask get survey => RPOrderedTask(identifier: "survey.informedconsent.title", steps: [
         RPInstructionStep(
-            identifier: "instruction",
-            title: " ",
+            identifier: "survey.informedconsent.instruction.id",
+            title: "survey.informedconsent.instruction.title",
             imagePath: 'assets/icons/smartphone.png',
-            text:
-                "Please make your evaluation of the app informed consent now.\n\nThe questionnaire consists of attributes that may apply to the app informed consent. You can express your agreement with the attributes by ticking the option that most closely reflects your impression.\n\nIt is your personal opinion that counts. Please remember: there is no wrong or right answer!"),
+            text: "survey.informedconsent.instruction.text"),
         RPQuestionStep(
-          identifier: "question1",
-          title: "The app informed consent was:",
+          identifier: "survey.informedconsent.question.1.id",
+          title: "survey.informedconsent.question.text",
           answerFormat: choiceAnswerFormat1,
         ),
         RPQuestionStep(
-          identifier: "question2",
-          title: "The app informed consent was:",
+          identifier: "survey.informedconsent.question.2.id",
+          title: "survey.informedconsent.question.text",
           answerFormat: choiceAnswerFormat2,
         ),
         RPQuestionStep(
-          identifier: "question3",
-          title: "The app informed consent was:",
+          identifier: "survey.informedconsent.question.3.id",
+          title: "survey.informedconsent.question.text",
           answerFormat: choiceAnswerFormat3,
         ),
         RPQuestionStep(
-          identifier: "question4",
-          title: "The app informed consent was:",
+          identifier: "survey.informedconsent.question.4.id",
+          title: "survey.informedconsent.question.text",
           answerFormat: choiceAnswerFormat4,
         ),
         RPQuestionStep(
-          identifier: "question5",
-          title: "The app informed consent was:",
+          identifier: "survey.informedconsent.question.5.id",
+          title: "survey.informedconsent.question.text",
           answerFormat: choiceAnswerFormat5,
         ),
         RPQuestionStep(
-          identifier: "question6",
-          title: "The app informed consent was:",
+          identifier: "survey.informedconsent.question.6.id",
+          title: "survey.informedconsent.question.text",
           answerFormat: choiceAnswerFormat6,
         ),
         RPQuestionStep(
-          identifier: "question7",
-          title: "The app informed consent was:",
+          identifier: "survey.informedconsent.question.7.id",
+          title: "survey.informedconsent.question.text",
           answerFormat: choiceAnswerFormat7,
         ),
         RPQuestionStep(
-          identifier: "question8",
-          title: "The app informed consent was:",
+          identifier: "survey.informedconsent.question.8.id",
+          title: "survey.informedconsent.question.text",
           answerFormat: choiceAnswerFormat8,
         ),
         RPQuestionStep(
-          identifier: "question9",
-          title: "The app informed consent was:",
+          identifier: "survey.informedconsent.question.9.id",
+          title: "survey.informedconsent.question.text",
           answerFormat: choiceAnswerFormat9,
         ),
         RPQuestionStep(
-          identifier: "question10",
-          title: "The app informed consent was:",
+          identifier: "survey.informedconsent.question.10.id",
+          title: "survey.informedconsent.question.text",
           answerFormat: choiceAnswerFormat10,
         ),
         RPQuestionStep(
-          identifier: "question11",
-          title: "The app informed consent was:",
+          identifier: "survey.informedconsent.question.11.id",
+          title: "survey.informedconsent.question.text",
           answerFormat: choiceAnswerFormat11,
         ),
         RPQuestionStep(
-          identifier: "question12",
-          title: "The app informed consent was:",
+          identifier: "survey.informedconsent.question.12.id",
+          title: "survey.informedconsent.question.text",
           answerFormat: choiceAnswerFormat12,
         ),
         RPCompletionStep(
-            identifier: "completion",
-            title: "Thank you for completing the product evaluation questionnaire!",
-            text: " ")
+            identifier: "survey.informedconsent.completition.id",
+            title: "survey.informedconsent.completition.title",
+            text: "survey.informedconsent.completition.text")
       ]);
 }
 
 class _AppUXSurvey implements Survey {
-  String get title => 'User Experience with the Mobile App';
+  String get title => "survey.appux.title";
 
-  String get description => 'We would like to know your experience with the app'; // TODO
+  String get description => "survey.appux.description";
 
   Duration get expire => const Duration(days: 7);
 
@@ -547,119 +541,118 @@ class _AppUXSurvey implements Survey {
 
   RPChoiceAnswerFormat choiceAnswerFormat1 =
       RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.SingleChoice, choices: [
-    RPChoice(text: "Extremely obstructive.", value: 0),
-    RPChoice(text: "Mostly obstructive.", value: 1),
-    RPChoice(text: "Mostly supportive.", value: 2),
-    RPChoice(text: "Extremely supportive.", value: 3),
+    RPChoice(text: "survey.answerFormat.support.extremely.obstructive", value: 0),
+    RPChoice(text: "survey.answerFormat.support.mostly.obstructive", value: 1),
+    RPChoice(text: "survey.answerFormat.support.mostly.supportive", value: 2),
+    RPChoice(text: "survey.answerFormat.support.extremely.supportive", value: 3),
   ]);
   RPChoiceAnswerFormat choiceAnswerFormat2 =
       RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.SingleChoice, choices: [
-    RPChoice(text: "Extremely complicated.", value: 0),
-    RPChoice(text: "Mostly complicated.", value: 1),
-    RPChoice(text: "Mostly easy.", value: 2),
-    RPChoice(text: "Extremely easy.", value: 3),
+    RPChoice(text: "survey.answerFormat.difficulty.extremely.complicated", value: 0),
+    RPChoice(text: "survey.answerFormat.difficulty.mostly.complicated", value: 1),
+    RPChoice(text: "survey.answerFormat.difficulty.mostly.easy", value: 2),
+    RPChoice(text: "survey.answerFormat.difficulty.extremely.easy", value: 3),
   ]);
   RPChoiceAnswerFormat choiceAnswerFormat3 =
       RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.SingleChoice, choices: [
-    RPChoice(text: "Extremely inefficient.", value: 0),
-    RPChoice(text: "Mostly inefficient.", value: 1),
-    RPChoice(text: "Mostly efficient.", value: 2),
-    RPChoice(text: "Extremely efficient.", value: 3),
+    RPChoice(text: "survey.answerFormat.efficiency.extremely.not", value: 0),
+    RPChoice(text: "survey.answerFormat.efficiency.mostly.not", value: 1),
+    RPChoice(text: "survey.answerFormat.efficiency.mostly.yes", value: 2),
+    RPChoice(text: "survey.answerFormat.efficiency.extremely.yes", value: 3),
   ]);
   RPChoiceAnswerFormat choiceAnswerFormat4 =
       RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.SingleChoice, choices: [
-    RPChoice(text: "Extremely confusing.", value: 0),
-    RPChoice(text: "Mostly confusing.", value: 1),
-    RPChoice(text: "Mostly clear.", value: 2),
-    RPChoice(text: "Extremely clear.", value: 3),
+    RPChoice(text: "survey.answerFormat.clarity.extremely.confusing", value: 0),
+    RPChoice(text: "survey.answerFormat.clarity.mostly.confusing", value: 1),
+    RPChoice(text: "survey.answerFormat.clarity.mostly.clear", value: 2),
+    RPChoice(text: "survey.answerFormat.clarity.extremely.clear", value: 3),
   ]);
   RPChoiceAnswerFormat choiceAnswerFormat5 =
       RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.SingleChoice, choices: [
-    RPChoice(text: "Extremely boring.", value: 0),
-    RPChoice(text: "Mostly boring.", value: 1),
-    RPChoice(text: "Mostly exciting.", value: 2),
-    RPChoice(text: "Extremely exciting.", value: 3),
+    RPChoice(text: "survey.answerFormat.excitement.extremely.boring", value: 0),
+    RPChoice(text: "survey.answerFormat.excitement.mostly.boring", value: 1),
+    RPChoice(text: "survey.answerFormat.excitement.mostly.exciting", value: 2),
+    RPChoice(text: "survey.answerFormat.excitement.extremely.exciting", value: 3),
   ]);
   RPChoiceAnswerFormat choiceAnswerFormat6 =
       RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.SingleChoice, choices: [
-    RPChoice(text: "Extremely not interesting.", value: 0),
-    RPChoice(text: "Mostly not interesting.", value: 1),
-    RPChoice(text: "Mostly interesting.", value: 2),
-    RPChoice(text: "Extremely interesting.", value: 3),
+    RPChoice(text: "survey.answerFormat.interesting.extremely.not", value: 0),
+    RPChoice(text: "survey.answerFormat.interesting.mostly.not", value: 1),
+    RPChoice(text: "survey.answerFormat.interesting.mostly.yes", value: 2),
+    RPChoice(text: "survey.answerFormat.interesting.extremely.yes", value: 3),
   ]);
   RPChoiceAnswerFormat choiceAnswerFormat7 =
       RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.SingleChoice, choices: [
-    RPChoice(text: "Extremely conventional.", value: 0),
-    RPChoice(text: "Mostly conventional.", value: 1),
-    RPChoice(text: "Mostly inventive.", value: 2),
-    RPChoice(text: "Extremely inventive.", value: 3),
+    RPChoice(text: "survey.answerFormat.conventionality.extremely.conventional", value: 0),
+    RPChoice(text: "survey.answerFormat.conventionality.mostly.conventional", value: 1),
+    RPChoice(text: "survey.answerFormat.conventionality.mostly.inventive", value: 2),
+    RPChoice(text: "survey.answerFormat.conventionality.extremely.inventive", value: 3),
   ]);
   RPChoiceAnswerFormat choiceAnswerFormat8 =
       RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.SingleChoice, choices: [
-    RPChoice(text: "Extremely usual.", value: 0),
-    RPChoice(text: "Mostly usual.", value: 1),
-    RPChoice(text: "Mostly leading edge.", value: 2),
-    RPChoice(text: "Extremely leading edge.", value: 3),
+    RPChoice(text: "survey.answerFormat.innovation.extremely.usual", value: 0),
+    RPChoice(text: "survey.answerFormat.innovation.mostly.usual", value: 1),
+    RPChoice(text: "survey.answerFormat.innovation.mostly.leading", value: 2),
+    RPChoice(text: "survey.answerFormat.innovation.extremely.leading", value: 3),
   ]);
 
-  RPTask get survey => RPOrderedTask(identifier: "User Experience with App", steps: [
+  RPTask get survey => RPOrderedTask(identifier: "survey.appux.title", steps: [
         RPInstructionStep(
-            identifier: "instruction",
-            title: " ",
+            identifier: "survey.appux.instruction.id",
+            title: "survey.appux.instruction.title",
             imagePath: 'assets/icons/smartphone.png',
-            text:
-                "Please make your evaluation of this mobile app now.\n\nThe questionnaire consists of attributes that may apply to the app. You can express your agreement with the attributes by ticking the option that most closely reflects your impression.\n\nIt is your personal opinion that counts. Please remember: there is no wrong or right answer!"),
+            text: "survey.appux.instruction.text"),
         RPQuestionStep(
-          identifier: "question1",
-          title: "The app is:",
+          identifier: "survey.appux.question.1.id",
+          title: "survey.appux.question.text",
           answerFormat: choiceAnswerFormat1,
         ),
         RPQuestionStep(
-          identifier: "question2",
-          title: "The app is:",
+          identifier: "survey.appux.question.2.id",
+          title: "survey.appux.question.text",
           answerFormat: choiceAnswerFormat2,
         ),
         RPQuestionStep(
-          identifier: "question3",
-          title: "The app is:",
+          identifier: "survey.appux.question.3.id",
+          title: "survey.appux.question.text",
           answerFormat: choiceAnswerFormat3,
         ),
         RPQuestionStep(
-          identifier: "question4",
-          title: "The app is:",
+          identifier: "survey.appux.question.4.id",
+          title: "survey.appux.question.text",
           answerFormat: choiceAnswerFormat4,
         ),
         RPQuestionStep(
-          identifier: "question5",
-          title: "The app is:",
+          identifier: "survey.appux.question.5.id",
+          title: "survey.appux.question.text",
           answerFormat: choiceAnswerFormat5,
         ),
         RPQuestionStep(
-          identifier: "question6",
-          title: "The app is:",
+          identifier: "survey.appux.question.6.id",
+          title: "survey.appux.question.text",
           answerFormat: choiceAnswerFormat6,
         ),
         RPQuestionStep(
-          identifier: "question7",
-          title: "The app is:",
+          identifier: "survey.appux.question.7.id",
+          title: "survey.appux.question.text",
           answerFormat: choiceAnswerFormat7,
         ),
         RPQuestionStep(
-          identifier: "question8",
-          title: "The app is:",
+          identifier: "survey.appux.question.8.id",
+          title: "survey.appux.question.text",
           answerFormat: choiceAnswerFormat8,
         ),
         RPCompletionStep(
-            identifier: "completion",
-            title: "Thank you for completing the product evaluation questionnaire!",
-            text: " ")
+            identifier: "survey.appux.completition.id",
+            title: "survey.appux.completition.title",
+            text: "survey.appux.completition.text")
       ]);
 }
 
 class _EcologicalParentsSurvey implements Survey {
-  String get title => 'How are you feeling right now?';
+  String get title => "survey.ecological.parents.title";
 
-  String get description => 'We would like to know your current mood'; // TODO
+  String get description => "survey.ecological.parents.description"; // TODO
 
   Duration get expire => const Duration(days: 1);
 
@@ -667,103 +660,103 @@ class _EcologicalParentsSurvey implements Survey {
 
   RPChoiceAnswerFormat choiceAnswerFormat1 =
       RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.SingleChoice, choices: [
-    RPChoice(text: "No", value: 0),
-    RPChoice(text: "Yes", value: 1),
+    RPChoice(text: "survey.answerFormat.no", value: 0),
+    RPChoice(text: "survey.answerFormat.yes", value: 1),
   ]);
   RPChoiceAnswerFormat choiceAnswerFormat2 =
       RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.SingleChoice, choices: [
-    RPChoice(text: "Very slightly or not at all", value: 1),
-    RPChoice(text: "A little", value: 2),
-    RPChoice(text: "Moderately", value: 3),
-    RPChoice(text: "Quite a bit", value: 4),
-    RPChoice(text: "Extremely", value: 5),
+    RPChoice(text: "survey.answerFormat.instensity.slightly", value: 1),
+    RPChoice(text: "survey.answerFormat.instensity.little", value: 2),
+    RPChoice(text: "survey.answerFormat.instensity.moderately", value: 3),
+    RPChoice(text: "survey.answerFormat.instensity.quite", value: 4),
+    RPChoice(text: "survey.answerFormat.instensity.extremely", value: 5),
   ]);
 
   RPChoiceAnswerFormat choiceAnswerFormat3 =
       RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.MultipleChoice, choices: [
-    RPChoice(text: "I am alone", value: 0),
-    RPChoice(text: "I am with my child who is participating in the study", value: 1),
-    RPChoice(text: "I am with my child(ren) who is/are not participating in the study", value: 2),
-    RPChoice(text: "I am with my participating child’s other parent)", value: 3),
-    RPChoice(text: "I am with my friends", value: 4),
-    RPChoice(text: "I am with others we have not mentioned", value: 5)
+    RPChoice(text: "survey.answerFormat.company.alone", value: 0),
+    RPChoice(text: "survey.answerFormat.company.child", value: 1),
+    RPChoice(text: "survey.answerFormat.company.other.child", value: 2),
+    RPChoice(text: "survey.answerFormat.company.other.parent", value: 3),
+    RPChoice(text: "survey.answerFormat.company.friend", value: 4),
+    RPChoice(text: "survey.answerFormat.company.other", value: 5)
   ]);
 
   RPTask get survey => RPOrderedTask(
-        identifier: "Ecological Momentary Assessment Parent",
+        identifier: "survey.ecological.parents.title",
         steps: [
           RPQuestionStep(
-            identifier: "question1",
-            title: "Are you alone?",
+            identifier: "survey.ecological.parents.question.1.id",
+            title: "survey.ecological.parents.question.1.text",
             answerFormat: choiceAnswerFormat3,
           ),
           RPInstructionStep(
-              identifier: "instruction",
-              title: " ",
-              text: "Indicate the extent you have felt this way over the past week."),
+              identifier: "survey.ecological.parents.instruction.id",
+              title: "survey.ecological.parents.instruction.title",
+              text: "survey.ecological.parents.instruction.text"),
           RPQuestionStep(
-            identifier: "question7",
-            title: "Upset",
+            identifier: "survey.ecological.parents.question.2.id",
+            title: "survey.ecological.parents.question.2.text",
             answerFormat: choiceAnswerFormat2,
           ),
           RPQuestionStep(
-            identifier: "question8",
-            title: "Hostile",
+            identifier: "survey.ecological.parents.question.3.id",
+            title: "survey.ecological.parents.question.3.text",
             answerFormat: choiceAnswerFormat2,
           ),
           RPQuestionStep(
-            identifier: "question9",
-            title: "Alert",
+            identifier: "survey.ecological.parents.question.4.id",
+            title: "survey.ecological.parents.question.4.text",
             answerFormat: choiceAnswerFormat2,
           ),
           RPQuestionStep(
-            identifier: "question10",
-            title: "Ashamed",
+            identifier: "survey.ecological.parents.question.5.id",
+            title: "survey.ecological.parents.question.5.text",
             answerFormat: choiceAnswerFormat2,
           ),
           RPQuestionStep(
-            identifier: "question11",
-            title: "Inspired",
+            identifier: "survey.ecological.parents.question.6.id",
+            title: "survey.ecological.parents.question.6.text",
             answerFormat: choiceAnswerFormat2,
           ),
           RPQuestionStep(
-            identifier: "question12",
-            title: "Nervous",
+            identifier: "survey.ecological.parents.question.7.id",
+            title: "survey.ecological.parents.question.7.text",
             answerFormat: choiceAnswerFormat2,
           ),
           RPQuestionStep(
-            identifier: "question13",
-            title: "Determined",
+            identifier: "survey.ecological.parents.question.8.id",
+            title: "survey.ecological.parents.question.8.text",
             answerFormat: choiceAnswerFormat2,
           ),
           RPQuestionStep(
-            identifier: "question14",
-            title: "Attentive",
+            identifier: "survey.ecological.parents.question.9.id",
+            title: "survey.ecological.parents.question.9.text",
             answerFormat: choiceAnswerFormat2,
           ),
           RPQuestionStep(
-            identifier: "question15",
-            title: "Afraid",
+            identifier: "survey.ecological.parents.question.10.id",
+            title: "survey.ecological.parents.question.10.text",
             answerFormat: choiceAnswerFormat2,
           ),
           RPQuestionStep(
-            identifier: "question16",
-            title: "Active",
+            identifier: "survey.ecological.parents.question.11.id",
+            title: "survey.ecological.parents.question.11.text",
             answerFormat: choiceAnswerFormat2,
           ),
           RPCompletionStep(
-            identifier: "completion",
-            title: "Thank you for telling us how you feel",
-            text: "by answering this survey you are helping us connect feelings to physiological signals",
+            identifier: "survey.ecological.parents.completition.id",
+            title: "survey.ecological.parents.completition.title",
+            text: "survey.ecological.parents.completition.text",
           )
         ],
       );
 }
 
 class _EcologicalSurvey implements Survey {
-  String get title => 'How are you feeling right now?';
+  String get title => "survey.ecological.child.title";
 
-  String get description => 'We would like to know your current mood'; // TODO
+  String get description => "survey.ecological.child.description";
 
   Duration get expire => const Duration(days: 1);
 
@@ -771,531 +764,519 @@ class _EcologicalSurvey implements Survey {
 
   RPChoiceAnswerFormat choiceAnswerFormat1 =
       RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.SingleChoice, choices: [
-    RPChoice(text: "No", value: 0),
-    RPChoice(text: "Yes", value: 1),
+    RPChoice(text: "survey.answerFormat.no", value: 0),
+    RPChoice(text: "survey.answerFormat.yes", value: 1),
   ]);
   RPChoiceAnswerFormat choiceAnswerFormat2 =
       RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.SingleChoice, choices: [
-    RPChoice(text: "Very slightly or not at all", value: 1),
-    RPChoice(text: "A little", value: 2),
-    RPChoice(text: "Moderately", value: 3),
-    RPChoice(text: "Quite a bit", value: 4),
-    RPChoice(text: "Extremely", value: 5),
+    RPChoice(text: "survey.answerFormat.instensity.slightly", value: 1),
+    RPChoice(text: "survey.answerFormat.instensity.little", value: 2),
+    RPChoice(text: "survey.answerFormat.instensity.moderately", value: 3),
+    RPChoice(text: "survey.answerFormat.instensity.quite", value: 4),
+    RPChoice(text: "survey.answerFormat.instensity.extremely", value: 5),
   ]);
   RPChoiceAnswerFormat choiceAnswerFormat3 =
       RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.MultipleChoice, choices: [
-    RPChoice(text: "I am alone", value: 0),
-    RPChoice(text: "I am with my mother/father who is also participating in the study", value: 1),
-    RPChoice(text: "I am  with my other parent who is not participating in the study", value: 2),
-    RPChoice(text: "I am with my sister(s) and/ or brother(s)", value: 3),
-    RPChoice(text: "I am with my friends", value: 4),
-    RPChoice(text: "I am with others we have not mentioned", value: 5)
+    RPChoice(text: "survey.answerFormat.company.alone", value: 0),
+    RPChoice(text: "survey.answerFormat.company.parent", value: 1),
+    RPChoice(text: "survey.answerFormat.company.other.parent", value: 2),
+    RPChoice(text: "survey.answerFormat.company.sibling", value: 3),
+    RPChoice(text: "survey.answerFormat.company.friend", value: 4),
+    RPChoice(text: "survey.answerFormat.company.others ", value: 5)
   ]);
 
   RPTask get survey => RPOrderedTask(
-        identifier: "Ecological Momentary Assessment Child",
+        identifier: "survey.ecological.child.title",
         steps: [
           RPQuestionStep(
-            identifier: "question1",
-            title: "Are you alone?",
+            identifier: "survey.ecological.child.question.1.id",
+            title: "survey.ecological.child.question.1.text",
             answerFormat: choiceAnswerFormat3,
           ),
           RPInstructionStep(
-              identifier: "instruction",
-              title: "We would like to know your current mood",
+              identifier: "survey.ecological.child.instruction.id",
+              title: "survey.ecological.child.instruction.title",
               imagePath: 'assets/icons/survey.png',
-              text:
-                  "Below are a list of different feelings and emotions.\n\nPlease read each feeling and choose the option that best matches how much you feel each feeling right now."),
+              text: "survey.ecological.child.instruction.text"),
           RPQuestionStep(
-            identifier: "question2",
-            title: "Miserable",
+            identifier: "survey.ecological.child.question.2.id",
+            title: "survey.ecological.child.question.2.text",
             answerFormat: choiceAnswerFormat2,
           ),
           RPQuestionStep(
-            identifier: "question3",
-            title: "Mad",
+            identifier: "survey.ecological.child.question.3.id",
+            title: "survey.ecological.child.question.3.text",
             answerFormat: choiceAnswerFormat2,
           ),
           RPQuestionStep(
-            identifier: "question4",
-            title: "Lively",
+            identifier: "survey.ecological.child.question.4.id",
+            title: "survey.ecological.child.question.4.text",
             answerFormat: choiceAnswerFormat2,
           ),
           RPQuestionStep(
-            identifier: "question5",
-            title: "Sad",
+            identifier: "survey.ecological.child.question.5.id",
+            title: "survey.ecological.child.question.5.text",
             answerFormat: choiceAnswerFormat2,
           ),
           RPQuestionStep(
-            identifier: "question6",
-            title: "Joyful",
+            identifier: "survey.ecological.child.question.6.id",
+            title: "survey.ecological.child.question.6.text",
             answerFormat: choiceAnswerFormat2,
           ),
           RPQuestionStep(
-            identifier: "question7",
-            title: "Scared",
+            identifier: "survey.ecological.child.question.7.id",
+            title: "survey.ecological.child.question.7.text",
             answerFormat: choiceAnswerFormat2,
           ),
           RPQuestionStep(
-            identifier: "question8",
-            title: "Cheerful",
+            identifier: "survey.ecological.child.question.8.id",
+            title: "survey.ecological.child.question.8.text",
             answerFormat: choiceAnswerFormat2,
           ),
           RPQuestionStep(
-            identifier: "question9",
-            title: "Happy",
+            identifier: "survey.ecological.child.question.9.id",
+            title: "survey.ecological.child.question.9.text",
             answerFormat: choiceAnswerFormat2,
           ),
           RPQuestionStep(
-            identifier: "question10",
-            title: "Afraid",
+            identifier: "survey.ecological.child.question.10.id",
+            title: "survey.ecological.child.question.10.text",
             answerFormat: choiceAnswerFormat2,
           ),
           RPQuestionStep(
-            identifier: "question11",
-            title: "Proud",
+            identifier: "survey.ecological.child.question.11.id",
+            title: "survey.ecological.child.question.11.text",
             answerFormat: choiceAnswerFormat2,
           ),
           RPCompletionStep(
-            identifier: "completion",
-            title: "Thank you for telling us how you feel",
-            text: "By answering this survey you are helping us connect how you feel to your bodily signals",
+            identifier: "survey.ecological.child.completition.id",
+            title: "survey.ecological.child.completition.title",
+            text: "survey.ecological.child.completition.text",
           )
         ],
       );
 }
 
 class _PatientParentsSurvey implements Survey {
-  String get title => "Wristband with biosensor";
+  String get title => "survey.biosensor.patient.parent.title";
 
-  String get description => "We would like to know what it was like for you to wear the wristband.";
+  String get description => "survey.biosensor.patient.parent.description";
   Duration get expire => const Duration(days: 7);
 
   int get minutesToComplete => 5;
 
   RPChoiceAnswerFormat choiceAnswerFormat1 =
       RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.SingleChoice, choices: [
-    RPChoice(text: "Strongly disagree", value: 0),
-    RPChoice(text: "Slightly disagree", value: 1),
-    RPChoice(text: "Agree", value: 2),
-    RPChoice(text: "Strongly agree", value: 3),
+    RPChoice(text: "survey.answerFormat.agreement.strongly.disagree", value: 0),
+    RPChoice(text: "survey.answerFormat.agreement.disagree", value: 1),
+    RPChoice(text: "survey.answerFormat.agreement.agree", value: 2),
+    RPChoice(text: "survey.answerFormat.agreement.strongly.agree", value: 3),
   ]);
 
   RPTask get survey => RPOrderedTask(
-        identifier: "PATIENT_Brugerundersøgelse_biosensor_forældre_v1_29-10-2020",
+        identifier: "survey.biosensor.patient.parent.title",
         steps: [
           RPInstructionStep(
-              identifier: "instruction",
-              title: "Wristband with biosensor",
+              identifier: "survey.biosensor.patient.parent.instruction.id",
+              title: "survey.biosensor.patient.parent.instruction.title",
               imagePath: 'assets/icons/wristwatch.png',
-              text:
-                  "We would like to know what it was like for you to wear the wristband.\n\nPlease read each statement and chose the option that best describes how you feel."),
+              text: "survey.biosensor.patient.parent.instruction.text"),
           RPQuestionStep(
-            identifier: "question1",
-            title: "I like how the wristband looks.",
+            identifier: "survey.biosensor.patient.parent.question.1.id",
+            title: "survey.biosensor.patient.parent.question.1.text",
             answerFormat: choiceAnswerFormat1,
           ),
           RPQuestionStep(
-            identifier: "question2",
-            title: "The wristband looks too big.",
+            identifier: "survey.biosensor.patient.parent.question.2.id",
+            title: "survey.biosensor.patient.parent.question.2.text",
             answerFormat: choiceAnswerFormat1,
           ),
           RPQuestionStep(
-            identifier: "question3",
-            title: "I was embarrassed to wear the wristband.",
+            identifier: "survey.biosensor.patient.parent.question.3.id",
+            title: "survey.biosensor.patient.parent.question.3.text",
             answerFormat: choiceAnswerFormat1,
           ),
           RPQuestionStep(
-            identifier: "question4",
-            title: "The wristband looks cool.",
+            identifier: "survey.biosensor.patient.parent.question.4.id",
+            title: "survey.biosensor.patient.parent.question.4.text",
             answerFormat: choiceAnswerFormat1,
           ),
           RPQuestionStep(
-            identifier: "question5",
-            title: "The wristband attracted too much attention.",
+            identifier: "survey.biosensor.patient.parent.question.5.id",
+            title: "survey.biosensor.patient.parent.question.5.text",
             answerFormat: choiceAnswerFormat1,
           ),
           RPQuestionStep(
-            identifier: "question6",
-            title: "The wristband was comfortable.",
+            identifier: "survey.biosensor.patient.parent.question.6.id",
+            title: "survey.biosensor.patient.parent.question.6.text",
             answerFormat: choiceAnswerFormat1,
           ),
           RPQuestionStep(
-            identifier: "question7",
-            title: "The wristband fit well around my wrist.",
+            identifier: "survey.biosensor.patient.parent.question.7.id",
+            title: "survey.biosensor.patient.parent.question.7.text",
             answerFormat: choiceAnswerFormat1,
           ),
           RPQuestionStep(
-            identifier: "question8",
-            title: "The wristband was easy to use.",
+            identifier: "survey.biosensor.patient.parent.question.8.id",
+            title: "survey.biosensor.patient.parent.question.8.text",
             answerFormat: choiceAnswerFormat1,
           ),
           RPQuestionStep(
-            identifier: "question9",
-            title: "The wristband was easy to charge.",
+            identifier: "survey.biosensor.patient.parent.question.9.id",
+            title: "survey.biosensor.patient.parent.question.9.text",
             answerFormat: choiceAnswerFormat1,
           ),
           RPQuestionStep(
-            identifier: "question10",
-            title: "I often forgot to wear the wristband.",
+            identifier: "survey.biosensor.patient.parent.question.10.id",
+            title: "survey.biosensor.patient.parent.question.10.text",
             answerFormat: choiceAnswerFormat1,
           ),
           RPQuestionStep(
-            identifier: "question11",
-            title: "I wanted to wear the wristband.",
+            identifier: "survey.biosensor.patient.parent.question.11.id",
+            title: "survey.biosensor.patient.parent.question.11.text",
             answerFormat: choiceAnswerFormat1,
           ),
           RPQuestionStep(
-            identifier: "question12",
-            title: "It was irritating to push the button on the wristband.",
+            identifier: "survey.biosensor.patient.parent.question.12.id",
+            title: "survey.biosensor.patient.parent.question.12.text",
             answerFormat: choiceAnswerFormat1,
           ),
           RPQuestionStep(
-            identifier: "question13",
-            title: "I remembered to push the button on the wristband each time my child’s OCD bothered me.",
+            identifier: "survey.biosensor.patient.parent.question.13.id",
+            title: "survey.biosensor.patient.parent.question.13.text",
             answerFormat: choiceAnswerFormat1,
           ),
           RPQuestionStep(
-            identifier: "question14",
-            title:
-                "Is there anything else you would like to tell us about your experience wearing the wristband?",
+            identifier: "survey.biosensor.patient.parent.question.14.id",
+            title: "survey.biosensor.patient.parent.question.14.text",
             answerFormat: RPTextAnswerFormat(),
             optional: true,
           ),
           RPCompletionStep(
-              identifier: "completion",
-              title: "You are done!",
-              text:
-                  "Thank you for telling us what you think about the wristband. Your answers will be taken into account")
+            identifier: "survey.biosensor.patient.parent.completition.id",
+            title: "survey.biosensor.patient.parent.completition.title",
+            text: "survey.biosensor.patient.parent.completition.text",
+          )
         ],
       );
 }
 
 class _PatientSurvey implements Survey {
-  String get title => "Wristband with biosensor";
+  String get title => "survey.biosensor.patient.title";
 
-  String get description => "We would like to know what it was like for you to wear the wristband.";
+  String get description => "survey.biosensor.patient.description";
   Duration get expire => const Duration(days: 7);
 
   int get minutesToComplete => 5;
 
   RPChoiceAnswerFormat choiceAnswerFormat1 =
       RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.SingleChoice, choices: [
-    RPChoice(text: "Strongly disagree", value: 0),
-    RPChoice(text: "Slightly disagree", value: 1),
-    RPChoice(text: "Agree", value: 2),
-    RPChoice(text: "Strongly agree", value: 3),
+    RPChoice(text: "survey.answerFormat.agreement.strongly.disagree", value: 0),
+    RPChoice(text: "survey.answerFormat.agreement.disagree", value: 1),
+    RPChoice(text: "survey.answerFormat.agreement.agree", value: 2),
+    RPChoice(text: "survey.answerFormat.agreement.strongly.agree", value: 3),
   ]);
 
   RPTask get survey => RPOrderedTask(
-        identifier: "PATIENT_Brugerundersøgelse_biosensor_barn_v1_29-10-2020",
+        identifier: "survey.biosensor.patient.title",
         steps: [
           RPInstructionStep(
-              identifier: "instruction",
-              title: "Wristband with biosensor",
+              identifier: "survey.biosensor.patient.instruction.id",
+              title: "survey.biosensor.patient.instruction.title",
               imagePath: 'assets/icons/wristwatch.png',
-              text:
-                  "We would like to know what it was like for you to wear the wristband.\n\nPlease read each statement and chose the option that best describes how you feel."),
+              text: "survey.biosensor.patient.instruction.text"),
           RPQuestionStep(
-            identifier: "question1",
-            title: "I like how the wristband looks.",
+            identifier: "survey.biosensor.patient.question.1.id",
+            title: "survey.biosensor.patient.question.1.text",
             answerFormat: choiceAnswerFormat1,
           ),
           RPQuestionStep(
-            identifier: "question2",
-            title: "The wristband looks too big.",
+            identifier: "survey.biosensor.patient.question.2.id",
+            title: "survey.biosensor.patient.question.2.text",
             answerFormat: choiceAnswerFormat1,
           ),
           RPQuestionStep(
-            identifier: "question3",
-            title: "I was embarrassed to wear the wristband.",
+            identifier: "survey.biosensor.patient.question.3.id",
+            title: "survey.biosensor.patient.question.3.text",
             answerFormat: choiceAnswerFormat1,
           ),
           RPQuestionStep(
-            identifier: "question4",
-            title: "The wristband looks cool.",
+            identifier: "survey.biosensor.patient.question.4.id",
+            title: "survey.biosensor.patient.question.4.text",
             answerFormat: choiceAnswerFormat1,
           ),
           RPQuestionStep(
-            identifier: "question5",
-            title: "The wristband attracted too much attention.",
+            identifier: "survey.biosensor.patient.question.5.id",
+            title: "survey.biosensor.patient.question.5.text",
             answerFormat: choiceAnswerFormat1,
           ),
           RPQuestionStep(
-            identifier: "question6",
-            title: "The wristband was comfortable.",
+            identifier: "survey.biosensor.patient.question.6.id",
+            title: "survey.biosensor.patient.question.6.text",
             answerFormat: choiceAnswerFormat1,
           ),
           RPQuestionStep(
-            identifier: "question7",
-            title: "The wristband fit well around my wrist.",
+            identifier: "survey.biosensor.patient.question.7.id",
+            title: "survey.biosensor.patient.question.7.text",
             answerFormat: choiceAnswerFormat1,
           ),
           RPQuestionStep(
-            identifier: "question8",
-            title: "The wristband was easy to use.",
+            identifier: "survey.biosensor.patient.question.8.id",
+            title: "survey.biosensor.patient.question.8.text",
             answerFormat: choiceAnswerFormat1,
           ),
           RPQuestionStep(
-            identifier: "question9",
-            title: "The wristband was easy to charge.",
+            identifier: "survey.biosensor.patient.question.9.id",
+            title: "survey.biosensor.patient.question.9.text",
             answerFormat: choiceAnswerFormat1,
           ),
           RPQuestionStep(
-            identifier: "question10",
-            title: "I often forgot to wear the wristband.",
+            identifier: "survey.biosensor.patient.question.10.id",
+            title: "survey.biosensor.patient.question.10.text",
             answerFormat: choiceAnswerFormat1,
           ),
           RPQuestionStep(
-            identifier: "question11",
-            title: "I wanted to wear the wristband.",
+            identifier: "survey.biosensor.patient.question.11.id",
+            title: "survey.biosensor.patient.question.11.text",
             answerFormat: choiceAnswerFormat1,
           ),
           RPQuestionStep(
-            identifier: "question12",
-            title: "It was irritating to push the button on the wristband.",
+            identifier: "survey.biosensor.patient.question.12.id",
+            title: "survey.biosensor.patient.question.12.text",
             answerFormat: choiceAnswerFormat1,
           ),
           RPQuestionStep(
-            identifier: "question13",
-            title: "I remembered to push the button on the wristband every time OCD was bothering me.",
+            identifier: "survey.biosensor.patient.question.13.id",
+            title: "survey.biosensor.patient.question.13.text",
             answerFormat: choiceAnswerFormat1,
           ),
           RPQuestionStep(
-            identifier: "question14",
-            title:
-                "Is there anything else you would like to tell us about your experience wearing the wristband?",
+            identifier: "survey.biosensor.patient.question.14.id",
+            title: "survey.biosensor.patient.question.14.text",
             answerFormat: RPTextAnswerFormat(),
             optional: true,
           ),
           RPCompletionStep(
-            identifier: "completion",
-            title: "You are done!",
-            text:
-                "Thank you for telling us what you think about the wristband. Your answers will help us make the wristband better",
+            identifier: "survey.biosensor.patient.completition.id",
+            title: "survey.biosensor.patient.completition.title",
+            text: "survey.biosensor.patient.completition.text",
           )
         ],
       );
 }
 
 class _ControlParentsSurvey implements Survey {
-  String get title => "Wristband with biosensor";
+  String get title => "survey.biosensor.control.parent.title";
 
-  String get description => "We would like to know what it was like for you to wear the wristband.";
+  String get description => "survey.biosensor.control.parent.description";
   Duration get expire => const Duration(days: 7);
 
   int get minutesToComplete => 5;
 
   RPChoiceAnswerFormat choiceAnswerFormat1 =
       RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.SingleChoice, choices: [
-    RPChoice(text: "Strongly disagree", value: 0),
-    RPChoice(text: "Slightly disagree", value: 1),
-    RPChoice(text: "Agree", value: 2),
-    RPChoice(text: "Strongly agree", value: 3),
+    RPChoice(text: "survey.answerFormat.agreement.strongly.disagree", value: 0),
+    RPChoice(text: "survey.answerFormat.agreement.disagree", value: 1),
+    RPChoice(text: "survey.answerFormat.agreement.agree", value: 2),
+    RPChoice(text: "survey.answerFormat.agreement.strongly.agree", value: 3),
   ]);
 
   RPTask get survey => RPOrderedTask(
-        identifier: "KONTROL_Brugerundersøgelse_biosensor_forældre_v1_29-10-2020",
+        identifier: "survey.biosensor.control.parent.title",
         steps: [
           RPInstructionStep(
-              identifier: "instruction",
-              title: "Wristband with biosensor",
+              identifier: "survey.biosensor.control.parent.instruction.id",
+              title: "survey.biosensor.control.parent.instruction.title",
               imagePath: 'assets/icons/wristwatch.png',
-              text:
-                  "We would like to know what it was like for you to wear the wristband.\n\nPlease read each statement and chose the option that best describes how you feel."),
+              text: "survey.biosensor.control.parent.instruction.text"),
           RPQuestionStep(
-            identifier: "question1",
-            title: "I like how the wristband looks.",
+            identifier: "survey.biosensor.control.parent.question.1.id",
+            title: "survey.biosensor.control.parent.question.1.text",
             answerFormat: choiceAnswerFormat1,
           ),
           RPQuestionStep(
-            identifier: "question2",
-            title: "The wristband looks too big.",
+            identifier: "survey.biosensor.control.parent.question.2.id",
+            title: "survey.biosensor.control.parent.question.2.text",
             answerFormat: choiceAnswerFormat1,
           ),
           RPQuestionStep(
-            identifier: "question3",
-            title: "I was embarrassed to wear the wristband.",
+            identifier: "survey.biosensor.control.parent.question.3.id",
+            title: "survey.biosensor.control.parent.question.3.text",
             answerFormat: choiceAnswerFormat1,
           ),
           RPQuestionStep(
-            identifier: "question4",
-            title: "The wristband looks cool.",
+            identifier: "survey.biosensor.control.parent.question.4.id",
+            title: "survey.biosensor.control.parent.question.4.text",
             answerFormat: choiceAnswerFormat1,
           ),
           RPQuestionStep(
-            identifier: "question5",
-            title: "The wristband attracted too much attention.",
+            identifier: "survey.biosensor.control.parent.question.5.id",
+            title: "survey.biosensor.control.parent.question.5.text",
             answerFormat: choiceAnswerFormat1,
           ),
           RPQuestionStep(
-            identifier: "question6",
-            title: "The wristband was comfortable.",
+            identifier: "survey.biosensor.control.parent.question.6.id",
+            title: "survey.biosensor.control.parent.question.6.text",
             answerFormat: choiceAnswerFormat1,
           ),
           RPQuestionStep(
-            identifier: "question7",
-            title: "The wristband fit well around my wrist.",
+            identifier: "survey.biosensor.control.parent.question.7.id",
+            title: "survey.biosensor.control.parent.question.7.text",
             answerFormat: choiceAnswerFormat1,
           ),
           RPQuestionStep(
-            identifier: "question8",
-            title: "The wristband was easy to use.",
+            identifier: "survey.biosensor.control.parent.question.8.id",
+            title: "survey.biosensor.control.parent.question.8.text",
             answerFormat: choiceAnswerFormat1,
           ),
           RPQuestionStep(
-            identifier: "question9",
-            title: "The wristband was easy to charge.",
+            identifier: "survey.biosensor.control.parent.question.9.id",
+            title: "survey.biosensor.control.parent.question.9.text",
             answerFormat: choiceAnswerFormat1,
           ),
           RPQuestionStep(
-            identifier: "question10",
-            title: "I often forgot to wear the wristband.",
+            identifier: "survey.biosensor.control.parent.question.10.id",
+            title: "survey.biosensor.control.parent.question.10.text",
             answerFormat: choiceAnswerFormat1,
           ),
           RPQuestionStep(
-            identifier: "question11",
-            title: "I wanted to wear the wristband.",
+            identifier: "survey.biosensor.control.parent.question.11.id",
+            title: "survey.biosensor.control.parent.question.11.text",
             answerFormat: choiceAnswerFormat1,
           ),
           RPQuestionStep(
-            identifier: "question12",
-            title: "It was irritating to push the button on the wristband.",
+            identifier: "survey.biosensor.control.parent.question.12.id",
+            title: "survey.biosensor.control.parent.question.12.text",
             answerFormat: choiceAnswerFormat1,
           ),
           RPQuestionStep(
-            identifier: "question13",
-            title: "I remembered to push the button on the wristband each time my child’s stress botheredme.",
+            identifier: "survey.biosensor.control.parent.question.13.id",
+            title: "survey.biosensor.control.parent.question.13.text",
             answerFormat: choiceAnswerFormat1,
           ),
           RPQuestionStep(
-            identifier: "question14",
-            title:
-                "Is there anything else you would like to tell us about your experience wearing the wristband?",
+            identifier: "survey.biosensor.control.parent.question.14.id",
+            title: "survey.biosensor.control.parent.question.14.text",
             answerFormat: RPTextAnswerFormat(),
             optional: true,
           ),
           RPCompletionStep(
-            identifier: "completion",
-            title: "You are done!",
-            text:
-                "Thank you for telling us what you think about the wristband. Your answers will be taken into account",
+            identifier: "survey.biosensor.control.parent.completition.id",
+            title: "survey.biosensor.control.parent.completition.title",
+            text: "survey.biosensor.control.parent.completition.text",
           )
         ],
       );
 }
 
 class _ControlSurvey implements Survey {
-  String get title => "Wristband with biosensor";
+  String get title => "survey.biosensor.control.patient.title";
 
-  String get description => "We would like to know what it was like for you to wear the wristband.";
+  String get description => "survey.biosensor.control.patient.description";
   Duration get expire => const Duration(days: 7);
 
   int get minutesToComplete => 5;
 
   RPChoiceAnswerFormat choiceAnswerFormat1 =
       RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.SingleChoice, choices: [
-    RPChoice(text: "Strongly disagree", value: 0),
-    RPChoice(text: "Slightly disagree", value: 1),
-    RPChoice(text: "Agree", value: 2),
-    RPChoice(text: "Strongly agree", value: 3),
+    RPChoice(text: "survey.answerFormat.agreement.strongly.disagree", value: 0),
+    RPChoice(text: "survey.answerFormat.agreement.disagree", value: 1),
+    RPChoice(text: "survey.answerFormat.agreement.agree", value: 2),
+    RPChoice(text: "survey.answerFormat.agreement.strongly.agree", value: 3),
   ]);
 
   RPTask get survey => RPOrderedTask(
-        identifier: "KONTROL_Brugerundersøgelse_biosensor_barn_v1_29-10-2020",
+        identifier: "survey.biosensor.control.patient.title",
         steps: [
           RPInstructionStep(
-              identifier: "instruction",
-              title: "Wristband with biosensor",
+              identifier: "survey.biosensor.control.patient.instruction.id",
+              title: "survey.biosensor.control.patient.instruction.title",
               imagePath: 'assets/icons/wristwatch.png',
-              text:
-                  "We would like to know what it was like for you to wear the wristband.\n\nPlease read each statement and chose the option that best describes how you feel."),
+              text: "survey.biosensor.control.patient.instruction.text"),
           RPQuestionStep(
-            identifier: "question1",
-            title: "I like how the wristband looks.",
+            identifier: "survey.biosensor.control.patient.question.1.id",
+            title: "survey.biosensor.control.patient.question.1.text",
             answerFormat: choiceAnswerFormat1,
           ),
           RPQuestionStep(
-            identifier: "question2",
-            title: "The wristband looks too big.",
+            identifier: "survey.biosensor.control.patient.question.2.id",
+            title: "survey.biosensor.control.patient.question.2.text",
             answerFormat: choiceAnswerFormat1,
           ),
           RPQuestionStep(
-            identifier: "question3",
-            title: "I was embarrassed to wear the wristband.",
+            identifier: "survey.biosensor.control.patient.question.3.id",
+            title: "survey.biosensor.control.patient.question.3.text",
             answerFormat: choiceAnswerFormat1,
           ),
           RPQuestionStep(
-            identifier: "question4",
-            title: "The wristband looks cool.",
+            identifier: "survey.biosensor.control.patient.question.4.id",
+            title: "survey.biosensor.control.patient.question.4.text",
             answerFormat: choiceAnswerFormat1,
           ),
           RPQuestionStep(
-            identifier: "question5",
-            title: "The wristband attracted too much attention.",
+            identifier: "survey.biosensor.control.patient.question.5.id",
+            title: "survey.biosensor.control.patient.question.5.text",
             answerFormat: choiceAnswerFormat1,
           ),
           RPQuestionStep(
-            identifier: "question6",
-            title: "The wristband was comfortable.",
+            identifier: "survey.biosensor.control.patient.question.6.id",
+            title: "survey.biosensor.control.patient.question.6.text",
             answerFormat: choiceAnswerFormat1,
           ),
           RPQuestionStep(
-            identifier: "question7",
-            title: "The wristband fit well around my wrist.",
+            identifier: "survey.biosensor.control.patient.question.7.id",
+            title: "survey.biosensor.control.patient.question.7.text",
             answerFormat: choiceAnswerFormat1,
           ),
           RPQuestionStep(
-            identifier: "question8",
-            title: "The wristband was easy to use.",
+            identifier: "survey.biosensor.control.patient.question.8.id",
+            title: "survey.biosensor.control.patient.question.8.text",
             answerFormat: choiceAnswerFormat1,
           ),
           RPQuestionStep(
-            identifier: "question9",
-            title: "The wristband was easy to charge.",
+            identifier: "survey.biosensor.control.patient.question.9.id",
+            title: "survey.biosensor.control.patient.question.9.text",
             answerFormat: choiceAnswerFormat1,
           ),
           RPQuestionStep(
-            identifier: "question10",
-            title: "I often forgot to wear the wristband.",
+            identifier: "survey.biosensor.control.patient.question.10.id",
+            title: "survey.biosensor.control.patient.question.10.text",
             answerFormat: choiceAnswerFormat1,
           ),
           RPQuestionStep(
-            identifier: "question11",
-            title: "I wanted to wear the wristband.",
+            identifier: "survey.biosensor.control.patient.question.11.id",
+            title: "survey.biosensor.control.patient.question.11.text",
             answerFormat: choiceAnswerFormat1,
           ),
           RPQuestionStep(
-            identifier: "question12",
-            title: "It was irritating to push the button on the wristband.",
+            identifier: "survey.biosensor.control.patient.question.12.id",
+            title: "survey.biosensor.control.patient.question.12.text",
             answerFormat: choiceAnswerFormat1,
           ),
           RPQuestionStep(
-            identifier: "question13",
-            title: "I remembered to push the button on the wristband every time stress was bothering me.",
+            identifier: "survey.biosensor.control.patient.question.13.id",
+            title: "survey.biosensor.control.patient.question.13.text",
             answerFormat: choiceAnswerFormat1,
           ),
           RPQuestionStep(
-            identifier: "question14",
-            title:
-                "Is there anything else you would like to tell us about your experience wearing the wristband?",
+            identifier: "survey.biosensor.control.patient.question.14.id",
+            title: "survey.biosensor.control.patient.question.14.text",
             answerFormat: RPTextAnswerFormat(),
             optional: true,
           ),
           RPCompletionStep(
-            identifier: "completion",
-            title: "You are done!",
-            text:
-                "Thank you for telling us what you think about the wristband. Your answers will help us make the wristband better",
+            identifier: "survey.biosensor.control.patient.completition.id",
+            title: "survey.biosensor.control.patient.completition.title",
+            text: "survey.biosensor.control.patient.completition.text",
           )
         ],
       );
 }
 
 class _ExposureSurvey implements Survey {
-  String get title => "Fight back against OCD";
+  String get title => "survey.exposure.title";
 
-  String get description => 'Describe the obsession and/or the compulsion you are working on';
+  String get description => "survey.exposure.description";
 
   Duration get expire => const Duration(days: 1);
 
@@ -1303,202 +1284,182 @@ class _ExposureSurvey implements Survey {
 
   RPChoiceAnswerFormat choiceAnswerFormat1 =
       RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.SingleChoice, choices: [
-    RPChoice(text: "My discomfort/fear/disgust will grow and grow until I can't take it any more", value: 0),
-    RPChoice(text: "My discomfort/fear/disgust will not change", value: 1),
-    RPChoice(text: "I will feel less discomfort/fear/disgust over time", value: 2),
+    RPChoice(text: "survey.answerFormat.discomfort.future.more", value: 0),
+    RPChoice(text: "survey.answerFormat.discomfort.future.same", value: 1),
+    RPChoice(text: "survey.answerFormat.discomfort.future.less", value: 2),
   ]);
   RPChoiceAnswerFormat choiceAnswerFormat2 =
       RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.SingleChoice, choices: [
-    RPChoice(text: "Read an exciting book", value: 0),
-    RPChoice(text: "Eat something delicious", value: 1),
-    RPChoice(text: "Watch an episode of your favorite series", value: 2),
-    RPChoice(text: "Do something fun with friends/ family (make a plan)", value: 3),
-    RPChoice(text: "Play a game", value: 4),
-    RPChoice(text: "Play a computer/videogame", value: 5),
-    RPChoice(text: "I will do something not listed here", value: 6),
+    RPChoice(text: "survey.answerFormat.reward.read", value: 0),
+    RPChoice(text: "survey.answerFormat.reward.eat", value: 1),
+    RPChoice(text: "survey.answerFormat.reward.tvshow", value: 2),
+    RPChoice(text: "survey.answerFormat.reward.plan", value: 3),
+    RPChoice(text: "survey.answerFormat.reward.game", value: 4),
+    RPChoice(text: "survey.answerFormat.reward.videogame", value: 5),
+    RPChoice(text: "survey.answerFormat.reward.other", value: 6),
   ]);
 
   RPChoiceAnswerFormat choiceAnswerFormat3 =
       RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.SingleChoice, choices: [
-    RPChoice(text: "No", value: 0),
-    RPChoice(text: "Yes", value: 1),
+    RPChoice(text: "survey.answerFormat.no", value: 0),
+    RPChoice(text: "survey.answerFormat.yes", value: 1),
   ]);
 
   RPChoiceAnswerFormat choiceAnswerFormat4 =
       RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.MultipleChoice, choices: [
-    RPChoice(text: "Fear/ disgust of pollution, infection, dirt, bacteria, diseases", value: 0),
-    RPChoice(text: "Fear of harming myself or others (physically or emotionally)", value: 1),
-    RPChoice(text: "Disturbing thoughts/ images about sex, pregnancy or sexuality", value: 2),
-    RPChoice(text: "Need to collect things or fear of losing something", value: 3),
-    RPChoice(
-        text:
-            "Magical/superstitious thoughts or actions (e.g. lucky numbers or words; stepping on a crack can break someone’s back)",
-        value: 4),
-    RPChoice(
-        text: "Worry about having a disease or that a body part or your appearance looks wrong)", value: 5),
-    RPChoice(text: "Fear of offending God or Satan or worry about what is right and wrong", value: 6),
-    RPChoice(
-        text: "Symmetry and order (e.g. that things must lie in a certain way, or things must be in order)",
-        value: 7),
-    RPChoice(text: "Needing to do something until it feels right or not wrong", value: 8),
+    RPChoice(text: "survey.answerFormat.obsesion.dirt", value: 0),
+    RPChoice(text: "survey.answerFormat.obsesion.harm", value: 1),
+    RPChoice(text: "survey.answerFormat.obsesion.sexuality", value: 2),
+    RPChoice(text: "survey.answerFormat.obsesion.collect", value: 3),
+    RPChoice(text: "survey.answerFormat.obsesion.superstition", value: 4),
+    RPChoice(text: "survey.answerFormat.obsesion.disease", value: 5),
+    RPChoice(text: "survey.answerFormat.obsesion.offense", value: 6),
+    RPChoice(text: "survey.answerFormat.obsesion.symmetry", value: 7),
+    RPChoice(text: "survey.answerFormat.obsesion.right", value: 8),
   ]);
 
   RPChoiceAnswerFormat choiceAnswerFormat5 =
       RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.MultipleChoice, choices: [
-    RPChoice(text: "Washing or cleaning", value: 0),
-    RPChoice(text: "Checking (like if you have remembered to lock the door)", value: 1),
-    RPChoice(text: "Repeating actions (like turning the lights on and off several times)", value: 2),
-    RPChoice(text: "Counting things", value: 3),
-    RPChoice(text: "Fixing things or trying to get things in a certain place or symmetrical", value: 4),
-    RPChoice(text: "Collecting things or difficulty throwing things away", value: 5),
-    RPChoice(
-        text:
-            "Magical/superstitious behavior (like doing or saying things a certain number of times to prevent something bad from happening)",
-        value: 6),
-    RPChoice(text: "Involving your parents in a ritual or asking for reassurance", value: 7),
-    RPChoice(text: "Doing something until it feels right", value: 8),
+    RPChoice(text: "survey.answerFormat.compulsion.cleaning", value: 0),
+    RPChoice(text: "survey.answerFormat.compulsion.checking", value: 1),
+    RPChoice(text: "survey.answerFormat.compulsion.repeating", value: 2),
+    RPChoice(text: "survey.answerFormat.compulsion.counting", value: 3),
+    RPChoice(text: "survey.answerFormat.compulsion.fixing", value: 4),
+    RPChoice(text: "survey.answerFormat.compulsion.collecting", value: 5),
+    RPChoice(text: "survey.answerFormat.compulsion.superstition", value: 6),
+    RPChoice(text: "survey.answerFormat.compulsion.parents", value: 7),
+    RPChoice(text: "survey.answerFormat.compulsion.right", value: 8),
   ]);
 
   RPChoiceAnswerFormat choiceAnswerFormat6 =
       RPChoiceAnswerFormat(answerStyle: RPChoiceAnswerStyle.SingleChoice, choices: [
-    RPChoice(text: "My discomfort grew until I couldn’t stand it anymore", value: 0),
-    RPChoice(text: "My discomfort went up and down", value: 1),
-    RPChoice(text: "My discomfort did not really change", value: 2),
-    RPChoice(text: "I felt less discomfort with time", value: 3),
+    RPChoice(text: "survey.answerFormat.discomfort.more", value: 0),
+    RPChoice(text: "survey.answerFormat.discomfort.mixed", value: 1),
+    RPChoice(text: "survey.answerFormat.discomfort.same", value: 2),
+    RPChoice(text: "survey.answerFormat.discomfort.less", value: 3),
   ]);
 
-  RPTask get survey => RPOrderedTask(identifier: "Exposure_SUDS_v2_2021.04.22", steps: [
+  RPTask get survey => RPOrderedTask(identifier: "survey.exposure.title", steps: [
         RPInstructionStep(
-            identifier: "instruction1",
-            title: "Exposure and response prevention",
+            identifier: "survey.exposure.instruction.1.id",
+            title: "survey.exposure.instruction.1.title",
             imagePath: 'assets/icons/survey.png',
-            text:
-                "This survey is designed to help you practice fighting OCD. To take back control from OCD, you must do the opposite of what OCD wants you to do. For example, you may touch some food left over on your plate or say some “dangerous” words. Or, if the OCD tells you to touch things a certain number of times, don't do it. Going against OCD can be scary or upsetting. But, to take control back from OCD, you can’t run away from the discomfort or fear - you must tough it out.\n\nDuring the exercise, notice what happens to the feeling of discomfort for up to 15 minutes.\n\nWhile you practice going against OCD, your parents or your therapist can help you use this form."),
+            text: "survey.exposure.instruction.1.text"),
         RPQuestionStep(
-          identifier: "question1",
-          title:
-              "What do you think is going to happen to your feelings of discomfort, fear or disgust when you practice doing the opposite of what OCD wants you to do? ",
+          identifier: "survey.exposure.question.1.id",
+          title: "survey.exposure.question.1.text",
           answerFormat: choiceAnswerFormat1,
         ),
         RPInstructionStep(
-            identifier: "instruction2",
-            title: " ",
-            text:
-                "Many children and adolescents think that their fear or discomfort will get worse and worse when they practice going against OCD, but that is not what happens.\n\nFor many children and adolescents, the fear/discomfort goes up and down during the exercise. For some people, the fear/discomfort becomes less during the exercise. Others find that their fear/discomfort does not really change during the exercise, but then they learn that fear and discomfort are not dangerous. With lots of practice, you should really notice that you feel less fear, disgust or discomfort."),
+            identifier: "survey.exposure.instruction.2.id",
+            title: "survey.exposure.instruction.2.title",
+            text: "survey.exposure.instruction.2.text"),
         RPQuestionStep(
-          identifier: "question2",
-          title:
-              "Before you start practicing going against OCD, prepare for the exercise by answering some questions.\n\nYou're going to do something difficult and that should be rewarded. How will you reward yourself after the exercise of fighting OCD?",
+          identifier: "survey.exposure.question.2.id",
+          title: "survey.exposure.question.1=2.text",
           answerFormat: choiceAnswerFormat2,
         ),
 
         RPQuestionStep(
-          identifier: "question3",
-          title:
-              "In the exercise, I will work on an obsession.\n\n(Obsessions are unwanted thoughts or images that keep popping into your head and that you can't stop thinking about, even though you want to be rid of them.)",
+          identifier: "survey.exposure.question.3.id",
+          title: "survey.exposure.question.3.text",
           answerFormat: choiceAnswerFormat3,
         ),
 
         // TODO: if previous question is no skip
         RPQuestionStep(
-          identifier: "question4",
-          title: "The obsession I want to work on now is about:",
+          identifier: "survey.exposure.question.4.id",
+          title: "survey.exposure.question.4.text",
           answerFormat: choiceAnswerFormat4,
           optional: true,
         ),
         RPQuestionStep(
-          identifier: "question5",
-          title:
-              "You can describe the obsession you want to work on here, if you would like to describe it detail or if you could not find an obsession in the list.",
+          identifier: "survey.exposure.question.5.id",
+          title: "survey.exposure.question.5.text",
           answerFormat: RPTextAnswerFormat(),
           optional: true,
         ),
 
 ////////////////////////////////
         RPQuestionStep(
-          identifier: "question6",
-          title:
-              "I want to work with a compulsion.\n\n\n(Compulsions are things that OCD wants you to do. If you try to resist doing these things or try not to do what OCD tells you to, you may feel afraid, worried, frustrated, angry or upset.)",
+          identifier: "survey.exposure.question.6.id",
+          title: "survey.exposure.question.6.text",
           answerFormat: choiceAnswerFormat3,
         ),
 
         // TODO: if previous question is no skip
         RPQuestionStep(
-          identifier: "question7",
-          title: "The compulsion I will work on is about:",
+          identifier: "survey.exposure.question.7.id",
+          title: "survey.exposure.question.7.text",
           answerFormat: choiceAnswerFormat5,
           optional: true,
         ),
 
         RPQuestionStep(
-          identifier: "question8",
-          title:
-              "You can describe the compulsion you want to work on here, if you would like to describe it detail or if you could not find a compulsion in the list.",
+          identifier: "survey.exposure.question.8.id",
+          title: "survey.exposure.question.8.text",
           answerFormat: RPTextAnswerFormat(),
           optional: true,
         ),
 
         RPQuestionStep(
-            identifier: "question9",
-            title:
-                "Describe how you will practice going against OCD. How do you want to work on the obsession and/or compulsion (for example touching the toilet seat or making your desk messy):",
+            identifier: "survey.exposure.question.9.id",
+            title: "survey.exposure.question.9.text",
             answerFormat: RPTextAnswerFormat(),
             optional: true),
 
         RPInstructionStep(
-            identifier: "instruction",
-            title: " ",
+            identifier: "survey.exposure.instruction.3.id",
+            title: "survey.exposure.instruction.3.title",
             imagePath: 'assets/images/timer_task.png',
-            text:
-                "On the next pages, you will be asked to note how much fear or discomfort you experience while you go against OCD.\n\nStart by noting how uncomfortable it is for you to think about doing the exercise you just described on a scale of 0 to 10. 0 means that you are completely calm or not at all afraid. 10 means that you are so scared or upset you can’t stand it."),
+            text: "survey.exposure.instruction.3.text"),
 
         // TODO: TIMER STEP IN BETWEEN ALL OF THE FOLLOWING QUESTIONS
         RPQuestionStep(
-          identifier: "question10",
-          title: "How much discomfort do you feel after 1 minute?",
+          identifier: "survey.exposure.question.10.id",
+          title: "survey.exposure.question.10.text",
           answerFormat: RPSliderAnswerFormat(minValue: 0, maxValue: 10, divisions: 10),
           optional: true,
         ),
         RPQuestionStep(
-          identifier: "question11",
-          title: "How much discomfort do you feel after 3 minutes?",
+          identifier: "survey.exposure.question.11.id",
+          title: "survey.exposure.question.11.text",
           answerFormat: RPSliderAnswerFormat(minValue: 0, maxValue: 10, divisions: 10),
           optional: true,
         ),
         RPQuestionStep(
-          identifier: "question12",
-          title: "How much discomfort do you feel after 5 minutes?",
+          identifier: "survey.exposure.question.12.id",
+          title: "survey.exposure.question.12.text",
           answerFormat: RPSliderAnswerFormat(minValue: 0, maxValue: 10, divisions: 10),
           optional: true,
         ),
         RPQuestionStep(
-          identifier: "question13",
-          title: "How much discomfort do you feel after 7 minutes?",
+          identifier: "survey.exposure.question.13.id",
+          title: "survey.exposure.question.13.text",
           answerFormat: RPSliderAnswerFormat(minValue: 0, maxValue: 10, divisions: 10),
           optional: true,
         ),
         RPQuestionStep(
-          identifier: "question14",
-          title: "How much discomfort do you feel after 10 minutes?",
+          identifier: "survey.exposure.question.14.id",
+          title: "survey.exposure.question.14.text",
           answerFormat: RPSliderAnswerFormat(minValue: 0, maxValue: 10, divisions: 10),
           optional: true,
         ),
         RPQuestionStep(
-          identifier: "question15",
-          title: "How much discomfort do you feel after 15 minutes?",
+          identifier: "survey.exposure.question.15.id",
+          title: "survey.exposure.question.15.text",
           answerFormat: RPSliderAnswerFormat(minValue: 0, maxValue: 10, divisions: 10),
           optional: true,
         ),
         RPQuestionStep(
-            identifier: "question16",
-            title:
-                "Well done! You stayed with some difficult feelings!\n\nWhat happened to those difficult feelings when you practiced doing the opposite of what OCD wants?",
+            identifier: "survey.exposure.question.16.id",
+            title: "survey.exposure.question.16.text",
             answerFormat: choiceAnswerFormat6),
 
         RPCompletionStep(
-          identifier: "completion",
-          title: "You are done with the exercise!",
-          text: "Remember to give yourself that reward",
+          identifier: "survey.exposure.completition.id",
+          title: "survey.exposure.completition.title",
+          text: "survey.exposure.completition.text",
         )
       ]);
 }

@@ -120,30 +120,30 @@ class StudyAppBLoC {
     print('$runtimeType configuring...');
 
     // force the app to refresh the user credentials and study information?
-    if (forceSignOutAndStudyReload) await bloc.leaveStudyAndSignOut();
+    if (forceSignOutAndStudyReload) await leaveStudyAndSignOut();
 
     //  initialize the CARP backend, if needed
-    if (bloc.deploymentMode != DeploymentMode.LOCAL) {
-      await bloc.backend.initialize();
-      await bloc.backend.authenticate(context);
-      await bloc.backend.getStudyInvitation(context);
+    if (deploymentMode != DeploymentMode.LOCAL) {
+      await backend.initialize();
+      await backend.authenticate(context);
+      await backend.getStudyInvitation(context);
     }
 
     // find the right informed consent, if needed
-    bloc.informedConsent = (!bloc.hasInformedConsentBeenAccepted)
-        ? await bloc.resourceManager.getInformedConsent()
+    bloc.informedConsent = (!hasInformedConsentBeenAccepted)
+        ? await resourceManager.getInformedConsent()
         : null;
 
     // set up the messaging part
-    await bloc.messageManager.init();
-    await bloc.getMessages();
+    await messageManager.init();
+    await getMessages();
 
     // set up and initialize sensing
     await Sensing().initialize();
     // print(toJsonString(bloc.deployment));
 
     // initialize the UI data models
-    bloc.data.init(Sensing().controller!);
+    data.init(Sensing().controller!);
 
     debug('$runtimeType configuration done.');
     _state = StudyAppState.configured;

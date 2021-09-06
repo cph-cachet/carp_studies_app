@@ -9,23 +9,7 @@ class CarpBackend {
   static const String CLIENT_ID = "carp";
   static const String CLIENT_SECRET = "carp";
 
-  // SharedPreferences
-  static const String OAUTH_TOKEN_KEY = 'token';
-  static const String USERNAME_KEY = 'username';
-  static const String STUDY_ID_KEY = 'study_id';
-  static const String STUDY_DEPLOYMENT_ID_KEY = "study_deployment_id";
-
-  String get _oauthTokenKey =>
-      '${Settings().appName}.$OAUTH_TOKEN_KEY'.toLowerCase();
-  String get _usernameKey =>
-      '${Settings().appName}.$USERNAME_KEY'.toLowerCase();
-  String get _studyIdKey => '${Settings().appName}.$STUDY_ID_KEY'.toLowerCase();
-  String get _studyDeploymentIdKey =>
-      '${Settings().appName}.$STUDY_DEPLOYMENT_ID_KEY'.toLowerCase();
-
   CarpApp? _app;
-  OAuthToken? _oauthToken;
-  String? _username;
 
   CarpApp? get app => _app;
 
@@ -39,31 +23,11 @@ class CarpBackend {
   String get clientID => CLIENT_ID;
   String get clientSecret => CLIENT_SECRET;
 
-  OAuthToken? get oauthToken {
-    if (_oauthToken == null) {
-      String? tokenString = Settings().preferences!.getString(_oauthTokenKey);
+  OAuthToken? get oauthToken => LocalSettings().oauthToken;
+  set oauthToken(OAuthToken? token) => LocalSettings().oauthToken = token;
 
-      _oauthToken = (tokenString != null)
-          ? OAuthToken.fromJson(jsonDecode(tokenString))
-          : null;
-    }
-    return _oauthToken!;
-  }
-
-  set oauthToken(OAuthToken? token) {
-    _oauthToken = token;
-    Settings()
-        .preferences!
-        .setString(_oauthTokenKey, jsonEncode(token?.toJson()));
-  }
-
-  String? get username =>
-      (_username ??= Settings().preferences!.getString(_usernameKey));
-
-  set username(String? username) {
-    _username = username;
-    Settings().preferences!.setString(_usernameKey, username!);
-  }
+  String? get username => LocalSettings().username;
+  set username(String? username) => LocalSettings().username = username;
 
   String? get studyId =>
       (app?.studyId ??= Settings().preferences!.getString(_studyIdKey));

@@ -15,8 +15,6 @@ enum StudyAppState {
 }
 
 class StudyAppBLoC {
-  static const INFORMED_CONSENT_ACCEPTED_KEY = 'informed_consent_accepted';
-
   StudyAppState _state = StudyAppState.created;
   final CarpBackend _backend = CarpBackend();
   final CarpStydyAppDataModel _data = CarpStydyAppDataModel();
@@ -85,9 +83,6 @@ class StudyAppBLoC {
             .firstWhereOrNull((measure) => measure.type == type) !=
         null);
   }
-
-  String get _informedConsentAcceptedKey =>
-      '$studyDeploymentId.$INFORMED_CONSENT_ACCEPTED_KEY'.toLowerCase();
 
   /// Initialize this BLOC. Called before being used for anything.
   Future<void> initialize() async {
@@ -164,7 +159,7 @@ class StudyAppBLoC {
 
   /// Has the informed consent been shown to, and accepted by the user?
   bool get hasInformedConsentBeenAccepted =>
-      Settings().preferences!.getBool(_informedConsentAcceptedKey) ?? false;
+      LocalSettings().hasInformedConsentBeenAccepted;
 
   /// Should the informed consent be shown to the user?
   bool get shouldInformedConsentBeShown =>
@@ -176,7 +171,7 @@ class StudyAppBLoC {
   ///  * accepted by the user
   ///  * successfully uploaded to CARP
   set informedConsentAccepted(bool accepted) =>
-      Settings().preferences!.setBool(_informedConsentAcceptedKey, accepted);
+      LocalSettings().informedConsentAccepted = accepted;
 
   Future<void> getMessages() async =>
       _messages ??= await messageManager.messages;

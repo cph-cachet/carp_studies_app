@@ -29,24 +29,25 @@ class CarpBackend {
   String? get username => LocalSettings().username;
   set username(String? username) => LocalSettings().username = username;
 
-  String? get studyId =>
-      (app?.studyId ??= Settings().preferences!.getString(_studyIdKey));
+  String? get studyId => LocalSettings().studyId;
 
   set studyId(String? id) {
-    CarpService().app!.studyId = id;
-    Settings().preferences!.setString(_studyIdKey, id!);
+    if (CarpService().isConfigured) CarpService().app!.studyId = id;
+    LocalSettings().studyId = id!;
   }
 
-  String? get studyDeploymentId => (app?.studyDeploymentId ??=
-      Settings().preferences!.getString(_studyDeploymentIdKey))!;
+  String? get studyDeploymentId => LocalSettings().studyDeploymentId;
 
   set studyDeploymentId(String? id) {
     if (CarpService().isConfigured) CarpService().app!.studyDeploymentId = id;
-    Settings().preferences!.setString(_studyDeploymentIdKey, id!);
+    LocalSettings().studyDeploymentId = id;
   }
 
   static CarpBackend _instance = CarpBackend._();
-  CarpBackend._() : super();
+  CarpBackend._() : super() {
+    // make sure that the json functions are loaded
+    DomainJsonFactory();
+  }
 
   factory CarpBackend() => _instance;
 
@@ -96,7 +97,7 @@ class CarpBackend {
 
   /// Get the study invitation.
   Future<void> getStudyInvitation(BuildContext context) async {
-    if (studyId == null || studyDeploymentId == null) {
+    if (studyDeploymentId == null) {
       ActiveParticipationInvitation? _invitation =
           await CarpParticipationService().getStudyInvitation(context);
       debug('CARP Study Invitation: $_invitation');
@@ -121,7 +122,7 @@ class CarpBackend {
       info(
           'Informed consent document uploaded successfully - id: ${document.id}');
       bloc.informedConsentAccepted = true;
-    } on Exception catch (e) {
+    } on Exception catch (error) {
       bloc.informedConsentAccepted = false;
       warning('Informed consent upload failed for username: $username');
     }
@@ -129,14 +130,10 @@ class CarpBackend {
     return document;
   }
 
-  Future<void> leaveStudy() async {
-    await Settings().preferences!.remove(_studyIdKey);
-    await Settings().preferences!.remove(_studyDeploymentIdKey);
-  }
+  Future<void> leaveStudy() async => await LocalSettings().eraseStudyIds();
 
   Future<void> signOut() async {
     if (CarpService().authenticated) await CarpService().signOut();
-    await Settings().preferences!.remove(_usernameKey);
-    await Settings().preferences!.remove(_oauthTokenKey);
+    await LocalSettings().eraseAuthCredentials();
   }
 }

@@ -12,6 +12,7 @@ class LocalSettings {
   static const String USERNAME_KEY = 'username';
   static const String STUDY_ID_KEY = 'study_id';
   static const String STUDY_DEPLOYMENT_ID_KEY = "study_deployment_id";
+  static const INFORMED_CONSENT_ACCEPTED_KEY = 'informed_consent_accepted';
 
   String get _oauthTokenKey =>
       '${Settings().appName}.$OAUTH_TOKEN_KEY'.toLowerCase();
@@ -20,9 +21,14 @@ class LocalSettings {
   String get _studyIdKey => '${Settings().appName}.$STUDY_ID_KEY'.toLowerCase();
   String get _studyDeploymentIdKey =>
       '${Settings().appName}.$STUDY_DEPLOYMENT_ID_KEY'.toLowerCase();
+  String get _informedConsentAcceptedKey =>
+      '$studyDeploymentId.$INFORMED_CONSENT_ACCEPTED_KEY'.toLowerCase();
 
   OAuthToken? _oauthToken;
   String? _username;
+  String? _studyId;
+  String? _studyDeploymentId;
+  bool? _hasInformedConsentBeenAccepted;
 
   OAuthToken? get oauthToken {
     if (_oauthToken == null) {
@@ -48,5 +54,45 @@ class LocalSettings {
   set username(String? username) {
     _username = username;
     Settings().preferences!.setString(_usernameKey, username!);
+  }
+
+  String? get studyId =>
+      (_studyId ??= Settings().preferences!.getString(_studyIdKey));
+
+  set studyId(String? id) {
+    _studyId = id;
+    Settings().preferences!.setString(_studyIdKey, id!);
+  }
+
+  String? get studyDeploymentId => (_studyDeploymentId ??=
+      Settings().preferences!.getString(_studyDeploymentIdKey));
+
+  set studyDeploymentId(String? id) {
+    _studyDeploymentId = id;
+    Settings().preferences!.setString(_studyDeploymentIdKey, id!);
+  }
+
+  /// Has the informed consent been shown to, and accepted by the user?
+  bool get hasInformedConsentBeenAccepted => _hasInformedConsentBeenAccepted ??=
+      Settings().preferences!.getBool(_informedConsentAcceptedKey) ?? false;
+
+  /// Specify if the informed consent been handled.
+  set informedConsentAccepted(bool accepted) =>
+      Settings().preferences!.setBool(_informedConsentAcceptedKey, accepted);
+
+  Future<void> eraseStudyIds() async {
+    _studyId = null;
+    _studyDeploymentId = null;
+    _hasInformedConsentBeenAccepted = null;
+    await Settings().preferences!.remove(_studyIdKey);
+    await Settings().preferences!.remove(_studyDeploymentIdKey);
+    await Settings().preferences!.remove(_informedConsentAcceptedKey);
+  }
+
+  Future<void> eraseAuthCredentials() async {
+    _username = null;
+    _oauthToken = null;
+    await Settings().preferences!.remove(_usernameKey);
+    await Settings().preferences!.remove(_oauthTokenKey);
   }
 }

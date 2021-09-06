@@ -37,6 +37,7 @@ import 'package:research_package/research_package.dart';
 part 'blocs/app_bloc.dart';
 part 'blocs/common.dart';
 
+part 'data/local_settings.dart';
 part 'data/carp_backend.dart';
 part 'data/message_manager.dart';
 part 'data/localization_loader.dart';

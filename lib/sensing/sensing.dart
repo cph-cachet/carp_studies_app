@@ -55,9 +55,6 @@ class Sensing {
   factory Sensing() => _instance;
 
   Sensing._() {
-    // make sure that the json functions are loaded
-    DomainJsonFactory();
-
     // create and register external sampling packages
     //SamplingPackageRegistry.register(ConnectivitySamplingPackage());
     SamplingPackageRegistry().register(ContextSamplingPackage());
@@ -96,8 +93,10 @@ class Sensing {
         description = await LocalResourceManager().getStudyDescription();
 
         // deploy this protocol using the on-phone deployment service
+        // re-use the study deployment id - if available
         _status = await SmartphoneDeploymentService().createStudyDeployment(
           protocol!,
+          LocalSettings().studyDeploymentId,
         );
 
         break;
@@ -115,14 +114,14 @@ class Sensing {
         _status = await CustomProtocolDeploymentService()
             .getStudyDeploymentStatus(bloc.backend.studyDeploymentId!);
 
-        // now register the CARP data manager for uploading data back to CARP
+        // register the CARP data manager for uploading data back to CARP
         DataManagerRegistry().register(CarpDataManager());
 
         break;
     }
 
-    // make sure to store the deployment id locally on the phone
-    bloc.backend.studyDeploymentId = studyDeploymentId!;
+    // store the deployment id locally on the phone
+    LocalSettings().studyDeploymentId = studyDeploymentId!;
 
     // create and configure a client manager for this phone
     client = SmartPhoneClientManager(

@@ -4,10 +4,10 @@ class MeasuresCardDataModel extends DataModel {
   final Map<String, int> _samplingTable = {};
 
   /// Stream of measures, i.e. [DataPoint] measures.
-  Stream<DataPoint> get measureEvents => controller.data;
+  Stream<DataPoint> get measureEvents => controller!.data;
 
   /// The total sampling size
-  int get samplingSize => controller.samplingSize;
+  int get samplingSize => controller!.samplingSize;
 
   /// A table with sampling size of each measure type
   Map<String, int> get samplingTable => _samplingTable;
@@ -26,7 +26,7 @@ class MeasuresCardDataModel extends DataModel {
     controller.data.listen((dataPoint) {
       final String key = dataPoint.carpHeader.dataFormat.name;
       if (!_samplingTable.containsKey(key)) _samplingTable[key] = 0;
-      _samplingTable[key]++;
+      _samplingTable[key] = _samplingTable[key]! + 1;
     });
   }
 

@@ -5,17 +5,16 @@ class StudyCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    AssetLocalizations locale = AssetLocalizations.of(context);
+    AssetLocalizations locale = AssetLocalizations.of(context)!;
 
-    String description() =>
-        '${studyPageModel.description ?? locale.translate('widgets.study_card.no_description')}\n\n'
-        '${locale.translate('widgets.study_card.title')}: \"${bloc.deployment.protocolDescription.title}\".\n'
-        '${locale.translate('widgets.study_card.purpose')}: \"${bloc.deployment.protocolDescription.purpose}\".\n\n'
+    String studyDescription() => '${locale.translate(studyPageModel.description)}\n\n'
+        '${locale.translate('widgets.study_card.title')}: \"${locale.translate(studyPageModel.title)}\".\n'
+        '${locale.translate('widgets.study_card.purpose')}: \"${locale.translate(studyPageModel.purpose)}\".\n\n'
         '${locale.translate('widgets.study_card.responsibles')}:\n'
-        '${bloc.deployment.responsible.name}, ${bloc.deployment.responsible.title}\n\n'
-        //'${bloc.study.pi.affiliation}\n'
-        '${bloc.deployment.responsible.address}\n'
-        '${bloc.deployment.responsible.email}\n';
+        '${locale.translate(studyPageModel.piName)}, ${locale.translate(studyPageModel.piTitle)}\n\n'
+        '${locale.translate(studyPageModel.piAffiliation)}\n'
+        '${locale.translate(studyPageModel.piAddress)}\n'
+        '${locale.translate(studyPageModel.piEmail)}\n';
 
     return Card(
       semanticContainer: true,
@@ -27,40 +26,43 @@ class StudyCard extends StatelessWidget {
           Row(children: [
             Expanded(
                 child: Container(
-              height: 120.0,
+              height: MediaQuery.of(context).size.height * 0.2,
               color: Color(0xFFF1F9FF),
-              child: Image.asset('assets/images/park.png',
-                  fit: BoxFit.fitHeight), //TODO get image from studyPageModel
+              child: Image.asset('assets/images/books.png', fit: BoxFit.fitHeight),
             ))
           ]),
           ExpansionTile(
-              title: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(width: 15),
-                  Text(studyPageModel.name,
-                      style: aboutCardTitleStyle.copyWith(
-                          color: Theme.of(context).primaryColor)),
-                  SizedBox(width: 15),
-                  Text(studyPageModel.affiliation,
-                      style: aboutCardSubtitleStyle.copyWith(
-                          color: Theme.of(context).primaryColor)),
-                ],
-              ),
+            title: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Row(children: [
-                  SizedBox(width: 15),
-                  Flexible(
-                      fit: FlexFit.loose,
+                SizedBox(width: 15),
+                Text(locale.translate(studyPageModel.title),
+                    style: aboutCardTitleStyle.copyWith(color: Theme.of(context).primaryColor)),
+                SizedBox(width: 15),
+                Text(locale.translate(studyPageModel.piAffiliation),
+                    style: aboutCardSubtitleStyle.copyWith(color: Theme.of(context).primaryColor)),
+              ],
+            ),
+            children: [
+              Container(
+                height: MediaQuery.of(context).size.height * 0.3,
+                child: Scrollbar(
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.vertical,
+                    child: Padding(
+                      padding: const EdgeInsets.all(15.0),
                       child: Text(
-                        description(),
+                        studyDescription(),
                         style: aboutCardContentStyle,
                         textAlign: TextAlign.justify,
-                      )),
-                  SizedBox(width: 15),
-                ]),
-              ]),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ],
       ),
       shape: RoundedRectangleBorder(

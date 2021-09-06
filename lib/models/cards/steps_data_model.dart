@@ -1,7 +1,7 @@
 part of carp_study_app;
 
 class StepsCardDataModel extends DataModel {
-  PedometerDatum _lastStep;
+  PedometerDatum? _lastStep;
   final Map<int, int> _weeklySteps = {};
 
   /// A map of weekly steps organized by the day of the week.
@@ -31,9 +31,14 @@ class StepsCardDataModel extends DataModel {
     controller.data
         .where((dataPoint) => dataPoint.data is PedometerDatum)
         .listen((pedometerDataPoint) {
-      PedometerDatum _step = pedometerDataPoint.data as PedometerDatum;
-      _weeklySteps[DateTime.now().weekday] +=
-          (_lastStep != null) ? _step.stepCount - _lastStep.stepCount : 0;
+      PedometerDatum? _step = pedometerDataPoint.data as PedometerDatum?;
+      if (_lastStep != null)
+        _weeklySteps[DateTime.now().weekday] =
+            _weeklySteps[DateTime.now().weekday]! +
+                _step!.stepCount! -
+                _lastStep!.stepCount!;
+      else
+        _weeklySteps[DateTime.now().weekday] = 0;
       _lastStep = _step;
     });
   }

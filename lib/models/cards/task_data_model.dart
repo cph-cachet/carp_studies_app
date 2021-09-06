@@ -23,7 +23,7 @@ class TaskCardDataModel extends DataModel {
             (task) => task.state == UserTaskState.done && task.type == taskType)
         .forEach((task) {
       if (!tasksTable.containsKey(task.title)) tasksTable[task.title] = 0;
-      tasksTable[task.title]++;
+      tasksTable[task.title] = tasksTable[task.title]! + 1;
     });
     return tasksTable;
   }

@@ -1,14 +1,20 @@
 part of carp_study_app;
 
 class CardHeader extends StatelessWidget {
-  final Icon iconAssetName;
-  final String title;
-  final List<String> values;
-  final String heroTag;
-  final String routeName;
-  final List<Color> colors;
+  final Icon? iconAssetName;
+  final String? title;
+  final List<String>? values;
+  final String? heroTag;
+  final String? routeName;
+  final List<Color>? colors;
 
-  CardHeader({this.heroTag, this.iconAssetName, this.title, this.values, this.routeName, this.colors});
+  CardHeader(
+      {this.heroTag,
+      this.iconAssetName,
+      this.title,
+      this.values,
+      this.routeName,
+      this.colors});
 
   @override
   Widget build(BuildContext context) {
@@ -25,17 +31,18 @@ class CardHeader extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(title.toUpperCase(), style: dataCardTitleStyle),
+                Text(title!.toUpperCase(), style: dataCardTitleStyle),
                 SizedBox(height: 10),
                 Row(
-                  children: values
+                  children: values!
                       .asMap()
                       .entries
                       .map(
                         (entry) => Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            Icon(Icons.circle, color: colors[entry.key], size: 12.0),
+                            Icon(Icons.circle,
+                                color: colors![entry.key], size: 12.0),
                             Text(' ' + entry.value + ' ', style: legendStyle),
                           ],
                         ),

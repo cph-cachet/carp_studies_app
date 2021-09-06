@@ -5,6 +5,7 @@ class StudyBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AssetLocalizations locale = AssetLocalizations.of(context)!;
     return Container(
       color: Theme.of(context).accentColor,
       child: Column(
@@ -12,7 +13,7 @@ class StudyBanner extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           ExpandablePanel(
-            header: Container(
+            collapsed: Container(
               height: 110,
               color: Theme.of(context).accentColor,
               child: Column(
@@ -24,8 +25,9 @@ class StudyBanner extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(studyPageModel.name,
-                          style: studyTitleStyle.copyWith(color: Theme.of(context).primaryColor))
+                      Text(locale.translate(studyPageModel.title),
+                          style: studyTitleStyle.copyWith(
+                              color: Theme.of(context).primaryColor))
                     ],
                   ),
                 ],
@@ -37,8 +39,9 @@ class StudyBanner extends StatelessWidget {
                 color: Theme.of(context).accentColor,
                 child: Column(children: <Widget>[
                   Expanded(
-                      child: Text(studyPageModel.description,
-                          style: studyDescriptionStyle.copyWith(color: Theme.of(context).primaryColor),
+                      child: Text(locale.translate(studyPageModel.description),
+                          style: studyDescriptionStyle.copyWith(
+                              color: Theme.of(context).primaryColor),
                           textAlign: TextAlign.justify)),
                 ])),
             theme: ExpandableThemeData(

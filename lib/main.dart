@@ -37,6 +37,7 @@ import 'package:research_package/research_package.dart';
 part 'blocs/app_bloc.dart';
 part 'blocs/common.dart';
 
+part 'data/local_settings.dart';
 part 'data/carp_backend.dart';
 part 'data/message_manager.dart';
 part 'data/localization_loader.dart';
@@ -93,6 +94,9 @@ part 'ui/cards/study_progress_card.dart';
 
 late CarpStudyApp app;
 void main() async {
+  // make sure that the json functions are loaded
+  DomainJsonFactory();
+
   app = CarpStudyApp();
   runApp(app);
 }
@@ -104,5 +108,5 @@ void main() async {
 final bloc = StudyAppBLoC(
   debugLevel: DebugLevel.DEBUG,
   deploymentMode: DeploymentMode.LOCAL,
-  forceSignOutAndStudyReload: true,
+  forceSignOutAndStudyReload: false,
 );

@@ -104,4 +104,5 @@ void main() async {
 final bloc = StudyAppBLoC(
   debugLevel: DebugLevel.DEBUG,
   deploymentMode: DeploymentMode.LOCAL,
+  forceSignOutAndStudyReload: true,
 );

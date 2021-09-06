@@ -8,7 +8,9 @@ class MobilityCardWidget extends StatefulWidget {
       {this.colors = const [CACHET.BLUE_2, CACHET.BLUE_1, CACHET.RED_1]});
 
   factory MobilityCardWidget.withSampleData(MobilityCardDataModel model) {
-    return MobilityCardWidget(_createChartList(model, [CACHET.BLUE_2, CACHET.BLUE_1, CACHET.RED_1]), model);
+    return MobilityCardWidget(
+        _createChartList(model, [CACHET.BLUE_2, CACHET.BLUE_1, CACHET.RED_1]),
+        model);
   }
 
   static const secondaryMeasureAxisId = 'secondaryMeasureAxisId';
@@ -59,9 +61,12 @@ class _MobilityCardWidgetState extends State<MobilityCardWidget> {
   @override
   void initState() {
     // Get current day mobility // TODO: REFACTOR
-    _measures['weeklyHomeStay']![1] = widget.model.weeklyHomeStay[DateTime.now().weekday];
-    _measures['weeklyDistanceTraveled']![0] = widget.model.weeklyDistanceTraveled[DateTime.now().weekday];
-    _measures['weeklyPlaces']![2] = widget.model.weeklyPlaces[DateTime.now().weekday];
+    _measures['weeklyHomeStay']![1] =
+        widget.model.weeklyHomeStay[DateTime.now().weekday];
+    _measures['weeklyDistanceTraveled']![0] =
+        widget.model.weeklyDistanceTraveled[DateTime.now().weekday];
+    _measures['weeklyPlaces']![2] =
+        widget.model.weeklyPlaces[DateTime.now().weekday];
 
     super.initState();
   }
@@ -81,12 +86,16 @@ class _MobilityCardWidgetState extends State<MobilityCardWidget> {
             children: <Widget>[
               CardHeader(
                 title: locale.translate('cards.mobility.title'),
-                iconAssetName: Icon(Icons.emoji_transportation, color: Theme.of(context).primaryColor),
+                iconAssetName: Icon(Icons.emoji_transportation,
+                    color: Theme.of(context).primaryColor),
                 heroTag: 'mobility-card',
                 values: [
-                  '${_measures['weeklyDistanceTraveled']![0]} ' + locale.translate('cards.mobility.distance'),
-                  '${_measures['weeklyHomeStay']![1]} ' + locale.translate('cards.mobility.homestay'),
-                  '${_measures['weeklyPlaces']![2]} ' + locale.translate('cards.mobility.places'),
+                  '${_measures['weeklyDistanceTraveled']![0]} ' +
+                      locale.translate('cards.mobility.distance'),
+                  '${_measures['weeklyHomeStay']![1]} ' +
+                      locale.translate('cards.mobility.homestay'),
+                  '${_measures['weeklyPlaces']![2]} ' +
+                      locale.translate('cards.mobility.places'),
                 ],
                 colors: widget.colors,
               ),
@@ -100,10 +109,12 @@ class _MobilityCardWidgetState extends State<MobilityCardWidget> {
                   ),
                   primaryMeasureAxis: charts.NumericAxisSpec(
                       renderSpec: renderSpecNum,
-                      tickProviderSpec: charts.BasicNumericTickProviderSpec(desiredTickCount: 3)),
+                      tickProviderSpec: charts.BasicNumericTickProviderSpec(
+                          desiredTickCount: 3)),
                   secondaryMeasureAxis: charts.NumericAxisSpec(
                       renderSpec: renderSpecNum,
-                      tickProviderSpec: charts.BasicNumericTickProviderSpec(desiredTickCount: 3)),
+                      tickProviderSpec: charts.BasicNumericTickProviderSpec(
+                          desiredTickCount: 3)),
                   customSeriesRenderers: [
                     charts.LineRendererConfig(
                       customRendererId: 'customLine',
@@ -115,13 +126,16 @@ class _MobilityCardWidgetState extends State<MobilityCardWidget> {
                   defaultInteractions: true,
                   selectionModels: [
                     charts.SelectionModelConfig(
-                        type: charts.SelectionModelType.info, changedListener: _infoSelectionModelChanged),
+                        type: charts.SelectionModelType.info,
+                        changedListener: _infoSelectionModelChanged),
                   ],
                   behaviors: [
                     charts.LinePointHighlighter(
                       defaultRadiusPx: 0,
-                      showHorizontalFollowLine: charts.LinePointHighlighterFollowLineType.none,
-                      showVerticalFollowLine: charts.LinePointHighlighterFollowLineType.all,
+                      showHorizontalFollowLine:
+                          charts.LinePointHighlighterFollowLineType.none,
+                      showVerticalFollowLine:
+                          charts.LinePointHighlighterFollowLineType.all,
                     ),
                     charts.SelectNearest(
                       selectAcrossAllDrawAreaComponents: true,
@@ -161,10 +175,12 @@ class MobilityOuterStatefulWidget extends StatefulWidget {
   MobilityOuterStatefulWidget(this.model);
 
   @override
-  _MobilityOuterStatefulWidgetState createState() => _MobilityOuterStatefulWidgetState();
+  _MobilityOuterStatefulWidgetState createState() =>
+      _MobilityOuterStatefulWidgetState();
 }
 
-class _MobilityOuterStatefulWidgetState extends State<MobilityOuterStatefulWidget> {
+class _MobilityOuterStatefulWidgetState
+    extends State<MobilityOuterStatefulWidget> {
   @override
   Widget build(BuildContext context) {
     return MobilityCardWidget.withSampleData(widget.model);

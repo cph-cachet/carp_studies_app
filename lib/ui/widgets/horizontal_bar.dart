@@ -14,8 +14,10 @@ class HorizontalBar extends StatelessWidget {
       print(values!.elementAt(i));
       print(colors!.elementAt(i));
       print(names!.elementAt(i));
-      assetList
-          .add(MyAsset(size: values!.elementAt(i), color: colors!.elementAt(i), name: names!.elementAt(i)));
+      assetList.add(MyAsset(
+          size: values!.elementAt(i),
+          color: colors!.elementAt(i),
+          name: names!.elementAt(i)));
     }
     return assetList;
   }
@@ -25,7 +27,10 @@ class HorizontalBar extends StatelessWidget {
 
     return Center(
       child: MyAssetsBar(
-          width: width * .9, background: Color(0xCFD8DC), order: OrderType.Descending, assets: _assetList()),
+          width: width * .9,
+          background: Color(0xCFD8DC),
+          order: OrderType.Descending,
+          assets: _assetList()),
     );
   }
 }
@@ -124,7 +129,10 @@ class MyAssetsBar extends StatelessWidget {
             ),
             width: width,
             height: height,
-            child: Row(children: assets.map((singleAsset) => _createSingle(singleAsset)).toList()),
+            child: Row(
+                children: assets
+                    .map((singleAsset) => _createSingle(singleAsset))
+                    .toList()),
           ),
         ),
         SizedBox(height: 10),
@@ -140,8 +148,13 @@ class MyAssetsBar extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Icon(Icons.circle, color: entry.value.color, size: 12.0),
-                      Text(' ' + entry.value.name! + ' ' + entry.value.size.toString(),
-                          style: legendStyle, textAlign: TextAlign.right),
+                      Text(
+                          ' ' +
+                              entry.value.name! +
+                              ' ' +
+                              entry.value.size.toString(),
+                          style: legendStyle,
+                          textAlign: TextAlign.right),
                     ],
                   ),
                 ),

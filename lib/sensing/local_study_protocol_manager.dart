@@ -32,11 +32,11 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
 
       // Biosensor experience: collect wristband UX - triggers on week 7 (TODO)
       _protocol!.addTriggeredTask(
-          ScheduledTrigger(
-            time: TimeOfDay(hour: 6, minute: 0),
-            recurrenceRule: RecurrenceRule(Frequency.WEEKLY, interval: 1),
-          ),
-          //type: RecurrentType.weekly, dayOfWeek: DateTime.sunday, time: Time(hour: 8, minute: 00)),
+          // ScheduledTrigger(
+          //   time: TimeOfDay(hour: 6, minute: 0),
+          //   recurrenceRule: RecurrenceRule(Frequency.WEEKLY, interval: 1),
+          // ),
+          RecurrentScheduledTrigger(type: RecurrentType.weekly, time: Time(hour: 6, minute: 00)),
           AppTask(
             type: SurveyUserTask.SURVEY_TYPE,
             title: surveys.patient.title,
@@ -53,10 +53,11 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
 
       /// collect exposure exercises - triggers daily
       _protocol!.addTriggeredTask(
-          ScheduledTrigger(
-            time: TimeOfDay(hour: 6, minute: 00),
-            recurrenceRule: RecurrenceRule(Frequency.DAILY),
-          ),
+          // ScheduledTrigger(
+          //   time: TimeOfDay(hour: 6, minute: 00),
+          //   recurrenceRule: RecurrenceRule(Frequency.DAILY),
+          // ),
+          RecurrentScheduledTrigger(type: RecurrentType.daily, time: Time(hour: 6, minute: 00)),
           AppTask(
             type: SurveyUserTask.SURVEY_TYPE,
             title: surveys.exposure.title,
@@ -95,10 +96,11 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
 
       // collect symptoms hierarchy (obsessions) - triggers weekly
       _protocol!.addTriggeredTask(
-          ScheduledTrigger(
-            time: TimeOfDay(hour: 6, minute: 00),
-            recurrenceRule: RecurrenceRule(Frequency.WEEKLY),
-          ),
+          // ScheduledTrigger(
+          //   time: TimeOfDay(hour: 6, minute: 00),
+          //   recurrenceRule: RecurrenceRule(Frequency.WEEKLY),
+          // ),
+          RecurrentScheduledTrigger(type: RecurrentType.weekly, time: Time(hour: 6, minute: 00)),
           AppTask(
             type: SurveyUserTask.SURVEY_TYPE,
             title: surveys.symptomHierarchyObsessions.title,
@@ -115,10 +117,11 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
 
       // collect symptoms hierarchy (compulsions) - triggers weekly
       _protocol!.addTriggeredTask(
-          ScheduledTrigger(
-            time: TimeOfDay(hour: 6, minute: 00),
-            recurrenceRule: RecurrenceRule(Frequency.WEEKLY),
-          ),
+          // ScheduledTrigger(
+          //   time: TimeOfDay(hour: 6, minute: 00),
+          //   recurrenceRule: RecurrenceRule(Frequency.WEEKLY),
+          // ),
+          RecurrentScheduledTrigger(type: RecurrentType.weekly, time: Time(hour: 6, minute: 00)),
           AppTask(
             type: SurveyUserTask.SURVEY_TYPE,
             title: surveys.symptomHierarchyCoumpulsions.title,
@@ -135,10 +138,11 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
 
       // Audio task: Exposure exercise
       _protocol!.addTriggeredTask(
-          ScheduledTrigger(
-            time: TimeOfDay(hour: 6, minute: 00),
-            recurrenceRule: RecurrenceRule(Frequency.DAILY),
-          ),
+          // ScheduledTrigger(
+          //   time: TimeOfDay(hour: 6, minute: 00),
+          //   recurrenceRule: RecurrenceRule(Frequency.DAILY),
+          // ),
+          RecurrentScheduledTrigger(type: RecurrentType.daily, time: Time(hour: 6, minute: 00)),
           AppTask(
             type: AudioUserTask.AUDIO_TYPE,
             title: "audio.exposure.title",
@@ -153,10 +157,11 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
 
       // Audio task: Wristband UX -  triggers on week 7 (TODO)
       _protocol!.addTriggeredTask(
-          ScheduledTrigger(
-            time: TimeOfDay(hour: 6, minute: 00),
-            recurrenceRule: RecurrenceRule(Frequency.WEEKLY),
-          ),
+          // ScheduledTrigger(
+          //   time: TimeOfDay(hour: 6, minute: 00),
+          //   recurrenceRule: RecurrenceRule(Frequency.WEEKLY),
+          // ),
+          RecurrentScheduledTrigger(type: RecurrentType.weekly, time: Time(hour: 6, minute: 00)),
           AppTask(
             type: AudioUserTask.AUDIO_TYPE,
             title: "audio.biosensor.title",
@@ -238,10 +243,11 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
 
       // Biosensor experience: collect wristband UX - triggers W7 - TODO: use scheduled trigger
       _protocol!.addTriggeredTask(
-          ScheduledTrigger(
-            time: TimeOfDay(hour: 6, minute: 00),
-            recurrenceRule: RecurrenceRule(Frequency.WEEKLY),
-          ),
+          // ScheduledTrigger(
+          //   time: TimeOfDay(hour: 6, minute: 00),
+          //   recurrenceRule: RecurrenceRule(Frequency.WEEKLY),
+          // ),
+          RecurrentScheduledTrigger(type: RecurrentType.daily, time: Time(hour: 6, minute: 00)),
           AppTask(
             type: SurveyUserTask.SURVEY_TYPE,
             title: surveys.patientParents.title,

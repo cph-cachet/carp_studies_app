@@ -14,31 +14,26 @@ class HorizontalBar extends StatelessWidget {
       print(values!.elementAt(i));
       print(colors!.elementAt(i));
       print(names!.elementAt(i));
-      assetList.add(MyAsset(
-          size: values!.elementAt(i),
-          color: colors!.elementAt(i),
-          name: names!.elementAt(i)));
+      assetList
+          .add(MyAsset(size: values!.elementAt(i), color: colors!.elementAt(i), name: names!.elementAt(i)));
     }
     return assetList;
   }
 
   Widget build(BuildContext context) {
+    AssetLocalizations locale = AssetLocalizations.of(context)!;
     double width = MediaQuery.of(context).size.width;
-
-    return Center(
-      child: MyAssetsBar(
-          width: width * .9,
-          background: Color(0xCFD8DC),
-          order: OrderType.Descending,
-          assets: _assetList()),
-    );
+    if (names!.isEmpty)
+      return Center(child: Text(locale.translate("No data yet")));
+    else
+      return Center(
+        child: MyAssetsBar(
+            width: width * .9,
+            background: Color(0xCFD8DC),
+            order: OrderType.Descending,
+            assets: _assetList()),
+      );
   }
-}
-
-/*Utils*/
-Color colorFromHex(String hexColor) {
-  final hexCode = hexColor.replaceAll('#', '');
-  return Color(int.parse('FF$hexCode', radix: 16));
 }
 
 const double _kHeight = 25;
@@ -106,33 +101,34 @@ class MyAssetsBar extends StatelessWidget {
   //single.size : assetsSum = x : width
   Widget _createSingle(MyAsset singleAsset) {
     return SizedBox(
-      width: singleAsset.size! * (width / _getValuesSum()),
+      width: singleAsset.size! != 0 ? singleAsset.size! * (width / _getValuesSum()) : 0,
       child: Container(color: singleAsset.color),
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    AssetLocalizations locale = AssetLocalizations.of(context)!;
+
     //Order assetsList
     orderMyAssetsList();
 
     final double rad = radius ?? (height / 2);
-
+    // if (assets.isEmpty)
+    //   return Center(child: Text(locale.translate("No data yet")));
+    // else
+    print("@@@@");
+    print(assets);
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         ClipRRect(
           borderRadius: BorderRadius.all(Radius.circular(rad)),
           child: Container(
-            decoration: new BoxDecoration(
-              color: background,
-            ),
+            decoration: BoxDecoration(color: background),
             width: width,
             height: height,
-            child: Row(
-                children: assets
-                    .map((singleAsset) => _createSingle(singleAsset))
-                    .toList()),
+            child: Row(children: assets.map((singleAsset) => _createSingle(singleAsset)).toList()),
           ),
         ),
         SizedBox(height: 10),
@@ -148,13 +144,8 @@ class MyAssetsBar extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Icon(Icons.circle, color: entry.value.color, size: 12.0),
-                      Text(
-                          ' ' +
-                              entry.value.name! +
-                              ' ' +
-                              entry.value.size.toString(),
-                          style: legendStyle,
-                          textAlign: TextAlign.right),
+                      Text(' ' + entry.value.name! + ' ' + entry.value.size.toString(),
+                          style: legendStyle, textAlign: TextAlign.right),
                     ],
                   ),
                 ),

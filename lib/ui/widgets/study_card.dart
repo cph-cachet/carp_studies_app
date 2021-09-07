@@ -23,14 +23,14 @@ class StudyCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Row(children: [
-            Expanded(
-                child: Container(
-              height: MediaQuery.of(context).size.height * 0.2,
-              color: Color(0xFFF1F9FF),
-              child: Image.asset('assets/images/books.png', fit: BoxFit.fitHeight),
-            ))
-          ]),
+          // Row(children: [
+          //   Expanded(
+          //       child: Container(
+          //     height: MediaQuery.of(context).size.height * 0.1,
+          //     color: Color(0xFFF1F9FF),
+          //     child: Image.asset('assets/images/books.png', fit: BoxFit.fitHeight),
+          //   ))
+          // ]),
           ExpansionTile(
             title: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

@@ -79,9 +79,14 @@ class StudyAppBLoC {
   /// Does this [deployment] have the measure of [type].
   bool hasMeasure(String type) {
     if (deployment == null) return false;
-    return (deployment!.measures
-            .firstWhereOrNull((measure) => measure.type == type) !=
-        null);
+
+    try {
+      deployment!.measures.firstWhere((measure) => measure.type == type);
+    } catch (error) {
+      return false;
+    }
+
+    return true;
   }
 
   /// Initialize this BLOC. Called before being used for anything.

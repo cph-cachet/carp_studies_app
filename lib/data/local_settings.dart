@@ -27,7 +27,6 @@ class LocalSettings {
   OAuthToken? _oauthToken;
   String? _username;
   String? _studyId;
-  String? _studyDeploymentId;
   bool? _hasInformedConsentBeenAccepted;
 
   OAuthToken? get oauthToken {
@@ -64,13 +63,8 @@ class LocalSettings {
     Settings().preferences!.setString(_studyIdKey, id!);
   }
 
-  String? get studyDeploymentId => (_studyDeploymentId ??=
-      Settings().preferences!.getString(_studyDeploymentIdKey));
-
-  set studyDeploymentId(String? id) {
-    _studyDeploymentId = id;
-    Settings().preferences!.setString(_studyDeploymentIdKey, id!);
-  }
+  String? get studyDeploymentId => Settings().studyDeploymentId;
+  set studyDeploymentId(String? id) => Settings().studyDeploymentId = id;
 
   /// Has the informed consent been shown to, and accepted by the user?
   bool get hasInformedConsentBeenAccepted => _hasInformedConsentBeenAccepted ??=
@@ -82,8 +76,8 @@ class LocalSettings {
 
   Future<void> eraseStudyIds() async {
     _studyId = null;
-    _studyDeploymentId = null;
     _hasInformedConsentBeenAccepted = null;
+    await Settings().eraseStudyDeployment();
     await Settings().preferences!.remove(_studyIdKey);
     await Settings().preferences!.remove(_studyDeploymentIdKey);
     await Settings().preferences!.remove(_informedConsentAcceptedKey);

@@ -5,17 +5,19 @@ import 'dart:math';
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
-
 import 'package:flutter/material.dart' hide TimeOfDay;
+
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:expandable/expandable.dart';
 import 'package:intl/intl.dart';
-import 'package:activity_recognition_flutter/activity_recognition_flutter.dart';
-import 'package:collection/collection.dart' show IterableExtension;
 
+import 'package:activity_recognition_flutter/activity_recognition_flutter.dart';
+
+// the CARP packages
+import 'package:carp_core/carp_core.dart';
 import 'package:carp_mobile_sensing/carp_mobile_sensing.dart';
 import 'package:carp_audio_package/audio.dart';
 //import 'package:carp_health_package/health_package.dart';
@@ -23,14 +25,9 @@ import 'package:carp_audio_package/audio.dart';
 //import 'package:carp_communication_package/communication.dart';
 import 'package:carp_context_package/context.dart';
 import 'package:carp_survey_package/survey.dart';
-
 import 'package:carp_webservices/carp_services/carp_services.dart';
 import 'package:carp_webservices/carp_auth/carp_auth.dart';
 import 'package:carp_backend/carp_backend.dart';
-import 'package:carp_core/carp_common/carp_core_common.dart';
-import 'package:carp_core/carp_protocols/carp_core_protocols.dart';
-import 'package:carp_core/carp_deployment/carp_core_deployment.dart';
-import 'package:carp_core/carp_data/carp_core_data.dart';
 
 import 'package:research_package/research_package.dart';
 
@@ -108,5 +105,5 @@ void main() async {
 final bloc = StudyAppBLoC(
   debugLevel: DebugLevel.DEBUG,
   deploymentMode: DeploymentMode.LOCAL,
-  forceSignOutAndStudyReload: false,
+  forceSignOutAndStudyReload: true,
 );

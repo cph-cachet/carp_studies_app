@@ -6,6 +6,8 @@ class CarpStudyAppHome extends StatefulWidget {
 }
 
 class CARPStudyAppState extends State<CarpStudyAppHome> {
+  // when the app starts, show the task list (index =0) since the app may have
+  // been started due to the user selecting a notification
   int _selectedIndex = 0;
   final _pages = [];
 

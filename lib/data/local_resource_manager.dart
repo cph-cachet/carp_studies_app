@@ -3,6 +3,7 @@ part of carp_study_app;
 /// A local resource manager handling:
 ///  * informed consent
 ///  * localization
+///  * study descriptions
 class LocalResourceManager implements ResourceManager {
   RPOrderedTask? _informedConsent;
   StudyDescription? _description;
@@ -117,15 +118,15 @@ class LocalResourceManager implements ResourceManager {
   }
 
   @override
-  Future<bool> deleteInformedConsent() {
-    // TODO: implement deleteInformedConsent
-    throw UnimplementedError();
+  Future<bool> setInformedConsent(RPOrderedTask informedConsent) async {
+    _informedConsent = informedConsent;
+    return true;
   }
 
   @override
-  Future<bool> deleteLocalizations(Locale locale) {
-    // TODO: implement deleteLocalizations
-    throw UnimplementedError();
+  Future<bool> deleteInformedConsent() async {
+    _informedConsent = null;
+    return true;
   }
 
   final String basePath = 'assets/lang_local';
@@ -144,15 +145,15 @@ class LocalResourceManager implements ResourceManager {
   }
 
   @override
-  Future<bool> setInformedConsent(RPOrderedTask informedConsent) {
-    // TODO: implement setInformedConsent
+  Future<bool> setLocalizations(
+      Locale locale, Map<String, dynamic> localizations) {
+    // TODO: implement setLocalizations
     throw UnimplementedError();
   }
 
   @override
-  Future<bool> setLocalizations(
-      Locale locale, Map<String, dynamic> localizations) {
-    // TODO: implement setLocalizations
+  Future<bool> deleteLocalizations(Locale locale) {
+    // TODO: implement deleteLocalizations
     throw UnimplementedError();
   }
 
@@ -180,14 +181,14 @@ class LocalResourceManager implements ResourceManager {
   }
 
   @override
-  Future<bool> setStudyDescription(StudyDescription description) {
-    // TODO: implement setStudyDescription
-    throw UnimplementedError();
+  Future<bool> setStudyDescription(StudyDescription description) async {
+    _description = description;
+    return true;
   }
 
   @override
-  Future<bool> deleteStudyDescription() {
-    // TODO: implement deleteStudyDescription
-    throw UnimplementedError();
+  Future<bool> deleteStudyDescription() async {
+    _description = null;
+    return true;
   }
 }

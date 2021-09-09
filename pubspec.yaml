@@ -26,8 +26,8 @@ dependencies:
   flutter:
     sdk: flutter
 
-  carp_core: ^0.30.1+1
-  carp_mobile_sensing: ^0.30.3+1
+  carp_core: ^0.30.1
+  #carp_mobile_sensing: ^0.30.4
   carp_context_package: ^0.30.0
   carp_survey_package: ^0.30.0
   carp_audio_package: ^0.30.1
@@ -59,8 +59,8 @@ dependencies:
 # Overriding carp libraries to use the local or github copy
 # Remove this before release of app
 dependency_overrides:
-#  carp_mobile_sensing:
-#    path: ../carp/carp.sensing-flutter/carp_mobile_sensing/
+  carp_mobile_sensing:
+    path: ../carp/carp.sensing-flutter/carp_mobile_sensing/
 #  carp_context_package:
 #    path: ../carp/carp.sensing-flutter/packages/carp_context_package/
 #  carp_survey_package:
@@ -93,11 +93,13 @@ dev_dependencies:
 #  1. import the 'flutter_launcher_icons' package above
 #  2. add the 'flutter_icons:' section below
 #  3. run 'flutter pub get'
-#  3. run 'flutter pub pub run flutter_launcher_icons:main'
+#  3. run 'flutter pub run flutter_launcher_icons:main'
 flutter_icons:
   android: true
   ios: true
-  image_path: "assets/logo.jpg"
+  remove_alpha_ios: true
+  #image_path: "assets/logo.jpg"
+  image_path: "assets/app_icon.png"
 
 # The following section is specific to Flutter.
 flutter:

@@ -59,6 +59,8 @@ dependencies:
 # Overriding carp libraries to use the local or github copy
 # Remove this before release of app
 dependency_overrides:
+  # carp_core:
+  #   path: ../carp/carp.sensing-flutter/carp_core/
 #  carp_mobile_sensing:
 #    path: ../carp/carp.sensing-flutter/carp_mobile_sensing/
 #  carp_context_package:
@@ -80,9 +82,9 @@ dev_dependencies:
   json_serializable: ^4.1.4
   build_runner: ^2.1.0
   test: ^1.17.10 
-  carp_study_generator: ^0.30.3+1
-#  carp_study_generator: 
-#      path: ../carp/carp.sensing-flutter/utilities/carp_study_generator/
+#  carp_study_generator: ^0.30.3+1
+  carp_study_generator: 
+      path: ../carp/carp.sensing-flutter/utilities/carp_study_generator/
 
 
 # For information on the generic Dart part of this file, see the

@@ -80,7 +80,7 @@ dev_dependencies:
   json_serializable: ^4.1.4
   build_runner: ^2.1.0
   test: ^1.17.10 
-  carp_study_generator: ^0.30.3
+  carp_study_generator: ^0.30.3+1
 #  carp_study_generator: 
 #      path: ../carp/carp.sensing-flutter/utilities/carp_study_generator/
 

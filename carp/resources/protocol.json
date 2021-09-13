@@ -2,7 +2,7 @@
     "ownerId": "1234",
     "name": "Wrist Angel: Patient (TEST)",
     "description": "Protocol testing for patients",
-    "creationDate": "2021-08-23T11:22:54.325256Z",
+    "creationDate": "2021-09-07T11:18:02.423996Z",
     "masterDevices": [
         {
             "$type": "dk.cachet.carp.protocols.domain.devices.Smartphone",
@@ -15,85 +15,110 @@
     "connections": [],
     "triggers": {
         "0": {
-            "$type": "dk.cachet.carp.protocols.domain.triggers.ScheduledTrigger",
-            "requiresMasterDevice": false,
+            "$type": "dk.cachet.carp.protocols.domain.triggers.RecurrentScheduledTrigger",
+            "duration": 10000000,
+            "type": "weekly",
             "time": {
-                "hour": 8,
+                "$type": "Time",
+                "hour": 6,
                 "minute": 0,
                 "second": 0
             },
-            "recurrenceRule": {
-                "frequency": "WEEKLY",
-                "interval": 1
-            }
+            "separationCount": 0,
+            "dayOfWeek": 1,
+            "remember": false,
+            "period": 604800000000
         },
         "1": {
-            "$type": "dk.cachet.carp.protocols.domain.triggers.ScheduledTrigger",
-            "requiresMasterDevice": false,
+            "$type": "dk.cachet.carp.protocols.domain.triggers.RecurrentScheduledTrigger",
+            "duration": 10000000,
+            "type": "daily",
             "time": {
-                "hour": 7,
+                "$type": "Time",
+                "hour": 6,
                 "minute": 0,
                 "second": 0
             },
-            "recurrenceRule": {
-                "frequency": "DAILY",
-                "interval": 1
-            }
+            "separationCount": 0,
+            "remember": false,
+            "period": 86400000000
         },
         "2": {
-            "$type": "dk.cachet.carp.protocols.domain.triggers.ImmediateTrigger"
+            "$type": "dk.cachet.carp.protocols.domain.triggers.RandomRecurrentTrigger",
+            "startTime": {
+                "$type": "Time",
+                "hour": 16,
+                "minute": 0,
+                "second": 0
+            },
+            "endTime": {
+                "$type": "Time",
+                "hour": 20,
+                "minute": 0,
+                "second": 0
+            },
+            "minNumberOfTriggers": 0,
+            "maxNumberOfTriggers": 3,
+            "duration": 2000000
         },
         "3": {
-            "$type": "dk.cachet.carp.protocols.domain.triggers.ScheduledTrigger",
-            "requiresMasterDevice": false,
+            "$type": "dk.cachet.carp.protocols.domain.triggers.RecurrentScheduledTrigger",
+            "duration": 10000000,
+            "type": "weekly",
             "time": {
-                "hour": 8,
+                "$type": "Time",
+                "hour": 6,
                 "minute": 0,
                 "second": 0
             },
-            "recurrenceRule": {
-                "frequency": "WEEKLY",
-                "interval": 1
-            }
+            "separationCount": 0,
+            "dayOfWeek": 1,
+            "remember": false,
+            "period": 604800000000
         },
         "4": {
-            "$type": "dk.cachet.carp.protocols.domain.triggers.ScheduledTrigger",
-            "requiresMasterDevice": false,
+            "$type": "dk.cachet.carp.protocols.domain.triggers.RecurrentScheduledTrigger",
+            "duration": 10000000,
+            "type": "weekly",
             "time": {
-                "hour": 8,
+                "$type": "Time",
+                "hour": 6,
                 "minute": 0,
                 "second": 0
             },
-            "recurrenceRule": {
-                "frequency": "WEEKLY",
-                "interval": 1
-            }
+            "separationCount": 0,
+            "dayOfWeek": 1,
+            "remember": false,
+            "period": 604800000000
         },
         "5": {
-            "$type": "dk.cachet.carp.protocols.domain.triggers.ScheduledTrigger",
-            "requiresMasterDevice": false,
+            "$type": "dk.cachet.carp.protocols.domain.triggers.RecurrentScheduledTrigger",
+            "duration": 10000000,
+            "type": "daily",
             "time": {
-                "hour": 7,
+                "$type": "Time",
+                "hour": 6,
                 "minute": 0,
                 "second": 0
             },
-            "recurrenceRule": {
-                "frequency": "DAILY",
-                "interval": 1
-            }
+            "separationCount": 0,
+            "remember": false,
+            "period": 86400000000
         },
         "6": {
-            "$type": "dk.cachet.carp.protocols.domain.triggers.ScheduledTrigger",
-            "requiresMasterDevice": false,
+            "$type": "dk.cachet.carp.protocols.domain.triggers.RecurrentScheduledTrigger",
+            "duration": 10000000,
+            "type": "weekly",
             "time": {
-                "hour": 8,
+                "$type": "Time",
+                "hour": 6,
                 "minute": 0,
                 "second": 0
             },
-            "recurrenceRule": {
-                "frequency": "WEEKLY",
-                "interval": 1
-            }
+            "separationCount": 0,
+            "dayOfWeek": 1,
+            "remember": false,
+            "period": 604800000000
         }
     },
     "tasks": [
@@ -104,26 +129,26 @@
                 {
                     "$type": "dk.cachet.carp.protocols.domain.tasks.measures.RPTaskMeasure",
                     "type": "dk.cachet.carp.survey",
-                    "name": "Wristband with biosensor",
+                    "name": "survey.biosensor.patient.title",
                     "enabled": true,
                     "configuration": {},
                     "surveyTask": {
                         "$type": "RPOrderedTask",
-                        "identifier": "PATIENT_Brugerundersøgelse_biosensor_barn_v1_29-10-2020",
+                        "identifier": "survey.biosensor.patient.title",
                         "close_after_finished": true,
                         "steps": [
                             {
                                 "$type": "RPInstructionStep",
-                                "identifier": "instruction",
-                                "title": "Wristband with biosensor",
-                                "text": "We would like to know what it was like for you to wear the wristband.\n\nPlease read each statement and chose the option that best describes how you feel.",
+                                "identifier": "survey.biosensor.patient.instruction.id",
+                                "title": "survey.biosensor.patient.instruction.title",
+                                "text": "survey.biosensor.patient.instruction.text",
                                 "optional": false,
                                 "image_path": "assets/icons/wristwatch.png"
                             },
                             {
                                 "$type": "RPQuestionStep",
-                                "identifier": "question1",
-                                "title": "I like how the wristband looks.",
+                                "identifier": "survey.biosensor.patient.question.1.id",
+                                "title": "survey.biosensor.patient.question.1.text",
                                 "optional": false,
                                 "answer_format": {
                                     "$type": "RPChoiceAnswerFormat",
@@ -131,25 +156,25 @@
                                     "choices": [
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Strongly disagree",
+                                            "text": "survey.answerFormat.agreement.strongly.disagree",
                                             "value": 0,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Slightly disagree",
+                                            "text": "survey.answerFormat.agreement.disagree",
                                             "value": 1,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Agree",
+                                            "text": "survey.answerFormat.agreement.agree",
                                             "value": 2,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Strongly agree",
+                                            "text": "survey.answerFormat.agreement.strongly.agree",
                                             "value": 3,
                                             "is_free_text": false
                                         }
@@ -159,8 +184,8 @@
                             },
                             {
                                 "$type": "RPQuestionStep",
-                                "identifier": "question2",
-                                "title": "The wristband looks too big.",
+                                "identifier": "survey.biosensor.patient.question.2.id",
+                                "title": "survey.biosensor.patient.question.2.text",
                                 "optional": false,
                                 "answer_format": {
                                     "$type": "RPChoiceAnswerFormat",
@@ -168,25 +193,25 @@
                                     "choices": [
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Strongly disagree",
+                                            "text": "survey.answerFormat.agreement.strongly.disagree",
                                             "value": 0,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Slightly disagree",
+                                            "text": "survey.answerFormat.agreement.disagree",
                                             "value": 1,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Agree",
+                                            "text": "survey.answerFormat.agreement.agree",
                                             "value": 2,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Strongly agree",
+                                            "text": "survey.answerFormat.agreement.strongly.agree",
                                             "value": 3,
                                             "is_free_text": false
                                         }
@@ -196,8 +221,8 @@
                             },
                             {
                                 "$type": "RPQuestionStep",
-                                "identifier": "question3",
-                                "title": "I was embarrassed to wear the wristband.",
+                                "identifier": "survey.biosensor.patient.question.3.id",
+                                "title": "survey.biosensor.patient.question.3.text",
                                 "optional": false,
                                 "answer_format": {
                                     "$type": "RPChoiceAnswerFormat",
@@ -205,25 +230,25 @@
                                     "choices": [
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Strongly disagree",
+                                            "text": "survey.answerFormat.agreement.strongly.disagree",
                                             "value": 0,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Slightly disagree",
+                                            "text": "survey.answerFormat.agreement.disagree",
                                             "value": 1,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Agree",
+                                            "text": "survey.answerFormat.agreement.agree",
                                             "value": 2,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Strongly agree",
+                                            "text": "survey.answerFormat.agreement.strongly.agree",
                                             "value": 3,
                                             "is_free_text": false
                                         }
@@ -233,8 +258,8 @@
                             },
                             {
                                 "$type": "RPQuestionStep",
-                                "identifier": "question4",
-                                "title": "The wristband looks cool.",
+                                "identifier": "survey.biosensor.patient.question.4.id",
+                                "title": "survey.biosensor.patient.question.4.text",
                                 "optional": false,
                                 "answer_format": {
                                     "$type": "RPChoiceAnswerFormat",
@@ -242,25 +267,25 @@
                                     "choices": [
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Strongly disagree",
+                                            "text": "survey.answerFormat.agreement.strongly.disagree",
                                             "value": 0,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Slightly disagree",
+                                            "text": "survey.answerFormat.agreement.disagree",
                                             "value": 1,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Agree",
+                                            "text": "survey.answerFormat.agreement.agree",
                                             "value": 2,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Strongly agree",
+                                            "text": "survey.answerFormat.agreement.strongly.agree",
                                             "value": 3,
                                             "is_free_text": false
                                         }
@@ -270,8 +295,8 @@
                             },
                             {
                                 "$type": "RPQuestionStep",
-                                "identifier": "question5",
-                                "title": "The wristband attracted too much attention.",
+                                "identifier": "survey.biosensor.patient.question.5.id",
+                                "title": "survey.biosensor.patient.question.5.text",
                                 "optional": false,
                                 "answer_format": {
                                     "$type": "RPChoiceAnswerFormat",
@@ -279,25 +304,25 @@
                                     "choices": [
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Strongly disagree",
+                                            "text": "survey.answerFormat.agreement.strongly.disagree",
                                             "value": 0,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Slightly disagree",
+                                            "text": "survey.answerFormat.agreement.disagree",
                                             "value": 1,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Agree",
+                                            "text": "survey.answerFormat.agreement.agree",
                                             "value": 2,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Strongly agree",
+                                            "text": "survey.answerFormat.agreement.strongly.agree",
                                             "value": 3,
                                             "is_free_text": false
                                         }
@@ -307,8 +332,8 @@
                             },
                             {
                                 "$type": "RPQuestionStep",
-                                "identifier": "question6",
-                                "title": "The wristband was comfortable.",
+                                "identifier": "survey.biosensor.patient.question.6.id",
+                                "title": "survey.biosensor.patient.question.6.text",
                                 "optional": false,
                                 "answer_format": {
                                     "$type": "RPChoiceAnswerFormat",
@@ -316,25 +341,25 @@
                                     "choices": [
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Strongly disagree",
+                                            "text": "survey.answerFormat.agreement.strongly.disagree",
                                             "value": 0,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Slightly disagree",
+                                            "text": "survey.answerFormat.agreement.disagree",
                                             "value": 1,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Agree",
+                                            "text": "survey.answerFormat.agreement.agree",
                                             "value": 2,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Strongly agree",
+                                            "text": "survey.answerFormat.agreement.strongly.agree",
                                             "value": 3,
                                             "is_free_text": false
                                         }
@@ -344,8 +369,8 @@
                             },
                             {
                                 "$type": "RPQuestionStep",
-                                "identifier": "question7",
-                                "title": "The wristband fit well around my wrist.",
+                                "identifier": "survey.biosensor.patient.question.7.id",
+                                "title": "survey.biosensor.patient.question.7.text",
                                 "optional": false,
                                 "answer_format": {
                                     "$type": "RPChoiceAnswerFormat",
@@ -353,25 +378,25 @@
                                     "choices": [
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Strongly disagree",
+                                            "text": "survey.answerFormat.agreement.strongly.disagree",
                                             "value": 0,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Slightly disagree",
+                                            "text": "survey.answerFormat.agreement.disagree",
                                             "value": 1,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Agree",
+                                            "text": "survey.answerFormat.agreement.agree",
                                             "value": 2,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Strongly agree",
+                                            "text": "survey.answerFormat.agreement.strongly.agree",
                                             "value": 3,
                                             "is_free_text": false
                                         }
@@ -381,8 +406,8 @@
                             },
                             {
                                 "$type": "RPQuestionStep",
-                                "identifier": "question8",
-                                "title": "The wristband was easy to use.",
+                                "identifier": "survey.biosensor.patient.question.8.id",
+                                "title": "survey.biosensor.patient.question.8.text",
                                 "optional": false,
                                 "answer_format": {
                                     "$type": "RPChoiceAnswerFormat",
@@ -390,25 +415,25 @@
                                     "choices": [
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Strongly disagree",
+                                            "text": "survey.answerFormat.agreement.strongly.disagree",
                                             "value": 0,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Slightly disagree",
+                                            "text": "survey.answerFormat.agreement.disagree",
                                             "value": 1,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Agree",
+                                            "text": "survey.answerFormat.agreement.agree",
                                             "value": 2,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Strongly agree",
+                                            "text": "survey.answerFormat.agreement.strongly.agree",
                                             "value": 3,
                                             "is_free_text": false
                                         }
@@ -418,8 +443,8 @@
                             },
                             {
                                 "$type": "RPQuestionStep",
-                                "identifier": "question9",
-                                "title": "The wristband was easy to charge.",
+                                "identifier": "survey.biosensor.patient.question.9.id",
+                                "title": "survey.biosensor.patient.question.9.text",
                                 "optional": false,
                                 "answer_format": {
                                     "$type": "RPChoiceAnswerFormat",
@@ -427,25 +452,25 @@
                                     "choices": [
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Strongly disagree",
+                                            "text": "survey.answerFormat.agreement.strongly.disagree",
                                             "value": 0,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Slightly disagree",
+                                            "text": "survey.answerFormat.agreement.disagree",
                                             "value": 1,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Agree",
+                                            "text": "survey.answerFormat.agreement.agree",
                                             "value": 2,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Strongly agree",
+                                            "text": "survey.answerFormat.agreement.strongly.agree",
                                             "value": 3,
                                             "is_free_text": false
                                         }
@@ -455,8 +480,8 @@
                             },
                             {
                                 "$type": "RPQuestionStep",
-                                "identifier": "question10",
-                                "title": "I often forgot to wear the wristband.",
+                                "identifier": "survey.biosensor.patient.question.10.id",
+                                "title": "survey.biosensor.patient.question.10.text",
                                 "optional": false,
                                 "answer_format": {
                                     "$type": "RPChoiceAnswerFormat",
@@ -464,25 +489,25 @@
                                     "choices": [
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Strongly disagree",
+                                            "text": "survey.answerFormat.agreement.strongly.disagree",
                                             "value": 0,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Slightly disagree",
+                                            "text": "survey.answerFormat.agreement.disagree",
                                             "value": 1,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Agree",
+                                            "text": "survey.answerFormat.agreement.agree",
                                             "value": 2,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Strongly agree",
+                                            "text": "survey.answerFormat.agreement.strongly.agree",
                                             "value": 3,
                                             "is_free_text": false
                                         }
@@ -492,8 +517,8 @@
                             },
                             {
                                 "$type": "RPQuestionStep",
-                                "identifier": "question11",
-                                "title": "I wanted to wear the wristband.",
+                                "identifier": "survey.biosensor.patient.question.11.id",
+                                "title": "survey.biosensor.patient.question.11.text",
                                 "optional": false,
                                 "answer_format": {
                                     "$type": "RPChoiceAnswerFormat",
@@ -501,25 +526,25 @@
                                     "choices": [
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Strongly disagree",
+                                            "text": "survey.answerFormat.agreement.strongly.disagree",
                                             "value": 0,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Slightly disagree",
+                                            "text": "survey.answerFormat.agreement.disagree",
                                             "value": 1,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Agree",
+                                            "text": "survey.answerFormat.agreement.agree",
                                             "value": 2,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Strongly agree",
+                                            "text": "survey.answerFormat.agreement.strongly.agree",
                                             "value": 3,
                                             "is_free_text": false
                                         }
@@ -529,8 +554,8 @@
                             },
                             {
                                 "$type": "RPQuestionStep",
-                                "identifier": "question12",
-                                "title": "It was irritating to push the button on the wristband.",
+                                "identifier": "survey.biosensor.patient.question.12.id",
+                                "title": "survey.biosensor.patient.question.12.text",
                                 "optional": false,
                                 "answer_format": {
                                     "$type": "RPChoiceAnswerFormat",
@@ -538,25 +563,25 @@
                                     "choices": [
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Strongly disagree",
+                                            "text": "survey.answerFormat.agreement.strongly.disagree",
                                             "value": 0,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Slightly disagree",
+                                            "text": "survey.answerFormat.agreement.disagree",
                                             "value": 1,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Agree",
+                                            "text": "survey.answerFormat.agreement.agree",
                                             "value": 2,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Strongly agree",
+                                            "text": "survey.answerFormat.agreement.strongly.agree",
                                             "value": 3,
                                             "is_free_text": false
                                         }
@@ -566,8 +591,8 @@
                             },
                             {
                                 "$type": "RPQuestionStep",
-                                "identifier": "question13",
-                                "title": "I remembered to push the button on the wristband every time OCD was bothering me.",
+                                "identifier": "survey.biosensor.patient.question.13.id",
+                                "title": "survey.biosensor.patient.question.13.text",
                                 "optional": false,
                                 "answer_format": {
                                     "$type": "RPChoiceAnswerFormat",
@@ -575,25 +600,25 @@
                                     "choices": [
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Strongly disagree",
+                                            "text": "survey.answerFormat.agreement.strongly.disagree",
                                             "value": 0,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Slightly disagree",
+                                            "text": "survey.answerFormat.agreement.disagree",
                                             "value": 1,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Agree",
+                                            "text": "survey.answerFormat.agreement.agree",
                                             "value": 2,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Strongly agree",
+                                            "text": "survey.answerFormat.agreement.strongly.agree",
                                             "value": 3,
                                             "is_free_text": false
                                         }
@@ -603,8 +628,8 @@
                             },
                             {
                                 "$type": "RPQuestionStep",
-                                "identifier": "question14",
-                                "title": "Is there anything else you would like to tell us about your experience wearing the wristband?",
+                                "identifier": "survey.biosensor.patient.question.14.id",
+                                "title": "survey.biosensor.patient.question.14.text",
                                 "optional": true,
                                 "answer_format": {
                                     "$type": "RPTextAnswerFormat",
@@ -613,9 +638,9 @@
                             },
                             {
                                 "$type": "RPCompletionStep",
-                                "identifier": "completion",
-                                "title": "You are done!",
-                                "text": "Thank you for telling us what you think about the wristband. Your answers will help us make the wristband better",
+                                "identifier": "survey.biosensor.patient.completition.id",
+                                "title": "survey.biosensor.patient.completition.title",
+                                "text": "survey.biosensor.patient.completition.text",
                                 "optional": false
                             }
                         ]
@@ -623,8 +648,8 @@
                 }
             ],
             "type": "survey",
-            "title": "Wristband with biosensor",
-            "description": "We would like to know what it was like for you to wear the wristband.",
+            "title": "survey.biosensor.patient.title",
+            "description": "survey.biosensor.patient.description",
             "instructions": "",
             "minutes_to_complete": 5,
             "expire": 604800000000,
@@ -637,26 +662,26 @@
                 {
                     "$type": "dk.cachet.carp.protocols.domain.tasks.measures.RPTaskMeasure",
                     "type": "dk.cachet.carp.survey",
-                    "name": "Fight back against OCD",
+                    "name": "survey.exposure.title",
                     "enabled": true,
                     "configuration": {},
                     "surveyTask": {
                         "$type": "RPOrderedTask",
-                        "identifier": "Exposure_SUDS_v2_2021.04.22",
+                        "identifier": "survey.exposure.title",
                         "close_after_finished": true,
                         "steps": [
                             {
                                 "$type": "RPInstructionStep",
-                                "identifier": "instruction1",
-                                "title": "Exposure and response prevention",
-                                "text": "This survey is designed to help you practice fighting OCD. To take back control from OCD, you must do the opposite of what OCD wants you to do. For example, you may touch some food left over on your plate or say some “dangerous” words. Or, if the OCD tells you to touch things a certain number of times, don't do it. Going against OCD can be scary or upsetting. But, to take control back from OCD, you can’t run away from the discomfort or fear - you must tough it out.\n\nDuring the exercise, notice what happens to the feeling of discomfort for up to 15 minutes.\n\nWhile you practice going against OCD, your parents or your therapist can help you use this form.",
+                                "identifier": "survey.exposure.instruction.1.id",
+                                "title": "survey.exposure.instruction.1.title",
+                                "text": "survey.exposure.instruction.1.text",
                                 "optional": false,
                                 "image_path": "assets/icons/survey.png"
                             },
                             {
                                 "$type": "RPQuestionStep",
-                                "identifier": "question1",
-                                "title": "What do you think is going to happen to your feelings of discomfort, fear or disgust when you practice doing the opposite of what OCD wants you to do? ",
+                                "identifier": "survey.exposure.question.1.id",
+                                "title": "survey.exposure.question.1.text",
                                 "optional": false,
                                 "answer_format": {
                                     "$type": "RPChoiceAnswerFormat",
@@ -664,19 +689,19 @@
                                     "choices": [
                                         {
                                             "$type": "RPChoice",
-                                            "text": "My discomfort/fear/disgust will grow and grow until I can't take it any more",
+                                            "text": "survey.answerFormat.discomfort.future.more",
                                             "value": 0,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "My discomfort/fear/disgust will not change",
+                                            "text": "survey.answerFormat.discomfort.future.same",
                                             "value": 1,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "I will feel less discomfort/fear/disgust over time",
+                                            "text": "survey.answerFormat.discomfort.future.less",
                                             "value": 2,
                                             "is_free_text": false
                                         }
@@ -686,15 +711,15 @@
                             },
                             {
                                 "$type": "RPInstructionStep",
-                                "identifier": "instruction2",
-                                "title": " ",
-                                "text": "Many children and adolescents think that their fear or discomfort will get worse and worse when they practice going against OCD, but that is not what happens.\n\nFor many children and adolescents, the fear/discomfort goes up and down during the exercise. For some people, the fear/discomfort becomes less during the exercise. Others find that their fear/discomfort does not really change during the exercise, but then they learn that fear and discomfort are not dangerous. With lots of practice, you should really notice that you feel less fear, disgust or discomfort.",
+                                "identifier": "survey.exposure.instruction.2.id",
+                                "title": "survey.exposure.instruction.2.title",
+                                "text": "survey.exposure.instruction.2.text",
                                 "optional": false
                             },
                             {
                                 "$type": "RPQuestionStep",
-                                "identifier": "question2",
-                                "title": "Before you start practicing going against OCD, prepare for the exercise by answering some questions.\n\nYou're going to do something difficult and that should be rewarded. How will you reward yourself after the exercise of fighting OCD?",
+                                "identifier": "survey.exposure.question.2.id",
+                                "title": "survey.exposure.question.1=2.text",
                                 "optional": false,
                                 "answer_format": {
                                     "$type": "RPChoiceAnswerFormat",
@@ -702,43 +727,43 @@
                                     "choices": [
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Read an exciting book",
+                                            "text": "survey.answerFormat.reward.read",
                                             "value": 0,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Eat something delicious",
+                                            "text": "survey.answerFormat.reward.eat",
                                             "value": 1,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Watch an episode of your favorite series",
+                                            "text": "survey.answerFormat.reward.tvshow",
                                             "value": 2,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Do something fun with friends/ family (make a plan)",
+                                            "text": "survey.answerFormat.reward.plan",
                                             "value": 3,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Play a game",
+                                            "text": "survey.answerFormat.reward.game",
                                             "value": 4,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Play a computer/videogame",
+                                            "text": "survey.answerFormat.reward.videogame",
                                             "value": 5,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "I will do something not listed here",
+                                            "text": "survey.answerFormat.reward.other",
                                             "value": 6,
                                             "is_free_text": false
                                         }
@@ -748,8 +773,8 @@
                             },
                             {
                                 "$type": "RPQuestionStep",
-                                "identifier": "question3",
-                                "title": "In the exercise, I will work on an obsession.\n\n(Obsessions are unwanted thoughts or images that keep popping into your head and that you can't stop thinking about, even though you want to be rid of them.)",
+                                "identifier": "survey.exposure.question.3.id",
+                                "title": "survey.exposure.question.3.text",
                                 "optional": false,
                                 "answer_format": {
                                     "$type": "RPChoiceAnswerFormat",
@@ -757,13 +782,13 @@
                                     "choices": [
                                         {
                                             "$type": "RPChoice",
-                                            "text": "No",
+                                            "text": "survey.answerFormat.no",
                                             "value": 0,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Yes",
+                                            "text": "survey.answerFormat.yes",
                                             "value": 1,
                                             "is_free_text": false
                                         }
@@ -773,8 +798,8 @@
                             },
                             {
                                 "$type": "RPQuestionStep",
-                                "identifier": "question4",
-                                "title": "The obsession I want to work on now is about:",
+                                "identifier": "survey.exposure.question.4.id",
+                                "title": "survey.exposure.question.4.text",
                                 "optional": true,
                                 "answer_format": {
                                     "$type": "RPChoiceAnswerFormat",
@@ -782,55 +807,55 @@
                                     "choices": [
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Fear/ disgust of pollution, infection, dirt, bacteria, diseases",
+                                            "text": "survey.answerFormat.obsesion.dirt",
                                             "value": 0,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Fear of harming myself or others (physically or emotionally)",
+                                            "text": "survey.answerFormat.obsesion.harm",
                                             "value": 1,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Disturbing thoughts/ images about sex, pregnancy or sexuality",
+                                            "text": "survey.answerFormat.obsesion.sexuality",
                                             "value": 2,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Need to collect things or fear of losing something",
+                                            "text": "survey.answerFormat.obsesion.collect",
                                             "value": 3,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Magical/superstitious thoughts or actions (e.g. lucky numbers or words; stepping on a crack can break someone’s back)",
+                                            "text": "survey.answerFormat.obsesion.superstition",
                                             "value": 4,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Worry about having a disease or that a body part or your appearance looks wrong)",
+                                            "text": "survey.answerFormat.obsesion.disease",
                                             "value": 5,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Fear of offending God or Satan or worry about what is right and wrong",
+                                            "text": "survey.answerFormat.obsesion.offense",
                                             "value": 6,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Symmetry and order (e.g. that things must lie in a certain way, or things must be in order)",
+                                            "text": "survey.answerFormat.obsesion.symmetry",
                                             "value": 7,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Needing to do something until it feels right or not wrong",
+                                            "text": "survey.answerFormat.obsesion.right",
                                             "value": 8,
                                             "is_free_text": false
                                         }
@@ -840,8 +865,8 @@
                             },
                             {
                                 "$type": "RPQuestionStep",
-                                "identifier": "question5",
-                                "title": "You can describe the obsession you want to work on here, if you would like to describe it detail or if you could not find an obsession in the list.",
+                                "identifier": "survey.exposure.question.5.id",
+                                "title": "survey.exposure.question.5.text",
                                 "optional": true,
                                 "answer_format": {
                                     "$type": "RPTextAnswerFormat",
@@ -850,8 +875,8 @@
                             },
                             {
                                 "$type": "RPQuestionStep",
-                                "identifier": "question6",
-                                "title": "I want to work with a compulsion.\n\n\n(Compulsions are things that OCD wants you to do. If you try to resist doing these things or try not to do what OCD tells you to, you may feel afraid, worried, frustrated, angry or upset.)",
+                                "identifier": "survey.exposure.question.6.id",
+                                "title": "survey.exposure.question.6.text",
                                 "optional": false,
                                 "answer_format": {
                                     "$type": "RPChoiceAnswerFormat",
@@ -859,13 +884,13 @@
                                     "choices": [
                                         {
                                             "$type": "RPChoice",
-                                            "text": "No",
+                                            "text": "survey.answerFormat.no",
                                             "value": 0,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Yes",
+                                            "text": "survey.answerFormat.yes",
                                             "value": 1,
                                             "is_free_text": false
                                         }
@@ -875,8 +900,8 @@
                             },
                             {
                                 "$type": "RPQuestionStep",
-                                "identifier": "question7",
-                                "title": "The compulsion I will work on is about:",
+                                "identifier": "survey.exposure.question.7.id",
+                                "title": "survey.exposure.question.7.text",
                                 "optional": true,
                                 "answer_format": {
                                     "$type": "RPChoiceAnswerFormat",
@@ -884,55 +909,55 @@
                                     "choices": [
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Washing or cleaning",
+                                            "text": "survey.answerFormat.compulsion.cleaning",
                                             "value": 0,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Checking (like if you have remembered to lock the door)",
+                                            "text": "survey.answerFormat.compulsion.checking",
                                             "value": 1,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Repeating actions (like turning the lights on and off several times)",
+                                            "text": "survey.answerFormat.compulsion.repeating",
                                             "value": 2,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Counting things",
+                                            "text": "survey.answerFormat.compulsion.counting",
                                             "value": 3,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Fixing things or trying to get things in a certain place or symmetrical",
+                                            "text": "survey.answerFormat.compulsion.fixing",
                                             "value": 4,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Collecting things or difficulty throwing things away",
+                                            "text": "survey.answerFormat.compulsion.collecting",
                                             "value": 5,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Magical/superstitious behavior (like doing or saying things a certain number of times to prevent something bad from happening)",
+                                            "text": "survey.answerFormat.compulsion.superstition",
                                             "value": 6,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Involving your parents in a ritual or asking for reassurance",
+                                            "text": "survey.answerFormat.compulsion.parents",
                                             "value": 7,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Doing something until it feels right",
+                                            "text": "survey.answerFormat.compulsion.right",
                                             "value": 8,
                                             "is_free_text": false
                                         }
@@ -942,8 +967,8 @@
                             },
                             {
                                 "$type": "RPQuestionStep",
-                                "identifier": "question8",
-                                "title": "You can describe the compulsion you want to work on here, if you would like to describe it detail or if you could not find a compulsion in the list.",
+                                "identifier": "survey.exposure.question.8.id",
+                                "title": "survey.exposure.question.8.text",
                                 "optional": true,
                                 "answer_format": {
                                     "$type": "RPTextAnswerFormat",
@@ -952,8 +977,8 @@
                             },
                             {
                                 "$type": "RPQuestionStep",
-                                "identifier": "question9",
-                                "title": "Describe how you will practice going against OCD. How do you want to work on the obsession and/or compulsion (for example touching the toilet seat or making your desk messy):",
+                                "identifier": "survey.exposure.question.9.id",
+                                "title": "survey.exposure.question.9.text",
                                 "optional": true,
                                 "answer_format": {
                                     "$type": "RPTextAnswerFormat",
@@ -962,16 +987,16 @@
                             },
                             {
                                 "$type": "RPInstructionStep",
-                                "identifier": "instruction",
-                                "title": " ",
-                                "text": "On the next pages, you will be asked to note how much fear or discomfort you experience while you go against OCD.\n\nStart by noting how uncomfortable it is for you to think about doing the exercise you just described on a scale of 0 to 10. 0 means that you are completely calm or not at all afraid. 10 means that you are so scared or upset you can’t stand it.",
+                                "identifier": "survey.exposure.instruction.3.id",
+                                "title": "survey.exposure.instruction.3.title",
+                                "text": "survey.exposure.instruction.3.text",
                                 "optional": false,
                                 "image_path": "assets/images/timer_task.png"
                             },
                             {
                                 "$type": "RPQuestionStep",
-                                "identifier": "question10",
-                                "title": "How much discomfort do you feel after 1 minute?",
+                                "identifier": "survey.exposure.question.10.id",
+                                "title": "survey.exposure.question.10.text",
                                 "optional": true,
                                 "answer_format": {
                                     "$type": "RPSliderAnswerFormat",
@@ -985,8 +1010,8 @@
                             },
                             {
                                 "$type": "RPQuestionStep",
-                                "identifier": "question11",
-                                "title": "How much discomfort do you feel after 3 minutes?",
+                                "identifier": "survey.exposure.question.11.id",
+                                "title": "survey.exposure.question.11.text",
                                 "optional": true,
                                 "answer_format": {
                                     "$type": "RPSliderAnswerFormat",
@@ -1000,8 +1025,8 @@
                             },
                             {
                                 "$type": "RPQuestionStep",
-                                "identifier": "question12",
-                                "title": "How much discomfort do you feel after 5 minutes?",
+                                "identifier": "survey.exposure.question.12.id",
+                                "title": "survey.exposure.question.12.text",
                                 "optional": true,
                                 "answer_format": {
                                     "$type": "RPSliderAnswerFormat",
@@ -1015,8 +1040,8 @@
                             },
                             {
                                 "$type": "RPQuestionStep",
-                                "identifier": "question13",
-                                "title": "How much discomfort do you feel after 7 minutes?",
+                                "identifier": "survey.exposure.question.13.id",
+                                "title": "survey.exposure.question.13.text",
                                 "optional": true,
                                 "answer_format": {
                                     "$type": "RPSliderAnswerFormat",
@@ -1030,8 +1055,8 @@
                             },
                             {
                                 "$type": "RPQuestionStep",
-                                "identifier": "question14",
-                                "title": "How much discomfort do you feel after 10 minutes?",
+                                "identifier": "survey.exposure.question.14.id",
+                                "title": "survey.exposure.question.14.text",
                                 "optional": true,
                                 "answer_format": {
                                     "$type": "RPSliderAnswerFormat",
@@ -1045,8 +1070,8 @@
                             },
                             {
                                 "$type": "RPQuestionStep",
-                                "identifier": "question15",
-                                "title": "How much discomfort do you feel after 15 minutes?",
+                                "identifier": "survey.exposure.question.15.id",
+                                "title": "survey.exposure.question.15.text",
                                 "optional": true,
                                 "answer_format": {
                                     "$type": "RPSliderAnswerFormat",
@@ -1060,8 +1085,8 @@
                             },
                             {
                                 "$type": "RPQuestionStep",
-                                "identifier": "question16",
-                                "title": "Well done! You stayed with some difficult feelings!\n\nWhat happened to those difficult feelings when you practiced doing the opposite of what OCD wants?",
+                                "identifier": "survey.exposure.question.16.id",
+                                "title": "survey.exposure.question.16.text",
                                 "optional": false,
                                 "answer_format": {
                                     "$type": "RPChoiceAnswerFormat",
@@ -1069,25 +1094,25 @@
                                     "choices": [
                                         {
                                             "$type": "RPChoice",
-                                            "text": "My discomfort grew until I couldn’t stand it anymore",
+                                            "text": "survey.answerFormat.discomfort.more",
                                             "value": 0,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "My discomfort went up and down",
+                                            "text": "survey.answerFormat.discomfort.mixed",
                                             "value": 1,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "My discomfort did not really change",
+                                            "text": "survey.answerFormat.discomfort.same",
                                             "value": 2,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "I felt less discomfort with time",
+                                            "text": "survey.answerFormat.discomfort.less",
                                             "value": 3,
                                             "is_free_text": false
                                         }
@@ -1097,9 +1122,9 @@
                             },
                             {
                                 "$type": "RPCompletionStep",
-                                "identifier": "completion",
-                                "title": "You are done with the exercise!",
-                                "text": "Remember to give yourself that reward",
+                                "identifier": "survey.exposure.completition.id",
+                                "title": "survey.exposure.completition.title",
+                                "text": "survey.exposure.completition.text",
                                 "optional": false
                             }
                         ]
@@ -1107,8 +1132,8 @@
                 }
             ],
             "type": "survey",
-            "title": "Fight back against OCD",
-            "description": "Describe the obsession and/or the compulsion you are working on",
+            "title": "survey.exposure.title",
+            "description": "survey.exposure.description",
             "instructions": "",
             "minutes_to_complete": 10,
             "expire": 86400000000,
@@ -1121,18 +1146,18 @@
                 {
                     "$type": "dk.cachet.carp.protocols.domain.tasks.measures.RPTaskMeasure",
                     "type": "dk.cachet.carp.survey",
-                    "name": "How are you feeling right now?",
+                    "name": "survey.ecological.child.title",
                     "enabled": true,
                     "configuration": {},
                     "surveyTask": {
                         "$type": "RPOrderedTask",
-                        "identifier": "Ecological Momentary Assessment Child",
+                        "identifier": "survey.ecological.child.title",
                         "close_after_finished": true,
                         "steps": [
                             {
                                 "$type": "RPQuestionStep",
-                                "identifier": "question1",
-                                "title": "Are you alone?",
+                                "identifier": "survey.ecological.child.question.1.id",
+                                "title": "survey.ecological.child.question.1.text",
                                 "optional": false,
                                 "answer_format": {
                                     "$type": "RPChoiceAnswerFormat",
@@ -1140,37 +1165,37 @@
                                     "choices": [
                                         {
                                             "$type": "RPChoice",
-                                            "text": "I am alone",
+                                            "text": "survey.answerFormat.company.alone",
                                             "value": 0,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "I am with my mother/father who is also participating in the study",
+                                            "text": "survey.answerFormat.company.parent",
                                             "value": 1,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "I am  with my other parent who is not participating in the study",
+                                            "text": "survey.answerFormat.company.other.parent",
                                             "value": 2,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "I am with my sister(s) and/ or brother(s)",
+                                            "text": "survey.answerFormat.company.sibling",
                                             "value": 3,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "I am with my friends",
+                                            "text": "survey.answerFormat.company.friend",
                                             "value": 4,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "I am with others we have not mentioned",
+                                            "text": "survey.answerFormat.company.others",
                                             "value": 5,
                                             "is_free_text": false
                                         }
@@ -1180,16 +1205,16 @@
                             },
                             {
                                 "$type": "RPInstructionStep",
-                                "identifier": "instruction",
-                                "title": "We would like to know your current mood",
-                                "text": "Below are a list of different feelings and emotions.\n\nPlease read each feeling and choose the option that best matches how much you feel each feeling right now.",
+                                "identifier": "survey.ecological.child.instruction.id",
+                                "title": "survey.ecological.child.instruction.title",
+                                "text": "survey.ecological.child.instruction.text",
                                 "optional": false,
                                 "image_path": "assets/icons/survey.png"
                             },
                             {
                                 "$type": "RPQuestionStep",
-                                "identifier": "question2",
-                                "title": "Miserable",
+                                "identifier": "survey.ecological.child.question.2.id",
+                                "title": "survey.ecological.child.question.2.text",
                                 "optional": false,
                                 "answer_format": {
                                     "$type": "RPChoiceAnswerFormat",
@@ -1197,31 +1222,31 @@
                                     "choices": [
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Very slightly or not at all",
+                                            "text": "survey.answerFormat.instensity.slightly",
                                             "value": 1,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "A little",
+                                            "text": "survey.answerFormat.instensity.little",
                                             "value": 2,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Moderately",
+                                            "text": "survey.answerFormat.instensity.moderately",
                                             "value": 3,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Quite a bit",
+                                            "text": "survey.answerFormat.instensity.quite",
                                             "value": 4,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Extremely",
+                                            "text": "survey.answerFormat.instensity.extremely",
                                             "value": 5,
                                             "is_free_text": false
                                         }
@@ -1231,8 +1256,8 @@
                             },
                             {
                                 "$type": "RPQuestionStep",
-                                "identifier": "question3",
-                                "title": "Mad",
+                                "identifier": "survey.ecological.child.question.3.id",
+                                "title": "survey.ecological.child.question.3.text",
                                 "optional": false,
                                 "answer_format": {
                                     "$type": "RPChoiceAnswerFormat",
@@ -1240,31 +1265,31 @@
                                     "choices": [
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Very slightly or not at all",
+                                            "text": "survey.answerFormat.instensity.slightly",
                                             "value": 1,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "A little",
+                                            "text": "survey.answerFormat.instensity.little",
                                             "value": 2,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Moderately",
+                                            "text": "survey.answerFormat.instensity.moderately",
                                             "value": 3,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Quite a bit",
+                                            "text": "survey.answerFormat.instensity.quite",
                                             "value": 4,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Extremely",
+                                            "text": "survey.answerFormat.instensity.extremely",
                                             "value": 5,
                                             "is_free_text": false
                                         }
@@ -1274,8 +1299,8 @@
                             },
                             {
                                 "$type": "RPQuestionStep",
-                                "identifier": "question4",
-                                "title": "Lively",
+                                "identifier": "survey.ecological.child.question.4.id",
+                                "title": "survey.ecological.child.question.4.text",
                                 "optional": false,
                                 "answer_format": {
                                     "$type": "RPChoiceAnswerFormat",
@@ -1283,31 +1308,31 @@
                                     "choices": [
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Very slightly or not at all",
+                                            "text": "survey.answerFormat.instensity.slightly",
                                             "value": 1,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "A little",
+                                            "text": "survey.answerFormat.instensity.little",
                                             "value": 2,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Moderately",
+                                            "text": "survey.answerFormat.instensity.moderately",
                                             "value": 3,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Quite a bit",
+                                            "text": "survey.answerFormat.instensity.quite",
                                             "value": 4,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Extremely",
+                                            "text": "survey.answerFormat.instensity.extremely",
                                             "value": 5,
                                             "is_free_text": false
                                         }
@@ -1317,8 +1342,8 @@
                             },
                             {
                                 "$type": "RPQuestionStep",
-                                "identifier": "question5",
-                                "title": "Sad",
+                                "identifier": "survey.ecological.child.question.5.id",
+                                "title": "survey.ecological.child.question.5.text",
                                 "optional": false,
                                 "answer_format": {
                                     "$type": "RPChoiceAnswerFormat",
@@ -1326,31 +1351,31 @@
                                     "choices": [
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Very slightly or not at all",
+                                            "text": "survey.answerFormat.instensity.slightly",
                                             "value": 1,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "A little",
+                                            "text": "survey.answerFormat.instensity.little",
                                             "value": 2,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Moderately",
+                                            "text": "survey.answerFormat.instensity.moderately",
                                             "value": 3,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Quite a bit",
+                                            "text": "survey.answerFormat.instensity.quite",
                                             "value": 4,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Extremely",
+                                            "text": "survey.answerFormat.instensity.extremely",
                                             "value": 5,
                                             "is_free_text": false
                                         }
@@ -1360,8 +1385,8 @@
                             },
                             {
                                 "$type": "RPQuestionStep",
-                                "identifier": "question6",
-                                "title": "Joyful",
+                                "identifier": "survey.ecological.child.question.6.id",
+                                "title": "survey.ecological.child.question.6.text",
                                 "optional": false,
                                 "answer_format": {
                                     "$type": "RPChoiceAnswerFormat",
@@ -1369,31 +1394,31 @@
                                     "choices": [
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Very slightly or not at all",
+                                            "text": "survey.answerFormat.instensity.slightly",
                                             "value": 1,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "A little",
+                                            "text": "survey.answerFormat.instensity.little",
                                             "value": 2,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Moderately",
+                                            "text": "survey.answerFormat.instensity.moderately",
                                             "value": 3,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Quite a bit",
+                                            "text": "survey.answerFormat.instensity.quite",
                                             "value": 4,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Extremely",
+                                            "text": "survey.answerFormat.instensity.extremely",
                                             "value": 5,
                                             "is_free_text": false
                                         }
@@ -1403,8 +1428,8 @@
                             },
                             {
                                 "$type": "RPQuestionStep",
-                                "identifier": "question7",
-                                "title": "Scared",
+                                "identifier": "survey.ecological.child.question.7.id",
+                                "title": "survey.ecological.child.question.7.text",
                                 "optional": false,
                                 "answer_format": {
                                     "$type": "RPChoiceAnswerFormat",
@@ -1412,31 +1437,31 @@
                                     "choices": [
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Very slightly or not at all",
+                                            "text": "survey.answerFormat.instensity.slightly",
                                             "value": 1,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "A little",
+                                            "text": "survey.answerFormat.instensity.little",
                                             "value": 2,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Moderately",
+                                            "text": "survey.answerFormat.instensity.moderately",
                                             "value": 3,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Quite a bit",
+                                            "text": "survey.answerFormat.instensity.quite",
                                             "value": 4,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Extremely",
+                                            "text": "survey.answerFormat.instensity.extremely",
                                             "value": 5,
                                             "is_free_text": false
                                         }
@@ -1446,8 +1471,8 @@
                             },
                             {
                                 "$type": "RPQuestionStep",
-                                "identifier": "question8",
-                                "title": "Cheerful",
+                                "identifier": "survey.ecological.child.question.8.id",
+                                "title": "survey.ecological.child.question.8.text",
                                 "optional": false,
                                 "answer_format": {
                                     "$type": "RPChoiceAnswerFormat",
@@ -1455,31 +1480,31 @@
                                     "choices": [
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Very slightly or not at all",
+                                            "text": "survey.answerFormat.instensity.slightly",
                                             "value": 1,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "A little",
+                                            "text": "survey.answerFormat.instensity.little",
                                             "value": 2,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Moderately",
+                                            "text": "survey.answerFormat.instensity.moderately",
                                             "value": 3,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Quite a bit",
+                                            "text": "survey.answerFormat.instensity.quite",
                                             "value": 4,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Extremely",
+                                            "text": "survey.answerFormat.instensity.extremely",
                                             "value": 5,
                                             "is_free_text": false
                                         }
@@ -1489,8 +1514,8 @@
                             },
                             {
                                 "$type": "RPQuestionStep",
-                                "identifier": "question9",
-                                "title": "Happy",
+                                "identifier": "survey.ecological.child.question.9.id",
+                                "title": "survey.ecological.child.question.9.text",
                                 "optional": false,
                                 "answer_format": {
                                     "$type": "RPChoiceAnswerFormat",
@@ -1498,31 +1523,31 @@
                                     "choices": [
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Very slightly or not at all",
+                                            "text": "survey.answerFormat.instensity.slightly",
                                             "value": 1,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "A little",
+                                            "text": "survey.answerFormat.instensity.little",
                                             "value": 2,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Moderately",
+                                            "text": "survey.answerFormat.instensity.moderately",
                                             "value": 3,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Quite a bit",
+                                            "text": "survey.answerFormat.instensity.quite",
                                             "value": 4,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Extremely",
+                                            "text": "survey.answerFormat.instensity.extremely",
                                             "value": 5,
                                             "is_free_text": false
                                         }
@@ -1532,8 +1557,8 @@
                             },
                             {
                                 "$type": "RPQuestionStep",
-                                "identifier": "question10",
-                                "title": "Afraid",
+                                "identifier": "survey.ecological.child.question.10.id",
+                                "title": "survey.ecological.child.question.10.text",
                                 "optional": false,
                                 "answer_format": {
                                     "$type": "RPChoiceAnswerFormat",
@@ -1541,31 +1566,31 @@
                                     "choices": [
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Very slightly or not at all",
+                                            "text": "survey.answerFormat.instensity.slightly",
                                             "value": 1,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "A little",
+                                            "text": "survey.answerFormat.instensity.little",
                                             "value": 2,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Moderately",
+                                            "text": "survey.answerFormat.instensity.moderately",
                                             "value": 3,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Quite a bit",
+                                            "text": "survey.answerFormat.instensity.quite",
                                             "value": 4,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Extremely",
+                                            "text": "survey.answerFormat.instensity.extremely",
                                             "value": 5,
                                             "is_free_text": false
                                         }
@@ -1575,8 +1600,8 @@
                             },
                             {
                                 "$type": "RPQuestionStep",
-                                "identifier": "question11",
-                                "title": "Proud",
+                                "identifier": "survey.ecological.child.question.11.id",
+                                "title": "survey.ecological.child.question.11.text",
                                 "optional": false,
                                 "answer_format": {
                                     "$type": "RPChoiceAnswerFormat",
@@ -1584,31 +1609,31 @@
                                     "choices": [
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Very slightly or not at all",
+                                            "text": "survey.answerFormat.instensity.slightly",
                                             "value": 1,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "A little",
+                                            "text": "survey.answerFormat.instensity.little",
                                             "value": 2,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Moderately",
+                                            "text": "survey.answerFormat.instensity.moderately",
                                             "value": 3,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Quite a bit",
+                                            "text": "survey.answerFormat.instensity.quite",
                                             "value": 4,
                                             "is_free_text": false
                                         },
                                         {
                                             "$type": "RPChoice",
-                                            "text": "Extremely",
+                                            "text": "survey.answerFormat.instensity.extremely",
                                             "value": 5,
                                             "is_free_text": false
                                         }
@@ -1618,9 +1643,9 @@
                             },
                             {
                                 "$type": "RPCompletionStep",
-                                "identifier": "completion",
-                                "title": "Thank you for telling us how you feel",
-                                "text": "By answering this survey you are helping us connect how you feel to your bodily signals",
+                                "identifier": "survey.ecological.child.completition.id",
+                                "title": "survey.ecological.child.completition.title",
+                                "text": "survey.ecological.child.completition.text",
                                 "optional": false
                             }
                         ]
@@ -1628,8 +1653,8 @@
                 }
             ],
             "type": "survey",
-            "title": "How are you feeling right now?",
-            "description": "We would like to know your current mood",
+            "title": "survey.ecological.child.title",
+            "description": "survey.ecological.child.description",
             "instructions": "",
             "minutes_to_complete": 10,
             "expire": 86400000000,
@@ -1642,25 +1667,25 @@
                 {
                     "$type": "dk.cachet.carp.protocols.domain.tasks.measures.RPTaskMeasure",
                     "type": "dk.cachet.carp.survey",
-                    "name": "Symptom Hierarchy: Obsessions",
+                    "name": "survey.symptoms.obsessions.title",
                     "enabled": true,
                     "configuration": {},
                     "surveyTask": {
                         "$type": "RPOrderedTask",
-                        "identifier": "Symptom Hierarchy: Obsessions",
+                        "identifier": "survey.symptoms.obsessions.title",
                         "close_after_finished": true,
                         "steps": [
                             {
                                 "$type": "RPInstructionStep",
-                                "identifier": "instruction",
-                                "title": "Obsessions",
-                                "text": "Symptom Hierarchy: Obsessions\n\n\nObsessions are unwanted thoughts or images that keep popping into your head and that you can't stop thinking about, even though you want to be rid of them.\n\nOn the next pages, you will see obsessions that many people with OCD have. Tell us how upset or scared each obsession has been for you over the past week by choosing the number that best matches how you feel. 0 means that you have not had the obsession or that it is not at all unpleasant and 10 means that the obsession is so upsetting you can’t stand it.",
+                                "identifier": "survey.symptoms.obsessions.instruction.id",
+                                "title": "survey.symptoms.obsessions.instruction.title",
+                                "text": "survey.symptoms.obsessions.instruction.text",
                                 "optional": false
                             },
                             {
                                 "$type": "RPQuestionStep",
-                                "identifier": "question1",
-                                "title": "Fear/ disgust of pollution, infection, dirt, bacteria, diseases",
+                                "identifier": "survey.symptoms.obsessions.question.1.id",
+                                "title": "survey.symptoms.obsessions.question.1.title",
                                 "optional": true,
                                 "answer_format": {
                                     "$type": "RPSliderAnswerFormat",
@@ -1674,8 +1699,8 @@
                             },
                             {
                                 "$type": "RPQuestionStep",
-                                "identifier": "question2",
-                                "title": "Fear of harming yourself or others (body or feelings)",
+                                "identifier": "survey.symptoms.obsessions.question.2.id",
+                                "title": "survey.symptoms.obsessions.question.2.title",
                                 "optional": true,
                                 "answer_format": {
                                     "$type": "RPSliderAnswerFormat",
@@ -1689,8 +1714,8 @@
                             },
                             {
                                 "$type": "RPQuestionStep",
-                                "identifier": "question3",
-                                "title": "Disturbing thoughts/ images about sex, pregnancy or sexuality",
+                                "identifier": "survey.symptoms.obsessions.question.3.id",
+                                "title": "survey.symptoms.obsessions.question.3.title",
                                 "optional": true,
                                 "answer_format": {
                                     "$type": "RPSliderAnswerFormat",
@@ -1704,8 +1729,8 @@
                             },
                             {
                                 "$type": "RPQuestionStep",
-                                "identifier": "question4",
-                                "title": "Need to collect things or fear of losing something",
+                                "identifier": "survey.symptoms.obsessions.question.4.id",
+                                "title": "survey.symptoms.obsessions.question.4.title",
                                 "optional": true,
                                 "answer_format": {
                                     "$type": "RPSliderAnswerFormat",
@@ -1719,8 +1744,8 @@
                             },
                             {
                                 "$type": "RPQuestionStep",
-                                "identifier": "question5",
-                                "title": "Magical/superstitious thoughts or actions (e.g. lucky numbers or words; stepping on a crack can break someone’s back)",
+                                "identifier": "survey.symptoms.obsessions.question.5.id",
+                                "title": "survey.symptoms.obsessions.question.5.title",
                                 "optional": true,
                                 "answer_format": {
                                     "$type": "RPSliderAnswerFormat",
@@ -1734,8 +1759,8 @@
                             },
                             {
                                 "$type": "RPQuestionStep",
-                                "identifier": "question6",
-                                "title": "Worry about having a disease or that a body part or your appearance looks wrong",
+                                "identifier": "survey.symptoms.obsessions.question.6.id",
+                                "title": "survey.symptoms.obsessions.question.6.title",
                                 "optional": true,
                                 "answer_format": {
                                     "$type": "RPSliderAnswerFormat",
@@ -1749,8 +1774,8 @@
                             },
                             {
                                 "$type": "RPQuestionStep",
-                                "identifier": "question7",
-                                "title": "Fear of offending God or Satan or worry about what is right and wrong",
+                                "identifier": "survey.symptoms.obsessions.question.7.id",
+                                "title": "survey.symptoms.obsessions.question.7.title",
                                 "optional": true,
                                 "answer_format": {
                                     "$type": "RPSliderAnswerFormat",
@@ -1764,8 +1789,8 @@
                             },
                             {
                                 "$type": "RPQuestionStep",
-                                "identifier": "question8",
-                                "title": "Symmetry and order (e.g. that things must lie in a certain way, or things must be in order)",
+                                "identifier": "survey.symptoms.obsessions.question.8.id",
+                                "title": "survey.symptoms.obsessions.question.8.title",
                                 "optional": true,
                                 "answer_format": {
                                     "$type": "RPSliderAnswerFormat",
@@ -1779,8 +1804,8 @@
                             },
                             {
                                 "$type": "RPQuestionStep",
-                                "identifier": "question9",
-                                "title": "Needing to do something until it feels right or not wrong",
+                                "identifier": "survey.symptoms.obsessions.question.9.id",
+                                "title": "survey.symptoms.obsessions.question.9.title",
                                 "optional": true,
                                 "answer_format": {
                                     "$type": "RPSliderAnswerFormat",
@@ -1794,8 +1819,8 @@
                             },
                             {
                                 "$type": "RPQuestionStep",
-                                "identifier": "question10",
-                                "title": "Here you can describe other obsessions that have not been mentioned",
+                                "identifier": "survey.symptoms.obsessions.question.10.id",
+                                "title": "survey.symptoms.obsessions.question.10.title",
                                 "optional": true,
                                 "answer_format": {
                                     "$type": "RPTextAnswerFormat",
@@ -1804,9 +1829,9 @@
                             },
                             {
                                 "$type": "RPCompletionStep",
-                                "identifier": "completion",
-                                "title": "Hurray!",
-                                "text": "You are finished recording your obsessions for this week. By keeping track of your obsessions and compulsions, you're taking back control, so OCD doesn't control you.",
+                                "identifier": "survey.symptoms.obsessions.completition.id",
+                                "title": "survey.symptoms.obsessions.completition.title",
+                                "text": "survey.symptoms.obsessions.completition.text",
                                 "optional": false
                             }
                         ]
@@ -1814,8 +1839,8 @@
                 }
             ],
             "type": "survey",
-            "title": "Symptom Hierarchy: Obsessions",
-            "description": "This form is designed to help you keep track of how your obsessions change from week to week.",
+            "title": "survey.symptoms.obsessions.title",
+            "description": "survey.symptoms.obsessions.description",
             "instructions": "",
             "minutes_to_complete": 5,
             "expire": 604800000000,
@@ -1828,25 +1853,25 @@
                 {
                     "$type": "dk.cachet.carp.protocols.domain.tasks.measures.RPTaskMeasure",
                     "type": "dk.cachet.carp.survey",
-                    "name": "Symptom Hierarchy: Compulsions",
+                    "name": "survey.symptoms.compulsions.title",
                     "enabled": true,
                     "configuration": {},
                     "surveyTask": {
                         "$type": "RPOrderedTask",
-                        "identifier": "Symptom Hierarchy: Compulsions",
+                        "identifier": "survey.symptoms.compulsions.title",
                         "close_after_finished": true,
                         "steps": [
                             {
                                 "$type": "RPInstructionStep",
-                                "identifier": "instruction",
-                                "title": "Compulsions",
-                                "text": "Symptom hierarchy: Compulsions\n\n\nCompulsions are things that OCD wants you to do. If you try to resist doing these things or try not to do what OCD tells to, you may feel afraid, worried, frustrated, angry or upset.\n\nOn the next pages there will be some compulsions that many people with OCD have. Tell us how upset each compulsion (or trying to resist the compulsion) has been for you over the past week by choosing the number that best matches how you feel. 0 means that you do not have that compulsion or that does not bother you and 10 means that the compulsion upsets you so much that you can’t stand it.",
+                                "identifier": "survey.symptoms.compulsions.instruction.id",
+                                "title": "survey.symptoms.compulsions.instruction.title",
+                                "text": "survey.symptoms.compulsions.instruction.text",
                                 "optional": false
                             },
                             {
                                 "$type": "RPQuestionStep",
-                                "identifier": "question1",
-                                "title": "Washing or cleaning",
+                                "identifier": "survey.symptoms.compulsions.question.1.id",
+                                "title": "survey.symptoms.compulsions.question.1.title",
                                 "optional": true,
                                 "answer_format": {
                                     "$type": "RPSliderAnswerFormat",
@@ -1860,8 +1885,8 @@
                             },
                             {
                                 "$type": "RPQuestionStep",
-                                "identifier": "question2",
-                                "title": "Checking (like if you have remembered to lock the door)",
+                                "identifier": "survey.symptoms.compulsions.question.2.id",
+                                "title": "survey.symptoms.compulsions.question.2.title",
                                 "optional": true,
                                 "answer_format": {
                                     "$type": "RPSliderAnswerFormat",
@@ -1875,8 +1900,8 @@
                             },
                             {
                                 "$type": "RPQuestionStep",
-                                "identifier": "question3",
-                                "title": "Repeating actions (like turning the lights on and off several times)",
+                                "identifier": "survey.symptoms.compulsions.question.3.id",
+                                "title": "survey.symptoms.compulsions.question.3.title",
                                 "optional": true,
                                 "answer_format": {
                                     "$type": "RPSliderAnswerFormat",
@@ -1890,8 +1915,8 @@
                             },
                             {
                                 "$type": "RPQuestionStep",
-                                "identifier": "question4",
-                                "title": "Counting things",
+                                "identifier": "survey.symptoms.compulsions.question.4.id",
+                                "title": "survey.symptoms.compulsions.question.4.title",
                                 "optional": true,
                                 "answer_format": {
                                     "$type": "RPSliderAnswerFormat",
@@ -1905,8 +1930,8 @@
                             },
                             {
                                 "$type": "RPQuestionStep",
-                                "identifier": "question5",
-                                "title": "Fixing things or try to get things the same or symmetrical",
+                                "identifier": "survey.symptoms.compulsions.question.5.id",
+                                "title": "survey.symptoms.compulsions.question.5.title",
                                 "optional": true,
                                 "answer_format": {
                                     "$type": "RPSliderAnswerFormat",
@@ -1920,8 +1945,8 @@
                             },
                             {
                                 "$type": "RPQuestionStep",
-                                "identifier": "question6",
-                                "title": "Collecting things or difficulty throwing things away",
+                                "identifier": "survey.symptoms.compulsions.question.6.id",
+                                "title": "survey.symptoms.compulsions.question.6.title",
                                 "optional": true,
                                 "answer_format": {
                                     "$type": "RPSliderAnswerFormat",
@@ -1935,8 +1960,8 @@
                             },
                             {
                                 "$type": "RPQuestionStep",
-                                "identifier": "question7",
-                                "title": "Magical/superstitious behavior (e.g. doing or saying things a certain number of times to prevent something terrible from happening)",
+                                "identifier": "survey.symptoms.compulsions.question.7.id",
+                                "title": "survey.symptoms.compulsions.question.7.title",
                                 "optional": true,
                                 "answer_format": {
                                     "$type": "RPSliderAnswerFormat",
@@ -1950,8 +1975,8 @@
                             },
                             {
                                 "$type": "RPQuestionStep",
-                                "identifier": "question8",
-                                "title": "Involving others (like your parents) in a ritual or asking for reassurance",
+                                "identifier": "survey.symptoms.compulsions.question.8.id",
+                                "title": "survey.symptoms.compulsions.question.8.title",
                                 "optional": true,
                                 "answer_format": {
                                     "$type": "RPSliderAnswerFormat",
@@ -1965,8 +1990,8 @@
                             },
                             {
                                 "$type": "RPQuestionStep",
-                                "identifier": "question9",
-                                "title": "Needing to do something until it feels right",
+                                "identifier": "survey.symptoms.compulsions.question.9.id",
+                                "title": "survey.symptoms.compulsions.question.9.title",
                                 "optional": true,
                                 "answer_format": {
                                     "$type": "RPSliderAnswerFormat",
@@ -1980,8 +2005,8 @@
                             },
                             {
                                 "$type": "RPQuestionStep",
-                                "identifier": "question10",
-                                "title": "Here you can describe other compulsions that have not been mentioned",
+                                "identifier": "survey.symptoms.compulsions.question.10.id",
+                                "title": "survey.symptoms.compulsions.question.10.title",
                                 "optional": true,
                                 "answer_format": {
                                     "$type": "RPTextAnswerFormat",
@@ -1990,9 +2015,9 @@
                             },
                             {
                                 "$type": "RPCompletionStep",
-                                "identifier": "completion",
-                                "title": "Hurray!",
-                                "text": "You are finished recording your compulsions for this week. By keeping track of your obsessions and compulsions, you're taking back control, so OCD doesn't control you.",
+                                "identifier": "survey.symptoms.compulsions.completition.id",
+                                "title": "survey.symptoms.compulsions.completition.title",
+                                "text": "survey.symptoms.compulsions.completition.text",
                                 "optional": false
                             }
                         ]
@@ -2000,8 +2025,8 @@
                 }
             ],
             "type": "survey",
-            "title": "Symptom Hierarchy: Compulsions",
-            "description": "This form is designed to help you keep track of how your compulsions change from week to week.",
+            "title": "survey.symptoms.compulsions.title",
+            "description": "survey.symptoms.compulsions.description",
             "instructions": "",
             "minutes_to_complete": 5,
             "expire": 604800000000,
@@ -2014,15 +2039,15 @@
                 {
                     "$type": "dk.cachet.carp.protocols.domain.tasks.measures.CAMSMeasure",
                     "type": "dk.cachet.carp.audio",
-                    "name": "Exposure exercise",
+                    "name": "audio.exposure.name",
                     "enabled": true,
                     "configuration": {}
                 }
             ],
             "type": "audio",
-            "title": "Exposure exercise",
-            "description": "Describe the exposure exercise you are working on",
-            "instructions": "Describe the exposure exercise: how will you work on the obsession or compulsion?",
+            "title": "audio.exposure.title",
+            "description": "audio.exposure.description",
+            "instructions": "audio.exposure.instructions",
             "minutes_to_complete": 5,
             "notification": false
         },
@@ -2033,15 +2058,15 @@
                 {
                     "$type": "dk.cachet.carp.protocols.domain.tasks.measures.CAMSMeasure",
                     "type": "dk.cachet.carp.audio",
-                    "name": "User Experience with the Wristband",
+                    "name": "audio.biosensor.name",
                     "enabled": true,
                     "configuration": {}
                 }
             ],
             "type": "audio",
-            "title": "User Experience with the Wristband",
-            "description": "Record yourself talking about how the wristband makes you feel",
-            "instructions": "Tell us about your experience wearing the wristband",
+            "title": "audio.biosensor.title",
+            "description": "audio.biosensor.description",
+            "instructions": "audio.biosensor.instructions",
             "minutes_to_complete": 5,
             "notification": false
         }

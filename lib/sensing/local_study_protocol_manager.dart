@@ -37,7 +37,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           //   recurrenceRule: RecurrenceRule(Frequency.WEEKLY, interval: 1),
           // ),
           RecurrentScheduledTrigger(
-              type: RecurrentType.weekly, time: Time(hour: 6, minute: 00)),
+              type: RecurrentType.weekly, time: Time(hour: 6, minute: 00), dayOfWeek: DateTime.monday),
           AppTask(
             type: SurveyUserTask.SURVEY_TYPE,
             title: surveys.patient.title,
@@ -80,7 +80,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           // RandomRecurrentTrigger(
           //     maxNumberOfTriggers: 3,
           //     minNumberOfTriggers: 0,
-          //     startTime: Time(hour: 6, minute: 00),
+          //     startTime: Time(hour: 16, minute: 00),
           //     endTime: Time(hour: 20, minute: 00)),
           AppTask(
             type: SurveyUserTask.SURVEY_TYPE,
@@ -103,7 +103,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           //   recurrenceRule: RecurrenceRule(Frequency.WEEKLY),
           // ),
           RecurrentScheduledTrigger(
-              type: RecurrentType.weekly, time: Time(hour: 6, minute: 00)),
+              type: RecurrentType.weekly, time: Time(hour: 6, minute: 00), dayOfWeek: DateTime.monday),
           AppTask(
             type: SurveyUserTask.SURVEY_TYPE,
             title: surveys.symptomHierarchyObsessions.title,
@@ -126,7 +126,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           //   recurrenceRule: RecurrenceRule(Frequency.WEEKLY),
           // ),
           RecurrentScheduledTrigger(
-              type: RecurrentType.weekly, time: Time(hour: 6, minute: 00)),
+              type: RecurrentType.weekly, time: Time(hour: 6, minute: 00), dayOfWeek: DateTime.monday),
           AppTask(
             type: SurveyUserTask.SURVEY_TYPE,
             title: surveys.symptomHierarchyCoumpulsions.title,
@@ -169,7 +169,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           //   recurrenceRule: RecurrenceRule(Frequency.WEEKLY),
           // ),
           RecurrentScheduledTrigger(
-              type: RecurrentType.weekly, time: Time(hour: 6, minute: 00)),
+              type: RecurrentType.weekly, time: Time(hour: 6, minute: 00), dayOfWeek: DateTime.monday),
           AppTask(
             type: AudioUserTask.AUDIO_TYPE,
             title: "audio.biosensor.title",
@@ -256,7 +256,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           //   recurrenceRule: RecurrenceRule(Frequency.WEEKLY),
           // ),
           RecurrentScheduledTrigger(
-              type: RecurrentType.daily, time: Time(hour: 6, minute: 00)),
+              type: RecurrentType.daily, time: Time(hour: 6, minute: 00), dayOfWeek: DateTime.monday),
           AppTask(
             type: SurveyUserTask.SURVEY_TYPE,
             title: surveys.patientParents.title,
@@ -273,7 +273,12 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
 
       // Ecological Momentary Assesment: collect how are you feeling - triggers randomly  - TODO: use random trigger - starts W0
       _protocol!.addTriggeredTask(
-          ImmediateTrigger(),
+          //ImmediateTrigger(),
+          RandomRecurrentTrigger(
+              maxNumberOfTriggers: 3,
+              minNumberOfTriggers: 0,
+              startTime: Time(hour: 16, minute: 00),
+              endTime: Time(hour: 20, minute: 00)),
           AppTask(
             type: SurveyUserTask.SURVEY_TYPE,
             title: surveys.ecologicalParents.title,
@@ -343,7 +348,12 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
 
       // Ecological Momentary Assesment: collect how are you feeling - triggers randomly  - TODO: use random trigger - w0, 6am, set it to expire as soon as the next one appears
       _protocol!.addTriggeredTask(
-          PeriodicTrigger(period: Duration(minutes: 5)),
+          //PeriodicTrigger(period: Duration(minutes: 5)),
+          RandomRecurrentTrigger(
+              maxNumberOfTriggers: 3,
+              minNumberOfTriggers: 0,
+              startTime: Time(hour: 16, minute: 00),
+              endTime: Time(hour: 20, minute: 00)),
           AppTask(
             type: SurveyUserTask.SURVEY_TYPE,
             title: surveys.ecological.title,
@@ -464,7 +474,12 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
 
       // Ecological Momentary Assesment: collect how are you feeling - triggers randomly  - TODO: use random trigger - w0, 6am, set it to expire as soon as the next one appears
       _protocol!.addTriggeredTask(
-          ImmediateTrigger(),
+          //ImmediateTrigger(),
+          RandomRecurrentTrigger(
+              maxNumberOfTriggers: 3,
+              minNumberOfTriggers: 0,
+              startTime: Time(hour: 16, minute: 00),
+              endTime: Time(hour: 20, minute: 00)),
           AppTask(
             type: SurveyUserTask.SURVEY_TYPE,
             title: surveys.ecologicalParents.title,

@@ -21,9 +21,9 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
   Future<StudyProtocol?> _getPatientWristWatch(String studyId) async {
     if (_protocol == null) {
       _protocol = StudyProtocol(
-        name: 'Wrist Angel: Patient (TEST)',
+        name: 'Wrist Angel: Patient (TEST with new triggers)',
         ownerId: studyId,
-        description: 'Protocol testing for patients',
+        description: 'Protocol testing for patients with new triggers',
       );
 
       // Define which devices are used for data collection.

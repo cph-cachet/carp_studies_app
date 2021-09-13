@@ -108,17 +108,11 @@ class MyAssetsBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    AssetLocalizations locale = AssetLocalizations.of(context)!;
-
     //Order assetsList
     orderMyAssetsList();
 
     final double rad = radius ?? (height / 2);
-    // if (assets.isEmpty)
-    //   return Center(child: Text(locale.translate("No data yet")));
-    // else
-    print("@@@@");
-    print(assets);
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [

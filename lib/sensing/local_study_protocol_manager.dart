@@ -74,14 +74,14 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
             )),
           phone);
 
-      // Ecological Momentary Assesment: collect how are you feeling - triggers randomly  - TODO: use random trigger, set it to expire as soon as the next one appears
+      // Ecological Momentary Assesment: collect how are you feeling - triggers randomly
       _protocol!.addTriggeredTask(
           //ImmediateTrigger(),
           RandomRecurrentTrigger(
-              maxNumberOfTriggers: 5,
-              minNumberOfTriggers: 3,
-              startTime: Time(hour: 11, minute: 17),
-              endTime: Time(hour: 11, minute: 23)),
+              maxNumberOfTriggers: 3,
+              minNumberOfTriggers: 0,
+              startTime: Time(hour: 16, minute: 00),
+              endTime: Time(hour: 20, minute: 00)),
           AppTask(
             type: SurveyUserTask.SURVEY_TYPE,
             title: surveys.ecological.title,
@@ -219,7 +219,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
             )),
           phone);
 
-      // collect trust scale - triggers on W8 (TODO: use scheduled trigger)
+      // collect trust scale - triggers on W8
       _protocol!.addTriggeredTask(
           //ImmediateTrigger(),
           DeploymentDelayedTrigger(delay: Duration(days: 56)),
@@ -376,7 +376,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
             )),
           phone);
 
-      // Ecological Momentary Assesment: collect how are you feeling - triggers randomly  - TODO: use random trigger - w0, 6am, set it to expire as soon as the next one appears
+      // Ecological Momentary Assesment: collect how are you feeling - triggers randomly
       _protocol!.addTriggeredTask(
           //PeriodicTrigger(period: Duration(minutes: 5)),
           RandomRecurrentTrigger(

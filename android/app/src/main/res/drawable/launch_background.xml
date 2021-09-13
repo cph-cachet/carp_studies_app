@@ -7,7 +7,7 @@
             android:gravity="center"
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:filter="true"
-            android:src="@drawable/cachet_logo"
+            android:src="@drawable/carp_logo"
         />
     </item>
     <!-- You can insert your own image assets here -->

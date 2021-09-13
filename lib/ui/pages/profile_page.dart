@@ -83,7 +83,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                   ),
                   ListTile(
-                    leading: Icon(Icons.support_agent, color: Theme.of(context).primaryColor),
+                    leading: Icon(Icons.mail_outline, color: Theme.of(context).primaryColor),
                     title: Text(locale.translate('pages.profile.contact'),
                         style: profileActionStyle.copyWith(color: Theme.of(context).primaryColor)),
                     onTap: () {

@@ -24,7 +24,7 @@ class HorizontalBar extends StatelessWidget {
     AssetLocalizations locale = AssetLocalizations.of(context)!;
     double width = MediaQuery.of(context).size.width;
     if (names!.isEmpty)
-      return Center(child: Text(locale.translate("No data yet")));
+      return Center(child: Text(locale.translate("pages.data_viz.no_data")));
     else
       return Center(
         child: MyAssetsBar(

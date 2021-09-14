@@ -3,150 +3,166 @@
     "identifier": "consentTaskID",
     "close_after_finished": false,
     "steps": [
-     {
-      "$type": "RPVisualConsentStep",
-      "identifier": "visualStep",
-      "consent_document": {
-       "$type": "RPConsentDocument",
-       "signatures": [
         {
-         "$type": "RPConsentSignature",
-         "requires_name": true,
-         "requires_signature_image": true,
-         "requires_birth_date": false,
-         "identifier": "signatureID"
+            "$type": "RPVisualConsentStep",
+            "identifier": "visualStep",
+            "title": "",
+            "optional": false,
+            "consent_document": {
+                "$type": "RPConsentDocument",
+                "signatures": [
+                    {
+                        "$type": "RPConsentSignature",
+                        "requires_name": true,
+                        "requires_signature_image": true,
+                        "identifier": "signatureID"
+                    }
+                ],
+                "title": "CACHET Research Platfom",
+                "sections": [
+                    {
+                        "$type": "RPConsentSection",
+                        "type": "Welcome",
+                        "title": "ic.overview.title",
+                        "summary": "ic.overview.summary",
+                        "content": "ic.overview.content"
+                    },
+                    {
+                        "$type": "RPConsentSection",
+                        "type": "AboutUs",
+                        "title": "ic.who.title",
+                        "summary": "ic.who.summary",
+                        "content": "ic.who.content"
+                    },
+                    {
+                        "$type": "RPConsentSection",
+                        "type": "StudyTasks",
+                        "title": "ic.tasks.title",
+                        "summary": "ic.tasks.summary",
+                        "content": "ic.tasks.summary"
+                    },
+                    {
+                        "$type": "RPConsentSection",
+                        "type": "Duration",
+                        "title": "ic.duration.title",
+                        "summary": "ic.duration.summary",
+                        "content": "ic.duration.summary"
+                    },
+                    {
+                        "$type": "RPConsentSection",
+                        "type": "DataHandling",
+                        "title": "ic.data.title",
+                        "summary": "ic.data.summary",
+                        "content": "ic.data.content"
+                    },
+                    {
+                        "$type": "RPConsentSection",
+                        "type": "Location",
+                        "title": "ic.location.title",
+                        "summary": "ic.location.summary",
+                        "content": "ic.location.content"
+                    },
+                    {
+                        "$type": "RPConsentSection",
+                        "type": "YourRights",
+                        "title": "ic.rights.title",
+                        "summary": "ic.rights.summary",
+                        "content": "ic.rights.content"
+                    },
+                    {
+                        "$type": "RPConsentSection",
+                        "type": "Overview",
+                        "title": "ic.summary.title",
+                        "summary": "ic.summary.summary",
+                        "content": "ic.summary.content"
+                    }
+                ]
+            }
+        },
+        {
+            "$type": "RPConsentReviewStep",
+            "identifier": "consentreviewstepID",
+            "title": "ic.review.title",
+            "optional": false,
+            "consent_document": {
+                "$type": "RPConsentDocument",
+                "signatures": [
+                    {
+                        "$type": "RPConsentSignature",
+                        "requires_name": true,
+                        "requires_signature_image": true,
+                        "identifier": "signatureID"
+                    }
+                ],
+                "title": "CACHET Research Platfom",
+                "sections": [
+                    {
+                        "$type": "RPConsentSection",
+                        "type": "Welcome",
+                        "title": "ic.overview.title",
+                        "summary": "ic.overview.summary",
+                        "content": "ic.overview.content"
+                    },
+                    {
+                        "$type": "RPConsentSection",
+                        "type": "AboutUs",
+                        "title": "ic.who.title",
+                        "summary": "ic.who.summary",
+                        "content": "ic.who.content"
+                    },
+                    {
+                        "$type": "RPConsentSection",
+                        "type": "StudyTasks",
+                        "title": "ic.tasks.title",
+                        "summary": "ic.tasks.summary",
+                        "content": "ic.tasks.summary"
+                    },
+                    {
+                        "$type": "RPConsentSection",
+                        "type": "Duration",
+                        "title": "ic.duration.title",
+                        "summary": "ic.duration.summary",
+                        "content": "ic.duration.summary"
+                    },
+                    {
+                        "$type": "RPConsentSection",
+                        "type": "DataHandling",
+                        "title": "ic.data.title",
+                        "summary": "ic.data.summary",
+                        "content": "ic.data.content"
+                    },
+                    {
+                        "$type": "RPConsentSection",
+                        "type": "Location",
+                        "title": "ic.location.title",
+                        "summary": "ic.location.summary",
+                        "content": "ic.location.content"
+                    },
+                    {
+                        "$type": "RPConsentSection",
+                        "type": "YourRights",
+                        "title": "ic.rights.title",
+                        "summary": "ic.rights.summary",
+                        "content": "ic.rights.content"
+                    },
+                    {
+                        "$type": "RPConsentSection",
+                        "type": "Overview",
+                        "title": "ic.summary.title",
+                        "summary": "ic.summary.summary",
+                        "content": "ic.summary.content"
+                    }
+                ]
+            },
+            "text": "ic.review.text",
+            "reason_for_consent": "ic.review.reason"
+        },
+        {
+            "$type": "RPCompletionStep",
+            "identifier": "completionID",
+            "title": "ic.completion.title",
+            "text": "ic.completion.text",
+            "optional": false
         }
-       ],
-       "title": "CACHET Research Platfom",
-       "sections": [
-        {
-         "$type": "RPConsentSection",
-         "type": "Welcome",
-         "title": "ic.overview.title",
-         "summary": "ic.overview.summary",
-         "content": "ic.overview.content"
-        },
-        {
-         "$type": "RPConsentSection",
-         "type": "AboutUs",
-         "title": "ic.who.title",
-         "summary": "ic.who.summary",
-         "content": "ic.who.content"
-        },
-        {
-         "$type": "RPConsentSection",
-         "type": "StudyTasks",
-         "title": "ic.tasks.title",
-         "summary": "ic.tasks.summary",
-         "content": "ic.tasks.summary"
-        },
-        {
-         "$type": "RPConsentSection",
-         "type": "Duration",
-         "title": "ic.duration.title",
-         "summary": "ic.duration.summary",
-         "content": "ic.duration.summary"
-        },
-        {
-         "$type": "RPConsentSection",
-         "type": "DataHandling",
-         "title": "ic.data.title",
-         "summary": "ic.data.summary",
-         "content": "ic.data.content"
-        },
-        {
-         "$type": "RPConsentSection",
-         "type": "YourRights",
-         "title": "ic.rights.title",
-         "summary": "ic.rights.summary",
-         "content": "ic.rights.content"
-        },
-        {
-         "$type": "RPConsentSection",
-         "type": "Overview",
-         "title": "ic.summary.title",
-         "summary": "ic.summary.summary",
-         "content": "ic.summary.content"
-        }
-       ]
-      }
-     },
-     {
-      "$type": "RPConsentReviewStep",
-      "identifier": "consentreviewstepID",
-      "title": "ic.review.title",
-      "consent_document": {
-       "$type": "RPConsentDocument",
-       "signatures": [
-        {
-         "$type": "RPConsentSignature",
-         "requires_name": true,
-         "requires_signature_image": true,
-         "requires_birth_date": false,
-         "identifier": "signatureID"
-        }
-       ],
-       "title": "CACHET Research Platfom",
-       "sections": [
-        {
-         "$type": "RPConsentSection",
-         "type": "Welcome",
-         "title": "ic.overview.title",
-         "summary": "ic.overview.summary",
-         "content": "ic.overview.content"
-        },
-        {
-         "$type": "RPConsentSection",
-         "type": "AboutUs",
-         "title": "ic.who.title",
-         "summary": "ic.who.summary",
-         "content": "ic.who.content"
-        },
-        {
-         "$type": "RPConsentSection",
-         "type": "StudyTasks",
-         "title": "ic.tasks.title",
-         "summary": "ic.tasks.summary",
-         "content": "ic.tasks.summary"
-        },
-        {
-         "$type": "RPConsentSection",
-         "type": "Duration",
-         "title": "ic.duration.title",
-         "summary": "ic.duration.summary",
-         "content": "ic.duration.summary"
-        },
-        {
-         "$type": "RPConsentSection",
-         "type": "DataHandling",
-         "title": "ic.data.title",
-         "summary": "ic.data.summary",
-         "content": "ic.data.content"
-        },
-        {
-         "$type": "RPConsentSection",
-         "type": "YourRights",
-         "title": "ic.rights.title",
-         "summary": "ic.rights.summary",
-         "content": "ic.rights.content"
-        },
-        {
-         "$type": "RPConsentSection",
-         "type": "Overview",
-         "title": "ic.summary.title",
-         "summary": "ic.summary.summary",
-         "content": "ic.summary.content"
-        }
-       ]
-      },
-      "text": "ic.review.text",
-      "reason_for_consent": "ic.review.reason"
-     },
-     {
-      "$type": "RPCompletionStep",
-      "identifier": "completionID",
-      "title": "ic.completion.title",
-      "text": "ic.completion.text"
-     }
     ]
-   }
+}

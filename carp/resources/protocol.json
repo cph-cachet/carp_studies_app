@@ -1,8 +1,8 @@
 {
     "ownerId": "1234",
     "name": "Wrist Angel: Patient (TEST with new triggers)",
-    "description": "Protocol testing for patients with new triggers.",
-    "creationDate": "2021-09-13T13:30:39.668267Z",
+    "description": "Protocol testing for patients with new triggers",
+    "creationDate": "2021-09-14T11:20:43.441338Z",
     "masterDevices": [
         {
             "$type": "dk.cachet.carp.protocols.domain.devices.Smartphone",

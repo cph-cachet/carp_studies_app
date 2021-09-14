@@ -32,6 +32,8 @@ dependencies:
   carp_survey_package: ^0.30.0
   carp_audio_package: ^0.30.1
   carp_backend: ^0.30.3
+  # carp_study_generator: 
+  #   path: ../carp/carp.sensing-flutter/utilities/carp_study_generator/
 
   #carp_communication_package: ^0.6.1
   #carp_health_package: ^0.6.1
@@ -84,7 +86,7 @@ dev_dependencies:
   test: ^1.17.10 
 #  carp_study_generator: ^0.30.3+1
   carp_study_generator: 
-      path: ../carp/carp.sensing-flutter/utilities/carp_study_generator/
+    path: ../carp/carp.sensing-flutter/utilities/carp_study_generator/
 
 
 # For information on the generic Dart part of this file, see the

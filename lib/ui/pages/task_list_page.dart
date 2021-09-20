@@ -42,7 +42,10 @@ class _TaskListPageState extends State<TaskListPage> {
                     slivers: <Widget>[
                       SliverList(
                         delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
-                          if (widget.model.tasks[index].state != UserTaskState.done)
+                          if (widget.model.tasks[index].state != UserTaskState.done &&
+                              widget.model.tasks[index].state != UserTaskState.expired &&
+                              widget.model.tasks[index].expiresIn != null &&
+                              widget.model.tasks[index].expiresIn! >= Duration.zero)
                             return _buildTaskCard(context, widget.model.tasks[index]);
                           else
                             return SizedBox.shrink();
@@ -56,14 +59,17 @@ class _TaskListPageState extends State<TaskListPage> {
                             return SizedBox.shrink();
                         }, childCount: widget.model.tasks.length),
                       ),
-                      SliverList(
-                        delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
-                          if (widget.model.tasks[index].state == UserTaskState.expired)
-                            return _buildExpiredTaskCard(context, widget.model.tasks[index]);
-                          else
-                            return SizedBox.shrink();
-                        }, childCount: widget.model.tasks.length),
-                      ),
+                      // TODO: Uncomment to show expired tasks
+                      // SliverList(
+                      //   delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
+                      //     if (widget.model.tasks[index].state == UserTaskState.expired ||
+                      //         (widget.model.tasks[index].expiresIn != null &&
+                      //             widget.model.tasks[index].expiresIn!.isNegative))
+                      //       return _buildExpiredTaskCard(context, widget.model.tasks[index]);
+                      //     else
+                      //       return SizedBox.shrink();
+                      //   }, childCount: widget.model.tasks.length),
+                      // ),
                     ],
                   );
                 }
@@ -84,10 +90,10 @@ class _TaskListPageState extends State<TaskListPage> {
         elevation: 5,
         child: ListTile(
           leading: CircleAvatar(
-            backgroundColor: Theme.of(context).hoverColor,
-            // child: taskTypeIcon[userTask.type],  // use a type icon
-            child: measureTypeIcon[userTask.task.measures[0].type], // use the 1st measure as an icon
-          ),
+              backgroundColor: CACHET.LIGHT_ORANGE,
+              // child: taskTypeIcon[userTask.type],  // use a type icon
+
+              child: measureTypeIcon[userTask.task.measures[0].type]),
           title: Text(locale.translate(userTask.title),
               style: aboutCardTitleStyle.copyWith(color: Theme.of(context).primaryColor)),
           subtitle: Column(
@@ -114,7 +120,7 @@ class _TaskListPageState extends State<TaskListPage> {
         ? '${userTask.task.minutesToComplete} ' + locale.translate('pages.task_list.task.time_to_complete')
         : '';
 
-    str += (userTask.expiresIn != null)
+    str += (userTask.expiresIn != null && !userTask.expiresIn!.isNegative)
         ? ' - ${userTask.expiresIn!.inDays + 1} ' + locale.translate('pages.task_list.task.days_remaining')
         : '';
 
@@ -133,7 +139,11 @@ class _TaskListPageState extends State<TaskListPage> {
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           elevation: 3,
           child: ListTile(
-            leading: Icon(Icons.check_circle_outlined, color: CACHET.GREEN_1),
+            leading: CircleAvatar(
+              backgroundColor: CACHET.LIGHT_GREEN_1,
+              // child: taskTypeIcon[userTask.type],  // use a type icon
+              child: Icon(Icons.check_circle_outlined, color: CACHET.GREEN_1),
+            ),
             title: Text(locale.translate(userTask.title),
                 style: aboutCardTitleStyle.copyWith(color: Theme.of(context).primaryColor)),
           ),
@@ -152,7 +162,11 @@ class _TaskListPageState extends State<TaskListPage> {
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           elevation: 3,
           child: ListTile(
-            leading: Icon(Icons.event_available_outlined, color: CACHET.RED_1),
+            leading: CircleAvatar(
+              backgroundColor: CACHET.LIGHT_GREY_1,
+              // child: taskTypeIcon[userTask.type],  // use a type icon
+              child: Icon(Icons.unpublished_outlined, color: CACHET.GREY_1),
+            ),
             title: Text(locale.translate(userTask.title),
                 style: aboutCardTitleStyle.copyWith(color: Theme.of(context).primaryColor)),
           ),

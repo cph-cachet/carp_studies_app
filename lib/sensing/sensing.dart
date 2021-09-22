@@ -24,7 +24,8 @@ class Sensing {
   SmartPhoneClientManager? client;
 
   /// The deployment running on this phone.
-  SmartphoneDeployment? get deployment => _controller?.deployment as SmartphoneDeployment?;
+  SmartphoneDeployment? get deployment =>
+      _controller?.deployment as SmartphoneDeployment?;
 
   /// Get the latest status of the study deployment.
   StudyDeploymentStatus? get status => _status;
@@ -39,13 +40,16 @@ class Sensing {
   StudyDeploymentController? get controller => _controller;
 
   /// Is sensing running, i.e. has the study executor been resumed?
-  bool get isRunning => (controller != null) && controller!.executor!.state == ProbeState.resumed;
+  bool get isRunning =>
+      (controller != null) && controller!.executor!.state == ProbeState.resumed;
 
   /// the list of running - i.e. used - probes in this study.
-  List<Probe> get runningProbes => (_controller != null) ? _controller!.executor!.probes : [];
+  List<Probe> get runningProbes =>
+      (_controller != null) ? _controller!.executor!.probes : [];
 
   /// The list of connected devices.
-  List<DeviceManager>? get runningDevices => client?.deviceRegistry.devices.values.toList();
+  List<DeviceManager>? get runningDevices =>
+      client?.deviceRegistry.devices.values.toList();
 
   /// The singleton sensing instance
   factory Sensing() => _instance;
@@ -82,7 +86,8 @@ class Sensing {
 
         // get the protocol from the local study protocol manager
         // note that the study id is not used
-        StudyProtocol? protocol = await (LocalStudyProtocolManager().getStudyProtocol(''));
+        StudyProtocol? protocol =
+            await (LocalStudyProtocolManager().getStudyProtocol(''));
 
         // get the local study description
         description = await LocalResourceManager().getStudyDescription();
@@ -106,10 +111,11 @@ class Sensing {
         deploymentService = CustomProtocolDeploymentService();
 
         // get the study deployment status
-        _status =
-            await CustomProtocolDeploymentService().getStudyDeploymentStatus(bloc.backend.studyDeploymentId!);
+        _status = await CustomProtocolDeploymentService()
+            .getStudyDeploymentStatus(bloc.backend.studyDeploymentId!);
 
         // register the CARP data manager for uploading data back to CARP
+        // TODO - check if we can remove this - seems to be done in the CustomProtocolDeploymentService
         DataManagerRegistry().register(CarpDataManager());
 
         break;

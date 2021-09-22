@@ -1,6 +1,6 @@
 part of carp_study_app;
 
-/// A local resource manager handling:
+/// A local in-memory resource manager handling:
 ///  * informed consent
 ///  * localization
 ///  * study descriptions

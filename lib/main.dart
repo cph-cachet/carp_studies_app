@@ -4,8 +4,6 @@ import 'dart:async';
 import 'dart:math';
 import 'dart:convert';
 
-import 'package:shared_preferences/shared_preferences.dart';
-
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart' hide TimeOfDay;
 

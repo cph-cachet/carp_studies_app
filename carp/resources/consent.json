@@ -6,6 +6,8 @@
      {
       "$type": "RPVisualConsentStep",
       "identifier": "visualStep",
+      "title": "",
+      "optional": false,
       "consent_document": {
        "$type": "RPConsentDocument",
        "signatures": [
@@ -13,7 +15,6 @@
          "$type": "RPConsentSignature",
          "requires_name": true,
          "requires_signature_image": true,
-         "requires_birth_date": false,
          "identifier": "signatureID"
         }
        ],
@@ -53,6 +54,13 @@
          "title": "ic.data.title",
          "summary": "ic.data.summary",
          "content": "ic.data.content"
+        },
+        {
+         "$type": "RPConsentSection",
+         "type": "Location",
+         "title": "ic.location.title",
+         "summary": "ic.location.summary",
+         "content": "ic.location.content"
         },
         {
          "$type": "RPConsentSection",
@@ -75,6 +83,7 @@
       "$type": "RPConsentReviewStep",
       "identifier": "consentreviewstepID",
       "title": "ic.review.title",
+      "optional": false,
       "consent_document": {
        "$type": "RPConsentDocument",
        "signatures": [
@@ -82,7 +91,6 @@
          "$type": "RPConsentSignature",
          "requires_name": true,
          "requires_signature_image": true,
-         "requires_birth_date": false,
          "identifier": "signatureID"
         }
        ],
@@ -122,6 +130,13 @@
          "title": "ic.data.title",
          "summary": "ic.data.summary",
          "content": "ic.data.content"
+        },
+        {
+         "$type": "RPConsentSection",
+         "type": "Location",
+         "title": "ic.location.title",
+         "summary": "ic.location.summary",
+         "content": "ic.location.content"
         },
         {
          "$type": "RPConsentSection",
@@ -146,7 +161,8 @@
       "$type": "RPCompletionStep",
       "identifier": "completionID",
       "title": "ic.completion.title",
-      "text": "ic.completion.text"
+      "text": "ic.completion.text",
+      "optional": false
      }
     ]
    }

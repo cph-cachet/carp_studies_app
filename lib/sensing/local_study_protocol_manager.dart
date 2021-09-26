@@ -59,7 +59,8 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           //   time: TimeOfDay(hour: 6, minute: 00),
           //   recurrenceRule: RecurrenceRule(Frequency.DAILY),
           // ),
-          RecurrentScheduledTrigger(type: RecurrentType.daily, time: Time(hour: 6, minute: 00)),
+          RecurrentScheduledTrigger(
+              type: RecurrentType.daily, time: Time(hour: 6, minute: 00)),
           AppTask(
             type: SurveyUserTask.SURVEY_TYPE,
             title: surveys.exposure.title,
@@ -104,12 +105,15 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           //   recurrenceRule: RecurrenceRule(Frequency.WEEKLY),
           // ),
           RecurrentScheduledTrigger(
-              type: RecurrentType.weekly, time: Time(hour: 6, minute: 00), dayOfWeek: DateTime.monday),
+              type: RecurrentType.weekly,
+              time: Time(hour: 6, minute: 00),
+              dayOfWeek: DateTime.monday),
           AppTask(
             type: SurveyUserTask.SURVEY_TYPE,
             title: surveys.symptomHierarchyObsessions.title,
             description: surveys.symptomHierarchyObsessions.description,
-            minutesToComplete: surveys.symptomHierarchyObsessions.minutesToComplete,
+            minutesToComplete:
+                surveys.symptomHierarchyObsessions.minutesToComplete,
             expire: surveys.symptomHierarchyObsessions.expire,
             notification: true,
           )..measures.add(RPTaskMeasure(
@@ -127,12 +131,15 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           //   recurrenceRule: RecurrenceRule(Frequency.WEEKLY),
           // ),
           RecurrentScheduledTrigger(
-              type: RecurrentType.weekly, time: Time(hour: 6, minute: 00), dayOfWeek: DateTime.monday),
+              type: RecurrentType.weekly,
+              time: Time(hour: 6, minute: 00),
+              dayOfWeek: DateTime.monday),
           AppTask(
             type: SurveyUserTask.SURVEY_TYPE,
             title: surveys.symptomHierarchyCoumpulsions.title,
             description: surveys.symptomHierarchyCoumpulsions.description,
-            minutesToComplete: surveys.symptomHierarchyCoumpulsions.minutesToComplete,
+            minutesToComplete:
+                surveys.symptomHierarchyCoumpulsions.minutesToComplete,
             expire: surveys.symptomHierarchyCoumpulsions.expire,
             notification: true,
           )..measures.add(RPTaskMeasure(
@@ -149,7 +156,8 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           //   time: TimeOfDay(hour: 6, minute: 00),
           //   recurrenceRule: RecurrenceRule(Frequency.DAILY),
           // ),
-          RecurrentScheduledTrigger(type: RecurrentType.daily, time: Time(hour: 6, minute: 00)),
+          RecurrentScheduledTrigger(
+              type: RecurrentType.daily, time: Time(hour: 6, minute: 00)),
           AppTask(
             type: AudioUserTask.AUDIO_TYPE,
             title: "audio.exposure.title",
@@ -756,7 +764,8 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
       _protocol = StudyProtocol(
         ownerId: studyId,
         name: 'CARP Study App 2nd Protocol',
-        description: 'A super generic 2nd protocol testing different parts of the CAMS Study App.',
+        description:
+            'A super generic 2nd protocol testing different parts of the CAMS Study App.',
         // TODO: fix
         // protocolDescription: StudyProtocolDescription(
         //   title: 'CARP Study App Feasibility Study',
@@ -851,7 +860,9 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
               enabled: true,
               surveyTask: surveys.demographics.survey,
             ))
-            ..measures.add(SamplingPackageRegistry().common().measures[ContextSamplingPackage.LOCATION]!),
+            ..measures.add(SamplingPackageRegistry()
+                .common()
+                .measures[ContextSamplingPackage.LOCATION]!),
           phone);
 
       // collect symptoms on a daily basis - notify the user
@@ -871,7 +882,9 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
               enabled: true,
               surveyTask: surveys.symptoms.survey,
             ))
-            ..measures.add(SamplingPackageRegistry().common().measures[ContextSamplingPackage.LOCATION]!),
+            ..measures.add(SamplingPackageRegistry()
+                .common()
+                .measures[ContextSamplingPackage.LOCATION]!),
           phone);
 
       // collect a coughing sample on a daily basis
@@ -881,7 +894,8 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           AppTask(
             type: AudioUserTask.AUDIO_TYPE,
             title: "Coughing",
-            description: 'In this small exercise we would like to collect sound samples of coughing.',
+            description:
+                'In this small exercise we would like to collect sound samples of coughing.',
             instructions: 'Please cough 5 times.',
             minutesToComplete: 1,
           )
@@ -889,9 +903,15 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
               type: AudioSamplingPackage.AUDIO,
               name: "Coughing",
             ))
-            ..measures.add(SamplingPackageRegistry().common().measures[ContextSamplingPackage.LOCATION]!)
-            ..measures.add(SamplingPackageRegistry().common().measures[ContextSamplingPackage.WEATHER]!)
-            ..measures.add(SamplingPackageRegistry().common().measures[ContextSamplingPackage.AIR_QUALITY]!),
+            ..measures.add(SamplingPackageRegistry()
+                .common()
+                .measures[ContextSamplingPackage.LOCATION]!)
+            ..measures.add(SamplingPackageRegistry()
+                .common()
+                .measures[ContextSamplingPackage.WEATHER]!)
+            ..measures.add(SamplingPackageRegistry()
+                .common()
+                .measures[ContextSamplingPackage.AIR_QUALITY]!),
           phone);
 
       // collect a reading / audio sample on a daily basis
@@ -900,7 +920,8 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           AppTask(
             type: AudioUserTask.AUDIO_TYPE,
             title: "Reading",
-            description: 'In this small exercise we would like to collect sound data while you are reading.',
+            description:
+                'In this small exercise we would like to collect sound data while you are reading.',
             instructions: 'Please read the following text aloud.\n\n'
                 'Many, many years ago lived an emperor, who thought so much of new clothes that he spent all his money in order to obtain them; his only ambition was to be always well dressed. '
                 'He did not care for his soldiers, and the theatre did not amuse him; the only thing, in fact, he thought anything of was to drive out and show a new suit of clothes. '

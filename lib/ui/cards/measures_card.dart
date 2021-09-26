@@ -24,7 +24,7 @@ class _MeasuresCardWidgetState extends State<MeasuresCardWidget> {
       ];
 
   Widget build(BuildContext context) {
-    AssetLocalizations locale = AssetLocalizations.of(context)!;
+    RPLocalizations locale = RPLocalizations.of(context)!;
 
     // Get the measures with more events to prioritize which ones to show
     widget.model.orderedMeasures();

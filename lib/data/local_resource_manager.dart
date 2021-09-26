@@ -4,6 +4,9 @@ part of carp_study_app;
 ///  * informed consent
 ///  * localization
 ///  * study descriptions
+///
+/// Localization json files should be added to the app as assets in the
+/// `assets/lang_local` folder and added to the `pubsepc.yaml` file.
 class LocalResourceManager implements ResourceManager {
   RPOrderedTask? _informedConsent;
   StudyDescription? _description;
@@ -12,9 +15,8 @@ class LocalResourceManager implements ResourceManager {
   factory LocalResourceManager() => _instance;
 
   LocalResourceManager._() {
-    RPOrderedTask(
-        identifier: '',
-        steps: []); // to initialize json serialization for RP classes
+    // to initialize json serialization for RP classes
+    RPOrderedTask(identifier: '', steps: []);
   }
 
   @override
@@ -129,10 +131,13 @@ class LocalResourceManager implements ResourceManager {
     return true;
   }
 
+  /// The path to the language json files to be loaded using this resource manager.
   final String basePath = 'assets/lang_local';
 
   @override
-  Future<Map<String, String>> getLocalizations(Locale locale) async {
+  Future<Map<String, String>> getLocalizations(
+    Locale locale,
+  ) async {
     String path = '$basePath/${locale.languageCode}.json';
     print("$runtimeType - loading '$path'");
     String jsonString = await rootBundle.loadString(path);
@@ -147,13 +152,11 @@ class LocalResourceManager implements ResourceManager {
   @override
   Future<bool> setLocalizations(
       Locale locale, Map<String, dynamic> localizations) {
-    // TODO: implement setLocalizations
     throw UnimplementedError();
   }
 
   @override
   Future<bool> deleteLocalizations(Locale locale) {
-    // TODO: implement deleteLocalizations
     throw UnimplementedError();
   }
 

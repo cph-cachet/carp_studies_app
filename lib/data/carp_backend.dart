@@ -4,8 +4,8 @@ part of carp_study_app;
 //     const JsonEncoder.withIndent(' ').convert(object);
 
 class CarpBackend {
-  static const String PROD_URI = "https://cans.cachet.dk:443";
-  static const String STAGING_URI = "https://cans.cachet.dk:443/stage";
+  static const String PROD_URI = "https://cans.cachet.dk";
+  static const String STAGING_URI = "https://cans.cachet.dk/stage";
   static const String CLIENT_ID = "carp";
   static const String CLIENT_SECRET = "carp";
 
@@ -53,9 +53,11 @@ class CarpBackend {
 
   Future<void> initialize() async {
     _app = CarpApp(
-      name: "CANS Production @ DTU",
+      name: "CANS @ DTU",
       uri: Uri.parse(uri),
       oauth: OAuthEndPoint(clientID: CLIENT_ID, clientSecret: CLIENT_SECRET),
+      studyId: LocalSettings().studyId,
+      studyDeploymentId: LocalSettings().studyDeploymentId,
     );
 
     CarpService().configure(app!);
@@ -122,7 +124,7 @@ class CarpBackend {
       info(
           'Informed consent document uploaded successfully - id: ${document.id}');
       bloc.informedConsentAccepted = true;
-    } on Exception catch (error) {
+    } on Exception {
       bloc.informedConsentAccepted = false;
       warning('Informed consent upload failed for username: $username');
     }

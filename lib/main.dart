@@ -4,6 +4,8 @@ import 'dart:async';
 import 'dart:math';
 import 'dart:convert';
 
+import 'package:shared_preferences/shared_preferences.dart';
+
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart' hide TimeOfDay;
 
@@ -94,6 +96,13 @@ void main() async {
   // make sure that the json functions are loaded
   DomainJsonFactory();
 
+  // make sure to have an instance of the WidgetsBinding, which is required
+  // to use platform channels to call the native code
+  // see also >> https://stackoverflow.com/questions/63873338/what-does-widgetsflutterbinding-ensureinitialized-do/63873689
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await bloc.initialize();
+
   app = CarpStudyApp();
   runApp(app);
 }
@@ -105,5 +114,5 @@ void main() async {
 final bloc = StudyAppBLoC(
   debugLevel: DebugLevel.DEBUG,
   deploymentMode: DeploymentMode.CARP_STAGING,
-  forceSignOutAndStudyReload: true,
+  forceSignOutAndStudyReload: false,
 );

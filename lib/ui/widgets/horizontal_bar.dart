@@ -14,14 +14,16 @@ class HorizontalBar extends StatelessWidget {
       print(values!.elementAt(i));
       print(colors!.elementAt(i));
       print(names!.elementAt(i));
-      assetList
-          .add(MyAsset(size: values!.elementAt(i), color: colors!.elementAt(i), name: names!.elementAt(i)));
+      assetList.add(MyAsset(
+          size: values!.elementAt(i),
+          color: colors!.elementAt(i),
+          name: names!.elementAt(i)));
     }
     return assetList;
   }
 
   Widget build(BuildContext context) {
-    AssetLocalizations locale = AssetLocalizations.of(context)!;
+    RPLocalizations locale = RPLocalizations.of(context)!;
     double width = MediaQuery.of(context).size.width;
     if (names!.isEmpty)
       return Center(child: Text(locale.translate("pages.data_viz.no_data")));
@@ -101,7 +103,9 @@ class MyAssetsBar extends StatelessWidget {
   //single.size : assetsSum = x : width
   Widget _createSingle(MyAsset singleAsset) {
     return SizedBox(
-      width: singleAsset.size! != 0 ? singleAsset.size! * (width / _getValuesSum()) : 0,
+      width: singleAsset.size! != 0
+          ? singleAsset.size! * (width / _getValuesSum())
+          : 0,
       child: Container(color: singleAsset.color),
     );
   }
@@ -122,7 +126,10 @@ class MyAssetsBar extends StatelessWidget {
             decoration: BoxDecoration(color: background),
             width: width,
             height: height,
-            child: Row(children: assets.map((singleAsset) => _createSingle(singleAsset)).toList()),
+            child: Row(
+                children: assets
+                    .map((singleAsset) => _createSingle(singleAsset))
+                    .toList()),
           ),
         ),
         SizedBox(height: 10),
@@ -138,8 +145,13 @@ class MyAssetsBar extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Icon(Icons.circle, color: entry.value.color, size: 12.0),
-                      Text(' ' + entry.value.name! + ' ' + entry.value.size.toString(),
-                          style: legendStyle, textAlign: TextAlign.right),
+                      Text(
+                          ' ' +
+                              entry.value.name! +
+                              ' ' +
+                              entry.value.size.toString(),
+                          style: legendStyle,
+                          textAlign: TextAlign.right),
                     ],
                   ),
                 ),

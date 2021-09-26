@@ -29,7 +29,7 @@ class HomePageState extends State<HomePage> {
   }
 
   Widget build(BuildContext context) {
-    AssetLocalizations locale = AssetLocalizations.of(context)!;
+    RPLocalizations locale = RPLocalizations.of(context)!;
 
     return Scaffold(
       body: _pages[_selectedIndex],

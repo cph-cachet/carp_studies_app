@@ -41,7 +41,7 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
   }
 
   Widget _header() {
-    AssetLocalizations locale = AssetLocalizations.of(context)!;
+    RPLocalizations locale = RPLocalizations.of(context)!;
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -113,7 +113,7 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
   }
 
   Widget _stepOne() {
-    AssetLocalizations? locale = AssetLocalizations.of(context);
+    RPLocalizations locale = RPLocalizations.of(context)!;
 
     return StreamBuilder<UserTaskState>(
       stream: audioUserTask!.stateEvents,
@@ -190,7 +190,7 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
   }
 
   Widget _stepTwo() {
-    AssetLocalizations? locale = AssetLocalizations.of(context);
+    RPLocalizations locale = RPLocalizations.of(context)!;
 
     // TODO: split the instructions in the model instead of here
     return StreamBuilder<UserTaskState>(
@@ -277,7 +277,7 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
   }
 
   Widget _stepThree() {
-    AssetLocalizations? locale = AssetLocalizations.of(context);
+    RPLocalizations locale = RPLocalizations.of(context)!;
 
     return StreamBuilder<UserTaskState>(
       stream: audioUserTask!.stateEvents,
@@ -338,7 +338,8 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
 
   // Taken from RP
   Future _showCancelConfirmationDialog() {
-    AssetLocalizations? locale = AssetLocalizations.of(context);
+    RPLocalizations locale = RPLocalizations.of(context)!;
+
     return showDialog(
       context: context,
       barrierDismissible: false,

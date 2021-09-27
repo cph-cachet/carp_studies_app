@@ -130,10 +130,10 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
                 width: 220,
                 height: 220),
             SizedBox(height: 40),
-            Text(audioUserTask!.title, style: audioTitleStyle),
+            Text(locale.translate(audioUserTask!.title), style: audioTitleStyle),
             SizedBox(height: 10),
             Text(
-                '${audioUserTask!.description}\n\n' +
+                '${ locale.translate(audioUserTask!.description)}\n\n' +
                     locale.translate('pages.audio_task.play'),
                 style: audioContentStyle),
             Expanded(
@@ -167,7 +167,7 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
                       ),
                       InkWell(
                         child: Text(
-                          'Skip',
+                          locale.translate("pages.audio_task.skip"),
                           style: aboutCardTitleStyle.copyWith(
                               color: Theme.of(context).primaryColor),
                         ),
@@ -212,7 +212,7 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
                 style: audioTitleStyle),
             SizedBox(height: 10),
             // If instructions are too long, create scrollable card for the extra instructions
-            Text(audioUserTask!.instructions.split('\n\n')[0],
+            Text( locale.translate(audioUserTask!.instructions).split('\n\n')[0],
                 style: audioContentStyle),
             SizedBox(height: 10),
             audioUserTask!.instructions.split('\n\n').length > 1
@@ -229,7 +229,7 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
-                                audioUserTask!.instructions.split('\n\n')[1],
+                                 locale.translate(audioUserTask!.instructions).split('\n\n')[1],
                                 style: audioInstructionStyle),
                           ),
                         ),

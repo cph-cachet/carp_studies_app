@@ -134,7 +134,7 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
             SizedBox(height: 10),
             Text(
                 '${audioUserTask!.description}\n\n' +
-                    locale!.translate('pages.audio_task.play'),
+                    locale.translate('pages.audio_task.play'),
                 style: audioContentStyle),
             Expanded(
               child: Align(
@@ -208,7 +208,7 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
                 width: 220,
                 height: 220),
             SizedBox(height: 40),
-            Text(locale!.translate("pages.audio_task.recording"),
+            Text(locale.translate("pages.audio_task.recording"),
                 style: audioTitleStyle),
             SizedBox(height: 10),
             // If instructions are too long, create scrollable card for the extra instructions
@@ -294,7 +294,7 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
                 width: 220,
                 height: 220),
             SizedBox(height: 40),
-            Text(locale!.translate("Done!"), style: audioTitleStyle),
+            Text(locale.translate("Done!"), style: audioTitleStyle),
             SizedBox(height: 10),
             Text(locale.translate('pages.audio_task.recording_completed'),
                 style: audioContentStyle),
@@ -345,7 +345,7 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(locale!.translate("pages.audio_task.discard")),
+          title: Text(locale.translate("pages.audio_task.discard")),
           actions: <Widget>[
             TextButton(
               child: Text(locale.translate("NO")),

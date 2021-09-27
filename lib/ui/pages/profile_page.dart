@@ -160,7 +160,7 @@ class _ProfilePageState extends State<ProfilePage> {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(locale!.translate("pages.profile.log_out.confirmation")),
+          title: Text(locale.translate("pages.profile.log_out.confirmation")),
           actions: <Widget>[
             TextButton(
               child: Text(locale.translate("NO")),
@@ -203,7 +203,7 @@ class _ProfilePageState extends State<ProfilePage> {
       builder: (BuildContext context) {
         return AlertDialog(
           title:
-              Text(locale!.translate("pages.profile.leave_study.confirmation")),
+              Text(locale.translate("pages.profile.leave_study.confirmation")),
           actions: <Widget>[
             TextButton(
               child: Text(locale.translate("NO")),

@@ -4,8 +4,9 @@ class HorizontalBar extends StatelessWidget {
   final List<String>? names;
   final List<int>? values;
   final List<Color>? colors;
+  final OrderType? order;
 
-  HorizontalBar({this.names, this.values, this.colors});
+  HorizontalBar({this.names, this.values, this.colors, this.order = OrderType.Descending});
 
   List<MyAsset> _assetList() {
     List<MyAsset> assetList = [];
@@ -14,10 +15,8 @@ class HorizontalBar extends StatelessWidget {
       print(values!.elementAt(i));
       print(colors!.elementAt(i));
       print(names!.elementAt(i));
-      assetList.add(MyAsset(
-          size: values!.elementAt(i),
-          color: colors!.elementAt(i),
-          name: names!.elementAt(i)));
+      assetList
+          .add(MyAsset(size: values!.elementAt(i), color: colors!.elementAt(i), name: names!.elementAt(i)));
     }
     return assetList;
   }
@@ -30,10 +29,7 @@ class HorizontalBar extends StatelessWidget {
     else
       return Center(
         child: MyAssetsBar(
-            width: width * .9,
-            background: Color(0xCFD8DC),
-            order: OrderType.Descending,
-            assets: _assetList()),
+            width: width * .9, background: Color(0xCFD8DC), order: this.order, assets: _assetList()),
       );
   }
 }
@@ -103,9 +99,7 @@ class MyAssetsBar extends StatelessWidget {
   //single.size : assetsSum = x : width
   Widget _createSingle(MyAsset singleAsset) {
     return SizedBox(
-      width: singleAsset.size! != 0
-          ? singleAsset.size! * (width / _getValuesSum())
-          : 0,
+      width: singleAsset.size! != 0 ? singleAsset.size! * (width / _getValuesSum()) : 0,
       child: Container(color: singleAsset.color),
     );
   }
@@ -126,10 +120,7 @@ class MyAssetsBar extends StatelessWidget {
             decoration: BoxDecoration(color: background),
             width: width,
             height: height,
-            child: Row(
-                children: assets
-                    .map((singleAsset) => _createSingle(singleAsset))
-                    .toList()),
+            child: Row(children: assets.map((singleAsset) => _createSingle(singleAsset)).toList()),
           ),
         ),
         SizedBox(height: 10),
@@ -145,13 +136,8 @@ class MyAssetsBar extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Icon(Icons.circle, color: entry.value.color, size: 12.0),
-                      Text(
-                          ' ' +
-                              entry.value.name! +
-                              ' ' +
-                              entry.value.size.toString(),
-                          style: legendStyle,
-                          textAlign: TextAlign.right),
+                      Text(' ' + entry.value.name! + ' ' + entry.value.size.toString(),
+                          style: legendStyle, textAlign: TextAlign.right),
                     ],
                   ),
                 ),

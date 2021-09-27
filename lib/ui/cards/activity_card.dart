@@ -66,7 +66,7 @@ class _ActivityCardWidgetState extends State<ActivityCardWidget> {
 
   @override
   Widget build(BuildContext context) {
-    AssetLocalizations locale = AssetLocalizations.of(context)!;
+    RPLocalizations locale = RPLocalizations.of(context)!;
 
     return Padding(
       padding: const EdgeInsets.all(5.0),

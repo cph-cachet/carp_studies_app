@@ -11,7 +11,6 @@ class LocalSettings {
   static const String OAUTH_TOKEN_KEY = 'token';
   static const String USERNAME_KEY = 'username';
   static const String STUDY_ID_KEY = 'study_id';
-  static const String STUDY_DEPLOYMENT_ID_KEY = "study_deployment_id";
   static const INFORMED_CONSENT_ACCEPTED_KEY = 'informed_consent_accepted';
 
   String get _oauthTokenKey =>
@@ -19,8 +18,6 @@ class LocalSettings {
   String get _usernameKey =>
       '${Settings().appName}.$USERNAME_KEY'.toLowerCase();
   String get _studyIdKey => '${Settings().appName}.$STUDY_ID_KEY'.toLowerCase();
-  String get _studyDeploymentIdKey =>
-      '${Settings().appName}.$STUDY_DEPLOYMENT_ID_KEY'.toLowerCase();
   String get _informedConsentAcceptedKey =>
       '$studyDeploymentId.$INFORMED_CONSENT_ACCEPTED_KEY'.toLowerCase();
 
@@ -70,7 +67,7 @@ class LocalSettings {
   bool get hasInformedConsentBeenAccepted => _hasInformedConsentBeenAccepted ??=
       Settings().preferences!.getBool(_informedConsentAcceptedKey) ?? false;
 
-  /// Specify if the informed consent been handled.
+  /// Specify if the informed consent has been handled.
   set informedConsentAccepted(bool accepted) =>
       Settings().preferences!.setBool(_informedConsentAcceptedKey, accepted);
 
@@ -79,7 +76,6 @@ class LocalSettings {
     _hasInformedConsentBeenAccepted = null;
     await Settings().eraseStudyDeployment();
     await Settings().preferences!.remove(_studyIdKey);
-    await Settings().preferences!.remove(_studyDeploymentIdKey);
     await Settings().preferences!.remove(_informedConsentAcceptedKey);
   }
 

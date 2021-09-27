@@ -11,7 +11,8 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
-    AssetLocalizations locale = AssetLocalizations.of(context)!;
+    RPLocalizations locale = RPLocalizations.of(context)!;
+
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -28,14 +29,17 @@ class _ProfilePageState extends State<ProfilePage> {
                   Row(
                     children: [
                       IconButton(
-                          icon: Icon(Icons.account_circle, color: Theme.of(context).primaryColor, size: 30),
+                          icon: Icon(Icons.account_circle,
+                              color: Theme.of(context).primaryColor, size: 30),
                           onPressed: () {}),
                       Text(locale.translate('pages.profile.title'),
-                          style: sectionTitleStyle.copyWith(color: Theme.of(context).primaryColor)),
+                          style: sectionTitleStyle.copyWith(
+                              color: Theme.of(context).primaryColor)),
                     ],
                   ),
                   IconButton(
-                      icon: Icon(Icons.close, color: Theme.of(context).primaryColor, size: 30),
+                      icon: Icon(Icons.close,
+                          color: Theme.of(context).primaryColor, size: 30),
                       tooltip: locale.translate('Back'),
                       onPressed: () {
                         Navigator.of(context).pop();
@@ -55,7 +59,8 @@ class _ProfilePageState extends State<ProfilePage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(locale.translate('pages.profile.username'),
-                            style: aboutCardSubtitleStyle.copyWith(color: Theme.of(context).primaryColor)),
+                            style: aboutCardSubtitleStyle.copyWith(
+                                color: Theme.of(context).primaryColor)),
                         Text(widget.model.username, style: profileTitleStyle),
                       ],
                     ),
@@ -66,8 +71,13 @@ class _ProfilePageState extends State<ProfilePage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(locale.translate('pages.profile.name'),
-                            style: aboutCardSubtitleStyle.copyWith(color: Theme.of(context).primaryColor)),
-                        Text(widget.model.firstname + ' ' + widget.model.lastname, style: profileTitleStyle),
+                            style: aboutCardSubtitleStyle.copyWith(
+                                color: Theme.of(context).primaryColor)),
+                        Text(
+                            widget.model.firstname +
+                                ' ' +
+                                widget.model.lastname,
+                            style: profileTitleStyle),
                       ],
                     ),
                   ),
@@ -77,15 +87,18 @@ class _ProfilePageState extends State<ProfilePage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(locale.translate('pages.profile.account_id'),
-                            style: aboutCardSubtitleStyle.copyWith(color: Theme.of(context).primaryColor)),
+                            style: aboutCardSubtitleStyle.copyWith(
+                                color: Theme.of(context).primaryColor)),
                         Text(widget.model.userid, style: profileTitleStyle),
                       ],
                     ),
                   ),
                   ListTile(
-                    leading: Icon(Icons.mail_outline, color: Theme.of(context).primaryColor),
+                    leading: Icon(Icons.mail_outline,
+                        color: Theme.of(context).primaryColor),
                     title: Text(locale.translate('pages.profile.contact'),
-                        style: profileActionStyle.copyWith(color: Theme.of(context).primaryColor)),
+                        style: profileActionStyle.copyWith(
+                            color: Theme.of(context).primaryColor)),
                     onTap: () {
                       print("contact researcher");
                       _contactResearcher(
@@ -97,16 +110,19 @@ class _ProfilePageState extends State<ProfilePage> {
                   ListTile(
                     leading: Icon(Icons.logout, color: CACHET.RED_1),
                     title: Text(locale.translate('pages.profile.leave_study'),
-                        style: profileActionStyle.copyWith(color: CACHET.RED_1)),
+                        style:
+                            profileActionStyle.copyWith(color: CACHET.RED_1)),
                     onTap: () {
                       print("leaving study");
                       _showLeaveStudyConfirmationDialog();
                     },
                   ),
                   ListTile(
-                    leading: Icon(Icons.power_settings_new, color: CACHET.RED_1),
+                    leading:
+                        Icon(Icons.power_settings_new, color: CACHET.RED_1),
                     title: Text(locale.translate('pages.profile.log_out'),
-                        style: profileActionStyle.copyWith(color: CACHET.RED_1)),
+                        style:
+                            profileActionStyle.copyWith(color: CACHET.RED_1)),
                     onTap: () {
                       print("log out");
                       _showLogoutConfirmationDialog();
@@ -123,7 +139,8 @@ class _ProfilePageState extends State<ProfilePage> {
 
   // Sends and email to the researcher with the name of the study + user id
   void _contactResearcher(String email, String subject) async {
-    final Uri _emailLaunchUri = Uri(scheme: 'mailto', path: email, queryParameters: {'subject': subject});
+    final Uri _emailLaunchUri = Uri(
+        scheme: 'mailto', path: email, queryParameters: {'subject': subject});
 
     var url = _emailLaunchUri.toString().replaceAll("+", "%20");
 
@@ -136,17 +153,19 @@ class _ProfilePageState extends State<ProfilePage> {
 
   // TODO: Navigate to log in page
   Future _showLogoutConfirmationDialog() {
-    AssetLocalizations? locale = AssetLocalizations.of(context);
+    RPLocalizations locale = RPLocalizations.of(context)!;
+
     return showDialog(
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(locale!.translate("pages.profile.log_out.confirmation")),
+          title: Text(locale.translate("pages.profile.log_out.confirmation")),
           actions: <Widget>[
             TextButton(
               child: Text(locale.translate("NO")),
-              onPressed: () => Navigator.of(context).pop(), // Dismissing the pop-up
+              onPressed: () =>
+                  Navigator.of(context).pop(), // Dismissing the pop-up
             ),
             TextButton(
               child: Text(locale.translate("YES")),
@@ -176,17 +195,20 @@ class _ProfilePageState extends State<ProfilePage> {
 
   // TODO: Leave study
   Future _showLeaveStudyConfirmationDialog() {
-    AssetLocalizations? locale = AssetLocalizations.of(context);
+    RPLocalizations locale = RPLocalizations.of(context)!;
+
     return showDialog(
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(locale!.translate("pages.profile.leave_study.confirmation")),
+          title:
+              Text(locale.translate("pages.profile.leave_study.confirmation")),
           actions: <Widget>[
             TextButton(
               child: Text(locale.translate("NO")),
-              onPressed: () => Navigator.of(context).pop(), // Dismissing the pop-up
+              onPressed: () =>
+                  Navigator.of(context).pop(), // Dismissing the pop-up
             ),
             TextButton(
               child: Text(locale.translate("YES")),

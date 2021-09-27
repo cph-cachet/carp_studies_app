@@ -500,7 +500,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 0.21.10;
 				DEVELOPMENT_ASSET_PATHS = "Runner/Base.lproj/Main.storyboard Runner/Assets.xcassets Runner/Base.lproj/LaunchScreen.storyboard";
-				DEVELOPMENT_TEAM = 59TCTNUBMQ;
+				DEVELOPMENT_TEAM = 8TB3T6MAZG;
 				ENABLE_BITCODE = NO;
 				FLUTTER_ROOT = /Users/luciamontesinos/flutter;
 				FRAMEWORK_SEARCH_PATHS = (

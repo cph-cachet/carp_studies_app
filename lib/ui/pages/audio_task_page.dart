@@ -41,7 +41,7 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
   }
 
   Widget _header() {
-    AssetLocalizations locale = AssetLocalizations.of(context)!;
+    RPLocalizations locale = RPLocalizations.of(context)!;
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -113,7 +113,7 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
   }
 
   Widget _stepOne() {
-    AssetLocalizations? locale = AssetLocalizations.of(context);
+    RPLocalizations locale = RPLocalizations.of(context)!;
 
     return StreamBuilder<UserTaskState>(
       stream: audioUserTask!.stateEvents,
@@ -134,7 +134,7 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
             SizedBox(height: 10),
             Text(
                 '${audioUserTask!.description}\n\n' +
-                    locale!.translate('pages.audio_task.play'),
+                    locale.translate('pages.audio_task.play'),
                 style: audioContentStyle),
             Expanded(
               child: Align(
@@ -190,7 +190,7 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
   }
 
   Widget _stepTwo() {
-    AssetLocalizations? locale = AssetLocalizations.of(context);
+    RPLocalizations locale = RPLocalizations.of(context)!;
 
     // TODO: split the instructions in the model instead of here
     return StreamBuilder<UserTaskState>(
@@ -208,7 +208,7 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
                 width: 220,
                 height: 220),
             SizedBox(height: 40),
-            Text(locale!.translate("pages.audio_task.recording"),
+            Text(locale.translate("pages.audio_task.recording"),
                 style: audioTitleStyle),
             SizedBox(height: 10),
             // If instructions are too long, create scrollable card for the extra instructions
@@ -277,7 +277,7 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
   }
 
   Widget _stepThree() {
-    AssetLocalizations? locale = AssetLocalizations.of(context);
+    RPLocalizations locale = RPLocalizations.of(context)!;
 
     return StreamBuilder<UserTaskState>(
       stream: audioUserTask!.stateEvents,
@@ -294,7 +294,7 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
                 width: 220,
                 height: 220),
             SizedBox(height: 40),
-            Text(locale!.translate("Done!"), style: audioTitleStyle),
+            Text(locale.translate("Done!"), style: audioTitleStyle),
             SizedBox(height: 10),
             Text(locale.translate('pages.audio_task.recording_completed'),
                 style: audioContentStyle),
@@ -338,13 +338,14 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
 
   // Taken from RP
   Future _showCancelConfirmationDialog() {
-    AssetLocalizations? locale = AssetLocalizations.of(context);
+    RPLocalizations locale = RPLocalizations.of(context)!;
+
     return showDialog(
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(locale!.translate("pages.audio_task.discard")),
+          title: Text(locale.translate("pages.audio_task.discard")),
           actions: <Widget>[
             TextButton(
               child: Text(locale.translate("NO")),

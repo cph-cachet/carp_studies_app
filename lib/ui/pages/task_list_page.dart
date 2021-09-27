@@ -11,7 +11,8 @@ class TaskListPage extends StatefulWidget {
 class _TaskListPageState extends State<TaskListPage> {
   @override
   Widget build(BuildContext context) {
-    AssetLocalizations locale = AssetLocalizations.of(context)!;
+    RPLocalizations locale = RPLocalizations.of(context)!;
+
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -25,7 +26,8 @@ class _TaskListPageState extends State<TaskListPage> {
                 alignment: Alignment.centerLeft,
                 child: Text(
                   locale.translate('pages.task_list.title'),
-                  style: sectionTitleStyle.copyWith(color: Theme.of(context).primaryColor),
+                  style: sectionTitleStyle.copyWith(
+                      color: Theme.of(context).primaryColor),
                 ),
               )),
           SizedBox(height: 15),
@@ -41,35 +43,38 @@ class _TaskListPageState extends State<TaskListPage> {
                   return CustomScrollView(
                     slivers: <Widget>[
                       SliverList(
-                        delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
-                          if (widget.model.tasks[index].state != UserTaskState.done &&
-                              widget.model.tasks[index].state != UserTaskState.expired &&
-                              widget.model.tasks[index].expiresIn != null &&
-                              widget.model.tasks[index].expiresIn! >= Duration.zero)
-                            return _buildTaskCard(context, widget.model.tasks[index]);
+                        delegate: SliverChildBuilderDelegate(
+                            (BuildContext context, int index) {
+                          if (widget.model.tasks[index].state !=
+                              UserTaskState.done)
+                            return _buildTaskCard(
+                                context, widget.model.tasks[index]);
                           else
                             return SizedBox.shrink();
                         }, childCount: widget.model.tasks.length),
                       ),
                       SliverList(
-                        delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
-                          if (widget.model.tasks[index].state == UserTaskState.done)
-                            return _buildDoneTaskCard(context, widget.model.tasks[index]);
+                        delegate: SliverChildBuilderDelegate(
+                            (BuildContext context, int index) {
+                          if (widget.model.tasks[index].state ==
+                              UserTaskState.done)
+                            return _buildDoneTaskCard(
+                                context, widget.model.tasks[index]);
                           else
                             return SizedBox.shrink();
                         }, childCount: widget.model.tasks.length),
                       ),
-                      // TODO: Uncomment to show expired tasks
-                      // SliverList(
-                      //   delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
-                      //     if (widget.model.tasks[index].state == UserTaskState.expired ||
-                      //         (widget.model.tasks[index].expiresIn != null &&
-                      //             widget.model.tasks[index].expiresIn!.isNegative))
-                      //       return _buildExpiredTaskCard(context, widget.model.tasks[index]);
-                      //     else
-                      //       return SizedBox.shrink();
-                      //   }, childCount: widget.model.tasks.length),
-                      // ),
+                      SliverList(
+                        delegate: SliverChildBuilderDelegate(
+                            (BuildContext context, int index) {
+                          if (widget.model.tasks[index].state ==
+                              UserTaskState.expired)
+                            return _buildExpiredTaskCard(
+                                context, widget.model.tasks[index]);
+                          else
+                            return SizedBox.shrink();
+                        }, childCount: widget.model.tasks.length),
+                      ),
                     ],
                   );
                 }
@@ -82,7 +87,8 @@ class _TaskListPageState extends State<TaskListPage> {
   }
 
   Widget _buildTaskCard(BuildContext context, UserTask userTask) {
-    AssetLocalizations locale = AssetLocalizations.of(context)!;
+    RPLocalizations locale = RPLocalizations.of(context)!;
+
     return Center(
       child: Card(
         margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
@@ -90,18 +96,21 @@ class _TaskListPageState extends State<TaskListPage> {
         elevation: 5,
         child: ListTile(
           leading: CircleAvatar(
-              backgroundColor: CACHET.LIGHT_ORANGE,
-              // child: taskTypeIcon[userTask.type],  // use a type icon
-
-              child: measureTypeIcon[userTask.task.measures[0].type]),
+            backgroundColor: Theme.of(context).hoverColor,
+            // child: taskTypeIcon[userTask.type],  // use a type icon
+            child: measureTypeIcon[userTask
+                .task.measures[0].type], // use the 1st measure as an icon
+          ),
           title: Text(locale.translate(userTask.title),
-              style: aboutCardTitleStyle.copyWith(color: Theme.of(context).primaryColor)),
+              style: aboutCardTitleStyle.copyWith(
+                  color: Theme.of(context).primaryColor)),
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: 5),
               Text(_subtitle(userTask),
-                  style: aboutCardSubtitleStyle.copyWith(color: Theme.of(context).primaryColor)),
+                  style: aboutCardSubtitleStyle.copyWith(
+                      color: Theme.of(context).primaryColor)),
               SizedBox(height: 5),
               Text(locale.translate(userTask.description)),
             ],
@@ -115,13 +124,15 @@ class _TaskListPageState extends State<TaskListPage> {
   }
 
   String _subtitle(UserTask userTask) {
-    AssetLocalizations locale = AssetLocalizations.of(context)!;
+    RPLocalizations locale = RPLocalizations.of(context)!;
     String str = (userTask.task.minutesToComplete != null)
-        ? '${userTask.task.minutesToComplete} ' + locale.translate('pages.task_list.task.time_to_complete')
+        ? '${userTask.task.minutesToComplete} ' +
+            locale.translate('pages.task_list.task.time_to_complete')
         : '';
 
-    str += (userTask.expiresIn != null && !userTask.expiresIn!.isNegative)
-        ? ' - ${userTask.expiresIn!.inDays + 1} ' + locale.translate('pages.task_list.task.days_remaining')
+    str += (userTask.expiresIn != null)
+        ? ' - ${userTask.expiresIn!.inDays + 1} ' +
+            locale.translate('pages.task_list.task.days_remaining')
         : '';
 
     str = (str.isEmpty) ? userTask.description : str;
@@ -130,13 +141,15 @@ class _TaskListPageState extends State<TaskListPage> {
   }
 
   Widget _buildDoneTaskCard(BuildContext context, UserTask userTask) {
-    AssetLocalizations locale = AssetLocalizations.of(context)!;
+    RPLocalizations locale = RPLocalizations.of(context)!;
+
     return Center(
       child: Opacity(
         opacity: 0.6,
         child: Card(
           margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           elevation: 3,
           child: ListTile(
             leading: CircleAvatar(
@@ -145,7 +158,8 @@ class _TaskListPageState extends State<TaskListPage> {
               child: Icon(Icons.check_circle_outlined, color: CACHET.GREEN_1),
             ),
             title: Text(locale.translate(userTask.title),
-                style: aboutCardTitleStyle.copyWith(color: Theme.of(context).primaryColor)),
+                style: aboutCardTitleStyle.copyWith(
+                    color: Theme.of(context).primaryColor)),
           ),
         ),
       ),
@@ -153,13 +167,15 @@ class _TaskListPageState extends State<TaskListPage> {
   }
 
   Widget _buildExpiredTaskCard(BuildContext context, UserTask userTask) {
-    AssetLocalizations locale = AssetLocalizations.of(context)!;
+    RPLocalizations locale = RPLocalizations.of(context)!;
+
     return Center(
       child: Opacity(
         opacity: 0.6,
         child: Card(
           margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           elevation: 3,
           child: ListTile(
             leading: CircleAvatar(
@@ -168,7 +184,8 @@ class _TaskListPageState extends State<TaskListPage> {
               child: Icon(Icons.unpublished_outlined, color: CACHET.GREY_1),
             ),
             title: Text(locale.translate(userTask.title),
-                style: aboutCardTitleStyle.copyWith(color: Theme.of(context).primaryColor)),
+                style: aboutCardTitleStyle.copyWith(
+                    color: Theme.of(context).primaryColor)),
           ),
         ),
       ),
@@ -176,7 +193,8 @@ class _TaskListPageState extends State<TaskListPage> {
   }
 
   Widget _noTasks(BuildContext context) {
-    AssetLocalizations locale = AssetLocalizations.of(context)!;
+    RPLocalizations locale = RPLocalizations.of(context)!;
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,

@@ -61,7 +61,13 @@ class StudyAppBLoC {
 
   CarpBackend get backend => _backend;
 
-  String? get studyDeploymentId => deployment?.studyDeploymentId;
+  /// The id of the currently running study deployment.
+  /// Typical set based on an invitation.
+  /// `null` if no deployment have been specified.
+  String? get studyDeploymentId => Settings().studyDeploymentId;
+  set studyDeploymentId(String? id) => Settings().studyDeploymentId = id;
+
+  // String? get studyDeploymentId => deployment?.studyDeploymentId;
 
   /// The deployment running on this phone.
   SmartphoneDeployment? get deployment =>
@@ -93,9 +99,12 @@ class StudyAppBLoC {
   Future<void> initialize() async {
     if (isInitialized) return;
     print('$runtimeType initializing...');
+
     Settings().debugLevel = debugLevel;
     await Settings().init();
+
     await resourceManager.initialize();
+
     _state = StudyAppState.initialized;
     info('$runtimeType initialized');
   }
@@ -111,7 +120,7 @@ class StudyAppBLoC {
   /// This method is used in the [LoadingPage].
   Future<void> configure(BuildContext context) async {
     // make sure to initialize the bloc, if not already done
-    await bloc.initialize();
+    // await bloc.initialize();
 
     // early out if already configuring (e.g. waiting for user authentication)
     if (isConfiguring) return;
@@ -126,7 +135,11 @@ class StudyAppBLoC {
     if (deploymentMode != DeploymentMode.LOCAL) {
       await backend.initialize();
       await backend.authenticate(context);
-      await backend.getStudyInvitation(context);
+
+      // check if there is a local deploymed id
+      // if not, get a deployment id based on an invitation
+      if (bloc.studyDeploymentId == null)
+        await backend.getStudyInvitation(context);
     }
 
     // find the right informed consent, if needed
@@ -205,7 +218,7 @@ class StudyAppBLoC {
     assert(Sensing().controller != null,
         'No Study Controller - the study has not been deployed.');
     Sensing().controller!.resume();
-    _studyStartTimestamp = await Sensing().controller!.studyDeploymentStartTime;
+    _studyStartTimestamp = Sensing().controller!.studyDeploymentStartTime;
 
     // listening on the data stream and print them as json to the debug console
     Sensing().controller!.data.listen((data) => print(toJsonString(data)));

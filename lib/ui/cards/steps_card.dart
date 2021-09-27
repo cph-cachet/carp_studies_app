@@ -45,7 +45,7 @@ class _StepsCardWidgetState extends State<StepsCardWidget> {
 
   @override
   Widget build(BuildContext context) {
-    AssetLocalizations locale = AssetLocalizations.of(context)!;
+    RPLocalizations locale = RPLocalizations.of(context)!;
 
     return Padding(
       padding: const EdgeInsets.all(5.0),

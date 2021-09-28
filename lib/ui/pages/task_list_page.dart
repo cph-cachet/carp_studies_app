@@ -152,7 +152,11 @@ class _TaskListPageState extends State<TaskListPage> {
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           elevation: 3,
           child: ListTile(
-            leading: Icon(Icons.check_circle_outlined, color: CACHET.GREEN_1),
+            leading: CircleAvatar(
+              backgroundColor: CACHET.LIGHT_GREEN_1,
+              // child: taskTypeIcon[userTask.type],  // use a type icon
+              child: Icon(Icons.check_circle_outlined, color: CACHET.GREEN_1),
+            ),
             title: Text(locale.translate(userTask.title),
                 style: aboutCardTitleStyle.copyWith(
                     color: Theme.of(context).primaryColor)),
@@ -174,7 +178,11 @@ class _TaskListPageState extends State<TaskListPage> {
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           elevation: 3,
           child: ListTile(
-            leading: Icon(Icons.event_available_outlined, color: CACHET.RED_1),
+            leading: CircleAvatar(
+              backgroundColor: CACHET.LIGHT_GREY_1,
+              // child: taskTypeIcon[userTask.type],  // use a type icon
+              child: Icon(Icons.unpublished_outlined, color: CACHET.GREY_1),
+            ),
             title: Text(locale.translate(userTask.title),
                 style: aboutCardTitleStyle.copyWith(
                     color: Theme.of(context).primaryColor)),

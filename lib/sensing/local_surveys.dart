@@ -773,7 +773,7 @@ class _AppUXSurvey implements Survey {
 class _EcologicalParentsSurvey implements Survey {
   String get title => "survey.ecological.parents.title";
 
-  String get description => "survey.ecological.parents.description"; // TODO
+  String get description => "survey.ecological.parents.description";
 
   Duration get expire => const Duration(days: 1);
 

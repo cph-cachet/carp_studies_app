@@ -10,7 +10,7 @@ class StudyProgressCardDataModel extends DataModel {
   int get taskCompleted => AppTaskController().taskCompleted;
 
   /// The number of tasks expired so far.
-  int get taskExpired => AppTaskController().taskExpired;
+  //int get taskExpired => AppTaskController().taskExpired;
 
   /// The number of tasks pending so far.
   int get taskPending => AppTaskController().taskPending;
@@ -19,9 +19,8 @@ class StudyProgressCardDataModel extends DataModel {
   Map<String, int> get progressTable => _progressTable;
 
   /// The list of measures
-  List<StudyProgress> get progress => _progressTable.entries
-      .map((entry) => StudyProgress(entry.key, entry.value))
-      .toList();
+  List<StudyProgress> get progress =>
+      _progressTable.entries.map((entry) => StudyProgress(entry.key, entry.value)).toList();
 
   StudyProgressCardDataModel() : super();
 
@@ -38,7 +37,7 @@ class StudyProgressCardDataModel extends DataModel {
 
   void updateProgress() {
     _progressTable['completed'] = taskCompleted;
-    _progressTable['expired'] = taskExpired;
+    //_progressTable['expired'] = taskExpired;
     _progressTable['pending'] = taskPending;
   }
 }

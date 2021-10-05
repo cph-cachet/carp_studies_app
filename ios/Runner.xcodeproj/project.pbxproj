@@ -10,6 +10,7 @@
 		1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */ = {isa = PBXBuildFile; fileRef = 1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */; };
 		59D41BB136F1C8D43A9CAE21 /* Pods_Runner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 404D78DE8363EF617F53CE75 /* Pods_Runner.framework */; };
 		74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74858FAE1ED2DC5600515810 /* AppDelegate.swift */; };
+		E10F125F270C58370054107C /* carp_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = E10F125E270C58370054107C /* carp_logo.png */; };
 		E13E6D4226E8BB2F00FA7CDB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FA1CF9000F007C117D /* Main.storyboard */; };
 		E13E6D4326E8BB2F00FA7CDB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FD1CF9000F007C117D /* Assets.xcassets */; };
 		E13E6D4426E8BB2F00FA7CDB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */; };
@@ -46,6 +47,9 @@
 		97C147001CF9000F007C117D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		97C147021CF9000F007C117D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BEE5B5C399E5E9BE41426E97 /* Pods-Runner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.debug.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.debug.xcconfig"; sourceTree = "<group>"; };
+		E10F125B270B1C3A0054107C /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		E10F125C270B1C3A0054107C /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/Main.storyboard; sourceTree = "<group>"; };
+		E10F125E270C58370054107C /* carp_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = carp_logo.png; path = Runner/Assets.xcassets/carp_logo.imageset/carp_logo.png; sourceTree = "<group>"; };
 		E1E629EF268DFF1000DDDF95 /* RunnerRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RunnerRelease.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -93,6 +97,7 @@
 		97C146E51CF9000F007C117D = {
 			isa = PBXGroup;
 			children = (
+				E10F125E270C58370054107C /* carp_logo.png */,
 				9740EEB11CF90186004384FC /* Flutter */,
 				97C146F01CF9000F007C117D /* Runner */,
 				97C146EF1CF9000F007C117D /* Products */,
@@ -188,6 +193,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E10F125F270C58370054107C /* carp_logo.png in Resources */,
 				E13E6D4226E8BB2F00FA7CDB /* Main.storyboard in Resources */,
 				E13E6D4326E8BB2F00FA7CDB /* Assets.xcassets in Resources */,
 				E13E6D4426E8BB2F00FA7CDB /* LaunchScreen.storyboard in Resources */,

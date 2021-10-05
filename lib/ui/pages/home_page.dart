@@ -14,8 +14,8 @@ class HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
 
-    // start the sensing
-    bloc.start();
+    // set up and initialize sensing
+    Sensing().askForPermissions().then((_) => bloc.start());
 
     _pages.add(TaskListPage(bloc.data.taskListPageModel));
     _pages.add(StudyPage(bloc.data.studyPageModel));

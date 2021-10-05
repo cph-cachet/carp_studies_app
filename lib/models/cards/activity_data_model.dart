@@ -17,7 +17,7 @@ class ActivityCardDataModel extends DataModel {
 
   ActivityCardDataModel() : super();
 
-  void init(StudyDeploymentController controller) {
+  void init(SmartphoneDeploymentController controller) {
     super.init(controller);
 
     // Initialize every week or if is the first time opening the app

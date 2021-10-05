@@ -34,7 +34,7 @@ class StudyPageModel extends DataModel {
 
   StudyPageModel();
 
-  void init(StudyDeploymentController controller) {
+  void init(SmartphoneDeploymentController controller) {
     super.init(controller);
   }
 }

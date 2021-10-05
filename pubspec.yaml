@@ -27,7 +27,7 @@ dependencies:
     sdk: flutter
 
   carp_core: ^0.30.1
-  carp_mobile_sensing: ^0.30.5
+  carp_mobile_sensing: ^0.30.6
   carp_context_package: ^0.30.0
   carp_survey_package: ^0.30.0
   carp_audio_package: ^0.30.5

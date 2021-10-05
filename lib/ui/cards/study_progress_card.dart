@@ -4,10 +4,12 @@ class StudyProgressCardWidget extends StatefulWidget {
   final StudyProgressCardDataModel model;
 
   final List<Color> colors;
-  StudyProgressCardWidget(this.model, {this.colors = const [CACHET.BLUE_1, CACHET.BLUE_3]}); // CACHET.RED_1,
+  StudyProgressCardWidget(this.model,
+      {this.colors = const [CACHET.BLUE_1, CACHET.BLUE_3]}); // CACHET.RED_1,
 
   @override
-  _StudyProgressCardWidgetState createState() => _StudyProgressCardWidgetState();
+  _StudyProgressCardWidgetState createState() =>
+      _StudyProgressCardWidgetState();
 }
 
 class _StudyProgressCardWidgetState extends State<StudyProgressCardWidget> {
@@ -42,7 +44,9 @@ class _StudyProgressCardWidgetState extends State<StudyProgressCardWidget> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   SizedBox(height: 5),
-                                  Text(locale.translate('cards.study_progress.title'),
+                                  Text(
+                                      locale.translate(
+                                          'cards.study_progress.title'),
                                       style: dataCardTitleStyle),
                                 ],
                               ),
@@ -57,9 +61,15 @@ class _StudyProgressCardWidgetState extends State<StudyProgressCardWidget> {
                                 .widget
                                 .model
                                 .progress
-                                .map((progress) => locale.translate(progress.state))
+                                .map((progress) =>
+                                    locale.translate(progress.state))
                                 .toList(),
-                            values: this.widget.model.progress.map((progress) => progress.value).toList(),
+                            values: this
+                                .widget
+                                .model
+                                .progress
+                                .map((progress) => progress.value)
+                                .toList(),
                             colors: widget.colors,
                             order: OrderType.None,
                           )),

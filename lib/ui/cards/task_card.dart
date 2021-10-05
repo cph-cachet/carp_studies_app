@@ -47,7 +47,8 @@ class _TaskCardWidgetState extends State<TaskCardWidget> {
                               SizedBox(height: 5),
                               Text(
                                   '${widget.model.tasksDone} ' +
-                                      locale.translate('cards.${widget.model.taskType}.title'),
+                                      locale.translate(
+                                          'cards.${widget.model.taskType}.title'),
                                   //textAlign: TextAlign.center,
                                   style: dataCardTitleStyle),
                             ],
@@ -82,8 +83,18 @@ class _TaskCardWidgetState extends State<TaskCardWidget> {
                     //   ),
                     // ),
                     child: HorizontalBar(
-                      names: this.widget.model.taskCount.map((task) => locale.translate(task.title)).toList(),
-                      values: this.widget.model.taskCount.map((task) => task.size).toList(),
+                      names: this
+                          .widget
+                          .model
+                          .taskCount
+                          .map((task) => locale.translate(task.title))
+                          .toList(),
+                      values: this
+                          .widget
+                          .model
+                          .taskCount
+                          .map((task) => task.size)
+                          .toList(),
                       colors: CACHET.COLOR_LIST,
                     ),
                   ),

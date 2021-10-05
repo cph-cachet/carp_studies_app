@@ -19,12 +19,13 @@ class StudyProgressCardDataModel extends DataModel {
   Map<String, int> get progressTable => _progressTable;
 
   /// The list of measures
-  List<StudyProgress> get progress =>
-      _progressTable.entries.map((entry) => StudyProgress(entry.key, entry.value)).toList();
+  List<StudyProgress> get progress => _progressTable.entries
+      .map((entry) => StudyProgress(entry.key, entry.value))
+      .toList();
 
   StudyProgressCardDataModel() : super();
 
-  void init(StudyDeploymentController controller) {
+  void init(SmartphoneDeploymentController controller) {
     super.init(controller);
     updateProgress();
   }

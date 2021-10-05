@@ -19,7 +19,7 @@ class StepsCardDataModel extends DataModel {
 
   StepsCardDataModel();
 
-  void init(StudyDeploymentController controller) {
+  void init(SmartphoneDeploymentController controller) {
     super.init(controller);
 
     // initialize the weekly steps table

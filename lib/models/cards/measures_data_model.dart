@@ -19,7 +19,7 @@ class MeasuresCardDataModel extends DataModel {
 
   MeasuresCardDataModel() : super();
 
-  void init(StudyDeploymentController controller) {
+  void init(SmartphoneDeploymentController controller) {
     super.init(controller);
 
     // listen to incoming events in order to count the measure types

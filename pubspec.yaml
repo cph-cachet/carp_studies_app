@@ -59,6 +59,12 @@ dependencies:
 # Overriding carp libraries to use the local or github copy
 # Remove this before release of app
 dependency_overrides:
+  # TODO: Temporary fix - remove
+ 
+  # charts_flutter:
+  #   git:
+  #     url: https://github.com/google/charts
+  #     path: charts_flutter
   # carp_core:
   #   path: ../carp/carp.sensing-flutter/carp_core/
   # carp_mobile_sensing:

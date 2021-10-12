@@ -28,6 +28,8 @@
     <!-- The following permissions are used in the Audio Package  -->
     <uses-permission android:name="android.permission.RECORD_AUDIO"/>
    
+    <!-- Remove unused permissions -->
+    <uses-permission android:name="android.permission.READ_CALL_LOG" tools:node="remove" />
 
     <!-- io.flutter.app.FlutterApplication is an android.app.Application that
          calls FlutterMain.startInitialization(this); in its onCreate method.

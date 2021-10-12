@@ -13,7 +13,7 @@ class InformedConsentState extends State<InformedConsentPage> {
 
   void resultCallback(RPTaskResult result) async {
     await bloc.informedConsentHasBeenAccepted(result);
-    Navigator.of(context).pushReplacementNamed('/HomePage');
+    Navigator.of(context).pushReplacementNamed('/LocationUsagePage');
   }
 
   @override

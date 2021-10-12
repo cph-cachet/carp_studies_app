@@ -80,6 +80,7 @@ part 'ui/widgets/study_banner.dart';
 part 'ui/widgets/card_header.dart';
 part 'ui/widgets/study_card.dart';
 part 'ui/widgets/horizontal_bar.dart';
+part 'ui/widgets/location_usage_dialog.dart';
 
 part 'ui/cards/steps_card.dart';
 part 'ui/cards/activity_card.dart';

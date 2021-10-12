@@ -42,6 +42,7 @@
     "pages.profile.name": "Name",
     "pages.profile.account_id": "Account Id",
     "pages.profile.contact": "Contact researcher",
+    "pages.profile.privacy": "Privacy policy",
     "pages.profile.leave_study": "Leave study",
     "pages.profile.log_out": "Log out",
     "pages.profile.log_out.confirmation": "You are about to log out. Are you sure?",

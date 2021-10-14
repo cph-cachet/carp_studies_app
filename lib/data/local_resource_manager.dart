@@ -159,39 +159,4 @@ class LocalResourceManager implements ResourceManager {
   Future<bool> deleteLocalizations(Locale locale) {
     throw UnimplementedError();
   }
-
-  @override
-  StudyDescription? get studyDescription => _description;
-
-  @override
-  Future<StudyDescription?> getStudyDescription() async {
-    if (_description == null) {
-      _description = StudyDescription(
-          title: 'study.description.title',
-          description: 'study.description.description',
-          purpose: 'study.description.purpose',
-          responsible: StudyReponsible(
-            id: 'study.responsible.id',
-            title: 'study.responsible.title',
-            address: 'study.responsible.address',
-            affiliation: 'study.responsible.affiliation',
-            email: 'study.responsible.email',
-            name: 'study.responsible.name',
-          ));
-    }
-
-    return _description;
-  }
-
-  @override
-  Future<bool> setStudyDescription(StudyDescription description) async {
-    _description = description;
-    return true;
-  }
-
-  @override
-  Future<bool> deleteStudyDescription() async {
-    _description = null;
-    return true;
-  }
 }

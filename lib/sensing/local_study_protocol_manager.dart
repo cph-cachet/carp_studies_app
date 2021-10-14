@@ -5,27 +5,53 @@ part of carp_study_app;
 /// This is used for loading the [StudyProtocol] from a local in-memory
 /// Dart definition.
 class LocalStudyProtocolManager implements StudyProtocolManager {
-  StudyProtocol? _protocol;
+  SmartphoneStudyProtocol? _protocol;
 
   Future initialize() async {}
 
-  Future<bool> saveStudyProtocol(String studyId, StudyProtocol protocol) async {
+  Future<bool> saveStudyProtocol(
+      String studyId, SmartphoneStudyProtocol protocol) async {
     throw UnimplementedError();
   }
 
   /// Create a new CAMS study protocol.
-  Future<StudyProtocol?> getStudyProtocol(String ignored) async =>
+  Future<SmartphoneStudyProtocol?> getStudyProtocol(String ignored) async {
+    if (_protocol == null) {
       // _protocol ??= await _getGenericCARPStudy(ignored);
       // _protocol ??= await _getPatientWristWatch(ignored);
-      _protocol ??= await _getTestWristWatch(ignored);
+      _protocol = await _getTestWristWatch(ignored);
+
+      // add the localized description to all protocols
+      _protocol!.protocolDescription = StudyDescription(
+          title: 'study.description.title',
+          description: 'study.description.description',
+          purpose: 'study.description.purpose',
+          responsible: StudyResponsible(
+            id: 'study.responsible.id',
+            title: 'study.responsible.title',
+            address: 'study.responsible.address',
+            affiliation: 'study.responsible.affiliation',
+            email: 'study.responsible.email',
+            name: 'study.responsible.name',
+          ));
+
+      // add CARP as the data endpoint w/o authentication info - we expect to be authenticated
+      // upload each data point as it is collected
+      _protocol!.dataEndPoint = CarpDataEndPoint(
+        uploadMethod: CarpUploadMethod.DATA_POINT,
+        name: 'CARP Service',
+      );
+    }
+
+    return _protocol;
+  }
 
   /// ALL SURVEYS STUDY (FOR TESTING) - TODO: REMOVE
-  Future<StudyProtocol?> _getTestWristWatch(String studyId) async {
+  Future<SmartphoneStudyProtocol?> _getTestWristWatch(String studyId) async {
     if (_protocol == null) {
-      _protocol = StudyProtocol(
+      _protocol = SmartphoneStudyProtocol(
         name: 'Wrist Angel: All surveys',
         ownerId: studyId,
-        description: 'Protocol for testing with all surveys triggered',
       );
 
       // Define which devices are used for data collection.
@@ -231,12 +257,11 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
     return _protocol;
   }
 
-  Future<StudyProtocol?> _getPatientWristWatch(String studyId) async {
+  Future<SmartphoneStudyProtocol?> _getPatientWristWatch(String studyId) async {
     if (_protocol == null) {
-      _protocol = StudyProtocol(
+      _protocol = SmartphoneStudyProtocol(
         name: 'Wrist Angel: Patient (TEST with new triggers)',
         ownerId: studyId,
-        description: 'Protocol testing for patients with new triggers',
       );
 
       // Define which devices are used for data collection.
@@ -410,12 +435,12 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
     return _protocol;
   }
 
-  Future<StudyProtocol?> _getPatientParentsWristWatch(String studyId) async {
+  Future<SmartphoneStudyProtocol?> _getPatientParentsWristWatch(
+      String studyId) async {
     if (_protocol == null) {
-      _protocol = StudyProtocol(
+      _protocol = SmartphoneStudyProtocol(
         name: 'Wrist Angel: Patient Parent',
         ownerId: studyId,
-        description: 'Protocol testing for patient parents',
       );
 
       // Define which devices are used for data collection.
@@ -565,12 +590,11 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
     return _protocol;
   }
 
-  Future<StudyProtocol?> _getControlWristWatch(String studyId) async {
+  Future<SmartphoneStudyProtocol?> _getControlWristWatch(String studyId) async {
     if (_protocol == null) {
-      _protocol = StudyProtocol(
+      _protocol = SmartphoneStudyProtocol(
         name: 'Wrist Angel: Control',
         ownerId: studyId,
-        description: 'Protocol testing for the control group',
       );
 
       // Define which devices are used for data collection.
@@ -643,12 +667,12 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
     return _protocol;
   }
 
-  Future<StudyProtocol?> _getControlParentWristWatch(String studyId) async {
+  Future<SmartphoneStudyProtocol?> _getControlParentWristWatch(
+      String studyId) async {
     if (_protocol == null) {
-      _protocol = StudyProtocol(
+      _protocol = SmartphoneStudyProtocol(
         name: 'Wrist Angel: Control Parents',
         ownerId: studyId,
-        description: 'Protocol testing for parents of the control group',
       );
 
       // Define which devices are used for data collection.
@@ -972,28 +996,26 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
   //   return _study;
   // }
 
-  Future<StudyProtocol?> _getGenericCARPStudy(String studyId) async {
+  Future<SmartphoneStudyProtocol?> _getGenericCARPStudy(String studyId) async {
     if (_protocol == null) {
-      _protocol = StudyProtocol(
-        ownerId: studyId,
-        name: 'CARP Study App 2nd Protocol',
-        description:
-            'A super generic 2nd protocol testing different parts of the CAMS Study App.',
-        // TODO: fix
-        // protocolDescription: StudyProtocolDescription(
-        //   title: 'CARP Study App Feasibility Study',
-        //   purpose: 'To investigate the technical stability and usability of the CARP Generic Study App.',
-        //   description:
-        //       "We would like to have you help in testing the technical stability and the usability of the CARP Mobile Sensing app. "
-        //       "Your data will be collected and store anonymously.",
-        // )..responsible = StudyProtocolReponsible(
-        //     name: 'Jakob E. Bardram',
-        //     title: 'PhD, MSc',
-        //     email: 'jakba@dtu.dk',
-        //     affiliation: 'Technical University of Denmark',
-        //     address: 'Ørsteds Plads, bygn. 349, DK-2800 Kg. Lyngby',
-        //   )
-      );
+      _protocol = SmartphoneStudyProtocol(
+          ownerId: studyId,
+          name: 'CARP Study App 2nd Protocol',
+          protocolDescription: StudyDescription(
+              title: 'CARP Study App Feasibility Study',
+              description:
+                  "We would like to have you help in testing the technical stability and the usability of the CARP Mobile Sensing app. "
+                  "Your data will be collected and store anonymously.",
+              purpose:
+                  'To investigate the technical stability and usability of the CARP Generic Study App.',
+              responsible: StudyResponsible(
+                id: 'jakba',
+                name: 'Jakob E. Bardram',
+                title: 'PhD, MSc',
+                email: 'jakba@dtu.dk',
+                affiliation: 'Technical University of Denmark',
+                address: 'Ørsteds Plads, bygn. 349, DK-2800 Kg. Lyngby',
+              )));
 
       // Define which devices are used for data collection.
       Smartphone phone = Smartphone();

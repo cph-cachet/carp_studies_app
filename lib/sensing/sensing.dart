@@ -74,8 +74,6 @@ class Sensing {
   Future<void> initialize() async {
     info('Initializing $runtimeType - mode: ${bloc.deploymentMode}');
 
-    StudyDescription? description;
-
     // set up the devices available on this phone
     DeviceController().registerAllAvailableDevices();
 
@@ -86,11 +84,8 @@ class Sensing {
 
         // get the protocol from the local study protocol manager
         // note that the study id is not used
-        StudyProtocol? protocol =
+        SmartphoneStudyProtocol? protocol =
             await (LocalStudyProtocolManager().getStudyProtocol(''));
-
-        // get the local study description
-        description = await LocalResourceManager().getStudyDescription();
 
         // deploy this protocol using the on-phone deployment service
         // re-use the study deployment id - if available
@@ -106,7 +101,7 @@ class Sensing {
       case DeploymentMode.CARP_PRODUCTION:
       case DeploymentMode.CARP_STAGING:
         assert(CarpService().authenticated,
-            'No used is authenticated. Call CarpService().authenticate() before using a CARP deployment service.');
+            'No user is authenticated. Call CarpService().authenticate() before using any of the CARP services.');
         assert(bloc.studyDeploymentId != null,
             'No study deployment ID is provided. Cannot fetch deployment from CARP w/o an id.');
 
@@ -116,10 +111,6 @@ class Sensing {
         // get the study deployment status
         _status = await CustomProtocolDeploymentService()
             .getStudyDeploymentStatus(bloc.studyDeploymentId!);
-
-        // register the CARP data manager for uploading data back to CARP
-        // TODO - check if we can remove this - seems to be done in the CustomProtocolDeploymentService
-        DataManagerRegistry().register(CarpDataManager());
 
         break;
     }
@@ -133,9 +124,6 @@ class Sensing {
 
     // add and deploy this deployment
     _controller = await client!.addStudy(studyDeploymentId!, deviceRolename!);
-
-    // set the study description, if available
-    deployment!.protocolDescription ??= description;
 
     // configure the controller
     await _controller!.configure(askForPermissions: false);

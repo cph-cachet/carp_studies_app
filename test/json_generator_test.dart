@@ -18,9 +18,8 @@ import '../lib/main.dart';
 
 void main() {
   // creating an empty protocol to initialize json serialization
-  StudyProtocol protocol;
+  SmartphoneStudyProtocol? protocol;
   RPOrderedTask informedConsent;
-  StudyDescription description;
 
   setUp(() async {
     Settings().saveAppTaskQueue = false;
@@ -39,16 +38,8 @@ void main() {
 
     /// Generates and prints the local study protocol as json
     test('protocol -> JSON', () async {
-      protocol = await LocalStudyProtocolManager().getStudyProtocol('1234')
-          as StudyProtocol;
-      print(toJsonString(protocol));
-    });
-
-    /// Generates and prints the local study description as json
-    test('study description -> JSON', () async {
-      description = await LocalResourceManager().getStudyDescription()
-          as StudyDescription;
-      print(toJsonString(description));
+      protocol = await LocalStudyProtocolManager().getStudyProtocol('1234');
+      print(toJsonString(protocol!));
     });
 
     /// Generates and prints the local informed consent as json

@@ -28,8 +28,13 @@
     <!-- The following permissions are used in the Audio Package  -->
     <uses-permission android:name="android.permission.RECORD_AUDIO"/>
    
-    <!-- Remove unused permissions -->
+    <!-- Remove unused permissions 
+         See https://github.com/cph-cachet/carp.sensing-flutter/wiki/5.-Best-Practice#android-manifest-file-merge  
+    -->
     <uses-permission android:name="android.permission.READ_CALL_LOG" tools:node="remove" />
+    <uses-permission android:name="android.permission.READ_SMS" tools:node="remove"/>
+    <uses-permission android:name="android.permission.SEND_SMS" tools:node="remove"/>
+    <uses-permission android:name="android.permission.RECEIVE_SMS" tools:node="remove"/>    
 
     <!-- io.flutter.app.FlutterApplication is an android.app.Application that
          calls FlutterMain.startInitialization(this); in its onCreate method.

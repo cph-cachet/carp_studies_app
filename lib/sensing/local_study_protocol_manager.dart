@@ -9,8 +9,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
 
   Future initialize() async {}
 
-  Future<bool> saveStudyProtocol(
-      String studyId, SmartphoneStudyProtocol protocol) async {
+  Future<bool> saveStudyProtocol(String studyId, SmartphoneStudyProtocol protocol) async {
     throw UnimplementedError();
   }
 
@@ -26,6 +25,8 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           title: 'study.description.title',
           description: 'study.description.description',
           purpose: 'study.description.purpose',
+          studyDescriptionUrl: 'study.description.url',
+          privacyPolicyUrl: 'study.description.privacy',
           responsible: StudyResponsible(
             id: 'study.responsible.id',
             title: 'study.responsible.title',
@@ -50,7 +51,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
   Future<SmartphoneStudyProtocol?> _getTestWristWatch(String studyId) async {
     if (_protocol == null) {
       _protocol = SmartphoneStudyProtocol(
-        name: 'Wrist Angel: All surveys',
+        name: 'Wrist Angel: All surveys immediate triggered',
         ownerId: studyId,
       );
 
@@ -199,8 +200,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
             type: SurveyUserTask.SURVEY_TYPE,
             title: surveys.symptomHierarchyCoumpulsions.title,
             description: surveys.symptomHierarchyCoumpulsions.description,
-            minutesToComplete:
-                surveys.symptomHierarchyCoumpulsions.minutesToComplete,
+            minutesToComplete: surveys.symptomHierarchyCoumpulsions.minutesToComplete,
             expire: surveys.symptomHierarchyCoumpulsions.expire,
           )..measures.add(RPTaskMeasure(
               type: SurveySamplingPackage.SURVEY,
@@ -215,8 +215,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
             type: SurveyUserTask.SURVEY_TYPE,
             title: surveys.symptomHierarchyObsessions.title,
             description: surveys.symptomHierarchyObsessions.description,
-            minutesToComplete:
-                surveys.symptomHierarchyObsessions.minutesToComplete,
+            minutesToComplete: surveys.symptomHierarchyObsessions.minutesToComplete,
             expire: surveys.symptomHierarchyObsessions.expire,
           )..measures.add(RPTaskMeasure(
               type: SurveySamplingPackage.SURVEY,
@@ -297,8 +296,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           //   time: TimeOfDay(hour: 6, minute: 00),
           //   recurrenceRule: RecurrenceRule(Frequency.DAILY),
           // ),
-          RecurrentScheduledTrigger(
-              type: RecurrentType.daily, time: Time(hour: 6, minute: 00)),
+          RecurrentScheduledTrigger(type: RecurrentType.daily, time: Time(hour: 6, minute: 00)),
           AppTask(
             type: SurveyUserTask.SURVEY_TYPE,
             title: surveys.exposure.title,
@@ -343,15 +341,12 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           //   recurrenceRule: RecurrenceRule(Frequency.WEEKLY),
           // ),
           RecurrentScheduledTrigger(
-              type: RecurrentType.weekly,
-              time: Time(hour: 6, minute: 00),
-              dayOfWeek: DateTime.monday),
+              type: RecurrentType.weekly, time: Time(hour: 6, minute: 00), dayOfWeek: DateTime.monday),
           AppTask(
             type: SurveyUserTask.SURVEY_TYPE,
             title: surveys.symptomHierarchyObsessions.title,
             description: surveys.symptomHierarchyObsessions.description,
-            minutesToComplete:
-                surveys.symptomHierarchyObsessions.minutesToComplete,
+            minutesToComplete: surveys.symptomHierarchyObsessions.minutesToComplete,
             expire: surveys.symptomHierarchyObsessions.expire,
             notification: true,
           )..measures.add(RPTaskMeasure(
@@ -369,15 +364,12 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           //   recurrenceRule: RecurrenceRule(Frequency.WEEKLY),
           // ),
           RecurrentScheduledTrigger(
-              type: RecurrentType.weekly,
-              time: Time(hour: 6, minute: 00),
-              dayOfWeek: DateTime.monday),
+              type: RecurrentType.weekly, time: Time(hour: 6, minute: 00), dayOfWeek: DateTime.monday),
           AppTask(
             type: SurveyUserTask.SURVEY_TYPE,
             title: surveys.symptomHierarchyCoumpulsions.title,
             description: surveys.symptomHierarchyCoumpulsions.description,
-            minutesToComplete:
-                surveys.symptomHierarchyCoumpulsions.minutesToComplete,
+            minutesToComplete: surveys.symptomHierarchyCoumpulsions.minutesToComplete,
             expire: surveys.symptomHierarchyCoumpulsions.expire,
             notification: true,
           )..measures.add(RPTaskMeasure(
@@ -394,8 +386,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           //   time: TimeOfDay(hour: 6, minute: 00),
           //   recurrenceRule: RecurrenceRule(Frequency.DAILY),
           // ),
-          RecurrentScheduledTrigger(
-              type: RecurrentType.daily, time: Time(hour: 6, minute: 00)),
+          RecurrentScheduledTrigger(type: RecurrentType.daily, time: Time(hour: 6, minute: 00)),
           AppTask(
             type: AudioUserTask.AUDIO_TYPE,
             title: "audio.exposure.title",
@@ -435,8 +426,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
     return _protocol;
   }
 
-  Future<SmartphoneStudyProtocol?> _getPatientParentsWristWatch(
-      String studyId) async {
+  Future<SmartphoneStudyProtocol?> _getPatientParentsWristWatch(String studyId) async {
     if (_protocol == null) {
       _protocol = SmartphoneStudyProtocol(
         name: 'Wrist Angel: Patient Parent',
@@ -667,8 +657,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
     return _protocol;
   }
 
-  Future<SmartphoneStudyProtocol?> _getControlParentWristWatch(
-      String studyId) async {
+  Future<SmartphoneStudyProtocol?> _getControlParentWristWatch(String studyId) async {
     if (_protocol == null) {
       _protocol = SmartphoneStudyProtocol(
         name: 'Wrist Angel: Control Parents',
@@ -1006,8 +995,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
               description:
                   "We would like to have you help in testing the technical stability and the usability of the CARP Mobile Sensing app. "
                   "Your data will be collected and store anonymously.",
-              purpose:
-                  'To investigate the technical stability and usability of the CARP Generic Study App.',
+              purpose: 'To investigate the technical stability and usability of the CARP Generic Study App.',
               responsible: StudyResponsible(
                 id: 'jakba',
                 name: 'Jakob E. Bardram',
@@ -1095,9 +1083,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
               enabled: true,
               surveyTask: surveys.demographics.survey,
             ))
-            ..measures.add(SamplingPackageRegistry()
-                .common()
-                .measures[ContextSamplingPackage.LOCATION]!),
+            ..measures.add(SamplingPackageRegistry().common().measures[ContextSamplingPackage.LOCATION]!),
           phone);
 
       // collect symptoms on a daily basis - notify the user
@@ -1117,9 +1103,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
               enabled: true,
               surveyTask: surveys.symptoms.survey,
             ))
-            ..measures.add(SamplingPackageRegistry()
-                .common()
-                .measures[ContextSamplingPackage.LOCATION]!),
+            ..measures.add(SamplingPackageRegistry().common().measures[ContextSamplingPackage.LOCATION]!),
           phone);
 
       // collect a coughing sample on a daily basis
@@ -1129,8 +1113,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           AppTask(
             type: AudioUserTask.AUDIO_TYPE,
             title: "Coughing",
-            description:
-                'In this small exercise we would like to collect sound samples of coughing.',
+            description: 'In this small exercise we would like to collect sound samples of coughing.',
             instructions: 'Please cough 5 times.',
             minutesToComplete: 1,
           )
@@ -1138,15 +1121,9 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
               type: AudioSamplingPackage.AUDIO,
               name: "Coughing",
             ))
-            ..measures.add(SamplingPackageRegistry()
-                .common()
-                .measures[ContextSamplingPackage.LOCATION]!)
-            ..measures.add(SamplingPackageRegistry()
-                .common()
-                .measures[ContextSamplingPackage.WEATHER]!)
-            ..measures.add(SamplingPackageRegistry()
-                .common()
-                .measures[ContextSamplingPackage.AIR_QUALITY]!),
+            ..measures.add(SamplingPackageRegistry().common().measures[ContextSamplingPackage.LOCATION]!)
+            ..measures.add(SamplingPackageRegistry().common().measures[ContextSamplingPackage.WEATHER]!)
+            ..measures.add(SamplingPackageRegistry().common().measures[ContextSamplingPackage.AIR_QUALITY]!),
           phone);
 
       // collect a reading / audio sample on a daily basis
@@ -1155,8 +1132,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           AppTask(
             type: AudioUserTask.AUDIO_TYPE,
             title: "Reading",
-            description:
-                'In this small exercise we would like to collect sound data while you are reading.',
+            description: 'In this small exercise we would like to collect sound data while you are reading.',
             instructions: 'Please read the following text aloud.\n\n'
                 'Many, many years ago lived an emperor, who thought so much of new clothes that he spent all his money in order to obtain them; his only ambition was to be always well dressed. '
                 'He did not care for his soldiers, and the theatre did not amuse him; the only thing, in fact, he thought anything of was to drive out and show a new suit of clothes. '

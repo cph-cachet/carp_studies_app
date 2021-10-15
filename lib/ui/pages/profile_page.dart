@@ -101,10 +101,10 @@ class _ProfilePageState extends State<ProfilePage> {
                         style: profileActionStyle.copyWith(color: Theme.of(context).primaryColor)),
                     // TODO: Add privacy policy section to model
                     onTap: () async {
-                      if (await canLaunch("https://carp.cachet.dk/privacy-policy-app/")) {
-                        await launch("https://carp.cachet.dk/privacy-policy-app/");
+                      if (await canLaunch(locale.translate('study.description.privacy'))) {
+                        await launch(locale.translate('study.description.privacy'));
                       } else {
-                        throw 'Could not launch privacy policy';
+                        throw 'Could not launch privacy policy URL';
                       }
                     },
                   ),

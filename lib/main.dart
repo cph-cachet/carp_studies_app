@@ -59,7 +59,7 @@ part 'models/audio_user_task.dart';
 part 'data/local_resource_manager.dart';
 
 part 'carp_study_app.dart';
-part 'app_home.dart';
+// part 'app_home.dart';
 part 'ui/pages/informed_consent_page.dart';
 part 'ui/pages/home_page.dart';
 

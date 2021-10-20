@@ -98,7 +98,6 @@ class StudyAppBLoC {
   /// Initialize this BLOC. Called before being used for anything.
   Future<void> initialize() async {
     if (isInitialized) return;
-    print('$runtimeType initializing...');
 
     Settings().debugLevel = debugLevel;
     await Settings().init();
@@ -119,14 +118,14 @@ class StudyAppBLoC {
   ///
   /// This method is used in the [LoadingPage].
   Future<void> configure(BuildContext context) async {
-    // make sure to initialize the bloc, if not already done
-    // await bloc.initialize();
+    assert(isInitialized,
+        "$runtimeType is not initialized. Call 'initialize()' first.");
 
     // early out if already configuring (e.g. waiting for user authentication)
     if (isConfiguring) return;
 
     _state = StudyAppState.configuring;
-    print('$runtimeType configuring...');
+    info('$runtimeType configuring...');
 
     // force the app to refresh the user credentials and study information?
     if (forceSignOutAndStudyReload) await leaveStudyAndSignOut();

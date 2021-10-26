@@ -69,18 +69,14 @@ part 'ui/colors.dart';
 part 'ui/pages/data_viz_page.dart';
 part 'ui/pages/study_page.dart';
 part 'ui/pages/task_list_page.dart';
-part 'ui/pages/contact_page.dart';
 part 'ui/pages/profile_page.dart';
 part 'ui/pages/audio_task_page.dart';
-part 'ui/pages/timer_task_page.dart';
-part 'ui/pages/question.dart';
 part 'ui/pages/failed_login_page.dart';
 
-part 'ui/widgets/study_banner.dart';
-part 'ui/widgets/card_header.dart';
 part 'ui/widgets/study_card.dart';
 part 'ui/widgets/horizontal_bar.dart';
 part 'ui/widgets/location_usage_dialog.dart';
+part 'ui/widgets/charts_legend.dart';
 
 part 'ui/cards/steps_card.dart';
 part 'ui/cards/activity_card.dart';

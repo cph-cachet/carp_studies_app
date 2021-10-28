@@ -91,8 +91,8 @@ dev_dependencies:
   #  - run "flutter clean" and "flutter get"
   #  - also, run "flutter pub cache clean" to clean the cache - if everything doesn't work
   # carp_study_generator: ^0.31.0
-  carp_study_generator: 
-      path: ../carp/carp.sensing-flutter/utilities/carp_study_generator/
+  # carp_study_generator: 
+  #     path: ../carp/carp.sensing-flutter/utilities/carp_study_generator/
 
 
 # For information on the generic Dart part of this file, see the

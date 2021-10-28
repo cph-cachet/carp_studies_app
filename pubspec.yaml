@@ -30,7 +30,7 @@ dependencies:
   carp_context_package: ^0.31.0
   carp_survey_package: ^0.31.0
   carp_audio_package: ^0.31.0
-  carp_backend: ^0.31.1
+  carp_backend: ^0.31.1+1
 
   #carp_communication_package: ^0.6.1
   #carp_health_package: ^0.6.1

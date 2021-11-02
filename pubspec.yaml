@@ -26,11 +26,11 @@ dependencies:
   flutter:
     sdk: flutter
 
-  carp_mobile_sensing: ^0.31.0
+  carp_mobile_sensing: ^0.31.1
   carp_context_package: ^0.31.0
   carp_survey_package: ^0.31.0
   carp_audio_package: ^0.31.0
-  carp_backend: ^0.31.0
+  carp_backend: ^0.31.1+1
 
   #carp_communication_package: ^0.6.1
   #carp_health_package: ^0.6.1
@@ -47,7 +47,7 @@ dependencies:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.0
+  # cupertino_icons: ^1.0.0
 
   flutter_localizations:
     sdk: flutter

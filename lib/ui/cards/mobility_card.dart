@@ -84,7 +84,7 @@ class _MobilityCardWidgetState extends State<MobilityCardWidget> {
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: <Widget>[
-              CardHeader(
+              ChartsLegend(
                 title: locale.translate('cards.mobility.title'),
                 iconAssetName: Icon(Icons.emoji_transportation,
                     color: Theme.of(context).primaryColor),

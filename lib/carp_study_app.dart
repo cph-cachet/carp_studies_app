@@ -4,7 +4,8 @@ class CarpStudyApp extends StatefulWidget {
   CarpStudyApp({Key? key}) : super(key: key);
 
   static void reloadLocale(BuildContext context) async {
-    _CarpStudyAppState? state = context.findAncestorStateOfType<_CarpStudyAppState>();
+    _CarpStudyAppState? state =
+        context.findAncestorStateOfType<_CarpStudyAppState>();
     state?.reloadLocale();
   }
 
@@ -28,7 +29,8 @@ class _CarpStudyAppState extends State<CarpStudyApp> {
 
   /// Research Package translations, incl. both local language assets plus
   /// translations of informed consent and surveys downloaded from CARP
-  final RPLocalizationsDelegate rpLocalizationsDelegate = RPLocalizationsDelegate(loaders: [
+  final RPLocalizationsDelegate rpLocalizationsDelegate =
+      RPLocalizationsDelegate(loaders: [
     AssetLocalizationLoader(),
     bloc.localizationLoader,
   ]);
@@ -98,20 +100,20 @@ class _LoadingPageState extends State<LoadingPage> {
     // the only reason to call it here - instead of in the initState() method -
     // is to have a handle to the context object, which is to be used in the
     // pop-up windows from CARP
-    //
-    // HOWEVER - all of this seems broken - we should maybe have our own login
-    // page for this app....
-    //
-    // TODO - make app-specific login page?
     if (!bloc.isConfiguring) {
       bloc.configure(context).then((_) {
         // when the configure is done, the localizations should have been downloaded
         // and we can ask the app to reload the translations
         CarpStudyApp.reloadLocale(context);
 
+        // At this point, the study deployment AND the translations are loaded.
+        // This means that we can translate the [AppTask]s in the protocol,
+        // if we want the translated title and description to be in the notifications.
+        // TODO - translate the app tasks in the deployment protocol.
+
         // then navigate to the right screen
-        Navigator.of(context)
-            .pushReplacementNamed((bloc.shouldInformedConsentBeShown) ? '/ConsentPage' : '/HomePage');
+        Navigator.of(context).pushReplacementNamed(
+            (bloc.shouldInformedConsentBeShown) ? '/ConsentPage' : '/HomePage');
       });
     }
 
@@ -135,7 +137,8 @@ class _LoadingPageState extends State<LoadingPage> {
         child: new Center(
             child: new Hero(
           tag: "tick",
-          child: new Image.asset('assets/images/splash_cachet.png', width: 150.0, height: 150.0, scale: 1.0),
+          child: new Image.asset('assets/images/splash_cachet.png',
+              width: 150.0, height: 150.0, scale: 1.0),
         )),
       );
 }

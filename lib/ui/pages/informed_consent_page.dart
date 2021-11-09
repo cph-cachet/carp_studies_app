@@ -16,6 +16,27 @@ class InformedConsentState extends State<InformedConsentPage> {
     Navigator.of(context).pushReplacementNamed('/LocationUsagePage');
   }
 
+  void cancellCallback(RPTaskResult? result) async {
+    print("informed consent not accepted");
+    return showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("You need to accept the informed consent to continue"),
+          actions: <Widget>[
+            TextButton(
+              child: Text("Go to informed consent"),
+              onPressed: () {
+                Navigator.of(context).pushReplacementNamed('/InformedConsent');
+              },
+            )
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,6 +46,7 @@ class InformedConsentState extends State<InformedConsentPage> {
           return RPUITask(
             task: bloc.informedConsent!,
             onSubmit: resultCallback,
+            //onCancel: cancellCallback,
           );
         },
       ),

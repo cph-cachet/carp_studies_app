@@ -109,21 +109,21 @@ class _ProfilePageState extends State<ProfilePage> {
                     },
                   ),
                   ListTile(
+                    leading: Icon(Icons.power_settings_new, color: CACHET.RED_1),
+                    title: Text(locale.translate('pages.profile.log_out'),
+                        style: profileActionStyle.copyWith(color: CACHET.RED_1)),
+                    onTap: () {
+                      print("logging out");
+                      _showLogoutConfirmationDialog();
+                    },
+                  ),
+                  ListTile(
                     leading: Icon(Icons.logout, color: CACHET.RED_1),
                     title: Text(locale.translate('pages.profile.leave_study'),
                         style: profileActionStyle.copyWith(color: CACHET.RED_1)),
                     onTap: () {
                       print("leaving study");
                       _showLeaveStudyConfirmationDialog();
-                    },
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.power_settings_new, color: CACHET.RED_1),
-                    title: Text(locale.translate('pages.profile.log_out'),
-                        style: profileActionStyle.copyWith(color: CACHET.RED_1)),
-                    onTap: () {
-                      print("log out");
-                      _showLogoutConfirmationDialog();
                     },
                   ),
                 ]).toList(),
@@ -170,7 +170,8 @@ class _ProfilePageState extends State<ProfilePage> {
                 // Only call it if it's not null
                 //widget.onCancel?.call(_taskResult);
 
-                bloc.leaveStudyAndSignOut();
+                // Remove the auth credentials
+                bloc.signOut();
                 // Popup dismiss
                 Navigator.of(context).pop();
                 // Exit the Ordered Task

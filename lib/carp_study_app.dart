@@ -112,9 +112,19 @@ class _LoadingPageState extends State<LoadingPage> {
         // TODO - translate the app tasks in the deployment protocol.
 
         // then navigate to the right screen
-        Navigator.of(context).pushReplacementNamed(
-            (bloc.shouldInformedConsentBeShown) ? '/ConsentPage' : '/HomePage');
+        Navigator.of(context)
+            .pushReplacementNamed((bloc.shouldInformedConsentBeShown) ? '/ConsentPage' : '/HomePage');
       });
+    }
+
+    // If the user has left the study it is still logged in and should be redirected to invitation screen
+    if (bloc.hasLeftStudy) {
+      bloc.hasLeftStudy = false;
+    }
+
+    // If the user is loged out, redirect to authentication screen
+    if (bloc.hasSignedOut) {
+      bloc.hasSignedOut = false;
     }
 
     return Scaffold(

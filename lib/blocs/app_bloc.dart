@@ -27,6 +27,9 @@ class StudyAppBLoC {
   bool get isConfiguring => _state.index >= 2;
   bool get isConfigured => _state.index >= 3;
 
+  bool hasSignedOut = false;
+  bool hasLeftStudy = false;
+
   /// Debug level for this app (and CAMS).
   DebugLevel debugLevel;
 

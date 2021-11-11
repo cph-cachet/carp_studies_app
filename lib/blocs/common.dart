@@ -9,6 +9,12 @@ enum DeploymentMode {
 
   /// Use the CARP staging server to get the study deployment and store data.
   CARP_STAGING,
+
+  /// Use the CARP testing server to get the study deployment and store data.
+  CARP_TEST,
+
+  /// Use the CARP development server to get the study deployment and store data.
+  CARP_DEV,
 }
 
 enum LoginStatus {

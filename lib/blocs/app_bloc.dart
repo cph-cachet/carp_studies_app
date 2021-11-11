@@ -53,9 +53,12 @@ class StudyAppBLoC {
   RPOrderedTask? informedConsent;
 
   ResourceManager get resourceManager =>
-      (deploymentMode == DeploymentMode.LOCAL) ? LocalResourceManager() : CarpResourceManager();
+      (deploymentMode == DeploymentMode.LOCAL)
+          ? LocalResourceManager()
+          : CarpResourceManager();
 
-  LocalizationLoader get localizationLoader => ResourceLocalizationLoader(resourceManager);
+  LocalizationLoader get localizationLoader =>
+      ResourceLocalizationLoader(resourceManager);
 
   MessageManager messageManager = LocalMessageManager();
 
@@ -70,7 +73,8 @@ class StudyAppBLoC {
   // String? get studyDeploymentId => deployment?.studyDeploymentId;
 
   /// The deployment running on this phone.
-  SmartphoneDeployment? get deployment => Sensing().controller?.deployment as SmartphoneDeployment?;
+  SmartphoneDeployment? get deployment =>
+      Sensing().controller?.deployment as SmartphoneDeployment?;
 
   /// Get the latest status of the study deployment.
   StudyDeploymentStatus? get status => _status;
@@ -104,7 +108,8 @@ class StudyAppBLoC {
     await resourceManager.initialize();
 
     _state = StudyAppState.initialized;
-    info('$runtimeType initialized');
+    info(
+        '$runtimeType initialized - deployment mode: ${deploymentMode.toString().split('.').last}');
   }
 
   /// This methods is used to configure the entire app, including:
@@ -117,7 +122,8 @@ class StudyAppBLoC {
   ///
   /// This method is used in the [LoadingPage].
   Future<void> configure(BuildContext context) async {
-    assert(isInitialized, "$runtimeType is not initialized. Call 'initialize()' first.");
+    assert(isInitialized,
+        "$runtimeType is not initialized. Call 'initialize()' first.");
 
     // early out if already configuring (e.g. waiting for user authentication)
     if (isConfiguring) return;
@@ -135,12 +141,14 @@ class StudyAppBLoC {
 
       // check if there is a local deploymed id
       // if not, get a deployment id based on an invitation
-      if (bloc.studyDeploymentId == null) await backend.getStudyInvitation(context);
+      if (bloc.studyDeploymentId == null)
+        await backend.getStudyInvitation(context);
     }
 
     // find the right informed consent, if needed
-    bloc.informedConsent =
-        (!hasInformedConsentBeenAccepted) ? await resourceManager.getInformedConsent() : null;
+    bloc.informedConsent = (!hasInformedConsentBeenAccepted)
+        ? await resourceManager.getInformedConsent()
+        : null;
 
     // set up the messaging part
     await messageManager.init();
@@ -171,24 +179,30 @@ class StudyAppBLoC {
   }
 
   /// Has the informed consent been shown to, and accepted by the user?
-  bool get hasInformedConsentBeenAccepted => LocalSettings().hasInformedConsentBeenAccepted;
+  bool get hasInformedConsentBeenAccepted =>
+      LocalSettings().hasInformedConsentBeenAccepted;
 
   /// Should the informed consent be shown to the user?
-  bool get shouldInformedConsentBeShown => (informedConsent != null && !hasInformedConsentBeenAccepted);
+  bool get shouldInformedConsentBeShown =>
+      (informedConsent != null && !hasInformedConsentBeenAccepted);
 
   /// Specify if the informed consent been handled.
   /// This entails that it has been:
   ///  * shown to the user
   ///  * accepted by the user
   ///  * successfully uploaded to CARP
-  set informedConsentAccepted(bool accepted) => LocalSettings().informedConsentAccepted = accepted;
+  set informedConsentAccepted(bool accepted) =>
+      LocalSettings().informedConsentAccepted = accepted;
 
-  Future<void> getMessages() async => _messages ??= await messageManager.messages;
+  Future<void> getMessages() async =>
+      _messages ??= await messageManager.messages;
 
   /// The signed in user. Returns null if no user is signed in.
   CarpUser? get user => backend.user;
 
-  String get username => (user != null) ? user!.username : Sensing().controller!.masterDeployment!.userId!;
+  String get username => (user != null)
+      ? user!.username
+      : Sensing().controller!.masterDeployment!.userId!;
 
   /// The name used for friendly greating - '' if no user logged in.
   String? get friendlyUsername => (user != null) ? user!.firstName : '';
@@ -197,13 +211,15 @@ class StudyAppBLoC {
   bool get isRunning => Sensing().isRunning;
 
   /// the list of running - i.e. used - probes in this study.
-  List<Probe> get runningProbes =>
-      (Sensing().controller != null) ? Sensing().controller!.executor!.probes : [];
+  List<Probe> get runningProbes => (Sensing().controller != null)
+      ? Sensing().controller!.executor!.probes
+      : [];
 
   /// Start sensing. Should only be called once.
   /// Use [resume] and [pause] if pausing/resuming sensing.
   Future<void> start() async {
-    assert(Sensing().controller != null, 'No Study Controller - the study has not been deployed.');
+    assert(Sensing().controller != null,
+        'No Study Controller - the study has not been deployed.');
     Sensing().controller!.resume();
     _studyStartTimestamp = Sensing().controller!.studyDeploymentStartTime;
 
@@ -225,7 +241,8 @@ class StudyAppBLoC {
   void dispose() => stop();
 
   /// Add a [Datum] object to the stream of events.
-  void addDatum(Datum datum) => Sensing().controller!.executor!.addDataPoint(DataPoint.fromData(datum));
+  void addDatum(Datum datum) =>
+      Sensing().controller!.executor!.addDataPoint(DataPoint.fromData(datum));
 
   /// Add a error to the stream of events.
   void addError(Object error, [StackTrace? stacktrace]) =>

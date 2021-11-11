@@ -7,9 +7,9 @@ class CarpBackend {
   static const String CANS_URI = "https://cans.cachet.dk";
 
   static const Map<DeploymentMode, String> URIs = {
-    DeploymentMode.CARP_DEV: 'dev',
-    DeploymentMode.CARP_TEST: 'test',
-    DeploymentMode.CARP_STAGING: 'stage',
+    DeploymentMode.CARP_DEV: '/dev',
+    DeploymentMode.CARP_TEST: '/test',
+    DeploymentMode.CARP_STAGING: '/stage',
     DeploymentMode.CARP_PRODUCTION: '',
   };
 
@@ -24,7 +24,7 @@ class CarpBackend {
   CarpUser? get user => CarpService().currentUser;
 
   /// The URI of the CANS server - depending on deployment mode.
-  String get uri => '$CANS_URI/${URIs[bloc.deploymentMode]}';
+  String get uri => '$CANS_URI${URIs[bloc.deploymentMode]}';
 
   String get clientID => CLIENT_ID;
   String get clientSecret => CLIENT_SECRET;

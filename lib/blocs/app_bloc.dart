@@ -156,7 +156,6 @@ class StudyAppBLoC {
 
     // set up and initialize sensing
     await Sensing().initialize();
-    // print(toJsonString(bloc.deployment));
 
     // initialize the UI data models
     data.init(Sensing().controller!);

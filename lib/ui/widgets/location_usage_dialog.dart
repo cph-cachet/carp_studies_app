@@ -3,6 +3,7 @@ part of carp_study_app;
 class LocationUsageDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;
+
     final AlertDialog locationUsageDialog = AlertDialog(
       title: Column(
         mainAxisSize: MainAxisSize.min,
@@ -23,7 +24,7 @@ class LocationUsageDialog extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            locale.translate("ic.location.summary") + locale.translate("ic.location.content"),
+            locale.translate("ic.location.content"),
             style: aboutCardContentStyle,
             textAlign: TextAlign.justify,
           ),
@@ -43,7 +44,8 @@ class LocationUsageDialog extends StatelessWidget {
           },
           child: Text("Allow"),
           style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(Theme.of(context).primaryColor),
+            backgroundColor:
+                MaterialStateProperty.all(Theme.of(context).primaryColor),
           ),
         ),
       ],

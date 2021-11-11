@@ -1985,7 +1985,7 @@ class _WHO5Survey implements Survey {
           answerFormat: _choiceAnswerFormat,
         ),
         RPCompletionStep(
-          identifier: "who5_ompletion",
+          identifier: "who5_completion",
           title: "Finished",
           text: "Thank you for filling out the survey!",
         )

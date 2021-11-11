@@ -4,8 +4,15 @@ part of carp_study_app;
 //     const JsonEncoder.withIndent(' ').convert(object);
 
 class CarpBackend {
-  static const String PROD_URI = "https://cans.cachet.dk";
-  static const String STAGING_URI = "https://cans.cachet.dk/stage";
+  static const String CANS_URI = "https://cans.cachet.dk";
+
+  static const Map<DeploymentMode, String> URIs = {
+    DeploymentMode.CARP_DEV: 'dev',
+    DeploymentMode.CARP_TEST: 'test',
+    DeploymentMode.CARP_STAGING: 'stage',
+    DeploymentMode.CARP_PRODUCTION: '',
+  };
+
   static const String CLIENT_ID = "carp";
   static const String CLIENT_SECRET = "carp";
 
@@ -16,9 +23,8 @@ class CarpBackend {
   /// The signed in user
   CarpUser? get user => CarpService().currentUser;
 
-  String get uri => (bloc.deploymentMode == DeploymentMode.CARP_PRODUCTION)
-      ? PROD_URI
-      : STAGING_URI;
+  /// The URI of the CANS server - depending on deployment mode.
+  String get uri => '$CANS_URI/${URIs[bloc.deploymentMode]}';
 
   String get clientID => CLIENT_ID;
   String get clientSecret => CLIENT_SECRET;
@@ -61,7 +67,7 @@ class CarpBackend {
     );
 
     CarpService().configure(app!);
-    info('$runtimeType initialized');
+    info('$runtimeType initialized - app: $_app');
   }
 
   /// Authenticate the user like this:

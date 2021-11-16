@@ -4,6 +4,7 @@
     "app_home.nav_bar_item.data": "Data",
     "pages.task_list.title": "MINE OPGAVER",
     "pages.task_list.task.time_to_complete": "min. at fuldføre",
+    "pages.task_list.task.auto_complete": "Udføres automatisk",
     "pages.task_list.task.days_remaining": "dage tilbage",
     "pages.task_list.no_tasks": "Der er ingen opgaver for dig i øjeblikket.\n Tjek igen senere.",
     "pages.data_viz.hello": "Hej",
@@ -60,5 +61,9 @@
     "pages.about.message.1.message": "Biosensor armbånd:\n\nVi vil bede børn/unge og forældre om hver at bære et biosensor på armen i op til 9 uger derhjemme, i skolen, på arbejdet, til sport osv. Armbåndet måler puls, sved, bevægelse, hudtemperatur og tidspunkt. Det tages af ved sengetid og oplades natten over og tages på igen næste morgen.\n\nArmbåndet kan lagre 60 timers data. Derfor vil vi mødes op til 2 gange om ugen for at gøre plads til data på armbåndet. Disse møder kan ske i klinikken eller hjemme hos jer. Når du afslutter deltagelsen i projektet, skal armbåndet returneres.\n\n\nSpørgeskemaer:\n\nVi vil også bede den unge og den deltagende forælder om at besvare forskellige spørgeskemaer. Vi sender en mail til eboks med en link til spørgeskemaerne. De handler om følelser, familieliv, livskvalitet, og hvordan du fungerer i hverdagen. Der er to gange, hvor vi vil bede den unge til at svare på nogle webbaseret spørgeskemaer: 1. ved starten og 2. afslutning af forløbet. Forældrene bliver bedt om at besvare spørgeskemaer tre gange: 1. ved starten, 2. midt i og 3. ved afslutning af forløbet.\n\n\nHvornår skal vi møde op i klinikken: I projektperioden vil vi bede dig om at deltage i forskellige undersøgelser hos forskerne ved starten og afslutning af forløbet.",
     "pages.about.message.2.title": "Påmindelse",
     "pages.about.message.2.subtitle": "Her er nogle tips",
-    "pages.about.message.2.message": "I denne app bliver du stillet række opgaver som skal løses. De forskellige opgaver stilles med forskellige hyppighed. Nogle opgaver stilles hver dag, nogle flere gange om dagen og nogle én gang om ugen. Det er derfor en god ide, at tjekke appen hver dag for nye opgaver.\n\n I nogle af opgaverne er det muligt at indtale dit svar. Det er frivilligt, hvad enten du vil skrive eller indtale dit svar så længe opgaven besvares."
+    "pages.about.message.2.message": "I denne app bliver du stillet række opgaver som skal løses. De forskellige opgaver stilles med forskellige hyppighed. Nogle opgaver stilles hver dag, nogle flere gange om dagen og nogle én gang om ugen. Det er derfor en god ide, at tjekke appen hver dag for nye opgaver.\n\n I nogle af opgaverne er det muligt at indtale dit svar. Det er frivilligt, hvad enten du vil skrive eller indtale dit svar så længe opgaven besvares.",
+    "dialog.location.permission": "Lokaliseringstjeneste",
+    "dialog.location.allow": "Tillad",
+    "pages.ic.need_accept": "Du skal acceptere denne informerede samtykke for at kunne deltage i dette studie.",
+    "pages.ic.go_to_ic": "Tilbage til samtykke"
 }

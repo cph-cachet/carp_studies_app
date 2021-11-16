@@ -15,7 +15,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 0.31.0
+version: 0.32.0
 
 environment:
   sdk: '>=2.12.0 <3.0.0'
@@ -26,11 +26,11 @@ dependencies:
   flutter:
     sdk: flutter
 
-  carp_mobile_sensing: ^0.31.1
-  carp_context_package: ^0.31.0
-  carp_survey_package: ^0.31.0
-  carp_audio_package: ^0.31.0
-  carp_backend: ^0.31.1+1
+  carp_mobile_sensing: ^0.32.1
+  carp_context_package: ^0.32.0
+  carp_survey_package: ^0.32.0
+  carp_audio_package: ^0.32.0
+  carp_backend: ^0.32.0
 
   #carp_communication_package: ^0.6.1
   #carp_health_package: ^0.6.1
@@ -41,13 +41,9 @@ dependencies:
   url_launcher: ^6.0.9
   timeago: ^3.1.0
   expandable: ^5.0.1
-  charts_flutter: ^0.11.0
+  charts_flutter: ^0.12.0
   intl: ^0.17.0
   flutter_markdown: ^0.6.4
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
-  # cupertino_icons: ^1.0.0
 
   flutter_localizations:
     sdk: flutter
@@ -58,10 +54,10 @@ dependencies:
 dependency_overrides:
   # TODO: Temporary fix - remove
   # See: https://github.com/google/charts/issues/652
-  charts_flutter:
-    git:
-      url: https://github.com/google/charts
-      path: charts_flutter
+  # charts_flutter:
+  #   git:
+  #     url: https://github.com/google/charts
+  #     path: charts_flutter
   # carp_core:
   #   path: ../carp/carp.sensing-flutter/carp_core/
   # carp_mobile_sensing:
@@ -82,9 +78,10 @@ dependency_overrides:
 dev_dependencies:
   # flutter_test:
   #   sdk: flutter
-  json_serializable: ^4.1.4
-  build_runner: ^2.1.0
-  test: ^1.17.10 
+  json_serializable: any
+  build_runner: any
+  test: any
+
   # DON'T include the carp_study_generator when compiling the app for runtime
   # If you're getting Android graddle build problems try to:
   #  - delete the "build" folder to force a re-build

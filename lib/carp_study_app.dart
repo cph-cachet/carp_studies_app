@@ -22,7 +22,6 @@ class _CarpStudyAppState extends State<CarpStudyApp> {
 
   final LoadingPage loadingPage = LoadingPage();
   final HomePage homePage = HomePage();
-  final LocationUsageDialog locationUsagePage = LocationUsageDialog();
 
   final InformedConsentPage consentPage = InformedConsentPage();
   final FailedLoginPage failedLoginPage = FailedLoginPage();
@@ -72,7 +71,6 @@ class _CarpStudyAppState extends State<CarpStudyApp> {
       routes: {
         '/LoadingPage': (context) => loadingPage,
         '/HomePage': (context) => homePage,
-        '/LocationUsagePage': (context) => locationUsagePage,
         '/ConsentPage': (context) => consentPage,
         '/FailedLoginPage': (context) => failedLoginPage,
       },
@@ -106,14 +104,9 @@ class _LoadingPageState extends State<LoadingPage> {
         // and we can ask the app to reload the translations
         CarpStudyApp.reloadLocale(context);
 
-        // At this point, the study deployment AND the translations are loaded.
-        // This means that we can translate the [AppTask]s in the protocol,
-        // if we want the translated title and description to be in the notifications.
-        // TODO - translate the app tasks in the deployment protocol.
-
-        // then navigate to the right screen
-        Navigator.of(context)
-            .pushReplacementNamed((bloc.shouldInformedConsentBeShown) ? '/ConsentPage' : '/HomePage');
+        // navigate to the right screen
+        Navigator.of(context).pushReplacementNamed(
+            (bloc.shouldInformedConsentBeShown) ? '/ConsentPage' : '/HomePage');
       });
     }
 
@@ -136,18 +129,17 @@ class _LoadingPageState extends State<LoadingPage> {
         )));
   }
 
-  // TODO - Not used right now - should we?
   Widget get _splashImage => Container(
-        decoration: new BoxDecoration(
-          image: new DecorationImage(
-            image: new AssetImage("assets/images/splash_background.png"),
+        decoration: const BoxDecoration(
+          image: const DecorationImage(
+            image: AssetImage("assets/images/splash_background.png"),
             fit: BoxFit.cover,
           ),
         ),
-        child: new Center(
-            child: new Hero(
+        child: Center(
+            child: Hero(
           tag: "tick",
-          child: new Image.asset('assets/images/splash_cachet.png',
+          child: Image.asset('assets/images/splash_cachet.png',
               width: 150.0, height: 150.0, scale: 1.0),
         )),
       );

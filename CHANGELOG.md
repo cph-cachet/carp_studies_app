@@ -3,6 +3,7 @@
 * fix of 
     * https://trello.com/c/qFZxo4Ws/110-sensing-is-not-started-on-app-restart
     * https://trello.com/c/eu99YxlD/108-too-much-text-in-location-pop-up-no-translation-to-danish
+    * https://trello.com/c/8DWHufIU/105-translation-of-notifications
 
 
 ## 0.21.0

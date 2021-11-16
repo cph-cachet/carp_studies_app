@@ -171,10 +171,12 @@ class StudyAppBLoC {
           permission == Permission.locationWhenInUse ||
           permission == Permission.locationAlways);
 
-  /// Configuration of permissions. Opens the [LocationUsageDialog] if
-  /// location permissions are needed and not yet granted.
-  Future<void> configurePermissions(BuildContext context) async {
-    if (usingLocationPermissions) {
+  /// Configuration of permissions.
+  ///
+  /// If a [context] is provided, this method also opens the [LocationUsageDialog]
+  /// if location permissions are needed and not yet granted.
+  Future<void> configurePermissions([BuildContext? context]) async {
+    if (usingLocationPermissions && context != null) {
       var status = await Permission.locationAlways.status;
       if (!status.isGranted) {
         await showDialog(
@@ -241,9 +243,14 @@ class StudyAppBLoC {
 
   /// Start sensing. Should only be called once.
   /// Use [resume] and [pause] if pausing/resuming sensing.
+  ///
+  /// Ensures that permissions are requested.
+  ///
+  /// If a [context] is provided, this method also translate the study protocol.
   Future<void> start() async {
     assert(Sensing().controller != null,
         'No Study Controller - the study has not been deployed.');
+
     Sensing().controller!.resume();
     _studyStartTimestamp = Sensing().controller!.studyDeploymentStartTime;
 

@@ -16,10 +16,9 @@ class HomePageState extends State<HomePage> {
 
     print('$runtimeType - initState()');
 
-    // request permissions and start sensing
-    bloc.configurePermissions(context).then((_) {
-      bloc.start();
-    });
+    // check for permissions and start sensing - with a small delay
+    bloc.configurePermissions(context).then(
+        (_) => Future.delayed(const Duration(seconds: 3), () => bloc.start()));
 
     _pages.add(TaskListPage(bloc.data.taskListPageModel));
     _pages.add(StudyPage(bloc.data.studyPageModel));
@@ -30,6 +29,17 @@ class HomePageState extends State<HomePage> {
   void dispose() {
     bloc.dispose();
     super.dispose();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    // at this point, the study deployment AND the translations are loaded
+    // this means that we can translate the [AppTask]s in the protocol,
+    // if we want the translated title and description to be in the notifications.
+    var locale = RPLocalizations.of(context)!;
+    Sensing().translateStudyProtocol(locale);
   }
 
   @override

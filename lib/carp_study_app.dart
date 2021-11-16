@@ -1,35 +1,52 @@
 part of carp_study_app;
 
-class CarpStudyApp extends StatelessWidget {
+class CarpStudyApp extends StatefulWidget {
+  CarpStudyApp({Key? key}) : super(key: key);
+
+  static void reloadLocale(BuildContext context) async {
+    _CarpStudyAppState? state =
+        context.findAncestorStateOfType<_CarpStudyAppState>();
+    state?.reloadLocale();
+  }
+
+  @override
+  _CarpStudyAppState createState() => _CarpStudyAppState();
+}
+
+class _CarpStudyAppState extends State<CarpStudyApp> {
+  reloadLocale() {
+    setState(() {
+      rpLocalizationsDelegate.reload();
+    });
+  }
+
   final LoadingPage loadingPage = LoadingPage();
   final HomePage homePage = HomePage();
+
   final InformedConsentPage consentPage = InformedConsentPage();
   final FailedLoginPage failedLoginPage = FailedLoginPage();
 
-  /// Research Package translations, incl. the translations of informed consent
-  /// and surveys are to be downloaded from CARP
+  /// Research Package translations, incl. both local language assets plus
+  /// translations of informed consent and surveys downloaded from CARP
   final RPLocalizationsDelegate rpLocalizationsDelegate =
-      RPLocalizationsDelegate(loader: bloc.localizationLoader);
+      RPLocalizationsDelegate(loaders: [
+    AssetLocalizationLoader(),
+    bloc.localizationLoader,
+  ]);
 
-  CarpStudyApp();
-
+  @override
   Widget build(BuildContext context) {
     return MaterialApp(
       supportedLocales: const [
         Locale('en'),
         Locale('da'),
+        // TODO - need to update the es.json file, if we want to claim to support Spanish
         Locale('es'),
       ],
       // These delegates make sure that localization for the phone language is loaded
       localizationsDelegates: [
-        // app translations - located in the 'assets/lang/' folder
-        AssetLocalizations.delegate,
-
         // Research Package translations
-        //  - the translations of informed consent and surveys are to be
-        //    downloaded from CARP
         rpLocalizationsDelegate,
-
         // Built-in localization of basic text for Cupertino widgets
         GlobalCupertinoLocalizations.delegate,
         // Built-in localization of basic text for Material widgets
@@ -37,31 +54,16 @@ class CarpStudyApp extends StatelessWidget {
         // Built-in localization for text direction LTR/RTL
         GlobalWidgetsLocalizations.delegate,
       ],
-      localeListResolutionCallback: (locales, supportedLocales) {
-        return null;
-      },
-      // Returns a locale which will be used by the app
       localeResolutionCallback: (locale, supportedLocales) {
-        // Work around for:
-        // https://github.com/flutter/flutter/issues/39032
-        if (locale == null) {
-          Intl.defaultLocale = supportedLocales.first.languageCode;
-          return supportedLocales.first;
-        }
-
-        // Check if the current device locale is supported
         for (var supportedLocale in supportedLocales) {
-          if (supportedLocale.languageCode == locale.languageCode
-              /* && supportedLocale.countryCode == locale.countryCode */
+          if (supportedLocale.languageCode == locale?.languageCode
+              // && supportedLocale.countryCode == locale?.countryCode
               ) {
             Intl.defaultLocale = supportedLocale.languageCode;
             return supportedLocale;
           }
         }
-        // If the locale of the device is not supported, use the first one
-        // from the list (English, in this case).
-        Intl.defaultLocale = supportedLocales.first.languageCode;
-        return supportedLocales.first;
+        return supportedLocales.first; // default to EN
       },
       theme: carpStudyTheme,
       darkTheme: carpStudyDarkTheme,
@@ -96,26 +98,26 @@ class _LoadingPageState extends State<LoadingPage> {
     // the only reason to call it here - instead of in the initState() method -
     // is to have a handle to the context object, which is to be used in the
     // pop-up windows from CARP
-    //
-    // HOWEVER - all of this seems broken - we should maybe have our own login
-    // page for this app....
-    //
-    // TODO - make app-specific login page?
     if (!bloc.isConfiguring) {
       bloc.configure(context).then((_) {
-        // when the setup is done, the localizations should have been downloaded
-        // and we can ask the delegate to reload
-        app.rpLocalizationsDelegate.reload();
+        // when the configure is done, the localizations should have been downloaded
+        // and we can ask the app to reload the translations
+        CarpStudyApp.reloadLocale(context);
 
-        // TODO - here the app should somehow be told to reload the
-        // localizations -- BUT simply cannot make this happen.....??????
-        print(
-            ' >> reload? - ${app.rpLocalizationsDelegate.shouldReload(app.rpLocalizationsDelegate)}');
-
-        // then navigate to the right screen
+        // navigate to the right screen
         Navigator.of(context).pushReplacementNamed(
             (bloc.shouldInformedConsentBeShown) ? '/ConsentPage' : '/HomePage');
       });
+    }
+
+    // If the user has left the study it is still logged in and should be redirected to invitation screen
+    if (bloc.hasLeftStudy) {
+      bloc.hasLeftStudy = false;
+    }
+
+    // If the user is loged out, redirect to authentication screen
+    if (bloc.hasSignedOut) {
+      bloc.hasSignedOut = false;
     }
 
     return Scaffold(
@@ -127,18 +129,17 @@ class _LoadingPageState extends State<LoadingPage> {
         )));
   }
 
-  // TODO - Not used right now - should we?
   Widget get _splashImage => Container(
-        decoration: new BoxDecoration(
-          image: new DecorationImage(
-            image: new AssetImage("assets/images/splash_background.png"),
+        decoration: const BoxDecoration(
+          image: const DecorationImage(
+            image: AssetImage("assets/images/splash_background.png"),
             fit: BoxFit.cover,
           ),
         ),
-        child: new Center(
-            child: new Hero(
+        child: Center(
+            child: Hero(
           tag: "tick",
-          child: new Image.asset('assets/images/splash_cachet.png',
+          child: Image.asset('assets/images/splash_cachet.png',
               width: 150.0, height: 150.0, scale: 1.0),
         )),
       );

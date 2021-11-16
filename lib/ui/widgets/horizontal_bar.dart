@@ -4,8 +4,13 @@ class HorizontalBar extends StatelessWidget {
   final List<String>? names;
   final List<int>? values;
   final List<Color>? colors;
+  final OrderType? order;
 
-  HorizontalBar({this.names, this.values, this.colors});
+  HorizontalBar(
+      {this.names,
+      this.values,
+      this.colors,
+      this.order = OrderType.Descending});
 
   List<MyAsset> _assetList() {
     List<MyAsset> assetList = [];
@@ -23,22 +28,19 @@ class HorizontalBar extends StatelessWidget {
   }
 
   Widget build(BuildContext context) {
+    RPLocalizations locale = RPLocalizations.of(context)!;
     double width = MediaQuery.of(context).size.width;
-
-    return Center(
-      child: MyAssetsBar(
-          width: width * .9,
-          background: Color(0xCFD8DC),
-          order: OrderType.Descending,
-          assets: _assetList()),
-    );
+    if (names!.isEmpty)
+      return Center(child: Text(locale.translate("pages.data_viz.no_data")));
+    else
+      return Center(
+        child: MyAssetsBar(
+            width: width * .9,
+            background: Color(0xCFD8DC),
+            order: this.order,
+            assets: _assetList()),
+      );
   }
-}
-
-/*Utils*/
-Color colorFromHex(String hexColor) {
-  final hexCode = hexColor.replaceAll('#', '');
-  return Color(int.parse('FF$hexCode', radix: 16));
 }
 
 const double _kHeight = 25;
@@ -106,7 +108,9 @@ class MyAssetsBar extends StatelessWidget {
   //single.size : assetsSum = x : width
   Widget _createSingle(MyAsset singleAsset) {
     return SizedBox(
-      width: singleAsset.size! * (width / _getValuesSum()),
+      width: singleAsset.size! != 0
+          ? singleAsset.size! * (width / _getValuesSum())
+          : 0,
       child: Container(color: singleAsset.color),
     );
   }
@@ -124,9 +128,7 @@ class MyAssetsBar extends StatelessWidget {
         ClipRRect(
           borderRadius: BorderRadius.all(Radius.circular(rad)),
           child: Container(
-            decoration: new BoxDecoration(
-              color: background,
-            ),
+            decoration: BoxDecoration(color: background),
             width: width,
             height: height,
             child: Row(

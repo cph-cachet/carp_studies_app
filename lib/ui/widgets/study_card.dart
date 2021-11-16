@@ -5,7 +5,7 @@ class StudyCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    AssetLocalizations locale = AssetLocalizations.of(context)!;
+    RPLocalizations locale = RPLocalizations.of(context)!;
 
     String studyDescription() => '${locale.translate(studyPageModel.description)}\n\n'
         '${locale.translate('widgets.study_card.title')}: \"${locale.translate(studyPageModel.title)}\".\n'
@@ -23,14 +23,14 @@ class StudyCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Row(children: [
-            Expanded(
-                child: Container(
-              height: MediaQuery.of(context).size.height * 0.2,
-              color: Color(0xFFF1F9FF),
-              child: Image.asset('assets/images/books.png', fit: BoxFit.fitHeight),
-            ))
-          ]),
+          // Row(children: [
+          //   Expanded(
+          //       child: Container(
+          //     height: MediaQuery.of(context).size.height * 0.1,
+          //     color: Color(0xFFF1F9FF),
+          //     child: Image.asset('assets/images/books.png', fit: BoxFit.fitHeight),
+          //   ))
+          // ]),
           ExpansionTile(
             title: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -60,6 +60,29 @@ class StudyCard extends StatelessWidget {
                     ),
                   ),
                 ),
+              ),
+              InkWell(
+                  onTap: () async {
+                    if (await canLaunch(locale.translate(studyPageModel.studyDescriptionUrl))) {
+                      await launch(locale.translate(studyPageModel.studyDescriptionUrl));
+                    } else {
+                      throw 'Could not launch project URL';
+                    }
+                  },
+                  child: Text(locale.translate('pages.about.study.website'),
+                      style: aboutCardInfoStyle.copyWith(decoration: TextDecoration.underline),
+                      textAlign: TextAlign.start)),
+              InkWell(
+                onTap: () async {
+                  if (await canLaunch(locale.translate(studyPageModel.privacyPolicyUrl))) {
+                    await launch(locale.translate(studyPageModel.privacyPolicyUrl));
+                  } else {
+                    throw 'Could not launch privacy policy URL';
+                  }
+                },
+                child: Text(locale.translate('pages.about.study.privacy'),
+                    style: aboutCardInfoStyle.copyWith(decoration: TextDecoration.underline),
+                    textAlign: TextAlign.start),
               ),
             ],
           ),

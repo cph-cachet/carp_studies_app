@@ -18,7 +18,7 @@ part of carp_study_app;
 class Sensing {
   static final Sensing _instance = Sensing._();
   StudyDeploymentStatus? _status;
-  StudyDeploymentController? _controller;
+  SmartphoneDeploymentController? _controller;
 
   DeploymentService? deploymentService;
   SmartPhoneClientManager? client;
@@ -37,7 +37,7 @@ class Sensing {
   String? get studyDeploymentId => _status?.studyDeploymentId;
 
   /// The study runtime controller for this deployment
-  StudyDeploymentController? get controller => _controller;
+  SmartphoneDeploymentController? get controller => _controller;
 
   /// Is sensing running, i.e. has the study executor been resumed?
   bool get isRunning =>
@@ -74,8 +74,6 @@ class Sensing {
   Future<void> initialize() async {
     info('Initializing $runtimeType - mode: ${bloc.deploymentMode}');
 
-    StudyDescription? description;
-
     // set up the devices available on this phone
     DeviceController().registerAllAvailableDevices();
 
@@ -86,42 +84,38 @@ class Sensing {
 
         // get the protocol from the local study protocol manager
         // note that the study id is not used
-        StudyProtocol? protocol =
+        SmartphoneStudyProtocol? protocol =
             await (LocalStudyProtocolManager().getStudyProtocol(''));
-
-        // get the local study description
-        description = await LocalResourceManager().getStudyDescription();
 
         // deploy this protocol using the on-phone deployment service
         // re-use the study deployment id - if available
         _status = await SmartphoneDeploymentService().createStudyDeployment(
           protocol!,
-          LocalSettings().studyDeploymentId,
+          bloc.studyDeploymentId,
         );
+
+        // save the correct deployment id on the phone for later use
+        bloc.studyDeploymentId = _status!.studyDeploymentId;
 
         break;
       case DeploymentMode.CARP_PRODUCTION:
       case DeploymentMode.CARP_STAGING:
+      case DeploymentMode.CARP_TEST:
+      case DeploymentMode.CARP_DEV:
         assert(CarpService().authenticated,
-            'No used is authenticated. Call CarpService().authenticate() before using a CARP deployment service.');
-        assert(bloc.backend.studyDeploymentId != null,
-            'No study deployment ID is provided. Cannot fetch deployment from CARP');
+            'No user is authenticated. Call CarpService().authenticate() before using any of the CARP services.');
+        assert(bloc.studyDeploymentId != null,
+            'No study deployment ID is provided. Cannot fetch deployment from CARP w/o an id.');
 
         // use the CARP deployment service that knows how to download a custom protocol
         deploymentService = CustomProtocolDeploymentService();
 
         // get the study deployment status
         _status = await CustomProtocolDeploymentService()
-            .getStudyDeploymentStatus(bloc.backend.studyDeploymentId!);
-
-        // register the CARP data manager for uploading data back to CARP
-        DataManagerRegistry().register(CarpDataManager());
+            .getStudyDeploymentStatus(bloc.studyDeploymentId!);
 
         break;
     }
-
-    // store the deployment id locally on the phone
-    LocalSettings().studyDeploymentId = studyDeploymentId!;
 
     // create and configure a client manager for this phone
     client = SmartPhoneClientManager(
@@ -133,15 +127,43 @@ class Sensing {
     // add and deploy this deployment
     _controller = await client!.addStudy(studyDeploymentId!, deviceRolename!);
 
-    // set the study description, if available
-    deployment!.protocolDescription ??= description;
-
     // configure the controller
-    await _controller!.configure();
+    await _controller!.configure(askForPermissions: false);
 
     // listening on the data stream and print them as json to the debug console
     _controller!.data.listen((data) => print(toJsonString(data)));
 
     info('$runtimeType initialized');
   }
+
+  /// Translate the title and description of all AppTask in the study protocol
+  /// of the current master deployment.
+  void translateStudyProtocol(AssetLocalizations localization) {
+    // fast out, if not configured or no protocol
+    if (controller?.status != StudyRuntimeStatus.Configured ||
+        controller?.masterDeployment == null) return;
+
+    // controller?.masterDeployment?.tasks
+    //     .where((task) => task.runtimeType == AppTask)
+    //     .forEach((task) {
+    //   AppTask appTask = task as AppTask;
+    //   print('>> translating $appTask');
+    //   appTask.title = localization.translate(appTask.title);
+    //   appTask.description = localization.translate(appTask.description);
+    // });
+
+    for (var task in controller!.masterDeployment!.tasks) {
+      if (task.runtimeType == AppTask) {
+        AppTask appTask = task as AppTask;
+        print('>> translating $appTask');
+        appTask.title = localization.translate(appTask.title);
+        appTask.description = localization.translate(appTask.description);
+      }
+    }
+
+    info("Study protocol translated to local '${localization.locale}'");
+  }
+
+  Future<void> askForPermissions() async =>
+      await _controller!.askForAllPermissions();
 }

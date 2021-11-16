@@ -11,7 +11,8 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
-    AssetLocalizations locale = AssetLocalizations.of(context)!;
+    RPLocalizations locale = RPLocalizations.of(context)!;
+
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -83,7 +84,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                   ),
                   ListTile(
-                    leading: Icon(Icons.support_agent, color: Theme.of(context).primaryColor),
+                    leading: Icon(Icons.mail_outline, color: Theme.of(context).primaryColor),
                     title: Text(locale.translate('pages.profile.contact'),
                         style: profileActionStyle.copyWith(color: Theme.of(context).primaryColor)),
                     onTap: () {
@@ -95,12 +96,16 @@ class _ProfilePageState extends State<ProfilePage> {
                     },
                   ),
                   ListTile(
-                    leading: Icon(Icons.logout, color: CACHET.RED_1),
-                    title: Text(locale.translate('pages.profile.leave_study'),
-                        style: profileActionStyle.copyWith(color: CACHET.RED_1)),
-                    onTap: () {
-                      print("leaving study");
-                      _showLeaveStudyConfirmationDialog();
+                    leading: Icon(Icons.policy_outlined, color: Theme.of(context).primaryColor),
+                    title: Text(locale.translate('pages.profile.privacy'),
+                        style: profileActionStyle.copyWith(color: Theme.of(context).primaryColor)),
+                    // TODO: Add privacy policy section to model
+                    onTap: () async {
+                      if (await canLaunch(locale.translate('study.description.privacy'))) {
+                        await launch(locale.translate('study.description.privacy'));
+                      } else {
+                        throw 'Could not launch privacy policy URL';
+                      }
                     },
                   ),
                   ListTile(
@@ -108,8 +113,17 @@ class _ProfilePageState extends State<ProfilePage> {
                     title: Text(locale.translate('pages.profile.log_out'),
                         style: profileActionStyle.copyWith(color: CACHET.RED_1)),
                     onTap: () {
-                      print("log out");
+                      print("logging out");
                       _showLogoutConfirmationDialog();
+                    },
+                  ),
+                  ListTile(
+                    leading: Icon(Icons.logout, color: CACHET.RED_1),
+                    title: Text(locale.translate('pages.profile.leave_study'),
+                        style: profileActionStyle.copyWith(color: CACHET.RED_1)),
+                    onTap: () {
+                      print("leaving study");
+                      _showLeaveStudyConfirmationDialog();
                     },
                   ),
                 ]).toList(),
@@ -136,13 +150,14 @@ class _ProfilePageState extends State<ProfilePage> {
 
   // TODO: Navigate to log in page
   Future _showLogoutConfirmationDialog() {
-    AssetLocalizations? locale = AssetLocalizations.of(context);
+    RPLocalizations locale = RPLocalizations.of(context)!;
+
     return showDialog(
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(locale!.translate("pages.profile.log_out.confirmation")),
+          title: Text(locale.translate("pages.profile.log_out.confirmation")),
           actions: <Widget>[
             TextButton(
               child: Text(locale.translate("NO")),
@@ -155,7 +170,8 @@ class _ProfilePageState extends State<ProfilePage> {
                 // Only call it if it's not null
                 //widget.onCancel?.call(_taskResult);
 
-                bloc.leaveStudyAndSignOut();
+                // Remove the auth credentials
+                bloc.signOut();
                 // Popup dismiss
                 Navigator.of(context).pop();
                 // Exit the Ordered Task
@@ -176,13 +192,14 @@ class _ProfilePageState extends State<ProfilePage> {
 
   // TODO: Leave study
   Future _showLeaveStudyConfirmationDialog() {
-    AssetLocalizations? locale = AssetLocalizations.of(context);
+    RPLocalizations locale = RPLocalizations.of(context)!;
+
     return showDialog(
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(locale!.translate("pages.profile.leave_study.confirmation")),
+          title: Text(locale.translate("pages.profile.leave_study.confirmation")),
           actions: <Widget>[
             TextButton(
               child: Text(locale.translate("NO")),

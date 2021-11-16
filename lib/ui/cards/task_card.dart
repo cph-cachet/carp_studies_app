@@ -22,7 +22,7 @@ class _TaskCardWidgetState extends State<TaskCardWidget> {
   //     ];
 
   Widget build(BuildContext context) {
-    AssetLocalizations locale = AssetLocalizations.of(context)!;
+    RPLocalizations locale = RPLocalizations.of(context)!;
 
     return Padding(
       padding: const EdgeInsets.all(5.0),
@@ -87,7 +87,7 @@ class _TaskCardWidgetState extends State<TaskCardWidget> {
                           .widget
                           .model
                           .taskCount
-                          .map((task) => task.title)
+                          .map((task) => locale.translate(task.title))
                           .toList(),
                       values: this
                           .widget

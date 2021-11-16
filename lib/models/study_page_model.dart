@@ -6,6 +6,8 @@ class StudyPageModel extends DataModel {
   String get purpose => bloc.deployment?.protocolDescription?.purpose ?? '';
   Image get image => Image.asset('assets/images/study.png');
   String? get userID => bloc.deployment?.userId;
+  String get studyDescriptionUrl => bloc.deployment?.protocolDescription?.studyDescriptionUrl ?? '';
+  String get privacyPolicyUrl => bloc.deployment?.protocolDescription?.privacyPolicyUrl ?? '';
 
   String get piTitle => bloc.deployment?.responsible?.title ?? '';
   String get piName => bloc.deployment?.responsible?.name ?? '';
@@ -31,7 +33,7 @@ class StudyPageModel extends DataModel {
 
   StudyPageModel();
 
-  void init(StudyDeploymentController controller) {
+  void init(SmartphoneDeploymentController controller) {
     super.init(controller);
   }
 }

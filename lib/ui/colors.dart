@@ -11,10 +11,12 @@ class CACHET {
   static const Color LIGHT_GREEN = Color.fromRGBO(175, 202, 11, 1.0);
   static const Color YELLOW = Color.fromRGBO(248, 209, 0, 1.0);
   static const Color ORANGE = Color.fromRGBO(234, 91, 12, 1.0);
+  static const Color LIGHT_ORANGE = Color.fromRGBO(234, 91, 12, .2);
   static const Color CYAN = Color.fromRGBO(79, 100, 50, 1.0);
   static const Color LIGHT_PURPLE = Color.fromRGBO(145, 133, 190, 1.0);
   static const Color PURPLE = Color.fromRGBO(102, 36, 131, 1.0);
   static const Color GREY_1 = Color.fromRGBO(100, 99, 99, 1.0);
+  static const Color LIGHT_GREY_1 = Color.fromRGBO(100, 99, 99, .2);
   static const Color GREY_2 = Color.fromRGBO(146, 146, 146, 1.0);
   static const Color GREY_3 = Color.fromRGBO(178, 178, 178, 1.0);
   static const Color GREY_4 = Color.fromRGBO(218, 218, 218, 1.0);
@@ -28,7 +30,8 @@ class CACHET {
   static const Color RED_2 = Color.fromRGBO(228, 107, 119, 1);
   static const Color RED_3 = Color.fromRGBO(254, 202, 212, 1);
 
-  static const Color GREEN_1 = Color(0xFF90D88F);
+  static const Color GREEN_1 = Color.fromRGBO(144, 216, 143, 1);
+  static const Color LIGHT_GREEN_1 = Color.fromRGBO(144, 216, 143, .2);
 
   static Color pie = createMaterialColor(Color.fromRGBO(225, 244, 250, 1));
 

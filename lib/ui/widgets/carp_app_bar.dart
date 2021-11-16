@@ -7,12 +7,13 @@ class CarpAppBar extends StatelessWidget {
       children: [
         SizedBox(height: 35),
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
+              margin: const EdgeInsets.only(left: 15.0),
               child: Image.asset(
-                'assets/cachet_logo.png',
-                height: 20,
+                'assets/carp_logo.png',
+                height: 30,
               ),
             ),
             SizedBox(width: 3),

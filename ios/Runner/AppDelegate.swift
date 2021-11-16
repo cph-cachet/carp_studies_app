@@ -1,13 +1,12 @@
 import UIKit
 import Flutter
-import background_locator
 import flutter_local_notifications
 
-func registerPlugins(registry: FlutterPluginRegistry) -> () {
-    if (!registry.hasPlugin("BackgroundLocatorPlugin")) {
-        GeneratedPluginRegistrant.register(with: registry)
-    }
-}
+// func registerPlugins(registry: FlutterPluginRegistry) -> () {
+//     if (!registry.hasPlugin("BackgroundLocatorPlugin")) {
+//         GeneratedPluginRegistrant.register(with: registry)
+//     }
+// }
 
 @UIApplicationMain
 @objc class AppDelegate: FlutterAppDelegate {
@@ -22,7 +21,6 @@ func registerPlugins(registry: FlutterPluginRegistry) -> () {
     }
 
     GeneratedPluginRegistrant.register(with: self)
-    BackgroundLocatorPlugin.setPluginRegistrantCallback(registerPlugins)
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
 }

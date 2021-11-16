@@ -1,6 +1,6 @@
 part of carp_study_app;
 
-class CardHeader extends StatelessWidget {
+class ChartsLegend extends StatelessWidget {
   final Icon? iconAssetName;
   final String? title;
   final List<String>? values;
@@ -8,13 +8,7 @@ class CardHeader extends StatelessWidget {
   final String? routeName;
   final List<Color>? colors;
 
-  CardHeader(
-      {this.heroTag,
-      this.iconAssetName,
-      this.title,
-      this.values,
-      this.routeName,
-      this.colors});
+  ChartsLegend({this.heroTag, this.iconAssetName, this.title, this.values, this.routeName, this.colors});
 
   @override
   Widget build(BuildContext context) {
@@ -41,8 +35,7 @@ class CardHeader extends StatelessWidget {
                         (entry) => Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            Icon(Icons.circle,
-                                color: colors![entry.key], size: 12.0),
+                            Icon(Icons.circle, color: colors![entry.key], size: 12.0),
                             Text(' ' + entry.value + ' ', style: legendStyle),
                           ],
                         ),

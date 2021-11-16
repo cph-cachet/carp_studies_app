@@ -27,6 +27,9 @@ class StudyAppBLoC {
   bool get isConfiguring => _state.index >= 2;
   bool get isConfigured => _state.index >= 3;
 
+  bool hasSignedOut = false;
+  bool hasLeftStudy = false;
+
   /// Debug level for this app (and CAMS).
   DebugLevel debugLevel;
 
@@ -61,7 +64,13 @@ class StudyAppBLoC {
 
   CarpBackend get backend => _backend;
 
-  String? get studyDeploymentId => deployment?.studyDeploymentId;
+  /// The id of the currently running study deployment.
+  /// Typical set based on an invitation.
+  /// `null` if no deployment have been specified.
+  String? get studyDeploymentId => Settings().studyDeploymentId;
+  set studyDeploymentId(String? id) => Settings().studyDeploymentId = id;
+
+  // String? get studyDeploymentId => deployment?.studyDeploymentId;
 
   /// The deployment running on this phone.
   SmartphoneDeployment? get deployment =>
@@ -92,12 +101,15 @@ class StudyAppBLoC {
   /// Initialize this BLOC. Called before being used for anything.
   Future<void> initialize() async {
     if (isInitialized) return;
-    print('$runtimeType initializing...');
+
     Settings().debugLevel = debugLevel;
     await Settings().init();
+
     await resourceManager.initialize();
+
     _state = StudyAppState.initialized;
-    info('$runtimeType initialized');
+    info(
+        '$runtimeType initialized - deployment mode: ${deploymentMode.toString().split('.').last}');
   }
 
   /// This methods is used to configure the entire app, including:
@@ -110,14 +122,14 @@ class StudyAppBLoC {
   ///
   /// This method is used in the [LoadingPage].
   Future<void> configure(BuildContext context) async {
-    // make sure to initialize the bloc, if not already done
-    await bloc.initialize();
+    assert(isInitialized,
+        "$runtimeType is not initialized. Call 'initialize()' first.");
 
     // early out if already configuring (e.g. waiting for user authentication)
     if (isConfiguring) return;
 
     _state = StudyAppState.configuring;
-    print('$runtimeType configuring...');
+    info('$runtimeType configuring...');
 
     // force the app to refresh the user credentials and study information?
     if (forceSignOutAndStudyReload) await leaveStudyAndSignOut();
@@ -126,7 +138,11 @@ class StudyAppBLoC {
     if (deploymentMode != DeploymentMode.LOCAL) {
       await backend.initialize();
       await backend.authenticate(context);
-      await backend.getStudyInvitation(context);
+
+      // check if there is a local deploymed id
+      // if not, get a deployment id based on an invitation
+      if (bloc.studyDeploymentId == null)
+        await backend.getStudyInvitation(context);
     }
 
     // find the right informed consent, if needed
@@ -140,13 +156,39 @@ class StudyAppBLoC {
 
     // set up and initialize sensing
     await Sensing().initialize();
-    // print(toJsonString(bloc.deployment));
 
     // initialize the UI data models
     data.init(Sensing().controller!);
 
     debug('$runtimeType configuration done.');
     _state = StudyAppState.configured;
+  }
+
+  /// Does this app use location permissions?
+  bool get usingLocationPermissions =>
+      SamplingPackageRegistry().permissions.any((permission) =>
+          permission == Permission.location ||
+          permission == Permission.locationWhenInUse ||
+          permission == Permission.locationAlways);
+
+  /// Configuration of permissions.
+  ///
+  /// If a [context] is provided, this method also opens the [LocationUsageDialog]
+  /// if location permissions are needed and not yet granted.
+  Future<void> configurePermissions([BuildContext? context]) async {
+    if (usingLocationPermissions && context != null) {
+      var status = await Permission.locationAlways.status;
+      if (!status.isGranted) {
+        await showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (BuildContext context) => LocationUsageDialog().build(
+                  context,
+                  "ic.location.content",
+                ));
+      }
+    }
+    await Sensing().askForPermissions();
   }
 
   /// Called when the informed consent has been accepted by the user.
@@ -201,11 +243,16 @@ class StudyAppBLoC {
 
   /// Start sensing. Should only be called once.
   /// Use [resume] and [pause] if pausing/resuming sensing.
+  ///
+  /// Ensures that permissions are requested.
+  ///
+  /// If a [context] is provided, this method also translate the study protocol.
   Future<void> start() async {
     assert(Sensing().controller != null,
         'No Study Controller - the study has not been deployed.');
+
     Sensing().controller!.resume();
-    _studyStartTimestamp = await Sensing().controller!.studyDeploymentStartTime;
+    _studyStartTimestamp = Sensing().controller!.studyDeploymentStartTime;
 
     // listening on the data stream and print them as json to the debug console
     Sensing().controller!.data.listen((data) => print(toJsonString(data)));
@@ -233,13 +280,20 @@ class StudyAppBLoC {
       Sensing().controller!.executor!.addError(error, stacktrace);
 
   Future<void> leaveStudy() async {
+    hasSignedOut = true;
     if (Sensing().isRunning) Sensing().controller!.stop();
     informedConsentAccepted = false;
+    _state = StudyAppState.initialized;
     await backend.leaveStudy();
   }
 
   Future<void> leaveStudyAndSignOut() async {
     await leaveStudy();
+    await backend.signOut();
+  }
+
+  Future<void> signOut() async {
+    bloc.hasSignedOut = true;
     await backend.signOut();
   }
 }

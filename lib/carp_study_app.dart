@@ -22,7 +22,6 @@ class _CarpStudyAppState extends State<CarpStudyApp> {
 
   final LoadingPage loadingPage = LoadingPage();
   final HomePage homePage = HomePage();
-  // final LocationUsageDialog locationUsagePage = LocationUsageDialog();
 
   final InformedConsentPage consentPage = InformedConsentPage();
   final FailedLoginPage failedLoginPage = FailedLoginPage();
@@ -72,7 +71,6 @@ class _CarpStudyAppState extends State<CarpStudyApp> {
       routes: {
         '/LoadingPage': (context) => loadingPage,
         '/HomePage': (context) => homePage,
-        // '/LocationUsagePage': (context) => locationUsagePage,
         '/ConsentPage': (context) => consentPage,
         '/FailedLoginPage': (context) => failedLoginPage,
       },
@@ -105,11 +103,6 @@ class _LoadingPageState extends State<LoadingPage> {
         // when the configure is done, the localizations should have been downloaded
         // and we can ask the app to reload the translations
         CarpStudyApp.reloadLocale(context);
-
-        // At this point, the study deployment AND the translations are loaded.
-        // This means that we can translate the [AppTask]s in the protocol,
-        // if we want the translated title and description to be in the notifications.
-        // TODO - translate the app tasks in the deployment protocol.
 
         // navigate to the right screen
         Navigator.of(context).pushReplacementNamed(

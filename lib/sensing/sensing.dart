@@ -136,6 +136,34 @@ class Sensing {
     info('$runtimeType initialized');
   }
 
+  /// Translate the title and description of all AppTask in the study protocol
+  /// of the current master deployment.
+  void translateStudyProtocol(AssetLocalizations localization) {
+    // fast out, if not configured or no protocol
+    if (controller?.status != StudyRuntimeStatus.Configured ||
+        controller?.masterDeployment == null) return;
+
+    // controller?.masterDeployment?.tasks
+    //     .where((task) => task.runtimeType == AppTask)
+    //     .forEach((task) {
+    //   AppTask appTask = task as AppTask;
+    //   print('>> translating $appTask');
+    //   appTask.title = localization.translate(appTask.title);
+    //   appTask.description = localization.translate(appTask.description);
+    // });
+
+    for (var task in controller!.masterDeployment!.tasks) {
+      if (task.runtimeType == AppTask) {
+        AppTask appTask = task as AppTask;
+        print('>> translating $appTask');
+        appTask.title = localization.translate(appTask.title);
+        appTask.description = localization.translate(appTask.description);
+      }
+    }
+
+    info("Study protocol translated to local '${localization.locale}'");
+  }
+
   Future<void> askForPermissions() async =>
       await _controller!.askForAllPermissions();
 }

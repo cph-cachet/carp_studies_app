@@ -16,9 +16,10 @@ class HomePageState extends State<HomePage> {
 
     print('$runtimeType - initState()');
 
-    // set up and initialize sensing
-    // Sensing().askForPermissions().then((_) => bloc.start());
-    bloc.start();
+    // request permissions and start sensing
+    bloc.configurePermissions(context).then((_) {
+      bloc.start();
+    });
 
     _pages.add(TaskListPage(bloc.data.taskListPageModel));
     _pages.add(StudyPage(bloc.data.studyPageModel));

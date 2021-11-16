@@ -111,14 +111,9 @@ class _LoadingPageState extends State<LoadingPage> {
         // if we want the translated title and description to be in the notifications.
         // TODO - translate the app tasks in the deployment protocol.
 
-        // check for permissions
-        bloc.configurePermissions(context).then((_) {
-          // then navigate to the right screen
-          Navigator.of(context).pushReplacementNamed(
-              (bloc.shouldInformedConsentBeShown)
-                  ? '/ConsentPage'
-                  : '/HomePage');
-        });
+        // navigate to the right screen
+        Navigator.of(context).pushReplacementNamed(
+            (bloc.shouldInformedConsentBeShown) ? '/ConsentPage' : '/HomePage');
       });
     }
 

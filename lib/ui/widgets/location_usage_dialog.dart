@@ -33,18 +33,7 @@ class LocationUsageDialog {
       ),
       actions: [
         ElevatedButton(
-          onPressed: () async {
-            Navigator.pop(context, true);
-
-            // // set up and initialize sensing
-            // Sensing().askForPermissions().then(
-            //       (_) => {
-            //         bloc.start(),
-            //         Navigator.of(context).pushReplacementNamed('/HomePage'),
-            //       },
-            //     ),
-            // Popup dismiss
-          },
+          onPressed: () async => Navigator.pop(context, true),
           child: Text(locale.translate("dialog.location.allow")),
           style: ButtonStyle(
             backgroundColor:

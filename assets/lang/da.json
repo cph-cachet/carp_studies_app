@@ -4,6 +4,7 @@
     "app_home.nav_bar_item.data": "Data",
     "pages.task_list.title": "MINE OPGAVER",
     "pages.task_list.task.time_to_complete": "min. at fuldføre",
+    "pages.task_list.task.auto_complete": "Udføres automatisk",
     "pages.task_list.task.days_remaining": "dage tilbage",
     "pages.task_list.no_tasks": "Der er ingen opgaver for dig i øjeblikket.\n Tjek igen senere.",
     "pages.data_viz.hello": "Hej",

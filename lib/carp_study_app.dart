@@ -141,18 +141,17 @@ class _LoadingPageState extends State<LoadingPage> {
         )));
   }
 
-  // TODO - Not used right now - should we?
   Widget get _splashImage => Container(
-        decoration: new BoxDecoration(
-          image: new DecorationImage(
-            image: new AssetImage("assets/images/splash_background.png"),
+        decoration: const BoxDecoration(
+          image: const DecorationImage(
+            image: AssetImage("assets/images/splash_background.png"),
             fit: BoxFit.cover,
           ),
         ),
-        child: new Center(
-            child: new Hero(
+        child: Center(
+            child: Hero(
           tag: "tick",
-          child: new Image.asset('assets/images/splash_cachet.png',
+          child: Image.asset('assets/images/splash_cachet.png',
               width: 150.0, height: 150.0, scale: 1.0),
         )),
       );

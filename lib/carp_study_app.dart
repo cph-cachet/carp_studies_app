@@ -22,7 +22,7 @@ class _CarpStudyAppState extends State<CarpStudyApp> {
 
   final LoadingPage loadingPage = LoadingPage();
   final HomePage homePage = HomePage();
-  final LocationUsageDialog locationUsagePage = LocationUsageDialog();
+  // final LocationUsageDialog locationUsagePage = LocationUsageDialog();
 
   final InformedConsentPage consentPage = InformedConsentPage();
   final FailedLoginPage failedLoginPage = FailedLoginPage();
@@ -72,7 +72,7 @@ class _CarpStudyAppState extends State<CarpStudyApp> {
       routes: {
         '/LoadingPage': (context) => loadingPage,
         '/HomePage': (context) => homePage,
-        '/LocationUsagePage': (context) => locationUsagePage,
+        // '/LocationUsagePage': (context) => locationUsagePage,
         '/ConsentPage': (context) => consentPage,
         '/FailedLoginPage': (context) => failedLoginPage,
       },
@@ -111,9 +111,14 @@ class _LoadingPageState extends State<LoadingPage> {
         // if we want the translated title and description to be in the notifications.
         // TODO - translate the app tasks in the deployment protocol.
 
-        // then navigate to the right screen
-        Navigator.of(context)
-            .pushReplacementNamed((bloc.shouldInformedConsentBeShown) ? '/ConsentPage' : '/HomePage');
+        // check for permissions
+        bloc.configurePermissions(context).then((_) {
+          // then navigate to the right screen
+          Navigator.of(context).pushReplacementNamed(
+              (bloc.shouldInformedConsentBeShown)
+                  ? '/ConsentPage'
+                  : '/HomePage');
+        });
       });
     }
 

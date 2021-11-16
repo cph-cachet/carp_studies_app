@@ -164,6 +164,31 @@ class StudyAppBLoC {
     _state = StudyAppState.configured;
   }
 
+  /// Configuration of permissions. Opens the [LocationUsageDialog] if
+  /// location permissions are needed.
+  Future<void> configurePermissions(BuildContext context) async {
+    bool allowed = false;
+
+    bool usingLocation = SamplingPackageRegistry().permissions.any(
+        (permission) =>
+            permission == Permission.location ||
+            permission == Permission.locationWhenInUse ||
+            permission == Permission.locationAlways);
+
+    print('Using location permissions: $usingLocation');
+
+    if (usingLocation) {
+      allowed = await showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (BuildContext context) => LocationUsageDialog().build(
+                context,
+                "ic.location.content",
+              ));
+    }
+    if (allowed) await Sensing().askForPermissions();
+  }
+
   /// Called when the informed consent has been accepted by the user.
   /// This entails that it has been:
   ///  * shown to the user

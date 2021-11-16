@@ -14,10 +14,10 @@ class InformedConsentState extends State<InformedConsentPage> {
     Navigator.of(context).pushReplacementNamed('/HomePage');
   }
 
-  void cancellCallback(RPTaskResult? result) async {
-    print("$runtimeType - Informed Consent not accepted");
+  void cancelCallback(RPTaskResult? result) async {
+    info("$runtimeType - Informed Consent canceled");
 
-    return showDialog(
+    await showDialog(
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
@@ -47,7 +47,7 @@ class InformedConsentState extends State<InformedConsentPage> {
           return RPUITask(
             task: bloc.informedConsent!,
             onSubmit: resultCallback,
-            //onCancel: cancellCallback,
+            onCancel: cancelCallback,
           );
         },
       ),

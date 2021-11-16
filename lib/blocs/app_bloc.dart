@@ -164,29 +164,29 @@ class StudyAppBLoC {
     _state = StudyAppState.configured;
   }
 
+  /// Does this app use location permissions?
+  bool get usingLocationPermissions =>
+      SamplingPackageRegistry().permissions.any((permission) =>
+          permission == Permission.location ||
+          permission == Permission.locationWhenInUse ||
+          permission == Permission.locationAlways);
+
   /// Configuration of permissions. Opens the [LocationUsageDialog] if
-  /// location permissions are needed.
+  /// location permissions are needed and not yet granted.
   Future<void> configurePermissions(BuildContext context) async {
-    bool allowed = false;
-
-    bool usingLocation = SamplingPackageRegistry().permissions.any(
-        (permission) =>
-            permission == Permission.location ||
-            permission == Permission.locationWhenInUse ||
-            permission == Permission.locationAlways);
-
-    print('Using location permissions: $usingLocation');
-
-    if (usingLocation) {
-      allowed = await showDialog(
-          context: context,
-          barrierDismissible: false,
-          builder: (BuildContext context) => LocationUsageDialog().build(
-                context,
-                "ic.location.content",
-              ));
+    if (usingLocationPermissions) {
+      var status = await Permission.locationAlways.status;
+      if (!status.isGranted) {
+        await showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (BuildContext context) => LocationUsageDialog().build(
+                  context,
+                  "ic.location.content",
+                ));
+      }
     }
-    if (allowed) await Sensing().askForPermissions();
+    await Sensing().askForPermissions();
   }
 
   /// Called when the informed consent has been accepted by the user.

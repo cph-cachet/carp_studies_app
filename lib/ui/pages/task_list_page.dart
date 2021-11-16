@@ -39,7 +39,6 @@ class _TaskListPageState extends State<TaskListPage> {
                 if (widget.model.tasks.isEmpty) {
                   return _noTasks(context);
                 } else {
-                  // TODO: refresh list when done
                   return CustomScrollView(
                     slivers: <Widget>[
                       SliverList(
@@ -128,14 +127,14 @@ class _TaskListPageState extends State<TaskListPage> {
     String str = (userTask.task.minutesToComplete != null)
         ? '${userTask.task.minutesToComplete} ' +
             locale.translate('pages.task_list.task.time_to_complete')
-        : '';
+        : locale.translate('pages.task_list.task.auto_complete');
 
     str += (userTask.expiresIn != null)
         ? ' - ${userTask.expiresIn!.inDays + 1} ' +
             locale.translate('pages.task_list.task.days_remaining')
         : '';
 
-    str = (str.isEmpty) ? userTask.description : str;
+    str = (str.isEmpty) ? locale.translate(userTask.description) : str;
 
     return str;
   }

@@ -1040,7 +1040,10 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
 
       // collect location, weather and air quality every 5 minutes
       _protocol!.addTriggeredTask(
-          PeriodicTrigger(period: Duration(minutes: 5)),
+          PeriodicTrigger(
+            period: Duration(minutes: 5),
+            duration: const Duration(seconds: 2),
+          ),
           AutomaticTask()
             ..measures = SamplingPackageRegistry().common().getMeasureList(
               types: [
@@ -1104,7 +1107,10 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
 
       // collect symptoms on a daily basis - notify the user
       _protocol!.addTriggeredTask(
-          PeriodicTrigger(period: Duration(days: 1)),
+          PeriodicTrigger(
+            period: Duration(days: 1),
+            duration: const Duration(seconds: 2),
+          ),
           AppTask(
             type: SurveyUserTask.SURVEY_TYPE,
             title: surveys.symptoms.title,
@@ -1127,7 +1133,10 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
       // collect a coughing sample on a daily basis
       // also collect location, and local weather and air quality of this sample
       _protocol!.addTriggeredTask(
-          PeriodicTrigger(period: Duration(minutes: 1)),
+          PeriodicTrigger(
+            period: Duration(minutes: 1),
+            duration: const Duration(seconds: 2),
+          ),
           AppTask(
             type: AudioUserTask.AUDIO_TYPE,
             title: "Coughing",
@@ -1153,7 +1162,10 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
 
       // collect a reading / audio sample on a daily basis
       _protocol!.addTriggeredTask(
-          PeriodicTrigger(period: Duration(minutes: 1)),
+          PeriodicTrigger(
+            period: Duration(minutes: 1),
+            duration: const Duration(seconds: 2),
+          ),
           AppTask(
             type: AudioUserTask.AUDIO_TYPE,
             title: "Reading",

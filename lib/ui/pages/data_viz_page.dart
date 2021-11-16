@@ -6,7 +6,8 @@ class DataVisualizationPage extends StatelessWidget {
   DataVisualizationPage(this.model);
 
   Widget build(BuildContext context) {
-    AssetLocalizations locale = AssetLocalizations.of(context)!;
+    RPLocalizations locale = RPLocalizations.of(context)!;
+
     return Scaffold(
       body: Container(
         child: Column(
@@ -62,7 +63,8 @@ class DataVisualizationPage extends StatelessWidget {
     widgets.add(StudyProgressCardWidget(model.studyProgressCardDataModel));
 
     // always show overall measure stats
-    widgets.add(MeasuresCardWidget(model.measuresCardDataModel));
+    // TODO: uncomment for other studies - not used right now
+    // widgets.add(MeasuresCardWidget(model.measuresCardDataModel));
 
     // check which measures are in the study
     if (bloc.hasMeasure(SurveySamplingPackage.SURVEY))

@@ -5,7 +5,7 @@ class StudyProgressCardWidget extends StatefulWidget {
 
   final List<Color> colors;
   StudyProgressCardWidget(this.model,
-      {this.colors = const [CACHET.BLUE_1, CACHET.RED_1, CACHET.BLUE_3]});
+      {this.colors = const [CACHET.BLUE_1, CACHET.BLUE_3]}); // CACHET.RED_1,
 
   @override
   _StudyProgressCardWidgetState createState() =>
@@ -15,7 +15,8 @@ class StudyProgressCardWidget extends StatefulWidget {
 class _StudyProgressCardWidgetState extends State<StudyProgressCardWidget> {
   @override
   Widget build(BuildContext context) {
-    AssetLocalizations locale = AssetLocalizations.of(context)!;
+    RPLocalizations locale = RPLocalizations.of(context)!;
+
     widget.model.updateProgress();
     widget.model.toString();
 
@@ -56,19 +57,22 @@ class _StudyProgressCardWidgetState extends State<StudyProgressCardWidget> {
                       Container(
                           height: 160,
                           child: HorizontalBar(
-                              names: this
-                                  .widget
-                                  .model
-                                  .progress
-                                  .map((progress) => progress.state)
-                                  .toList(),
-                              values: this
-                                  .widget
-                                  .model
-                                  .progress
-                                  .map((progress) => progress.value)
-                                  .toList(),
-                              colors: CACHET.COLOR_LIST)),
+                            names: this
+                                .widget
+                                .model
+                                .progress
+                                .map((progress) =>
+                                    locale.translate(progress.state))
+                                .toList(),
+                            values: this
+                                .widget
+                                .model
+                                .progress
+                                .map((progress) => progress.value)
+                                .toList(),
+                            colors: widget.colors,
+                            order: OrderType.None,
+                          )),
                     ],
                   );
                 },

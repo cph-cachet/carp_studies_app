@@ -11,7 +11,7 @@ import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:timeago/timeago.dart' as timeago;
-import 'package:expandable/expandable.dart';
+// import 'package:expandable/expandable.dart';
 import 'package:intl/intl.dart';
 
 import 'package:activity_recognition_flutter/activity_recognition_flutter.dart';
@@ -30,6 +30,9 @@ import 'package:carp_webservices/carp_auth/carp_auth.dart';
 import 'package:carp_backend/carp_backend.dart';
 
 import 'package:research_package/research_package.dart';
+
+import 'package:permission_handler/permission_handler.dart';
+import 'package:permission_handler_platform_interface/permission_handler_platform_interface.dart';
 
 part 'blocs/app_bloc.dart';
 part 'blocs/common.dart';
@@ -59,7 +62,6 @@ part 'models/audio_user_task.dart';
 part 'data/local_resource_manager.dart';
 
 part 'carp_study_app.dart';
-part 'app_home.dart';
 part 'ui/pages/informed_consent_page.dart';
 part 'ui/pages/home_page.dart';
 
@@ -69,17 +71,14 @@ part 'ui/colors.dart';
 part 'ui/pages/data_viz_page.dart';
 part 'ui/pages/study_page.dart';
 part 'ui/pages/task_list_page.dart';
-part 'ui/pages/contact_page.dart';
 part 'ui/pages/profile_page.dart';
 part 'ui/pages/audio_task_page.dart';
-part 'ui/pages/timer_task_page.dart';
-part 'ui/pages/question.dart';
 part 'ui/pages/failed_login_page.dart';
 
-part 'ui/widgets/study_banner.dart';
-part 'ui/widgets/card_header.dart';
 part 'ui/widgets/study_card.dart';
 part 'ui/widgets/horizontal_bar.dart';
+part 'ui/widgets/location_usage_dialog.dart';
+part 'ui/widgets/charts_legend.dart';
 
 part 'ui/cards/steps_card.dart';
 part 'ui/cards/activity_card.dart';
@@ -94,6 +93,13 @@ void main() async {
   // make sure that the json functions are loaded
   DomainJsonFactory();
 
+  // make sure to have an instance of the WidgetsBinding, which is required
+  // to use platform channels to call the native code
+  // see also >> https://stackoverflow.com/questions/63873338/what-does-widgetsflutterbinding-ensureinitialized-do/63873689
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await bloc.initialize();
+
   app = CarpStudyApp();
   runApp(app);
 }
@@ -104,6 +110,6 @@ void main() async {
 /// or deploying it.
 final bloc = StudyAppBLoC(
   debugLevel: DebugLevel.DEBUG,
-  deploymentMode: DeploymentMode.LOCAL,
-  forceSignOutAndStudyReload: true,
+  deploymentMode: DeploymentMode.CARP_PRODUCTION,
+  forceSignOutAndStudyReload: false,
 );

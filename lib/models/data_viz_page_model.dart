@@ -37,7 +37,7 @@ class DataVisualizationPageModel extends DataModel {
 
   DataVisualizationPageModel();
 
-  void init(StudyDeploymentController controller) {
+  void init(SmartphoneDeploymentController controller) {
     super.init(controller);
     _activityCardDataModel.init(controller);
     _stepsCardDataModel.init(controller);

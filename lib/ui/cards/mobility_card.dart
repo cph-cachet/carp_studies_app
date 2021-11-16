@@ -73,7 +73,7 @@ class _MobilityCardWidgetState extends State<MobilityCardWidget> {
 
   @override
   Widget build(BuildContext context) {
-    AssetLocalizations locale = AssetLocalizations.of(context)!;
+    RPLocalizations locale = RPLocalizations.of(context)!;
 
     return Padding(
       padding: const EdgeInsets.all(5.0),
@@ -84,7 +84,7 @@ class _MobilityCardWidgetState extends State<MobilityCardWidget> {
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: <Widget>[
-              CardHeader(
+              ChartsLegend(
                 title: locale.translate('cards.mobility.title'),
                 iconAssetName: Icon(Icons.emoji_transportation,
                     color: Theme.of(context).primaryColor),

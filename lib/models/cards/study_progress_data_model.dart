@@ -10,7 +10,7 @@ class StudyProgressCardDataModel extends DataModel {
   int get taskCompleted => AppTaskController().taskCompleted;
 
   /// The number of tasks expired so far.
-  int get taskExpired => AppTaskController().taskExpired;
+  //int get taskExpired => AppTaskController().taskExpired;
 
   /// The number of tasks pending so far.
   int get taskPending => AppTaskController().taskPending;
@@ -25,7 +25,7 @@ class StudyProgressCardDataModel extends DataModel {
 
   StudyProgressCardDataModel() : super();
 
-  void init(StudyDeploymentController controller) {
+  void init(SmartphoneDeploymentController controller) {
     super.init(controller);
     updateProgress();
   }
@@ -38,7 +38,7 @@ class StudyProgressCardDataModel extends DataModel {
 
   void updateProgress() {
     _progressTable['completed'] = taskCompleted;
-    _progressTable['expired'] = taskExpired;
+    //_progressTable['expired'] = taskExpired;
     _progressTable['pending'] = taskPending;
   }
 }

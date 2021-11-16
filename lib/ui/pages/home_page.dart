@@ -14,20 +14,24 @@ class HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
 
+    print('$runtimeType - initState()');
+
     // set up and initialize sensing
     // Sensing().askForPermissions().then((_) => bloc.start());
+    bloc.start();
 
     _pages.add(TaskListPage(bloc.data.taskListPageModel));
     _pages.add(StudyPage(bloc.data.studyPageModel));
-    //_pages.add(TimerTaskPage());
     _pages.add(DataVisualizationPage(bloc.data.dataPageModel));
   }
 
+  @override
   void dispose() {
     bloc.dispose();
     super.dispose();
   }
 
+  @override
   Widget build(BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;
 

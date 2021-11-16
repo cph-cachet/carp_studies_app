@@ -136,7 +136,6 @@ class Sensing {
     info('$runtimeType initialized');
   }
 
-  Future<void> askForPermissions() async {
-    await _controller!.askForAllPermissions();
-  }
+  Future<void> askForPermissions() async =>
+      await _controller!.askForAllPermissions();
 }

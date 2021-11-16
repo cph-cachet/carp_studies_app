@@ -14,20 +14,35 @@ class HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
 
-    // set up and initialize sensing
-    // Sensing().askForPermissions().then((_) => bloc.start());
+    print('$runtimeType - initState()');
+
+    // check for permissions and start sensing - with a small delay
+    bloc.configurePermissions(context).then(
+        (_) => Future.delayed(const Duration(seconds: 3), () => bloc.start()));
 
     _pages.add(TaskListPage(bloc.data.taskListPageModel));
     _pages.add(StudyPage(bloc.data.studyPageModel));
-    //_pages.add(TimerTaskPage());
     _pages.add(DataVisualizationPage(bloc.data.dataPageModel));
   }
 
+  @override
   void dispose() {
     bloc.dispose();
     super.dispose();
   }
 
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    // at this point, the study deployment AND the translations are loaded
+    // this means that we can translate the [AppTask]s in the protocol,
+    // if we want the translated title and description to be in the notifications.
+    var locale = RPLocalizations.of(context)!;
+    Sensing().translateStudyProtocol(locale);
+  }
+
+  @override
   Widget build(BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;
 

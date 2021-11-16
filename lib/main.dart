@@ -11,7 +11,7 @@ import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:timeago/timeago.dart' as timeago;
-import 'package:expandable/expandable.dart';
+// import 'package:expandable/expandable.dart';
 import 'package:intl/intl.dart';
 
 import 'package:activity_recognition_flutter/activity_recognition_flutter.dart';
@@ -30,6 +30,9 @@ import 'package:carp_webservices/carp_auth/carp_auth.dart';
 import 'package:carp_backend/carp_backend.dart';
 
 import 'package:research_package/research_package.dart';
+
+import 'package:permission_handler/permission_handler.dart';
+import 'package:permission_handler_platform_interface/permission_handler_platform_interface.dart';
 
 part 'blocs/app_bloc.dart';
 part 'blocs/common.dart';
@@ -59,7 +62,6 @@ part 'models/audio_user_task.dart';
 part 'data/local_resource_manager.dart';
 
 part 'carp_study_app.dart';
-// part 'app_home.dart';
 part 'ui/pages/informed_consent_page.dart';
 part 'ui/pages/home_page.dart';
 

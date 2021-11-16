@@ -1,7 +1,7 @@
 part of carp_study_app;
 
-class LocationUsageDialog extends StatelessWidget {
-  Widget build(BuildContext context) {
+class LocationUsageDialog {
+  Widget build(BuildContext context, String message) {
     RPLocalizations locale = RPLocalizations.of(context)!;
 
     final AlertDialog locationUsageDialog = AlertDialog(
@@ -15,7 +15,8 @@ class LocationUsageDialog extends StatelessWidget {
             width: MediaQuery.of(context).size.width * 0.15,
             height: MediaQuery.of(context).size.height * 0.15,
           ),
-          Text("Permission required", style: aboutCardTitleStyle),
+          Text(locale.translate("dialog.location.permission"),
+              style: aboutCardTitleStyle),
         ],
       ),
       contentPadding: EdgeInsets.all(15),
@@ -24,7 +25,7 @@ class LocationUsageDialog extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            locale.translate("ic.location.content"),
+            locale.translate(message),
             style: aboutCardContentStyle,
             textAlign: TextAlign.justify,
           ),
@@ -32,17 +33,8 @@ class LocationUsageDialog extends StatelessWidget {
       ),
       actions: [
         ElevatedButton(
-          onPressed: () => {
-            // set up and initialize sensing
-            Sensing().askForPermissions().then(
-                  (_) => {
-                    bloc.start(),
-                    Navigator.of(context).pushReplacementNamed('/HomePage'),
-                  },
-                ),
-            // Popup dismiss
-          },
-          child: Text("Allow"),
+          onPressed: () async => Navigator.pop(context, true),
+          child: Text(locale.translate("dialog.location.allow")),
           style: ButtonStyle(
             backgroundColor:
                 MaterialStateProperty.all(Theme.of(context).primaryColor),

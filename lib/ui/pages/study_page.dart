@@ -17,19 +17,30 @@ class _StudyPageState extends State<StudyPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             CarpAppBar(),
-            StudyCard(),
+            //StudyCard(),
             Flexible(
               child: StreamBuilder<DataPoint>(
                   stream: widget.model.samplingEvents,
                   builder: (context, AsyncSnapshot<DataPoint> snapshot) {
-                    return Scrollbar(
-                      child: ListView.builder(
-                          itemCount: widget.model.messages!.length,
-                          padding: EdgeInsets.symmetric(vertical: 5.0),
-                          itemBuilder: (context, index) {
-                            return _aboutStudyCard(
-                                context, widget.model.messages![index]);
-                          }),
+                    return CustomScrollView(
+                      slivers: [
+                        CarpBanner(),
+                        SliverList(
+                          delegate: SliverChildBuilderDelegate(
+                            (BuildContext context, int index) {
+                              return _aboutStudyCard(context, widget.model.messages![index]);
+                            },
+                            childCount: widget.model.messages!.length,
+                          ),
+                        ),
+
+                        // ListView.builder(
+                        //     itemCount: widget.model.messages!.length,
+                        //     padding: EdgeInsets.symmetric(vertical: 5.0),
+                        //     itemBuilder: (context, index) {
+                        //       return _aboutStudyCard(context, widget.model.messages![index]);
+                        //     }),
+                      ],
                     );
                   }),
             ),
@@ -82,8 +93,7 @@ class _StudyPageState extends State<StudyPage> {
                   SizedBox(width: 15),
                   Expanded(
                       child: Text(locale.translate(message.title!),
-                          style: aboutCardTitleStyle.copyWith(
-                              color: Theme.of(context).primaryColor))),
+                          style: aboutCardTitleStyle.copyWith(color: Theme.of(context).primaryColor))),
                 ],
               ),
               SizedBox(height: 5),
@@ -92,21 +102,15 @@ class _StudyPageState extends State<StudyPage> {
                 Text(
                     // locale.translate(message.type.toString().split('.')[1][0].toUpperCase() +
                     //         message.type.toString().split('.')[1].substring(1)) +
-                    locale.translate(message.type
-                            .toString()
-                            .split('.')
-                            .last
-                            .toLowerCase()) +
+                    locale.translate(message.type.toString().split('.').last.toLowerCase()) +
                         ' - ' +
                         timeago.format(
                             DateTime.now().subtract(Duration(
                                 days: message.timestamp.day,
                                 hours: message.timestamp.hour,
                                 minutes: message.timestamp.minute)),
-                            locale:
-                                Localizations.localeOf(context).languageCode),
-                    style: aboutCardSubtitleStyle.copyWith(
-                        color: Theme.of(context).primaryColor)),
+                            locale: Localizations.localeOf(context).languageCode),
+                    style: aboutCardSubtitleStyle.copyWith(color: Theme.of(context).primaryColor)),
               ]),
               SizedBox(height: 5),
               Row(children: [
@@ -114,8 +118,7 @@ class _StudyPageState extends State<StudyPage> {
                 if (message.subTitle!.isNotEmpty)
                   Expanded(
                       child: Text(locale.translate(message.subTitle!),
-                          style: aboutCardContentStyle.copyWith(
-                              color: Theme.of(context).primaryColor))),
+                          style: aboutCardContentStyle.copyWith(color: Theme.of(context).primaryColor))),
               ]),
               SizedBox(height: 5),
               Row(children: [

@@ -33,17 +33,19 @@ class StudyCard extends StatelessWidget {
           // ]),
           ExpansionTile(
             title: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisSize: MainAxisSize.max,
               children: [
-                SizedBox(width: 15),
+                SizedBox(width: 40),
+                SizedBox(width: 40),
                 Text(locale.translate(studyPageModel.title),
                     style: aboutCardTitleStyle.copyWith(color: Theme.of(context).primaryColor)),
-                SizedBox(width: 15),
-                Text(locale.translate(studyPageModel.piAffiliation),
-                    style: aboutCardSubtitleStyle.copyWith(color: Theme.of(context).primaryColor)),
+                SizedBox(width: 40),
+                SizedBox(width: 40),
               ],
             ),
+            subtitle: Text("Tap to learn more", style: aboutCardInfoStyle),
             children: [
               Container(
                 height: MediaQuery.of(context).size.height * 0.3,
@@ -52,11 +54,15 @@ class StudyCard extends StatelessWidget {
                     scrollDirection: Axis.vertical,
                     child: Padding(
                       padding: const EdgeInsets.all(15.0),
-                      child: Text(
-                        studyDescription(),
-                        style: aboutCardContentStyle,
-                        textAlign: TextAlign.justify,
-                      ),
+                      child: Column(children: [
+                        Text(locale.translate(studyPageModel.piAffiliation),
+                            style: aboutCardSubtitleStyle.copyWith(color: Theme.of(context).primaryColor)),
+                        Text(
+                          studyDescription(),
+                          style: aboutCardContentStyle,
+                          textAlign: TextAlign.justify,
+                        ),
+                      ]),
                     ),
                   ),
                 ),

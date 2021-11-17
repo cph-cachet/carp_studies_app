@@ -74,11 +74,13 @@ part 'ui/pages/task_list_page.dart';
 part 'ui/pages/profile_page.dart';
 part 'ui/pages/audio_task_page.dart';
 part 'ui/pages/failed_login_page.dart';
+part 'ui/pages/study_expanded_page.dart';
 
 part 'ui/widgets/study_card.dart';
 part 'ui/widgets/horizontal_bar.dart';
 part 'ui/widgets/location_usage_dialog.dart';
 part 'ui/widgets/charts_legend.dart';
+part 'ui/widgets/carp_banner.dart';
 
 part 'ui/cards/steps_card.dart';
 part 'ui/cards/activity_card.dart';
@@ -110,6 +112,6 @@ void main() async {
 /// or deploying it.
 final bloc = StudyAppBLoC(
   debugLevel: DebugLevel.DEBUG,
-  deploymentMode: DeploymentMode.CARP_PRODUCTION,
+  deploymentMode: DeploymentMode.CARP_STAGING,
   forceSignOutAndStudyReload: false,
 );

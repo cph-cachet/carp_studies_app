@@ -15,34 +15,33 @@ class _ProfilePageState extends State<ProfilePage> {
 
     return Scaffold(
       body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          SizedBox(height: 40),
+          SizedBox(height: 35),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 15),
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      IconButton(
-                          icon: Icon(Icons.account_circle, color: Theme.of(context).primaryColor, size: 30),
-                          onPressed: () {}),
-                      Text(locale.translate('pages.profile.title'),
-                          style: sectionTitleStyle.copyWith(color: Theme.of(context).primaryColor)),
-                    ],
-                  ),
-                  IconButton(
-                      icon: Icon(Icons.close, color: Theme.of(context).primaryColor, size: 30),
-                      tooltip: locale.translate('Back'),
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      }),
-                ],
-              ),
+            padding: EdgeInsets.symmetric(horizontal: 10.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                //SizedBox(width: 3),
+                IconButton(
+                    icon: Icon(Icons.close, color: Theme.of(context).primaryColor, size: 30),
+                    tooltip: locale.translate('Back'),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    }),
+                Icon(Icons.account_circle, color: Theme.of(context).primaryColor, size: 30)
+                // Row(
+                //   children: [
+                //     IconButton(
+                //         icon: ,
+                //         onPressed: () {}),
+                //     Text(locale.translate('pages.profile.title'),
+                //         style: sectionTitleStyle.copyWith(color: Theme.of(context).primaryColor)),
+                //   ],
+                // ),
+              ],
             ),
           ),
           Flexible(

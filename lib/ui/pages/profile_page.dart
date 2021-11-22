@@ -24,7 +24,6 @@ class _ProfilePageState extends State<ProfilePage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                //SizedBox(width: 3),
                 IconButton(
                     icon: Icon(Icons.close, color: Theme.of(context).primaryColor, size: 30),
                     tooltip: locale.translate('Back'),
@@ -32,15 +31,6 @@ class _ProfilePageState extends State<ProfilePage> {
                       Navigator.of(context).pop();
                     }),
                 Icon(Icons.account_circle, color: Theme.of(context).primaryColor, size: 30)
-                // Row(
-                //   children: [
-                //     IconButton(
-                //         icon: ,
-                //         onPressed: () {}),
-                //     Text(locale.translate('pages.profile.title'),
-                //         style: sectionTitleStyle.copyWith(color: Theme.of(context).primaryColor)),
-                //   ],
-                // ),
               ],
             ),
           ),
@@ -54,8 +44,8 @@ class _ProfilePageState extends State<ProfilePage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(locale.translate('pages.profile.username'),
-                            style: aboutCardSubtitleStyle.copyWith(color: Theme.of(context).primaryColor)),
+                        Text(locale.translate('pages.profile.username').toUpperCase(),
+                            style: profileSectionStyle.copyWith(color: Theme.of(context).primaryColor)),
                         Text(widget.model.username, style: profileTitleStyle),
                       ],
                     ),
@@ -65,8 +55,19 @@ class _ProfilePageState extends State<ProfilePage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(locale.translate('pages.profile.name'),
-                            style: aboutCardSubtitleStyle.copyWith(color: Theme.of(context).primaryColor)),
+                        Text(locale.translate('pages.profile.account_id').toUpperCase(),
+                            style: profileSectionStyle.copyWith(color: Theme.of(context).primaryColor)),
+                        Text(widget.model.userid, style: profileTitleStyle),
+                      ],
+                    ),
+                  ),
+                  ListTile(
+                    title: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(locale.translate('pages.profile.name').toUpperCase(),
+                            style: profileSectionStyle.copyWith(color: Theme.of(context).primaryColor)),
                         Text(widget.model.firstname + ' ' + widget.model.lastname, style: profileTitleStyle),
                       ],
                     ),
@@ -76,9 +77,9 @@ class _ProfilePageState extends State<ProfilePage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(locale.translate('pages.profile.account_id'),
-                            style: aboutCardSubtitleStyle.copyWith(color: Theme.of(context).primaryColor)),
-                        Text(widget.model.userid, style: profileTitleStyle),
+                        Text(locale.translate('pages.profile.study_name').toUpperCase(),
+                            style: profileSectionStyle.copyWith(color: Theme.of(context).primaryColor)),
+                        Text(locale.translate(widget.model.studyTitle), style: profileTitleStyle),
                       ],
                     ),
                   ),
@@ -98,12 +99,23 @@ class _ProfilePageState extends State<ProfilePage> {
                     leading: Icon(Icons.policy_outlined, color: Theme.of(context).primaryColor),
                     title: Text(locale.translate('pages.profile.privacy'),
                         style: profileActionStyle.copyWith(color: Theme.of(context).primaryColor)),
-                    // TODO: Add privacy policy section to model
                     onTap: () async {
                       if (await canLaunch(locale.translate('study.description.privacy'))) {
                         await launch(locale.translate('study.description.privacy'));
                       } else {
                         throw 'Could not launch privacy policy URL';
+                      }
+                    },
+                  ),
+                  ListTile(
+                    leading: Icon(Icons.public_outlined, color: Theme.of(context).primaryColor),
+                    title: Text(locale.translate('pages.about.study.website'),
+                        style: profileActionStyle.copyWith(color: Theme.of(context).primaryColor)),
+                    onTap: () async {
+                      if (await canLaunch(locale.translate('study.description.website'))) {
+                        await launch(locale.translate('study.description.website'));
+                      } else {
+                        throw 'Could not launch Study URL';
                       }
                     },
                   ),

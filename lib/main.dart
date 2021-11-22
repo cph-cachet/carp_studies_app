@@ -3,6 +3,7 @@ library carp_study_app;
 import 'dart:async';
 import 'dart:math';
 import 'dart:convert';
+import 'dart:ui' as ui;
 
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart' hide TimeOfDay;
@@ -76,6 +77,7 @@ part 'ui/pages/audio_task_page.dart';
 part 'ui/pages/failed_login_page.dart';
 part 'ui/pages/study_details_page.dart';
 part 'ui/pages/message_details_page.dart';
+part 'ui/pages/process_message_page.dart';
 
 part 'ui/widgets/study_card.dart';
 part 'ui/widgets/horizontal_bar.dart';

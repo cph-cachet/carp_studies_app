@@ -142,6 +142,8 @@ TextStyle aboutCardInfoStyle = TextStyle(fontSize: 14, fontStyle: FontStyle.ital
 
 TextStyle aboutCardSubtitleStyle = TextStyle(fontSize: 16, fontWeight: FontWeight.w600);
 
+TextStyle profileSectionStyle = TextStyle(fontSize: 12, fontWeight: FontWeight.w400, letterSpacing: 2);
+
 TextStyle aboutCardContentStyle = TextStyle(fontSize: 16, fontWeight: FontWeight.w400);
 
 TextStyle sectionTitleStyle = TextStyle(fontSize: 18, fontWeight: FontWeight.w700);
@@ -162,6 +164,6 @@ TextStyle audioDescriptionStyle = TextStyle(fontSize: 14, fontWeight: FontWeight
 TextStyle audioInstructionStyle = TextStyle(fontSize: 16, fontWeight: FontWeight.w400);
 
 TextStyle profileTitleStyle = TextStyle(fontSize: 20, fontWeight: FontWeight.w400);
-TextStyle profileActionStyle = TextStyle(fontSize: 20, fontWeight: FontWeight.w600);
+TextStyle profileActionStyle = TextStyle(fontSize: 20, fontWeight: FontWeight.w400);
 
 TextStyle timerStyle = TextStyle(fontSize: 36, fontWeight: FontWeight.w600);

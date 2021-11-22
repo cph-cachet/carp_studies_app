@@ -116,11 +116,11 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
       builder: (context, AsyncSnapshot<UserTaskState> snapshot) {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
+          children: [
             SizedBox(height: 35),
             _header(),
             SizedBox(height: 35),
-            Image(image: AssetImage('assets/images/audio.png'), width: 220, height: 220),
+            Image(image: AssetImage('assets/icons/audio.png'), width: 220, height: 220),
             SizedBox(height: 40),
             Text(locale.translate(audioUserTask!.title), style: audioTitleStyle),
             SizedBox(height: 10),

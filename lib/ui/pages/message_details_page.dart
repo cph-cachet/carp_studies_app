@@ -1,13 +1,12 @@
 part of carp_study_app;
 
 class MessageDetailsPage extends StatelessWidget {
-  Message message;
+  final Message message;
   MessageDetailsPage({required this.message});
 
   @override
   Widget build(BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;
-    //bool hasArticle = message.url!.isNotEmpty ? true : false;
     return Scaffold(
       body: Column(
         children: [

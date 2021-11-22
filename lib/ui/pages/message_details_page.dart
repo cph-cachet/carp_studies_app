@@ -98,22 +98,25 @@ class MessageDetailsPage extends StatelessWidget {
         ],
       ),
       bottomSheet: message.url != null
-          ? Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                IconButton(
-                  onPressed: () async {
-                    if (await canLaunch(message.url!)) {
-                      await launch(locale.translate(message.url!));
-                    } else {
-                      throw 'Could not launch project URL';
-                    }
-                  },
-                  icon: Icon(Icons.public_outlined, color: Theme.of(context).primaryColor),
+          ? Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: InkWell(
+                onTap: () async {
+                  if (await canLaunch(message.url!)) {
+                    await launch(locale.translate(message.url!));
+                  } else {
+                    throw 'Could not launch project URL';
+                  }
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.public_outlined, color: Theme.of(context).primaryColor),
+                    Text(locale.translate('pages.about.study.website'),
+                        style: aboutCardSubtitleStyle.copyWith(color: Theme.of(context).primaryColor)),
+                  ],
                 ),
-                Text(locale.translate('pages.about.study.website'),
-                    style: aboutCardSubtitleStyle.copyWith(color: Theme.of(context).primaryColor)),
-              ],
+              ),
             )
           : SizedBox.shrink(),
     );

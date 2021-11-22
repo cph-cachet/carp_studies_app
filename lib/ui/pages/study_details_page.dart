@@ -75,44 +75,46 @@ class StudyDetailsPage extends StatelessWidget {
           ),
         ],
       ),
-      bottomSheet: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          Row(
-            children: [
-              IconButton(
-                onPressed: () async {
-                  if (await canLaunch(locale.translate(studyPageModel.privacyPolicyUrl))) {
-                    await launch(locale.translate(studyPageModel.privacyPolicyUrl));
-                  } else {
-                    throw 'Could not launch privacy policy URL';
-                  }
-                },
-                icon: Icon(Icons.policy_outlined, color: Theme.of(context).primaryColor),
+      bottomSheet: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            InkWell(
+              onTap: () async {
+                if (await canLaunch(locale.translate(studyPageModel.privacyPolicyUrl))) {
+                  await launch(locale.translate(studyPageModel.privacyPolicyUrl));
+                } else {
+                  throw 'Could not launch privacy policy URL';
+                }
+              },
+              child: Row(
+                children: [
+                  Icon(Icons.policy_outlined, color: Theme.of(context).primaryColor),
+                  Text(locale.translate('pages.about.study.privacy'),
+                      style: aboutCardSubtitleStyle.copyWith(color: Theme.of(context).primaryColor))
+                ],
               ),
-              Text(locale.translate('pages.about.study.privacy'),
-                  style: aboutCardSubtitleStyle.copyWith(color: Theme.of(context).primaryColor))
-            ],
-          ),
-          SizedBox(width: 15),
-          Row(
-            children: [
-              IconButton(
-                onPressed: () async {
-                  if (await canLaunch(locale.translate(studyPageModel.studyDescriptionUrl))) {
-                    await launch(locale.translate(studyPageModel.studyDescriptionUrl));
-                  } else {
-                    throw 'Could not launch project URL';
-                  }
-                },
-                icon: Icon(Icons.public_outlined, color: Theme.of(context).primaryColor),
+            ),
+            SizedBox(width: 15),
+            InkWell(
+              onTap: () async {
+                if (await canLaunch(locale.translate(studyPageModel.studyDescriptionUrl))) {
+                  await launch(locale.translate(studyPageModel.studyDescriptionUrl));
+                } else {
+                  throw 'Could not launch project URL';
+                }
+              },
+              child: Row(
+                children: [
+                  Icon(Icons.public_outlined, color: Theme.of(context).primaryColor),
+                  Text(locale.translate('pages.about.study.website'),
+                      style: aboutCardSubtitleStyle.copyWith(color: Theme.of(context).primaryColor)),
+                ],
               ),
-              Text(locale.translate('pages.about.study.website'),
-                  style: aboutCardSubtitleStyle.copyWith(color: Theme.of(context).primaryColor)),
-            ],
-          ),
-        ],
+            ),
+          ],
+        ),
       ),
     );
   }

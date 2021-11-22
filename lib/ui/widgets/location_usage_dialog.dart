@@ -6,17 +6,16 @@ class LocationUsageDialog {
 
     final AlertDialog locationUsageDialog = AlertDialog(
       title: Column(
-        mainAxisSize: MainAxisSize.min,
+        mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Image.asset(
-            "assets/images/location.png",
+            "assets/icons/location.png",
             width: MediaQuery.of(context).size.width * 0.15,
             height: MediaQuery.of(context).size.height * 0.15,
           ),
-          Text(locale.translate("dialog.location.permission"),
-              style: aboutCardTitleStyle),
+          Text(locale.translate("dialog.location.permission"), style: aboutCardTitleStyle),
         ],
       ),
       contentPadding: EdgeInsets.all(15),
@@ -36,8 +35,7 @@ class LocationUsageDialog {
           onPressed: () async => Navigator.pop(context, true),
           child: Text(locale.translate("dialog.location.allow")),
           style: ButtonStyle(
-            backgroundColor:
-                MaterialStateProperty.all(Theme.of(context).primaryColor),
+            backgroundColor: MaterialStateProperty.all(Theme.of(context).primaryColor),
           ),
         ),
       ],
@@ -47,8 +45,9 @@ class LocationUsageDialog {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          CarpAppBar(),
+          //CarpAppBar(),
           Expanded(
+            flex: 4,
             child: locationUsageDialog,
           ),
         ],

@@ -65,7 +65,7 @@ class DataVisualizationPage extends StatelessWidget {
 
     // always show overall measure stats
     // TODO: uncomment for other studies - not used right now
-    // widgets.add(MeasuresCardWidget(model.measuresCardDataModel));
+    widgets.add(MeasuresCardWidget(model.measuresCardDataModel));
 
     // check which measures are in the study
     if (bloc.hasMeasure(SurveySamplingPackage.SURVEY))

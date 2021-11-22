@@ -55,6 +55,7 @@
     "pending": "pending",
     "expired": "expired",
     "completed": "completed",
+    "cancel": "Cancel",
     "pages.about.message.read_more": "Tap to read more",
     "pages.about.study.website": "Website",
     "pages.about.study.privacy": "Privacy policy",

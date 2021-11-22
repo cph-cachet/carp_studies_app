@@ -55,6 +55,7 @@
     "pending": "verserende",
     "expired": "udløbet",
     "completed": "færdig",
+    "cancel": "Anuller",
     "pages.about.message.read_more": "Tryk for at læse mere",
     "pages.about.study.website": "Website",
     "pages.about.study.privacy": "Fortrolighedspolitik",

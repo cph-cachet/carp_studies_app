@@ -19,18 +19,18 @@ class _StudyPageState extends State<StudyPage> {
             CarpAppBar(),
             //StudyCard(),
             Flexible(
-              child: StreamBuilder<DataPoint>(
-                  stream: widget.model.samplingEvents,
-                  builder: (context, AsyncSnapshot<DataPoint> snapshot) {
+              child: StreamBuilder<int>(
+                  stream: widget.model.messageStream,
+                  builder: (context, AsyncSnapshot<int> snapshot) {
                     return CustomScrollView(
                       slivers: [
                         CarpBanner(),
                         SliverList(
                           delegate: SliverChildBuilderDelegate(
-                            (BuildContext context, int index) {
-                              return _aboutStudyCard(context, widget.model.messages![index]);
-                            },
-                            childCount: widget.model.messages!.length,
+                            (BuildContext context, int index) =>
+                                _aboutStudyCard(
+                                    context, widget.model.messages[index]),
+                            childCount: widget.model.messages.length,
                           ),
                         ),
 
@@ -60,13 +60,20 @@ class _StudyPageState extends State<StudyPage> {
     timeago.setLocaleMessages('da', timeago.DaMessages());
     timeago.setLocaleMessages('es', timeago.EsMessages());
 
+    Image messageImage = widget.model.getMessageImage(message.imagePath);
+
     return Card(
       semanticContainer: true,
       clipBehavior: Clip.antiAliasWithSaveLayer,
       child: InkWell(
         onTap: () {
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => MessageDetailsPage(message: message)));
+              context,
+              MaterialPageRoute(
+                  builder: (context) => MessageDetailsPage(
+                        message: message,
+                        messageImage: messageImage,
+                      )));
         },
 
         // onTap: () async {
@@ -86,7 +93,7 @@ class _StudyPageState extends State<StudyPage> {
                       child: Container(
                       height: 150.0,
                       color: Color(0xFFF1F9FF),
-                      child: message.image,
+                      child: messageImage,
                     ))
                   : SizedBox.shrink()
             ]),
@@ -98,7 +105,8 @@ class _StudyPageState extends State<StudyPage> {
                 SizedBox(width: 15),
                 Expanded(
                     child: Text(locale.translate(message.title!),
-                        style: aboutCardTitleStyle.copyWith(color: Theme.of(context).primaryColor))),
+                        style: aboutCardTitleStyle.copyWith(
+                            color: Theme.of(context).primaryColor))),
               ],
             ),
             SizedBox(height: 5),
@@ -107,7 +115,11 @@ class _StudyPageState extends State<StudyPage> {
               Text(
                   // locale.translate(message.type.toString().split('.')[1][0].toUpperCase() +
                   //         message.type.toString().split('.')[1].substring(1)) +
-                  locale.translate(message.type.toString().split('.').last.toLowerCase()) +
+                  locale.translate(message.type
+                          .toString()
+                          .split('.')
+                          .last
+                          .toLowerCase()) +
                       ' - ' +
                       timeago.format(
                           DateTime.now().subtract(Duration(
@@ -115,7 +127,8 @@ class _StudyPageState extends State<StudyPage> {
                               hours: message.timestamp.hour,
                               minutes: message.timestamp.minute)),
                           locale: Localizations.localeOf(context).languageCode),
-                  style: aboutCardSubtitleStyle.copyWith(color: Theme.of(context).primaryColor)),
+                  style: aboutCardSubtitleStyle.copyWith(
+                      color: Theme.of(context).primaryColor)),
             ]),
             SizedBox(height: 5),
             Row(children: [
@@ -123,15 +136,18 @@ class _StudyPageState extends State<StudyPage> {
               if (message.subTitle!.isNotEmpty)
                 Expanded(
                     child: Text(locale.translate(message.subTitle!),
-                        style: aboutCardContentStyle.copyWith(color: Theme.of(context).primaryColor))),
+                        style: aboutCardContentStyle.copyWith(
+                            color: Theme.of(context).primaryColor))),
             ]),
             SizedBox(height: 5),
             Row(children: [
               SizedBox(width: 15),
-              if (message.message!.isNotEmpty)
+              if (message.message != null && message.message!.isNotEmpty)
                 Expanded(
                     child: Text(
-                  locale.translate(message.message!).substring(0, 200) + "...",
+                  locale.translate(message.message!).substring(
+                          0, (message.message!.length > 200) ? 200 : null) +
+                      "...",
                   style: aboutCardContentStyle,
                   textAlign: TextAlign.justify,
                 )),
@@ -141,7 +157,8 @@ class _StudyPageState extends State<StudyPage> {
             Row(mainAxisAlignment: MainAxisAlignment.end, children: [
               Text(locale.translate("pages.about.message.read_more"),
                   style: aboutCardContentStyle.copyWith(
-                      color: Theme.of(context).primaryColor, fontStyle: FontStyle.italic),
+                      color: Theme.of(context).primaryColor,
+                      fontStyle: FontStyle.italic),
                   textAlign: TextAlign.right),
               SizedBox(width: 15),
             ]),

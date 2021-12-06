@@ -15,7 +15,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 0.32.0
+version: 0.32.1
 
 environment:
   sdk: '>=2.12.0 <3.0.0'
@@ -30,7 +30,7 @@ dependencies:
   carp_context_package: ^0.32.0
   carp_survey_package: ^0.32.0
   carp_audio_package: ^0.32.0
-  carp_backend: ^0.32.0
+  carp_backend: ^0.32.1
 
   #carp_communication_package: ^0.6.1
   #carp_health_package: ^0.6.1
@@ -81,16 +81,6 @@ dev_dependencies:
   json_serializable: any
   build_runner: any
   test: any
-
-  # DON'T include the carp_study_generator when compiling the app for runtime
-  # If you're getting Android graddle build problems try to:
-  #  - delete the "build" folder to force a re-build
-  #  - run "flutter clean" and "flutter get"
-  #  - also, run "flutter pub cache clean" to clean the cache - if everything doesn't work
-  # carp_study_generator: ^0.31.0
-  # carp_study_generator: 
-  #     path: ../carp/carp.sensing-flutter/utilities/carp_study_generator/
-
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

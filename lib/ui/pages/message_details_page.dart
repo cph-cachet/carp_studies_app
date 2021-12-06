@@ -2,7 +2,12 @@ part of carp_study_app;
 
 class MessageDetailsPage extends StatelessWidget {
   final Message message;
-  MessageDetailsPage({required this.message});
+  final Image messageImage;
+
+  MessageDetailsPage({
+    required this.message,
+    required this.messageImage,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +34,7 @@ class MessageDetailsPage extends StatelessWidget {
                           padding: EdgeInsets.only(bottom: 20),
                           height: MediaQuery.of(context).size.height * 0.22,
                           //color: Color(0xFFF1F9FF),
-                          child: message.image,
+                          child: messageImage,
                         )
                       : SizedBox.shrink(),
                   //SizedBox(height: 20),
@@ -37,18 +42,25 @@ class MessageDetailsPage extends StatelessWidget {
                   //     style: aboutCardTitleStyle.copyWith(color: Theme.of(context).primaryColor)),
 
                   Text(locale.translate(message.title!),
-                      style: aboutCardTitleStyle.copyWith(color: Theme.of(context).primaryColor)),
+                      style: aboutCardTitleStyle.copyWith(
+                          color: Theme.of(context).primaryColor)),
                   SizedBox(width: 15),
                   Text(
-                      locale.translate(message.type.toString().split('.').last.toLowerCase()) +
+                      locale.translate(message.type
+                              .toString()
+                              .split('.')
+                              .last
+                              .toLowerCase()) +
                           ' - ' +
                           timeago.format(
                               DateTime.now().subtract(Duration(
                                   days: message.timestamp.day,
                                   hours: message.timestamp.hour,
                                   minutes: message.timestamp.minute)),
-                              locale: Localizations.localeOf(context).languageCode),
-                      style: aboutCardSubtitleStyle.copyWith(color: Theme.of(context).primaryColor)),
+                              locale:
+                                  Localizations.localeOf(context).languageCode),
+                      style: aboutCardSubtitleStyle.copyWith(
+                          color: Theme.of(context).primaryColor)),
                   SizedBox(height: 20),
                 ],
               ),
@@ -72,9 +84,11 @@ class MessageDetailsPage extends StatelessWidget {
                             SizedBox(width: 15),
                             if (message.subTitle!.isNotEmpty)
                               Expanded(
-                                  child: Text(locale.translate(message.subTitle!),
+                                  child: Text(
+                                      locale.translate(message.subTitle!),
                                       style: aboutCardContentStyle.copyWith(
-                                          color: Theme.of(context).primaryColor))),
+                                          color:
+                                              Theme.of(context).primaryColor))),
                           ]),
                           SizedBox(height: 5),
                           Row(children: [
@@ -102,18 +116,20 @@ class MessageDetailsPage extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: InkWell(
                 onTap: () async {
-                  if (await canLaunch(message.url!)) {
-                    await launch(locale.translate(message.url!));
-                  } else {
-                    throw 'Could not launch project URL';
+                  try {
+                    await launch(message.url!);
+                  } catch (error) {
+                    warning("Could not launch message URL - '${message.url!}'");
                   }
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.public_outlined, color: Theme.of(context).primaryColor),
+                    Icon(Icons.public_outlined,
+                        color: Theme.of(context).primaryColor),
                     Text(locale.translate('pages.about.study.website'),
-                        style: aboutCardSubtitleStyle.copyWith(color: Theme.of(context).primaryColor)),
+                        style: aboutCardSubtitleStyle.copyWith(
+                            color: Theme.of(context).primaryColor)),
                   ],
                 ),
               ),

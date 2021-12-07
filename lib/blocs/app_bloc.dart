@@ -166,7 +166,7 @@ class StudyAppBLoC {
 
     // refresh the list of messages on a regular basis
     Timer.periodic(
-        const Duration(minutes: 1), (_) async => await refreshMessages());
+        const Duration(minutes: 30), (_) async => await refreshMessages());
     await refreshMessages();
 
     // set up and initialize sensing

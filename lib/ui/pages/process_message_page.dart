@@ -44,7 +44,7 @@ class ProcessMessagePage extends StatelessWidget {
         case ProcessStatus.OTHER:
         default:
           image = Image(
-              image: AssetImage('assets/icons/audio.png'), height: MediaQuery.of(context).size.height * 0.35);
+              image: AssetImage('assets/icons/info.png'), height: MediaQuery.of(context).size.height * 0.35);
           break;
       }
 

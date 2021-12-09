@@ -29,6 +29,7 @@ class ProcessMessagePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("in message page");
     Image messageImage() {
       final Image image;
       switch (this.statusType) {

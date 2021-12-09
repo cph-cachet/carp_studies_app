@@ -4,8 +4,7 @@ class CarpStudyApp extends StatefulWidget {
   CarpStudyApp({Key? key}) : super(key: key);
 
   static void reloadLocale(BuildContext context) async {
-    _CarpStudyAppState? state =
-        context.findAncestorStateOfType<_CarpStudyAppState>();
+    _CarpStudyAppState? state = context.findAncestorStateOfType<_CarpStudyAppState>();
     state?.reloadLocale();
   }
 
@@ -40,7 +39,6 @@ class _CarpStudyAppState extends State<CarpStudyApp> {
       supportedLocales: const [
         Locale('en'),
         Locale('da'),
-        // TODO - need to update the es.json file, if we want to claim to support Spanish
         Locale('es'),
       ],
       // These delegates make sure that localization for the phone language is loaded
@@ -105,8 +103,8 @@ class _LoadingPageState extends State<LoadingPage> {
         CarpStudyApp.reloadLocale(context);
 
         // navigate to the right screen
-        Navigator.of(context).pushReplacementNamed(
-            (bloc.shouldInformedConsentBeShown) ? '/ConsentPage' : '/HomePage');
+        Navigator.of(context)
+            .pushReplacementNamed((bloc.shouldInformedConsentBeShown) ? '/ConsentPage' : '/HomePage');
       });
     }
 
@@ -139,8 +137,7 @@ class _LoadingPageState extends State<LoadingPage> {
         child: Center(
             child: Hero(
           tag: "tick",
-          child: Image.asset('assets/images/splash_cachet.png',
-              width: 150.0, height: 150.0, scale: 1.0),
+          child: Image.asset('assets/images/splash_cachet.png', width: 150.0, height: 150.0, scale: 1.0),
         )),
       );
 }

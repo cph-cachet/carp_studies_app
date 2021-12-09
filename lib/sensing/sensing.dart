@@ -143,15 +143,6 @@ class Sensing {
     if (controller?.status != StudyRuntimeStatus.Configured ||
         controller?.masterDeployment == null) return;
 
-    // controller?.masterDeployment?.tasks
-    //     .where((task) => task.runtimeType == AppTask)
-    //     .forEach((task) {
-    //   AppTask appTask = task as AppTask;
-    //   print('>> translating $appTask');
-    //   appTask.title = localization.translate(appTask.title);
-    //   appTask.description = localization.translate(appTask.description);
-    // });
-
     for (var task in controller!.masterDeployment!.tasks) {
       if (task.runtimeType == AppTask) {
         AppTask appTask = task as AppTask;

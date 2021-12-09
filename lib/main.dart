@@ -40,7 +40,6 @@ part 'blocs/common.dart';
 
 part 'data/local_settings.dart';
 part 'data/carp_backend.dart';
-part 'data/message_manager.dart';
 part 'data/localization_loader.dart';
 
 part 'sensing/local_surveys.dart';
@@ -115,6 +114,6 @@ void main() async {
 /// or deploying it.
 final bloc = StudyAppBLoC(
   debugLevel: DebugLevel.DEBUG,
-  deploymentMode: DeploymentMode.CARP_STAGING,
+  deploymentMode: DeploymentMode.CARP_DEV,
   forceSignOutAndStudyReload: false,
 );

@@ -24,7 +24,7 @@ class StudyDetailsPage extends StatelessWidget {
             //height: MediaQuery.of(context).size.height * 0.3,
             color: Theme.of(context).accentColor,
             child: Padding(
-              padding: const EdgeInsets.only(top: 20),
+              padding: const EdgeInsets.only(top: 35),
               child: Column(
                 children: [
                   Row(mainAxisAlignment: MainAxisAlignment.end, children: [
@@ -40,9 +40,11 @@ class StudyDetailsPage extends StatelessWidget {
                     height: MediaQuery.of(context).size.height * 0.22,
                   ),
                   SizedBox(height: 20),
-                  Text(locale.translate(studyPageModel.title),
-                      style: aboutCardTitleStyle.copyWith(
-                          color: Theme.of(context).primaryColor)),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: Text(locale.translate(studyPageModel.title),
+                        style: aboutCardTitleStyle.copyWith(color: Theme.of(context).primaryColor)),
+                  ),
                   SizedBox(height: 20),
                 ],
               ),
@@ -60,8 +62,7 @@ class StudyDetailsPage extends StatelessWidget {
                     child: Column(
                       children: [
                         Text(locale.translate(studyPageModel.piAffiliation),
-                            style: aboutCardSubtitleStyle.copyWith(
-                                color: Theme.of(context).primaryColor)),
+                            style: aboutCardSubtitleStyle.copyWith(color: Theme.of(context).primaryColor)),
                         SizedBox(height: 5),
                         Text(
                           studyDescription(),
@@ -76,55 +77,50 @@ class StudyDetailsPage extends StatelessWidget {
               ),
             ),
           ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 30, top: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                InkWell(
+                  onTap: () async {
+                    String url = locale.translate(studyPageModel.privacyPolicyUrl);
+                    try {
+                      await launch(url);
+                    } catch (error) {
+                      warning("Could not launch privacy policy URL - '$url'");
+                    }
+                  },
+                  child: Row(
+                    children: [
+                      Icon(Icons.policy_outlined, color: Theme.of(context).primaryColor),
+                      Text(locale.translate('pages.about.study.privacy'),
+                          style: aboutCardSubtitleStyle.copyWith(color: Theme.of(context).primaryColor))
+                    ],
+                  ),
+                ),
+                SizedBox(width: 15),
+                InkWell(
+                  onTap: () async {
+                    String url = locale.translate(studyPageModel.studyDescriptionUrl);
+                    try {
+                      await launch(url);
+                    } catch (error) {
+                      warning("Could not launch study description URL - '$url'");
+                    }
+                  },
+                  child: Row(
+                    children: [
+                      Icon(Icons.public_outlined, color: Theme.of(context).primaryColor),
+                      Text(locale.translate('pages.about.study.website'),
+                          style: aboutCardSubtitleStyle.copyWith(color: Theme.of(context).primaryColor)),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
         ],
-      ),
-      bottomSheet: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            InkWell(
-              onTap: () async {
-                String url = locale.translate(studyPageModel.privacyPolicyUrl);
-                try {
-                  await launch(url);
-                } catch (error) {
-                  warning("Could not launch privacy policy URL - '$url'");
-                }
-              },
-              child: Row(
-                children: [
-                  Icon(Icons.policy_outlined,
-                      color: Theme.of(context).primaryColor),
-                  Text(locale.translate('pages.about.study.privacy'),
-                      style: aboutCardSubtitleStyle.copyWith(
-                          color: Theme.of(context).primaryColor))
-                ],
-              ),
-            ),
-            SizedBox(width: 15),
-            InkWell(
-              onTap: () async {
-                String url =
-                    locale.translate(studyPageModel.studyDescriptionUrl);
-                try {
-                  await launch(url);
-                } catch (error) {
-                  warning("Could not launch study description URL - '$url'");
-                }
-              },
-              child: Row(
-                children: [
-                  Icon(Icons.public_outlined,
-                      color: Theme.of(context).primaryColor),
-                  Text(locale.translate('pages.about.study.website'),
-                      style: aboutCardSubtitleStyle.copyWith(
-                          color: Theme.of(context).primaryColor)),
-                ],
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }

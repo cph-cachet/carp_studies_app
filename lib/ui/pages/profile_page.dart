@@ -24,13 +24,18 @@ class _ProfilePageState extends State<ProfilePage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                TextButton.icon(
+                  onPressed: () {},
+                  icon: Icon(Icons.account_circle, color: Theme.of(context).primaryColor, size: 30),
+                  label: Text(locale.translate("pages.profile.title"),
+                      style: aboutCardTitleStyle.copyWith(color: Theme.of(context).primaryColor)),
+                ),
                 IconButton(
                     icon: Icon(Icons.close, color: Theme.of(context).primaryColor, size: 30),
                     tooltip: locale.translate('Back'),
                     onPressed: () {
                       Navigator.of(context).pop();
                     }),
-                Icon(Icons.account_circle, color: Theme.of(context).primaryColor, size: 30)
               ],
             ),
           ),
@@ -38,6 +43,7 @@ class _ProfilePageState extends State<ProfilePage> {
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 15),
               child: ListView(
+                padding: EdgeInsets.zero,
                 children: ListTile.divideTiles(context: context, tiles: [
                   ListTile(
                     title: Column(

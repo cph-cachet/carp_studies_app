@@ -28,18 +28,10 @@ class _StudyPageState extends State<StudyPage> {
                         SliverList(
                           delegate: SliverChildBuilderDelegate(
                             (BuildContext context, int index) =>
-                                _aboutStudyCard(
-                                    context, widget.model.messages[index]),
+                                _aboutStudyCard(context, widget.model.messages[index]),
                             childCount: widget.model.messages.length,
                           ),
                         ),
-
-                        // ListView.builder(
-                        //     itemCount: widget.model.messages!.length,
-                        //     padding: EdgeInsets.symmetric(vertical: 5.0),
-                        //     itemBuilder: (context, index) {
-                        //       return _aboutStudyCard(context, widget.model.messages![index]);
-                        //     }),
                       ],
                     );
                   }),
@@ -51,9 +43,6 @@ class _StudyPageState extends State<StudyPage> {
   }
 
   Widget _aboutStudyCard(BuildContext context, Message message) {
-    // TODO - when the messaging system works (i.e., is not hard coded), the
-    // locale need to be changed to use the RPLocalizations
-    //
     RPLocalizations locale = RPLocalizations.of(context)!;
 
     // Initialization the language of the tiemago package
@@ -75,14 +64,6 @@ class _StudyPageState extends State<StudyPage> {
                         messageImage: messageImage,
                       )));
         },
-
-        // onTap: () async {
-        //   if (message.url != null) if (await canLaunch(message.url!)) {
-        //     await launch(message.url!);
-        //   } else {
-        //     throw 'Could not launch $message.url';
-        //   }
-        // },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -105,8 +86,7 @@ class _StudyPageState extends State<StudyPage> {
                 SizedBox(width: 15),
                 Expanded(
                     child: Text(locale.translate(message.title!),
-                        style: aboutCardTitleStyle.copyWith(
-                            color: Theme.of(context).primaryColor))),
+                        style: aboutCardTitleStyle.copyWith(color: Theme.of(context).primaryColor))),
               ],
             ),
             SizedBox(height: 5),
@@ -115,11 +95,7 @@ class _StudyPageState extends State<StudyPage> {
               Text(
                   // locale.translate(message.type.toString().split('.')[1][0].toUpperCase() +
                   //         message.type.toString().split('.')[1].substring(1)) +
-                  locale.translate(message.type
-                          .toString()
-                          .split('.')
-                          .last
-                          .toLowerCase()) +
+                  locale.translate(message.type.toString().split('.').last.toLowerCase()) +
                       ' - ' +
                       timeago.format(
                           DateTime.now().subtract(Duration(
@@ -127,8 +103,7 @@ class _StudyPageState extends State<StudyPage> {
                               hours: message.timestamp.hour,
                               minutes: message.timestamp.minute)),
                           locale: Localizations.localeOf(context).languageCode),
-                  style: aboutCardSubtitleStyle.copyWith(
-                      color: Theme.of(context).primaryColor)),
+                  style: aboutCardSubtitleStyle.copyWith(color: Theme.of(context).primaryColor)),
             ]),
             SizedBox(height: 5),
             Row(children: [
@@ -136,8 +111,7 @@ class _StudyPageState extends State<StudyPage> {
               if (message.subTitle!.isNotEmpty)
                 Expanded(
                     child: Text(locale.translate(message.subTitle!),
-                        style: aboutCardContentStyle.copyWith(
-                            color: Theme.of(context).primaryColor))),
+                        style: aboutCardContentStyle.copyWith(color: Theme.of(context).primaryColor))),
             ]),
             SizedBox(height: 5),
             Row(children: [
@@ -145,21 +119,22 @@ class _StudyPageState extends State<StudyPage> {
               if (message.message != null && message.message!.isNotEmpty)
                 Expanded(
                     child: Text(
-                  locale.translate(message.message!).substring(
-                          0, (message.message!.length > 200) ? 200 : null) +
+                  locale
+                          .translate(message.message!)
+                          .substring(0, (message.message!.length > 150) ? 150 : null) +
                       "...",
                   style: aboutCardContentStyle,
                   textAlign: TextAlign.justify,
                 )),
               SizedBox(width: 15),
             ]),
-            SizedBox(height: 10),
+            SizedBox(height: 5),
             Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-              Text(locale.translate("pages.about.message.read_more"),
-                  style: aboutCardContentStyle.copyWith(
-                      color: Theme.of(context).primaryColor,
-                      fontStyle: FontStyle.italic),
-                  textAlign: TextAlign.right),
+              Icon(Icons.touch_app, color: Theme.of(context).primaryColor),
+              // Text(locale.translate("pages.about.message.read_more"),
+              //     style: aboutCardContentStyle.copyWith(
+              //         color: Theme.of(context).primaryColor, fontStyle: FontStyle.italic),
+              //     textAlign: TextAlign.right),
               SizedBox(width: 15),
             ]),
             SizedBox(height: 10),

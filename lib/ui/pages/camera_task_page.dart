@@ -1,17 +1,19 @@
 part of carp_study_app;
 
-// TODO Missing to obtain a list of the available cameras on the device (normal & selfie)
-// final cameras = await availableCameras();
-
 class CameraTaskPage extends StatefulWidget {
-  final List<CameraDescription> cameras;
-  const CameraTaskPage({Key? key, required this.cameras}) : super(key: key);
+  final VideoUserTask videoUserTask;
+
+  CameraTaskPage({Key? key, required this.videoUserTask}) : super(key: key);
 
   @override
-  _CameraTaskPageState createState() => _CameraTaskPageState();
+  _CameraTaskPageState createState() => _CameraTaskPageState(videoUserTask);
 }
 
 class _CameraTaskPageState extends State<CameraTaskPage> {
+  final VideoUserTask videoUserTask;
+
+  _CameraTaskPageState(this.videoUserTask) : super();
+
   @override
   void initState() {
     initializeCamera(selectedCamera); // O - normal camera, 1 - selfie camera
@@ -21,6 +23,8 @@ class _CameraTaskPageState extends State<CameraTaskPage> {
   late CameraController _controller;
   late Future<void> _initializeControllerFuture;
 
+  List<CameraDescription>? cameras;
+
   int selectedCamera = 0;
   IconData flashIcon = Icons.flash_off;
   bool isFlashOff = true;
@@ -28,7 +32,9 @@ class _CameraTaskPageState extends State<CameraTaskPage> {
   bool isRecording = false;
 
   initializeCamera(int cameraIndex) async {
-    _controller = CameraController(widget.cameras[cameraIndex], ResolutionPreset.medium,
+    cameras ??= await availableCameras();
+    _controller = CameraController(
+        cameras![cameraIndex], ResolutionPreset.medium,
         imageFormatGroup: ImageFormatGroup.yuv420, enableAudio: true);
 
     _initializeControllerFuture = _controller.initialize();
@@ -44,6 +50,8 @@ class _CameraTaskPageState extends State<CameraTaskPage> {
   void startRecording() async {
     await _initializeControllerFuture;
 
+    videoUserTask.onRecordStart();
+
     try {
       await _controller.startVideoRecording();
       setState(() {
@@ -57,9 +65,14 @@ class _CameraTaskPageState extends State<CameraTaskPage> {
   void stopRecording() async {
     try {
       var xFile = await _controller.stopVideoRecording();
+      videoUserTask.onRecordStop(xFile);
+
       await Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (context) => DisplayPictureScreen(filePath: xFile.path, isVideo: true),
+          builder: (context) => DisplayPictureScreen(
+              videoUserTask: videoUserTask,
+              filePath: xFile.path,
+              isVideo: true),
         ),
       );
       setState(() {
@@ -73,11 +86,14 @@ class _CameraTaskPageState extends State<CameraTaskPage> {
 
   void takePicture() async {
     await _initializeControllerFuture;
-    var xFile = await _controller.takePicture();
+    XFile xFile = await _controller.takePicture();
+
+    videoUserTask.onPictureCapture(xFile);
 
     await Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => DisplayPictureScreen(filePath: xFile.path),
+        builder: (context) => DisplayPictureScreen(
+            videoUserTask: videoUserTask, filePath: xFile.path),
       ),
     );
 
@@ -130,7 +146,7 @@ class _CameraTaskPageState extends State<CameraTaskPage> {
               children: [
                 IconButton(
                   onPressed: () {
-                    if (widget.cameras.length > 1) {
+                    if (cameras!.length > 1) {
                       setState(() {
                         selectedCamera = selectedCamera == 0 ? 1 : 0;
                         initializeCamera(selectedCamera);
@@ -158,20 +174,23 @@ class _CameraTaskPageState extends State<CameraTaskPage> {
                               height: 65,
                               child: CircularProgressIndicator(
                                   backgroundColor: Colors.white54,
-                                  valueColor: AlwaysStoppedAnimation(Colors.black54),
+                                  valueColor:
+                                      AlwaysStoppedAnimation(Colors.black54),
                                   strokeWidth: 5),
                             ),
                             Container(
                               height: 60,
                               width: 60,
-                              decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.white),
+                              decoration: BoxDecoration(
+                                  shape: BoxShape.circle, color: Colors.white),
                             ),
                           ],
                         )
                       : Container(
                           height: 60,
                           width: 60,
-                          decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.white),
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle, color: Colors.white),
                         ),
                 ),
                 IconButton(
@@ -205,15 +224,25 @@ class _CameraTaskPageState extends State<CameraTaskPage> {
 class DisplayPictureScreen extends StatefulWidget {
   final String filePath;
   final bool isVideo;
+  final VideoUserTask videoUserTask;
 
-  const DisplayPictureScreen({Key? key, required this.filePath, this.isVideo = false}) : super(key: key);
+  const DisplayPictureScreen(
+      {Key? key,
+      required this.videoUserTask,
+      required this.filePath,
+      this.isVideo = false})
+      : super(key: key);
 
   @override
-  State<DisplayPictureScreen> createState() => _DisplayPictureScreenState();
+  State<DisplayPictureScreen> createState() =>
+      _DisplayPictureScreenState(videoUserTask);
 }
 
 class _DisplayPictureScreenState extends State<DisplayPictureScreen> {
   late VideoPlayerController _videoPlayerController;
+  final VideoUserTask videoUserTask;
+
+  _DisplayPictureScreenState(this.videoUserTask) : super();
 
   initializeVideoPLayer(String path) async {
     _videoPlayerController = VideoPlayerController.file(File(path))
@@ -290,7 +319,8 @@ class _DisplayPictureScreenState extends State<DisplayPictureScreen> {
                 TextButton(
                   child: Text("SAVE"),
                   onPressed: () {
-                    // TODO: connect with video task
+                    // call back to the video task
+                    videoUserTask.onSave();
                   },
                   style: TextButton.styleFrom(
                     primary: Theme.of(context).primaryColor,

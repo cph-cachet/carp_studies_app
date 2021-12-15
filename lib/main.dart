@@ -62,7 +62,7 @@ part 'models/cards/measures_data_model.dart';
 part 'models/cards/task_data_model.dart';
 part 'models/cards/study_progress_data_model.dart';
 
-part 'models/audio_user_task.dart';
+part 'models/user_tasks.dart';
 part 'data/local_resource_manager.dart';
 
 part 'carp_study_app.dart';
@@ -119,6 +119,6 @@ void main() async {
 /// or deploying it.
 final bloc = StudyAppBLoC(
   debugLevel: DebugLevel.DEBUG,
-  deploymentMode: DeploymentMode.CARP_PRODUCTION,
+  deploymentMode: DeploymentMode.LOCAL,
   forceSignOutAndStudyReload: false,
 );

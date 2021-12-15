@@ -12,9 +12,9 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
   /// Create a new CAMS study protocol.
   Future<SmartphoneStudyProtocol?> getStudyProtocol(String ignored) async {
     if (_protocol == null) {
-      // _protocol ??= await _getGenericCARPStudy(ignored);
+      _protocol ??= await _getGenericCARPStudy(ignored);
       // _protocol ??= await _getPatientWristWatch(ignored);
-      _protocol = await _getTestWristWatch(ignored);
+      // _protocol = await _getTestWristWatch(ignored);
 
       // add the localized description to all protocols
       _protocol!.protocolDescription = StudyDescription(
@@ -237,7 +237,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
             minutesToComplete: 5,
             notification: true,
           )..measures.add(CAMSMeasure(
-              type: AudioSamplingPackage.AUDIO,
+              type: AudioVideoSamplingPackage.AUDIO,
               name: "audio.exposure.name",
             )),
           phone);
@@ -251,7 +251,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
             minutesToComplete: 5,
             notification: true,
           )..measures.add(CAMSMeasure(
-              type: AudioSamplingPackage.AUDIO,
+              type: AudioVideoSamplingPackage.AUDIO,
               name: "audio.biosensor.name",
             )),
           phone);
@@ -406,7 +406,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
             minutesToComplete: 5,
             notification: true,
           )..measures.add(CAMSMeasure(
-              type: AudioSamplingPackage.AUDIO,
+              type: AudioVideoSamplingPackage.AUDIO,
               name: "audio.exposure.name",
             )),
           phone);
@@ -428,7 +428,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
             minutesToComplete: 5,
             notification: true,
           )..measures.add(CAMSMeasure(
-              type: AudioSamplingPackage.AUDIO,
+              type: AudioVideoSamplingPackage.AUDIO,
               name: "audio.biosensor.name",
             )),
           phone);
@@ -583,7 +583,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
             minutesToComplete: 5,
             notification: true,
           )..measures.add(CAMSMeasure(
-              type: AudioSamplingPackage.AUDIO,
+              type: AudioVideoSamplingPackage.AUDIO,
               name: "audio.biosensor.name",
             )),
           phone);
@@ -661,7 +661,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
             minutesToComplete: 5,
             notification: true,
           )..measures.add(CAMSMeasure(
-              type: AudioSamplingPackage.AUDIO,
+              type: AudioVideoSamplingPackage.AUDIO,
               name: "audio.biosensor.name",
             )),
           phone);
@@ -812,7 +812,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
             minutesToComplete: 5,
             notification: true,
           )..measures.add(CAMSMeasure(
-              type: AudioSamplingPackage.AUDIO,
+              type: AudioVideoSamplingPackage.AUDIO,
               name: "audio.biosensor.name",
             )),
           phone);
@@ -1146,7 +1146,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
             minutesToComplete: 1,
           )
             ..measures.add(CAMSMeasure(
-              type: AudioSamplingPackage.AUDIO,
+              type: AudioVideoSamplingPackage.AUDIO,
               name: "Coughing",
             ))
             ..measures.add(SamplingPackageRegistry()
@@ -1177,16 +1177,40 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
                 'He had a coat for every hour of the day; and as one would say of a king "He is in his cabinet," so one could say of him, "The emperor is in his dressing-room."',
             minutesToComplete: 3,
           )..measures.add(CAMSMeasure(
-              type: AudioSamplingPackage.AUDIO,
+              type: AudioVideoSamplingPackage.AUDIO,
               name: "Reading",
             )),
+          phone);
+
+      // collect a video
+      _protocol!.addTriggeredTask(
+          PeriodicTrigger(
+            period: Duration(minutes: 1),
+            duration: const Duration(seconds: 2),
+          ),
+          AppTask(
+            type: VideoUserTask.VIDEO_TYPE,
+            title: "Take a video or image",
+            description:
+                'In this small exercise we would like to collect a small video clip or a picture of your left hand.',
+            instructions:
+                'Please hold the phone with your right hand and take a picture of your left palm.',
+            minutesToComplete: 3,
+          )
+            ..measures.add(CAMSMeasure(
+              type: AudioVideoSamplingPackage.VIDEO,
+              name: "Image capture",
+            ))
+            ..measures.add(SamplingPackageRegistry()
+                .common()
+                .measures[ContextSamplingPackage.LOCATION]!),
           phone);
 
       // when the reading (audio) measure is collected, the add a user task to
       // collect location, and local weather and air quality
       _protocol!.addTriggeredTask(
           ConditionalSamplingEventTrigger(
-            measureType: AudioSamplingPackage.AUDIO,
+            measureType: AudioVideoSamplingPackage.AUDIO,
             resumeCondition: (DataPoint dataPoint) => true,
             pauseCondition: (DataPoint dataPoint) => true,
           ),

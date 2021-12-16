@@ -4,12 +4,15 @@ part of carp_study_app;
 class AppUserTaskFactory implements UserTaskFactory {
   List<String> types = [
     AudioUserTask.AUDIO_TYPE,
+    VideoUserTask.VIDEO_TYPE,
   ];
 
   UserTask create(AppTaskExecutor executor) {
     switch (executor.appTask.type) {
       case AudioUserTask.AUDIO_TYPE:
         return AudioUserTask(executor);
+      case VideoUserTask.VIDEO_TYPE:
+        return VideoUserTask(executor);
       default:
         return SensingUserTask(executor);
     }
@@ -84,10 +87,6 @@ class VideoUserTask extends UserTask {
 
   VideoUserTask(AppTaskExecutor executor) : super(executor);
 
-  VideoProbe get videoProbe => executor.probes
-          .firstWhere((probe) => probe.type == AudioVideoSamplingPackage.VIDEO)
-      as VideoProbe;
-
   void onStart(BuildContext context) {
     Navigator.push(
       context,
@@ -136,8 +135,8 @@ class VideoUserTask extends UserTask {
           videoType: _videoType)
         ..filename = file!.path.split("/").last;
 
-      // ... and add it to the probe controller
-      videoProbe.controller.add(datum);
+      // ... and add it to the sensing controller
+      bloc.addDatum(datum);
     }
   }
 }

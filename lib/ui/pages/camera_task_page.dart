@@ -21,7 +21,7 @@ class _CameraTaskPageState extends State<CameraTaskPage> {
   }
 
   late CameraController _controller;
-  late Future<void> _initializeControllerFuture;
+  Future<void>? _initializeControllerFuture;
 
   List<CameraDescription>? cameras;
 
@@ -37,7 +37,8 @@ class _CameraTaskPageState extends State<CameraTaskPage> {
         cameras![cameraIndex], ResolutionPreset.medium,
         imageFormatGroup: ImageFormatGroup.yuv420, enableAudio: true);
 
-    _initializeControllerFuture = _controller.initialize();
+    // _initializeControllerFuture = _controller.initialize();
+    await _controller.initialize();
     _controller.setFocusMode(FocusMode.auto);
   }
 

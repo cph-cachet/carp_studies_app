@@ -105,9 +105,7 @@ class _TaskListPageState extends State<TaskListPage> {
         child: ListTile(
           leading: CircleAvatar(
             backgroundColor: Theme.of(context).hoverColor,
-            // child: taskTypeIcon[userTask.type],  // use a type icon
-            child: measureTypeIcon[userTask
-                .task.measures[0].type], // use the 1st measure as an icon
+            child: _taskTypeIcon(userTask),
           ),
           title: Text(locale.translate(userTask.title),
               style: aboutCardTitleStyle.copyWith(
@@ -130,6 +128,19 @@ class _TaskListPageState extends State<TaskListPage> {
       ),
     );
   }
+
+  /// Get an icon for the [userTask] based on its type. If there is no icon for
+  /// the type, use the 1st measure in the task as an icon. If there is no
+  /// icon for the measure, use a default icon.
+  Icon _taskTypeIcon(UserTask userTask) =>
+      (taskTypeIcons[userTask.type] != null)
+          ? taskTypeIcons[userTask.type] as Icon
+          : (measureTypeIcons[userTask.task.measures[0].type] != null)
+              ? measureTypeIcons[userTask.task.measures[0].type] as Icon
+              : Icon(
+                  Icons.description_outlined,
+                  color: CACHET.ORANGE,
+                );
 
   String _subtitle(UserTask userTask) {
     RPLocalizations locale = RPLocalizations.of(context)!;
@@ -162,7 +173,6 @@ class _TaskListPageState extends State<TaskListPage> {
           child: ListTile(
             leading: CircleAvatar(
               backgroundColor: CACHET.LIGHT_GREEN_1,
-              // child: taskTypeIcon[userTask.type],  // use a type icon
               child: Icon(Icons.check_circle_outlined, color: CACHET.GREEN_1),
             ),
             title: Text(locale.translate(userTask.title),
@@ -188,7 +198,6 @@ class _TaskListPageState extends State<TaskListPage> {
           child: ListTile(
             leading: CircleAvatar(
               backgroundColor: CACHET.LIGHT_GREY_1,
-              // child: taskTypeIcon[userTask.type],  // use a type icon
               child: Icon(Icons.unpublished_outlined, color: CACHET.GREY_1),
             ),
             title: Text(locale.translate(userTask.title),
@@ -230,127 +239,127 @@ class _TaskListPageState extends State<TaskListPage> {
     );
   }
 
-  Map<String, Icon> get taskTypeIcon => {
-        SurveyUserTask.WHO5_SURVEY_TYPE: Icon(
-          Icons.design_services,
-          color: CACHET.ORANGE,
-        ),
-        SurveyUserTask.DEMOGRAPHIC_SURVEY_TYPE: Icon(
-          Icons.person,
-          color: CACHET.ORANGE,
-        ),
-        SurveyUserTask.SURVEY_TYPE: Icon(
-          Icons.description,
-          color: CACHET.ORANGE,
-        ),
-        AudioUserTask.AUDIO_TYPE: Icon(
-          Icons.record_voice_over,
-          color: CACHET.GREEN,
-        ),
-        VideoUserTask.VIDEO_TYPE: Icon(
-          Icons.camera_alt,
-          color: CACHET.BLUE_1,
-        ),
-        SensingUserTask.SENSING_TYPE: Icon(
-          Icons.settings_input_antenna,
-          color: CACHET.CACHET_BLUE,
-        ),
-        SensingUserTask.ONE_TIME_SENSING_TYPE: Icon(
-          Icons.settings_input_component,
-          color: CACHET.PURPLE,
-        ),
-      };
+  static Map<String, Icon> taskTypeIcons = {
+    SurveyUserTask.WHO5_SURVEY_TYPE: Icon(
+      Icons.design_services,
+      color: CACHET.ORANGE,
+    ),
+    SurveyUserTask.DEMOGRAPHIC_SURVEY_TYPE: Icon(
+      Icons.person,
+      color: CACHET.ORANGE,
+    ),
+    SurveyUserTask.SURVEY_TYPE: Icon(
+      Icons.description,
+      color: CACHET.ORANGE,
+    ),
+    AudioUserTask.AUDIO_TYPE: Icon(
+      Icons.record_voice_over,
+      color: CACHET.GREEN,
+    ),
+    VideoUserTask.VIDEO_TYPE: Icon(
+      Icons.camera_alt,
+      color: CACHET.BLUE_1,
+    ),
+    SensingUserTask.SENSING_TYPE: Icon(
+      Icons.settings_input_antenna,
+      color: CACHET.CACHET_BLUE,
+    ),
+    SensingUserTask.ONE_TIME_SENSING_TYPE: Icon(
+      Icons.settings_input_component,
+      color: CACHET.PURPLE,
+    ),
+  };
 
-  static Map<String, Icon> get measureTypeIcon => {
-        DeviceSamplingPackage.MEMORY: Icon(
-          Icons.memory,
-          color: CACHET.GREY_4,
-        ),
-        DeviceSamplingPackage.DEVICE: Icon(
-          Icons.phone_android,
-          color: CACHET.GREY_4,
-        ),
-        DeviceSamplingPackage.BATTERY: Icon(
-          Icons.battery_charging_full,
-          color: CACHET.GREEN,
-        ),
-        SensorSamplingPackage.PEDOMETER: Icon(
-          Icons.directions_walk,
-          color: CACHET.LIGHT_PURPLE,
-        ),
-        SensorSamplingPackage.ACCELEROMETER: Icon(
-          Icons.adb,
-          color: CACHET.GREY_4,
-        ),
-        SensorSamplingPackage.GYROSCOPE: Icon(
-          Icons.adb,
-          color: CACHET.GREY_4,
-        ),
-        SensorSamplingPackage.LIGHT: Icon(
-          Icons.highlight,
-          color: CACHET.YELLOW,
-        ),
-        // ConnectivitySamplingPackage.BLUETOOTH:
-        //     Icon(Icons.bluetooth_searching, size: 50, color: CACHET.DARK_BLUE),
-        // ConnectivitySamplingPackage.WIFI:
-        //     Icon(Icons.wifi, size: 50, color: CACHET.LIGHT_PURPLE),
-        // ConnectivitySamplingPackage.CONNECTIVITY:
-        //     Icon(Icons.cast_connected, size: 50, color: CACHET.GREEN),
-        AudioVideoSamplingPackage.AUDIO: Icon(
-          Icons.mic,
-          color: CACHET.ORANGE,
-        ),
-        AudioVideoSamplingPackage.NOISE: Icon(
-          Icons.hearing,
-          color: CACHET.YELLOW,
-        ),
-        AudioVideoSamplingPackage.VIDEO: Icon(
-          Icons.camera_alt,
-          color: CACHET.YELLOW,
-        ),
-        // AppsSamplingPackage.APPS: Icon(Icons.apps, size: 50, color: CACHET.LIGHT_GREEN),
-        //AppsSamplingPackage.APP_USAGE: Icon(Icons.get_app, size: 50, color: CACHET.LIGHT_GREEN),
-        // CommunicationSamplingPackage.TEXT_MESSAGE: Icon(Icons.text_fields, size: 50, color: CACHET.LIGHT_PURPLE),
-        // CommunicationSamplingPackage.TEXT_MESSAGE_LOG: Icon(Icons.textsms, size: 50, color: CACHET.LIGHT_PURPLE),
-        // CommunicationSamplingPackage.PHONE_LOG: Icon(Icons.phone_in_talk, size: 50, color: CACHET.ORANGE),
-        // CommunicationSamplingPackage.CALENDAR: Icon(Icons.event, size: 50, color: CACHET.CYAN),
-        DeviceSamplingPackage.SCREEN: Icon(
-          Icons.screen_lock_portrait,
-          color: CACHET.LIGHT_PURPLE,
-        ),
-        ContextSamplingPackage.LOCATION: Icon(
-          Icons.location_searching,
-          color: CACHET.CYAN,
-        ),
-        ContextSamplingPackage.GEOLOCATION: Icon(
-          Icons.my_location,
-          color: CACHET.YELLOW,
-        ),
-        ContextSamplingPackage.ACTIVITY: Icon(
-          Icons.directions_bike,
-          color: CACHET.ORANGE,
-        ),
-        ContextSamplingPackage.WEATHER: Icon(
-          Icons.cloud,
-          color: CACHET.LIGHT_BLUE_2,
-        ),
-        ContextSamplingPackage.AIR_QUALITY: Icon(
-          Icons.warning,
-          color: CACHET.GREY_3,
-        ),
-        ContextSamplingPackage.GEOFENCE: Icon(
-          Icons.location_on,
-          color: CACHET.CYAN,
-        ),
-        ContextSamplingPackage.MOBILITY: Icon(
-          Icons.location_on,
-          color: CACHET.ORANGE,
-        ),
-        SurveySamplingPackage.SURVEY: Icon(
-          Icons.description,
-          color: CACHET.ORANGE,
-        ),
-      };
+  static Map<String, Icon> measureTypeIcons = {
+    DeviceSamplingPackage.MEMORY: Icon(
+      Icons.memory,
+      color: CACHET.GREY_4,
+    ),
+    DeviceSamplingPackage.DEVICE: Icon(
+      Icons.phone_android,
+      color: CACHET.GREY_4,
+    ),
+    DeviceSamplingPackage.BATTERY: Icon(
+      Icons.battery_charging_full,
+      color: CACHET.GREEN,
+    ),
+    SensorSamplingPackage.PEDOMETER: Icon(
+      Icons.directions_walk,
+      color: CACHET.LIGHT_PURPLE,
+    ),
+    SensorSamplingPackage.ACCELEROMETER: Icon(
+      Icons.adb,
+      color: CACHET.GREY_4,
+    ),
+    SensorSamplingPackage.GYROSCOPE: Icon(
+      Icons.adb,
+      color: CACHET.GREY_4,
+    ),
+    SensorSamplingPackage.LIGHT: Icon(
+      Icons.highlight,
+      color: CACHET.YELLOW,
+    ),
+    // ConnectivitySamplingPackage.BLUETOOTH:
+    //     Icon(Icons.bluetooth_searching, size: 50, color: CACHET.DARK_BLUE),
+    // ConnectivitySamplingPackage.WIFI:
+    //     Icon(Icons.wifi, size: 50, color: CACHET.LIGHT_PURPLE),
+    // ConnectivitySamplingPackage.CONNECTIVITY:
+    //     Icon(Icons.cast_connected, size: 50, color: CACHET.GREEN),
+    AudioVideoSamplingPackage.AUDIO: Icon(
+      Icons.mic,
+      color: CACHET.ORANGE,
+    ),
+    AudioVideoSamplingPackage.NOISE: Icon(
+      Icons.hearing,
+      color: CACHET.YELLOW,
+    ),
+    AudioVideoSamplingPackage.VIDEO: Icon(
+      Icons.camera_alt,
+      color: CACHET.YELLOW,
+    ),
+    // AppsSamplingPackage.APPS: Icon(Icons.apps, size: 50, color: CACHET.LIGHT_GREEN),
+    //AppsSamplingPackage.APP_USAGE: Icon(Icons.get_app, size: 50, color: CACHET.LIGHT_GREEN),
+    // CommunicationSamplingPackage.TEXT_MESSAGE: Icon(Icons.text_fields, size: 50, color: CACHET.LIGHT_PURPLE),
+    // CommunicationSamplingPackage.TEXT_MESSAGE_LOG: Icon(Icons.textsms, size: 50, color: CACHET.LIGHT_PURPLE),
+    // CommunicationSamplingPackage.PHONE_LOG: Icon(Icons.phone_in_talk, size: 50, color: CACHET.ORANGE),
+    // CommunicationSamplingPackage.CALENDAR: Icon(Icons.event, size: 50, color: CACHET.CYAN),
+    DeviceSamplingPackage.SCREEN: Icon(
+      Icons.screen_lock_portrait,
+      color: CACHET.LIGHT_PURPLE,
+    ),
+    ContextSamplingPackage.LOCATION: Icon(
+      Icons.location_searching,
+      color: CACHET.CYAN,
+    ),
+    ContextSamplingPackage.GEOLOCATION: Icon(
+      Icons.my_location,
+      color: CACHET.YELLOW,
+    ),
+    ContextSamplingPackage.ACTIVITY: Icon(
+      Icons.directions_bike,
+      color: CACHET.ORANGE,
+    ),
+    ContextSamplingPackage.WEATHER: Icon(
+      Icons.cloud,
+      color: CACHET.LIGHT_BLUE_2,
+    ),
+    ContextSamplingPackage.AIR_QUALITY: Icon(
+      Icons.warning,
+      color: CACHET.GREY_3,
+    ),
+    ContextSamplingPackage.GEOFENCE: Icon(
+      Icons.location_on,
+      color: CACHET.CYAN,
+    ),
+    ContextSamplingPackage.MOBILITY: Icon(
+      Icons.location_on,
+      color: CACHET.ORANGE,
+    ),
+    SurveySamplingPackage.SURVEY: Icon(
+      Icons.description,
+      color: CACHET.ORANGE,
+    ),
+  };
 
   static Map<UserTaskState, Icon> get taskStateIcon => {
         UserTaskState.initialized: Icon(Icons.stream, color: CACHET.YELLOW),

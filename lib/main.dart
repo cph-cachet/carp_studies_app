@@ -14,6 +14,10 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:timeago/timeago.dart' as timeago;
 // import 'package:expandable/expandable.dart';
 import 'package:intl/intl.dart';
+import 'dart:io';
+import 'package:camera/camera.dart';
+import 'package:flutter/material.dart';
+import 'package:video_player/video_player.dart';
 
 import 'package:activity_recognition_flutter/activity_recognition_flutter.dart';
 
@@ -58,7 +62,7 @@ part 'models/cards/measures_data_model.dart';
 part 'models/cards/task_data_model.dart';
 part 'models/cards/study_progress_data_model.dart';
 
-part 'models/audio_user_task.dart';
+part 'models/user_tasks.dart';
 part 'data/local_resource_manager.dart';
 
 part 'carp_study_app.dart';
@@ -77,6 +81,7 @@ part 'ui/pages/failed_login_page.dart';
 part 'ui/pages/study_details_page.dart';
 part 'ui/pages/message_details_page.dart';
 part 'ui/pages/process_message_page.dart';
+part 'ui/pages/camera_task_page.dart';
 
 part 'ui/widgets/study_card.dart';
 part 'ui/widgets/horizontal_bar.dart';
@@ -114,6 +119,6 @@ void main() async {
 /// or deploying it.
 final bloc = StudyAppBLoC(
   debugLevel: DebugLevel.DEBUG,
-  deploymentMode: DeploymentMode.CARP_PRODUCTION,
+  deploymentMode: DeploymentMode.LOCAL,
   forceSignOutAndStudyReload: false,
 );

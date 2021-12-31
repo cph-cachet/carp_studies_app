@@ -59,7 +59,7 @@ class Sensing {
     //SamplingPackageRegistry.register(ConnectivitySamplingPackage());
     SamplingPackageRegistry().register(ContextSamplingPackage());
     //SamplingPackageRegistry.register(CommunicationSamplingPackage());
-    SamplingPackageRegistry().register(AudioSamplingPackage());
+    SamplingPackageRegistry().register(AudioVideoSamplingPackage());
     SamplingPackageRegistry().register(SurveySamplingPackage());
     //SamplingPackageRegistry.register(HealthSamplingPackage());
 
@@ -67,7 +67,7 @@ class Sensing {
     DataManagerRegistry().register(CarpDataManager());
 
     // register the special-purpose audio user task factory
-    AppTaskController().registerUserTaskFactory(AudioUserTaskFactory());
+    AppTaskController().registerUserTaskFactory(AppUserTaskFactory());
   }
 
   /// Initialize and set up sensing.

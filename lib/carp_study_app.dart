@@ -4,7 +4,8 @@ class CarpStudyApp extends StatefulWidget {
   CarpStudyApp({Key? key}) : super(key: key);
 
   static void reloadLocale(BuildContext context) async {
-    _CarpStudyAppState? state = context.findAncestorStateOfType<_CarpStudyAppState>();
+    _CarpStudyAppState? state =
+        context.findAncestorStateOfType<_CarpStudyAppState>();
     state?.reloadLocale();
   }
 
@@ -21,13 +22,13 @@ class _CarpStudyAppState extends State<CarpStudyApp> {
 
   final LoadingPage loadingPage = LoadingPage();
   final HomePage homePage = HomePage();
-
   final InformedConsentPage consentPage = InformedConsentPage();
   final FailedLoginPage failedLoginPage = FailedLoginPage();
 
   /// Research Package translations, incl. both local language assets plus
   /// translations of informed consent and surveys downloaded from CARP
-  final RPLocalizationsDelegate rpLocalizationsDelegate = RPLocalizationsDelegate(loaders: [
+  final RPLocalizationsDelegate rpLocalizationsDelegate =
+      RPLocalizationsDelegate(loaders: [
     AssetLocalizationLoader(),
     bloc.localizationLoader,
   ]);
@@ -103,8 +104,8 @@ class _LoadingPageState extends State<LoadingPage> {
         CarpStudyApp.reloadLocale(context);
 
         // navigate to the right screen
-        Navigator.of(context)
-            .pushReplacementNamed((bloc.shouldInformedConsentBeShown) ? '/ConsentPage' : '/HomePage');
+        Navigator.of(context).pushReplacementNamed(
+            (bloc.shouldInformedConsentBeShown) ? '/ConsentPage' : '/HomePage');
       });
     }
 
@@ -137,7 +138,8 @@ class _LoadingPageState extends State<LoadingPage> {
         child: Center(
             child: Hero(
           tag: "tick",
-          child: Image.asset('assets/images/splash_cachet.png', width: 150.0, height: 150.0, scale: 1.0),
+          child: Image.asset('assets/images/splash_cachet.png',
+              width: 150.0, height: 150.0, scale: 1.0),
         )),
       );
 }

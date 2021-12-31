@@ -12,9 +12,9 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
   /// Create a new CAMS study protocol.
   Future<SmartphoneStudyProtocol?> getStudyProtocol(String ignored) async {
     if (_protocol == null) {
-      // _protocol ??= await _getGenericCARPStudy(ignored);
+      _protocol ??= await _getGenericCARPStudy(ignored);
       // _protocol ??= await _getPatientWristWatch(ignored);
-      _protocol = await _getTestWristWatch(ignored);
+      // _protocol = await _getTestWristWatch(ignored);
 
       // add the localized description to all protocols
       _protocol!.protocolDescription = StudyDescription(
@@ -237,7 +237,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
             minutesToComplete: 5,
             notification: true,
           )..measures.add(CAMSMeasure(
-              type: AudioSamplingPackage.AUDIO,
+              type: AudioVideoSamplingPackage.AUDIO,
               name: "audio.exposure.name",
             )),
           phone);
@@ -251,7 +251,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
             minutesToComplete: 5,
             notification: true,
           )..measures.add(CAMSMeasure(
-              type: AudioSamplingPackage.AUDIO,
+              type: AudioVideoSamplingPackage.AUDIO,
               name: "audio.biosensor.name",
             )),
           phone);
@@ -406,7 +406,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
             minutesToComplete: 5,
             notification: true,
           )..measures.add(CAMSMeasure(
-              type: AudioSamplingPackage.AUDIO,
+              type: AudioVideoSamplingPackage.AUDIO,
               name: "audio.exposure.name",
             )),
           phone);
@@ -428,7 +428,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
             minutesToComplete: 5,
             notification: true,
           )..measures.add(CAMSMeasure(
-              type: AudioSamplingPackage.AUDIO,
+              type: AudioVideoSamplingPackage.AUDIO,
               name: "audio.biosensor.name",
             )),
           phone);
@@ -583,7 +583,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
             minutesToComplete: 5,
             notification: true,
           )..measures.add(CAMSMeasure(
-              type: AudioSamplingPackage.AUDIO,
+              type: AudioVideoSamplingPackage.AUDIO,
               name: "audio.biosensor.name",
             )),
           phone);
@@ -661,7 +661,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
             minutesToComplete: 5,
             notification: true,
           )..measures.add(CAMSMeasure(
-              type: AudioSamplingPackage.AUDIO,
+              type: AudioVideoSamplingPackage.AUDIO,
               name: "audio.biosensor.name",
             )),
           phone);
@@ -812,7 +812,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
             minutesToComplete: 5,
             notification: true,
           )..measures.add(CAMSMeasure(
-              type: AudioSamplingPackage.AUDIO,
+              type: AudioVideoSamplingPackage.AUDIO,
               name: "audio.biosensor.name",
             )),
           phone);
@@ -820,183 +820,6 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
 
     return _protocol;
   }
-
-  // GENERIC STUDY FOR TESTING
-  // Future<Study> _getWristWatchStudy(String studyId) async {
-  //   if (_study == null) {
-  //     _study = Study(id: studyId, userId: await settings.userId)
-  //       ..name = 'Wrist Angel'
-  //       ..title =
-  //           "Wrist Angel: A Wearable AI Feedback Tool for OCD Treatment and Research"
-  //       ..purpose =
-  //           "We aim to improve assessment and psychotherapy for pediatric obsessive-compulsive disorder (OCD)."
-  //       ..pi = PrincipalInvestigator(
-  //         name:
-  //             "Professor Anne Katrine Pagsberg1, Associate Professor Line Katrine Harder Clemmensen2 and Senior Researcher Nicole Nadine Lønfeldt1",
-  //         title: '',
-  //         email: 'nicole.nadine.loenfeldt@regionh.dk',
-  //         affiliation:
-  //             'Børne - og Ungdomspsykiatrisk Center – Forskningsenheden, Region Hovedstadens Psykiatri\nDTU Compute',
-  //         address: 'Gentoftehospitalsvej 28, 2900 Hellerup',
-  //       )
-  //       ..description =
-  //           "Hormone levels, measured in saliva, and physiological indicators of stress from children and parents are used as input to privacy preserving signal processing and machine learning algorithms. Signal processing will be used to extract acoustic and physiological features of importance for therapeutic response. The study includes children with an OCD diagnosis and children without a psychiatric diagnosis and their parents."
-  //       ..dataEndPoint = getDataEndpoint(DataEndPointTypes.FILE)
-  //       // Audio task: Wristband UX - TODO: TRIGGER AFTER CHECKING RESULT FROM SURVEY
-  //       ..addTriggerTask(
-  //           PeriodicTrigger(period: Duration(days: 7)),
-  //           AppTask(
-  //             type: AudioUserTask.AUDIO_TYPE,
-  //             title: "User Experience: wristband",
-  //             description:
-  //                 'Record yourself talking about how the wristband makes you feel',
-  //             instructions:
-  //                 'Tell us about your experience wearing the wristband',
-  //             minutesToComplete: 5,
-  //           )..measures.add(AudioMeasure(
-  //               type: MeasureType(NameSpace.CARP, AudioSamplingPackage.AUDIO),
-  //               name: "UX_wristband",
-  //               studyId: studyId,
-  //             )))
-  //       // Audio task: Exposure exercise - TODO: TRIGGER AFTER CHECKING RESULT FROM SURVEY
-  //       ..addTriggerTask(
-  //           PeriodicTrigger(period: Duration(days: 7)),
-  //           AppTask(
-  //             type: AudioUserTask.AUDIO_TYPE,
-  //             title: "Exposure exercise",
-  //             description: 'Describe the exposure exercise you are working on',
-  //             instructions:
-  //                 'Describe the exposure exercise: how will you work on the obsession or compulsion?',
-  //             minutesToComplete: 5,
-  //           )..measures.add(AudioMeasure(
-  //               type: MeasureType(NameSpace.CARP, AudioSamplingPackage.AUDIO),
-  //               name: "Exposure_exercise_description",
-  //               studyId: studyId,
-  //             )))
-
-  //       /////////////////////////////////////////////////////////////////
-  //       /// Depending on the user, show only 1 of this next 4 surveys ///
-  //       /////////////////////////////////////////////////////////////////
-  //       ..addTriggerTask(
-  //           RecurrentScheduledTrigger(
-  //               type: RecurrentType.weekly,
-  //               dayOfWeek: DateTime.sunday,
-  //               time: Time(hour: 6, minute: 00)),
-  //           AppTask(
-  //             type: SurveyUserTask.SURVEY_TYPE,
-  //             title: surveys.control.title,
-  //             description: surveys.control.description,
-  //             minutesToComplete: surveys.control.minutesToComplete,
-  //             expire: surveys.control.expire,
-  //           )..measures.add(RPTaskMeasure(
-  //               type: MeasureType(NameSpace.CARP, SurveySamplingPackage.SURVEY),
-  //               name: surveys.control.title,
-  //               enabled: true,
-  //               surveyTask: surveys.control.survey,
-  //             )))
-  //       ..addTriggerTask(
-  //           PeriodicTrigger(period: Duration(days: 1)),
-  //           AppTask(
-  //             type: SurveyUserTask.SURVEY_TYPE,
-  //             title: surveys.controlParents.title,
-  //             description: surveys.controlParents.description,
-  //             minutesToComplete: surveys.controlParents.minutesToComplete,
-  //             expire: surveys.controlParents.expire,
-  //           )..measures.add(RPTaskMeasure(
-  //               type: MeasureType(NameSpace.CARP, SurveySamplingPackage.SURVEY),
-  //               name: surveys.controlParents.title,
-  //               enabled: true,
-  //               surveyTask: surveys.controlParents.survey,
-  //             )))
-  //       ..addTriggerTask(
-  //           RecurrentScheduledTrigger(
-  //               type: RecurrentType.weekly,
-  //               dayOfWeek: DateTime.sunday,
-  //               time: Time(hour: 6, minute: 00)),
-  //           AppTask(
-  //             type: SurveyUserTask.SURVEY_TYPE,
-  //             title: surveys.patient.title,
-  //             description: surveys.patient.description,
-  //             minutesToComplete: surveys.patient.minutesToComplete,
-  //             expire: surveys.patient.expire,
-  //           )..measures.add(RPTaskMeasure(
-  //               type: MeasureType(NameSpace.CARP, SurveySamplingPackage.SURVEY),
-  //               name: surveys.patient.title,
-  //               enabled: true,
-  //               surveyTask: surveys.patient.survey,
-  //             )))
-  //       ..addTriggerTask(
-  //           RecurrentScheduledTrigger(
-  //               type: RecurrentType.weekly,
-  //               dayOfWeek: DateTime.sunday,
-  //               time: Time(hour: 6, minute: 00)),
-  //           AppTask(
-  //             type: SurveyUserTask.SURVEY_TYPE,
-  //             title: surveys.patientParents.title,
-  //             description: surveys.patientParents.description,
-  //             minutesToComplete: surveys.patientParents.minutesToComplete,
-  //             expire: surveys.patientParents.expire,
-  //           )..measures.add(RPTaskMeasure(
-  //               type: MeasureType(NameSpace.CARP, SurveySamplingPackage.SURVEY),
-  //               name: surveys.patientParents.title,
-  //               enabled: true,
-  //               surveyTask: surveys.patientParents.survey,
-  //             )))
-
-  //       /// EXPOSURE at least 1/day
-  //       ..addTriggerTask(
-  //           PeriodicTrigger(period: Duration(minutes: 5)),
-  //           AppTask(
-  //             type: SurveyUserTask.SURVEY_TYPE,
-  //             title: surveys.exposure.title,
-  //             description: surveys.exposure.description,
-  //             minutesToComplete: surveys.exposure.minutesToComplete,
-  //             expire: surveys.exposure.expire,
-  //           )..measures.add(RPTaskMeasure(
-  //               type: MeasureType(NameSpace.CARP, SurveySamplingPackage.SURVEY),
-  //               name: surveys.exposure.title,
-  //               enabled: true,
-  //               surveyTask: surveys.exposure.survey,
-  //             )))
-  //       ..addTriggerTask(
-  //           RandomRecurrentTrigger(
-  //               startTime: Time(hour: 16, minute: 00),
-  //               endTime: Time(hour: 22, minute: 00),
-  //               minNumberOfSampling: 0,
-  //               maxNumberOfSampling: 3),
-  //           AppTask(
-  //             type: SurveyUserTask.SURVEY_TYPE,
-  //             title: surveys.ecological.title,
-  //             description: surveys.ecological.description,
-  //             minutesToComplete: surveys.ecological.minutesToComplete,
-  //             expire: surveys.ecological.expire,
-  //           )..measures.add(RPTaskMeasure(
-  //               type: MeasureType(NameSpace.CARP, SurveySamplingPackage.SURVEY),
-  //               name: surveys.ecological.title,
-  //               enabled: true,
-  //               surveyTask: surveys.ecological.survey,
-  //             )))
-
-  //       /// UX APP- TODO get datetimes for end of week 1, half of week 4 and beginning of week 8, create one for each
-  //       ..addTriggerTask(
-  //           PeriodicTrigger(period: Duration(minutes: 5)),
-  //           //ScheduledTrigger(schedule: DateTime(2021, 3, 27, 08, 30), duration: Duration(days: 10)),
-  //           AppTask(
-  //             type: SurveyUserTask.SURVEY_TYPE,
-  //             title: surveys.appUX.title,
-  //             description: surveys.appUX.description,
-  //             minutesToComplete: surveys.appUX.minutesToComplete,
-  //             expire: surveys.appUX.expire,
-  //           )..measures.add(RPTaskMeasure(
-  //               type: MeasureType(NameSpace.CARP, SurveySamplingPackage.SURVEY),
-  //               name: surveys.appUX.title,
-  //               enabled: true,
-  //               surveyTask: surveys.appUX.survey,
-  //             )));
-  //   }
-
-  //   return _study;
-  // }
 
   Future<SmartphoneStudyProtocol?> _getGenericCARPStudy(String studyId) async {
     if (_protocol == null) {
@@ -1146,7 +969,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
             minutesToComplete: 1,
           )
             ..measures.add(CAMSMeasure(
-              type: AudioSamplingPackage.AUDIO,
+              type: AudioVideoSamplingPackage.AUDIO,
               name: "Coughing",
             ))
             ..measures.add(SamplingPackageRegistry()
@@ -1177,16 +1000,40 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
                 'He had a coat for every hour of the day; and as one would say of a king "He is in his cabinet," so one could say of him, "The emperor is in his dressing-room."',
             minutesToComplete: 3,
           )..measures.add(CAMSMeasure(
-              type: AudioSamplingPackage.AUDIO,
+              type: AudioVideoSamplingPackage.AUDIO,
               name: "Reading",
             )),
+          phone);
+
+      // collect a video
+      _protocol!.addTriggeredTask(
+          PeriodicTrigger(
+            period: Duration(minutes: 1),
+            duration: const Duration(seconds: 2),
+          ),
+          AppTask(
+            type: VideoUserTask.VIDEO_TYPE,
+            title: "Take a video or image",
+            description:
+                'In this small exercise we would like to collect a small video clip or a picture of your left hand.',
+            instructions:
+                'Please hold the phone with your right hand and take a picture of your left palm.',
+            minutesToComplete: 3,
+          )
+            ..measures.add(CAMSMeasure(
+              type: AudioVideoSamplingPackage.VIDEO,
+              name: "Image capture",
+            ))
+            ..measures.add(SamplingPackageRegistry()
+                .common()
+                .measures[ContextSamplingPackage.LOCATION]!),
           phone);
 
       // when the reading (audio) measure is collected, the add a user task to
       // collect location, and local weather and air quality
       _protocol!.addTriggeredTask(
           ConditionalSamplingEventTrigger(
-            measureType: AudioSamplingPackage.AUDIO,
+            measureType: AudioVideoSamplingPackage.AUDIO,
             resumeCondition: (DataPoint dataPoint) => true,
             pauseCondition: (DataPoint dataPoint) => true,
           ),

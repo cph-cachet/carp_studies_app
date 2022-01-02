@@ -2,7 +2,51 @@ part of carp_study_app;
 
 class StepsCardDataModel extends DataModel {
   PedometerDatum? _lastStep;
+  final WeeklySteps _weeklySteps = WeeklySteps();
+
+  /// A map of weekly steps organized by the day of the week.
+  Map<int, int> get weeklySteps => _weeklySteps.weeklySteps;
+
+  /// The list of steps.
+  List<Steps> get steps => _weeklySteps.steps;
+
+  /// The stream of pedometer data points.
+  Stream<DataPoint> get pedometerStream => controller!.data.where((dataPoint) =>
+      dataPoint.carpHeader.dataFormat.toString() ==
+      SensorSamplingPackage.PEDOMETER);
+
+  StepsCardDataModel();
+
+  void init(SmartphoneDeploymentController controller) {
+    super.init(controller);
+
+    // // initialize the weekly steps table
+    // if (DateTime.now().weekday == 1 || _weeklySteps.isEmpty) {
+    //   for (int i = 1; i <= 7; i++) _weeklySteps[i] = 0;
+    // }
+
+    // listen for pedometer events and count them
+    controller.data
+        .where((dataPoint) => dataPoint.data is PedometerDatum)
+        .listen((pedometerDataPoint) {
+      PedometerDatum? _step = pedometerDataPoint.data as PedometerDatum?;
+      print('Steps - got a step: $_step');
+      if (_lastStep != null)
+        _weeklySteps.increateStepCount(
+            DateTime.now().weekday, _step!.stepCount! - _lastStep!.stepCount!);
+      _lastStep = _step;
+    });
+  }
+}
+
+/// Weekly steps organized by the day of the week.
+class WeeklySteps {
   final Map<int, int> _weeklySteps = {};
+
+  WeeklySteps() {
+    // initialize the weekly steps table
+    for (int i = 1; i <= 7; i++) _weeklySteps[i] = 0;
+  }
 
   /// A map of weekly steps organized by the day of the week.
   ///
@@ -10,37 +54,17 @@ class StepsCardDataModel extends DataModel {
   ///
   /// In accordance with Dart [DateTime] a week starts with Monday,
   /// which has the value 1.
+  // @JsonSerializable(fieldRename: FieldRename.snake, includeIfNull: false)
   Map<int, int> get weeklySteps => _weeklySteps;
 
-  /// The list of steps.
+  /// The list of steps listed pr. weekday.
   List<Steps> get steps => _weeklySteps.entries
       .map((entry) => Steps(entry.key, entry.value))
       .toList();
 
-  StepsCardDataModel();
-
-  void init(SmartphoneDeploymentController controller) {
-    super.init(controller);
-
-    // initialize the weekly steps table
-    if (DateTime.now().weekday == 1 || _weeklySteps.isEmpty) {
-      for (int i = 1; i <= 7; i++) _weeklySteps[i] = 0;
-    }
-
-    // listen for pedometer events and count them
-    controller.data
-        .where((dataPoint) => dataPoint.data is PedometerDatum)
-        .listen((pedometerDataPoint) {
-      PedometerDatum? _step = pedometerDataPoint.data as PedometerDatum?;
-      if (_lastStep != null)
-        _weeklySteps[DateTime.now().weekday] =
-            _weeklySteps[DateTime.now().weekday]! +
-                _step!.stepCount! -
-                _lastStep!.stepCount!;
-      else
-        _weeklySteps[DateTime.now().weekday] = 0;
-      _lastStep = _step;
-    });
+  void increateStepCount(int weekday, int steps) {
+    print('Steps - adding $steps for weekday $weekday');
+    _weeklySteps[weekday] = _weeklySteps[weekday]! + steps;
   }
 
   String toString() {
@@ -50,14 +74,19 @@ class StepsCardDataModel extends DataModel {
   }
 }
 
+/// Steps pr. day.
+// @JsonSerializable(fieldRename: FieldRename.snake, includeIfNull: false)
 class Steps {
-  final int day;
+  /// Day of week - Monday = 1, Sunday = 7.
+  final int weekday;
+
+  /// Number of steps for this [weekday].
   final int steps;
 
-  Steps(this.day, this.steps);
+  Steps(this.weekday, this.steps);
 
-  /// Get the localilzed name of the [day].
+  /// Get the localilzed name of the [weekday].
   String toString() => DateFormat('EEEE')
-      .format(DateTime(2021, 2, 7).add(Duration(days: day)))
+      .format(DateTime(2021, 2, 7).add(Duration(days: weekday)))
       .substring(0, 3);
 }

@@ -210,8 +210,11 @@ class StudyAppBLoC {
                   context,
                   "ic.location.content",
                 ));
+        await LocationManager().requestPermission();
+        // await Permission.locationAlways.request();
       }
     }
+    print('$runtimeType - asking for permisions');
     await Sensing().askForPermissions();
   }
 

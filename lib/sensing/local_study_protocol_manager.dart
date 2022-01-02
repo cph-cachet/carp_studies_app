@@ -825,9 +825,9 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
     if (_protocol == null) {
       _protocol = SmartphoneStudyProtocol(
           ownerId: studyId,
-          name: 'CARP Study App 2nd Protocol',
+          name: 'CARP Study App Technical Test Protocol',
           protocolDescription: StudyDescription(
-              title: 'CARP Study App Feasibility Study',
+              title: 'CARP Study App Technical Study',
               description:
                   "We would like to have you help in testing the technical stability and the usability of the CARP Mobile Sensing app. "
                   "Your data will be collected and store anonymously.",
@@ -862,20 +862,20 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           phone);
 
       // collect location, weather and air quality every 5 minutes
-      _protocol!.addTriggeredTask(
-          PeriodicTrigger(
-            period: Duration(minutes: 5),
-            duration: const Duration(seconds: 2),
-          ),
-          AutomaticTask()
-            ..measures = SamplingPackageRegistry().common().getMeasureList(
-              types: [
-                ContextSamplingPackage.LOCATION,
-                ContextSamplingPackage.WEATHER,
-                ContextSamplingPackage.AIR_QUALITY,
-              ],
-            ),
-          phone);
+      // _protocol!.addTriggeredTask(
+      //     PeriodicTrigger(
+      //       period: Duration(minutes: 5),
+      //       duration: const Duration(seconds: 2),
+      //     ),
+      //     AutomaticTask()
+      //       ..measures = SamplingPackageRegistry().common().getMeasureList(
+      //         types: [
+      //           ContextSamplingPackage.LOCATION,
+      //           ContextSamplingPackage.WEATHER,
+      //           ContextSamplingPackage.AIR_QUALITY,
+      //         ],
+      //       ),
+      //     phone);
 
       // collect location, activity, mobility measures continously (event-based)
       _protocol!.addTriggeredTask(
@@ -885,7 +885,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
               types: [
                 ContextSamplingPackage.GEOLOCATION,
                 ContextSamplingPackage.ACTIVITY,
-                ContextSamplingPackage.MOBILITY,
+                // ContextSamplingPackage.MOBILITY,
               ],
             ),
           phone);
@@ -931,7 +931,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
       // collect symptoms on a daily basis - notify the user
       _protocol!.addTriggeredTask(
           PeriodicTrigger(
-            period: Duration(days: 1),
+            period: Duration(hours: 1),
             duration: const Duration(seconds: 2),
           ),
           AppTask(
@@ -955,38 +955,38 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
 
       // collect a coughing sample on a daily basis
       // also collect location, and local weather and air quality of this sample
-      _protocol!.addTriggeredTask(
-          PeriodicTrigger(
-            period: Duration(minutes: 1),
-            duration: const Duration(seconds: 2),
-          ),
-          AppTask(
-            type: AudioUserTask.AUDIO_TYPE,
-            title: "Coughing",
-            description:
-                'In this small exercise we would like to collect sound samples of coughing.',
-            instructions: 'Please cough 5 times.',
-            minutesToComplete: 1,
-          )
-            ..measures.add(CAMSMeasure(
-              type: AudioVideoSamplingPackage.AUDIO,
-              name: "Coughing",
-            ))
-            ..measures.add(SamplingPackageRegistry()
-                .common()
-                .measures[ContextSamplingPackage.LOCATION]!)
-            ..measures.add(SamplingPackageRegistry()
-                .common()
-                .measures[ContextSamplingPackage.WEATHER]!)
-            ..measures.add(SamplingPackageRegistry()
-                .common()
-                .measures[ContextSamplingPackage.AIR_QUALITY]!),
-          phone);
+      // _protocol!.addTriggeredTask(
+      //     PeriodicTrigger(
+      //       period: Duration(days: 1),
+      //       duration: const Duration(seconds: 2),
+      //     ),
+      //     AppTask(
+      //       type: AudioUserTask.AUDIO_TYPE,
+      //       title: "Coughing",
+      //       description:
+      //           'In this small exercise we would like to collect sound samples of coughing.',
+      //       instructions: 'Please cough 5 times.',
+      //       minutesToComplete: 1,
+      //     )
+      //       ..measures.add(CAMSMeasure(
+      //         type: AudioVideoSamplingPackage.AUDIO,
+      //         name: "Coughing",
+      //       ))
+      //       ..measures.add(SamplingPackageRegistry()
+      //           .common()
+      //           .measures[ContextSamplingPackage.LOCATION]!)
+      //       ..measures.add(SamplingPackageRegistry()
+      //           .common()
+      //           .measures[ContextSamplingPackage.WEATHER]!)
+      //       ..measures.add(SamplingPackageRegistry()
+      //           .common()
+      //           .measures[ContextSamplingPackage.AIR_QUALITY]!),
+      //     phone);
 
       // collect a reading / audio sample on a daily basis
       _protocol!.addTriggeredTask(
           PeriodicTrigger(
-            period: Duration(minutes: 1),
+            period: Duration(hours: 1),
             duration: const Duration(seconds: 2),
           ),
           AppTask(
@@ -999,35 +999,39 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
                 'He did not care for his soldiers, and the theatre did not amuse him; the only thing, in fact, he thought anything of was to drive out and show a new suit of clothes. '
                 'He had a coat for every hour of the day; and as one would say of a king "He is in his cabinet," so one could say of him, "The emperor is in his dressing-room."',
             minutesToComplete: 3,
-          )..measures.add(CAMSMeasure(
-              type: AudioVideoSamplingPackage.AUDIO,
-              name: "Reading",
-            )),
-          phone);
-
-      // collect a video
-      _protocol!.addTriggeredTask(
-          PeriodicTrigger(
-            period: Duration(minutes: 1),
-            duration: const Duration(seconds: 2),
-          ),
-          AppTask(
-            type: VideoUserTask.VIDEO_TYPE,
-            title: "Take a video or image",
-            description:
-                'In this small exercise we would like to collect a small video clip or a picture of your left hand.',
-            instructions:
-                'Please hold the phone with your right hand and take a picture of your left palm.',
-            minutesToComplete: 3,
           )
             ..measures.add(CAMSMeasure(
-              type: AudioVideoSamplingPackage.VIDEO,
-              name: "Image capture",
+              type: AudioVideoSamplingPackage.AUDIO,
+              name: "Reading",
             ))
             ..measures.add(SamplingPackageRegistry()
                 .common()
                 .measures[ContextSamplingPackage.LOCATION]!),
           phone);
+
+      // collect a video
+      // _protocol!.addTriggeredTask(
+      //     PeriodicTrigger(
+      //       period: Duration(minutes: 10),
+      //       duration: const Duration(seconds: 2),
+      //     ),
+      //     AppTask(
+      //       type: VideoUserTask.VIDEO_TYPE,
+      //       title: "Take a video or image",
+      //       description:
+      //           'In this small exercise we would like to collect a small video clip or a picture of your left hand.',
+      //       instructions:
+      //           'Please hold the phone with your right hand and take a picture of your left palm.',
+      //       minutesToComplete: 3,
+      //     )
+      //       ..measures.add(CAMSMeasure(
+      //         type: AudioVideoSamplingPackage.VIDEO,
+      //         name: "Image capture",
+      //       ))
+      //       ..measures.add(SamplingPackageRegistry()
+      //           .common()
+      //           .measures[ContextSamplingPackage.LOCATION]!),
+      //     phone);
 
       // when the reading (audio) measure is collected, the add a user task to
       // collect location, and local weather and air quality

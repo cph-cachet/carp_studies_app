@@ -1,25 +1,25 @@
 part of carp_study_app;
 
 class MeasuresCardWidget extends StatefulWidget {
-  final MeasuresCardDataModel model;
+  final MeasuresCardViewModel model;
   final List<Color> colors;
   MeasuresCardWidget(this.model, {this.colors = CACHET.COLOR_LIST});
   _MeasuresCardWidgetState createState() => _MeasuresCardWidgetState();
 }
 
 class _MeasuresCardWidgetState extends State<MeasuresCardWidget> {
-  static List<charts.Series<Measures, String>> _createChartList(
+  static List<charts.Series<MeasureCount, String>> _createChartList(
           BuildContext context,
-          MeasuresCardDataModel model,
+          MeasuresCardViewModel model,
           List<Color> colors) =>
       [
-        charts.Series<Measures, String>(
+        charts.Series<MeasureCount, String>(
           colorFn: (_, index) => charts.ColorUtil.fromDartColor(colors[index!]),
           //charts.MaterialPalette.blue.makeShades(min(7, model.samplingTable.length))[index],
           id: 'TotalMeasures',
           data: model.measures.sublist(0, min(7, model.samplingTable.length)),
-          domainFn: (Measures measures, _) => measures.measure,
-          measureFn: (Measures measures, _) => measures.size,
+          domainFn: (MeasureCount measures, _) => measures.measure,
+          measureFn: (MeasureCount measures, _) => measures.size,
         )
       ];
 

@@ -17,7 +17,7 @@ enum StudyAppState {
 class StudyAppBLoC {
   StudyAppState _state = StudyAppState.created;
   final CarpBackend _backend = CarpBackend();
-  final CarpStydyAppDataModel _data = CarpStydyAppDataModel();
+  final CarpStydyAppViewModel _data = CarpStydyAppViewModel();
   StudyDeploymentStatus? _status;
   DateTime? _studyStartTimestamp;
 
@@ -94,7 +94,7 @@ class StudyAppBLoC {
   DateTime? get studyStartTimestamp => _studyStartTimestamp;
 
   /// The overall data model for this app
-  CarpStydyAppDataModel get data => _data;
+  CarpStydyAppViewModel get data => _data;
 
   /// Does this [deployment] have the measure of [type].
   bool hasMeasure(String type) {

@@ -3,12 +3,12 @@ part of carp_study_app;
 /// The data model for the the different task card widgets, like
 /// [AudioCardWidget] and [SurveysCardWidget].
 /// Keeps track on the number of different tasks done ordered by their task title.
-class TaskCardDataModel extends DataModel {
+class TaskCardViewModel extends ViewModel {
   String taskType;
 
   /// Create a data model for a card showing the number of tasks done of
   /// type [taskType] (e.g., at survey task).
-  TaskCardDataModel(this.taskType) : super();
+  TaskCardViewModel(this.taskType) : super();
 
   /// A map of task count indexed by the task title.
   ///

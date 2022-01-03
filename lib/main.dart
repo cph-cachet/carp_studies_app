@@ -45,30 +45,28 @@ part 'blocs/common.dart';
 part 'data/local_settings.dart';
 part 'data/carp_backend.dart';
 part 'data/localization_loader.dart';
+part 'data/local_resource_manager.dart';
 
 part 'sensing/local_surveys.dart';
 part 'sensing/local_study_protocol_manager.dart';
 part 'sensing/sensing.dart';
 
-part 'models/data_model.dart';
-part 'models/tasklist_page_model.dart';
-part 'models/study_page_model.dart';
-part 'models/profile_page_model.dart';
-part 'models/data_viz_page_model.dart';
-part 'models/cards/activity_data_model.dart';
-part 'models/cards/mobility_data_model.dart';
-part 'models/cards/steps_data_model.dart';
-part 'models/cards/measures_data_model.dart';
-part 'models/cards/task_data_model.dart';
-part 'models/cards/study_progress_data_model.dart';
-
-part 'models/user_tasks.dart';
-part 'data/local_resource_manager.dart';
+part 'view_models/data_model.dart';
+part 'view_models/tasklist_page_model.dart';
+part 'view_models/study_page_model.dart';
+part 'view_models/profile_page_model.dart';
+part 'view_models/data_viz_page_model.dart';
+part 'view_models/cards/activity_data_model.dart';
+part 'view_models/cards/mobility_data_model.dart';
+part 'view_models/cards/steps_data_model.dart';
+part 'view_models/cards/measures_data_model.dart';
+part 'view_models/cards/task_data_model.dart';
+part 'view_models/cards/study_progress_data_model.dart';
+part 'view_models/user_tasks.dart';
 
 part 'carp_study_app.dart';
 part 'ui/pages/informed_consent_page.dart';
 part 'ui/pages/home_page.dart';
-
 part 'ui/widgets/carp_app_bar.dart';
 part 'ui/carp_study_style.dart';
 part 'ui/colors.dart';

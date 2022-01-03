@@ -2,7 +2,7 @@ part of carp_study_app;
 
 // todo change text for survey progress
 class DataVisualizationPage extends StatelessWidget {
-  final DataVisualizationPageModel model;
+  final DataVisualizationPageViewModel model;
   DataVisualizationPage(this.model);
 
   Widget build(BuildContext context) {

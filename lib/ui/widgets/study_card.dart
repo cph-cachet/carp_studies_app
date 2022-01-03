@@ -1,13 +1,14 @@
 part of carp_study_app;
 
 class StudyCard extends StatelessWidget {
-  final StudyPageModel studyPageModel = StudyPageModel();
+  final StudyPageViewModel studyPageModel = StudyPageViewModel();
 
   @override
   Widget build(BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;
 
-    String studyDescription() => '${locale.translate(studyPageModel.description)}\n\n'
+    String studyDescription() =>
+        '${locale.translate(studyPageModel.description)}\n\n'
         '${locale.translate('widgets.study_card.title')}: \"${locale.translate(studyPageModel.title)}\".\n'
         '${locale.translate('widgets.study_card.purpose')}: \"${locale.translate(studyPageModel.purpose)}\".\n\n'
         '${locale.translate('widgets.study_card.responsibles')}:\n'
@@ -40,7 +41,8 @@ class StudyCard extends StatelessWidget {
                 SizedBox(width: 40),
                 SizedBox(width: 40),
                 Text(locale.translate(studyPageModel.title),
-                    style: aboutCardTitleStyle.copyWith(color: Theme.of(context).primaryColor)),
+                    style: aboutCardTitleStyle.copyWith(
+                        color: Theme.of(context).primaryColor)),
                 SizedBox(width: 40),
                 SizedBox(width: 40),
               ],
@@ -56,7 +58,8 @@ class StudyCard extends StatelessWidget {
                       padding: const EdgeInsets.all(15.0),
                       child: Column(children: [
                         Text(locale.translate(studyPageModel.piAffiliation),
-                            style: aboutCardSubtitleStyle.copyWith(color: Theme.of(context).primaryColor)),
+                            style: aboutCardSubtitleStyle.copyWith(
+                                color: Theme.of(context).primaryColor)),
                         Text(
                           studyDescription(),
                           style: aboutCardContentStyle,
@@ -69,25 +72,31 @@ class StudyCard extends StatelessWidget {
               ),
               InkWell(
                   onTap: () async {
-                    if (await canLaunch(locale.translate(studyPageModel.studyDescriptionUrl))) {
-                      await launch(locale.translate(studyPageModel.studyDescriptionUrl));
+                    if (await canLaunch(
+                        locale.translate(studyPageModel.studyDescriptionUrl))) {
+                      await launch(
+                          locale.translate(studyPageModel.studyDescriptionUrl));
                     } else {
                       throw 'Could not launch project URL';
                     }
                   },
                   child: Text(locale.translate('pages.about.study.website'),
-                      style: aboutCardInfoStyle.copyWith(decoration: TextDecoration.underline),
+                      style: aboutCardInfoStyle.copyWith(
+                          decoration: TextDecoration.underline),
                       textAlign: TextAlign.start)),
               InkWell(
                 onTap: () async {
-                  if (await canLaunch(locale.translate(studyPageModel.privacyPolicyUrl))) {
-                    await launch(locale.translate(studyPageModel.privacyPolicyUrl));
+                  if (await canLaunch(
+                      locale.translate(studyPageModel.privacyPolicyUrl))) {
+                    await launch(
+                        locale.translate(studyPageModel.privacyPolicyUrl));
                   } else {
                     throw 'Could not launch privacy policy URL';
                   }
                 },
                 child: Text(locale.translate('pages.about.study.privacy'),
-                    style: aboutCardInfoStyle.copyWith(decoration: TextDecoration.underline),
+                    style: aboutCardInfoStyle.copyWith(
+                        decoration: TextDecoration.underline),
                     textAlign: TextAlign.start),
               ),
             ],

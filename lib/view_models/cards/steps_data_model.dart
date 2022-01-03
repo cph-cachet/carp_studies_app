@@ -1,6 +1,6 @@
 part of carp_study_app;
 
-class StepsCardDataModel extends DataModel {
+class StepsCardViewModel extends ViewModel {
   PedometerDatum? _lastStep;
   final WeeklySteps _weeklySteps = WeeklySteps();
 
@@ -8,13 +8,13 @@ class StepsCardDataModel extends DataModel {
   Map<int, int> get weeklySteps => _weeklySteps.weeklySteps;
 
   /// The list of steps.
-  List<Steps> get steps => _weeklySteps.steps;
+  List<DailySteps> get steps => _weeklySteps.steps;
 
   /// Stream of pedometer (step) [DataPoint] measures.
   Stream<DataPoint>? get pedometerEvents =>
       controller?.data.where((dataPoint) => dataPoint.data is PedometerDatum);
 
-  StepsCardDataModel();
+  StepsCardViewModel();
 
   void init(SmartphoneDeploymentController controller) {
     super.init(controller);
@@ -50,8 +50,8 @@ class WeeklySteps {
   Map<int, int> get weeklySteps => _weeklySteps;
 
   /// The list of steps listed pr. weekday.
-  List<Steps> get steps => _weeklySteps.entries
-      .map((entry) => Steps(entry.key, entry.value))
+  List<DailySteps> get steps => _weeklySteps.entries
+      .map((entry) => DailySteps(entry.key, entry.value))
       .toList();
 
   void increateStepCount(int weekday, int steps) {
@@ -66,16 +66,16 @@ class WeeklySteps {
   }
 }
 
-/// Steps pr. day.
+/// Steps pr. week day.
 // @JsonSerializable(fieldRename: FieldRename.snake, includeIfNull: false)
-class Steps {
+class DailySteps {
   /// Day of week - Monday = 1, Sunday = 7.
   final int weekday;
 
   /// Number of steps for this [weekday].
   final int steps;
 
-  Steps(this.weekday, this.steps);
+  DailySteps(this.weekday, this.steps);
 
   /// Get the localilzed name of the [weekday].
   String toString() => DateFormat('EEEE')

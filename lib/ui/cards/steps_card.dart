@@ -1,27 +1,27 @@
 part of carp_study_app;
 
 class StepsCardWidget extends StatefulWidget {
-  final StepsCardDataModel model;
+  final StepsCardViewModel model;
   final List<Color> colors;
-  final List<charts.Series<Steps, String>> seriesList;
+  final List<charts.Series<DailySteps, String>> seriesList;
 
   StepsCardWidget(this.seriesList, this.model,
       {this.colors = const [CACHET.BLUE_1]});
 
-  factory StepsCardWidget.withSampleData(StepsCardDataModel model) =>
+  factory StepsCardWidget.withSampleData(StepsCardViewModel model) =>
       StepsCardWidget(_createChartList(model, [CACHET.BLUE_1]), model);
 
-  static List<charts.Series<Steps, String>> _createChartList(
-    StepsCardDataModel model,
+  static List<charts.Series<DailySteps, String>> _createChartList(
+    StepsCardViewModel model,
     List<Color> colors,
   ) =>
       [
-        charts.Series<Steps, String>(
+        charts.Series<DailySteps, String>(
           colorFn: (d, i) => charts.ColorUtil.fromDartColor(colors[0]),
           id: 'DailyStepsList',
           data: model.steps,
-          domainFn: (Steps steps, _) => steps.toString(),
-          measureFn: (Steps steps, _) => steps.steps,
+          domainFn: (DailySteps steps, _) => steps.toString(),
+          measureFn: (DailySteps steps, _) => steps.steps,
         )
       ];
 
@@ -122,7 +122,7 @@ class _StepsCardWidgetState extends State<StepsCardWidget> {
 }
 
 class StepsOuterStatefulWidget extends StatefulWidget {
-  final StepsCardDataModel model;
+  final StepsCardViewModel model;
   StepsOuterStatefulWidget(this.model);
 
   @override

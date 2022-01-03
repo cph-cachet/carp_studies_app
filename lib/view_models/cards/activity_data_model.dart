@@ -1,6 +1,6 @@
 part of carp_study_app;
 
-class ActivityCardDataModel extends DataModel {
+class ActivityCardViewModel extends ViewModel {
   ActivityDatum _lastActivity = new ActivityDatum(ActivityType.STILL, 100);
   final Map<ActivityType, Map<int, int>> _activities = {};
 
@@ -17,7 +17,7 @@ class ActivityCardDataModel extends DataModel {
       .map((entry) => Activity(entry.key, entry.value))
       .toList();
 
-  ActivityCardDataModel() : super();
+  ActivityCardViewModel() : super();
 
   void init(SmartphoneDeploymentController controller) {
     super.init(controller);

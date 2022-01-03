@@ -3,8 +3,8 @@ part of carp_study_app;
 class MeasuresCardDataModel extends DataModel {
   final Map<String, int> _samplingTable = {};
 
-  /// Stream of measures, i.e. [DataPoint] measures.
-  Stream<DataPoint> get measureEvents => controller!.data;
+  /// Stream of [DataPoint] measures.
+  Stream<DataPoint>? get measureEvents => controller?.data;
 
   /// The total sampling size
   int get samplingSize => controller!.samplingSize;

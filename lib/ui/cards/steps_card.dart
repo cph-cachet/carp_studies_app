@@ -59,7 +59,7 @@ class _StepsCardWidgetState extends State<StepsCardWidget> {
           child: Column(
             children: <Widget>[
               StreamBuilder(
-                stream: widget.model.pedometerStream,
+                stream: widget.model.pedometerEvents,
                 builder: (context, AsyncSnapshot<DataPoint> snapshot) {
                   return Column(
                     children: [

@@ -7,8 +7,63 @@ abstract class ViewModel {
   SmartphoneDeploymentController? get controller => _controller;
 
   /// Initialize this view model before use.
+  @mustCallSuper
   void init(SmartphoneDeploymentController ctrl) {
     this._controller = ctrl;
+  }
+}
+
+abstract class DataModel {
+  DataModel();
+  DataModel fromJson(Map<String, dynamic> json);
+  Map<String, dynamic> toJson();
+}
+
+/// An abstract view model which can serialize a [DataModel].
+abstract class SerializableViewModel<D extends DataModel> extends ViewModel {
+  late D dataModel;
+
+  @mustCallSuper
+  void init(SmartphoneDeploymentController controller) {
+    super.init(controller);
+
+    // restore the data model
+    restore().then((json) => dataModel = dataModel.fromJson(json) as D);
+
+    // save the data model on a regular basis.
+    Timer.periodic(const Duration(minutes: 1), (_) => save(dataModel.toJson()));
+  }
+
+  /// Current path and filename of the data.
+  Future<String> get filename async {
+    String path = await Settings().deploymentBasePath ?? '';
+    return '$path/$runtimeType.json';
+  }
+
+  Future<bool> save(Map<String, dynamic> json) async {
+    bool success = true;
+    try {
+      String name = (await filename);
+      info("Saving $runtimeType data to file '$name'.");
+      File(name).writeAsStringSync(jsonEncode(json));
+    } catch (exception) {
+      success = false;
+      warning('Failed to save $runtimeType data - $exception');
+    }
+    return success;
+  }
+
+  Future<Map<String, dynamic>> restore() async {
+    Map<String, dynamic> result = {};
+    try {
+      String name = (await filename);
+      info("Restoring $runtimeType data from file '$name'.");
+      String jsonString = File(name).readAsStringSync();
+      result = json.decode(jsonString) as Map<String, dynamic>;
+    } catch (exception) {
+      warning('Failed to load $runtimeType - $exception');
+    }
+    return result;
   }
 }
 

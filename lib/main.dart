@@ -5,6 +5,8 @@ import 'dart:math';
 import 'dart:convert';
 import 'dart:ui' as ui;
 
+import 'package:json_annotation/json_annotation.dart';
+
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart' hide TimeOfDay;
 
@@ -94,6 +96,8 @@ part 'ui/cards/measures_card.dart';
 part 'ui/cards/task_card.dart';
 part 'ui/cards/scoreboard_card.dart';
 part 'ui/cards/study_progress_card.dart';
+
+part 'main.g.dart';
 
 late CarpStudyApp app;
 void main() async {

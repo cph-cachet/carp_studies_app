@@ -10,25 +10,17 @@ class StepsCardDataModel extends DataModel {
   /// The list of steps.
   List<Steps> get steps => _weeklySteps.steps;
 
-  /// The stream of pedometer data points.
-  Stream<DataPoint> get pedometerStream => controller!.data.where((dataPoint) =>
-      dataPoint.carpHeader.dataFormat.toString() ==
-      SensorSamplingPackage.PEDOMETER);
+  /// Stream of pedometer (step) [DataPoint] measures.
+  Stream<DataPoint>? get pedometerEvents =>
+      controller?.data.where((dataPoint) => dataPoint.data is PedometerDatum);
 
   StepsCardDataModel();
 
   void init(SmartphoneDeploymentController controller) {
     super.init(controller);
 
-    // // initialize the weekly steps table
-    // if (DateTime.now().weekday == 1 || _weeklySteps.isEmpty) {
-    //   for (int i = 1; i <= 7; i++) _weeklySteps[i] = 0;
-    // }
-
     // listen for pedometer events and count them
-    controller.data
-        .where((dataPoint) => dataPoint.data is PedometerDatum)
-        .listen((pedometerDataPoint) {
+    pedometerEvents?.listen((pedometerDataPoint) {
       PedometerDatum? _step = pedometerDataPoint.data as PedometerDatum?;
       print('Steps - got a step: $_step');
       if (_lastStep != null)

@@ -851,31 +851,31 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           AutomaticTask()
             ..measures = SamplingPackageRegistry().common().getMeasureList(
               types: [
-                SensorSamplingPackage.LIGHT,
+                // SensorSamplingPackage.LIGHT,
                 SensorSamplingPackage.PEDOMETER,
-                DeviceSamplingPackage.MEMORY,
+                // DeviceSamplingPackage.MEMORY,
                 DeviceSamplingPackage.DEVICE,
-                DeviceSamplingPackage.BATTERY,
+                // DeviceSamplingPackage.BATTERY,
                 DeviceSamplingPackage.SCREEN,
               ],
             ),
           phone);
 
       // collect location, weather and air quality every 5 minutes
-      // _protocol!.addTriggeredTask(
-      //     PeriodicTrigger(
-      //       period: Duration(minutes: 5),
-      //       duration: const Duration(seconds: 2),
-      //     ),
-      //     AutomaticTask()
-      //       ..measures = SamplingPackageRegistry().common().getMeasureList(
-      //         types: [
-      //           ContextSamplingPackage.LOCATION,
-      //           ContextSamplingPackage.WEATHER,
-      //           ContextSamplingPackage.AIR_QUALITY,
-      //         ],
-      //       ),
-      //     phone);
+      _protocol!.addTriggeredTask(
+          PeriodicTrigger(
+            period: Duration(minutes: 5),
+            duration: const Duration(seconds: 2),
+          ),
+          AutomaticTask()
+            ..measures = SamplingPackageRegistry().common().getMeasureList(
+              types: [
+                ContextSamplingPackage.LOCATION,
+                ContextSamplingPackage.WEATHER,
+                ContextSamplingPackage.AIR_QUALITY,
+              ],
+            ),
+          phone);
 
       // collect location, activity, mobility measures continously (event-based)
       _protocol!.addTriggeredTask(
@@ -883,7 +883,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           AutomaticTask()
             ..measures = SamplingPackageRegistry().common().getMeasureList(
               types: [
-                ContextSamplingPackage.GEOLOCATION,
+                // ContextSamplingPackage.GEOLOCATION,
                 ContextSamplingPackage.ACTIVITY,
                 // ContextSamplingPackage.MOBILITY,
               ],

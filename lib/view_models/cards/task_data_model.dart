@@ -42,8 +42,6 @@ class TaskCardViewModel extends ViewModel {
       ..sort((b, a) => a.value.compareTo(b.value));
     Map<String, int> sortedTasksTable = {}..addEntries(mapEntries);
 
-    print(sortedTasksTable);
-
     // and map to the [TaskCount] model
     List<TaskCount> tasksList = sortedTasksTable.entries
         .map((entry) => TaskCount(entry.key, entry.value))

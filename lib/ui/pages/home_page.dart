@@ -14,8 +14,6 @@ class HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
 
-    print('$runtimeType - initState()');
-
     // check for permissions and start sensing - with a small delay
     bloc.configurePermissions(context).then(
         (_) => Future.delayed(const Duration(seconds: 3), () => bloc.start()));

@@ -164,7 +164,6 @@ class LocalResourceManager
     Locale locale,
   ) async {
     String path = '$basePath/${locale.languageCode}.json';
-    print("$runtimeType - loading '$path'");
     String jsonString = await rootBundle.loadString(path);
 
     Map<String, dynamic> jsonMap = json.decode(jsonString);

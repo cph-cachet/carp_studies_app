@@ -20,7 +20,6 @@ class StepsCardViewModel extends SerializableViewModel<WeeklySteps> {
     // listen for pedometer events and count them
     pedometerEvents?.listen((pedometerDataPoint) {
       PedometerDatum? _step = pedometerDataPoint.data as PedometerDatum?;
-      print('Steps - got a step: $_step');
       if (_lastStep != null)
         dataModel.increateStepCount(
             DateTime.now().weekday, _step!.stepCount! - _lastStep!.stepCount!);
@@ -51,7 +50,6 @@ class WeeklySteps extends DataModel {
       .toList();
 
   void increateStepCount(int weekday, int steps) {
-    print('Steps - adding $steps for weekday $weekday');
     weeklySteps[weekday] = weeklySteps[weekday]! + steps;
   }
 

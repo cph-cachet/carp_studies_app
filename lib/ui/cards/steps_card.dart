@@ -47,8 +47,6 @@ class _StepsCardWidgetState extends State<StepsCardWidget> {
   Widget build(BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;
 
-    print('${widget.model.weeklySteps}');
-
     return Padding(
       padding: const EdgeInsets.all(5.0),
       child: Card(

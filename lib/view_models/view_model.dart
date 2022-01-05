@@ -13,14 +13,16 @@ abstract class ViewModel {
   }
 }
 
+/// A serializable data model to be used in a [SerializableViewModel].
 abstract class DataModel {
   DataModel();
   DataModel fromJson(Map<String, dynamic> json);
   Map<String, dynamic> toJson();
 }
 
-/// An abstract view model which can serialize a [DataModel].
+/// An abstract view model which can serialize a [DataModel] across app restart.
 abstract class SerializableViewModel<D extends DataModel> extends ViewModel {
+  /// The [DataModel] to be serialized.
   late D dataModel;
 
   @mustCallSuper

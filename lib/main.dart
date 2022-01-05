@@ -53,7 +53,7 @@ part 'sensing/local_surveys.dart';
 part 'sensing/local_study_protocol_manager.dart';
 part 'sensing/sensing.dart';
 
-part 'view_models/data_model.dart';
+part 'view_models/view_model.dart';
 part 'view_models/tasklist_page_model.dart';
 part 'view_models/study_page_model.dart';
 part 'view_models/profile_page_model.dart';

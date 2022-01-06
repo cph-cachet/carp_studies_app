@@ -22,19 +22,35 @@ abstract class DataModel {
 
 /// An abstract view model which can serialize its [DataModel] across app restart.
 abstract class SerializableViewModel<D extends DataModel> extends ViewModel {
+  /// The current data model.
+  ///
+  /// The data model is either created using the [createModel] method or loaded
+  /// from persistent storage.
+  D get model => _model!;
+  D? _model;
+
   /// The [DataModel] to be serialized.
-  /// Override this in the specific view model.
-  late D dataModel;
+  ///
+  /// Subclasses should override this method to return a newly created instance
+  /// of their associated [DataModel] subclass. For example:
+  ///
+  /// ```dart
+  /// @override
+  /// MyDataModel createModel() => MyDataModel();
+  /// ```
+  @protected
+  D createModel();
 
   @mustCallSuper
   void init(SmartphoneDeploymentController controller) {
     super.init(controller);
+    _model = createModel();
 
-    // restore the data model
-    restore().then((json) => dataModel = dataModel.fromJson(json) as D);
+    // restore the data model (if any saved)
+    restore().then((savedModel) => _model = savedModel ?? _model);
 
     // save the data model on a regular basis.
-    Timer.periodic(const Duration(minutes: 1), (_) => save(dataModel.toJson()));
+    Timer.periodic(const Duration(minutes: 1), (_) => save(model.toJson()));
   }
 
   /// Current path and filename of the data.
@@ -56,18 +72,46 @@ abstract class SerializableViewModel<D extends DataModel> extends ViewModel {
     return success;
   }
 
-  Future<Map<String, dynamic>> restore() async {
-    Map<String, dynamic> result = {};
+  // Future<Map<String, dynamic>> restore() async {
+  //   Map<String, dynamic> result = {};
+  //   try {
+  //     String name = (await filename);
+  //     info("Restoring $runtimeType data from file '$name'.");
+  //     String jsonString = File(name).readAsStringSync();
+  //     result = json.decode(jsonString) as Map<String, dynamic>;
+  //   } catch (exception) {
+  //     warning('Failed to load $runtimeType - $exception');
+  //   }
+  //   return result;
+  // }
+
+  Future<D?> restore() async {
+    D? result;
     try {
       String name = (await filename);
       info("Restoring $runtimeType data from file '$name'.");
-      String jsonString = File(name).readAsStringSync();
-      result = json.decode(jsonString) as Map<String, dynamic>;
+      final jsonString = File(name).readAsStringSync();
+      final modelAsJson = json.decode(jsonString) as Map<String, dynamic>;
+      result = model.fromJson(modelAsJson) as D;
     } catch (exception) {
       warning('Failed to load $runtimeType - $exception');
     }
     return result;
   }
+}
+
+/// A measure for a specific week day. [weekday] is numbered in accordance with
+/// Dart [DateTime] a week starts with Monday, which has the value 1.
+class DailyMeasure {
+  /// Day of week - Monday = 1, Sunday = 7.
+  final int weekday;
+
+  DailyMeasure(this.weekday);
+
+  /// Get the localilzed name of the [weekday].
+  String toString() => DateFormat('EEEE')
+      .format(DateTime(2021, 2, 7).add(Duration(days: weekday)))
+      .substring(0, 3);
 }
 
 /// The view model for the entire app.

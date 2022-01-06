@@ -4,10 +4,10 @@ class ActivityCardViewModel extends SerializableViewModel<WeeklyActivities> {
   ActivityDatum _lastActivity = new ActivityDatum(ActivityType.STILL, 100);
 
   @override
-  WeeklyActivities dataModel = WeeklyActivities();
-  Map<ActivityType, Map<int, int>> get activities => dataModel.activities;
-  List<Activity> activitiesByType(ActivityType type) =>
-      dataModel.activitiesByType(type);
+  WeeklyActivities createModel() => WeeklyActivities();
+  Map<ActivityType, Map<int, int>> get activities => model.activities;
+  List<DailyActivity> activitiesByType(ActivityType type) =>
+      model.activitiesByType(type);
 
   ActivityCardViewModel() : super();
 
@@ -25,7 +25,7 @@ class ActivityCardViewModel extends SerializableViewModel<WeeklyActivities> {
       if (activity.type != _lastActivity.type) {
         // if we have a new type of activity
         // add the minutes to the last know activity type
-        dataModel.increaseActivityDuration(
+        model.increaseActivityDuration(
             _lastActivity, activity.timestamp ?? DateTime.now());
         // and then save the new activity
         _lastActivity = activity;
@@ -46,9 +46,9 @@ class WeeklyActivities extends DataModel {
   Map<ActivityType, Map<int, int>> activities = {};
 
   /// A list of activities of a specific [type].
-  List<Activity> activitiesByType(ActivityType type) => activities[type]!
+  List<DailyActivity> activitiesByType(ActivityType type) => activities[type]!
       .entries
-      .map((entry) => Activity(entry.key, entry.value))
+      .map((entry) => DailyActivity(entry.key, entry.value))
       .toList();
 
   WeeklyActivities() {
@@ -82,19 +82,12 @@ class WeeklyActivities extends DataModel {
 
 /// An activity of a specific type for a specific week day [1..7] and
 /// the number of active minutes that day.
-class Activity {
-  /// Day of week - Monday = 1, Sunday = 7.
-  final int weekday;
+class DailyActivity extends DailyMeasure {
   final int minutes;
   ActivityType? type;
 
   /// Activity [type] as a string.
   String get typeString => type.toString().split(".").last;
 
-  Activity(this.weekday, this.minutes);
-
-  /// Get the localilzed name of the [weekday].
-  String toString() => DateFormat('EEEE')
-      .format(DateTime(2021, 2, 7).add(Duration(days: weekday)))
-      .substring(0, 3);
+  DailyActivity(int weekday, this.minutes) : super(weekday);
 }

@@ -2,7 +2,7 @@ part of carp_study_app;
 
 class ActivityCardWidget extends StatefulWidget {
   final ActivityCardViewModel model;
-  final List<charts.Series<Activity, String>> seriesList;
+  final List<charts.Series<DailyActivity, String>> seriesList;
   final List<Color> colors;
   ActivityCardWidget(this.seriesList, this.model,
       {this.colors = const [CACHET.BLUE_1, CACHET.BLUE_2, CACHET.BLUE_3]});
@@ -13,29 +13,29 @@ class ActivityCardWidget extends StatefulWidget {
         model);
   }
 
-  static List<charts.Series<Activity, String>> _createChartList(
+  static List<charts.Series<DailyActivity, String>> _createChartList(
           ActivityCardViewModel model, List<Color> colors) =>
       [
-        charts.Series<Activity, String>(
+        charts.Series<DailyActivity, String>(
           colorFn: (d, i) => charts.ColorUtil.fromDartColor(colors[0]),
           id: 'walking',
           data: model.activitiesByType(ActivityType.WALKING),
-          domainFn: (Activity datum, _) => datum.toString(),
-          measureFn: (Activity datum, _) => datum.minutes,
+          domainFn: (DailyActivity datum, _) => datum.toString(),
+          measureFn: (DailyActivity datum, _) => datum.minutes,
         ),
-        charts.Series<Activity, String>(
+        charts.Series<DailyActivity, String>(
           colorFn: (d, i) => charts.ColorUtil.fromDartColor(colors[1]),
           id: 'running',
           data: model.activitiesByType(ActivityType.RUNNING),
-          domainFn: (Activity datum, _) => datum.toString(),
-          measureFn: (Activity datum, _) => datum.minutes,
+          domainFn: (DailyActivity datum, _) => datum.toString(),
+          measureFn: (DailyActivity datum, _) => datum.minutes,
         ),
-        charts.Series<Activity, String>(
+        charts.Series<DailyActivity, String>(
           colorFn: (d, i) => charts.ColorUtil.fromDartColor(colors[2]),
           id: 'cycling',
           data: model.activitiesByType(ActivityType.ON_BICYCLE),
-          domainFn: (Activity datum, _) => datum.toString(),
-          measureFn: (Activity datum, _) => datum.minutes,
+          domainFn: (DailyActivity datum, _) => datum.toString(),
+          measureFn: (DailyActivity datum, _) => datum.minutes,
         )
       ];
 

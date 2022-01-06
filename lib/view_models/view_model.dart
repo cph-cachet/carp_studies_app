@@ -20,9 +20,10 @@ abstract class DataModel {
   Map<String, dynamic> toJson();
 }
 
-/// An abstract view model which can serialize a [DataModel] across app restart.
+/// An abstract view model which can serialize its [DataModel] across app restart.
 abstract class SerializableViewModel<D extends DataModel> extends ViewModel {
   /// The [DataModel] to be serialized.
+  /// Override this in the specific view model.
   late D dataModel;
 
   @mustCallSuper

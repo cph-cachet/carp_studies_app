@@ -156,7 +156,6 @@ class ActivityOuterStatefulWidget extends StatefulWidget {
 class _ActivityOuterStatefulWidgetState
     extends State<ActivityOuterStatefulWidget> {
   @override
-  Widget build(BuildContext context) {
-    return ActivityCardWidget.withSampleData(widget.model);
-  }
+  Widget build(BuildContext context) =>
+      ActivityCardWidget.withSampleData(widget.model);
 }

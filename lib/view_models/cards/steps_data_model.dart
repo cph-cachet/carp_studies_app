@@ -2,6 +2,8 @@ part of carp_study_app;
 
 class StepsCardViewModel extends SerializableViewModel<WeeklySteps> {
   PedometerDatum? _lastStep;
+
+  @override
   WeeklySteps dataModel = WeeklySteps();
 
   /// A map of weekly steps organized by the day of the week.
@@ -50,7 +52,7 @@ class WeeklySteps extends DataModel {
       .toList();
 
   void increateStepCount(int weekday, int steps) {
-    weeklySteps[weekday] = weeklySteps[weekday]! + steps;
+    weeklySteps[weekday] = weeklySteps[weekday] ?? 0 + steps;
   }
 
   String toString() {

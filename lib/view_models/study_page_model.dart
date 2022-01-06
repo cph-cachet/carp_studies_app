@@ -1,6 +1,6 @@
 part of carp_study_app;
 
-class StudyPageModel extends DataModel {
+class StudyPageViewModel extends ViewModel {
   String get title => bloc.deployment?.protocolDescription?.title ?? 'Unnamed';
   String get description =>
       bloc.deployment?.protocolDescription?.description ?? '';
@@ -71,7 +71,7 @@ class StudyPageModel extends DataModel {
     return image;
   }
 
-  StudyPageModel();
+  StudyPageViewModel();
 
   void init(SmartphoneDeploymentController controller) {
     super.init(controller);

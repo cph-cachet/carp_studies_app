@@ -1,6 +1,6 @@
 part of carp_study_app;
 
-class MobilityCardDataModel extends DataModel {
+class MobilityCardViewModel extends ViewModel {
   final Map<int, double?> _weeklyHomeStay = {};
   final Map<int, int?> _weeklyPlaces = {};
   final Map<int, double?> _weeklyDistanceTraveled = {};
@@ -44,7 +44,7 @@ class MobilityCardDataModel extends DataModel {
       .map((entry) => Mobility(entry.key, 0, 0, entry.value))
       .toList();
 
-  MobilityCardDataModel();
+  MobilityCardViewModel();
   void init(SmartphoneDeploymentController controller) {
     super.init(controller);
 

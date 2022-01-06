@@ -1,7 +1,7 @@
 part of carp_study_app;
 
 class TaskListPage extends StatefulWidget {
-  final TaskListPageModel model;
+  final TaskListPageViewModel model;
   const TaskListPage(this.model);
 
   @override

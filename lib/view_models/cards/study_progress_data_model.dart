@@ -1,6 +1,6 @@
 part of carp_study_app;
 
-class StudyProgressCardDataModel extends DataModel {
+class StudyProgressCardViewModel extends ViewModel {
   final Map<String, int> _progressTable = {};
 
   /// A stream of [UserTask]s as they are generated.
@@ -23,7 +23,7 @@ class StudyProgressCardDataModel extends DataModel {
       .map((entry) => StudyProgress(entry.key, entry.value))
       .toList();
 
-  StudyProgressCardDataModel() : super();
+  StudyProgressCardViewModel() : super();
 
   void init(SmartphoneDeploymentController controller) {
     super.init(controller);

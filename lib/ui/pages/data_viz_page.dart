@@ -2,7 +2,7 @@ part of carp_study_app;
 
 // todo change text for survey progress
 class DataVisualizationPage extends StatelessWidget {
-  final DataVisualizationPageModel model;
+  final DataVisualizationPageViewModel model;
   DataVisualizationPage(this.model);
 
   Widget build(BuildContext context) {
@@ -66,7 +66,6 @@ class DataVisualizationPage extends StatelessWidget {
     widgets.add(StudyProgressCardWidget(model.studyProgressCardDataModel));
 
     // always show overall measure stats
-    // TODO: uncomment for other studies - not used right now
     widgets.add(MeasuresCardWidget(model.measuresCardDataModel));
 
     // check which measures are in the study

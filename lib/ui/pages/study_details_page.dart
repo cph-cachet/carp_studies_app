@@ -1,7 +1,7 @@
 part of carp_study_app;
 
 class StudyDetailsPage extends StatelessWidget {
-  final StudyPageModel studyPageModel = StudyPageModel();
+  final StudyPageViewModel studyPageModel = StudyPageViewModel();
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +43,8 @@ class StudyDetailsPage extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 15),
                     child: Text(locale.translate(studyPageModel.title),
-                        style: aboutCardTitleStyle.copyWith(color: Theme.of(context).primaryColor)),
+                        style: aboutCardTitleStyle.copyWith(
+                            color: Theme.of(context).primaryColor)),
                   ),
                   SizedBox(height: 20),
                 ],
@@ -62,7 +63,8 @@ class StudyDetailsPage extends StatelessWidget {
                     child: Column(
                       children: [
                         Text(locale.translate(studyPageModel.piAffiliation),
-                            style: aboutCardSubtitleStyle.copyWith(color: Theme.of(context).primaryColor)),
+                            style: aboutCardSubtitleStyle.copyWith(
+                                color: Theme.of(context).primaryColor)),
                         SizedBox(height: 5),
                         Text(
                           studyDescription(),
@@ -84,7 +86,8 @@ class StudyDetailsPage extends StatelessWidget {
               children: [
                 InkWell(
                   onTap: () async {
-                    String url = locale.translate(studyPageModel.privacyPolicyUrl);
+                    String url =
+                        locale.translate(studyPageModel.privacyPolicyUrl);
                     try {
                       await launch(url);
                     } catch (error) {
@@ -93,27 +96,33 @@ class StudyDetailsPage extends StatelessWidget {
                   },
                   child: Row(
                     children: [
-                      Icon(Icons.policy_outlined, color: Theme.of(context).primaryColor),
+                      Icon(Icons.policy_outlined,
+                          color: Theme.of(context).primaryColor),
                       Text(locale.translate('pages.about.study.privacy'),
-                          style: aboutCardSubtitleStyle.copyWith(color: Theme.of(context).primaryColor))
+                          style: aboutCardSubtitleStyle.copyWith(
+                              color: Theme.of(context).primaryColor))
                     ],
                   ),
                 ),
                 SizedBox(width: 15),
                 InkWell(
                   onTap: () async {
-                    String url = locale.translate(studyPageModel.studyDescriptionUrl);
+                    String url =
+                        locale.translate(studyPageModel.studyDescriptionUrl);
                     try {
                       await launch(url);
                     } catch (error) {
-                      warning("Could not launch study description URL - '$url'");
+                      warning(
+                          "Could not launch study description URL - '$url'");
                     }
                   },
                   child: Row(
                     children: [
-                      Icon(Icons.public_outlined, color: Theme.of(context).primaryColor),
+                      Icon(Icons.public_outlined,
+                          color: Theme.of(context).primaryColor),
                       Text(locale.translate('pages.about.study.website'),
-                          style: aboutCardSubtitleStyle.copyWith(color: Theme.of(context).primaryColor)),
+                          style: aboutCardSubtitleStyle.copyWith(
+                              color: Theme.of(context).primaryColor)),
                     ],
                   ),
                 ),

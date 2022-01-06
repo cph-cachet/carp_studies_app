@@ -885,7 +885,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
               types: [
                 // ContextSamplingPackage.GEOLOCATION,
                 ContextSamplingPackage.ACTIVITY,
-                // ContextSamplingPackage.MOBILITY,
+                ContextSamplingPackage.MOBILITY,
               ],
             ),
           phone);

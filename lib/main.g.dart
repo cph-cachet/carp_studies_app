@@ -35,6 +35,12 @@ const _$ActivityTypeEnumMap = {
   ActivityType.INVALID: 'INVALID',
 };
 
+WeeklyMobility _$WeeklyMobilityFromJson(Map<String, dynamic> json) =>
+    WeeklyMobility();
+
+Map<String, dynamic> _$WeeklyMobilityToJson(WeeklyMobility instance) =>
+    <String, dynamic>{};
+
 WeeklySteps _$WeeklyStepsFromJson(Map<String, dynamic> json) => WeeklySteps()
   ..weeklySteps = (json['weekly_steps'] as Map<String, dynamic>).map(
     (k, e) => MapEntry(int.parse(k), e as int),

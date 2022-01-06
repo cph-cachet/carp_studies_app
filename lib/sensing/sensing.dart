@@ -146,7 +146,6 @@ class Sensing {
     for (var task in controller!.masterDeployment!.tasks) {
       if (task.runtimeType == AppTask) {
         AppTask appTask = task as AppTask;
-        print('>> translating $appTask');
         appTask.title = localization.translate(appTask.title);
         appTask.description = localization.translate(appTask.description);
       }

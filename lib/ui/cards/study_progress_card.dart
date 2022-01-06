@@ -1,7 +1,7 @@
 part of carp_study_app;
 
 class StudyProgressCardWidget extends StatefulWidget {
-  final StudyProgressCardDataModel model;
+  final StudyProgressCardViewModel model;
 
   final List<Color> colors;
   StudyProgressCardWidget(this.model,

@@ -1,26 +1,27 @@
 part of carp_study_app;
 
 class StepsCardWidget extends StatefulWidget {
-  final StepsCardDataModel model;
+  final StepsCardViewModel model;
   final List<Color> colors;
-  final List<charts.Series<Steps, String>> seriesList;
+  final List<charts.Series<DailySteps, String>> seriesList;
 
-  StepsCardWidget(this.seriesList, this.model, {this.colors = const [CACHET.BLUE_1]});
+  StepsCardWidget(this.seriesList, this.model,
+      {this.colors = const [CACHET.BLUE_1]});
 
-  factory StepsCardWidget.withSampleData(StepsCardDataModel model) =>
+  factory StepsCardWidget.withSampleData(StepsCardViewModel model) =>
       StepsCardWidget(_createChartList(model, [CACHET.BLUE_1]), model);
 
-  static List<charts.Series<Steps, String>> _createChartList(
-    StepsCardDataModel model,
+  static List<charts.Series<DailySteps, String>> _createChartList(
+    StepsCardViewModel model,
     List<Color> colors,
   ) =>
       [
-        charts.Series<Steps, String>(
+        charts.Series<DailySteps, String>(
           colorFn: (d, i) => charts.ColorUtil.fromDartColor(colors[0]),
           id: 'DailyStepsList',
           data: model.steps,
-          domainFn: (Steps datum, _) => datum.toString(),
-          measureFn: (Steps datum, _) => datum.steps,
+          domainFn: (DailySteps steps, _) => steps.toString(),
+          measureFn: (DailySteps steps, _) => steps.steps,
         )
       ];
 
@@ -56,15 +57,19 @@ class _StepsCardWidgetState extends State<StepsCardWidget> {
           child: Column(
             children: <Widget>[
               StreamBuilder(
-                stream: widget.model.controller!.data,
+                stream: widget.model.pedometerEvents,
                 builder: (context, AsyncSnapshot<DataPoint> snapshot) {
                   return Column(
                     children: [
                       ChartsLegend(
                         title: locale.translate('cards.steps.title'),
-                        iconAssetName: Icon(Icons.directions_walk, color: Theme.of(context).primaryColor),
+                        iconAssetName: Icon(Icons.directions_walk,
+                            color: Theme.of(context).primaryColor),
                         heroTag: 'steps-card',
-                        values: ['$_selectedSteps ' + locale.translate('cards.steps.steps')],
+                        values: [
+                          '$_selectedSteps ' +
+                              locale.translate('cards.steps.steps')
+                        ],
                         colors: widget.colors,
                       ),
                       Container(
@@ -78,7 +83,8 @@ class _StepsCardWidgetState extends State<StepsCardWidget> {
                           domainAxis: charts.OrdinalAxisSpec(
                             renderSpec: renderSpecString,
                           ),
-                          primaryMeasureAxis: charts.NumericAxisSpec(renderSpec: renderSpecNum),
+                          primaryMeasureAxis:
+                              charts.NumericAxisSpec(renderSpec: renderSpecNum),
                           defaultInteractions: false,
                           selectionModels: [
                             charts.SelectionModelConfig(
@@ -86,7 +92,9 @@ class _StepsCardWidgetState extends State<StepsCardWidget> {
                                 changedListener: _infoSelectionModelChanged)
                           ],
                           behaviors: [
-                            charts.SelectNearest(eventTrigger: charts.SelectionTrigger.tapAndDrag),
+                            charts.SelectNearest(
+                                eventTrigger:
+                                    charts.SelectionTrigger.tapAndDrag),
                             charts.DomainHighlighter(),
                           ],
                         ),
@@ -105,17 +113,19 @@ class _StepsCardWidgetState extends State<StepsCardWidget> {
   void _infoSelectionModelChanged(charts.SelectionModel model) {
     if (model.hasDatumSelection)
       setState(() {
-        _selectedSteps = model.selectedSeries[0].measureFn(model.selectedDatum[0].index) as int?;
+        _selectedSteps = model.selectedSeries[0]
+            .measureFn(model.selectedDatum[0].index) as int?;
       });
   }
 }
 
 class StepsOuterStatefulWidget extends StatefulWidget {
-  final StepsCardDataModel model;
+  final StepsCardViewModel model;
   StepsOuterStatefulWidget(this.model);
 
   @override
-  _StepsOuterStatefulWidgetState createState() => _StepsOuterStatefulWidgetState();
+  _StepsOuterStatefulWidgetState createState() =>
+      _StepsOuterStatefulWidgetState();
 }
 
 class _StepsOuterStatefulWidgetState extends State<StepsOuterStatefulWidget> {

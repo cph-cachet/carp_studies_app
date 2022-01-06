@@ -1,7 +1,7 @@
 part of carp_study_app;
 
-class TaskListPageModel extends DataModel {
-  TaskListPageModel();
+class TaskListPageViewModel extends ViewModel {
+  TaskListPageViewModel();
 
   /// The list of available app tasks for the user to address.
   List<UserTask> get tasks => AppTaskController().userTaskQueue;
@@ -15,8 +15,10 @@ class TaskListPageModel extends DataModel {
       : 0;
 
   /// The number of tasks completed so far.
-  int get taskCompleted =>
-      AppTaskController().userTaskQueue.where((task) => task.state == UserTaskState.done).length;
+  int get taskCompleted => AppTaskController()
+      .userTaskQueue
+      .where((task) => task.state == UserTaskState.done)
+      .length;
 
   void init(SmartphoneDeploymentController controller) {
     super.init(controller);

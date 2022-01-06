@@ -14,15 +14,13 @@ class HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
 
-    print('$runtimeType - initState()');
-
     // check for permissions and start sensing - with a small delay
     bloc.configurePermissions(context).then(
         (_) => Future.delayed(const Duration(seconds: 3), () => bloc.start()));
 
-    _pages.add(TaskListPage(bloc.data.taskListPageModel));
-    _pages.add(StudyPage(bloc.data.studyPageModel));
-    _pages.add(DataVisualizationPage(bloc.data.dataPageModel));
+    _pages.add(TaskListPage(bloc.data.taskListPageViewModel));
+    _pages.add(StudyPage(bloc.data.studyPageViewModel));
+    _pages.add(DataVisualizationPage(bloc.data.dataVisualizationPageViewModel));
   }
 
   @override

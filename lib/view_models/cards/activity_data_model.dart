@@ -1,6 +1,6 @@
 part of carp_study_app;
 
-class ActivityCardDataModel extends DataModel {
+class ActivityCardViewModel extends ViewModel {
   ActivityDatum _lastActivity = new ActivityDatum(ActivityType.STILL, 100);
   final Map<ActivityType, Map<int, int>> _activities = {};
 
@@ -8,6 +8,8 @@ class ActivityCardDataModel extends DataModel {
   ///
   ///   (type,weekday,minutes)
   ///
+  /// In accordance with Dart [DateTime] a week starts with Monday,
+  /// which has the value 1.
   Map<ActivityType, Map<int, int>> get activities => _activities;
 
   List<Activity> activitiesByType(ActivityType type) => _activities[type]!
@@ -15,7 +17,7 @@ class ActivityCardDataModel extends DataModel {
       .map((entry) => Activity(entry.key, entry.value))
       .toList();
 
-  ActivityCardDataModel() : super();
+  ActivityCardViewModel() : super();
 
   void init(SmartphoneDeploymentController controller) {
     super.init(controller);
@@ -58,18 +60,21 @@ class ActivityCardDataModel extends DataModel {
   }
 }
 
+/// An activity of a specific type for a specific week day [1..7] and
+/// the number of active minutes that day.
 class Activity {
-  final int day;
+  /// Day of week - Monday = 1, Sunday = 7.
+  final int weekday;
   final int minutes;
   ActivityType? type;
 
   /// Activity [type] as a string.
   String get typeString => type.toString().split(".").last;
 
-  Activity(this.day, this.minutes);
+  Activity(this.weekday, this.minutes);
 
-  /// Get the localilzed name of the [day].
+  /// Get the localilzed name of the [weekday].
   String toString() => DateFormat('EEEE')
-      .format(DateTime(2021, 2, 7).add(Duration(days: day)))
+      .format(DateTime(2021, 2, 7).add(Duration(days: weekday)))
       .substring(0, 3);
 }

@@ -1,88 +1,99 @@
 part of carp_study_app;
 
-class MobilityCardViewModel extends ViewModel {
-  final Map<int, double?> _weeklyHomeStay = {};
-  final Map<int, int?> _weeklyPlaces = {};
-  final Map<int, double?> _weeklyDistanceTraveled = {};
+class MobilityCardViewModel extends SerializableViewModel<WeeklyMobility> {
+  @override
+  WeeklyMobility createModel() => WeeklyMobility();
 
-  /// A map of weekly home stays (%) organized by the day of the week.
-  ///
-  ///    (weekday,home_stay)
-  ///
-  /// In accordance with Dart [DateTime] a week starts with Monday,
-  /// which has the value 1.
-  Map<int, double?> get weeklyHomeStay => _weeklyHomeStay;
+  Map<int, int> get weeklyHomeStay => model.weeklyHomeStay;
+  List<DailyMobility> get homeStay => model.homeStay;
+  Map<int, int> get weeklyPlaces => model.weeklyPlaces;
+  List<DailyMobility> get places => model.places;
+  Map<int, double> get weeklyDistanceTraveled => model.weeklyDistanceTraveled;
+  List<DailyMobility> get distance => model.distance;
 
-  /// The list of [Mobility] object representing home stay.
-  List<Mobility> get homeStay => _weeklyHomeStay.entries
-      .map((entry) => Mobility(entry.key, 0, entry.value, 0))
-      .toList();
-
-  /// A map of weekly places organized by the day of the week.
-  ///
-  ///    (weekday,places)
-  ///
-  /// In accordance with Dart [DateTime] a week starts with Monday,
-  /// which has the value 1.
-  Map<int, int?> get weeklyPlaces => _weeklyPlaces;
-
-  /// The list of [Mobility] object representing the places visited.
-  List<Mobility> get places => _weeklyPlaces.entries
-      .map((entry) => Mobility(entry.key, entry.value, 0, 0))
-      .toList();
-
-  /// A map of weekly places organized by the day of the week.
-  ///
-  ///    (weekday,places)
-  ///
-  /// In accordance with Dart [DateTime] a week starts with Monday,
-  /// which has the value 1.
-  Map<int, double?> get weeklyDistanceTraveled => _weeklyDistanceTraveled;
-
-  /// The list of [Mobility] object representing distance traveled.
-  List<Mobility> get distance => _weeklyDistanceTraveled.entries
-      .map((entry) => Mobility(entry.key, 0, 0, entry.value))
-      .toList();
+  /// Stream of mobility [DataPoint] measures.
+  Stream<DataPoint>? get mobilityEvents =>
+      controller?.data.where((dataPoint) => dataPoint.data is MobilityDatum);
 
   MobilityCardViewModel();
   void init(SmartphoneDeploymentController controller) {
     super.init(controller);
 
-    // Initialize every week or if is the first time opening the app
-    if (DateTime.now().weekday == 1 ||
-        ((_weeklyDistanceTraveled.isEmpty && _weeklyHomeStay.isEmpty) &&
-            _weeklyPlaces.isEmpty)) {
-      for (int i = 1; i <= 7; i++) {
-        _weeklyDistanceTraveled[i] = 0;
-        _weeklyHomeStay[i] = 0;
-        _weeklyPlaces[i] = 0;
-      }
-    }
-
-    // listen for mobility events and count them
-    controller.data
-        .where((dataPoint) => dataPoint.data is MobilityDatum)
-        .listen((datum) {
-      MobilityDatum _mobility = datum as MobilityDatum;
-      // just collect the data asuming the date is correct
-      _weeklyDistanceTraveled[_mobility.date.weekday] =
-          _mobility.distanceTravelled;
-      _weeklyHomeStay[_mobility.date.weekday] = _mobility.homeStay;
-      _weeklyPlaces[_mobility.date.weekday] = _mobility.numberOfPlaces;
+    // listen for mobility events and update the features
+    mobilityEvents?.listen((mobilityDataPoint) {
+      MobilityDatum _mobility = mobilityDataPoint.data as MobilityDatum;
+      model.setMobilityFeatures(_mobility);
     });
   }
 }
 
-class Mobility {
-  final int day;
-  final int? places;
-  final double? homeStay;
-  final double? distance;
+/// Weekly mobility data in terms of
+///  * percentage at home (home stay)
+///  * visited places
+///  * distance traveled
+///
+/// All organized pr week day. In accordance with Dart [DateTime] a week
+/// starts with Monday, which has the value 1.
+@JsonSerializable(fieldRename: FieldRename.snake, includeIfNull: false)
+class WeeklyMobility extends DataModel {
+  /// A map of weekly home stays (%) organized by the day of the week.
+  Map<int, int> weeklyHomeStay = {};
 
-  Mobility(this.day, this.places, this.homeStay, this.distance);
+  /// A map of weekly places organized by the day of the week.
+  Map<int, int> weeklyPlaces = {};
 
-  /// Get the localilzed name of the [day].
-  String toString() => DateFormat('EEEE')
-      .format(DateTime(2021, 2, 7).add(Duration(days: day)))
-      .substring(0, 3);
+  /// A map of distance traveled organized by the day of the week.
+  Map<int, double> weeklyDistanceTraveled = {};
+
+  /// The list of [DailyMobility] object representing home stay.
+  List<DailyMobility> get homeStay => weeklyHomeStay.entries
+      .map((entry) => DailyMobility(entry.key, 0, entry.value, 0))
+      .toList();
+
+  /// The list of [DailyMobility] object representing the places visited.
+  List<DailyMobility> get places => weeklyPlaces.entries
+      .map((entry) => DailyMobility(entry.key, entry.value, 0, 0))
+      .toList();
+
+  /// The list of [DailyMobility] object representing distance traveled.
+  List<DailyMobility> get distance => weeklyDistanceTraveled.entries
+      .map((entry) => DailyMobility(entry.key, 0, 0, entry.value))
+      .toList();
+
+  WeeklyMobility() {
+    for (int i = 1; i <= 7; i++) {
+      weeklyDistanceTraveled[i] = 0;
+      weeklyHomeStay[i] = 0;
+      weeklyPlaces[i] = 0;
+    }
+  }
+
+  /// Update the mobility feature with [data].
+  void setMobilityFeatures(MobilityDatum data) {
+    DateTime day = data.date ?? DateTime.now();
+
+    if (data.distanceTravelled != null)
+      weeklyDistanceTraveled[day.weekday] = data.distanceTravelled!;
+    if (data.numberOfPlaces != null)
+      weeklyPlaces[day.weekday] = data.numberOfPlaces!;
+
+    // only set homestay % if larger than zero (can return -1)
+    // also convert to int (1-100) instead of double (0-1)
+    if (data.homeStay != null && data.homeStay! > 0)
+      weeklyHomeStay[day.weekday] = (100 * data.homeStay!).toInt();
+  }
+
+  WeeklyMobility fromJson(Map<String, dynamic> json) =>
+      _$WeeklyMobilityFromJson(json);
+  Map<String, dynamic> toJson() => _$WeeklyMobilityToJson(this);
+}
+
+/// Mobility features for a weekday.
+class DailyMobility extends DailyMeasure {
+  final int places;
+  final int homeStay;
+  final double distance;
+
+  DailyMobility(int weekday, this.places, this.homeStay, this.distance)
+      : super(weekday);
 }

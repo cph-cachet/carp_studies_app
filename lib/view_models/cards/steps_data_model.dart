@@ -2,13 +2,15 @@ part of carp_study_app;
 
 class StepsCardViewModel extends SerializableViewModel<WeeklySteps> {
   PedometerDatum? _lastStep;
-  WeeklySteps dataModel = WeeklySteps();
+
+  @override
+  WeeklySteps createModel() => WeeklySteps();
 
   /// A map of weekly steps organized by the day of the week.
-  Map<int, int> get weeklySteps => dataModel.weeklySteps;
+  Map<int, int> get weeklySteps => model.weeklySteps;
 
   /// The list of steps.
-  List<DailySteps> get steps => dataModel.steps;
+  List<DailySteps> get steps => model.steps;
 
   /// Stream of pedometer (step) [DataPoint] measures.
   Stream<DataPoint>? get pedometerEvents =>
@@ -21,8 +23,9 @@ class StepsCardViewModel extends SerializableViewModel<WeeklySteps> {
     pedometerEvents?.listen((pedometerDataPoint) {
       PedometerDatum? _step = pedometerDataPoint.data as PedometerDatum?;
       if (_lastStep != null)
-        dataModel.increateStepCount(
+        model.increateStepCount(
             DateTime.now().weekday, _step!.stepCount! - _lastStep!.stepCount!);
+
       _lastStep = _step;
     });
   }
@@ -49,9 +52,8 @@ class WeeklySteps extends DataModel {
       .map((entry) => DailySteps(entry.key, entry.value))
       .toList();
 
-  void increateStepCount(int weekday, int steps) {
-    weeklySteps[weekday] = weeklySteps[weekday]! + steps;
-  }
+  void increateStepCount(int weekday, int steps) =>
+      weeklySteps[weekday] = (weeklySteps[weekday] ?? 0) + steps;
 
   String toString() {
     String _str = ' day | steps\n';
@@ -64,18 +66,10 @@ class WeeklySteps extends DataModel {
   Map<String, dynamic> toJson() => _$WeeklyStepsToJson(this);
 }
 
-/// Steps pr. week day.
-class DailySteps {
-  /// Day of week - Monday = 1, Sunday = 7.
-  final int weekday;
-
+/// Steps per weekday.
+class DailySteps extends DailyMeasure {
   /// Number of steps for this [weekday].
   final int steps;
 
-  DailySteps(this.weekday, this.steps);
-
-  /// Get the localilzed name of the [weekday].
-  String toString() => DateFormat('EEEE')
-      .format(DateTime(2021, 2, 7).add(Duration(days: weekday)))
-      .substring(0, 3);
+  DailySteps(int weekday, this.steps) : super(weekday);
 }

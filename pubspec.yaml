@@ -1,21 +1,7 @@
 name: carp_study_app
 description: The generic CARP study app
-
-# The following line prevents the package from being accidentally published to
-# pub.dev using `pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
-
-# The following defines the version and build number for your application.
-# A version number is three numbers separated by dots, like 1.2.43
-# followed by an optional build number separated by a +.
-# Both the version and the builder number may be overridden in flutter
-# build by specifying --build-name and --build-number, respectively.
-# In Android, build-name is used as versionName while build-number used as versionCode.
-# Read more about Android versioning at https://developer.android.com/studio/publish/versioning
-# In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
-# Read more about iOS versioning at
-# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 0.32.1
+publish_to: 'none'
+version: 0.32.2
 
 environment:
   sdk: '>=2.12.0 <3.0.0'
@@ -26,10 +12,10 @@ dependencies:
   flutter:
     sdk: flutter
 
-  carp_mobile_sensing: ^0.32.1
+  carp_mobile_sensing: ^0.32.2
   # carp_context_package: ^0.32.0
   carp_survey_package: ^0.32.0
-  # carp_audio_package: ^0.32.1
+  carp_audio_package: ^0.32.2
   carp_backend: ^0.32.1
 
   #carp_communication_package: ^0.6.1
@@ -67,10 +53,12 @@ dependency_overrides:
   #   path: ../carp/carp.sensing-flutter/carp_mobile_sensing/
   carp_context_package:
     path: ../carp/carp.sensing-flutter/packages/carp_context_package/
+  mobility_features:
+    path: ../flutter-plugins/packages/mobility_features/
   # carp_survey_package:
   #   path: ../carp/carp.sensing-flutter/packages/carp_survey_package/
-  carp_audio_package:
-    path: ../carp/carp.sensing-flutter/packages/carp_audio_package/
+  # carp_audio_package:
+  #   path: ../carp/carp.sensing-flutter/packages/carp_audio_package/
   # carp_backend:
   #   path: ../carp/carp.sensing-flutter/backends/carp_backend/
   # carp_webservices:

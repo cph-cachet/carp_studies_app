@@ -36,10 +36,27 @@ const _$ActivityTypeEnumMap = {
 };
 
 WeeklyMobility _$WeeklyMobilityFromJson(Map<String, dynamic> json) =>
-    WeeklyMobility();
+    WeeklyMobility()
+      ..weeklyHomeStay = (json['weekly_home_stay'] as Map<String, dynamic>).map(
+        (k, e) => MapEntry(int.parse(k), e as int),
+      )
+      ..weeklyPlaces = (json['weekly_places'] as Map<String, dynamic>).map(
+        (k, e) => MapEntry(int.parse(k), e as int),
+      )
+      ..weeklyDistanceTraveled =
+          (json['weekly_distance_traveled'] as Map<String, dynamic>).map(
+        (k, e) => MapEntry(int.parse(k), (e as num).toDouble()),
+      );
 
 Map<String, dynamic> _$WeeklyMobilityToJson(WeeklyMobility instance) =>
-    <String, dynamic>{};
+    <String, dynamic>{
+      'weekly_home_stay':
+          instance.weeklyHomeStay.map((k, e) => MapEntry(k.toString(), e)),
+      'weekly_places':
+          instance.weeklyPlaces.map((k, e) => MapEntry(k.toString(), e)),
+      'weekly_distance_traveled': instance.weeklyDistanceTraveled
+          .map((k, e) => MapEntry(k.toString(), e)),
+    };
 
 WeeklySteps _$WeeklyStepsFromJson(Map<String, dynamic> json) => WeeklySteps()
   ..weeklySteps = (json['weekly_steps'] as Map<String, dynamic>).map(

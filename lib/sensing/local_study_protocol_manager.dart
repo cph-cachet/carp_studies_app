@@ -906,9 +906,9 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
             ),
           phone);
 
-      // collect demographics once when the study starts
+      // collect demographics only once
       _protocol!.addTriggeredTask(
-          ImmediateTrigger(),
+          OneTimeTrigger('demographics'),
           AppTask(
             // type: SurveyUserTask.DEMOGRAPHIC_SURVEY_TYPE,
             type: SurveyUserTask.SURVEY_TYPE,

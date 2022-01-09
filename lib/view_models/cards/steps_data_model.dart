@@ -25,6 +25,7 @@ class StepsCardViewModel extends SerializableViewModel<WeeklySteps> {
       if (_lastStep != null)
         model.increateStepCount(
             DateTime.now().weekday, _step!.stepCount! - _lastStep!.stepCount!);
+
       _lastStep = _step;
     });
   }
@@ -51,9 +52,8 @@ class WeeklySteps extends DataModel {
       .map((entry) => DailySteps(entry.key, entry.value))
       .toList();
 
-  void increateStepCount(int weekday, int steps) {
-    weeklySteps[weekday] = weeklySteps[weekday] ?? 0 + steps;
-  }
+  void increateStepCount(int weekday, int steps) =>
+      weeklySteps[weekday] = (weeklySteps[weekday] ?? 0) + steps;
 
   String toString() {
     String _str = ' day | steps\n';

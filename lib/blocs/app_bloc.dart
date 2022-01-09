@@ -25,6 +25,9 @@ class StudyAppBLoC {
   final StreamController<int> _messageStreamController =
       StreamController.broadcast();
   List<Message> get messages => _messages;
+
+  /// A stream of event when the list of [messages] is updated.
+  /// The data send on the stream is the number of available messages.
   Stream<int> get messageStream => _messageStreamController.stream;
 
   StudyAppState get state => _state;
@@ -250,10 +253,14 @@ class StudyAppBLoC {
   /// Refresh the list of messages (news, announcments, articles) to be shown in
   /// the Study Page of the app.
   Future<void> refreshMessages() async {
-    _messages = await messageManager.getMessages();
-    _messages.sort((m1, m2) => m1.timestamp.compareTo(m2.timestamp));
-    info('Message list refreshed - count: ${_messages.length}');
-    _messageStreamController.add(_messages.length);
+    try {
+      _messages = await messageManager.getMessages();
+      _messages.sort((m1, m2) => m1.timestamp.compareTo(m2.timestamp));
+      info('Message list refreshed - count: ${_messages.length}');
+      _messageStreamController.add(_messages.length);
+    } catch (error) {
+      warning('Error getting messages - $error');
+    }
   }
 
   /// The signed in user. Returns null if no user is signed in.

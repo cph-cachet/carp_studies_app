@@ -50,7 +50,7 @@ abstract class SerializableViewModel<D extends DataModel> extends ViewModel {
     restore().then((savedModel) => _model = savedModel ?? _model);
 
     // save the data model on a regular basis.
-    Timer.periodic(const Duration(minutes: 1), (_) => save(model.toJson()));
+    Timer.periodic(const Duration(minutes: 5), (_) => save(model.toJson()));
   }
 
   /// Current path and filename of the data.

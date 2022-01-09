@@ -1,7 +1,8 @@
 part of carp_study_app;
 
 class ActivityCardViewModel extends SerializableViewModel<WeeklyActivities> {
-  ActivityDatum _lastActivity = new ActivityDatum(ActivityType.STILL, 100);
+  DataPoint _lastActivity =
+      DataPoint.fromData(ActivityDatum(ActivityType.STILL, 100));
 
   @override
   WeeklyActivities createModel() => WeeklyActivities();
@@ -19,16 +20,23 @@ class ActivityCardViewModel extends SerializableViewModel<WeeklyActivities> {
     super.init(controller);
 
     // listen for activity events and count the minutes
-    activityEvents?.listen((activityDataPoint) {
-      ActivityDatum activity = activityDataPoint.data as ActivityDatum;
+    activityEvents?.listen((_activityDataPoint) {
+      ActivityDatum lastActivityDatum = _lastActivity.data as ActivityDatum;
+      ActivityDatum activityDatum = _activityDataPoint.data as ActivityDatum;
 
-      if (activity.type != _lastActivity.type) {
+      if (activityDatum.type != lastActivityDatum.type) {
         // if we have a new type of activity
-        // add the minutes to the last know activity type
+        // add the minutes to the last known activity type
+        DateTime start = _lastActivity.carpHeader.startTime ?? DateTime.now();
+        DateTime end =
+            _activityDataPoint.carpHeader.startTime ?? DateTime.now();
         model.increaseActivityDuration(
-            _lastActivity, activity.timestamp ?? DateTime.now());
+          lastActivityDatum.type,
+          start.weekday,
+          end.difference(start).inMinutes,
+        );
         // and then save the new activity
-        _lastActivity = activity;
+        _lastActivity = _activityDataPoint;
       }
     });
   }
@@ -61,11 +69,14 @@ class WeeklyActivities extends DataModel {
     );
   }
 
-  /// Increase the number of minutes of doing [activity] until [timestamp].
-  void increaseActivityDuration(ActivityDatum activity, DateTime timestamp) {
-    activities[activity.type]![activity.timestamp!.weekday] =
-        activities[activity.type]![activity.timestamp!.weekday] ??
-            0 + timestamp.difference(activity.timestamp!).inMinutes;
+  /// Increase the number of minutes of doing [activityType] on [weekday] with [minutes].
+  void increaseActivityDuration(
+    ActivityType activityType,
+    int weekday,
+    int minutes,
+  ) {
+    activities[activityType]![weekday] =
+        (activities[activityType]![weekday] ?? 0) + minutes;
   }
 
   WeeklyActivities fromJson(Map<String, dynamic> json) =>

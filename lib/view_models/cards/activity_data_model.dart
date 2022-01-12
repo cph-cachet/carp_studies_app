@@ -27,9 +27,8 @@ class ActivityCardViewModel extends SerializableViewModel<WeeklyActivities> {
       if (activityDatum.type != lastActivityDatum.type) {
         // if we have a new type of activity
         // add the minutes to the last known activity type
-        DateTime start = _lastActivity.carpHeader.startTime ?? DateTime.now();
-        DateTime end =
-            _activityDataPoint.carpHeader.startTime ?? DateTime.now();
+        DateTime start = lastActivityDatum.timestamp;
+        DateTime end = activityDatum.timestamp;
         model.increaseActivityDuration(
           lastActivityDatum.type,
           start.weekday,

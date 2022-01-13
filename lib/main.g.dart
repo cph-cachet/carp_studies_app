@@ -26,13 +26,10 @@ Map<String, dynamic> _$WeeklyActivitiesToJson(WeeklyActivities instance) =>
 const _$ActivityTypeEnumMap = {
   ActivityType.IN_VEHICLE: 'IN_VEHICLE',
   ActivityType.ON_BICYCLE: 'ON_BICYCLE',
-  ActivityType.ON_FOOT: 'ON_FOOT',
   ActivityType.RUNNING: 'RUNNING',
   ActivityType.STILL: 'STILL',
-  ActivityType.TILTING: 'TILTING',
-  ActivityType.UNKNOWN: 'UNKNOWN',
   ActivityType.WALKING: 'WALKING',
-  ActivityType.INVALID: 'INVALID',
+  ActivityType.UNKNOWN: 'UNKNOWN',
 };
 
 WeeklyMobility _$WeeklyMobilityFromJson(Map<String, dynamic> json) =>

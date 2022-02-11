@@ -83,6 +83,8 @@ part 'ui/pages/study_details_page.dart';
 part 'ui/pages/message_details_page.dart';
 part 'ui/pages/process_message_page.dart';
 part 'ui/pages/camera_task_page.dart';
+part 'ui/pages/display_picture_page.dart';
+part 'ui/pages/camera_page.dart';
 
 part 'ui/widgets/study_card.dart';
 part 'ui/widgets/horizontal_bar.dart';

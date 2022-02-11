@@ -33,8 +33,7 @@ class _CameraTaskPageState extends State<CameraTaskPage> {
 
   initializeCamera(int cameraIndex) async {
     cameras ??= await availableCameras();
-    _controller = CameraController(
-        cameras![cameraIndex], ResolutionPreset.medium,
+    _controller = CameraController(cameras![cameraIndex], ResolutionPreset.medium,
         imageFormatGroup: ImageFormatGroup.yuv420, enableAudio: true);
 
     // _initializeControllerFuture = _controller.initialize();
@@ -70,10 +69,8 @@ class _CameraTaskPageState extends State<CameraTaskPage> {
 
       await Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (context) => DisplayPictureScreen(
-              videoUserTask: videoUserTask,
-              filePath: xFile.path,
-              isVideo: true),
+          builder: (context) =>
+              DisplayPictureScreen(videoUserTask: videoUserTask, filePath: xFile.path, isVideo: true),
         ),
       );
       setState(() {
@@ -93,8 +90,7 @@ class _CameraTaskPageState extends State<CameraTaskPage> {
 
     await Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => DisplayPictureScreen(
-            videoUserTask: videoUserTask, filePath: xFile.path),
+        builder: (context) => DisplayPictureScreen(videoUserTask: videoUserTask, filePath: xFile.path),
       ),
     );
 
@@ -175,23 +171,20 @@ class _CameraTaskPageState extends State<CameraTaskPage> {
                               height: 65,
                               child: CircularProgressIndicator(
                                   backgroundColor: Colors.white54,
-                                  valueColor:
-                                      AlwaysStoppedAnimation(Colors.black54),
+                                  valueColor: AlwaysStoppedAnimation(Colors.black54),
                                   strokeWidth: 5),
                             ),
                             Container(
                               height: 60,
                               width: 60,
-                              decoration: BoxDecoration(
-                                  shape: BoxShape.circle, color: Colors.white),
+                              decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.white),
                             ),
                           ],
                         )
                       : Container(
                           height: 60,
                           width: 60,
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle, color: Colors.white),
+                          decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.white),
                         ),
                 ),
                 IconButton(
@@ -228,15 +221,11 @@ class DisplayPictureScreen extends StatefulWidget {
   final VideoUserTask videoUserTask;
 
   const DisplayPictureScreen(
-      {Key? key,
-      required this.videoUserTask,
-      required this.filePath,
-      this.isVideo = false})
+      {Key? key, required this.videoUserTask, required this.filePath, this.isVideo = false})
       : super(key: key);
 
   @override
-  State<DisplayPictureScreen> createState() =>
-      _DisplayPictureScreenState(videoUserTask);
+  State<DisplayPictureScreen> createState() => _DisplayPictureScreenState(videoUserTask);
 }
 
 class _DisplayPictureScreenState extends State<DisplayPictureScreen> {

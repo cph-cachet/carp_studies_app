@@ -51,7 +51,8 @@
             android:theme="@style/LaunchTheme"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
             android:hardwareAccelerated="true"
-            android:windowSoftInputMode="adjustResize">
+            android:windowSoftInputMode="adjustResize"
+            android:exported="true">
             <!-- Specifies an Android theme to apply to this Activity as soon as
                  the Android process has started. This theme is visible to the user
                  while the Flutter UI initializes. After that, this theme continues
@@ -76,7 +77,8 @@
         </activity>
 
         <!-- service for using the Android activity recognition API -->
-        <service android:name="dk.cachet.activity_recognition_flutter.activity.ActivityRecognizedService" />
+        <service android:name="dk.cachet.activity_recognition_flutter.activity.ActivityRecognizedService" 
+        android:exported="true"/>
 
         <!-- Services for background location handling -->
         <receiver
@@ -85,7 +87,8 @@
                 android:exported="true"
         />
         <receiver android:name="rekab.app.background_locator.BootBroadcastReceiver"
-                  android:enabled="true">
+                  android:enabled="true"
+                  android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
             </intent-filter>

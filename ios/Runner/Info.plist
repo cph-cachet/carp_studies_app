@@ -45,6 +45,8 @@
 	<string>CARP uses bluetooth to connect to wearable devices</string>
 	<key>NSCalendarsUsageDescription</key>
 	<string>CARP collects calendar events to see how busy you are</string>
+	<key>NSCameraUsageDescription</key>
+	<string>CARP uses the camera to take pictures and/or videos for some tasks</string>
 	<key>NSContactsUsageDescription</key>
 	<string>CARP uses contacts</string>
 	<key>NSHealthShareUsageDescription</key>

@@ -1,10 +1,10 @@
 part of carp_study_app;
 
-class MeasuresCardDataModel extends DataModel {
+class MeasuresCardViewModel extends ViewModel {
   final Map<String, int> _samplingTable = {};
 
-  /// Stream of measures, i.e. [DataPoint] measures.
-  Stream<DataPoint> get measureEvents => controller!.data;
+  /// Stream of [DataPoint] measures.
+  Stream<DataPoint>? get measureEvents => controller?.data;
 
   /// The total sampling size
   int get samplingSize => controller!.samplingSize;
@@ -13,11 +13,11 @@ class MeasuresCardDataModel extends DataModel {
   Map<String, int> get samplingTable => _samplingTable;
 
   /// The list of measures
-  List<Measures> get measures => _samplingTable.entries
-      .map((entry) => Measures(entry.key, entry.value))
+  List<MeasureCount> get measures => _samplingTable.entries
+      .map((entry) => MeasureCount(entry.key, entry.value))
       .toList();
 
-  MeasuresCardDataModel() : super();
+  MeasuresCardViewModel() : super();
 
   void init(SmartphoneDeploymentController controller) {
     super.init(controller);
@@ -36,20 +36,19 @@ class MeasuresCardDataModel extends DataModel {
     return _str;
   }
 
-  // Orders the measures based on the amount of entries to display those with more entries
+  /// Order the measures based on the amount of entries
   void orderedMeasures() {
     var mapEntries = _samplingTable.entries.toList()
       ..sort((b, a) => a.value.compareTo(b.value));
     _samplingTable
       ..clear()
       ..addEntries(mapEntries);
-
-    print(_samplingTable);
   }
 }
 
-class Measures {
+/// Holds the count for a measure.
+class MeasureCount {
   final String measure;
   final int size;
-  Measures(this.measure, this.size);
+  MeasureCount(this.measure, this.size);
 }

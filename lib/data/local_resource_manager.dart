@@ -7,9 +7,10 @@ part of carp_study_app;
 ///
 /// Localization json files should be added to the app as assets in the
 /// `assets/lang_local` folder and added to the `pubsepc.yaml` file.
-class LocalResourceManager implements ResourceManager {
+class LocalResourceManager
+    implements InformedConsentManager, LocalizationManager, MessageManager {
   RPOrderedTask? _informedConsent;
-  StudyDescription? _description;
+  final Map<String, Message> _messages = {};
 
   static final LocalResourceManager _instance = LocalResourceManager._();
   factory LocalResourceManager() => _instance;
@@ -20,7 +21,29 @@ class LocalResourceManager implements ResourceManager {
   }
 
   @override
-  Future initialize() async {}
+  Future initialize() async {
+    setMessage(Message(
+      type: MessageType.announcement,
+      title: 'Study overview',
+      subTitle: '',
+      message: 'Click here to get a preview of the WristAngel Study',
+      url: 'https://docdro.id/rk21nkz',
+    ));
+    setMessage(Message(
+      type: MessageType.article,
+      title: "pages.about.message.1.title",
+      subTitle: "pages.about.message.1.subtitle",
+      message: "pages.about.message.1.message",
+      imagePath: 'assets/images/park.png',
+    ));
+    setMessage(Message(
+        type: MessageType.announcement,
+        title: "pages.about.message.2.title",
+        subTitle: "pages.about.message.2.subtitle",
+        message: "pages.about.message.2.message"));
+  }
+
+  // INFORMED CONSENT
 
   @override
   RPOrderedTask? get informedConsent => _informedConsent;
@@ -131,6 +154,8 @@ class LocalResourceManager implements ResourceManager {
     return true;
   }
 
+  // LOCALIZATION
+
   /// The path to the language json files to be loaded using this resource manager.
   final String basePath = 'assets/lang_local';
 
@@ -139,7 +164,6 @@ class LocalResourceManager implements ResourceManager {
     Locale locale,
   ) async {
     String path = '$basePath/${locale.languageCode}.json';
-    print("$runtimeType - loading '$path'");
     String jsonString = await rootBundle.loadString(path);
 
     Map<String, dynamic> jsonMap = json.decode(jsonString);
@@ -159,4 +183,28 @@ class LocalResourceManager implements ResourceManager {
   Future<bool> deleteLocalizations(Locale locale) {
     throw UnimplementedError();
   }
+
+  // MESSAGES
+
+  @override
+  Future<List<Message>> getMessages({
+    DateTime? start,
+    DateTime? end,
+    int? count = 20,
+  }) async =>
+      _messages.values.toList();
+
+  @override
+  Future<Message?> getMessage(String messageId) async => _messages[messageId];
+
+  @override
+  Future<void> setMessage(Message message) async =>
+      _messages[message.id] = message;
+
+  @override
+  Future<void> deleteMessage(String messageId) async =>
+      _messages.remove(messageId);
+
+  @override
+  Future<void> deleteAllMessages() async => _messages.clear();
 }

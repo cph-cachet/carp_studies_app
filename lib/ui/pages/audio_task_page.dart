@@ -121,12 +121,12 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
       builder: (context, AsyncSnapshot<UserTaskState> snapshot) {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
+          children: [
             SizedBox(height: 35),
             _header(),
             SizedBox(height: 35),
             Image(
-                image: AssetImage('assets/images/audio.png'),
+                image: AssetImage('assets/icons/audio.png'),
                 width: 220,
                 height: 220),
             SizedBox(height: 40),
@@ -205,7 +205,7 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
             _header(),
             SizedBox(height: 35),
             Image(
-                image: AssetImage('assets/images/audio.png'),
+                image: AssetImage('assets/icons/audio.png'),
                 width: 220,
                 height: 220),
             SizedBox(height: 40),
@@ -213,10 +213,14 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
                 style: audioTitleStyle),
             SizedBox(height: 10),
             // If instructions are too long, create scrollable card for the extra instructions
+            // TODO - the layout method below is prone to be creating problems / exceptions....
+            //  - if, for example, the audioUserTask.instructions is a key (with no \n\n)
+            //  - or if there is no \n\n
+            // IMO we need another solution, which does not rely on assuming \n\n to be in the text
             Text(locale.translate(audioUserTask!.instructions).split('\n\n')[0],
                 style: audioContentStyle),
             SizedBox(height: 10),
-            audioUserTask!.instructions.split('\n\n').length > 1
+            audioUserTask!.instructions.split('\n\n').length >= 1
                 ? Expanded(
                     flex: 3,
                     child: Card(
@@ -293,7 +297,7 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
             _header(),
             SizedBox(height: 35),
             Image(
-                image: AssetImage('assets/images/audio.png'),
+                image: AssetImage('assets/icons/audio.png'),
                 width: 220,
                 height: 220),
             SizedBox(height: 40),

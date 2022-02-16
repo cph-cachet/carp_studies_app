@@ -33,3 +33,5 @@ enum LoginStatus {
   /// Successful login - Navigate to home page
   SUCCESSFUL
 }
+
+enum ProcessStatus { DONE, ERROR, OTHER }

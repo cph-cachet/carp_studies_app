@@ -2,8 +2,9 @@ part of carp_study_app;
 
 ThemeData carpStudyTheme = ThemeData.light().copyWith(
   primaryColor: Color(0xFF206FA2),
-  accentColor: Color(0xffcce8fa),
+  accentColor: Color(0xFFFAFAFA), //Color(0xffcce8fa),
   hoverColor: Color(0xFFF1F9FF),
+  scaffoldBackgroundColor: Color(0xFFFFFFFF),
   textTheme: ThemeData.light()
       .textTheme
       .copyWith(
@@ -19,10 +20,10 @@ ThemeData carpStudyTheme = ThemeData.light().copyWith(
               fontWeight: FontWeight.w400,
               fontSize: 16.0,
             ),
-        subtitle1: ThemeData.light().textTheme.subtitle1!.copyWith(
-            fontWeight: FontWeight.w600,
-            fontSize: 20.0,
-            color: Color(0xFF206FA2)),
+        subtitle1: ThemeData.light()
+            .textTheme
+            .subtitle1!
+            .copyWith(fontWeight: FontWeight.w600, fontSize: 20.0, color: Color(0xFF206FA2)),
         headline6: ThemeData.light().textTheme.headline6!.copyWith(
               fontWeight: FontWeight.w500,
               fontSize: 20.0,
@@ -125,61 +126,44 @@ class AxisTheme {
   }
 }
 
-TextStyle studyTitleStyle = TextStyle(
-    fontSize: 24,
-    fontWeight: FontWeight.w600,
-    color: Color.fromRGBO(32, 111, 162, 1));
+TextStyle studyTitleStyle =
+    TextStyle(fontSize: 24, fontWeight: FontWeight.w600, color: Color.fromRGBO(32, 111, 162, 1));
 
-TextStyle readMoreStudyStyle =
-    TextStyle(fontSize: 12, fontWeight: FontWeight.w700);
+TextStyle readMoreStudyStyle = TextStyle(fontSize: 12, fontWeight: FontWeight.w700);
 
-TextStyle scoreNumberStyle = TextStyle(
-    fontSize: 36,
-    fontWeight: FontWeight.w800,
-    color: Color.fromRGBO(32, 111, 162, 1));
+TextStyle scoreNumberStyle =
+    TextStyle(fontSize: 36, fontWeight: FontWeight.w800, color: Color.fromRGBO(32, 111, 162, 1));
 
-TextStyle scoreTextStyle = TextStyle(
-    fontSize: 12, fontWeight: FontWeight.w700, color: Color(0xff77A8C8));
+TextStyle scoreTextStyle = TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: Color(0xff77A8C8));
 
-TextStyle aboutCardTitleStyle =
-    TextStyle(fontSize: 20, fontWeight: FontWeight.w700);
+TextStyle aboutCardTitleStyle = TextStyle(fontSize: 20, fontWeight: FontWeight.w700);
 
-TextStyle aboutCardInfoStyle =
-    TextStyle(fontSize: 14, fontStyle: FontStyle.italic);
+TextStyle aboutCardInfoStyle = TextStyle(fontSize: 14, fontStyle: FontStyle.italic);
 
-TextStyle aboutCardSubtitleStyle =
-    TextStyle(fontSize: 16, fontWeight: FontWeight.w600);
+TextStyle aboutCardSubtitleStyle = TextStyle(fontSize: 16, fontWeight: FontWeight.w600);
 
-TextStyle aboutCardContentStyle =
-    TextStyle(fontSize: 16, fontWeight: FontWeight.w400);
+TextStyle profileSectionStyle = TextStyle(fontSize: 12, fontWeight: FontWeight.w400, letterSpacing: 2);
 
-TextStyle sectionTitleStyle =
-    TextStyle(fontSize: 18, fontWeight: FontWeight.w700);
+TextStyle aboutCardContentStyle = TextStyle(fontSize: 16, fontWeight: FontWeight.w400);
+
+TextStyle sectionTitleStyle = TextStyle(fontSize: 18, fontWeight: FontWeight.w700);
 
 TextStyle inputFieldStyle = TextStyle(fontSize: 15, color: Color(0xff707070));
 
-TextStyle welcomeMessageStyle = TextStyle(
-    fontSize: 24, color: Color(0xff707070), fontWeight: FontWeight.bold);
+TextStyle welcomeMessageStyle =
+    TextStyle(fontSize: 24, color: Color(0xff707070), fontWeight: FontWeight.bold);
 
-TextStyle studyDescriptionStyle =
-    TextStyle(fontSize: 12, fontWeight: FontWeight.w300);
-TextStyle dataCardTitleStyle =
-    TextStyle(fontSize: 16, fontWeight: FontWeight.w400, letterSpacing: 1);
+TextStyle studyDescriptionStyle = TextStyle(fontSize: 12, fontWeight: FontWeight.w300);
+TextStyle dataCardTitleStyle = TextStyle(fontSize: 16, fontWeight: FontWeight.w400, letterSpacing: 1);
 TextStyle measuresStyle = TextStyle(fontSize: 18, fontWeight: FontWeight.w400);
 TextStyle legendStyle = TextStyle(fontSize: 12, fontWeight: FontWeight.w400);
 
-TextStyle audioTitleStyle =
-    TextStyle(fontSize: 22, fontWeight: FontWeight.w700);
-TextStyle audioContentStyle =
-    TextStyle(fontSize: 16, fontWeight: FontWeight.w500);
-TextStyle audioDescriptionStyle =
-    TextStyle(fontSize: 14, fontWeight: FontWeight.w400);
-TextStyle audioInstructionStyle =
-    TextStyle(fontSize: 16, fontWeight: FontWeight.w400);
+TextStyle audioTitleStyle = TextStyle(fontSize: 22, fontWeight: FontWeight.w700);
+TextStyle audioContentStyle = TextStyle(fontSize: 16, fontWeight: FontWeight.w500);
+TextStyle audioDescriptionStyle = TextStyle(fontSize: 14, fontWeight: FontWeight.w400);
+TextStyle audioInstructionStyle = TextStyle(fontSize: 16, fontWeight: FontWeight.w400);
 
-TextStyle profileTitleStyle =
-    TextStyle(fontSize: 20, fontWeight: FontWeight.w400);
-TextStyle profileActionStyle =
-    TextStyle(fontSize: 20, fontWeight: FontWeight.w600);
+TextStyle profileTitleStyle = TextStyle(fontSize: 20, fontWeight: FontWeight.w400);
+TextStyle profileActionStyle = TextStyle(fontSize: 20, fontWeight: FontWeight.w400);
 
 TextStyle timerStyle = TextStyle(fontSize: 36, fontWeight: FontWeight.w600);

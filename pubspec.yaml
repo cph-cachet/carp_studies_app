@@ -1,41 +1,26 @@
 name: carp_study_app
 description: The generic CARP study app
-
-# The following line prevents the package from being accidentally published to
-# pub.dev using `pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
-
-# The following defines the version and build number for your application.
-# A version number is three numbers separated by dots, like 1.2.43
-# followed by an optional build number separated by a +.
-# Both the version and the builder number may be overridden in flutter
-# build by specifying --build-name and --build-number, respectively.
-# In Android, build-name is used as versionName while build-number used as versionCode.
-# Read more about Android versioning at https://developer.android.com/studio/publish/versioning
-# In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
-# Read more about iOS versioning at
-# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 0.32.0
+publish_to: 'none'
+version: 0.32.3
 
 environment:
   sdk: '>=2.12.0 <3.0.0'
   flutter: ">=2.2.0"
 
-
 dependencies:
   flutter:
     sdk: flutter
 
-  carp_mobile_sensing: ^0.32.1
-  carp_context_package: ^0.32.0
-  carp_survey_package: ^0.32.0
-  carp_audio_package: ^0.32.0
-  carp_backend: ^0.32.0
+  carp_mobile_sensing: ^0.32.3
+  carp_context_package: ^0.32.1
+  carp_survey_package: ^0.32.1
+  carp_audio_package: ^0.32.2
+  carp_backend: ^0.32.3
 
   #carp_communication_package: ^0.6.1
   #carp_health_package: ^0.6.1
   
-  research_package: ^0.6.4
+  research_package: ^0.7.0
 
   flutter_launcher_icons: ^0.9.1
   url_launcher: ^6.0.9
@@ -44,6 +29,10 @@ dependencies:
   charts_flutter: ^0.12.0
   intl: ^0.17.0
   flutter_markdown: ^0.6.4
+  camera: ^0.9.4+11
+  video_player: ^2.2.7
+  path_provider: ^2.0.2
+  json_annotation: ^4.3.0
 
   flutter_localizations:
     sdk: flutter
@@ -64,6 +53,8 @@ dependency_overrides:
   #   path: ../carp/carp.sensing-flutter/carp_mobile_sensing/
   # carp_context_package:
   #   path: ../carp/carp.sensing-flutter/packages/carp_context_package/
+  # mobility_features:
+  #   path: ../flutter-plugins/packages/mobility_features/
   # carp_survey_package:
   #   path: ../carp/carp.sensing-flutter/packages/carp_survey_package/
   # carp_audio_package:
@@ -78,19 +69,12 @@ dependency_overrides:
 dev_dependencies:
   # flutter_test:
   #   sdk: flutter
+
+  #  auto generate json code (.g files) with:
+  #    flutter pub run build_runner build --delete-conflicting-outputs
   json_serializable: any
   build_runner: any
   test: any
-
-  # DON'T include the carp_study_generator when compiling the app for runtime
-  # If you're getting Android graddle build problems try to:
-  #  - delete the "build" folder to force a re-build
-  #  - run "flutter clean" and "flutter get"
-  #  - also, run "flutter pub cache clean" to clean the cache - if everything doesn't work
-  # carp_study_generator: ^0.31.0
-  # carp_study_generator: 
-  #     path: ../carp/carp.sensing-flutter/utilities/carp_study_generator/
-
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

@@ -22,7 +22,6 @@ class _CarpStudyAppState extends State<CarpStudyApp> {
 
   final LoadingPage loadingPage = LoadingPage();
   final HomePage homePage = HomePage();
-
   final InformedConsentPage consentPage = InformedConsentPage();
   final FailedLoginPage failedLoginPage = FailedLoginPage();
 
@@ -37,10 +36,10 @@ class _CarpStudyAppState extends State<CarpStudyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       supportedLocales: const [
         Locale('en'),
         Locale('da'),
-        // TODO - need to update the es.json file, if we want to claim to support Spanish
         Locale('es'),
       ],
       // These delegates make sure that localization for the phone language is loaded

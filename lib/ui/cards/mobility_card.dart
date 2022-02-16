@@ -2,12 +2,12 @@ part of carp_study_app;
 
 class MobilityCardWidget extends StatefulWidget {
   final List<Color> colors;
-  final List<charts.Series<Mobility, String>> seriesList;
-  final MobilityCardDataModel model;
+  final List<charts.Series<DailyMobility, String>> seriesList;
+  final MobilityCardViewModel model;
   MobilityCardWidget(this.seriesList, this.model,
       {this.colors = const [CACHET.BLUE_2, CACHET.BLUE_1, CACHET.RED_1]});
 
-  factory MobilityCardWidget.withSampleData(MobilityCardDataModel model) {
+  factory MobilityCardWidget.withSampleData(MobilityCardViewModel model) {
     return MobilityCardWidget(
         _createChartList(model, [CACHET.BLUE_2, CACHET.BLUE_1, CACHET.RED_1]),
         model);
@@ -15,29 +15,29 @@ class MobilityCardWidget extends StatefulWidget {
 
   static const secondaryMeasureAxisId = 'secondaryMeasureAxisId';
 
-  static List<charts.Series<Mobility, String>> _createChartList(
-          MobilityCardDataModel model, List<Color> colors) =>
+  static List<charts.Series<DailyMobility, String>> _createChartList(
+          MobilityCardViewModel model, List<Color> colors) =>
       [
-        charts.Series<Mobility, String>(
+        charts.Series<DailyMobility, String>(
           colorFn: (d, i) => charts.ColorUtil.fromDartColor(colors[0]),
           id: 'weeklyDistanceTraveled',
           data: model.distance,
-          domainFn: (Mobility datum, _) => datum.toString(),
-          measureFn: (Mobility datum, _) => datum.distance,
+          domainFn: (DailyMobility datum, _) => datum.toString(),
+          measureFn: (DailyMobility datum, _) => datum.distance,
         )..setAttribute(charts.rendererIdKey, 'customLine'),
-        charts.Series<Mobility, String>(
+        charts.Series<DailyMobility, String>(
           colorFn: (d, i) => charts.ColorUtil.fromDartColor(colors[1]),
           id: 'weeklyHomeStay',
           data: model.homeStay,
-          domainFn: (Mobility datum, _) => datum.toString(),
-          measureFn: (Mobility datum, _) => datum.homeStay,
+          domainFn: (DailyMobility datum, _) => datum.toString(),
+          measureFn: (DailyMobility datum, _) => datum.homeStay,
         )..setAttribute(charts.measureAxisIdKey, secondaryMeasureAxisId),
-        charts.Series<Mobility, String>(
+        charts.Series<DailyMobility, String>(
           colorFn: (d, i) => charts.ColorUtil.fromDartColor(colors[2]),
           id: 'weeklyPlaces',
           data: model.places,
-          domainFn: (Mobility datum, _) => datum.toString(),
-          measureFn: (Mobility datum, _) => datum.places,
+          domainFn: (DailyMobility datum, _) => datum.toString(),
+          measureFn: (DailyMobility datum, _) => datum.places,
         ),
       ];
 
@@ -171,7 +171,7 @@ class _MobilityCardWidgetState extends State<MobilityCardWidget> {
 }
 
 class MobilityOuterStatefulWidget extends StatefulWidget {
-  final MobilityCardDataModel model;
+  final MobilityCardViewModel model;
   MobilityOuterStatefulWidget(this.model);
 
   @override

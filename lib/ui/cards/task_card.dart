@@ -1,7 +1,7 @@
 part of carp_study_app;
 
 class TaskCardWidget extends StatefulWidget {
-  final TaskCardDataModel model;
+  final TaskCardViewModel model;
   final List<Color> colors;
   TaskCardWidget(this.model, {this.colors = CACHET.COLOR_LIST});
   _TaskCardWidgetState createState() => _TaskCardWidgetState();

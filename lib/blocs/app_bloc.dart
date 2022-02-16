@@ -17,10 +17,18 @@ enum StudyAppState {
 class StudyAppBLoC {
   StudyAppState _state = StudyAppState.created;
   final CarpBackend _backend = CarpBackend();
-  final CarpStydyAppDataModel _data = CarpStydyAppDataModel();
+  final CarpStydyAppViewModel _data = CarpStydyAppViewModel();
   StudyDeploymentStatus? _status;
   DateTime? _studyStartTimestamp;
-  List<Message>? _messages;
+
+  List<Message> _messages = [];
+  final StreamController<int> _messageStreamController =
+      StreamController.broadcast();
+  List<Message> get messages => _messages;
+
+  /// A stream of event when the list of [messages] is updated.
+  /// The data send on the stream is the number of available messages.
+  Stream<int> get messageStream => _messageStreamController.stream;
 
   StudyAppState get state => _state;
   bool get isInitialized => _state.index >= 1;
@@ -52,15 +60,22 @@ class StudyAppBLoC {
   /// The informed consent to be shown to the user for this study.
   RPOrderedTask? informedConsent;
 
-  ResourceManager get resourceManager =>
+  InformedConsentManager get informedConsentManager =>
       (deploymentMode == DeploymentMode.LOCAL)
           ? LocalResourceManager()
-          : CarpResourceManager();
+          : CarpResourceManager() as InformedConsentManager;
+
+  LocalizationManager get localizationManager =>
+      (deploymentMode == DeploymentMode.LOCAL)
+          ? LocalResourceManager()
+          : CarpResourceManager() as LocalizationManager;
 
   LocalizationLoader get localizationLoader =>
-      ResourceLocalizationLoader(resourceManager);
+      ResourceLocalizationLoader(localizationManager);
 
-  MessageManager messageManager = LocalMessageManager();
+  MessageManager get messageManager => (deploymentMode == DeploymentMode.LOCAL)
+      ? LocalResourceManager()
+      : CarpResourceManager() as MessageManager;
 
   CarpBackend get backend => _backend;
 
@@ -80,10 +95,9 @@ class StudyAppBLoC {
   StudyDeploymentStatus? get status => _status;
 
   DateTime? get studyStartTimestamp => _studyStartTimestamp;
-  List<Message>? get messages => _messages;
 
   /// The overall data model for this app
-  CarpStydyAppDataModel get data => _data;
+  CarpStydyAppViewModel get data => _data;
 
   /// Does this [deployment] have the measure of [type].
   bool hasMeasure(String type) {
@@ -105,7 +119,7 @@ class StudyAppBLoC {
     Settings().debugLevel = debugLevel;
     await Settings().init();
 
-    await resourceManager.initialize();
+    await localizationManager.initialize();
 
     _state = StudyAppState.initialized;
     info(
@@ -147,12 +161,16 @@ class StudyAppBLoC {
 
     // find the right informed consent, if needed
     bloc.informedConsent = (!hasInformedConsentBeenAccepted)
-        ? await resourceManager.getInformedConsent()
+        ? await informedConsentManager.getInformedConsent()
         : null;
 
     // set up the messaging part
-    await messageManager.init();
-    await getMessages();
+    await messageManager.initialize();
+
+    // refresh the list of messages on a regular basis
+    Timer.periodic(
+        const Duration(minutes: 30), (_) async => await refreshMessages());
+    await refreshMessages();
 
     // set up and initialize sensing
     await Sensing().initialize();
@@ -179,15 +197,27 @@ class StudyAppBLoC {
     if (usingLocationPermissions && context != null) {
       var status = await Permission.locationAlways.status;
       if (!status.isGranted) {
-        await showDialog(
+        await showGeneralDialog(
             context: context,
             barrierDismissible: false,
-            builder: (BuildContext context) => LocationUsageDialog().build(
+            barrierColor: Colors.black38,
+            transitionBuilder: (ctx, anim1, anim2, child) => BackdropFilter(
+                  filter: ui.ImageFilter.blur(
+                      sigmaX: 4 * anim1.value, sigmaY: 4 * anim1.value),
+                  child: FadeTransition(
+                    child: child,
+                    opacity: anim1,
+                  ),
+                ),
+            pageBuilder: (context, anim1, anim2) => LocationUsageDialog().build(
                   context,
                   "ic.location.content",
                 ));
+        await LocationManager().requestPermission();
+        // await Permission.locationAlways.request();
       }
     }
+    print('$runtimeType - asking for permisions');
     await Sensing().askForPermissions();
   }
 
@@ -220,8 +250,18 @@ class StudyAppBLoC {
   set informedConsentAccepted(bool accepted) =>
       LocalSettings().informedConsentAccepted = accepted;
 
-  Future<void> getMessages() async =>
-      _messages ??= await messageManager.messages;
+  /// Refresh the list of messages (news, announcments, articles) to be shown in
+  /// the Study Page of the app.
+  Future<void> refreshMessages() async {
+    try {
+      _messages = await messageManager.getMessages();
+      _messages.sort((m1, m2) => m1.timestamp.compareTo(m2.timestamp));
+      info('Message list refreshed - count: ${_messages.length}');
+      _messageStreamController.add(_messages.length);
+    } catch (error) {
+      warning('Error getting messages - $error');
+    }
+  }
 
   /// The signed in user. Returns null if no user is signed in.
   CarpUser? get user => backend.user;

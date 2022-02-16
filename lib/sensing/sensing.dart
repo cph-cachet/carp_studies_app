@@ -59,7 +59,7 @@ class Sensing {
     //SamplingPackageRegistry.register(ConnectivitySamplingPackage());
     SamplingPackageRegistry().register(ContextSamplingPackage());
     //SamplingPackageRegistry.register(CommunicationSamplingPackage());
-    SamplingPackageRegistry().register(AudioSamplingPackage());
+    SamplingPackageRegistry().register(AudioVideoSamplingPackage());
     SamplingPackageRegistry().register(SurveySamplingPackage());
     //SamplingPackageRegistry.register(HealthSamplingPackage());
 
@@ -67,7 +67,7 @@ class Sensing {
     DataManagerRegistry().register(CarpDataManager());
 
     // register the special-purpose audio user task factory
-    AppTaskController().registerUserTaskFactory(AudioUserTaskFactory());
+    AppTaskController().registerUserTaskFactory(AppUserTaskFactory());
   }
 
   /// Initialize and set up sensing.
@@ -143,19 +143,9 @@ class Sensing {
     if (controller?.status != StudyRuntimeStatus.Configured ||
         controller?.masterDeployment == null) return;
 
-    // controller?.masterDeployment?.tasks
-    //     .where((task) => task.runtimeType == AppTask)
-    //     .forEach((task) {
-    //   AppTask appTask = task as AppTask;
-    //   print('>> translating $appTask');
-    //   appTask.title = localization.translate(appTask.title);
-    //   appTask.description = localization.translate(appTask.description);
-    // });
-
     for (var task in controller!.masterDeployment!.tasks) {
       if (task.runtimeType == AppTask) {
         AppTask appTask = task as AppTask;
-        print('>> translating $appTask');
         appTask.title = localization.translate(appTask.title);
         appTask.description = localization.translate(appTask.description);
       }

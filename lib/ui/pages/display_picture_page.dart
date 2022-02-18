@@ -95,8 +95,9 @@ class _DisplayPicturePageState extends State<DisplayPicturePage> {
                 TextButton(
                   child: Text("SAVE"),
                   onPressed: () {
+                    widget.videoUserTask.onSave();
                     // TODO: connect with video task
-                    widget.videoUserTask.file = widget.file;
+                    //widget.videoUserTask.file = widget.file;
                   },
                   style: TextButton.styleFrom(
                     primary: Theme.of(context).primaryColor,

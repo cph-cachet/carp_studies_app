@@ -20,7 +20,7 @@ class _CameraTaskPageState extends State<CameraTaskPage> {
         body: Container(
           padding: EdgeInsets.symmetric(horizontal: 15),
           child: StreamBuilder<UserTaskState>(
-            stream: widget.videoUserTask!.stateEvents,
+            stream: widget.videoUserTask.stateEvents,
             initialData: UserTaskState.enqueued,
             builder: (context, AsyncSnapshot<UserTaskState> snapshot) {
               return Column(
@@ -30,9 +30,9 @@ class _CameraTaskPageState extends State<CameraTaskPage> {
                   SizedBox(height: 35),
                   Image(image: AssetImage('assets/icons/camera.png'), width: 220, height: 220),
                   SizedBox(height: 40),
-                  Text(locale.translate(widget.videoUserTask!.title), style: audioTitleStyle),
+                  Text(locale.translate(widget.videoUserTask.title), style: audioTitleStyle),
                   SizedBox(height: 10),
-                  Text(locale.translate(widget.videoUserTask!.description), style: audioContentStyle),
+                  Text(locale.translate(widget.videoUserTask.description), style: audioContentStyle),
                   Expanded(
                     child: Align(
                       alignment: FractionalOffset.bottomCenter,
@@ -64,7 +64,7 @@ class _CameraTaskPageState extends State<CameraTaskPage> {
                                 style: aboutCardTitleStyle.copyWith(color: Theme.of(context).primaryColor),
                               ),
                               onTap: () {
-                                widget.videoUserTask!.onDone(context);
+                                widget.videoUserTask.onDone(context);
                                 //audioUserTask!.onCancel(context);
                                 Navigator.of(context).pop();
                               },

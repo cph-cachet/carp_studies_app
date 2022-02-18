@@ -97,7 +97,7 @@ class _CameraPageState extends State<CameraPage> {
                   onTap: () async {
                     await _initializeControllerFuture;
                     var xFile = await _controller.takePicture();
-
+                    widget.videoUserTask.onPictureCapture(xFile);
                     await Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (context) =>
@@ -114,6 +114,7 @@ class _CameraPageState extends State<CameraPage> {
 
                     try {
                       await _controller.startVideoRecording();
+                      widget.videoUserTask.onRecordStart();
                       setState(() {
                         isRecording = true;
                       });
@@ -124,11 +125,13 @@ class _CameraPageState extends State<CameraPage> {
                   onLongPressEnd: (details) async {
                     try {
                       var xFile = await _controller.stopVideoRecording();
+
                       await Navigator.of(context).push(
                         MaterialPageRoute(
                             builder: (context) => DisplayPicturePage(
                                 file: xFile, isVideo: true, videoUserTask: widget.videoUserTask)),
                       );
+                      widget.videoUserTask.onRecordStop(xFile);
                       setState(() {
                         capturedImages.add(File(xFile.path));
                         isRecording = false;

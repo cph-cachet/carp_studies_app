@@ -34,16 +34,14 @@ class AudioUserTask extends UserTask {
   int? ongoingRecordingDuration;
 
   AudioUserTask(AppTaskExecutor executor) : super(executor) {
-    recordingDuration = (executor.appTask.minutesToComplete != null)
-        ? executor.appTask.minutesToComplete! * 60
-        : 60;
+    recordingDuration =
+        (executor.appTask.minutesToComplete != null) ? executor.appTask.minutesToComplete! * 60 : 60;
   }
 
   void onStart(BuildContext context) {
     Navigator.push(
       context,
-      MaterialPageRoute(
-          builder: (context) => AudioTaskPage(audioUserTask: this)),
+      MaterialPageRoute(builder: (context) => AudioTaskPage(audioUserTask: this)),
     );
   }
 
@@ -57,8 +55,7 @@ class AudioUserTask extends UserTask {
     executor.resume();
 
     timer = Timer.periodic(new Duration(seconds: 1), (timer) {
-      if (ongoingRecordingDuration != null)
-        _countDownController!.add(ongoingRecordingDuration! - 1);
+      if (ongoingRecordingDuration != null) _countDownController!.add(ongoingRecordingDuration! - 1);
 
       if (ongoingRecordingDuration == 0) {
         timer.cancel();
@@ -87,11 +84,11 @@ class VideoUserTask extends UserTask {
 
   VideoUserTask(AppTaskExecutor executor) : super(executor);
 
-  void onStart(BuildContext context) {
+  void onStart(BuildContext context) async {
+    final cameras = await availableCameras();
     Navigator.push(
       context,
-      MaterialPageRoute(
-          builder: (context) => CameraTaskPage(videoUserTask: this)),
+      MaterialPageRoute(builder: (context) => CameraTaskPage(videoUserTask: this, cameras: cameras)),
     );
   }
 
@@ -104,8 +101,7 @@ class VideoUserTask extends UserTask {
     onRecordStart();
 
     // now wait for 2 secs to finish up any other sensing in the task
-    Timer(const Duration(seconds: 2),
-        () => onRecordStop(image, videoType: VideoType.image));
+    Timer(const Duration(seconds: 2), () => onRecordStop(image, videoType: VideoType.image));
   }
 
   /// Callback when video recording is started.

@@ -2,326 +2,145 @@ part of carp_study_app;
 
 class CameraTaskPage extends StatefulWidget {
   final VideoUserTask videoUserTask;
+  final List<CameraDescription> cameras;
 
-  CameraTaskPage({Key? key, required this.videoUserTask}) : super(key: key);
+  CameraTaskPage({Key? key, required this.videoUserTask, required this.cameras}) : super(key: key);
 
   @override
-  _CameraTaskPageState createState() => _CameraTaskPageState(videoUserTask);
+  _CameraTaskPageState createState() => _CameraTaskPageState();
 }
 
 class _CameraTaskPageState extends State<CameraTaskPage> {
-  final VideoUserTask videoUserTask;
-
-  _CameraTaskPageState(this.videoUserTask) : super();
-
-  @override
-  void initState() {
-    initializeCamera(selectedCamera); // O - normal camera, 1 - selfie camera
-    super.initState();
-  }
-
-  late CameraController _controller;
-  Future<void>? _initializeControllerFuture;
-
-  List<CameraDescription>? cameras;
-
-  int selectedCamera = 0;
-  IconData flashIcon = Icons.flash_off;
-  bool isFlashOff = true;
-  List<File> capturedImages = [];
-  bool isRecording = false;
-
-  initializeCamera(int cameraIndex) async {
-    cameras ??= await availableCameras();
-    _controller = CameraController(cameras![cameraIndex], ResolutionPreset.medium,
-        imageFormatGroup: ImageFormatGroup.yuv420, enableAudio: true);
-
-    // _initializeControllerFuture = _controller.initialize();
-    await _controller.initialize();
-    _controller.setFocusMode(FocusMode.auto);
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  void startRecording() async {
-    await _initializeControllerFuture;
-
-    videoUserTask.onRecordStart();
-
-    try {
-      await _controller.startVideoRecording();
-      setState(() {
-        isRecording = true;
-      });
-    } on CameraException catch (e) {
-      print('Error: ${e.code}\n${e.description}');
-    }
-  }
-
-  void stopRecording() async {
-    try {
-      var xFile = await _controller.stopVideoRecording();
-      videoUserTask.onRecordStop(xFile);
-
-      await Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) =>
-              DisplayPictureScreen(videoUserTask: videoUserTask, filePath: xFile.path, isVideo: true),
-        ),
-      );
-      setState(() {
-        capturedImages.add(File(xFile.path));
-        isRecording = false;
-      });
-    } on CameraException catch (e) {
-      print('Error: ${e.code}\n${e.description}');
-    }
-  }
-
-  void takePicture() async {
-    await _initializeControllerFuture;
-    XFile xFile = await _controller.takePicture();
-
-    videoUserTask.onPictureCapture(xFile);
-
-    await Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => DisplayPictureScreen(videoUserTask: videoUserTask, filePath: xFile.path),
-      ),
-    );
-
-    setState(() {
-      capturedImages.add(File(xFile.path));
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black,
-      body: Column(
-        children: [
-          SizedBox(height: 35),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              IconButton(
-                  onPressed: () {
-                    // TODO: exit video task
-                    Navigator.of(context).pop();
-                    Navigator.of(context).pop();
-                  },
-                  icon: Icon(Icons.close, color: Colors.white))
-            ],
-          ),
-          SizedBox(height: 35),
-          FutureBuilder<void>(
-            future: _initializeControllerFuture,
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.done) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.all(Radius.circular(20)),
-                    child: CameraPreview(_controller),
-                  ),
-                );
-              } else {
-                return const Center(child: CircularProgressIndicator());
-              }
-            },
-          ),
-          Spacer(),
-          Padding(
-            padding: const EdgeInsets.only(right: 10, left: 10, bottom: 30),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+    RPLocalizations locale = RPLocalizations.of(context)!;
+    return WillPopScope(
+      onWillPop: (() async => _showCancelConfirmationDialog() as FutureOr<bool>),
+      child: Scaffold(
+        body: Container(padding: EdgeInsets.symmetric(horizontal: 15), child: _stepSelector()),
+      ),
+    );
+  }
+
+  Widget _stepSelector() {
+    return StreamBuilder<UserTaskState>(
+        stream: widget.videoUserTask.stateEvents,
+        initialData: UserTaskState.enqueued,
+        builder: (context, AsyncSnapshot<UserTaskState> snapshot) {
+          switch (snapshot.data) {
+            case UserTaskState.enqueued:
+              return _stepOne();
+
+            default:
+              return SizedBox.shrink();
+          }
+        });
+  }
+
+  Widget _stepOne() {
+    RPLocalizations locale = RPLocalizations.of(context)!;
+    return StreamBuilder<UserTaskState>(
+      stream: widget.videoUserTask.stateEvents,
+      initialData: UserTaskState.enqueued,
+      builder: (context, AsyncSnapshot<UserTaskState> snapshot) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(height: 35),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 IconButton(
-                  onPressed: () {
-                    if (cameras!.length > 1) {
-                      setState(() {
-                        selectedCamera = selectedCamera == 0 ? 1 : 0;
-                        initializeCamera(selectedCamera);
-                      });
-                    }
-                  },
-                  icon: Icon(Icons.flip_camera_android, color: Colors.white),
-                ),
-                GestureDetector(
-                  onTap: () async {
-                    takePicture();
-                  },
-                  onLongPress: () async {
-                    startRecording();
-                  },
-                  onLongPressEnd: (details) async {
-                    stopRecording();
-                  },
-                  child: isRecording
-                      ? Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            SizedBox(
-                              width: 65,
-                              height: 65,
-                              child: CircularProgressIndicator(
-                                  backgroundColor: Colors.white54,
-                                  valueColor: AlwaysStoppedAnimation(Colors.black54),
-                                  strokeWidth: 5),
+                    onPressed: () {
+                      _showCancelConfirmationDialog();
+                    },
+                    icon: Icon(Icons.close, color: Theme.of(context).primaryColor, size: 30))
+              ],
+            ),
+            SizedBox(height: 35),
+            Image(image: AssetImage('assets/icons/camera.png'), width: 220, height: 220),
+            SizedBox(height: 40),
+            Text(locale.translate(widget.videoUserTask.title), style: audioTitleStyle),
+            SizedBox(height: 10),
+            Text(locale.translate(widget.videoUserTask.description), style: audioContentStyle),
+            Expanded(
+              child: Align(
+                alignment: FractionalOffset.bottomCenter,
+                child: Padding(
+                  padding: EdgeInsets.only(bottom: 30.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      SizedBox(width: 50),
+                      SizedBox(width: 30),
+                      CircleAvatar(
+                        radius: 30,
+                        backgroundColor: CACHET.RED_1,
+                        child: IconButton(
+                          onPressed: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  CameraPage(videoUserTask: widget.videoUserTask, cameras: widget.cameras),
                             ),
-                            Container(
-                              height: 60,
-                              width: 60,
-                              decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.white),
-                            ),
-                          ],
-                        )
-                      : Container(
-                          height: 60,
-                          width: 60,
-                          decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.white),
+                          ),
+                          padding: EdgeInsets.all(0),
+                          icon: Icon(Icons.camera_alt, color: Colors.white, size: 30),
                         ),
+                      ),
+                      InkWell(
+                        child: Text(
+                          locale.translate("pages.audio_task.skip"),
+                          style: aboutCardTitleStyle.copyWith(color: Theme.of(context).primaryColor),
+                        ),
+                        onTap: () {
+                          widget.videoUserTask.onDone(context);
+                          //audioUserTask!.onCancel(context);
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                      SizedBox(width: 30),
+                    ],
+                  ),
                 ),
-                IconButton(
-                  onPressed: () {
-                    if (isFlashOff) {
-                      setState(() {
-                        isFlashOff = false;
-                        flashIcon = Icons.flash_on;
-                      });
-                      _controller.setFlashMode(FlashMode.always);
-                    } else {
-                      setState(() {
-                        isFlashOff = true;
-                        flashIcon = Icons.flash_off;
-                      });
-                      _controller.setFlashMode(FlashMode.off);
-                    }
-                  },
-                  icon: Icon(flashIcon, color: Colors.white),
-                ),
-              ],
-            ),
-          ),
-          Spacer(),
-        ],
-      ),
+              ),
+            )
+          ],
+        );
+      },
     );
   }
-}
 
-class DisplayPictureScreen extends StatefulWidget {
-  final String filePath;
-  final bool isVideo;
-  final VideoUserTask videoUserTask;
+// Taken from RP
+  Future _showCancelConfirmationDialog() {
+    RPLocalizations locale = RPLocalizations.of(context)!;
 
-  const DisplayPictureScreen(
-      {Key? key, required this.videoUserTask, required this.filePath, this.isVideo = false})
-      : super(key: key);
-
-  @override
-  State<DisplayPictureScreen> createState() => _DisplayPictureScreenState(videoUserTask);
-}
-
-class _DisplayPictureScreenState extends State<DisplayPictureScreen> {
-  late VideoPlayerController _videoPlayerController;
-  final VideoUserTask videoUserTask;
-
-  _DisplayPictureScreenState(this.videoUserTask) : super();
-
-  initializeVideoPLayer(String path) async {
-    _videoPlayerController = VideoPlayerController.file(File(path))
-      ..initialize().then((_) {
-        setState(() {});
-        _videoPlayerController.setLooping(true);
-        _videoPlayerController.play();
-      });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    initializeVideoPLayer(widget.filePath);
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _videoPlayerController.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black,
-      body: Column(
-        children: [
-          SizedBox(height: 35),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              IconButton(
-                  onPressed: () {
-                    // TODO: exit video task
-                    Navigator.of(context).pop();
-                    Navigator.of(context).pop();
-                  },
-                  icon: Icon(Icons.close, color: Colors.white))
-            ],
-          ),
-          SizedBox(height: 35),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: ClipRRect(
-              borderRadius: BorderRadius.all(Radius.circular(20)),
-              child: widget.isVideo
-                  ? _videoPlayerController.value.isInitialized
-                      ? AspectRatio(
-                          aspectRatio: _videoPlayerController.value.aspectRatio,
-                          child: VideoPlayer(_videoPlayerController))
-                      : CircularProgressIndicator()
-                  : Image.file(File(widget.filePath)),
+    return showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(locale.translate("pages.audio_task.discard")),
+          actions: <Widget>[
+            TextButton(
+              child: Text(locale.translate("NO")),
+              onPressed: () => Navigator.of(context).pop(), // Dismissing the pop-up
             ),
-          ),
-          Spacer(),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 30),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                TextButton.icon(
-                  icon: Icon(Icons.replay, color: Colors.white),
-                  label: Text("RETAKE"),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  style: TextButton.styleFrom(
-                    primary: Colors.white,
-                    side: BorderSide(color: Colors.white),
-                  ),
-                ),
-                SizedBox(width: 10),
-                TextButton(
-                  child: Text("SAVE"),
-                  onPressed: () {
-                    // call back to the video task
-                    videoUserTask.onSave();
-                  },
-                  style: TextButton.styleFrom(
-                    primary: Theme.of(context).primaryColor,
-                    backgroundColor: Colors.white,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
+            TextButton(
+              child: Text(locale.translate("YES")),
+              onPressed: () {
+                // Calling the onCancel method with which the developer can for e.g. save the result on the device.
+                // Only call it if it's not null
+                //widget.onCancel?.call(_taskResult);
+                // Popup dismiss
+                Navigator.of(context).pop();
+                // Exit the Ordered Task
+                Navigator.of(context).pop();
+              },
+            )
+          ],
+        );
+      },
     );
   }
 }

@@ -65,13 +65,17 @@ class _DisplayPicturePageState extends State<DisplayPicturePage> {
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: ClipRRect(
               borderRadius: BorderRadius.all(Radius.circular(20)),
-              child: widget.isVideo
-                  ? _videoPlayerController.value.isInitialized
-                      ? AspectRatio(
-                          aspectRatio: _videoPlayerController.value.aspectRatio,
-                          child: VideoPlayer(_videoPlayerController))
-                      : CircularProgressIndicator()
-                  : Image.file(File(widget.file.path)),
+              child: Container(
+                height: MediaQuery.of(context).size.height * 0.7,
+                width: MediaQuery.of(context).size.width * 0.9,
+                child: widget.isVideo
+                    ? _videoPlayerController.value.isInitialized
+                        ? AspectRatio(
+                            aspectRatio: _videoPlayerController.value.aspectRatio,
+                            child: VideoPlayer(_videoPlayerController))
+                        : CircularProgressIndicator()
+                    : Image.file(File(widget.file.path)),
+              ),
             ),
           ),
           Spacer(),
@@ -96,6 +100,12 @@ class _DisplayPicturePageState extends State<DisplayPicturePage> {
                   child: Text("SAVE"),
                   onPressed: () {
                     widget.videoUserTask.onSave();
+
+                    widget.videoUserTask.onDone(context);
+                    Navigator.of(context).pop();
+                    Navigator.of(context).pop();
+                    Navigator.of(context).pop();
+
                     // TODO: connect with video task
                     //widget.videoUserTask.file = widget.file;
                   },

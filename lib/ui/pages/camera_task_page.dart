@@ -17,70 +17,110 @@ class _CameraTaskPageState extends State<CameraTaskPage> {
     return WillPopScope(
       onWillPop: (() async => _showCancelConfirmationDialog() as FutureOr<bool>),
       child: Scaffold(
-        body: Container(
-          padding: EdgeInsets.symmetric(horizontal: 15),
-          child: StreamBuilder<UserTaskState>(
-            stream: widget.videoUserTask.stateEvents,
-            initialData: UserTaskState.enqueued,
-            builder: (context, AsyncSnapshot<UserTaskState> snapshot) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(height: 35),
-                  SizedBox(height: 35),
-                  Image(image: AssetImage('assets/icons/camera.png'), width: 220, height: 220),
-                  SizedBox(height: 40),
-                  Text(locale.translate(widget.videoUserTask.title), style: audioTitleStyle),
-                  SizedBox(height: 10),
-                  Text(locale.translate(widget.videoUserTask.description), style: audioContentStyle),
-                  Expanded(
-                    child: Align(
-                      alignment: FractionalOffset.bottomCenter,
-                      child: Padding(
-                        padding: EdgeInsets.only(bottom: 30.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            SizedBox(width: 50),
-                            SizedBox(width: 30),
-                            CircleAvatar(
-                              radius: 30,
-                              backgroundColor: CACHET.RED_1,
-                              child: IconButton(
-                                onPressed: () => Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => CameraPage(
-                                        videoUserTask: widget.videoUserTask, cameras: widget.cameras),
-                                  ),
-                                ),
-                                padding: EdgeInsets.all(0),
-                                icon: Icon(Icons.camera_alt, color: Colors.white, size: 30),
-                              ),
+        body: Container(padding: EdgeInsets.symmetric(horizontal: 15), child: _stepSelector()),
+      ),
+    );
+  }
+
+  Widget _stepSelector() {
+    return StreamBuilder<UserTaskState>(
+        stream: widget.videoUserTask.stateEvents,
+        initialData: UserTaskState.enqueued,
+        builder: (context, AsyncSnapshot<UserTaskState> snapshot) {
+          switch (snapshot.data) {
+            case UserTaskState.enqueued:
+              return _stepOne();
+            case UserTaskState.done:
+              return _stepTwo();
+            default:
+              return SizedBox.shrink();
+          }
+        });
+  }
+
+  Widget _stepOne() {
+    RPLocalizations locale = RPLocalizations.of(context)!;
+    return StreamBuilder<UserTaskState>(
+      stream: widget.videoUserTask.stateEvents,
+      initialData: UserTaskState.enqueued,
+      builder: (context, AsyncSnapshot<UserTaskState> snapshot) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(height: 35),
+            SizedBox(height: 35),
+            Image(image: AssetImage('assets/icons/camera.png'), width: 220, height: 220),
+            SizedBox(height: 40),
+            Text(locale.translate(widget.videoUserTask.title), style: audioTitleStyle),
+            SizedBox(height: 10),
+            Text(locale.translate(widget.videoUserTask.description), style: audioContentStyle),
+            Expanded(
+              child: Align(
+                alignment: FractionalOffset.bottomCenter,
+                child: Padding(
+                  padding: EdgeInsets.only(bottom: 30.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      SizedBox(width: 50),
+                      SizedBox(width: 30),
+                      CircleAvatar(
+                        radius: 30,
+                        backgroundColor: CACHET.RED_1,
+                        child: IconButton(
+                          onPressed: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  CameraPage(videoUserTask: widget.videoUserTask, cameras: widget.cameras),
                             ),
-                            InkWell(
-                              child: Text(
-                                locale.translate("pages.audio_task.skip"),
-                                style: aboutCardTitleStyle.copyWith(color: Theme.of(context).primaryColor),
-                              ),
-                              onTap: () {
-                                widget.videoUserTask.onDone(context);
-                                //audioUserTask!.onCancel(context);
-                                Navigator.of(context).pop();
-                              },
-                            ),
-                            SizedBox(width: 30),
-                          ],
+                          ),
+                          padding: EdgeInsets.all(0),
+                          icon: Icon(Icons.camera_alt, color: Colors.white, size: 30),
                         ),
                       ),
-                    ),
-                  )
-                ],
-              );
-            },
-          ),
-        ),
-      ),
+                      InkWell(
+                        child: Text(
+                          locale.translate("pages.audio_task.skip"),
+                          style: aboutCardTitleStyle.copyWith(color: Theme.of(context).primaryColor),
+                        ),
+                        onTap: () {
+                          widget.videoUserTask.onDone(context);
+                          //audioUserTask!.onCancel(context);
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                      SizedBox(width: 30),
+                    ],
+                  ),
+                ),
+              ),
+            )
+          ],
+        );
+      },
+    );
+  }
+
+  Widget _stepTwo() {
+    RPLocalizations locale = RPLocalizations.of(context)!;
+
+    return StreamBuilder<UserTaskState>(
+      stream: widget.videoUserTask.stateEvents,
+      initialData: UserTaskState.enqueued,
+      builder: (context, AsyncSnapshot<UserTaskState> snapshot) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            SizedBox(height: 70),
+            Image(image: AssetImage('assets/icons/camera.png'), width: 220, height: 220),
+            SizedBox(height: 40),
+            Text(locale.translate("Done!"), style: audioTitleStyle),
+            SizedBox(height: 10),
+            Text(locale.translate('pages.audio_task.recording_completed'), style: audioContentStyle),
+          ],
+        );
+      },
     );
   }
 

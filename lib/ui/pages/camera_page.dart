@@ -23,11 +23,11 @@ class _CameraPageState extends State<CameraPage> {
   int selectedCamera = 0;
   IconData flashIcon = Icons.flash_off;
   bool isFlashOff = true;
-  List<File> capturedImages = [];
+  late File capturedImages;
   bool isRecording = false;
 
   initializeCamera(int cameraIndex) async {
-    _controller = CameraController(widget.cameras[cameraIndex], ResolutionPreset.medium,
+    _controller = CameraController(widget.cameras[cameraIndex], ResolutionPreset.max,
         imageFormatGroup: ImageFormatGroup.yuv420, enableAudio: true);
 
     _initializeControllerFuture = _controller.initialize();
@@ -67,9 +67,11 @@ class _CameraPageState extends State<CameraPage> {
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: ClipRRect(
-                    borderRadius: BorderRadius.all(Radius.circular(20)),
-                    child: CameraPreview(_controller),
-                  ),
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                      child: Container(
+                          child: CameraPreview(_controller),
+                          height: MediaQuery.of(context).size.height * 0.7,
+                          width: MediaQuery.of(context).size.width * 0.9)),
                 );
               } else {
                 return const Center(child: CircularProgressIndicator());
@@ -106,7 +108,7 @@ class _CameraPageState extends State<CameraPage> {
                     );
 
                     setState(() {
-                      capturedImages.add(File(xFile.path));
+                      capturedImages = File(xFile.path);
                     });
                   },
                   onLongPress: () async {
@@ -133,7 +135,7 @@ class _CameraPageState extends State<CameraPage> {
                       );
                       widget.videoUserTask.onRecordStop(xFile);
                       setState(() {
-                        capturedImages.add(File(xFile.path));
+                        capturedImages = File(xFile.path);
                         isRecording = false;
                       });
                     } on CameraException catch (e) {

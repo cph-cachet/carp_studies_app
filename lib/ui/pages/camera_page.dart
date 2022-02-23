@@ -52,11 +52,9 @@ class _CameraPageState extends State<CameraPage> {
             children: [
               IconButton(
                   onPressed: () {
-                    // TODO: exit video task
-                    Navigator.of(context).pop();
-                    Navigator.of(context).pop();
+                    _showCancelConfirmationDialog();
                   },
-                  icon: Icon(Icons.close, color: Colors.white))
+                  icon: Icon(Icons.close, color: Colors.white, size: 30))
             ],
           ),
           SizedBox(height: 35),
@@ -191,6 +189,40 @@ class _CameraPageState extends State<CameraPage> {
           Spacer(),
         ],
       ),
+    );
+  }
+
+  // Taken from RP
+  Future _showCancelConfirmationDialog() {
+    RPLocalizations locale = RPLocalizations.of(context)!;
+
+    return showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(locale.translate("pages.audio_task.discard")),
+          actions: <Widget>[
+            TextButton(
+              child: Text(locale.translate("NO")),
+              onPressed: () => Navigator.of(context).pop(), // Dismissing the pop-up
+            ),
+            TextButton(
+              child: Text(locale.translate("YES")),
+              onPressed: () {
+                // Calling the onCancel method with which the developer can for e.g. save the result on the device.
+                // Only call it if it's not null
+                //widget.onCancel?.call(_taskResult);
+                // Popup dismiss
+                Navigator.of(context).pop();
+                // Exit the Ordered Task
+                Navigator.of(context).pop();
+                Navigator.of(context).pop();
+              },
+            )
+          ],
+        );
+      },
     );
   }
 }

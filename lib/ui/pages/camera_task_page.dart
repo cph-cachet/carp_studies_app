@@ -30,8 +30,7 @@ class _CameraTaskPageState extends State<CameraTaskPage> {
           switch (snapshot.data) {
             case UserTaskState.enqueued:
               return _stepOne();
-            case UserTaskState.done:
-              return _stepTwo();
+
             default:
               return SizedBox.shrink();
           }
@@ -48,6 +47,16 @@ class _CameraTaskPageState extends State<CameraTaskPage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SizedBox(height: 35),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                IconButton(
+                    onPressed: () {
+                      _showCancelConfirmationDialog();
+                    },
+                    icon: Icon(Icons.close, color: Theme.of(context).primaryColor, size: 30))
+              ],
+            ),
             SizedBox(height: 35),
             Image(image: AssetImage('assets/icons/camera.png'), width: 220, height: 220),
             SizedBox(height: 40),
@@ -96,28 +105,6 @@ class _CameraTaskPageState extends State<CameraTaskPage> {
                 ),
               ),
             )
-          ],
-        );
-      },
-    );
-  }
-
-  Widget _stepTwo() {
-    RPLocalizations locale = RPLocalizations.of(context)!;
-
-    return StreamBuilder<UserTaskState>(
-      stream: widget.videoUserTask.stateEvents,
-      initialData: UserTaskState.enqueued,
-      builder: (context, AsyncSnapshot<UserTaskState> snapshot) {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            SizedBox(height: 70),
-            Image(image: AssetImage('assets/icons/camera.png'), width: 220, height: 220),
-            SizedBox(height: 40),
-            Text(locale.translate("Done!"), style: audioTitleStyle),
-            SizedBox(height: 10),
-            Text(locale.translate('pages.audio_task.recording_completed'), style: audioContentStyle),
           ],
         );
       },

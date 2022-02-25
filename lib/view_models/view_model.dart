@@ -109,26 +109,25 @@ class DailyMeasure {
   DailyMeasure(this.weekday);
 
   /// Get the localilzed name of the [weekday].
-  String toString() => DateFormat('EEEE')
-      .format(DateTime(2021, 2, 7).add(Duration(days: weekday)))
-      .substring(0, 3);
+  String toString() =>
+      DateFormat('EEEE').format(DateTime(2021, 2, 7).add(Duration(days: weekday))).substring(0, 3);
 }
 
 /// The view model for the entire app.
 class CarpStydyAppViewModel extends ViewModel {
-  final DataVisualizationPageViewModel _dataVisualizationPageViewModel =
-      DataVisualizationPageViewModel();
+  final DataVisualizationPageViewModel _dataVisualizationPageViewModel = DataVisualizationPageViewModel();
   final StudyPageViewModel _studyPageViewModel = StudyPageViewModel();
   final TaskListPageViewModel _taskListPageViewModel = TaskListPageViewModel();
   final ProfilePageViewModel _profilePageViewModel = ProfilePageViewModel();
+  final DevicesPageViewModel _devicesPageViewModel = DevicesPageViewModel();
 
   CarpStydyAppViewModel() : super();
 
-  DataVisualizationPageViewModel get dataVisualizationPageViewModel =>
-      _dataVisualizationPageViewModel;
+  DataVisualizationPageViewModel get dataVisualizationPageViewModel => _dataVisualizationPageViewModel;
   StudyPageViewModel get studyPageViewModel => _studyPageViewModel;
   TaskListPageViewModel get taskListPageViewModel => _taskListPageViewModel;
   ProfilePageViewModel get profilePageViewModel => _profilePageViewModel;
+  DevicesPageViewModel get devicesPageViewModel => _devicesPageViewModel;
 
   void init(SmartphoneDeploymentController controller) {
     super.init(controller);
@@ -136,5 +135,6 @@ class CarpStydyAppViewModel extends ViewModel {
     _studyPageViewModel.init(controller);
     _taskListPageViewModel.init(controller);
     _profilePageViewModel.init(controller);
+    _devicesPageViewModel.init(controller);
   }
 }

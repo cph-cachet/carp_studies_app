@@ -52,7 +52,7 @@ class Sensing {
 
   Sensing._() {
     // create and register external sampling packages
-    //SamplingPackageRegistry.register(ConnectivitySamplingPackage());
+    SamplingPackageRegistry().register(ConnectivitySamplingPackage());
     SamplingPackageRegistry().register(ContextSamplingPackage());
     //SamplingPackageRegistry.register(CommunicationSamplingPackage());
     SamplingPackageRegistry().register(MediaSamplingPackage());

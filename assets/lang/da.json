@@ -2,6 +2,7 @@
     "app_home.nav_bar_item.tasks": "Opgaver",
     "app_home.nav_bar_item.about": "Om",
     "app_home.nav_bar_item.data": "Data",
+    "app_home.nav_bar_item.devices": "Devices",
     "pages.task_list.title": "MINE OPGAVER",
     "pages.task_list.task.time_to_complete": "min. at fuldføre",
     "pages.task_list.task.auto_complete": "Udføres automatisk",

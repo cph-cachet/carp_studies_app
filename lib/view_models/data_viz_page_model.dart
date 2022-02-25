@@ -5,12 +5,10 @@ class DataVisualizationPageViewModel extends ViewModel {
   final StepsCardViewModel _stepsCardDataModel = StepsCardViewModel();
   final MeasuresCardViewModel _measuresCardDataModel = MeasuresCardViewModel();
   final MobilityCardViewModel _mobilityCardDataModel = MobilityCardViewModel();
-  final TaskCardViewModel _surveysCardDataModel =
-      TaskCardViewModel(SurveyUserTask.SURVEY_TYPE);
-  final TaskCardViewModel _audioCardDataModel =
-      TaskCardViewModel(AudioUserTask.AUDIO_TYPE);
-  final StudyProgressCardViewModel _studyProgressCardDataModel =
-      StudyProgressCardViewModel();
+  final TaskCardViewModel _surveysCardDataModel = TaskCardViewModel(SurveyUserTask.SURVEY_TYPE);
+  final TaskCardViewModel _audioCardDataModel = TaskCardViewModel(AudioUserTask.AUDIO_TYPE);
+  final TaskCardViewModel _mediaCardDataModel = TaskCardViewModel(VideoUserTask.VIDEO_TYPE); // TODO ADD PHOTO
+  final StudyProgressCardViewModel _studyProgressCardDataModel = StudyProgressCardViewModel();
 
   ActivityCardViewModel get activityCardDataModel => _activityCardDataModel;
   StepsCardViewModel get stepsCardDataModel => _stepsCardDataModel;
@@ -18,8 +16,9 @@ class DataVisualizationPageViewModel extends ViewModel {
   MobilityCardViewModel get mobilityCardDataModel => _mobilityCardDataModel;
   TaskCardViewModel get surveysCardDataModel => _surveysCardDataModel;
   TaskCardViewModel get audioCardDataModel => _audioCardDataModel;
-  StudyProgressCardViewModel get studyProgressCardDataModel =>
-      _studyProgressCardDataModel;
+  TaskCardViewModel get mediaCardDataModel => _mediaCardDataModel;
+
+  StudyProgressCardViewModel get studyProgressCardDataModel => _studyProgressCardDataModel;
 
   /// A stream of [UserTask]s as they are generated.
   Stream<UserTask> get userTaskEvents => AppTaskController().userTaskEvents;
@@ -30,10 +29,8 @@ class DataVisualizationPageViewModel extends ViewModel {
       : 0;
 
   /// The number of tasks completed so far.
-  int get taskCompleted => AppTaskController()
-      .userTaskQueue
-      .where((task) => task.state == UserTaskState.done)
-      .length;
+  int get taskCompleted =>
+      AppTaskController().userTaskQueue.where((task) => task.state == UserTaskState.done).length;
 
   DataVisualizationPageViewModel();
 
@@ -45,6 +42,7 @@ class DataVisualizationPageViewModel extends ViewModel {
     _mobilityCardDataModel.init(controller);
     _surveysCardDataModel.init(controller);
     _audioCardDataModel.init(controller);
+    _mediaCardDataModel.init(controller);
     _studyProgressCardDataModel.init(controller);
   }
 }

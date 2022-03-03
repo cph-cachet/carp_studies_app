@@ -5,6 +5,7 @@ import 'dart:math';
 import 'dart:convert';
 import 'dart:ui' as ui;
 
+import 'package:esense_flutter/esense_flutter.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import 'package:flutter/services.dart';
@@ -38,6 +39,9 @@ import 'package:carp_webservices/carp_auth/carp_auth.dart';
 import 'package:carp_backend/carp_backend.dart';
 
 import 'package:research_package/research_package.dart';
+
+import 'package:esense_flutter/esense.dart';
+import 'package:carp_esense_package/esense.dart';
 
 import 'package:permission_handler/permission_handler.dart';
 import 'package:permission_handler_platform_interface/permission_handler_platform_interface.dart';

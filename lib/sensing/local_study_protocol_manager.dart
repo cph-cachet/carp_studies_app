@@ -59,6 +59,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
 
       // Define which devices are used for data collection.
       Smartphone phone = Smartphone();
+
       _protocol!.addMasterDevice(phone);
 
       _protocol!.addTriggeredTask(
@@ -833,6 +834,8 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
       // Define which devices are used for data collection.
       Smartphone phone = Smartphone();
       _protocol!.addMasterDevice(phone);
+      DeviceDescriptor eSense = ESenseDevice(roleName: 'The left eSense earplug');
+      _protocol!.addConnectedDevice(eSense);
 
       _protocol!.addTriggeredTask(
           ImmediateTrigger(),

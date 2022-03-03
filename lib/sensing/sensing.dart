@@ -52,12 +52,13 @@ class Sensing {
 
   Sensing._() {
     // create and register external sampling packages
-    SamplingPackageRegistry().register(ConnectivitySamplingPackage());
+    //SamplingPackageRegistry().register(ConnectivitySamplingPackage());
     SamplingPackageRegistry().register(ContextSamplingPackage());
     //SamplingPackageRegistry.register(CommunicationSamplingPackage());
     SamplingPackageRegistry().register(MediaSamplingPackage());
     SamplingPackageRegistry().register(SurveySamplingPackage());
     //SamplingPackageRegistry.register(HealthSamplingPackage());
+    SamplingPackageRegistry().register(ESenseSamplingPackage());
 
     // create and register external data managers
     DataManagerRegistry().register(CarpDataManager());

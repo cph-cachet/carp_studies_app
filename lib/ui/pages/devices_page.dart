@@ -9,42 +9,42 @@ class DevicesPage extends StatefulWidget {
 }
 
 class _DevicesPageState extends State<DevicesPage> {
-  List<Device> devices = [
-    Device(
-        name: "Phone",
-        state: DeviceState.CONNECTED,
-        description: "00:11:22:33:FF:EE",
-        battery: 70,
-        type: DeviceType.PHONE),
-    Device(
-        name: "eSense Ear Plug",
-        state: DeviceState.CONNECTED,
-        description: "00:11:22:33:FF:EE",
-        battery: 80,
-        type: DeviceType.HEADSET),
-    Device(
-        name: "Scale",
-        state: DeviceState.DISCONNECTED,
-        description: "00:11:22:33:FF:EE",
-        type: DeviceType.SCALE),
-    Device(
-        name: "Fitbit",
-        state: DeviceState.NOT_PAIRED,
-        description: "00:11:22:33:FF:EE",
-        type: DeviceType.WATCH),
-    Device(
-        name: "Google Home",
-        state: DeviceState.ERROR,
-        description: "00:11:22:33:FF:EE",
-        type: DeviceType.HOME),
-  ];
+  // List<Device> devices = [
+  //   Device(
+  //       name: "Phone",
+  //       state: DeviceState.CONNECTED,
+  //       description: "00:11:22:33:FF:EE",
+  //       battery: 70,
+  //       type: DeviceType.PHONE),
+  //   Device(
+  //       name: "eSense Ear Plug",
+  //       state: DeviceState.CONNECTED,
+  //       description: "00:11:22:33:FF:EE",
+  //       battery: 80,
+  //       type: DeviceType.HEADSET),
+  //   Device(
+  //       name: "Scale",
+  //       state: DeviceState.DISCONNECTED,
+  //       description: "00:11:22:33:FF:EE",
+  //       type: DeviceType.SCALE),
+  //   Device(
+  //       name: "Fitbit",
+  //       state: DeviceState.NOT_PAIRED,
+  //       description: "00:11:22:33:FF:EE",
+  //       type: DeviceType.WATCH),
+  //   Device(
+  //       name: "Google Home",
+  //       state: DeviceState.ERROR,
+  //       description: "00:11:22:33:FF:EE",
+  //       type: DeviceType.HOME),
+  // ];
 
-  @override
-  void initState() {
-    super.initState();
-    BluetoothProbe().getDatum();
-    widget.model.scanDevices;
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   BluetoothProbe().getDatum();
+  //   widget.model.scanDevices;
+  // }
 
 //   @override
 //   Widget build(BuildContext context) {
@@ -82,8 +82,8 @@ class _DevicesPageState extends State<DevicesPage> {
   @override
   Widget build(BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;
-    BluetoothProbe().getDatum();
-    widget.model.scanDevices;
+    // BluetoothProbe().getDatum();
+    // widget.model.scanDevices;
     return Scaffold(
       body: Column(
         children: [
@@ -102,8 +102,8 @@ class _DevicesPageState extends State<DevicesPage> {
                 SliverList(
                   delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
                     //return Text(widget.model.devices[index].bluetoothDeviceName);
-                    return _buildDeviceCard(context, devices[index]);
-                  }, childCount: devices.length),
+                    return _buildDeviceCard(context, widget.model._devices[index]);
+                  }, childCount: widget.model._devices.length),
                 ),
               ],
               //   );
@@ -116,15 +116,15 @@ class _DevicesPageState extends State<DevicesPage> {
   }
 }
 
-Widget _buildDeviceCard(BuildContext context, Device device) {
+Widget _buildDeviceCard(BuildContext context, DeviceModel device) {
   return Center(
     child: Card(
       margin: EdgeInsets.symmetric(horizontal: 10, vertical: 1),
       //shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       elevation: 0,
       child: ListTile(
-        leading: deviceTypeIcons[device.type],
-        title: Text(device.name),
+        leading: device.icon,
+        title: Text(device.name!),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -133,26 +133,26 @@ Widget _buildDeviceCard(BuildContext context, Device device) {
             SizedBox(height: 5),
             Row(
               children: [
-                Text(deviceStateText[device.state]!),
-                device.battery == null
+                Text(device.statusString!),
+                device.batteryLevel == null
                     ? SizedBox.shrink()
                     : Row(
                         children: [
                           SizedBox(width: 5),
                           Transform.rotate(angle: 90 * pi / 180, child: Icon(Icons.battery_std_outlined)),
-                          Text(device.battery.toString() + "%")
+                          Text(device.batteryLevel.toString() + "%")
                         ],
                       ),
               ],
             ),
           ],
         ),
-        trailing: device.state == DeviceState.CONNECTED
+        trailing: device.status == DeviceStatus.connected
             ? Icon(
                 Icons.check,
                 color: Colors.green,
               )
-            : device.state == DeviceState.DISCONNECTED
+            : device.status == DeviceStatus.disconnected
                 ? Text("CONNECT")
                 : Text("PAIR"),
         onTap: () => _showConnectionDialog(context, 0),
@@ -250,39 +250,31 @@ Future _showConnectionDialog(BuildContext context, _currentStep) {
   );
 }
 
-// Get an icon for the device based on its type.  If there is no icon for the device, use a default icon
-Map<DeviceType, Icon> deviceTypeIcons = {
-  DeviceType.HEADSET: Icon(Icons.headphones),
-  DeviceType.PHONE: Icon(Icons.phone_android),
-  DeviceType.WATCH: Icon(Icons.watch),
-  DeviceType.HOME: Icon(Icons.home_mini_outlined),
-  DeviceType.SPEAKER: Icon(Icons.speaker),
-  DeviceType.SCALE: Icon(Icons.monitor_weight_outlined),
-  DeviceType.UNKNOWN: Icon(Icons.bluetooth)
-};
+// // Get an icon for the device based on its type.  If there is no icon for the device, use a default icon
 
-Map<DeviceState, String> deviceStateText = {
-  DeviceState.CONNECTED: "Connected",
-  DeviceState.DISCONNECTED: "Disconnected",
-  DeviceState.NOT_PAIRED: "Not paired",
-  DeviceState.ERROR: "Error",
-};
 
-class Device {
-  String name;
-  String description;
-  DeviceState state;
-  int? battery;
-  DeviceType type;
+// Map<DeviceState, String> deviceStateText = {
+//   DeviceState.CONNECTED: "Connected",
+//   DeviceState.DISCONNECTED: "Disconnected",
+//   DeviceState.NOT_PAIRED: "Not paired",
+//   DeviceState.ERROR: "Error",
+// };
 
-  Device(
-      {required this.name,
-      required this.description,
-      required this.state,
-      this.type = DeviceType.UNKNOWN,
-      this.battery});
-}
+// class Device {
+//   String name;
+//   String description;
+//   DeviceState state;
+//   int? battery;
+//   DeviceType type;
 
-enum DeviceType { WATCH, PHONE, HEADSET, SCALE, HOME, SPEAKER, UNKNOWN }
+//   Device(
+//       {required this.name,
+//       required this.description,
+//       required this.state,
+//       this.type = DeviceType.UNKNOWN,
+//       this.battery});
+// }
 
-enum DeviceState { CONNECTED, DISCONNECTED, NOT_PAIRED, ERROR }
+// enum DeviceType { WATCH, PHONE, HEADSET, SCALE, HOME, SPEAKER, UNKNOWN }
+
+// enum DeviceState { CONNECTED, DISCONNECTED, NOT_PAIRED, ERROR }

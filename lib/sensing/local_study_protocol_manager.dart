@@ -1052,6 +1052,42 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
               name: "Recording",
             )),
           phone);
+      _protocol!.addTriggeredTask(
+          PeriodicTrigger(
+            period: const Duration(minutes: 1),
+            duration: const Duration(seconds: 2),
+          ),
+          AppTask(
+            type: SurveyUserTask.SURVEY_TYPE,
+            title: surveys.control.title,
+            description: surveys.control.description,
+            minutesToComplete: surveys.control.minutesToComplete,
+            expire: surveys.control.expire,
+          )..measures.add(RPTaskMeasure(
+              type: SurveySamplingPackage.SURVEY,
+              name: surveys.control.title,
+              enabled: true,
+              surveyTask: surveys.control.survey,
+            )),
+          phone);
+      _protocol!.addTriggeredTask(
+          PeriodicTrigger(
+            period: const Duration(minutes: 1),
+            duration: const Duration(seconds: 2),
+          ),
+          AppTask(
+            type: SurveyUserTask.SURVEY_TYPE,
+            title: surveys.ecological.title,
+            description: surveys.ecological.description,
+            minutesToComplete: surveys.ecological.minutesToComplete,
+            expire: surveys.ecological.expire,
+          )..measures.add(RPTaskMeasure(
+              type: SurveySamplingPackage.SURVEY,
+              name: surveys.ecological.title,
+              enabled: true,
+              surveyTask: surveys.ecological.survey,
+            )),
+          phone);
     }
 
     return _protocol;

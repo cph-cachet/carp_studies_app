@@ -5,12 +5,16 @@ class HorizontalBar extends StatelessWidget {
   final List<int>? values;
   final List<Color>? colors;
   final OrderType? order;
+  final double? height;
+  final LabelOrientation? labelOrientation;
 
   HorizontalBar(
       {this.names,
       this.values,
       this.colors,
-      this.order = OrderType.Descending});
+      this.order = OrderType.Descending,
+      this.height = 25,
+      this.labelOrientation = LabelOrientation.vertical});
 
   List<MyAsset> _assetList() {
     List<MyAsset> assetList = [];
@@ -19,10 +23,8 @@ class HorizontalBar extends StatelessWidget {
       print(values!.elementAt(i));
       print(colors!.elementAt(i));
       print(names!.elementAt(i));
-      assetList.add(MyAsset(
-          size: values!.elementAt(i),
-          color: colors!.elementAt(i),
-          name: names!.elementAt(i)));
+      assetList
+          .add(MyAsset(size: values!.elementAt(i), color: colors!.elementAt(i), name: names!.elementAt(i)));
     }
     return assetList;
   }
@@ -34,18 +36,19 @@ class HorizontalBar extends StatelessWidget {
       return Center(child: Text(locale.translate("pages.data_viz.no_data")));
     else
       return Center(
-        child: MyAssetsBar(
-            width: width * .9,
-            background: Color(0xCFD8DC),
-            order: this.order,
-            assets: _assetList()),
-      );
+          child: MyAssetsBar(
+        width: width * .9,
+        background: Color(0xCFD8DC),
+        order: this.order,
+        assets: _assetList(),
+        height: this.height,
+        labelOrientation: this.labelOrientation,
+      ));
   }
 }
 
-const double _kHeight = 25;
 enum OrderType { Ascending, Descending, None }
-/*Utils*/
+enum LabelOrientation { vertical, horizontal }
 
 class MyAsset {
   final int? size;
@@ -59,7 +62,8 @@ class MyAssetsBar extends StatelessWidget {
   MyAssetsBar(
       {Key? key,
       required this.width,
-      this.height = _kHeight,
+      required this.height,
+      required this.labelOrientation,
       this.radius,
       required this.assets,
       this.order,
@@ -67,11 +71,12 @@ class MyAssetsBar extends StatelessWidget {
       : super(key: key);
 
   final double width;
-  final double height;
+  final double? height;
   final double? radius;
   final List<MyAsset> assets;
   final OrderType? order;
   final Color background;
+  final LabelOrientation? labelOrientation;
 
   double _getValuesSum() {
     double sum = 0;
@@ -108,11 +113,119 @@ class MyAssetsBar extends StatelessWidget {
   //single.size : assetsSum = x : width
   Widget _createSingle(MyAsset singleAsset) {
     return SizedBox(
-      width: singleAsset.size! != 0
-          ? singleAsset.size! * (width / _getValuesSum())
-          : 0,
+      width: singleAsset.size! != 0 ? singleAsset.size! * (width / _getValuesSum()) : 0,
       child: Container(color: singleAsset.color),
     );
+  }
+
+  Widget _labelOrientation() {
+    if (this.labelOrientation == LabelOrientation.horizontal)
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: assets
+            .asMap()
+            .entries
+            .map(
+              (entry) => Padding(
+                  padding: EdgeInsets.symmetric(vertical: 3, horizontal: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Icon(Icons.circle, color: entry.value.color, size: 12.0),
+                      Text(' ' + entry.value.name! + ' ' + entry.value.size.toString(),
+                          style: legendStyle, textAlign: TextAlign.right),
+                    ],
+                  )),
+            )
+            .toList(),
+      );
+    else {
+      // return Row(
+      //   mainAxisAlignment: MainAxisAlignment.start,
+      //   children: assets
+      //       .asMap()
+      //       .entries
+      //       .map(
+      //         (entry) => Flexible(
+      //             child: Padding(
+      //                 padding: EdgeInsets.symmetric(vertical: 3, horizontal: 5),
+      //                 child: Row(
+      //                   children: [
+      //                     Icon(Icons.circle, color: entry.value.color, size: 12.0),
+      //                     Expanded(
+      //                         child: Text(' ' + entry.value.name!,
+      //                             style: legendStyle,
+      //                             textAlign: TextAlign.left,
+      //                             overflow: TextOverflow.ellipsis)),
+      //                     Text('' + entry.value.size.toString(),
+      //                         style: legendStyle, textAlign: TextAlign.right)
+      //                   ],
+      //                 ))),
+      //       )
+      //       .toList(),
+      // );
+
+      // print(assets.asMap().entries.map((e) => print('e ' + e.toString())));
+      // return Column(
+      //   mainAxisAlignment: MainAxisAlignment.center,
+      //   children: assets
+      //       .asMap()
+      //       .entries
+      //       .map(
+      //         (entry) => Padding(
+      //           padding: EdgeInsets.symmetric(vertical: 3, horizontal: 10),
+      //           child: Row(
+      //             mainAxisAlignment: MainAxisAlignment.start,
+      //             children: [
+      //               Icon(Icons.circle, color: entry.value.color, size: 12.0),
+      //               Text(' ' + entry.value.size.toString(), style: legendStyle, textAlign: TextAlign.left),
+      //               Expanded(
+      //                   child: Text(' ' + entry.value.name!,
+      //                       style: legendStyle, textAlign: TextAlign.left, overflow: TextOverflow.ellipsis)),
+      //               Icon(Icons.circle, color: entry.value.color, size: 12.0),
+      //               Expanded(
+      //                   child: Text(' ' + entry.value.name! + ' ' + entry.value.size.toString(),
+      //                       style: legendStyle, textAlign: TextAlign.left, overflow: TextOverflow.ellipsis)),
+      //             ],
+      //           ),
+      //         ),
+      //       )
+      //       .toList(),
+      // );
+
+      return Container(
+          child: GridView.count(
+        shrinkWrap: true,
+        primary: true,
+        physics: ClampingScrollPhysics(),
+        scrollDirection: Axis.vertical,
+        crossAxisCount: 2,
+        crossAxisSpacing: 5,
+        mainAxisSpacing: 1,
+        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 0),
+        childAspectRatio: 8,
+        children: assets
+            .asMap()
+            .entries
+            .map(
+              (entry) => Padding(
+                  padding: EdgeInsets.symmetric(vertical: 3, horizontal: 5),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Icon(Icons.circle, color: entry.value.color, size: 12.0),
+                      Text(' ' + entry.value.size.toString(), style: legendStyle, textAlign: TextAlign.left),
+                      Expanded(
+                          child: Text(' ' + entry.value.name!,
+                              style: legendStyle,
+                              textAlign: TextAlign.left,
+                              overflow: TextOverflow.ellipsis)),
+                    ],
+                  )),
+            )
+            .toList(),
+      ));
+    }
   }
 
   @override
@@ -120,49 +233,24 @@ class MyAssetsBar extends StatelessWidget {
     //Order assetsList
     orderMyAssetsList();
 
-    final double rad = radius ?? (height / 2);
+    final double rad = radius ?? (height! / 2);
 
     return Column(
+      mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
+        SizedBox(height: 15),
         ClipRRect(
           borderRadius: BorderRadius.all(Radius.circular(rad)),
           child: Container(
             decoration: BoxDecoration(color: background),
             width: width,
             height: height,
-            child: Row(
-                children: assets
-                    .map((singleAsset) => _createSingle(singleAsset))
-                    .toList()),
+            child: Row(children: assets.map((singleAsset) => _createSingle(singleAsset)).toList()),
           ),
         ),
-        SizedBox(height: 10),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: assets
-              .asMap()
-              .entries
-              .map(
-                (entry) => Padding(
-                  padding: EdgeInsets.symmetric(vertical: 3, horizontal: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Icon(Icons.circle, color: entry.value.color, size: 12.0),
-                      Text(
-                          ' ' +
-                              entry.value.name! +
-                              ' ' +
-                              entry.value.size.toString(),
-                          style: legendStyle,
-                          textAlign: TextAlign.right),
-                    ],
-                  ),
-                ),
-              )
-              .toList(),
-        ),
+        SizedBox(height: 2),
+        _labelOrientation(),
       ],
     );
   }

@@ -7,8 +7,7 @@ part of carp_study_app;
 ///
 /// Localization json files should be added to the app as assets in the
 /// `assets/lang_local` folder and added to the `pubsepc.yaml` file.
-class LocalResourceManager
-    implements InformedConsentManager, LocalizationManager, MessageManager {
+class LocalResourceManager implements InformedConsentManager, LocalizationManager, MessageManager {
   RPOrderedTask? _informedConsent;
   final Map<String, Message> _messages = {};
 
@@ -35,6 +34,7 @@ class LocalResourceManager
       subTitle: "pages.about.message.1.subtitle",
       message: "pages.about.message.1.message",
       imagePath: 'assets/images/park.png',
+      timestamp: DateTime(2020, 12, 25),
     ));
     setMessage(Message(
         type: MessageType.announcement,
@@ -99,11 +99,9 @@ class LocalResourceManager
           summary: "ic.summary.summary",
           content: "ic.summary.content");
 
-      RPConsentSignature signature =
-          RPConsentSignature(identifier: "signatureID");
+      RPConsentSignature signature = RPConsentSignature(identifier: "signatureID");
 
-      RPConsentDocument consentDocument =
-          RPConsentDocument(title: 'CACHET Research Platfom', sections: [
+      RPConsentDocument consentDocument = RPConsentDocument(title: 'CACHET Research Platfom', sections: [
         overviewSection,
         whoAreWeSection,
         tasksSection,
@@ -113,21 +111,19 @@ class LocalResourceManager
         rightsSection,
         summarySection,
       ])
-            ..addSignature(signature);
+        ..addSignature(signature);
 
-      RPConsentReviewStep consentReviewStep = RPConsentReviewStep(
-          identifier: "consentreviewstepID", consentDocument: consentDocument)
-        ..title = "ic.review.title"
-        ..reasonForConsent = "ic.review.reason"
-        ..text = "ic.review.text";
+      RPConsentReviewStep consentReviewStep =
+          RPConsentReviewStep(identifier: "consentreviewstepID", consentDocument: consentDocument)
+            ..title = "ic.review.title"
+            ..reasonForConsent = "ic.review.reason"
+            ..text = "ic.review.text";
 
-      RPVisualConsentStep consentVisualStep = RPVisualConsentStep(
-          identifier: "visualStep", consentDocument: consentDocument);
+      RPVisualConsentStep consentVisualStep =
+          RPVisualConsentStep(identifier: "visualStep", consentDocument: consentDocument);
 
       RPCompletionStep completionStep = RPCompletionStep(
-          identifier: "completionID",
-          title: "ic.completion.title",
-          text: "ic.completion.text");
+          identifier: "completionID", title: "ic.completion.title", text: "ic.completion.text");
 
       _informedConsent = RPOrderedTask(
         identifier: "consentTaskID",
@@ -167,15 +163,13 @@ class LocalResourceManager
     String jsonString = await rootBundle.loadString(path);
 
     Map<String, dynamic> jsonMap = json.decode(jsonString);
-    Map<String, String> translations =
-        jsonMap.map((key, value) => MapEntry(key, value.toString()));
+    Map<String, String> translations = jsonMap.map((key, value) => MapEntry(key, value.toString()));
 
     return translations;
   }
 
   @override
-  Future<bool> setLocalizations(
-      Locale locale, Map<String, dynamic> localizations) {
+  Future<bool> setLocalizations(Locale locale, Map<String, dynamic> localizations) {
     throw UnimplementedError();
   }
 
@@ -198,12 +192,10 @@ class LocalResourceManager
   Future<Message?> getMessage(String messageId) async => _messages[messageId];
 
   @override
-  Future<void> setMessage(Message message) async =>
-      _messages[message.id] = message;
+  Future<void> setMessage(Message message) async => _messages[message.id] = message;
 
   @override
-  Future<void> deleteMessage(String messageId) async =>
-      _messages.remove(messageId);
+  Future<void> deleteMessage(String messageId) async => _messages.remove(messageId);
 
   @override
   Future<void> deleteAllMessages() async => _messages.clear();

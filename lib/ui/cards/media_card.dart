@@ -1,9 +1,9 @@
 part of carp_study_app;
 
 class MediaCardWidget extends StatefulWidget {
-  final TaskCardViewModel model;
+  final List<TaskCardViewModel> modelsList;
   final List<Color> colors;
-  MediaCardWidget(this.model, {this.colors = CACHET.COLOR_LIST});
+  MediaCardWidget(this.modelsList, {this.colors = CACHET.COLOR_LIST});
   _MediaCardWidgetState createState() => _MediaCardWidgetState();
 }
 
@@ -45,67 +45,97 @@ class _MediaCardWidgetState extends State<MediaCardWidget> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               SizedBox(height: 5),
-                              Text(
-                                  '${widget.model.tasksDone} ' +
-                                      locale.translate('cards.${widget.model.taskType}.title'),
-                                  //textAlign: TextAlign.center,
-                                  style: dataCardTitleStyle),
+                              Row(
+                                children: widget.modelsList
+                                    .asMap()
+                                    .entries
+                                    .map((entry) => Text(
+                                        '${entry.value.tasksDone} ' +
+                                            locale.translate('cards.${entry.value.taskType}.title') +
+                                            '      ',
+                                        //textAlign: TextAlign.center,
+                                        style: dataCardTitleStyle))
+                                    .toList(),
+                              ),
                             ],
                           ),
                         ),
                       ],
                     ),
                   ),
-                  Container(
-                    height: 200,
-                    // child: charts.PieChart(
-                    //   _createChartList(
-                    //       context, widget.model, CACHET.COLOR_LIST),
-                    //   animate: true,
-                    //   behaviors: [
-                    //     charts.DatumLegend(
-                    //       position: charts.BehaviorPosition.bottom,
-                    //       //desiredMaxRows: 7,
-                    //       desiredMaxColumns: 1,
-                    //       entryTextStyle: charts.TextStyleSpec(fontSize: 12),
-                    //       cellPadding: EdgeInsets.only(right: 3.0, bottom: 2.0),
-                    //       showMeasures: true,
-                    //       legendDefaultMeasure:
-                    //           charts.LegendDefaultMeasure.firstValue,
-                    //       measureFormatter: (num value) {
-                    //         return value == null ? '-' : '$value';
-                    //       },
-                    //     ),
-                    //   ],
-                    //   defaultRenderer: charts.ArcRendererConfig(
-                    //     arcWidth: 20,
-                    //   ),
-                    // ),
-                    child: Column(
-                      children: [
-                        HorizontalBar(
-                            names: this
-                                .widget
-                                .model
-                                .taskCount
-                                .map((task) => locale.translate(task.title))
-                                .toList(),
-                            values: this.widget.model.taskCount.map((task) => task.size).toList(),
-                            colors: CACHET.COLOR_LIST,
-                            height: 10),
-                        HorizontalBar(
-                            names: this
-                                .widget
-                                .model
-                                .taskCount
-                                .map((task) => locale.translate(task.title))
-                                .toList(),
-                            values: this.widget.model.taskCount.map((task) => task.size).toList(),
-                            colors: CACHET.COLOR_LIST,
-                            height: 10),
-                      ],
-                    ),
+                  // Container(
+                  //   height: 200,
+                  // child: charts.PieChart(
+                  //   _createChartList(
+                  //       context, widget.model, CACHET.COLOR_LIST),
+                  //   animate: true,
+                  //   behaviors: [
+                  //     charts.DatumLegend(
+                  //       position: charts.BehaviorPosition.bottom,
+                  //       //desiredMaxRows: 7,
+                  //       desiredMaxColumns: 1,
+                  //       entryTextStyle: charts.TextStyleSpec(fontSize: 12),
+                  //       cellPadding: EdgeInsets.only(right: 3.0, bottom: 2.0),
+                  //       showMeasures: true,
+                  //       legendDefaultMeasure:
+                  //           charts.LegendDefaultMeasure.firstValue,
+                  //       measureFormatter: (num value) {
+                  //         return value == null ? '-' : '$value';
+                  //       },
+                  //     ),
+                  //   ],
+                  //   defaultRenderer: charts.ArcRendererConfig(
+                  //     arcWidth: 20,
+                  //   ),
+                  // ),
+                  Column(
+                    children: this
+                        .widget
+                        .modelsList
+                        .asMap()
+                        .entries
+                        .map(
+                          (entry) => HorizontalBar(
+                              names:
+                                  entry.value.taskCount.map((task) => locale.translate(task.title)).toList(),
+                              values: entry.value.taskCount.map((task) => task.size).toList(),
+                              colors: CACHET.COLOR_LIST,
+                              height: 10),
+                        )
+                        .toList(),
+
+                    // HorizontalBar(
+                    //     names: this
+                    //         .widget
+                    //         .model
+                    //         .taskCount
+                    //         .map((task) => locale.translate(task.title))
+                    //         .toList(),
+                    //     values: this.widget.model.taskCount.map((task) => task.size).toList(),
+                    //     colors: CACHET.COLOR_LIST,
+                    //     height: 10),
+                    // HorizontalBar(
+                    //     names: this
+                    //         .widget
+                    //         .model
+                    //         .taskCount
+                    //         .map((task) => locale.translate(task.title))
+                    //         .toList(),
+                    //     values: this.widget.model.taskCount.map((task) => task.size).toList(),
+                    //     colors: CACHET.COLOR_LIST,
+                    //     height: 10),
+                    // HorizontalBar(
+                    //     names: this
+                    //         .widget
+                    //         .model
+                    //         .taskCount
+                    //         .map((task) => locale.translate(task.title))
+                    //         .toList(),
+                    //     values: this.widget.model.taskCount.map((task) => task.size).toList(),
+                    //     colors: CACHET.COLOR_LIST,
+                    //     height: 10),
                   ),
+                  // ),
                 ],
               )
             ],

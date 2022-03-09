@@ -119,7 +119,7 @@ class MyAssetsBar extends StatelessWidget {
   }
 
   Widget _labelOrientation() {
-    if (this.labelOrientation == LabelOrientation.vertical)
+    if (this.labelOrientation == LabelOrientation.horizontal)
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: assets

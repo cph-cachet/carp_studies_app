@@ -23,6 +23,10 @@ class _MediaCardWidgetState extends State<MediaCardWidget> {
 
   Widget build(BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;
+    var total = 0;
+    widget.modelsList.forEach((element) {
+      total += element.tasksDone;
+    });
 
     return Padding(
       padding: const EdgeInsets.all(5.0),
@@ -36,7 +40,6 @@ class _MediaCardWidgetState extends State<MediaCardWidget> {
               Column(
                 children: [
                   Container(
-                    padding: EdgeInsets.only(left: 10),
                     child: Row(
                       children: <Widget>[
                         Expanded(
@@ -45,97 +48,37 @@ class _MediaCardWidgetState extends State<MediaCardWidget> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               SizedBox(height: 5),
-                              Row(
-                                children: widget.modelsList
-                                    .asMap()
-                                    .entries
-                                    .map((entry) => Text(
-                                        '${entry.value.tasksDone} ' +
-                                            locale.translate('cards.${entry.value.taskType}.title') +
-                                            '      ',
-                                        //textAlign: TextAlign.center,
-                                        style: dataCardTitleStyle))
-                                    .toList(),
-                              ),
+                              Text(total.toString() + ' MEDIA', style: dataCardTitleStyle),
+                              Column(
+                                  children: widget.modelsList
+                                      .asMap()
+                                      .entries
+                                      .map((entry) => Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              SizedBox(height: 15),
+                                              Text(
+                                                '${entry.value.tasksDone} ' +
+                                                    locale.translate('cards.${entry.value.taskType}.title'),
+                                                style: dataCardTitleStyle.copyWith(fontSize: 14),
+                                              ),
+                                              HorizontalBar(
+                                                  names: entry.value.taskCount
+                                                      .map((task) => locale.translate(task.title))
+                                                      .toList(),
+                                                  values:
+                                                      entry.value.taskCount.map((task) => task.size).toList(),
+                                                  colors: CACHET.COLOR_LIST,
+                                                  height: 18),
+                                            ],
+                                          ))
+                                      .toList()),
                             ],
                           ),
                         ),
                       ],
                     ),
                   ),
-                  // Container(
-                  //   height: 200,
-                  // child: charts.PieChart(
-                  //   _createChartList(
-                  //       context, widget.model, CACHET.COLOR_LIST),
-                  //   animate: true,
-                  //   behaviors: [
-                  //     charts.DatumLegend(
-                  //       position: charts.BehaviorPosition.bottom,
-                  //       //desiredMaxRows: 7,
-                  //       desiredMaxColumns: 1,
-                  //       entryTextStyle: charts.TextStyleSpec(fontSize: 12),
-                  //       cellPadding: EdgeInsets.only(right: 3.0, bottom: 2.0),
-                  //       showMeasures: true,
-                  //       legendDefaultMeasure:
-                  //           charts.LegendDefaultMeasure.firstValue,
-                  //       measureFormatter: (num value) {
-                  //         return value == null ? '-' : '$value';
-                  //       },
-                  //     ),
-                  //   ],
-                  //   defaultRenderer: charts.ArcRendererConfig(
-                  //     arcWidth: 20,
-                  //   ),
-                  // ),
-                  Column(
-                    children: this
-                        .widget
-                        .modelsList
-                        .asMap()
-                        .entries
-                        .map(
-                          (entry) => HorizontalBar(
-                              names:
-                                  entry.value.taskCount.map((task) => locale.translate(task.title)).toList(),
-                              values: entry.value.taskCount.map((task) => task.size).toList(),
-                              colors: CACHET.COLOR_LIST,
-                              height: 10),
-                        )
-                        .toList(),
-
-                    // HorizontalBar(
-                    //     names: this
-                    //         .widget
-                    //         .model
-                    //         .taskCount
-                    //         .map((task) => locale.translate(task.title))
-                    //         .toList(),
-                    //     values: this.widget.model.taskCount.map((task) => task.size).toList(),
-                    //     colors: CACHET.COLOR_LIST,
-                    //     height: 10),
-                    // HorizontalBar(
-                    //     names: this
-                    //         .widget
-                    //         .model
-                    //         .taskCount
-                    //         .map((task) => locale.translate(task.title))
-                    //         .toList(),
-                    //     values: this.widget.model.taskCount.map((task) => task.size).toList(),
-                    //     colors: CACHET.COLOR_LIST,
-                    //     height: 10),
-                    // HorizontalBar(
-                    //     names: this
-                    //         .widget
-                    //         .model
-                    //         .taskCount
-                    //         .map((task) => locale.translate(task.title))
-                    //         .toList(),
-                    //     values: this.widget.model.taskCount.map((task) => task.size).toList(),
-                    //     colors: CACHET.COLOR_LIST,
-                    //     height: 10),
-                  ),
-                  // ),
                 ],
               )
             ],

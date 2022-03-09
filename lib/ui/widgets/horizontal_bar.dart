@@ -119,7 +119,7 @@ class MyAssetsBar extends StatelessWidget {
   }
 
   Widget _labelOrientation() {
-    if (this.labelOrientation == LabelOrientation.horizontal)
+    if (this.labelOrientation == LabelOrientation.vertical)
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: assets
@@ -140,59 +140,6 @@ class MyAssetsBar extends StatelessWidget {
             .toList(),
       );
     else {
-      // return Row(
-      //   mainAxisAlignment: MainAxisAlignment.start,
-      //   children: assets
-      //       .asMap()
-      //       .entries
-      //       .map(
-      //         (entry) => Flexible(
-      //             child: Padding(
-      //                 padding: EdgeInsets.symmetric(vertical: 3, horizontal: 5),
-      //                 child: Row(
-      //                   children: [
-      //                     Icon(Icons.circle, color: entry.value.color, size: 12.0),
-      //                     Expanded(
-      //                         child: Text(' ' + entry.value.name!,
-      //                             style: legendStyle,
-      //                             textAlign: TextAlign.left,
-      //                             overflow: TextOverflow.ellipsis)),
-      //                     Text('' + entry.value.size.toString(),
-      //                         style: legendStyle, textAlign: TextAlign.right)
-      //                   ],
-      //                 ))),
-      //       )
-      //       .toList(),
-      // );
-
-      // print(assets.asMap().entries.map((e) => print('e ' + e.toString())));
-      // return Column(
-      //   mainAxisAlignment: MainAxisAlignment.center,
-      //   children: assets
-      //       .asMap()
-      //       .entries
-      //       .map(
-      //         (entry) => Padding(
-      //           padding: EdgeInsets.symmetric(vertical: 3, horizontal: 10),
-      //           child: Row(
-      //             mainAxisAlignment: MainAxisAlignment.start,
-      //             children: [
-      //               Icon(Icons.circle, color: entry.value.color, size: 12.0),
-      //               Text(' ' + entry.value.size.toString(), style: legendStyle, textAlign: TextAlign.left),
-      //               Expanded(
-      //                   child: Text(' ' + entry.value.name!,
-      //                       style: legendStyle, textAlign: TextAlign.left, overflow: TextOverflow.ellipsis)),
-      //               Icon(Icons.circle, color: entry.value.color, size: 12.0),
-      //               Expanded(
-      //                   child: Text(' ' + entry.value.name! + ' ' + entry.value.size.toString(),
-      //                       style: legendStyle, textAlign: TextAlign.left, overflow: TextOverflow.ellipsis)),
-      //             ],
-      //           ),
-      //         ),
-      //       )
-      //       .toList(),
-      // );
-
       return Container(
           child: GridView.count(
         shrinkWrap: true,

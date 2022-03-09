@@ -16,18 +16,27 @@ class CarpBanner extends StatelessWidget {
         titlePadding: EdgeInsets.only(top: 15),
         title: InkWell(
           onTap: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => StudyDetailsPage()));
+            Navigator.push(context, MaterialPageRoute(builder: (context) => StudyDetailsPage()));
           },
           child: Padding(
             padding: EdgeInsets.all(10),
-            child: Text(locale.translate(studyPageModel.title),
-                style: TextStyle(
-                    color: Theme.of(context).primaryColor, fontSize: 16.0)),
+            child: Stack(
+              alignment: AlignmentDirectional.bottomEnd,
+              children: [
+                Text(locale.translate(studyPageModel.title),
+                    style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 16.0)),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Icon(Icons.touch_app, color: Theme.of(context).primaryColor, size: 15),
+                  ],
+                )
+              ],
+            ),
           ),
         ),
-        background:
-            Image.asset('./assets/images/kids.png', fit: BoxFit.fitHeight),
+        background: Image.asset('./assets/images/kids.png', fit: BoxFit.fitHeight),
       ),
     );
   }

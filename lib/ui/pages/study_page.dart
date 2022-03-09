@@ -28,8 +28,7 @@ class _StudyPageState extends State<StudyPage> {
                         SliverList(
                           delegate: SliverChildBuilderDelegate(
                             (BuildContext context, int index) =>
-                                _aboutStudyCard(
-                                    context, widget.model.messages[index]),
+                                _aboutStudyCard(context, widget.model.messages[index]),
                             childCount: widget.model.messages.length,
                           ),
                         ),
@@ -74,7 +73,7 @@ class _StudyPageState extends State<StudyPage> {
                   ? Expanded(
                       child: Container(
                       height: 150.0,
-                      color: Color(0xFFF1F9FF),
+                      color: Theme.of(context).accentColor, //Color(0xFFF1F9FF),
                       child: messageImage,
                     ))
                   : SizedBox.shrink()
@@ -87,8 +86,7 @@ class _StudyPageState extends State<StudyPage> {
                 SizedBox(width: 15),
                 Expanded(
                     child: Text(locale.translate(message.title!),
-                        style: aboutCardTitleStyle.copyWith(
-                            color: Theme.of(context).primaryColor))),
+                        style: aboutCardTitleStyle.copyWith(color: Theme.of(context).primaryColor))),
               ],
             ),
             SizedBox(height: 5),
@@ -97,11 +95,7 @@ class _StudyPageState extends State<StudyPage> {
               Text(
                   // locale.translate(message.type.toString().split('.')[1][0].toUpperCase() +
                   //         message.type.toString().split('.')[1].substring(1)) +
-                  locale.translate(message.type
-                          .toString()
-                          .split('.')
-                          .last
-                          .toLowerCase()) +
+                  locale.translate(message.type.toString().split('.').last.toLowerCase()) +
                       ' - ' +
                       timeago.format(
                           DateTime.now().subtract(Duration(
@@ -109,8 +103,7 @@ class _StudyPageState extends State<StudyPage> {
                               hours: message.timestamp.hour,
                               minutes: message.timestamp.minute)),
                           locale: Localizations.localeOf(context).languageCode),
-                  style: aboutCardSubtitleStyle.copyWith(
-                      color: Theme.of(context).primaryColor)),
+                  style: aboutCardSubtitleStyle.copyWith(color: Theme.of(context).primaryColor)),
             ]),
             SizedBox(height: 5),
             Row(children: [
@@ -118,8 +111,7 @@ class _StudyPageState extends State<StudyPage> {
               if (message.subTitle!.isNotEmpty)
                 Expanded(
                     child: Text(locale.translate(message.subTitle!),
-                        style: aboutCardContentStyle.copyWith(
-                            color: Theme.of(context).primaryColor))),
+                        style: aboutCardContentStyle.copyWith(color: Theme.of(context).primaryColor))),
             ]),
             SizedBox(height: 5),
             Row(children: [
@@ -127,8 +119,9 @@ class _StudyPageState extends State<StudyPage> {
               if (message.message != null && message.message!.isNotEmpty)
                 Expanded(
                     child: Text(
-                  locale.translate(message.message!).substring(
-                          0, (message.message!.length > 150) ? 150 : null) +
+                  locale
+                          .translate(message.message!)
+                          .substring(0, (message.message!.length > 150) ? 150 : null) +
                       "...",
                   style: aboutCardContentStyle,
                   textAlign: TextAlign.justify,
@@ -136,14 +129,14 @@ class _StudyPageState extends State<StudyPage> {
               SizedBox(width: 15),
             ]),
             SizedBox(height: 5),
-            Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-              Icon(Icons.touch_app, color: Theme.of(context).primaryColor),
-              // Text(locale.translate("pages.about.message.read_more"),
-              //     style: aboutCardContentStyle.copyWith(
-              //         color: Theme.of(context).primaryColor, fontStyle: FontStyle.italic),
-              //     textAlign: TextAlign.right),
-              SizedBox(width: 15),
-            ]),
+            // Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+            //   Icon(Icons.touch_app, color: Theme.of(context).primaryColor, size: 18),
+            //   // Text(locale.translate("pages.about.message.read_more"),
+            //   //     style: aboutCardContentStyle.copyWith(
+            //   //         color: Theme.of(context).primaryColor, fontStyle: FontStyle.italic),
+            //   //     textAlign: TextAlign.right),
+            //   SizedBox(width: 15),
+            // ]),
             SizedBox(height: 10),
           ],
         ),

@@ -989,6 +989,25 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
             ..measures.add(SamplingPackageRegistry().common().measures[ContextSamplingPackage.LOCATION]!),
           phone);
 
+      _protocol!.addTriggeredTask(
+          PeriodicTrigger(
+            period: Duration(days: 1),
+            duration: const Duration(seconds: 2),
+          ),
+          AppTask(
+            type: AudioUserTask.AUDIO_TYPE,
+            title: "Coughing",
+            description: 'In this small exercise we would like to collect sound samples of coughing.',
+            instructions: 'Please cough 5 times.',
+            minutesToComplete: 1,
+          )
+            ..measures.add(CAMSMeasure(
+              type: AudioVideoSamplingPackage.AUDIO,
+              name: "Coughing",
+            ))
+            ..measures.add(SamplingPackageRegistry().common().measures[ContextSamplingPackage.LOCATION]!),
+          phone);
+
       // collect a video
       // _protocol!.addTriggeredTask(
       //     PeriodicTrigger(
@@ -1042,7 +1061,26 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           ),
           AppTask(
             type: VIDEO_TYPE,
-            title: "Video",
+            title: "Scars",
+            description: "Take a video of your scars",
+            instructions: "Please take a video of the scars in your skin",
+            minutesToComplete: 3,
+            notification: true,
+          )..measures.add(CAMSMeasure(
+              type: AudioVideoSamplingPackage.VIDEO,
+              name: "Recording",
+            )),
+          phone);
+
+      // video
+      _protocol!.addTriggeredTask(
+          PeriodicTrigger(
+            period: const Duration(minutes: 1),
+            duration: const Duration(seconds: 2),
+          ),
+          AppTask(
+            type: VIDEO_TYPE,
+            title: "Surrounding",
             description: "Take a video of your surroundings",
             instructions: "Please take a video of whatever is next to you",
             minutesToComplete: 3,

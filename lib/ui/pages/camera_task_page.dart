@@ -1,10 +1,10 @@
 part of carp_study_app;
 
 class CameraTaskPage extends StatefulWidget {
-  final VideoUserTask videoUserTask;
+  final VideoUserTask mediaUserTask;
   final List<CameraDescription> cameras;
 
-  CameraTaskPage({Key? key, required this.videoUserTask, required this.cameras}) : super(key: key);
+  CameraTaskPage({Key? key, required this.mediaUserTask, required this.cameras}) : super(key: key);
 
   @override
   _CameraTaskPageState createState() => _CameraTaskPageState();
@@ -24,7 +24,7 @@ class _CameraTaskPageState extends State<CameraTaskPage> {
 
   Widget _stepSelector() {
     return StreamBuilder<UserTaskState>(
-        stream: widget.videoUserTask.stateEvents,
+        stream: widget.mediaUserTask.stateEvents,
         initialData: UserTaskState.enqueued,
         builder: (context, AsyncSnapshot<UserTaskState> snapshot) {
           switch (snapshot.data) {
@@ -40,7 +40,7 @@ class _CameraTaskPageState extends State<CameraTaskPage> {
   Widget _stepOne() {
     RPLocalizations locale = RPLocalizations.of(context)!;
     return StreamBuilder<UserTaskState>(
-      stream: widget.videoUserTask.stateEvents,
+      stream: widget.mediaUserTask.stateEvents,
       initialData: UserTaskState.enqueued,
       builder: (context, AsyncSnapshot<UserTaskState> snapshot) {
         return Column(
@@ -60,9 +60,9 @@ class _CameraTaskPageState extends State<CameraTaskPage> {
             SizedBox(height: 35),
             Image(image: AssetImage('assets/icons/camera.png'), width: 220, height: 220),
             SizedBox(height: 40),
-            Text(locale.translate(widget.videoUserTask.title), style: audioTitleStyle),
+            Text(locale.translate(widget.mediaUserTask.title), style: audioTitleStyle),
             SizedBox(height: 10),
-            Text(locale.translate(widget.videoUserTask.description), style: audioContentStyle),
+            Text(locale.translate(widget.mediaUserTask.description), style: audioContentStyle),
             Expanded(
               child: Align(
                 alignment: FractionalOffset.bottomCenter,
@@ -81,7 +81,7 @@ class _CameraTaskPageState extends State<CameraTaskPage> {
                             context,
                             MaterialPageRoute(
                               builder: (context) =>
-                                  CameraPage(videoUserTask: widget.videoUserTask, cameras: widget.cameras),
+                                  CameraPage(videoUserTask: widget.mediaUserTask, cameras: widget.cameras),
                             ),
                           ),
                           padding: EdgeInsets.all(0),
@@ -94,7 +94,7 @@ class _CameraTaskPageState extends State<CameraTaskPage> {
                           style: aboutCardTitleStyle.copyWith(color: Theme.of(context).primaryColor),
                         ),
                         onTap: () {
-                          widget.videoUserTask.onDone(context);
+                          widget.mediaUserTask.onDone(context);
                           //audioUserTask!.onCancel(context);
                           Navigator.of(context).pop();
                         },

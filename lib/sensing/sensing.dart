@@ -24,8 +24,7 @@ class Sensing {
   SmartPhoneClientManager? client;
 
   /// The deployment running on this phone.
-  SmartphoneDeployment? get deployment =>
-      _controller?.deployment as SmartphoneDeployment?;
+  SmartphoneDeployment? get deployment => _controller?.deployment as SmartphoneDeployment?;
 
   /// Get the latest status of the study deployment.
   StudyDeploymentStatus? get status => _status;
@@ -40,16 +39,13 @@ class Sensing {
   SmartphoneDeploymentController? get controller => _controller;
 
   /// Is sensing running, i.e. has the study executor been resumed?
-  bool get isRunning =>
-      (controller != null) && controller!.executor!.state == ProbeState.resumed;
+  bool get isRunning => (controller != null) && controller!.executor!.state == ProbeState.resumed;
 
   /// the list of running - i.e. used - probes in this study.
-  List<Probe> get runningProbes =>
-      (_controller != null) ? _controller!.executor!.probes : [];
+  List<Probe> get runningProbes => (_controller != null) ? _controller!.executor!.probes : [];
 
   /// The list of connected devices.
-  List<DeviceManager>? get runningDevices =>
-      client?.deviceRegistry.devices.values.toList();
+  List<DeviceManager>? get runningDevices => client?.deviceRegistry.devices.values.toList();
 
   /// The singleton sensing instance
   factory Sensing() => _instance;
@@ -59,7 +55,7 @@ class Sensing {
     //SamplingPackageRegistry.register(ConnectivitySamplingPackage());
     SamplingPackageRegistry().register(ContextSamplingPackage());
     //SamplingPackageRegistry.register(CommunicationSamplingPackage());
-    SamplingPackageRegistry().register(AudioVideoSamplingPackage());
+    SamplingPackageRegistry().register(MediaSamplingPackage());
     SamplingPackageRegistry().register(SurveySamplingPackage());
     //SamplingPackageRegistry.register(HealthSamplingPackage());
 
@@ -84,8 +80,7 @@ class Sensing {
 
         // get the protocol from the local study protocol manager
         // note that the study id is not used
-        SmartphoneStudyProtocol? protocol =
-            await (LocalStudyProtocolManager().getStudyProtocol(''));
+        SmartphoneStudyProtocol? protocol = await (LocalStudyProtocolManager().getStudyProtocol(''));
 
         // deploy this protocol using the on-phone deployment service
         // re-use the study deployment id - if available
@@ -111,8 +106,7 @@ class Sensing {
         deploymentService = CustomProtocolDeploymentService();
 
         // get the study deployment status
-        _status = await CustomProtocolDeploymentService()
-            .getStudyDeploymentStatus(bloc.studyDeploymentId!);
+        _status = await CustomProtocolDeploymentService().getStudyDeploymentStatus(bloc.studyDeploymentId!);
 
         break;
     }
@@ -126,6 +120,7 @@ class Sensing {
 
     // add and deploy this deployment
     _controller = await client!.addStudy(studyDeploymentId!, deviceRolename!);
+    await _controller?.tryDeployment();
 
     // configure the controller
     await _controller!.configure(askForPermissions: false);
@@ -140,8 +135,7 @@ class Sensing {
   /// of the current master deployment.
   void translateStudyProtocol(AssetLocalizations localization) {
     // fast out, if not configured or no protocol
-    if (controller?.status != StudyRuntimeStatus.Configured ||
-        controller?.masterDeployment == null) return;
+    if (controller?.status != StudyRuntimeStatus.Configured || controller?.masterDeployment == null) return;
 
     for (var task in controller!.masterDeployment!.tasks) {
       if (task.runtimeType == AppTask) {
@@ -154,6 +148,5 @@ class Sensing {
     info("Study protocol translated to local '${localization.locale}'");
   }
 
-  Future<void> askForPermissions() async =>
-      await _controller!.askForAllPermissions();
+  Future<void> askForPermissions() async => await _controller!.askForAllPermissions();
 }

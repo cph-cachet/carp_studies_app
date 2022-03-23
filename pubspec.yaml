@@ -11,16 +11,16 @@ dependencies:
   flutter:
     sdk: flutter
 
-  carp_mobile_sensing: ^0.32.3
-  carp_context_package: ^0.32.1
-  carp_survey_package: ^0.32.1
-  carp_audio_package: ^0.32.2
-  carp_backend: ^0.32.3
+  carp_mobile_sensing: ^0.33.0
+  carp_context_package: ^0.33.0
+  carp_survey_package: ^0.33.0
+  carp_audio_package: ^0.33.0
+  carp_backend: ^0.33.0
 
   #carp_communication_package: ^0.6.1
   #carp_health_package: ^0.6.1
   
-  research_package: ^0.7.0
+  research_package: ^0.7.3
 
   flutter_launcher_icons: ^0.9.1
   url_launcher: ^6.0.9
@@ -32,7 +32,7 @@ dependencies:
   camera: ^0.9.4+11
   video_player: ^2.2.7
   path_provider: ^2.0.2
-  json_annotation: ^4.3.0
+  json_annotation: ^4.4.0
 
   flutter_localizations:
     sdk: flutter

@@ -7,7 +7,8 @@ class DataVisualizationPageViewModel extends ViewModel {
   final MobilityCardViewModel _mobilityCardDataModel = MobilityCardViewModel();
   final TaskCardViewModel _surveysCardDataModel = TaskCardViewModel(SurveyUserTask.SURVEY_TYPE);
   final TaskCardViewModel _audioCardDataModel = TaskCardViewModel(AudioUserTask.AUDIO_TYPE);
-  final TaskCardViewModel _videoCardDataModel = TaskCardViewModel(VideoUserTask.VIDEO_TYPE); // TODO ADD PHOTO
+  final TaskCardViewModel _videoCardDataModel = TaskCardViewModel(VideoUserTask.VIDEO_TYPE);
+  final TaskCardViewModel _imageCardDataModel = TaskCardViewModel(VideoUserTask.IMAGE_TYPE); // TODO ADD PHOTO
   final StudyProgressCardViewModel _studyProgressCardDataModel = StudyProgressCardViewModel();
 
   ActivityCardViewModel get activityCardDataModel => _activityCardDataModel;
@@ -17,6 +18,7 @@ class DataVisualizationPageViewModel extends ViewModel {
   TaskCardViewModel get surveysCardDataModel => _surveysCardDataModel;
   TaskCardViewModel get audioCardDataModel => _audioCardDataModel;
   TaskCardViewModel get videoCardDataModel => _videoCardDataModel;
+  TaskCardViewModel get imageCardDataModel => _imageCardDataModel;
 
   StudyProgressCardViewModel get studyProgressCardDataModel => _studyProgressCardDataModel;
 
@@ -43,6 +45,7 @@ class DataVisualizationPageViewModel extends ViewModel {
     _surveysCardDataModel.init(controller);
     _audioCardDataModel.init(controller);
     _videoCardDataModel.init(controller);
+    _imageCardDataModel.init(controller);
     _studyProgressCardDataModel.init(controller);
   }
 }

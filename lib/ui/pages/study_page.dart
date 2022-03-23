@@ -98,11 +98,14 @@ class _StudyPageState extends State<StudyPage> {
                   locale.translate(message.type.toString().split('.').last.toLowerCase()) +
                       ' - ' +
                       timeago.format(
-                          DateTime.now().subtract(Duration(
-                              days: message.timestamp.day,
-                              hours: message.timestamp.hour,
-                              minutes: message.timestamp.minute)),
-                          locale: Localizations.localeOf(context).languageCode),
+                        DateTime.now().copyWithAdditional(
+                            years: -DateTime.now().year + message.timestamp.year,
+                            months: -DateTime.now().month + message.timestamp.month,
+                            days: -DateTime.now().day + message.timestamp.day,
+                            hours: -DateTime.now().hour + message.timestamp.hour,
+                            minutes: -DateTime.now().minute + message.timestamp.minute),
+                        locale: Localizations.localeOf(context).languageCode,
+                      ),
                   style: aboutCardSubtitleStyle.copyWith(color: Theme.of(context).primaryColor)),
             ]),
             SizedBox(height: 5),
@@ -146,6 +149,33 @@ class _StudyPageState extends State<StudyPage> {
       ),
       elevation: 4,
       margin: EdgeInsets.all(5),
+    );
+  }
+}
+
+extension CopyWithAdditional on DateTime {
+  DateTime copyWithAdditional({
+    int years = 0,
+    int months = 0,
+    int days = 0,
+    int hours = 0,
+    int minutes = 0,
+    int seconds = 0,
+    int milliseconds = 0,
+    int microseconds = 0,
+  }) {
+    print(hours);
+    print(DateTime.now().hour);
+
+    return DateTime(
+      year + years,
+      month + months,
+      day + days,
+      hour + hours,
+      minute + minutes,
+      second + seconds,
+      millisecond + milliseconds,
+      microsecond + microseconds,
     );
   }
 }

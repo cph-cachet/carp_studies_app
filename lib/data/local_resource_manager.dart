@@ -34,7 +34,7 @@ class LocalResourceManager implements InformedConsentManager, LocalizationManage
       subTitle: "pages.about.message.1.subtitle",
       message: "pages.about.message.1.message",
       imagePath: 'assets/images/park.png',
-      timestamp: DateTime(2020, 12, 25),
+      timestamp: DateTime(2021, 12, 14),
     ));
     setMessage(Message(
         type: MessageType.announcement,

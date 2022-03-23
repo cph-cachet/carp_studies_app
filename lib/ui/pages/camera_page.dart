@@ -25,6 +25,8 @@ class _CameraPageState extends State<CameraPage> {
   bool isFlashOff = true;
   late File capturedImages;
   bool isRecording = false;
+  // bool _imageEnabled = videoUserTask;
+  // late bool _videoEnabled;
 
   initializeCamera(int cameraIndex) async {
     _controller = CameraController(widget.cameras[cameraIndex], ResolutionPreset.max,

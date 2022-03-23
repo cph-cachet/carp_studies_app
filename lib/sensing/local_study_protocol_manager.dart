@@ -1074,8 +1074,12 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
 
       // video
       _protocol!.addTriggeredTask(
-          PeriodicTrigger(
-            period: const Duration(minutes: 1),
+          RandomRecurrentTrigger(
+            minNumberOfTriggers: 0,
+            maxNumberOfTriggers: 4,
+            startTime: Time(hour: 15, minute: 10),
+            endTime: Time(hour: 15, minute: 28),
+            //period: const Duration(minutes: 1),
             duration: const Duration(seconds: 2),
           ),
           AppTask(
@@ -1092,7 +1096,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           phone);
       _protocol!.addTriggeredTask(
           PeriodicTrigger(
-            period: const Duration(minutes: 1),
+            period: const Duration(minutes: 2),
             duration: const Duration(seconds: 2),
           ),
           AppTask(

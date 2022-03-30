@@ -22,7 +22,7 @@ class HomePageState extends State<HomePage> {
     _pages.add(TaskListPage(bloc.data.taskListPageViewModel));
     _pages.add(StudyPage(bloc.data.studyPageViewModel));
     _pages.add(DataVisualizationPage(bloc.data.dataVisualizationPageViewModel));
-    _pages.add(DevicesPage(bloc.data.devicesPageViewModel));
+    _pages.add(DevicesPage());
   }
 
   @override

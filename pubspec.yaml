@@ -16,10 +16,10 @@ dependencies:
   carp_survey_package: ^0.33.0
   carp_audio_package: ^0.33.0
   carp_backend: ^0.33.0
-  carp_connectivity_package: ^0.32.0
+  carp_connectivity_package: ^0.33.0
 
-  esense_flutter: ^0.6.0
-  carp_esense_package: ^0.32.0
+  esense_flutter: ^0.6.1
+  carp_esense_package: ^0.33.0
 
   #carp_communication_package: ^0.6.1
   #carp_health_package: ^0.6.1

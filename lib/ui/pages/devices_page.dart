@@ -1,8 +1,8 @@
 part of carp_study_app;
 
 class DevicesPage extends StatefulWidget {
-  final DevicesPageViewModel model;
-  const DevicesPage(this.model);
+  // final DevicesPageViewModel model;
+  // const DevicesPage(this.model);
 
   @override
   _DevicesPageState createState() => _DevicesPageState();
@@ -81,6 +81,8 @@ class _DevicesPageState extends State<DevicesPage> {
 
   @override
   Widget build(BuildContext context) {
+    List<DeviceModel> devices = bloc.runningDevices.toList();
+
     RPLocalizations locale = RPLocalizations.of(context)!;
     // BluetoothProbe().getDatum();
     // widget.model.scanDevices;
@@ -97,18 +99,21 @@ class _DevicesPageState extends State<DevicesPage> {
           ),
           Expanded(
             flex: 4,
-            child: CustomScrollView(
-              slivers: [
-                SliverList(
-                  delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
-                    //return Text(widget.model.devices[index].bluetoothDeviceName);
-                    return _buildDeviceCard(context, widget.model._devices[index]);
-                  }, childCount: widget.model._devices.length),
-                ),
-              ],
-              //   );
-              // }),
-            ),
+            child: StreamBuilder<DeviceStatus>(
+                stream: devices.first.deviceEvents,
+                builder: (context, AsyncSnapshot<DeviceStatus> snapshot) {
+                  print('>> $snapshot');
+                  return CustomScrollView(
+                    slivers: [
+                      SliverList(
+                        delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
+                          //return Text(widget.model.devices[index].bluetoothDeviceName);
+                          return _buildDeviceCard(context, devices[index]);
+                        }, childCount: devices.length),
+                      ),
+                    ],
+                  );
+                }),
           ),
         ],
       ),
@@ -122,46 +127,57 @@ Widget _buildDeviceCard(BuildContext context, DeviceModel device) {
       margin: EdgeInsets.symmetric(horizontal: 10, vertical: 1),
       //shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       elevation: 0,
-      child: ListTile(
-        leading: device.icon,
-        title: Text(device.name!),
-        subtitle: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(height: 5),
-            Text(device.description),
-            SizedBox(height: 5),
-            Row(
-              children: [
-                Text(device.statusString!),
-                device.batteryLevel == null
-                    ? SizedBox.shrink()
-                    : Row(
-                        children: [
-                          SizedBox(width: 5),
-                          Transform.rotate(angle: 90 * pi / 180, child: Icon(Icons.battery_std_outlined)),
-                          Text(device.batteryLevel.toString() + "%")
-                        ],
-                      ),
-              ],
+      child: StreamBuilder<DeviceStatus>(
+        stream: device.deviceEvents,
+        initialData: DeviceStatus.unknown,
+        builder: (context, AsyncSnapshot<DeviceStatus> snapshot) => Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            ListTile(
+              leading: device.icon,
+              title: Text(device.name!),
+              subtitle: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: 5),
+                  Text(device.id),
+                  SizedBox(height: 5),
+                  Row(
+                    children: [
+                      Text(device.statusString!),
+                      device.batteryLevel == null
+                          ? SizedBox.shrink()
+                          : Row(
+                              children: [
+                                SizedBox(width: 5),
+                                Transform.rotate(
+                                    angle: 90 * pi / 180, child: Icon(Icons.battery_std_outlined)),
+                                Text(device.batteryLevel.toString() + "%")
+                              ],
+                            ),
+                    ],
+                  ),
+                ],
+              ),
+              trailing: device.status == DeviceStatus.connected
+                  ? Icon(
+                      Icons.check,
+                      color: Colors.green,
+                    )
+                  : device.status == DeviceStatus.disconnected
+                      ? Text("CONNECT")
+                      : Text("PAIR"),
+              onTap: () => _showConnectionDialog(context, 0, device),
             ),
+            const Divider(),
           ],
         ),
-        trailing: device.status == DeviceStatus.connected
-            ? Icon(
-                Icons.check,
-                color: Colors.green,
-              )
-            : device.status == DeviceStatus.disconnected
-                ? Text("CONNECT")
-                : Text("PAIR"),
-        onTap: () => _showConnectionDialog(context, 0),
       ),
     ),
   );
 }
 
-Future _showConnectionDialog(BuildContext context, _currentStep) {
+Future _showConnectionDialog(BuildContext context, _currentStep, DeviceModel device) {
   return showDialog(
     context: context,
     barrierDismissible: true,
@@ -182,8 +198,8 @@ Future _showConnectionDialog(BuildContext context, _currentStep) {
                   ],
                 ),
                 _currentStep == 0
-                    ? Container(width: 220, height: 220, color: Colors.blue)
-                    : Container(width: 220, height: 220, color: Colors.red),
+                    ? Image(image: AssetImage('assets/icons/bluetooth.png'), width: 220, height: 220)
+                    : Image(image: AssetImage('assets/icons/connected.png'), width: 220, height: 220),
                 SizedBox(height: 15),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -211,7 +227,7 @@ Future _showConnectionDialog(BuildContext context, _currentStep) {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      _currentStep == 0 ? Text("Let's get started") : Text("Device paired!"),
+                      _currentStep == 0 ? Text("Let's get started") : Text(device.name! + " paired!"),
                     ],
                   ),
                 ),
@@ -219,11 +235,23 @@ Future _showConnectionDialog(BuildContext context, _currentStep) {
             ),
             content: Container(
               height: 120,
-              child: SingleChildScrollView(
-                child: _currentStep == 0
-                    ? Text(
-                        "Make sure the Fitbit is charged and on. Then go to the ‘Bluetooth Settings’ in your phone, press ‘Pair new device’ and select the Fitbit. Once is paired come back and press Connect.")
-                    : Text("Now you can connect the device to this app."),
+              child: Scrollbar(
+                isAlwaysShown: true,
+                child: SingleChildScrollView(
+                  child: _currentStep == 0
+                      ? Text(
+                          "Make sure the " +
+                              device.name! +
+                              " is charged and turned on. Then go to the ‘Bluetooth Settings’ in your phone, press ‘Pair new device’ and select the " +
+                              device.name! +
+                              ". Once is paired come back and press 'NEXT'.",
+                          style: aboutCardContentStyle,
+                        )
+                      : Text(
+                          "Now you can connect the " + device.name! + " to this app.",
+                          style: aboutCardContentStyle,
+                        ),
+                ),
               ),
             ),
             contentPadding: EdgeInsets.symmetric(horizontal: 25),
@@ -241,7 +269,15 @@ Future _showConnectionDialog(BuildContext context, _currentStep) {
                         ),
                   ]
                 : [
-                    TextButton(child: Text("CONNECT"), onPressed: () => {}),
+                    TextButton(
+                        child: Text("CONNECT"),
+                        onPressed: () => {
+                              bloc.connectToDevice(device),
+                              Navigator.of(context).pop(),
+                              // setState(() {
+                              //   _currentStep = 0;
+                              // })
+                            }),
                   ],
           );
         },

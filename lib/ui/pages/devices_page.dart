@@ -1,14 +1,20 @@
 part of carp_study_app;
 
 class DevicesPage extends StatefulWidget {
+<<<<<<< HEAD
   // final DevicesPageViewModel model;
   // const DevicesPage(this.model);
+=======
+  final DevicesPageViewModel model;
+  const DevicesPage(this.model);
+>>>>>>> dev-devices
 
   @override
   _DevicesPageState createState() => _DevicesPageState();
 }
 
 class _DevicesPageState extends State<DevicesPage> {
+<<<<<<< HEAD
   // List<Device> devices = [
   //   Device(
   //       name: "Phone",
@@ -115,11 +121,28 @@ class _DevicesPageState extends State<DevicesPage> {
                   );
                 }),
           ),
+=======
+  @override
+  Widget build(BuildContext context) {
+    RPLocalizations locale = RPLocalizations.of(context)!;
+
+    return Scaffold(
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          ListView(children: [
+            ListTile(
+              leading: FlutterLogo(),
+              title: Text('One-line with leading widget'),
+            ),
+          ])
+>>>>>>> dev-devices
         ],
       ),
     );
   }
 }
+<<<<<<< HEAD
 
 Widget _buildDeviceCard(BuildContext context, DeviceModel device) {
   return Center(
@@ -314,3 +337,5 @@ Future _showConnectionDialog(BuildContext context, _currentStep, DeviceModel dev
 // enum DeviceType { WATCH, PHONE, HEADSET, SCALE, HOME, SPEAKER, UNKNOWN }
 
 // enum DeviceState { CONNECTED, DISCONNECTED, NOT_PAIRED, ERROR }
+=======
+>>>>>>> dev-devices

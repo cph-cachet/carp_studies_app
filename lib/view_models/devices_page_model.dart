@@ -1,5 +1,6 @@
 part of carp_study_app;
 
+<<<<<<< HEAD
 class DevicesPageViewModel extends ViewModel {
   // DevicesPageViewModel();
 
@@ -80,3 +81,8 @@ class DeviceModel {
 }
 
 enum DeviceType { WATCH, PHONE, HEADSET, SCALE, HOME, SPEAKER, UNKNOWN }
+=======
+class DevicesPageViewModel {
+  // TODO:
+}
+>>>>>>> dev-devices

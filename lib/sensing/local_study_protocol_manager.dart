@@ -59,8 +59,10 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
 
       // Define which devices are used for data collection.
       Smartphone phone = Smartphone();
+      DeviceDescriptor eSense = DeviceDescriptor(roleName: 'esense');
 
       _protocol!.addMasterDevice(phone);
+      _protocol!.addConnectedDevice(eSense);
 
       _protocol!.addTriggeredTask(
           DeploymentDelayedTrigger(delay: Duration(seconds: 15)),
@@ -834,7 +836,15 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
       // Define which devices are used for data collection.
       Smartphone phone = Smartphone();
       _protocol!.addMasterDevice(phone);
-      DeviceDescriptor eSense = ESenseDevice(roleName: 'The left eSense earplug');
+
+      // DeviceDescriptor eSense = DeviceDescriptor(roleName: 'The left eSense earplug');
+      // _protocol!.addConnectedDevice(eSense);
+
+      ESenseDevice eSense = ESenseDevice(
+        deviceName: 'eSense-1401',
+        samplingRate: 10,
+      );
+      _protocol!.addMasterDevice(phone);
       _protocol!.addConnectedDevice(eSense);
 
       _protocol!.addTriggeredTask(
@@ -1134,6 +1144,15 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
               surveyTask: surveys.ecological.survey,
             )),
           phone);
+
+      _protocol!.addTriggeredTask(
+          PeriodicTrigger(period: const Duration(minutes: 1), duration: const Duration(seconds: 2)),
+          AutomaticTask()
+            ..addMeasures([
+              Measure(type: ESenseSamplingPackage.ESENSE_BUTTON),
+              Measure(type: ESenseSamplingPackage.ESENSE_SENSOR),
+            ]),
+          eSense);
     }
 
     return _protocol;

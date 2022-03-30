@@ -53,16 +53,20 @@ class DeviceModel {
         Smartphone.DEVICE_TYPE: 'This phone',
         ESenseDevice.DEVICE_TYPE: 'eSense ear plug',
       };
-
-  static Map<DeviceType, Icon> get deviceTypeIcon => {
-        DeviceType.HEADSET: Icon(Icons.headphones),
-        DeviceType.PHONE: Icon(Icons.phone_android),
-        DeviceType.WATCH: Icon(Icons.watch),
-        DeviceType.HOME: Icon(Icons.home_mini_outlined),
-        DeviceType.SPEAKER: Icon(Icons.speaker),
-        DeviceType.SCALE: Icon(Icons.monitor_weight_outlined),
-        DeviceType.UNKNOWN: Icon(Icons.bluetooth)
+  static Map<String, Icon> get deviceTypeIcon => {
+        Smartphone.DEVICE_TYPE: Icon(Icons.phone_android),
+        ESenseDevice.DEVICE_TYPE: Icon(Icons.headphones),
       };
+
+  // static Map<DeviceType, Icon> get deviceTypeIcon => {
+  //       DeviceType.HEADSET: Icon(Icons.headphones),
+  //       DeviceType.PHONE: Icon(Icons.phone_android),
+  //       DeviceType.WATCH: Icon(Icons.watch),
+  //       DeviceType.HOME: Icon(Icons.home_mini_outlined),
+  //       DeviceType.SPEAKER: Icon(Icons.speaker),
+  //       DeviceType.SCALE: Icon(Icons.monitor_weight_outlined),
+  //       DeviceType.UNKNOWN: Icon(Icons.bluetooth)
+  //     };
 
 // Map<DeviceStatus, String> deviceStateText = {
 //   DeviceStatus.connected: "Connected",

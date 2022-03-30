@@ -5,7 +5,7 @@ import 'dart:math';
 import 'dart:convert';
 import 'dart:ui' as ui;
 
-import 'package:esense_flutter/esense_flutter.dart';
+import 'package:esense_flutter/esense.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import 'package:flutter/services.dart';
@@ -28,7 +28,7 @@ import 'package:flutter_activity_recognition/flutter_activity_recognition.dart';
 // the CARP packages
 import 'package:carp_core/carp_core.dart';
 import 'package:carp_mobile_sensing/carp_mobile_sensing.dart';
-import 'package:carp_audio_package/audio.dart';
+import 'package:carp_audio_package/media.dart';
 //import 'package:carp_health_package/health_package.dart';s
 import 'package:carp_connectivity_package/connectivity.dart';
 //import 'package:carp_communication_package/communication.dart';

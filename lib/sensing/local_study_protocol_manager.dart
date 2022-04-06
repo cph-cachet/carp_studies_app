@@ -841,7 +841,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
       // _protocol!.addConnectedDevice(eSense);
 
       ESenseDevice eSense = ESenseDevice(
-        deviceName: 'eSense-1401',
+        deviceName: 'eSense-0049',
         samplingRate: 10,
       );
       _protocol!.addMasterDevice(phone);
@@ -1146,7 +1146,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           phone);
 
       _protocol!.addTriggeredTask(
-          PeriodicTrigger(period: const Duration(minutes: 1), duration: const Duration(seconds: 2)),
+          PeriodicTrigger(period: const Duration(minutes: 1), duration: const Duration(seconds: 20)),
           AutomaticTask()
             ..addMeasures([
               Measure(type: ESenseSamplingPackage.ESENSE_BUTTON),

@@ -9,6 +9,18 @@ class DevicesPage extends StatefulWidget {
 }
 
 class _DevicesPageState extends State<DevicesPage> {
+  // /// App settings
+  // static const MethodChannel _channel = const MethodChannel('app_settings');
+
+  // /// Future async method call to open bluetooth settings.
+  // static Future<void> openBluetoothSettings({
+  //   bool asAnotherTask = false,
+  // }) async {
+  //   _channel.invokeMethod('bluetooth', {
+  //     'asAnotherTask': asAnotherTask,
+  //   });
+  // }
+
   // List<Device> devices = [
   //   Device(
   //       name: "Phone",
@@ -88,20 +100,39 @@ class _DevicesPageState extends State<DevicesPage> {
     // widget.model.scanDevices;
     return Scaffold(
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SizedBox(height: 35),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: ListTile(
-              leading: Icon(Icons.devices_other),
-              title: Text("Devices"),
+          CarpAppBar(),
+          Container(
+            color: Theme.of(context).accentColor,
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 15),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Devices",
+                      //'${locale.translate('pages.data_viz.hello')} ${bloc.friendlyUsername}',
+                      style: sectionTitleStyle.copyWith(color: Theme.of(context).primaryColor),
+                    ),
+                    Text("Here you can find all the devices you will use in your study.",
+                        style: aboutCardSubtitleStyle),
+                    //Text(locale.translate('pages.data_viz.thanks'), style: aboutCardSubtitleStyle),
+                    SizedBox(height: 15),
+                  ],
+                ),
+              ),
             ),
           ),
           Expanded(
             flex: 4,
-            child: StreamBuilder<DeviceStatus>(
-                stream: devices.first.deviceEvents,
-                builder: (context, AsyncSnapshot<DeviceStatus> snapshot) {
+            child: StreamBuilder<UserTask>(
+                stream: AppTaskController().userTaskEvents,
+                builder: (context, AsyncSnapshot<UserTask> snapshot) {
                   print('>> $snapshot');
                   return CustomScrollView(
                     slivers: [
@@ -121,55 +152,88 @@ class _DevicesPageState extends State<DevicesPage> {
   }
 }
 
+Widget _showBateryPercentage(BuildContext context, int bateryLevel, {double scale = 1}) {
+  double width = 25 * scale;
+  double height = 12 * scale;
+  return Row(children: [
+    SizedBox(width: 8),
+    ClipRRect(
+      borderRadius: BorderRadius.all(Radius.circular(2)),
+      child: Container(
+        decoration: BoxDecoration(
+            color: Theme.of(context).accentColor, border: Border.all(color: Theme.of(context).primaryColor)),
+        width: width,
+        height: height,
+        child: Row(children: [
+          SizedBox(
+              width: bateryLevel != 0 ? bateryLevel * (width * 0.9 / 100) : 0,
+              height: height * 0.75,
+              child: Container(color: Theme.of(context).primaryColor)),
+        ]),
+      ),
+    ),
+    ClipRRect(
+      borderRadius: BorderRadius.all(Radius.circular(4)),
+      child: Container(
+        decoration: BoxDecoration(
+            color: Theme.of(context).accentColor, border: Border.all(color: Theme.of(context).primaryColor)),
+        width: 2,
+        height: 4,
+      ),
+    ),
+    SizedBox(width: 4),
+    Text(bateryLevel.toString() + "%")
+  ]);
+}
+
 Widget _buildDeviceCard(BuildContext context, DeviceModel device) {
   return Center(
     child: Card(
-      margin: EdgeInsets.symmetric(horizontal: 10, vertical: 1),
-      //shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      elevation: 0,
+      color: Theme.of(context).scaffoldBackgroundColor,
+      margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      elevation: 5,
       child: StreamBuilder<DeviceStatus>(
         stream: device.deviceEvents,
         initialData: DeviceStatus.unknown,
         builder: (context, AsyncSnapshot<DeviceStatus> snapshot) => Column(
           mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
+          children: [
             ListTile(
-              leading: device.icon,
+              leading: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+                device.icon!,
+              ]),
               title: Text(device.name!),
               subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: 5),
                   Text(device.id),
-                  SizedBox(height: 5),
+                  SizedBox(height: 1),
                   Row(
                     children: [
-                      Text(device.statusString!),
-                      device.batteryLevel == null
-                          ? SizedBox.shrink()
-                          : Row(
-                              children: [
-                                SizedBox(width: 5),
-                                Transform.rotate(
-                                    angle: 90 * pi / 180, child: Icon(Icons.battery_std_outlined)),
-                                Text(device.batteryLevel.toString() + "%")
-                              ],
-                            ),
+                      Text(device.statusString),
+                      // device.batteryLevel == null
+                      //     ? SizedBox.shrink()
+                      //     : Row(
+                      //         children: [
+                      //           SizedBox(width: 5),
+                      //           Transform.rotate(
+                      //               angle: 90 * pi / 180, child: Icon(Icons.battery_std_outlined)),
+
+                      //         ],
+                      //       ),
+                      SizedBox(width: 8),
+                      _showBateryPercentage(context, device.batteryLevel!, scale: 0.9)
                     ],
                   ),
                 ],
               ),
-              trailing: device.status == DeviceStatus.connected
-                  ? Icon(
-                      Icons.check,
-                      color: Colors.green,
-                    )
-                  : device.status == DeviceStatus.disconnected
-                      ? Text("CONNECT")
-                      : Text("PAIR"),
+              trailing: device.statusIcon,
               onTap: () => _showConnectionDialog(context, 0, device),
             ),
-            const Divider(),
+            // const Divider(
+            //   thickness: 1,
+            // ),
           ],
         ),
       ),
@@ -234,7 +298,7 @@ Future _showConnectionDialog(BuildContext context, _currentStep, DeviceModel dev
               ],
             ),
             content: Container(
-              height: 120,
+              height: 300,
               child: Scrollbar(
                 isAlwaysShown: true,
                 child: SingleChildScrollView(
@@ -242,22 +306,19 @@ Future _showConnectionDialog(BuildContext context, _currentStep, DeviceModel dev
                       ? Text(
                           "Make sure the " +
                               device.name! +
-                              " is charged and turned on. Then go to the ‘Bluetooth Settings’ in your phone, press ‘Pair new device’ and select the " +
+                              " is charged and turned on. Then go to the Bluetooth Settings in your phone, press ‘Pair new device’ and select the " +
                               device.name! +
                               ". Once is paired come back and press 'NEXT'.",
                           style: aboutCardContentStyle,
                         )
-                      : Text(
-                          "Now you can connect the " + device.name! + " to this app.",
-                          style: aboutCardContentStyle,
-                        ),
+                      : configureDevice(device),
                 ),
               ),
             ),
             contentPadding: EdgeInsets.symmetric(horizontal: 25),
             actions: _currentStep == 0
                 ? [
-                    TextButton(child: Text("GO TO SETTINGS"), onPressed: () => {}),
+                    TextButton(child: Text("SETTINGS"), onPressed: () => AppSettings.openBluetoothSettings()),
                     TextButton(
                         child: Text("NEXT"),
                         onPressed: () => {
@@ -285,6 +346,38 @@ Future _showConnectionDialog(BuildContext context, _currentStep, DeviceModel dev
     },
   );
 }
+
+Widget configureDevice(DeviceModel device) {
+  final inputController = TextEditingController(text: 'eSense-1234');
+  return Column(
+    children: [
+      Text(
+        "Introduce the name of the " + device.name! + " that appeared on your bluetooth settings.",
+        style: aboutCardContentStyle,
+      ),
+      TextField(
+        style: inputFieldStyle,
+        // decoration: new InputDecoration.collapsed(hintText: 'eSense-0049'),
+        controller: inputController,
+        inputFormatters: [
+          FilteringTextInputFormatter(RegExp(r'^eSense-\d{4}'), allow: true),
+        ],
+        decoration: InputDecoration(
+          labelText: 'Device name',
+          helperText: 'e.g. eSense-1234',
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(50)),
+        ),
+      ),
+      TextButton(
+          onPressed: () {
+            print("@@@" + inputController.text);
+          },
+          child: Text("Save name"))
+    ],
+  );
+}
+
+
 
 // // Get an icon for the device based on its type.  If there is no icon for the device, use a default icon
 

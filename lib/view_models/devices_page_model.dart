@@ -39,6 +39,9 @@ class DeviceModel {
   /// The icon for this type of device.
   Icon? get icon => deviceTypeIcon[type!];
 
+  /// The icon for the status of device.
+  dynamic get statusIcon => deviceStatusIcon[status];
+
   // /// The icon for the runtime state of this device.
   // Icon? get stateIcon => deviceStateIcon[status];
 
@@ -56,6 +59,16 @@ class DeviceModel {
   static Map<String, Icon> get deviceTypeIcon => {
         Smartphone.DEVICE_TYPE: Icon(Icons.phone_android),
         ESenseDevice.DEVICE_TYPE: Icon(Icons.headphones),
+      };
+
+  static Map<DeviceStatus, dynamic> get deviceStatusIcon => {
+        DeviceStatus.connected: Icon(Icons.done, color: CACHET.GREEN_1),
+        DeviceStatus.disconnected: Text("PAIR"), // If its disconnected, ask to pair
+        DeviceStatus.paired: Text("CONNECT"), // If its paired, ask to connect
+        DeviceStatus.error: Icon(Icons.error_outline, color: CACHET.RED_1),
+        DeviceStatus.sampling: Icon(Icons.save_alt, color: CACHET.BLUE_1),
+        DeviceStatus.initialized: Text("READY"),
+        DeviceStatus.unknown: Icon(Icons.error_outline, color: CACHET.RED_1),
       };
 
   // static Map<DeviceType, Icon> get deviceTypeIcon => {

@@ -24,10 +24,12 @@ class MessageDetailsPage extends StatelessWidget {
                 children: [
                   Row(mainAxisAlignment: MainAxisAlignment.end, children: [
                     IconButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        icon: Icon(Icons.close))
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: Icon(Icons.close),
+                      color: Theme.of(context).primaryColor,
+                    )
                   ]),
                   message.type == MessageType.article
                       ? Container(
@@ -66,6 +68,7 @@ class MessageDetailsPage extends StatelessWidget {
           ),
           Expanded(
             child: Scrollbar(
+              isAlwaysShown: true,
               child: SingleChildScrollView(
                 scrollDirection: Axis.vertical,
                 child: Container(
@@ -105,7 +108,7 @@ class MessageDetailsPage extends StatelessWidget {
               ),
             ),
           ),
-          Spacer(),
+          //Spacer(),
           Padding(
             padding: EdgeInsets.only(bottom: 30),
             child: message.url != null

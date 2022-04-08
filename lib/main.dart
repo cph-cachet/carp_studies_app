@@ -22,6 +22,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 import 'package:app_settings/app_settings.dart';
+import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 
 // import 'package:activity_recognition_flutter/activity_recognition_flutter.dart';
 import 'package:flutter_activity_recognition/flutter_activity_recognition.dart';
@@ -31,7 +32,7 @@ import 'package:carp_core/carp_core.dart';
 import 'package:carp_mobile_sensing/carp_mobile_sensing.dart';
 import 'package:carp_audio_package/media.dart';
 //import 'package:carp_health_package/health_package.dart';s
-import 'package:carp_connectivity_package/connectivity.dart';
+import 'package:carp_connectivity_package/connectivity.dart' as carpcon;
 //import 'package:carp_communication_package/communication.dart';
 import 'package:carp_context_package/context.dart';
 import 'package:carp_survey_package/survey.dart';

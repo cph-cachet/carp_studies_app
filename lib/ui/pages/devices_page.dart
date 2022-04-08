@@ -249,7 +249,9 @@ Future _showConnectionDialog(BuildContext context, _currentStep, DeviceModel dev
       return StatefulBuilder(
         builder: (context, setState) {
           return AlertDialog(
+            scrollable: true,
             titlePadding: EdgeInsets.symmetric(vertical: 10),
+            insetPadding: EdgeInsets.symmetric(vertical: 24, horizontal: 40),
             title: Column(
               children: [
                 Row(
@@ -261,10 +263,17 @@ Future _showConnectionDialog(BuildContext context, _currentStep, DeviceModel dev
                         padding: EdgeInsets.only(right: 10)),
                   ],
                 ),
+
                 _currentStep == 0
-                    ? Image(image: AssetImage('assets/icons/bluetooth.png'), width: 220, height: 220)
-                    : Image(image: AssetImage('assets/icons/connected.png'), width: 220, height: 220),
-                SizedBox(height: 15),
+                    ? Image(
+                        image: AssetImage('assets/icons/bluetooth.png'),
+                        width: MediaQuery.of(context).size.height * 0.4,
+                        height: MediaQuery.of(context).size.height * 0.4)
+                    : Image(
+                        image: AssetImage('assets/icons/connected.png'),
+                        width: MediaQuery.of(context).size.height * 0.4,
+                        height: MediaQuery.of(context).size.height * 0.4),
+                SizedBox(height: 10),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [0, 1].map(
@@ -298,22 +307,19 @@ Future _showConnectionDialog(BuildContext context, _currentStep, DeviceModel dev
               ],
             ),
             content: Container(
-              height: 300,
-              child: Scrollbar(
-                isAlwaysShown: true,
-                child: SingleChildScrollView(
-                  child: _currentStep == 0
-                      ? Text(
-                          "Make sure the " +
-                              device.name! +
-                              " is charged and turned on. Then go to the Bluetooth Settings in your phone, press ‘Pair new device’ and select the " +
-                              device.name! +
-                              ". Once is paired come back and press 'NEXT'.",
-                          style: aboutCardContentStyle,
-                        )
-                      : configureDevice(device),
-                ),
-              ),
+              height: MediaQuery.of(context).size.height * 0.3,
+              child: _currentStep == 0
+                  ? Text(
+                      "Make sure the " +
+                          device.name! +
+                          " is charged and turned on. Then go to the Bluetooth Settings in your phone, press ‘Pair new device’ and select the " +
+                          device.name! +
+                          ". Once is paired come back and press 'NEXT'.",
+                      style: aboutCardContentStyle,
+                    )
+                  : getName(context),
+              //   ),s
+              // ),
             ),
             contentPadding: EdgeInsets.symmetric(horizontal: 25),
             actions: _currentStep == 0
@@ -377,6 +383,31 @@ Widget configureDevice(DeviceModel device) {
   );
 }
 
+Widget getName(BuildContext context) {
+  FlutterBluePlus flutterBlue = FlutterBluePlus.instance;
+
+  return RefreshIndicator(
+    onRefresh: () => FlutterBluePlus.instance.startScan(timeout: Duration(seconds: 2)),
+    child: Column(
+      children: <Widget>[
+        StreamBuilder<List<BluetoothDevice>>(
+          stream: Stream.periodic(Duration(seconds: 2))
+              .asyncMap((_) => FlutterBluePlus.instance.connectedDevices),
+          initialData: [],
+          builder: (c, snapshot) => Column(
+            children: snapshot.data!
+                .map(
+                  (d) => ListTile(
+                    title: Text(d.name),
+                  ),
+                )
+                .toList(),
+          ),
+        ),
+      ],
+    ),
+  );
+}
 
 
 // // Get an icon for the device based on its type.  If there is no icon for the device, use a default icon

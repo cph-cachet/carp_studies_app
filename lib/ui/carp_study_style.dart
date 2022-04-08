@@ -167,3 +167,5 @@ TextStyle profileTitleStyle = TextStyle(fontSize: 20, fontWeight: FontWeight.w40
 TextStyle profileActionStyle = TextStyle(fontSize: 20, fontWeight: FontWeight.w400);
 
 TextStyle timerStyle = TextStyle(fontSize: 36, fontWeight: FontWeight.w600);
+
+TextStyle studyNameStyle = TextStyle(fontSize: 16.0, fontWeight: FontWeight.w800);

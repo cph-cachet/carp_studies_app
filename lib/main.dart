@@ -31,7 +31,7 @@ import 'package:flutter_activity_recognition/flutter_activity_recognition.dart';
 import 'package:carp_core/carp_core.dart';
 import 'package:carp_mobile_sensing/carp_mobile_sensing.dart';
 import 'package:carp_audio_package/media.dart';
-//import 'package:carp_health_package/health_package.dart';s
+//import 'package:carp_health_package/health_package.dart';
 import 'package:carp_connectivity_package/connectivity.dart' as carpcon;
 //import 'package:carp_communication_package/communication.dart';
 import 'package:carp_context_package/context.dart';

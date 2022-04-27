@@ -9,9 +9,7 @@ class MeasuresCardWidget extends StatefulWidget {
 
 class _MeasuresCardWidgetState extends State<MeasuresCardWidget> {
   static List<charts.Series<MeasureCount, String>> _createChartList(
-          BuildContext context,
-          MeasuresCardViewModel model,
-          List<Color> colors) =>
+          BuildContext context, MeasuresCardViewModel model, List<Color> colors) =>
       [
         charts.Series<MeasureCount, String>(
           colorFn: (_, index) => charts.ColorUtil.fromDartColor(colors[index!]),
@@ -27,7 +25,7 @@ class _MeasuresCardWidgetState extends State<MeasuresCardWidget> {
     RPLocalizations locale = RPLocalizations.of(context)!;
 
     // Get the measures with more events to prioritize which ones to show
-    widget.model.orderedMeasures();
+
     return Padding(
       padding: const EdgeInsets.all(5.0),
       child: Card(
@@ -40,6 +38,8 @@ class _MeasuresCardWidgetState extends State<MeasuresCardWidget> {
               StreamBuilder(
                 stream: widget.model.measureEvents,
                 builder: (context, AsyncSnapshot<DataPoint> snapshot) {
+                  widget.model.orderedMeasures();
+                  widget.model.removeSensingEvents();
                   return Column(
                     children: [
                       Container(
@@ -54,8 +54,7 @@ class _MeasuresCardWidgetState extends State<MeasuresCardWidget> {
                                   SizedBox(height: 5),
                                   Text(
                                       '${widget.model.samplingSize} ' +
-                                          locale.translate(
-                                              'cards.measures.title'),
+                                          locale.translate('cards.measures.title'),
                                       //textAlign: TextAlign.center,
                                       style: dataCardTitleStyle),
                                 ],
@@ -70,19 +69,16 @@ class _MeasuresCardWidgetState extends State<MeasuresCardWidget> {
                           alignment: Alignment.center,
                           children: [
                             charts.PieChart<String>(
-                              _createChartList(
-                                  context, widget.model, CACHET.COLOR_LIST),
+                              _createChartList(context, widget.model, CACHET.COLOR_LIST),
                               animate: true,
                               behaviors: [
                                 charts.DatumLegend(
                                   position: charts.BehaviorPosition.end,
                                   desiredMaxRows: 7,
                                   //entryTextStyle: charts.TextStyleSpec(fontSize: 10),
-                                  cellPadding:
-                                      EdgeInsets.only(right: 3.0, bottom: 2.0),
+                                  cellPadding: EdgeInsets.only(right: 3.0, bottom: 2.0),
                                   showMeasures: true,
-                                  legendDefaultMeasure:
-                                      charts.LegendDefaultMeasure.firstValue,
+                                  legendDefaultMeasure: charts.LegendDefaultMeasure.firstValue,
                                   measureFormatter: (num? value) {
                                     return value == null ? '-' : '$value';
                                   },

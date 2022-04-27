@@ -317,9 +317,7 @@ Future _showConnectionDialog(BuildContext context, _currentStep, DeviceModel dev
                           ". Once is paired come back and press 'NEXT'.",
                       style: aboutCardContentStyle,
                     )
-                  : getName(context),
-              //   ),s
-              // ),
+                  : configureDevice(device, context),
             ),
             contentPadding: EdgeInsets.symmetric(horizontal: 25),
             actions: _currentStep == 0
@@ -337,6 +335,15 @@ Future _showConnectionDialog(BuildContext context, _currentStep, DeviceModel dev
                   ]
                 : [
                     TextButton(
+                        child: Text("BACK"),
+                        onPressed: () => {
+                              setState(() {
+                                _currentStep = 0;
+                              })
+                            }
+                        //settings
+                        ),
+                    TextButton(
                         child: Text("CONNECT"),
                         onPressed: () => {
                               bloc.connectToDevice(device),
@@ -353,59 +360,66 @@ Future _showConnectionDialog(BuildContext context, _currentStep, DeviceModel dev
   );
 }
 
-Widget configureDevice(DeviceModel device) {
-  final inputController = TextEditingController(text: 'eSense-1234');
+Widget configureDevice(DeviceModel device, BuildContext context) {
+  //final inputController = TextEditingController(text: 'eSense-1234');
+  FlutterBluePlus flutterBlue = FlutterBluePlus.instance;
+  flutterBlue.startScan(timeout: Duration(seconds: 2));
+
+  bool _selected = false;
+
   return Column(
     children: [
       Text(
-        "Introduce the name of the " + device.name! + " that appeared on your bluetooth settings.",
+        "Select the name of the " +
+            device.name! +
+            " that you want to connect and press 'CONNECT'. If the " +
+            device.name! +
+            " is not in the list, press 'BACK'.",
         style: aboutCardContentStyle,
       ),
-      TextField(
-        style: inputFieldStyle,
-        // decoration: new InputDecoration.collapsed(hintText: 'eSense-0049'),
-        controller: inputController,
-        inputFormatters: [
-          FilteringTextInputFormatter(RegExp(r'^eSense-\d{4}'), allow: true),
-        ],
-        decoration: InputDecoration(
-          labelText: 'Device name',
-          helperText: 'e.g. eSense-1234',
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(50)),
+
+      StreamBuilder<List<BluetoothDevice>>(
+        stream: Stream.periodic(Duration(seconds: 2)).asyncMap((_) => flutterBlue.connectedDevices),
+        initialData: [],
+        builder: (context, snapshot) => Column(
+          children: snapshot.data!.isEmpty
+              ? [Padding(padding: EdgeInsets.symmetric(vertical: 20), child: CircularProgressIndicator())]
+              : snapshot.data!
+                  .map(
+                    (bluetoothDevice) => ListTile(
+                      selected: _selected,
+                      //selectedTileColor: Theme.of(context).primaryColor,
+                      title: Text(bluetoothDevice.name),
+                      onTap: () {
+                        device.id = bluetoothDevice.name;
+
+                        _selected = !_selected;
+                      },
+                    ),
+                  )
+                  .toList(),
         ),
       ),
-      TextButton(
-          onPressed: () {
-            print("@@@" + inputController.text);
-          },
-          child: Text("Save name"))
+
+      // TextField(
+      //   style: inputFieldStyle,
+      //   // decoration: new InputDecoration.collapsed(hintText: 'eSense-0049'),
+      //   controller: inputController,
+      //   inputFormatters: [
+      //     FilteringTextInputFormatter(RegExp(r'^eSense-\d{4}'), allow: true),
+      //   ],
+      //   decoration: InputDecoration(
+      //     labelText: 'Device name',
+      //     helperText: 'e.g. eSense-1234',
+      //     border: OutlineInputBorder(borderRadius: BorderRadius.circular(50)),
+      //   ),
+      // ),
+      // TextButton(
+      //     onPressed: () {
+      //       print("@@@" + inputController.text);
+      //     },
+      //     child: Text("Save name"))
     ],
-  );
-}
-
-Widget getName(BuildContext context) {
-  FlutterBluePlus flutterBlue = FlutterBluePlus.instance;
-
-  return RefreshIndicator(
-    onRefresh: () => FlutterBluePlus.instance.startScan(timeout: Duration(seconds: 2)),
-    child: Column(
-      children: <Widget>[
-        StreamBuilder<List<BluetoothDevice>>(
-          stream: Stream.periodic(Duration(seconds: 2))
-              .asyncMap((_) => FlutterBluePlus.instance.connectedDevices),
-          initialData: [],
-          builder: (c, snapshot) => Column(
-            children: snapshot.data!
-                .map(
-                  (d) => ListTile(
-                    title: Text(d.name),
-                  ),
-                )
-                .toList(),
-          ),
-        ),
-      ],
-    ),
   );
 }
 

@@ -16,12 +16,16 @@ class DevicesPageViewModel extends ViewModel {
 
 class DeviceModel {
   DeviceManager deviceManager;
+  //late ESenseDevice eSenseDevice;
+
+  String _id = '';
+
   String? get type => deviceManager.type;
   DeviceStatus get status => deviceManager.status;
   Stream<DeviceStatus> get deviceEvents => deviceManager.statusEvents;
 
-  /// The device id.
-  String get id => deviceManager.id;
+  /// The device ids
+  String get id => deviceTypeName[type!] == 'Phone' ? deviceManager.id : _id;
 
   /// A printer-friendly name for this device.
   String? get name => deviceTypeName[type!];
@@ -44,6 +48,11 @@ class DeviceModel {
 
   // /// The icon for the runtime state of this device.
   // Icon? get stateIcon => deviceStateIcon[status];
+
+  set id(String newName) {
+    _id = newName;
+    ESenseDeviceManager().setDeviceName(newName);
+  }
 
   DeviceModel(this.deviceManager) : super();
 

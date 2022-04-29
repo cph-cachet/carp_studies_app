@@ -267,12 +267,12 @@ Future _showConnectionDialog(BuildContext context, _currentStep, DeviceModel dev
                 _currentStep == 0
                     ? Image(
                         image: AssetImage('assets/icons/bluetooth.png'),
-                        width: MediaQuery.of(context).size.height * 0.4,
-                        height: MediaQuery.of(context).size.height * 0.4)
+                        width: MediaQuery.of(context).size.height * 0.34,
+                        height: MediaQuery.of(context).size.height * 0.34)
                     : Image(
                         image: AssetImage('assets/icons/connected.png'),
-                        width: MediaQuery.of(context).size.height * 0.4,
-                        height: MediaQuery.of(context).size.height * 0.4),
+                        width: MediaQuery.of(context).size.height * 0.34,
+                        height: MediaQuery.of(context).size.height * 0.34),
                 SizedBox(height: 10),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -365,8 +365,24 @@ Widget configureDevice(DeviceModel device, BuildContext context) {
   FlutterBluePlus flutterBlue = FlutterBluePlus.instance;
   flutterBlue.startScan(timeout: Duration(seconds: 2));
 
-  bool _selected = false;
+  List<BluetoothDevice> availableDevices = [];
 
+  flutterBlue.scanResults.listen((event) {
+    event.forEach((element) async {
+      if (element.device.name.isNotEmpty && !availableDevices.contains(element.device.name)) {
+        availableDevices.add(element.device);
+
+        var state = await element.device.state.first;
+        print("@@@ " + element.device.name + " " + state.name);
+      }
+    });
+
+    // event.map((e) {
+    //   if (e.device.state.toList() == BluetoothDeviceState.connected) print("@@@" + e.device.name);
+    // });
+  });
+
+  int _selected = 0;
   return Column(
     children: [
       Text(
@@ -378,28 +394,55 @@ Widget configureDevice(DeviceModel device, BuildContext context) {
         style: aboutCardContentStyle,
       ),
 
-      StreamBuilder<List<BluetoothDevice>>(
-        stream: Stream.periodic(Duration(seconds: 2)).asyncMap((_) => flutterBlue.connectedDevices),
-        initialData: [],
-        builder: (context, snapshot) => Column(
-          children: snapshot.data!.isEmpty
-              ? [Padding(padding: EdgeInsets.symmetric(vertical: 20), child: CircularProgressIndicator())]
-              : snapshot.data!
-                  .map(
-                    (bluetoothDevice) => ListTile(
-                      selected: _selected,
-                      //selectedTileColor: Theme.of(context).primaryColor,
-                      title: Text(bluetoothDevice.name),
-                      onTap: () {
-                        device.id = bluetoothDevice.name;
+      Expanded(
+        child: StreamBuilder<List<ScanResult>>(
+          stream: flutterBlue.scanResults,
+          initialData: [],
+          builder: (context, snapshot) => SingleChildScrollView(
+            child: Column(
+                children: snapshot.data!
+                    .where((element) => element.device.name.isNotEmpty)
+                    .toList()
+                    .asMap()
+                    .entries
+                    .map(
+                      (bluetoothDevice) => ListTile(
+                        selected: bluetoothDevice.key == _selected,
+                        title: Text(bluetoothDevice.value.device.name),
+                        onTap: () {
+                          device.id = bluetoothDevice.value.device.name;
+                          bluetoothDevice.value.device.connect();
 
-                        _selected = !_selected;
-                      },
-                    ),
-                  )
-                  .toList(),
+                          _selected = bluetoothDevice.key;
+                        },
+                      ),
+                    )
+                    .toList()),
+          ),
         ),
       ),
+
+      // StreamBuilder<List<BluetoothDevice>>(
+      //   stream: Stream.periodic(Duration(seconds: 2)).asyncMap((_) => flutterBlue.connectedDevices),
+      //   initialData: [],
+      //   builder: (context, snapshot) => Column(
+      //       children: snapshot.data!.isEmpty
+      //           ? [Padding(padding: EdgeInsets.symmetric(vertical: 20), child: CircularProgressIndicator())]
+      //           : snapshot.data!
+      //               .map(
+      //                 (bluetoothDevice) => ListTile(
+      //                   selected: _selected,
+      //                   //selectedTileColor: Theme.of(context).primaryColor,
+      //                   title: Text(bluetoothDevice.name),
+      //                   onTap: () {
+      //                     device.id = bluetoothDevice.name;
+      //                     bluetoothDevice.connect();
+      //                     _selected = !_selected;
+      //                   },
+      //                 ),
+      //               )
+      //               .toList()),
+      // ),
 
       // TextField(
       //   style: inputFieldStyle,
@@ -423,9 +466,7 @@ Widget configureDevice(DeviceModel device, BuildContext context) {
   );
 }
 
-
 // // Get an icon for the device based on its type.  If there is no icon for the device, use a default icon
-
 
 // Map<DeviceState, String> deviceStateText = {
 //   DeviceState.CONNECTED: "Connected",

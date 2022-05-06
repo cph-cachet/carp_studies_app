@@ -6,6 +6,7 @@ import 'dart:convert';
 import 'dart:ui' as ui;
 
 import 'package:esense_flutter/esense.dart';
+import 'package:flutter/foundation.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import 'package:flutter/services.dart';

@@ -46,6 +46,8 @@ class DeviceModel {
   /// The icon for the status of device.
   dynamic get statusIcon => deviceStatusIcon[status];
 
+  String? get connectionInstructions => deviceConnectionInstructions[type!];
+
   // /// The icon for the runtime state of this device.
   // Icon? get stateIcon => deviceStateIcon[status];
 
@@ -78,6 +80,12 @@ class DeviceModel {
         DeviceStatus.sampling: Icon(Icons.save_alt, color: CACHET.BLUE_1),
         DeviceStatus.initialized: Text("READY"),
         DeviceStatus.unknown: Icon(Icons.error_outline, color: CACHET.RED_1),
+      };
+
+  static Map<String, String> get deviceConnectionInstructions => {
+        Smartphone.DEVICE_TYPE: 'This phone is already connected to the study',
+        ESenseDevice.DEVICE_TYPE:
+            'Turn on the earbuds by pressing and holding the push button until the LED turns on blue.\n\nThe earbuds are paired to eachother and only one earbud needs to be paired with the phone.\n\nTo pair the eSense with the phone, press the push button until the LED starts blinking blue and red.\n\nOpen the bluetooth settings of the phone and click on the eSense device.\n\nOnce the device is paired, it will indicate so by blinking in blue.\n\nTurn on the earbuds by pressing and holding the push button until the LED turns on blue.\n\nThe earbuds are paired to eachother and only one earbud needs to be paired with the phone.\n\nTo pair the eSense with the phone, press the push button until the LED starts blinking blue and red.\n\nOpen the bluetooth settings of the phone and click on the eSense device.\n\nOnce the device is paired, it will indicate so by blinking in blue.',
       };
 
   // static Map<DeviceType, Icon> get deviceTypeIcon => {

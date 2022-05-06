@@ -9,6 +9,9 @@ class DevicesPage extends StatefulWidget {
 }
 
 class _DevicesPageState extends State<DevicesPage> {
+  int selected = 40;
+  dynamic selectedDevice;
+
   // /// App settings
   // static const MethodChannel _channel = const MethodChannel('app_settings');
 
@@ -21,83 +24,11 @@ class _DevicesPageState extends State<DevicesPage> {
   //   });
   // }
 
-  // List<Device> devices = [
-  //   Device(
-  //       name: "Phone",
-  //       state: DeviceState.CONNECTED,
-  //       description: "00:11:22:33:FF:EE",
-  //       battery: 70,
-  //       type: DeviceType.PHONE),
-  //   Device(
-  //       name: "eSense Ear Plug",
-  //       state: DeviceState.CONNECTED,
-  //       description: "00:11:22:33:FF:EE",
-  //       battery: 80,
-  //       type: DeviceType.HEADSET),
-  //   Device(
-  //       name: "Scale",
-  //       state: DeviceState.DISCONNECTED,
-  //       description: "00:11:22:33:FF:EE",
-  //       type: DeviceType.SCALE),
-  //   Device(
-  //       name: "Fitbit",
-  //       state: DeviceState.NOT_PAIRED,
-  //       description: "00:11:22:33:FF:EE",
-  //       type: DeviceType.WATCH),
-  //   Device(
-  //       name: "Google Home",
-  //       state: DeviceState.ERROR,
-  //       description: "00:11:22:33:FF:EE",
-  //       type: DeviceType.HOME),
-  // ];
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   BluetoothProbe().getDatum();
-  //   widget.model.scanDevices;
-  // }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     RPLocalizations locale = RPLocalizations.of(context)!;
-
-//     return Scaffold(
-//       body: Column(
-//         children: [
-//           SizedBox(height: 35),
-//           Padding(
-//             padding: const EdgeInsets.symmetric(horizontal: 10),
-//             child: ListTile(
-//               leading: Icon(Icons.devices_other),
-//               title: Text("Devices"),
-//             ),
-//           ),
-//           Expanded(
-//             flex: 4,
-//             child: CustomScrollView(
-//               slivers: [
-//                 SliverList(
-//                   delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
-//                     return _buildDeviceCard(context, devices[index]);
-//                   }, childCount: devices.length),
-//                 ),
-//               ],
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
-
   @override
   Widget build(BuildContext context) {
     List<DeviceModel> devices = bloc.runningDevices.toList();
-
     RPLocalizations locale = RPLocalizations.of(context)!;
-    // BluetoothProbe().getDatum();
-    // widget.model.scanDevices;
+
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -116,12 +47,10 @@ class _DevicesPageState extends State<DevicesPage> {
                   children: [
                     Text(
                       "Devices",
-                      //'${locale.translate('pages.data_viz.hello')} ${bloc.friendlyUsername}',
                       style: sectionTitleStyle.copyWith(color: Theme.of(context).primaryColor),
                     ),
                     Text("Here you can find all the devices you will use in your study.",
                         style: aboutCardSubtitleStyle),
-                    //Text(locale.translate('pages.data_viz.thanks'), style: aboutCardSubtitleStyle),
                     SizedBox(height: 15),
                   ],
                 ),
@@ -139,7 +68,8 @@ class _DevicesPageState extends State<DevicesPage> {
                       SliverList(
                         delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
                           //return Text(widget.model.devices[index].bluetoothDeviceName);
-                          return _buildDeviceCard(context, devices[index]);
+                          return _buildDeviceCard(
+                              context, devices[index], setState, selected, selectedDevice);
                         }, childCount: devices.length),
                       ),
                     ],
@@ -186,7 +116,7 @@ Widget _showBateryPercentage(BuildContext context, int bateryLevel, {double scal
   ]);
 }
 
-Widget _buildDeviceCard(BuildContext context, DeviceModel device) {
+Widget _buildDeviceCard(BuildContext context, DeviceModel device, setState, selected, selectedDevice) {
   return Center(
     child: Card(
       color: Theme.of(context).scaffoldBackgroundColor,
@@ -200,40 +130,30 @@ Widget _buildDeviceCard(BuildContext context, DeviceModel device) {
           mainAxisSize: MainAxisSize.min,
           children: [
             ListTile(
-              leading: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-                device.icon!,
-              ]),
-              title: Text(device.name!),
-              subtitle: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(device.id),
-                  SizedBox(height: 1),
-                  Row(
-                    children: [
-                      Text(device.statusString),
-                      // device.batteryLevel == null
-                      //     ? SizedBox.shrink()
-                      //     : Row(
-                      //         children: [
-                      //           SizedBox(width: 5),
-                      //           Transform.rotate(
-                      //               angle: 90 * pi / 180, child: Icon(Icons.battery_std_outlined)),
-
-                      //         ],
-                      //       ),
-                      SizedBox(width: 8),
-                      _showBateryPercentage(context, device.batteryLevel!, scale: 0.9)
-                    ],
-                  ),
-                ],
-              ),
-              trailing: device.statusIcon,
-              onTap: () => _showConnectionDialog(context, 0, device),
-            ),
-            // const Divider(
-            //   thickness: 1,
-            // ),
+                leading: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+                  device.icon!,
+                ]),
+                title: Text(device.name!),
+                subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(device.id),
+                    SizedBox(height: 1),
+                    Row(
+                      children: [
+                        Text(device.statusString),
+                        SizedBox(width: 8),
+                        _showBateryPercentage(context, device.batteryLevel!, scale: 0.9)
+                      ],
+                    ),
+                  ],
+                ),
+                trailing: device.statusIcon,
+                onTap: () async {
+                  //TODO: uncomment
+                  // if (device.status != DeviceStatus.connected)
+                  await _showConnectionDialog(context, 1, device, setState, selected, selectedDevice);
+                }),
           ],
         ),
       ),
@@ -241,7 +161,13 @@ Widget _buildDeviceCard(BuildContext context, DeviceModel device) {
   );
 }
 
-Future _showConnectionDialog(BuildContext context, _currentStep, DeviceModel device) {
+Future _showConnectionDialog(
+    BuildContext context, _currentStep, DeviceModel device, setState, selected, selectedDevice) async {
+  FlutterBluePlus flutterBlue = FlutterBluePlus.instance;
+  // Start Scanning devices
+  flutterBlue.startScan();
+
+  print(flutterBlue.connectedDevices);
   return showDialog(
     context: context,
     barrierDismissible: true,
@@ -249,247 +175,226 @@ Future _showConnectionDialog(BuildContext context, _currentStep, DeviceModel dev
       return StatefulBuilder(
         builder: (context, setState) {
           return AlertDialog(
-            scrollable: true,
-            titlePadding: EdgeInsets.symmetric(vertical: 10),
-            insetPadding: EdgeInsets.symmetric(vertical: 24, horizontal: 40),
-            title: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    IconButton(
-                        onPressed: () => Navigator.of(context).pop(),
-                        icon: Icon(Icons.close),
-                        padding: EdgeInsets.only(right: 10)),
-                  ],
-                ),
-
-                _currentStep == 0
-                    ? Image(
-                        image: AssetImage('assets/icons/bluetooth.png'),
-                        width: MediaQuery.of(context).size.height * 0.34,
-                        height: MediaQuery.of(context).size.height * 0.34)
-                    : Image(
-                        image: AssetImage('assets/icons/connected.png'),
-                        width: MediaQuery.of(context).size.height * 0.34,
-                        height: MediaQuery.of(context).size.height * 0.34),
-                SizedBox(height: 10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [0, 1].map(
-                    (step) {
-                      var index = step;
-                      return Container(
-                        width: 7.0,
-                        height: 7.0,
-                        margin: EdgeInsets.symmetric(horizontal: 6.0),
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: index <= _currentStep
-                                ? Theme.of(context).primaryColor
-                                : Theme.of(context).primaryColor.withOpacity(0.5)),
-                      );
-                    },
-                  ).toList(),
-                ),
-
-                //Image(image: AssetImage('assets/icons/audio.png'), width: 220, height: 220),
-
-                Padding(
-                  padding: EdgeInsets.only(left: 25, top: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
+              scrollable: true,
+              titlePadding: EdgeInsets.symmetric(vertical: 5),
+              insetPadding: EdgeInsets.symmetric(vertical: 24, horizontal: 40),
+              title: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      _currentStep == 0 ? Text("Let's get started") : Text(device.name! + " paired!"),
+                      IconButton(
+                          onPressed: () => Navigator.of(context).pop(),
+                          icon: Icon(Icons.close),
+                          padding: EdgeInsets.only(right: 10)),
                     ],
                   ),
-                ),
-              ],
-            ),
-            content: Container(
-              height: MediaQuery.of(context).size.height * 0.3,
-              child: _currentStep == 0
-                  ? Text(
-                      "Make sure the " +
-                          device.name! +
-                          " is charged and turned on. Then go to the Bluetooth Settings in your phone, press ‘Pair new device’ and select the " +
-                          device.name! +
-                          ". Once is paired come back and press 'NEXT'.",
-                      style: aboutCardContentStyle,
-                    )
-                  : configureDevice(device, context),
-            ),
-            contentPadding: EdgeInsets.symmetric(horizontal: 25),
-            actions: _currentStep == 0
-                ? [
-                    TextButton(child: Text("SETTINGS"), onPressed: () => AppSettings.openBluetoothSettings()),
-                    TextButton(
-                        child: Text("NEXT"),
-                        onPressed: () => {
-                              setState(() {
-                                _currentStep = 1;
-                              })
-                            }
-                        //settings
-                        ),
-                  ]
-                : [
-                    TextButton(
-                        child: Text("BACK"),
-                        onPressed: () => {
-                              setState(() {
-                                _currentStep = 0;
-                              })
-                            }
-                        //settings
-                        ),
-                    TextButton(
-                        child: Text("CONNECT"),
-                        onPressed: () => {
-                              bloc.connectToDevice(device),
-                              Navigator.of(context).pop(),
-                              // setState(() {
-                              //   _currentStep = 0;
-                              // })
-                            }),
-                  ],
-          );
+                  Padding(
+                    padding: EdgeInsets.only(left: 25, right: 25, bottom: 10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        stepTitle(_currentStep, device, context),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              content: Container(
+                height: MediaQuery.of(context).size.height * 0.6,
+                child: _currentStep == 1
+                    ? Column(
+                        children: [
+                          Text(
+                            "Select the name of the " +
+                                device.name! +
+                                " that you want to connect and press 'NEXT'.",
+                            style: aboutCardContentStyle,
+                            textAlign: TextAlign.justify,
+                          ),
+                          Expanded(
+                            child: StreamBuilder<List<ScanResult>>(
+                              stream: flutterBlue.scanResults,
+                              initialData: [],
+                              builder: (context, snapshot) => SingleChildScrollView(
+                                child: Column(
+                                    children: snapshot.data!
+                                        .where((element) => element.device.name.isNotEmpty)
+                                        .toList()
+                                        .asMap()
+                                        .entries
+                                        .map(
+                                          (bluetoothDevice) => ListTile(
+                                            selected: bluetoothDevice.key == selected,
+                                            title: Text(bluetoothDevice.value.device.name),
+                                            onTap: () {
+                                              device.id = bluetoothDevice.value.device.name;
+                                              selectedDevice = bluetoothDevice.value.device;
+
+                                              // bluetoothDevice.value.device.connect();
+
+                                              setState(() => selected = bluetoothDevice.key);
+                                            },
+                                          ),
+                                        )
+                                        .toList()),
+                              ),
+                            ),
+                          ),
+                          Text(
+                            "If the " +
+                                device.name! +
+                                " is not in the list, make sure it is charged and turned on. If you want to know how to connect " +
+                                device.name! +
+                                " to the phone, press 'INSTRUCTIONS'.",
+                            style: aboutCardContentStyle,
+                            textAlign: TextAlign.justify,
+                          )
+                        ],
+                      )
+                    : stepContent(_currentStep, device, selected, flutterBlue, context),
+              ),
+              contentPadding: EdgeInsets.symmetric(horizontal: 25),
+              // actions: stepActions(_currentStep, setState, device, context),
+              actions: _currentStep == 0
+                  ? [
+                      TextButton(
+                          child: Text("NEXT"),
+                          onPressed: () => {
+                                setState(() {
+                                  _currentStep = 1;
+                                })
+                              }
+                          //settings
+                          ),
+                    ]
+                  : _currentStep == 1
+                      ? [
+                          // TextButton(child: Text("SETTINGS"), onPressed: () => AppSettings.openBluetoothSettings()),
+                          TextButton(
+                              child: Text("INSTRUCTIONS"),
+                              onPressed: () => setState(() {
+                                    _currentStep = 0;
+                                  })),
+                          TextButton(
+                              child: Text("NEXT"),
+                              onPressed: () => {
+                                    if (selectedDevice != null)
+                                      {
+                                        setState(() {
+                                          _currentStep = 2;
+                                        })
+                                      }
+                                  }),
+                        ]
+                      : [
+                          TextButton(
+                              child: Text("BACK"),
+                              onPressed: () => setState(() {
+                                    _currentStep = 1;
+                                  })),
+                          TextButton(
+                              child: Text("DONE"),
+                              onPressed: () => {
+                                    if (selectedDevice != null)
+                                      {
+                                        // TODO: Update name in protocol
+                                        selectedDevice.connect(),
+                                        bloc.connectToDevice(device),
+                                        Navigator.of(context).pop(),
+                                      },
+                                  }),
+                        ]);
         },
       );
     },
   );
 }
 
-Widget configureDevice(DeviceModel device, BuildContext context) {
-  //final inputController = TextEditingController(text: 'eSense-1234');
-  FlutterBluePlus flutterBlue = FlutterBluePlus.instance;
-  flutterBlue.startScan(timeout: Duration(seconds: 2));
+Widget stepTitle(_currentStep, device, context) {
+  if (_currentStep == 0) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Text(
+          "How to connect to " + device.name!,
+          style: sectionTitleStyle.copyWith(color: Theme.of(context).primaryColor),
+        ),
+      ],
+    );
+  } else if (_currentStep == 1) {
+    return Column(
+      children: [
+        Text(
+          "Let's get started",
+          style: sectionTitleStyle.copyWith(color: Theme.of(context).primaryColor),
+        ),
+      ],
+    );
+  } else
+    return Column(
+      children: [
+        Text(
+          device.name! + " is connected!",
+          style: sectionTitleStyle.copyWith(color: Theme.of(context).primaryColor),
+        ),
+      ],
+    );
+}
 
-  List<BluetoothDevice> availableDevices = [];
-
-  flutterBlue.scanResults.listen((event) {
-    event.forEach((element) async {
-      if (element.device.name.isNotEmpty && !availableDevices.contains(element.device.name)) {
-        availableDevices.add(element.device);
-
-        var state = await element.device.state.first;
-        print("@@@ " + element.device.name + " " + state.name);
-      }
-    });
-
-    // event.map((e) {
-    //   if (e.device.state.toList() == BluetoothDeviceState.connected) print("@@@" + e.device.name);
-    // });
-  });
-
-  int _selected = 0;
+Widget confirmDevice(DeviceModel device, FlutterBluePlus flutterBlue, BuildContext context) {
+  flutterBlue.startScan();
   return Column(
     children: [
+      Image(
+          image: AssetImage('assets/icons/connection_done.png'),
+          width: MediaQuery.of(context).size.height * 0.2,
+          height: MediaQuery.of(context).size.height * 0.2),
       Text(
-        "Select the name of the " +
+        "The " +
             device.name! +
-            " that you want to connect and press 'CONNECT'. If the " +
-            device.name! +
-            " is not in the list, press 'BACK'.",
+            " " +
+            device.id +
+            " has succesfully been connected to the study and is now ready to start sensing.",
         style: aboutCardContentStyle,
+        textAlign: TextAlign.justify,
       ),
-
-      Expanded(
-        child: StreamBuilder<List<ScanResult>>(
-          stream: flutterBlue.scanResults,
-          initialData: [],
-          builder: (context, snapshot) => SingleChildScrollView(
-            child: Column(
-                children: snapshot.data!
-                    .where((element) => element.device.name.isNotEmpty)
-                    .toList()
-                    .asMap()
-                    .entries
-                    .map(
-                      (bluetoothDevice) => ListTile(
-                        selected: bluetoothDevice.key == _selected,
-                        title: Text(bluetoothDevice.value.device.name),
-                        onTap: () {
-                          device.id = bluetoothDevice.value.device.name;
-                          bluetoothDevice.value.device.connect();
-
-                          _selected = bluetoothDevice.key;
-                        },
-                      ),
-                    )
-                    .toList()),
-          ),
-        ),
-      ),
-
-      // StreamBuilder<List<BluetoothDevice>>(
-      //   stream: Stream.periodic(Duration(seconds: 2)).asyncMap((_) => flutterBlue.connectedDevices),
-      //   initialData: [],
-      //   builder: (context, snapshot) => Column(
-      //       children: snapshot.data!.isEmpty
-      //           ? [Padding(padding: EdgeInsets.symmetric(vertical: 20), child: CircularProgressIndicator())]
-      //           : snapshot.data!
-      //               .map(
-      //                 (bluetoothDevice) => ListTile(
-      //                   selected: _selected,
-      //                   //selectedTileColor: Theme.of(context).primaryColor,
-      //                   title: Text(bluetoothDevice.name),
-      //                   onTap: () {
-      //                     device.id = bluetoothDevice.name;
-      //                     bluetoothDevice.connect();
-      //                     _selected = !_selected;
-      //                   },
-      //                 ),
-      //               )
-      //               .toList()),
-      // ),
-
-      // TextField(
-      //   style: inputFieldStyle,
-      //   // decoration: new InputDecoration.collapsed(hintText: 'eSense-0049'),
-      //   controller: inputController,
-      //   inputFormatters: [
-      //     FilteringTextInputFormatter(RegExp(r'^eSense-\d{4}'), allow: true),
-      //   ],
-      //   decoration: InputDecoration(
-      //     labelText: 'Device name',
-      //     helperText: 'e.g. eSense-1234',
-      //     border: OutlineInputBorder(borderRadius: BorderRadius.circular(50)),
-      //   ),
-      // ),
-      // TextButton(
-      //     onPressed: () {
-      //       print("@@@" + inputController.text);
-      //     },
-      //     child: Text("Save name"))
     ],
   );
 }
 
-// // Get an icon for the device based on its type.  If there is no icon for the device, use a default icon
+Widget connectionInstructions(DeviceModel device, BuildContext context) {
+  return Column(
+    children: [
+      Expanded(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Image(
+                  image: AssetImage('assets/icons/connection.png'),
+                  width: MediaQuery.of(context).size.height * 0.2,
+                  height: MediaQuery.of(context).size.height * 0.2),
+              Text(
+                device.connectionInstructions!,
+                style: aboutCardContentStyle,
+                textAlign: TextAlign.justify,
+              ),
+            ],
+          ),
+        ),
+      ),
+    ],
+  );
+}
 
-// Map<DeviceState, String> deviceStateText = {
-//   DeviceState.CONNECTED: "Connected",
-//   DeviceState.DISCONNECTED: "Disconnected",
-//   DeviceState.NOT_PAIRED: "Not paired",
-//   DeviceState.ERROR: "Error",
-// };
+Widget stepContent(_currentStep, device, selected, flutterBlue, context) {
+  if (_currentStep == 0)
+    return connectionInstructions(device, context);
 
-// class Device {
-//   String name;
-//   String description;
-//   DeviceState state;
-//   int? battery;
-//   DeviceType type;
+  // Since the step 1 it uses setState, it needs to go in the parent widget
+  // if (_currentStep == 1)
+  //   return pairDevice(device, setState, selected, flutterBlue);
 
-//   Device(
-//       {required this.name,
-//       required this.description,
-//       required this.state,
-//       this.type = DeviceType.UNKNOWN,
-//       this.battery});
-// }
-
-// enum DeviceType { WATCH, PHONE, HEADSET, SCALE, HOME, SPEAKER, UNKNOWN }
-
-// enum DeviceState { CONNECTED, DISCONNECTED, NOT_PAIRED, ERROR }
+  else
+    return confirmDevice(device, flutterBlue, context);
+}

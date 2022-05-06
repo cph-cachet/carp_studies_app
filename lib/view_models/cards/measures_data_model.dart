@@ -8,6 +8,10 @@ class MeasuresCardViewModel extends ViewModel {
   /// Stream of [DataPoint] measures.
   Stream<DataPoint>? get measureEvents => controller?.data;
 
+  /// Stream of more quiet [DataPoint] measures.
+  Stream<DataPoint>? get quietMeasureEvents =>
+      controller?.data.where((dataPoint) => dataPoint.carpHeader.dataFormat.name != 'sensor');
+
   /// The total sampling size
   int get samplingSize => _samplingSize;
 
@@ -18,23 +22,17 @@ class MeasuresCardViewModel extends ViewModel {
   List<MeasureCount> get measures =>
       _samplingTable.entries.map((entry) => MeasureCount(entry.key, entry.value)).toList();
 
-  /// The number of measures event to remove (in order to not show sensor events)
-  int numToRemove = 0;
-
   MeasuresCardViewModel() : super();
 
   void init(SmartphoneDeploymentController controller) {
     super.init(controller);
 
     // listen to incoming events in order to count the measure types
-    controller.data.listen((dataPoint) {
+    this.quietMeasureEvents?.listen((dataPoint) {
       final String key = dataPoint.carpHeader.dataFormat.name;
-      // Do not add sensor events as measures
-      if (key != 'sensor') {
-        if (!_samplingTable.containsKey(key)) _samplingTable[key] = 0;
-        _samplingTable[key] = _samplingTable[key]! + 1;
-      } else
-        numToRemove += 1;
+
+      if (!_samplingTable.containsKey(key)) _samplingTable[key] = 0;
+      _samplingTable[key] = _samplingTable[key]! + 1;
     });
   }
 
@@ -50,10 +48,6 @@ class MeasuresCardViewModel extends ViewModel {
     _samplingTable
       ..clear()
       ..addEntries(mapEntries);
-  }
-
-  void removeSensingEvents() {
-    _samplingSize = controller!.samplingSize - numToRemove;
   }
 }
 

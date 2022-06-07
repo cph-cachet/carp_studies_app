@@ -260,11 +260,11 @@ class _TaskListPageState extends State<TaskListPage> {
       Icons.camera_alt,
       color: CACHET.BLUE_1,
     ),
-    SensingUserTask.SENSING_TYPE: Icon(
+    BackgroundSensingUserTask.SENSING_TYPE: Icon(
       Icons.settings_input_antenna,
       color: CACHET.CACHET_BLUE,
     ),
-    SensingUserTask.ONE_TIME_SENSING_TYPE: Icon(
+    BackgroundSensingUserTask.ONE_TIME_SENSING_TYPE: Icon(
       Icons.settings_input_component,
       color: CACHET.PURPLE,
     ),
@@ -305,15 +305,15 @@ class _TaskListPageState extends State<TaskListPage> {
     //     Icon(Icons.wifi, size: 50, color: CACHET.LIGHT_PURPLE),
     // ConnectivitySamplingPackage.CONNECTIVITY:
     //     Icon(Icons.cast_connected, size: 50, color: CACHET.GREEN),
-    AudioVideoSamplingPackage.AUDIO: Icon(
+    MediaSamplingPackage.AUDIO: Icon(
       Icons.mic,
       color: CACHET.ORANGE,
     ),
-    AudioVideoSamplingPackage.NOISE: Icon(
+    MediaSamplingPackage.NOISE: Icon(
       Icons.hearing,
       color: CACHET.YELLOW,
     ),
-    AudioVideoSamplingPackage.VIDEO: Icon(
+    MediaSamplingPackage.VIDEO: Icon(
       Icons.camera_alt,
       color: CACHET.YELLOW,
     ),
@@ -344,7 +344,7 @@ class _TaskListPageState extends State<TaskListPage> {
       color: CACHET.LIGHT_BLUE_2,
     ),
     ContextSamplingPackage.AIR_QUALITY: Icon(
-      Icons.warning,
+      Icons.air,
       color: CACHET.GREY_3,
     ),
     ContextSamplingPackage.GEOFENCE: Icon(

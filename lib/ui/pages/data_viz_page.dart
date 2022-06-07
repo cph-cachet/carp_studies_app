@@ -27,9 +27,11 @@ class DataVisualizationPage extends StatelessWidget {
                     children: [
                       Text(
                         '${locale.translate('pages.data_viz.hello')} ${bloc.friendlyUsername}',
-                        style: sectionTitleStyle.copyWith(color: Theme.of(context).primaryColor),
+                        style: sectionTitleStyle.copyWith(
+                            color: Theme.of(context).primaryColor),
                       ),
-                      Text(locale.translate('pages.data_viz.thanks'), style: aboutCardSubtitleStyle),
+                      Text(locale.translate('pages.data_viz.thanks'),
+                          style: aboutCardSubtitleStyle),
                       SizedBox(height: 15),
                     ],
                   ),
@@ -69,9 +71,9 @@ class DataVisualizationPage extends StatelessWidget {
     // check which measures are in the study
     if (bloc.hasMeasure(SurveySamplingPackage.SURVEY))
       widgets.add(TaskCardWidget(model.surveysCardDataModel));
-    if (bloc.hasMeasure(AudioVideoSamplingPackage.AUDIO))
+    if (bloc.hasMeasure(MediaSamplingPackage.AUDIO))
       widgets.add(TaskCardWidget(model.audioCardDataModel));
-    if (bloc.hasMeasure(AudioVideoSamplingPackage.VIDEO)) // TODO ADD PHOTO
+    if (bloc.hasMeasure(MediaSamplingPackage.VIDEO)) // TODO ADD PHOTO
       widgets.add(TaskCardWidget(model.mediaCardDataModel));
     if (bloc.hasMeasure(SensorSamplingPackage.PEDOMETER))
       widgets.add(StepsOuterStatefulWidget(model.stepsCardDataModel));

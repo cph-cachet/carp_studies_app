@@ -2,19 +2,21 @@ part of carp_study_app;
 
 /// A [UserTaskFactory] that can handle the user tasks in this app.
 class AppUserTaskFactory implements UserTaskFactory {
+  @override
   List<String> types = [
     AudioUserTask.AUDIO_TYPE,
     VideoUserTask.VIDEO_TYPE,
   ];
 
+  @override
   UserTask create(AppTaskExecutor executor) {
-    switch (executor.appTask.type) {
+    switch (executor.task.type) {
       case AudioUserTask.AUDIO_TYPE:
         return AudioUserTask(executor);
       case VideoUserTask.VIDEO_TYPE:
         return VideoUserTask(executor);
       default:
-        return SensingUserTask(executor);
+        return BackgroundSensingUserTask(executor);
     }
   }
 }
@@ -34,8 +36,8 @@ class AudioUserTask extends UserTask {
   int ongoingRecordingDuration = 60;
 
   AudioUserTask(AppTaskExecutor executor) : super(executor) {
-    recordingDuration = (executor.appTask.minutesToComplete != null)
-        ? executor.appTask.minutesToComplete! * 60
+    recordingDuration = (executor.task.minutesToComplete != null)
+        ? executor.task.minutesToComplete! * 60
         : 60;
   }
 
@@ -86,6 +88,8 @@ class VideoUserTask extends UserTask {
   VideoUserTask(AppTaskExecutor executor) : super(executor);
 
   void onStart(BuildContext context) async {
+    super.onStart(context);
+
     final cameras = await availableCameras();
     Navigator.push(
       context,
@@ -97,7 +101,7 @@ class VideoUserTask extends UserTask {
 
   DateTime? _startRecordingTime, _endRecordingTime;
   XFile? file;
-  VideoType _videoType = VideoType.image;
+  MediaType _videoType = MediaType.image;
 
   /// Callback when a picture is captured.
   void onPictureCapture(XFile image) {
@@ -105,7 +109,7 @@ class VideoUserTask extends UserTask {
 
     // now wait for 2 secs to finish up any other sensing in the task
     Timer(const Duration(seconds: 2),
-        () => onRecordStop(image, videoType: VideoType.image));
+        () => onRecordStop(image, videoType: MediaType.image));
   }
 
   /// Callback when video recording is started.
@@ -116,7 +120,7 @@ class VideoUserTask extends UserTask {
   }
 
   /// Callback when video recording is stopped.
-  void onRecordStop(XFile video, {VideoType videoType = VideoType.video}) {
+  void onRecordStop(XFile video, {MediaType videoType = MediaType.video}) {
     executor.pause();
     file = video;
     _videoType = videoType;
@@ -128,12 +132,12 @@ class VideoUserTask extends UserTask {
   void onSave() {
     if (file != null) {
       // create the datum directly here...
-      VideoDatum datum = VideoDatum(
-          filename: file!.path,
-          startRecordingTime: _startRecordingTime!,
-          endRecordingTime: _endRecordingTime,
-          videoType: _videoType)
-        ..filename = file!.path.split("/").last;
+      MediaDatum datum = MediaDatum(
+        mediaType: _videoType,
+        filename: file!.path,
+        startRecordingTime: _startRecordingTime!,
+        endRecordingTime: _endRecordingTime,
+      )..filename = file!.path.split("/").last;
 
       // ... and add it to the sensing controller
       bloc.addDatum(datum);

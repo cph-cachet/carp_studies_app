@@ -24,42 +24,43 @@ class AppUserTaskFactory implements UserTaskFactory {
 class AudioUserTask extends UserTask {
   static const String AUDIO_TYPE = 'audio';
 
-  StreamController<int>? _countDownController;
-  Stream<int>? get countDownEvents => _countDownController?.stream;
+  StreamController<int> _countDownController = StreamController.broadcast();
+  Stream<int>? get countDownEvents => _countDownController.stream;
 
   /// Total duration of audio recording in seconds.
   int recordingDuration = 60;
 
   /// Seconds left in ongoing recording
-  int? ongoingRecordingDuration;
+  int ongoingRecordingDuration = 60;
 
   AudioUserTask(AppTaskExecutor executor) : super(executor) {
-    recordingDuration =
-        (executor.appTask.minutesToComplete != null) ? executor.appTask.minutesToComplete! * 60 : 60;
+    recordingDuration = (executor.appTask.minutesToComplete != null)
+        ? executor.appTask.minutesToComplete! * 60
+        : 60;
   }
 
   void onStart(BuildContext context) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => AudioTaskPage(audioUserTask: this)),
+      MaterialPageRoute(
+          builder: (context) => AudioTaskPage(audioUserTask: this)),
     );
   }
 
-  Timer? timer;
+  Timer? _timer;
 
   /// Callback when recording is to start.
   void onRecordStart() {
-    _countDownController = StreamController.broadcast();
     ongoingRecordingDuration = recordingDuration;
     state = UserTaskState.started;
     executor.resume();
 
-    timer = Timer.periodic(new Duration(seconds: 1), (timer) {
-      if (ongoingRecordingDuration != null) _countDownController!.add(ongoingRecordingDuration! - 1);
+    _timer = Timer.periodic(new Duration(seconds: 1), (_) {
+      _countDownController.add(--ongoingRecordingDuration);
 
-      if (ongoingRecordingDuration == 0) {
-        timer.cancel();
-        _countDownController!.close();
+      if (ongoingRecordingDuration <= 0) {
+        _timer?.cancel();
+        _countDownController.close();
 
         executor.pause();
         state = UserTaskState.done;
@@ -69,8 +70,8 @@ class AudioUserTask extends UserTask {
 
   /// Callback when recording is to stop.
   void onRecordStop() {
-    timer?.cancel();
-    _countDownController!.close();
+    _timer?.cancel();
+    _countDownController.close();
 
     executor.pause();
     state = UserTaskState.done;
@@ -88,7 +89,9 @@ class VideoUserTask extends UserTask {
     final cameras = await availableCameras();
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => CameraTaskPage(videoUserTask: this, cameras: cameras)),
+      MaterialPageRoute(
+          builder: (context) =>
+              CameraTaskPage(videoUserTask: this, cameras: cameras)),
     );
   }
 
@@ -101,7 +104,8 @@ class VideoUserTask extends UserTask {
     onRecordStart();
 
     // now wait for 2 secs to finish up any other sensing in the task
-    Timer(const Duration(seconds: 2), () => onRecordStop(image, videoType: VideoType.image));
+    Timer(const Duration(seconds: 2),
+        () => onRecordStop(image, videoType: VideoType.image));
   }
 
   /// Callback when video recording is started.

@@ -124,14 +124,15 @@ class Sensing {
     );
     await client!.configure();
 
-    // add and deploy this deployment
+    // add and deploy this study deployment
     _controller = await client!.addStudy(studyDeploymentId!, deviceRolename!);
+    await _controller?.tryDeployment();
 
     // configure the controller
-    await _controller!.configure(askForPermissions: false);
+    await _controller?.configure(askForPermissions: false);
 
     // listening on the data stream and print them as json to the debug console
-    _controller!.data.listen((data) => print(toJsonString(data)));
+    _controller?.data.listen((data) => print(toJsonString(data)));
 
     info('$runtimeType initialized');
   }

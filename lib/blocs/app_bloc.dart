@@ -19,7 +19,6 @@ class StudyAppBLoC {
   final CarpBackend _backend = CarpBackend();
   final CarpStydyAppViewModel _data = CarpStydyAppViewModel();
   StudyDeploymentStatus? _status;
-  DateTime? _studyStartTimestamp;
 
   List<Message> _messages = [];
   final StreamController<int> _messageStreamController =
@@ -82,19 +81,19 @@ class StudyAppBLoC {
   /// The id of the currently running study deployment.
   /// Typical set based on an invitation.
   /// `null` if no deployment have been specified.
-  String? get studyDeploymentId => Settings().studyDeploymentId;
-  set studyDeploymentId(String? id) => Settings().studyDeploymentId = id;
+  String? get studyDeploymentId => LocalSettings().studyDeploymentId;
+  set studyDeploymentId(String? id) => LocalSettings().studyDeploymentId = id;
 
   // String? get studyDeploymentId => deployment?.studyDeploymentId;
 
   /// The deployment running on this phone.
-  SmartphoneDeployment? get deployment =>
-      Sensing().controller?.deployment as SmartphoneDeployment?;
+  SmartphoneDeployment? get deployment => Sensing().controller?.deployment;
 
   /// Get the latest status of the study deployment.
   StudyDeploymentStatus? get status => _status;
 
-  DateTime? get studyStartTimestamp => _studyStartTimestamp;
+  /// When was this study deployed on this phone.
+  DateTime? get studyStartTimestamp => deployment?.deployed;
 
   /// The overall data model for this app
   CarpStydyAppViewModel get data => _data;
@@ -268,7 +267,7 @@ class StudyAppBLoC {
 
   String get username => (user != null)
       ? user!.username
-      : Sensing().controller!.masterDeployment!.userId!;
+      : Sensing().controller!.deployment!.userId!;
 
   /// The name used for friendly greating - '' if no user logged in.
   String? get friendlyUsername => (user != null) ? user!.firstName : '';
@@ -291,18 +290,17 @@ class StudyAppBLoC {
     assert(Sensing().controller != null,
         'No Study Controller - the study has not been deployed.');
 
-    Sensing().controller!.resume();
-    _studyStartTimestamp = Sensing().controller!.studyDeploymentStartTime;
+    Sensing().controller?.start();
 
     // listening on the data stream and print them as json to the debug console
     Sensing().controller!.data.listen((data) => print(toJsonString(data)));
   }
 
   // Pause sensing.
-  void pause() => Sensing().controller!.pause();
+  void pause() => Sensing().controller?.executor?.pause();
 
   /// Resume sensing.
-  void resume() => Sensing().controller!.resume();
+  void resume() => Sensing().controller?.executor?.resume();
 
   /// Stop sensing.
   /// Once sensing is stopped, it cannot be (re)started.

@@ -44,7 +44,8 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
     return _protocol;
   }
 
-  Future<bool> saveStudyProtocol(String studyId, SmartphoneStudyProtocol protocol) async {
+  Future<bool> saveStudyProtocol(
+      String studyId, SmartphoneStudyProtocol protocol) async {
     throw UnimplementedError();
   }
 
@@ -61,172 +62,130 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
       _protocol!.addMasterDevice(phone);
 
       _protocol!.addTriggeredTask(
-          DeploymentDelayedTrigger(delay: Duration(seconds: 15)),
-          AppTask(
+          ElapsedTimeTrigger(elapsedTime: Duration(seconds: 15)),
+          RPAppTask(
             type: SurveyUserTask.SURVEY_TYPE,
             title: surveys.patient.title,
             description: surveys.patient.description,
             minutesToComplete: surveys.patient.minutesToComplete,
             expire: surveys.patient.expire,
-          )..measures.add(RPTaskMeasure(
-              type: SurveySamplingPackage.SURVEY,
-              name: surveys.patient.title,
-              enabled: true,
-              surveyTask: surveys.patient.survey,
-            )),
+            rpTask: surveys.patient.survey,
+          ),
           phone);
       _protocol!.addTriggeredTask(
-          DeploymentDelayedTrigger(delay: Duration(seconds: 15)),
-          AppTask(
+          ElapsedTimeTrigger(elapsedTime: Duration(seconds: 15)),
+          RPAppTask(
             type: SurveyUserTask.SURVEY_TYPE,
             title: surveys.patientParents.title,
             description: surveys.patientParents.description,
             minutesToComplete: surveys.patientParents.minutesToComplete,
             expire: surveys.patientParents.expire,
-          )..measures.add(RPTaskMeasure(
-              type: SurveySamplingPackage.SURVEY,
-              name: surveys.patientParents.title,
-              enabled: true,
-              surveyTask: surveys.patientParents.survey,
-            )),
+            rpTask: surveys.patientParents.survey,
+          ),
           phone);
       _protocol!.addTriggeredTask(
-          DeploymentDelayedTrigger(delay: Duration(seconds: 15)),
-          AppTask(
+          ElapsedTimeTrigger(elapsedTime: Duration(seconds: 15)),
+          RPAppTask(
             type: SurveyUserTask.SURVEY_TYPE,
             title: surveys.control.title,
             description: surveys.control.description,
             minutesToComplete: surveys.control.minutesToComplete,
             expire: surveys.control.expire,
-          )..measures.add(RPTaskMeasure(
-              type: SurveySamplingPackage.SURVEY,
-              name: surveys.control.title,
-              enabled: true,
-              surveyTask: surveys.control.survey,
-            )),
+            rpTask: surveys.control.survey,
+          ),
           phone);
       _protocol!.addTriggeredTask(
-          DeploymentDelayedTrigger(delay: Duration(seconds: 15)),
-          AppTask(
+          ElapsedTimeTrigger(elapsedTime: Duration(seconds: 15)),
+          RPAppTask(
             type: SurveyUserTask.SURVEY_TYPE,
             title: surveys.controlParents.title,
             description: surveys.controlParents.description,
             minutesToComplete: surveys.controlParents.minutesToComplete,
             expire: surveys.controlParents.expire,
-          )..measures.add(RPTaskMeasure(
-              type: SurveySamplingPackage.SURVEY,
-              name: surveys.controlParents.title,
-              enabled: true,
-              surveyTask: surveys.controlParents.survey,
-            )),
+            rpTask: surveys.controlParents.survey,
+          ),
           phone);
       _protocol!.addTriggeredTask(
-          DeploymentDelayedTrigger(delay: Duration(seconds: 15)),
-          AppTask(
+          ElapsedTimeTrigger(elapsedTime: Duration(seconds: 15)),
+          RPAppTask(
             type: SurveyUserTask.SURVEY_TYPE,
             title: surveys.ecological.title,
             description: surveys.ecological.description,
             minutesToComplete: surveys.ecological.minutesToComplete,
             expire: surveys.ecological.expire,
-          )..measures.add(RPTaskMeasure(
-              type: SurveySamplingPackage.SURVEY,
-              name: surveys.ecological.title,
-              enabled: true,
-              surveyTask: surveys.ecological.survey,
-            )),
+            rpTask: surveys.ecological.survey,
+          ),
           phone);
       _protocol!.addTriggeredTask(
-          DeploymentDelayedTrigger(delay: Duration(seconds: 15)),
-          AppTask(
+          ElapsedTimeTrigger(elapsedTime: Duration(seconds: 15)),
+          RPAppTask(
             type: SurveyUserTask.SURVEY_TYPE,
             title: surveys.ecologicalParents.title,
             description: surveys.ecologicalParents.description,
             minutesToComplete: surveys.ecologicalParents.minutesToComplete,
             expire: surveys.ecologicalParents.expire,
-          )..measures.add(RPTaskMeasure(
-              type: SurveySamplingPackage.SURVEY,
-              name: surveys.ecologicalParents.title,
-              enabled: true,
-              surveyTask: surveys.ecologicalParents.survey,
-            )),
+            rpTask: surveys.ecologicalParents.survey,
+          ),
           phone);
       _protocol!.addTriggeredTask(
-          DeploymentDelayedTrigger(delay: Duration(seconds: 15)),
-          AppTask(
+          ElapsedTimeTrigger(elapsedTime: Duration(seconds: 15)),
+          RPAppTask(
             type: SurveyUserTask.SURVEY_TYPE,
             title: surveys.appUX.title,
             description: surveys.appUX.description,
             minutesToComplete: surveys.appUX.minutesToComplete,
             expire: surveys.appUX.expire,
-          )..measures.add(RPTaskMeasure(
-              type: SurveySamplingPackage.SURVEY,
-              name: surveys.appUX.title,
-              enabled: true,
-              surveyTask: surveys.appUX.survey,
-            )),
+            rpTask: surveys.appUX.survey,
+          ),
           phone);
       _protocol!.addTriggeredTask(
-          DeploymentDelayedTrigger(delay: Duration(seconds: 15)),
-          AppTask(
+          ElapsedTimeTrigger(elapsedTime: Duration(seconds: 15)),
+          RPAppTask(
             type: SurveyUserTask.SURVEY_TYPE,
             title: surveys.exposure.title,
             description: surveys.exposure.description,
             minutesToComplete: surveys.exposure.minutesToComplete,
             expire: surveys.exposure.expire,
-          )..measures.add(RPTaskMeasure(
-              type: SurveySamplingPackage.SURVEY,
-              name: surveys.exposure.title,
-              enabled: true,
-              surveyTask: surveys.exposure.survey,
-            )),
+            rpTask: surveys.exposure.survey,
+          ),
           phone);
       _protocol!.addTriggeredTask(
-          DeploymentDelayedTrigger(delay: Duration(seconds: 15)),
-          AppTask(
+          ElapsedTimeTrigger(elapsedTime: Duration(seconds: 15)),
+          RPAppTask(
             type: SurveyUserTask.SURVEY_TYPE,
             title: surveys.informedConsent.title,
             description: surveys.informedConsent.description,
             minutesToComplete: surveys.informedConsent.minutesToComplete,
             expire: surveys.informedConsent.expire,
-          )..measures.add(RPTaskMeasure(
-              type: SurveySamplingPackage.SURVEY,
-              name: surveys.informedConsent.title,
-              enabled: true,
-              surveyTask: surveys.informedConsent.survey,
-            )),
+            rpTask: surveys.informedConsent.survey,
+          ),
           phone);
       _protocol!.addTriggeredTask(
-          DeploymentDelayedTrigger(delay: Duration(seconds: 15)),
-          AppTask(
+          ElapsedTimeTrigger(elapsedTime: Duration(seconds: 15)),
+          RPAppTask(
             type: SurveyUserTask.SURVEY_TYPE,
             title: surveys.symptomHierarchyCoumpulsions.title,
             description: surveys.symptomHierarchyCoumpulsions.description,
-            minutesToComplete: surveys.symptomHierarchyCoumpulsions.minutesToComplete,
+            minutesToComplete:
+                surveys.symptomHierarchyCoumpulsions.minutesToComplete,
             expire: surveys.symptomHierarchyCoumpulsions.expire,
-          )..measures.add(RPTaskMeasure(
-              type: SurveySamplingPackage.SURVEY,
-              name: surveys.symptomHierarchyCoumpulsions.title,
-              enabled: true,
-              surveyTask: surveys.symptomHierarchyCoumpulsions.survey,
-            )),
+            rpTask: surveys.symptomHierarchyCoumpulsions.survey,
+          ),
           phone);
       _protocol!.addTriggeredTask(
-          DeploymentDelayedTrigger(delay: Duration(seconds: 15)),
-          AppTask(
+          ElapsedTimeTrigger(elapsedTime: Duration(seconds: 15)),
+          RPAppTask(
             type: SurveyUserTask.SURVEY_TYPE,
             title: surveys.symptomHierarchyObsessions.title,
             description: surveys.symptomHierarchyObsessions.description,
-            minutesToComplete: surveys.symptomHierarchyObsessions.minutesToComplete,
+            minutesToComplete:
+                surveys.symptomHierarchyObsessions.minutesToComplete,
             expire: surveys.symptomHierarchyObsessions.expire,
-          )..measures.add(RPTaskMeasure(
-              type: SurveySamplingPackage.SURVEY,
-              name: surveys.symptomHierarchyObsessions.title,
-              enabled: true,
-              surveyTask: surveys.symptomHierarchyObsessions.survey,
-            )),
+            rpTask: surveys.symptomHierarchyObsessions.survey,
+          ),
           phone);
       _protocol!.addTriggeredTask(
-          DeploymentDelayedTrigger(delay: Duration(seconds: 15)),
+          ElapsedTimeTrigger(elapsedTime: Duration(seconds: 15)),
           AppTask(
             type: AudioUserTask.AUDIO_TYPE,
             title: "audio.exposure.title",
@@ -234,13 +193,10 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
             instructions: "audio.exposure.instructions",
             minutesToComplete: 5,
             notification: true,
-          )..measures.add(CAMSMeasure(
-              type: AudioVideoSamplingPackage.AUDIO,
-              name: "audio.exposure.name",
-            )),
+          ),
           phone);
       _protocol!.addTriggeredTask(
-          DeploymentDelayedTrigger(delay: Duration(seconds: 15)),
+          ElapsedTimeTrigger(elapsedTime: Duration(seconds: 15)),
           AppTask(
             type: AudioUserTask.AUDIO_TYPE,
             title: "audio.biosensor.title",
@@ -248,10 +204,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
             instructions: "audio.biosensor.instructions",
             minutesToComplete: 5,
             notification: true,
-          )..measures.add(CAMSMeasure(
-              type: AudioVideoSamplingPackage.AUDIO,
-              name: "audio.biosensor.name",
-            )),
+          ),
           phone);
     }
     return _protocol;
@@ -270,46 +223,29 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
 
       // Biosensor experience: collect wristband UX - triggers on week 7
       _protocol!.addTriggeredTask(
-          DeploymentDelayedTrigger(delay: Duration(days: 49)),
-          // ScheduledTrigger(
-          //   time: TimeOfDay(hour: 6, minute: 0),
-          //   recurrenceRule: RecurrenceRule(Frequency.WEEKLY, interval: 1),
-          // ),
-          // RecurrentScheduledTrigger(
-          //     type: RecurrentType.weekly, time: Time(hour: 6, minute: 00), dayOfWeek: DateTime.monday),
-          AppTask(
+          ElapsedTimeTrigger(elapsedTime: Duration(days: 49)),
+          RPAppTask(
             type: SurveyUserTask.SURVEY_TYPE,
             title: surveys.patient.title,
             description: surveys.patient.description,
             minutesToComplete: surveys.patient.minutesToComplete,
             expire: surveys.patient.expire,
-          )..measures.add(RPTaskMeasure(
-              type: SurveySamplingPackage.SURVEY,
-              name: surveys.patient.title,
-              enabled: true,
-              surveyTask: surveys.patient.survey,
-            )),
+            rpTask: surveys.patient.survey,
+          ),
           phone);
 
       /// collect exposure exercises - triggers daily
       _protocol!.addTriggeredTask(
-          // ScheduledTrigger(
-          //   time: TimeOfDay(hour: 6, minute: 00),
-          //   recurrenceRule: RecurrenceRule(Frequency.DAILY),
-          // ),
-          RecurrentScheduledTrigger(type: RecurrentType.daily, time: Time(hour: 6, minute: 00)),
-          AppTask(
+          RecurrentScheduledTrigger(
+              type: RecurrentType.daily, time: TimeOfDay(hour: 6, minute: 00)),
+          RPAppTask(
             type: SurveyUserTask.SURVEY_TYPE,
             title: surveys.exposure.title,
             description: surveys.exposure.description,
             minutesToComplete: surveys.exposure.minutesToComplete,
             expire: surveys.exposure.expire,
-          )..measures.add(RPTaskMeasure(
-              type: SurveySamplingPackage.SURVEY,
-              name: surveys.exposure.title,
-              enabled: true,
-              surveyTask: surveys.exposure.survey,
-            )),
+            rpTask: surveys.exposure.survey,
+          ),
           phone);
 
       // Ecological Momentary Assesment: collect how are you feeling - triggers randomly
@@ -318,21 +254,17 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           RandomRecurrentTrigger(
               maxNumberOfTriggers: 3,
               minNumberOfTriggers: 0,
-              startTime: Time(hour: 16, minute: 00),
-              endTime: Time(hour: 20, minute: 00)),
-          AppTask(
+              startTime: TimeOfDay(hour: 16, minute: 00),
+              endTime: TimeOfDay(hour: 20, minute: 00)),
+          RPAppTask(
             type: SurveyUserTask.SURVEY_TYPE,
             title: surveys.ecological.title,
             description: surveys.ecological.description,
             minutesToComplete: surveys.ecological.minutesToComplete,
             expire: surveys.ecological.expire,
             notification: true,
-          )..measures.add(RPTaskMeasure(
-              type: SurveySamplingPackage.SURVEY,
-              name: surveys.ecological.title,
-              enabled: true,
-              surveyTask: surveys.ecological.survey,
-            )),
+            rpTask: surveys.ecological.survey,
+          ),
           phone);
 
       // collect symptoms hierarchy (obsessions) - triggers weekly
@@ -342,20 +274,19 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           //   recurrenceRule: RecurrenceRule(Frequency.WEEKLY),
           // ),
           RecurrentScheduledTrigger(
-              type: RecurrentType.weekly, time: Time(hour: 6, minute: 00), dayOfWeek: DateTime.monday),
-          AppTask(
+              type: RecurrentType.weekly,
+              time: TimeOfDay(hour: 6, minute: 00),
+              dayOfWeek: DateTime.monday),
+          RPAppTask(
             type: SurveyUserTask.SURVEY_TYPE,
             title: surveys.symptomHierarchyObsessions.title,
             description: surveys.symptomHierarchyObsessions.description,
-            minutesToComplete: surveys.symptomHierarchyObsessions.minutesToComplete,
+            minutesToComplete:
+                surveys.symptomHierarchyObsessions.minutesToComplete,
             expire: surveys.symptomHierarchyObsessions.expire,
             notification: true,
-          )..measures.add(RPTaskMeasure(
-              type: SurveySamplingPackage.SURVEY,
-              name: surveys.symptomHierarchyObsessions.title,
-              enabled: true,
-              surveyTask: surveys.symptomHierarchyObsessions.survey,
-            )),
+            rpTask: surveys.symptomHierarchyObsessions.survey,
+          ),
           phone);
 
       // collect symptoms hierarchy (compulsions) - triggers weekly
@@ -365,20 +296,19 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           //   recurrenceRule: RecurrenceRule(Frequency.WEEKLY),
           // ),
           RecurrentScheduledTrigger(
-              type: RecurrentType.weekly, time: Time(hour: 6, minute: 00), dayOfWeek: DateTime.monday),
-          AppTask(
+              type: RecurrentType.weekly,
+              time: TimeOfDay(hour: 6, minute: 00),
+              dayOfWeek: DateTime.monday),
+          RPAppTask(
             type: SurveyUserTask.SURVEY_TYPE,
             title: surveys.symptomHierarchyCoumpulsions.title,
             description: surveys.symptomHierarchyCoumpulsions.description,
-            minutesToComplete: surveys.symptomHierarchyCoumpulsions.minutesToComplete,
+            minutesToComplete:
+                surveys.symptomHierarchyCoumpulsions.minutesToComplete,
             expire: surveys.symptomHierarchyCoumpulsions.expire,
             notification: true,
-          )..measures.add(RPTaskMeasure(
-              type: SurveySamplingPackage.SURVEY,
-              name: surveys.symptomHierarchyCoumpulsions.title,
-              enabled: true,
-              surveyTask: surveys.symptomHierarchyCoumpulsions.survey,
-            )),
+            rpTask: surveys.symptomHierarchyCoumpulsions.survey,
+          ),
           phone);
 
       // Audio task: Exposure exercise
@@ -387,7 +317,8 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           //   time: TimeOfDay(hour: 6, minute: 00),
           //   recurrenceRule: RecurrenceRule(Frequency.DAILY),
           // ),
-          RecurrentScheduledTrigger(type: RecurrentType.daily, time: Time(hour: 6, minute: 00)),
+          RecurrentScheduledTrigger(
+              type: RecurrentType.daily, time: TimeOfDay(hour: 6, minute: 00)),
           AppTask(
             type: AudioUserTask.AUDIO_TYPE,
             title: "audio.exposure.title",
@@ -395,15 +326,12 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
             instructions: "audio.exposure.instructions",
             minutesToComplete: 5,
             notification: true,
-          )..measures.add(CAMSMeasure(
-              type: AudioVideoSamplingPackage.AUDIO,
-              name: "audio.exposure.name",
-            )),
+          ),
           phone);
 
       // Audio task: Wristband UX -  triggers on week 7
       _protocol!.addTriggeredTask(
-          DeploymentDelayedTrigger(delay: Duration(days: 49)),
+          ElapsedTimeTrigger(elapsedTime: Duration(days: 49)),
           // ScheduledTrigger(
           //   time: TimeOfDay(hour: 6, minute: 00),
           //   recurrenceRule: RecurrenceRule(Frequency.WEEKLY),
@@ -417,17 +345,15 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
             instructions: "audio.biosensor.instructions",
             minutesToComplete: 5,
             notification: true,
-          )..measures.add(CAMSMeasure(
-              type: AudioVideoSamplingPackage.AUDIO,
-              name: "audio.biosensor.name",
-            )),
+          ),
           phone);
     }
 
     return _protocol;
   }
 
-  Future<SmartphoneStudyProtocol?> _getPatientParentsWristWatch(String studyId) async {
+  Future<SmartphoneStudyProtocol?> _getPatientParentsWristWatch(
+      String studyId) async {
     if (_protocol == null) {
       _protocol = SmartphoneStudyProtocol(
         name: 'Wrist Angel: Patient Parent',
@@ -440,98 +366,79 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
 
       // collect app consent UX - triggers when the study starts - W0
       _protocol!.addTriggeredTask(
-          DeploymentDelayedTrigger(delay: Duration(minutes: 1)),
-          AppTask(
+          ElapsedTimeTrigger(elapsedTime: Duration(minutes: 1)),
+          RPAppTask(
             type: SurveyUserTask.SURVEY_TYPE,
             title: surveys.informedConsent.title,
             description: surveys.informedConsent.description,
             minutesToComplete: surveys.informedConsent.minutesToComplete,
             expire: surveys.informedConsent.expire,
             notification: true,
-          )..measures.add(RPTaskMeasure(
-              type: SurveySamplingPackage.SURVEY,
-              name: surveys.informedConsent.title,
-              enabled: true,
-              surveyTask: surveys.informedConsent.survey,
-            )),
+            rpTask: surveys.informedConsent.survey,
+          ),
           phone);
 
       // collect trust scale - triggers on W8
       _protocol!.addTriggeredTask(
           //ImmediateTrigger(),
-          DeploymentDelayedTrigger(delay: Duration(days: 56)),
-          AppTask(
+          ElapsedTimeTrigger(elapsedTime: Duration(days: 56)),
+          RPAppTask(
             type: SurveyUserTask.SURVEY_TYPE,
             title: surveys.trustScale.title,
             description: surveys.trustScale.description,
             minutesToComplete: surveys.trustScale.minutesToComplete,
             expire: surveys.trustScale.expire,
             notification: true,
-          )..measures.add(RPTaskMeasure(
-              type: SurveySamplingPackage.SURVEY,
-              name: surveys.trustScale.title,
-              enabled: true,
-              surveyTask: surveys.trustScale.survey,
-            )),
+            rpTask: surveys.trustScale.survey,
+          ),
           phone);
 
       // collect App UX (I) - triggers on W1
       _protocol!.addTriggeredTask(
-          DeploymentDelayedTrigger(delay: Duration(days: 7)),
-          AppTask(
+          ElapsedTimeTrigger(elapsedTime: Duration(days: 7)),
+          RPAppTask(
             type: SurveyUserTask.SURVEY_TYPE,
             title: surveys.appUX.title,
             description: surveys.appUX.description,
             minutesToComplete: surveys.appUX.minutesToComplete,
             expire: surveys.appUX.expire,
             notification: true,
-          )..measures.add(RPTaskMeasure(
-              type: SurveySamplingPackage.SURVEY,
-              name: surveys.appUX.title,
-              enabled: true,
-              surveyTask: surveys.appUX.survey,
-            )),
+            rpTask: surveys.appUX.survey,
+          ),
           phone);
+
       // collect App UX (II) - triggers on W8
       _protocol!.addTriggeredTask(
-          DeploymentDelayedTrigger(delay: Duration(days: 56)),
-          AppTask(
+          ElapsedTimeTrigger(elapsedTime: Duration(days: 56)),
+          RPAppTask(
             type: SurveyUserTask.SURVEY_TYPE,
             title: surveys.appUX.title,
             description: surveys.appUX.description,
             minutesToComplete: surveys.appUX.minutesToComplete,
             expire: surveys.appUX.expire,
             notification: true,
-          )..measures.add(RPTaskMeasure(
-              type: SurveySamplingPackage.SURVEY,
-              name: surveys.appUX.title,
-              enabled: true,
-              surveyTask: surveys.appUX.survey,
-            )),
+            rpTask: surveys.appUX.survey,
+          ),
           phone);
 
       // Biosensor experience: collect wristband UX - triggers W7
       _protocol!.addTriggeredTask(
-          DeploymentDelayedTrigger(delay: Duration(days: 49)),
+          ElapsedTimeTrigger(elapsedTime: Duration(days: 49)),
           // ScheduledTrigger(
           //   time: TimeOfDay(hour: 6, minute: 00),
           //   recurrenceRule: RecurrenceRule(Frequency.WEEKLY),
           // ),
           // RecurrentScheduledTrigger(
           //     type: RecurrentType.daily, time: Time(hour: 6, minute: 00), dayOfWeek: DateTime.monday),
-          AppTask(
+          RPAppTask(
             type: SurveyUserTask.SURVEY_TYPE,
             title: surveys.patientParents.title,
             description: surveys.patientParents.description,
             minutesToComplete: surveys.patientParents.minutesToComplete,
             expire: surveys.patientParents.expire,
             notification: true,
-          )..measures.add(RPTaskMeasure(
-              type: SurveySamplingPackage.SURVEY,
-              name: surveys.patientParents.title,
-              enabled: true,
-              surveyTask: surveys.patientParents.survey,
-            )),
+            rpTask: surveys.patientParents.survey,
+          ),
           phone);
 
       // Ecological Momentary Assesment: collect how are you feeling - triggers randomly between 6am-11pm
@@ -540,26 +447,22 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           RandomRecurrentTrigger(
               maxNumberOfTriggers: 3,
               minNumberOfTriggers: 0,
-              startTime: Time(hour: 6, minute: 00),
-              endTime: Time(hour: 23, minute: 00)),
-          AppTask(
+              startTime: TimeOfDay(hour: 6, minute: 00),
+              endTime: TimeOfDay(hour: 23, minute: 00)),
+          RPAppTask(
             type: SurveyUserTask.SURVEY_TYPE,
             title: surveys.ecologicalParents.title,
             description: surveys.ecologicalParents.description,
             minutesToComplete: surveys.ecologicalParents.minutesToComplete,
             expire: surveys.ecologicalParents.expire,
             notification: true,
-          )..measures.add(RPTaskMeasure(
-              type: SurveySamplingPackage.SURVEY,
-              name: surveys.ecologicalParents.title,
-              enabled: true,
-              surveyTask: surveys.ecologicalParents.survey,
-            )),
+            rpTask: surveys.ecologicalParents.survey,
+          ),
           phone);
 
       // Audio task: Wristband UX -  triggers on week 7
       _protocol!.addTriggeredTask(
-          DeploymentDelayedTrigger(delay: Duration(days: 49)),
+          ElapsedTimeTrigger(elapsedTime: Duration(days: 49)),
           // ScheduledTrigger(
           //   time: TimeOfDay(hour: 6, minute: 00),
           //   recurrenceRule: RecurrenceRule(Frequency.WEEKLY),
@@ -571,10 +474,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
             instructions: "audio.biosensor.instructions",
             minutesToComplete: 5,
             notification: true,
-          )..measures.add(CAMSMeasure(
-              type: AudioVideoSamplingPackage.AUDIO,
-              name: "audio.biosensor.name",
-            )),
+          ),
           phone);
     }
 
@@ -594,22 +494,18 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
 
       // collect Biosensor experience: - triggers W7
       _protocol!.addTriggeredTask(
-          DeploymentDelayedTrigger(delay: Duration(days: 49)),
+          ElapsedTimeTrigger(elapsedTime: Duration(days: 49)),
           // ScheduledTrigger(
           //     time: TimeOfDay(hour: 6, minute: 00), recurrenceRule: RecurrenceRule(Frequency.WEEKLY)),
-          AppTask(
+          RPAppTask(
             type: SurveyUserTask.SURVEY_TYPE,
             title: surveys.control.title,
             description: surveys.control.description,
             minutesToComplete: surveys.control.minutesToComplete,
             expire: surveys.control.expire,
             notification: true,
-          )..measures.add(RPTaskMeasure(
-              type: SurveySamplingPackage.SURVEY,
-              name: surveys.control.title,
-              enabled: true,
-              surveyTask: surveys.control.survey,
-            )),
+            rpTask: surveys.control.survey,
+          ),
           phone);
 
       // Ecological Momentary Assesment: collect how are you feeling - triggers randomly
@@ -618,26 +514,22 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           RandomRecurrentTrigger(
               maxNumberOfTriggers: 3,
               minNumberOfTriggers: 0,
-              startTime: Time(hour: 16, minute: 00),
-              endTime: Time(hour: 20, minute: 00)),
-          AppTask(
+              startTime: TimeOfDay(hour: 16, minute: 00),
+              endTime: TimeOfDay(hour: 20, minute: 00)),
+          RPAppTask(
             type: SurveyUserTask.SURVEY_TYPE,
             title: surveys.ecological.title,
             description: surveys.ecological.description,
             minutesToComplete: surveys.ecological.minutesToComplete,
             expire: surveys.ecological.expire,
             notification: true,
-          )..measures.add(RPTaskMeasure(
-              type: SurveySamplingPackage.SURVEY,
-              name: surveys.ecological.title,
-              enabled: true,
-              surveyTask: surveys.ecological.survey,
-            )),
+            rpTask: surveys.ecological.survey,
+          ),
           phone);
 
       // Audio task: Wristband UX -  triggers on week 7
       _protocol!.addTriggeredTask(
-          DeploymentDelayedTrigger(delay: Duration(days: 49)),
+          ElapsedTimeTrigger(elapsedTime: Duration(days: 49)),
           // ScheduledTrigger(
           //   time: TimeOfDay(hour: 6, minute: 00),
           //   recurrenceRule: RecurrenceRule(Frequency.WEEKLY),
@@ -649,16 +541,14 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
             instructions: "audio.biosensor.instructions",
             minutesToComplete: 5,
             notification: true,
-          )..measures.add(CAMSMeasure(
-              type: AudioVideoSamplingPackage.AUDIO,
-              name: "audio.biosensor.name",
-            )),
+          ),
           phone);
     }
     return _protocol;
   }
 
-  Future<SmartphoneStudyProtocol?> _getControlParentWristWatch(String studyId) async {
+  Future<SmartphoneStudyProtocol?> _getControlParentWristWatch(
+      String studyId) async {
     if (_protocol == null) {
       _protocol = SmartphoneStudyProtocol(
         name: 'Wrist Angel: Control Parents',
@@ -671,123 +561,101 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
 
       // collect informed consent once when the study starts - W0
       _protocol!.addTriggeredTask(
-          DeploymentDelayedTrigger(delay: Duration(minutes: 1)),
-          AppTask(
+          ElapsedTimeTrigger(elapsedTime: Duration(minutes: 1)),
+          RPAppTask(
             type: SurveyUserTask.SURVEY_TYPE,
             title: surveys.informedConsent.title,
             description: surveys.informedConsent.description,
             minutesToComplete: surveys.informedConsent.minutesToComplete,
             expire: surveys.informedConsent.expire,
             notification: true,
-          )..measures.add(RPTaskMeasure(
-              type: SurveySamplingPackage.SURVEY,
-              name: surveys.informedConsent.title,
-              enabled: true,
-              surveyTask: surveys.informedConsent.survey,
-            )),
+            rpTask: surveys.informedConsent.survey,
+          ),
           phone);
 
       // collect trust scale - triggers on W7
       _protocol!.addTriggeredTask(
-          DeploymentDelayedTrigger(delay: Duration(days: 49)),
-          AppTask(
+          ElapsedTimeTrigger(elapsedTime: Duration(days: 49)),
+          RPAppTask(
             type: SurveyUserTask.SURVEY_TYPE,
             title: surveys.trustScale.title,
             description: surveys.trustScale.description,
             minutesToComplete: surveys.trustScale.minutesToComplete,
             expire: surveys.trustScale.expire,
             notification: true,
-          )..measures.add(RPTaskMeasure(
-              type: SurveySamplingPackage.SURVEY,
-              name: surveys.trustScale.title,
-              enabled: true,
-              surveyTask: surveys.trustScale.survey,
-            )),
+            rpTask: surveys.trustScale.survey,
+          ),
           phone);
 
       // collect App UX (I) - triggers on W1
       _protocol!.addTriggeredTask(
-          DeploymentDelayedTrigger(delay: Duration(days: 7)),
-          AppTask(
+          ElapsedTimeTrigger(elapsedTime: Duration(days: 7)),
+          RPAppTask(
             type: SurveyUserTask.SURVEY_TYPE,
             title: surveys.appUX.title,
             description: surveys.appUX.description,
             minutesToComplete: surveys.appUX.minutesToComplete,
             expire: surveys.appUX.expire,
             notification: true,
-          )..measures.add(RPTaskMeasure(
-              type: SurveySamplingPackage.SURVEY,
-              name: surveys.appUX.title,
-              enabled: true,
-              surveyTask: surveys.appUX.survey,
-            )),
+            rpTask: surveys.appUX.survey,
+          ),
           phone);
+
       // collect App UX (II) - triggers on W8
       _protocol!.addTriggeredTask(
-          DeploymentDelayedTrigger(delay: Duration(days: 56)),
-          AppTask(
+          ElapsedTimeTrigger(elapsedTime: Duration(days: 56)),
+          RPAppTask(
             type: SurveyUserTask.SURVEY_TYPE,
             title: surveys.appUX.title,
             description: surveys.appUX.description,
             minutesToComplete: surveys.appUX.minutesToComplete,
             expire: surveys.appUX.expire,
             notification: true,
-          )..measures.add(RPTaskMeasure(
-              type: SurveySamplingPackage.SURVEY,
-              name: surveys.appUX.title,
-              enabled: true,
-              surveyTask: surveys.appUX.survey,
-            )),
+            rpTask: surveys.appUX.survey,
+          ),
           phone);
 
       // Biosensor experience: collect wristband UX - triggers w7
       _protocol!.addTriggeredTask(
-          DeploymentDelayedTrigger(delay: Duration(days: 49)),
+          ElapsedTimeTrigger(elapsedTime: Duration(days: 49)),
           // ScheduledTrigger(
           //   time: TimeOfDay(hour: 6, minute: 00),
           //   recurrenceRule: RecurrenceRule(Frequency.WEEKLY),
           // ),
-          AppTask(
+          RPAppTask(
             type: SurveyUserTask.SURVEY_TYPE,
             title: surveys.controlParents.title,
             description: surveys.controlParents.description,
             minutesToComplete: surveys.controlParents.minutesToComplete,
             expire: surveys.controlParents.expire,
             notification: true,
-          )..measures.add(RPTaskMeasure(
-              type: SurveySamplingPackage.SURVEY,
-              name: surveys.controlParents.title,
-              enabled: true,
-              surveyTask: surveys.controlParents.survey,
-            )),
+            rpTask: surveys.controlParents.survey,
+          ),
           phone);
 
-      // Ecological Momentary Assesment: collect how are you feeling - triggers randomly  between 6am-11pm
+      // Ecological Momentary Assesment: collect how are you feeling.
+      // Triggers randomly  between 6am-11pm
       _protocol!.addTriggeredTask(
           //ImmediateTrigger(),
           RandomRecurrentTrigger(
               maxNumberOfTriggers: 3,
               minNumberOfTriggers: 0,
-              startTime: Time(hour: 6, minute: 00),
-              endTime: Time(hour: 23, minute: 00)),
-          AppTask(
+              startTime: TimeOfDay(hour: 6, minute: 00),
+              endTime: TimeOfDay(hour: 23, minute: 00)),
+          RPAppTask(
             type: SurveyUserTask.SURVEY_TYPE,
             title: surveys.ecologicalParents.title,
             description: surveys.ecologicalParents.description,
             minutesToComplete: surveys.ecologicalParents.minutesToComplete,
             expire: surveys.ecologicalParents.expire,
             notification: true,
-          )..measures.add(RPTaskMeasure(
-              type: SurveySamplingPackage.SURVEY,
-              name: surveys.ecologicalParents.title,
-              enabled: true,
-              surveyTask: surveys.ecologicalParents.survey,
-            )),
+            rpTask: surveys.ecologicalParents.survey,
+          ),
           phone);
 
       // Audio task: Wristband UX -  triggers on week 7
       _protocol!.addTriggeredTask(
-          DeploymentDelayedTrigger(delay: Duration(days: 49)),
+          ElapsedTimeTrigger(elapsedTime: Duration(days: 49)),
           // ScheduledTrigger(
           //   time: TimeOfDay(hour: 6, minute: 00),
           //   recurrenceRule: RecurrenceRule(Frequency.WEEKLY),
@@ -799,10 +667,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
             instructions: "audio.biosensor.instructions",
             minutesToComplete: 5,
             notification: true,
-          )..measures.add(CAMSMeasure(
-              type: AudioVideoSamplingPackage.AUDIO,
-              name: "audio.biosensor.name",
-            )),
+          ),
           phone);
     }
 
@@ -819,7 +684,8 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
               description:
                   "We would like to have you help in testing the technical stability and the usability of the CARP Mobile Sensing app. "
                   "Your data will be collected and store anonymously.",
-              purpose: 'To investigate the technical stability and usability of the CARP Generic Study App.',
+              purpose:
+                  'To investigate the technical stability and usability of the CARP Generic Study App.',
               responsible: StudyResponsible(
                 id: 'jakba',
                 name: 'Jakob E. Bardram',
@@ -831,86 +697,97 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
 
       // Define which devices are used for data collection.
       Smartphone phone = Smartphone();
-      _protocol!.addMasterDevice(phone);
+      _protocol?.addMasterDevice(phone);
 
-      _protocol!.addTriggeredTask(
+      // Define the online location service and add it as a 'device'
+      LocationService locationService = LocationService();
+      _protocol?.addConnectedDevice(locationService);
+
+      // Define the online weather service and add it as a 'device'
+      WeatherService weatherService =
+          WeatherService(apiKey: '12b6e28582eb9298577c734a31ba9f4f');
+      _protocol?.addConnectedDevice(weatherService);
+
+      // Define the online air quality service and add it as a 'device'
+      AirQualityService airQualityService =
+          AirQualityService(apiKey: '9e538456b2b85c92647d8b65090e29f957638c77');
+      _protocol?.addConnectedDevice(airQualityService);
+
+      _protocol?.addTriggeredTask(
           ImmediateTrigger(),
-          AutomaticTask()
-            ..measures = SamplingPackageRegistry().common().getMeasureList(
-              types: [
-                // SensorSamplingPackage.LIGHT,
-                SensorSamplingPackage.PEDOMETER,
-                // DeviceSamplingPackage.MEMORY,
-                DeviceSamplingPackage.DEVICE,
-                // DeviceSamplingPackage.BATTERY,
-                DeviceSamplingPackage.SCREEN,
-              ],
-            ),
+          BackgroundTask()
+            ..addMeasures([
+              Measure(type: SensorSamplingPackage.PEDOMETER),
+              // Measure(type: SensorSamplingPackage.LIGHT),
+              Measure(type: DeviceSamplingPackage.SCREEN),
+              Measure(type: DeviceSamplingPackage.DEVICE),
+              // Measure(type: DeviceSamplingPackage.MEMORY),
+              // Measure(type: DeviceSamplingPackage.BATTERY),
+            ]),
           phone);
 
-      // collect location, weather and air quality every 5 minutes
-      _protocol!.addTriggeredTask(
-          PeriodicTrigger(
-            period: Duration(minutes: 5),
-            duration: const Duration(seconds: 2),
-          ),
-          AutomaticTask()
-            ..measures = SamplingPackageRegistry().common().getMeasureList(
-              types: [
-                ContextSamplingPackage.LOCATION,
-                ContextSamplingPackage.WEATHER,
-                ContextSamplingPackage.AIR_QUALITY,
-              ],
-            ),
-          phone);
-
-      // collect location, activity, mobility measures continously (event-based)
-      _protocol!.addTriggeredTask(
+      // Activity measure using the phone
+      _protocol?.addTriggeredTask(
           ImmediateTrigger(),
-          AutomaticTask()
-            ..measures = SamplingPackageRegistry().common().getMeasureList(
-              types: [
-                // ContextSamplingPackage.GEOLOCATION,
-                ContextSamplingPackage.ACTIVITY,
-                ContextSamplingPackage.MOBILITY,
-              ],
-            ),
+          BackgroundTask()
+            ..addMeasure(Measure(type: ContextSamplingPackage.ACTIVITY)),
           phone);
+
+      // Add a background task that collects location on a regular basis
+      _protocol?.addTriggeredTask(
+          IntervalTrigger(period: Duration(minutes: 5)),
+          BackgroundTask()
+            ..addMeasure(Measure(type: ContextSamplingPackage.LOCATION)),
+          locationService);
+
+      // Add a background task that continously collects geolocation and mobility
+      _protocol?.addTriggeredTask(
+          ImmediateTrigger(),
+          BackgroundTask()
+            // ..addMeasure(Measure(type: ContextSamplingPackage.GEOLOCATION))
+            ..addMeasure(Measure(type: ContextSamplingPackage.MOBILITY)),
+          locationService);
+
+      // Add a background task that collects weather every 30 miutes.
+      _protocol?.addTriggeredTask(
+          IntervalTrigger(period: Duration(minutes: 30)),
+          BackgroundTask()
+            ..addMeasure(Measure(type: ContextSamplingPackage.WEATHER)),
+          weatherService);
+
+      // Add a background task that air quality every 30 miutes.
+      _protocol?.addTriggeredTask(
+          IntervalTrigger(period: Duration(minutes: 30)),
+          BackgroundTask()
+            ..addMeasure(Measure(type: ContextSamplingPackage.AIR_QUALITY)),
+          airQualityService);
 
       // collect local weather and air quality as an app task - notify the user
       _protocol!.addTriggeredTask(
           ImmediateTrigger(),
           AppTask(
-            type: SensingUserTask.ONE_TIME_SENSING_TYPE,
+            type: BackgroundSensingUserTask.ONE_TIME_SENSING_TYPE,
             title: "Weather & Air Quality",
             description: "Collect local weather and air quality",
             notification: true,
-          )..measures = SamplingPackageRegistry().common().getMeasureList(
-              types: [
-                ContextSamplingPackage.WEATHER,
-                ContextSamplingPackage.AIR_QUALITY,
-              ],
-            ),
+          )..addMeasures([
+              Measure(type: ContextSamplingPackage.WEATHER),
+              Measure(type: ContextSamplingPackage.AIR_QUALITY),
+            ]),
           phone);
 
       // collect demographics only once
       _protocol!.addTriggeredTask(
-          OneTimeTrigger('demographics'),
-          AppTask(
+          OneTimeTrigger(),
+          RPAppTask(
             // type: SurveyUserTask.DEMOGRAPHIC_SURVEY_TYPE,
             type: SurveyUserTask.SURVEY_TYPE,
             title: surveys.demographics.title,
             description: surveys.demographics.description,
             minutesToComplete: surveys.demographics.minutesToComplete,
             expire: surveys.demographics.expire,
-          )
-            ..measures.add(RPTaskMeasure(
-              type: SurveySamplingPackage.SURVEY,
-              name: surveys.demographics.title,
-              enabled: true,
-              surveyTask: surveys.demographics.survey,
-            ))
-            ..measures.add(SamplingPackageRegistry().common().measures[ContextSamplingPackage.LOCATION]!),
+            rpTask: surveys.demographics.survey,
+          )..addMeasure(Measure(type: ContextSamplingPackage.LOCATION)),
           phone);
 
       // collect symptoms on a daily basis - notify the user
@@ -919,21 +796,15 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
             period: Duration(hours: 1),
             duration: const Duration(seconds: 2),
           ),
-          AppTask(
+          RPAppTask(
             type: SurveyUserTask.SURVEY_TYPE,
             title: surveys.symptoms.title,
             description: surveys.symptoms.description,
             minutesToComplete: surveys.symptoms.minutesToComplete,
             expire: surveys.symptoms.expire,
             notification: true,
-          )
-            ..measures.add(RPTaskMeasure(
-              type: SurveySamplingPackage.SURVEY,
-              name: surveys.symptoms.title,
-              enabled: true,
-              surveyTask: surveys.symptoms.survey,
-            ))
-            ..measures.add(SamplingPackageRegistry().common().measures[ContextSamplingPackage.LOCATION]!),
+            rpTask: surveys.symptoms.survey,
+          )..addMeasure(Measure(type: ContextSamplingPackage.LOCATION)),
           phone);
 
       // collect a coughing sample on a daily basis
@@ -943,7 +814,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
       //       period: Duration(days: 1),
       //       duration: const Duration(seconds: 2),
       //     ),
-      //     AppTask(
+      //     RPAppTask(
       //       type: AudioUserTask.AUDIO_TYPE,
       //       title: "Coughing",
       //       description:
@@ -975,18 +846,17 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           AppTask(
             type: AudioUserTask.AUDIO_TYPE,
             title: "Reading",
-            description: 'In this small exercise we would like to collect sound data while you are reading.',
+            description:
+                'In this small exercise we would like to collect sound data while you are reading.',
             instructions: 'Please read the following text aloud.\n\n'
                 'Many, many years ago lived an emperor, who thought so much of new clothes that he spent all his money in order to obtain them; his only ambition was to be always well dressed. '
                 'He did not care for his soldiers, and the theatre did not amuse him; the only thing, in fact, he thought anything of was to drive out and show a new suit of clothes. '
                 'He had a coat for every hour of the day; and as one would say of a king "He is in his cabinet," so one could say of him, "The emperor is in his dressing-room."',
             minutesToComplete: 3,
-          )
-            ..measures.add(CAMSMeasure(
-              type: AudioVideoSamplingPackage.AUDIO,
-              name: "Reading",
-            ))
-            ..measures.add(SamplingPackageRegistry().common().measures[ContextSamplingPackage.LOCATION]!),
+          )..addMeasures([
+              Measure(type: MediaSamplingPackage.AUDIO),
+              Measure(type: ContextSamplingPackage.LOCATION)
+            ]),
           phone);
 
       // collect a video
@@ -995,7 +865,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
       //       period: Duration(minutes: 10),
       //       duration: const Duration(seconds: 2),
       //     ),
-      //     AppTask(
+      //     RPAppTask(
       //       type: VideoUserTask.VIDEO_TYPE,
       //       title: "Take a video or image",
       //       description:
@@ -1017,24 +887,21 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
       // collect location, and local weather and air quality
       _protocol!.addTriggeredTask(
           ConditionalSamplingEventTrigger(
-            measureType: AudioVideoSamplingPackage.AUDIO,
+            measureType: MediaSamplingPackage.AUDIO,
             resumeCondition: (DataPoint dataPoint) => true,
             pauseCondition: (DataPoint dataPoint) => true,
           ),
           AppTask(
-            type: SensingUserTask.ONE_TIME_SENSING_TYPE,
+            type: BackgroundSensingUserTask.ONE_TIME_SENSING_TYPE,
             title: "Location, Weather & Air Quality",
             description: "Collect location, weather and air quality",
-          )..measures = SamplingPackageRegistry().common().getMeasureList(
-              types: [
-                ContextSamplingPackage.LOCATION,
-                ContextSamplingPackage.WEATHER,
-                ContextSamplingPackage.AIR_QUALITY,
-              ],
-            ),
+          )..addMeasures([
+              Measure(type: ContextSamplingPackage.WEATHER),
+              Measure(type: ContextSamplingPackage.AIR_QUALITY),
+            ]),
           phone);
 
-      // video
+      // Video Recording task
       _protocol!.addTriggeredTask(
           PeriodicTrigger(
             period: const Duration(minutes: 1),
@@ -1047,10 +914,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
             instructions: "Please take a video of whatever is next to you",
             minutesToComplete: 3,
             notification: true,
-          )..measures.add(CAMSMeasure(
-              type: AudioVideoSamplingPackage.VIDEO,
-              name: "Recording",
-            )),
+          ),
           phone);
     }
 

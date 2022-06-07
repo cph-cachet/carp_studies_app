@@ -18,7 +18,6 @@ import 'package:timeago/timeago.dart' as timeago;
 import 'package:intl/intl.dart';
 import 'dart:io';
 import 'package:camera/camera.dart';
-import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
 // import 'package:activity_recognition_flutter/activity_recognition_flutter.dart';
@@ -27,7 +26,7 @@ import 'package:flutter_activity_recognition/flutter_activity_recognition.dart';
 // the CARP packages
 import 'package:carp_core/carp_core.dart';
 import 'package:carp_mobile_sensing/carp_mobile_sensing.dart';
-import 'package:carp_audio_package/audio.dart';
+import 'package:carp_audio_package/media.dart';
 //import 'package:carp_health_package/health_package.dart';
 //import 'package:carp_connectivity_package/connectivity.dart';
 //import 'package:carp_communication_package/communication.dart';
@@ -40,7 +39,7 @@ import 'package:carp_backend/carp_backend.dart';
 import 'package:research_package/research_package.dart';
 
 import 'package:permission_handler/permission_handler.dart';
-import 'package:permission_handler_platform_interface/permission_handler_platform_interface.dart';
+// import 'package:permission_handler_platform_interface/permission_handler_platform_interface.dart';
 
 part 'blocs/app_bloc.dart';
 part 'blocs/common.dart';

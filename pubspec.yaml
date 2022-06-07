@@ -1,7 +1,7 @@
 name: carp_study_app
 description: The generic CARP study app
 publish_to: 'none'
-version: 0.32.3
+version: 0.40.0
 
 environment:
   sdk: '>=2.12.0 <3.0.0'
@@ -11,16 +11,16 @@ dependencies:
   flutter:
     sdk: flutter
 
-  carp_mobile_sensing: ^0.32.3
-  carp_context_package: ^0.32.1
-  carp_survey_package: ^0.32.1
-  carp_audio_package: ^0.32.2
-  carp_backend: ^0.32.3
+  # carp_mobile_sensing: ^0.40.0
+  # carp_context_package: ^0.40.0
+  # carp_survey_package: ^0.40.0
+  # carp_audio_package: ^0.40.0
+  # carp_backend: ^0.40.0
 
-  #carp_communication_package: ^0.6.1
-  #carp_health_package: ^0.6.1
+  #carp_communication_package: ^0.40.0
+  #carp_health_package: ^0.40.0
   
-  research_package: ^0.7.0
+  # research_package: ^0.8.1
 
   flutter_launcher_icons: ^0.9.1
   url_launcher: ^6.0.9
@@ -47,24 +47,24 @@ dependency_overrides:
   #   git:
   #     url: https://github.com/google/charts
   #     path: charts_flutter
-  # carp_core:
-  #   path: ../carp/carp.sensing-flutter/carp_core/
-  # carp_mobile_sensing:
-  #   path: ../carp/carp.sensing-flutter/carp_mobile_sensing/
-  # carp_context_package:
-  #   path: ../carp/carp.sensing-flutter/packages/carp_context_package/
-  # mobility_features:
-  #   path: ../flutter-plugins/packages/mobility_features/
-  # carp_survey_package:
-  #   path: ../carp/carp.sensing-flutter/packages/carp_survey_package/
-  # carp_audio_package:
-  #   path: ../carp/carp.sensing-flutter/packages/carp_audio_package/
-  # carp_backend:
-  #   path: ../carp/carp.sensing-flutter/backends/carp_backend/
-  # carp_webservices:
-  #   path: ../carp/carp.sensing-flutter/backends/carp_webservices/
-  # research_package:
-  #   path: ../research.package/
+  carp_core:
+    path: ../carp/carp.sensing-flutter/carp_core/
+  carp_mobile_sensing:
+    path: ../carp/carp.sensing-flutter/carp_mobile_sensing/
+  carp_context_package:
+    path: ../carp/carp.sensing-flutter/packages/carp_context_package/
+  mobility_features:
+    path: ../flutter-plugins/packages/mobility_features/
+  carp_survey_package:
+    path: ../carp/carp.sensing-flutter/packages/carp_survey_package/
+  carp_audio_package:
+    path: ../carp/carp.sensing-flutter/packages/carp_audio_package/
+  carp_backend:
+    path: ../carp/carp.sensing-flutter/backends/carp_backend/
+  carp_webservices:
+    path: ../carp/carp.sensing-flutter/backends/carp_webservices/
+  research_package:
+    path: ../research.package/
 
 dev_dependencies:
   # flutter_test:

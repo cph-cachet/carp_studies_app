@@ -55,7 +55,7 @@ abstract class SerializableViewModel<D extends DataModel> extends ViewModel {
 
   /// Current path and filename of the data.
   Future<String> get filename async {
-    String path = await Settings().deploymentBasePath ?? '';
+    String path = await LocalSettings().deploymentBasePath ?? '';
     return '$path/$runtimeType.json';
   }
 

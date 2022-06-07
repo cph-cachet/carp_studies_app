@@ -40,25 +40,66 @@ dependencies:
 
 # Overriding carp libraries to use the local or github copy
 # Remove this before release of app
-dependency_overrides:
+dependency_overrides:  
   carp_core:
-    path: ../carp/carp.sensing-flutter/carp_core/
+    git:
+      url: https://github.com/cph-cachet/carp.sensing-flutter.git
+      ref: develop
+      path: carp_core
   carp_mobile_sensing:
-    path: ../carp/carp.sensing-flutter/carp_mobile_sensing/
+    git:
+      url: https://github.com/cph-cachet/carp.sensing-flutter.git
+      ref: develop
+      path: carp_mobile_sensing
   carp_context_package:
-    path: ../carp/carp.sensing-flutter/packages/carp_context_package/
-  mobility_features:
-    path: ../flutter-plugins/packages/mobility_features/
+    git:
+      url: https://github.com/cph-cachet/carp.sensing-flutter.git
+      ref: develop
+      path: packages/carp_context_package/
   carp_survey_package:
-    path: ../carp/carp.sensing-flutter/packages/carp_survey_package/
+    git:
+      url: https://github.com/cph-cachet/carp.sensing-flutter.git
+      ref: develop
+      path: packages/carp_survey_package/
   carp_audio_package:
-    path: ../carp/carp.sensing-flutter/packages/carp_audio_package/
+    git:
+      url: https://github.com/cph-cachet/carp.sensing-flutter.git
+      ref: develop
+      path: packages/carp_audio_package/
   carp_backend:
-    path: ../carp/carp.sensing-flutter/backends/carp_backend/
+    git:
+      url: https://github.com/cph-cachet/carp.sensing-flutter.git
+      ref: develop
+      path: backends/carp_backend/
   carp_webservices:
-    path: ../carp/carp.sensing-flutter/backends/carp_webservices/
+    git:
+      url: https://github.com/cph-cachet/carp.sensing-flutter.git
+      ref: develop
+      path: backends/carp_webservices/
   research_package:
-    path: ../research.package/
+    git:
+      url: https://github.com/cph-cachet/research.package.git
+      ref: dev-carp-core-0_40_0
+
+
+  # carp_core:
+  #   path: ../carp/carp.sensing-flutter/carp_core/
+  # carp_mobile_sensing:
+  #   path: ../carp/carp.sensing-flutter/carp_mobile_sensing/
+  # carp_context_package:
+  #   path: ../carp/carp.sensing-flutter/packages/carp_context_package/
+  # mobility_features:
+  #   path: ../flutter-plugins/packages/mobility_features/
+  # carp_survey_package:
+  #   path: ../carp/carp.sensing-flutter/packages/carp_survey_package/
+  # carp_audio_package:
+  #   path: ../carp/carp.sensing-flutter/packages/carp_audio_package/
+  # carp_backend:
+  #   path: ../carp/carp.sensing-flutter/backends/carp_backend/
+  # carp_webservices:
+  #   path: ../carp/carp.sensing-flutter/backends/carp_webservices/
+  # research_package:
+  #   path: ../research.package/
 
 dev_dependencies:
   # flutter_test:

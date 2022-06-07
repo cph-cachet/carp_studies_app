@@ -839,10 +839,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
 
       // collect a reading / audio sample on a daily basis
       _protocol!.addTriggeredTask(
-          PeriodicTrigger(
-            period: Duration(hours: 1),
-            duration: const Duration(seconds: 2),
-          ),
+          IntervalTrigger(period: Duration(minutes: 1)),
           AppTask(
             type: AudioUserTask.AUDIO_TYPE,
             title: "Reading",
@@ -903,10 +900,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
 
       // Video Recording task
       _protocol!.addTriggeredTask(
-          PeriodicTrigger(
-            period: const Duration(minutes: 1),
-            duration: const Duration(seconds: 2),
-          ),
+          IntervalTrigger(period: const Duration(minutes: 2)),
           AppTask(
             type: VIDEO_TYPE,
             title: "Video",

@@ -42,6 +42,7 @@ class AudioUserTask extends UserTask {
   }
 
   void onStart(BuildContext context) {
+    super.onStart(context);
     Navigator.push(
       context,
       MaterialPageRoute(

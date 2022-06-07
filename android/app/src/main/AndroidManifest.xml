@@ -28,7 +28,6 @@
     <!-- The following permissions are used in the Media Package  -->
     <uses-permission android:name="android.permission.RECORD_AUDIO"/>
     <uses-permission android:name="android.permission.CAMERA"/>
-
    
     <!-- Remove unused permissions 
          See https://github.com/cph-cachet/carp.sensing-flutter/wiki/5.-Best-Practice#android-manifest-file-merge  

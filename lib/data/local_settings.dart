@@ -3,6 +3,8 @@ part of carp_study_app;
 /// A local settings manager. Works as a singleton - use `LocalSettings()`
 /// for accessing settings.
 class LocalSettings {
+  static const String STUDY_DEPLOYMENT_ID_KEY = 'study_deployment_id';
+
   static final LocalSettings _instance = LocalSettings._();
   factory LocalSettings() => _instance;
   LocalSettings._() : super();
@@ -60,8 +62,30 @@ class LocalSettings {
     Settings().preferences!.setString(_studyIdKey, id!);
   }
 
-  String? get studyDeploymentId => Settings().studyDeploymentId;
-  set studyDeploymentId(String? id) => Settings().studyDeploymentId = id;
+  String? _studyDeploymentId;
+
+  /// The study deployment id for the currently running deployment.
+  /// Returns the deployment id cached locally on the phone (if available).
+  /// Returns `null` if no study is deployed (yet).
+  String? get studyDeploymentId => (_studyDeploymentId ??=
+      Settings().preferences?.getString(STUDY_DEPLOYMENT_ID_KEY));
+
+  /// Set the study deployment id for the currently running deployment.
+  /// This study deployment id will be cached locally on the phone.
+  set studyDeploymentId(String? id) {
+    assert(
+        id != null,
+        'Cannot set the study deployment id to null in Settings. '
+        "Use the 'eraseStudyDeployment()' method to erase study deployment information.");
+    _studyDeploymentId = id;
+    Settings().preferences?.setString(STUDY_DEPLOYMENT_ID_KEY, id!);
+  }
+
+  /// Erase all study deployment information cached locally on this phone.
+  Future<void> eraseStudyDeployment() async {
+    _studyDeploymentId = null;
+    await Settings().preferences!.remove(STUDY_DEPLOYMENT_ID_KEY);
+  }
 
   /// Has the informed consent been shown to, and accepted by the user?
   bool get hasInformedConsentBeenAccepted => _hasInformedConsentBeenAccepted ??=
@@ -74,7 +98,7 @@ class LocalSettings {
   Future<void> eraseStudyIds() async {
     _studyId = null;
     _hasInformedConsentBeenAccepted = null;
-    await Settings().eraseStudyDeployment();
+    await eraseStudyDeployment();
     await Settings().preferences!.remove(_studyIdKey);
     await Settings().preferences!.remove(_informedConsentAcceptedKey);
   }

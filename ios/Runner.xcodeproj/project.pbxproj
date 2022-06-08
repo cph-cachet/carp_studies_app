@@ -515,7 +515,7 @@
 				DEVELOPMENT_ASSET_PATHS = "Runner/base.lproj/Main.storyboard Runner/Assets.xcassets Runner/base.lproj/LaunchScreen.storyboard";
 				DEVELOPMENT_TEAM = 59TCTNUBMQ;
 				ENABLE_BITCODE = NO;
-				FLUTTER_ROOT = /Users/luciamontesinos/Documents/flutter;
+				FLUTTER_ROOT = /Users/luciamontesinos/flutter;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
@@ -554,7 +554,7 @@
 				DEVELOPMENT_ASSET_PATHS = "Runner/base.lproj/Main.storyboard Runner/Assets.xcassets Runner/base.lproj/LaunchScreen.storyboard";
 				DEVELOPMENT_TEAM = 59TCTNUBMQ;
 				ENABLE_BITCODE = NO;
-				FLUTTER_ROOT = /Users/luciamontesinos/Documents/flutter;
+				FLUTTER_ROOT = /Users/luciamontesinos/flutter;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",

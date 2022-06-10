@@ -77,7 +77,7 @@ class DeviceModel {
         DeviceStatus.disconnected: Text("PAIR"), // If its disconnected, ask to pair
         DeviceStatus.paired: Text("CONNECT"), // If its paired, ask to connect
         DeviceStatus.error: Icon(Icons.error_outline, color: CACHET.RED_1),
-        DeviceStatus.sampling: Icon(Icons.save_alt, color: CACHET.BLUE_1),
+        // DeviceStatus.sampling: Icon(Icons.save_alt, color: CACHET.BLUE_1),
         DeviceStatus.initialized: Text("READY"),
         DeviceStatus.unknown: Icon(Icons.error_outline, color: CACHET.RED_1),
       };

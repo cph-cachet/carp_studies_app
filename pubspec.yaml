@@ -36,6 +36,8 @@ dependencies:
   app_settings: ^4.1.5
   flutter_blue_plus: ^1.1.2
   device_info_plus: ^3.2.3
+  esense_flutter: ^0.6.1
+  # carp_esense_package: ^0.33.0
   
   flutter_localizations:
     sdk: flutter
@@ -83,6 +85,12 @@ dependency_overrides:
     git:
       url: https://github.com/cph-cachet/research.package.git
       ref: dev-carp-core-0_40_0
+  carp_esense_package:
+    git:
+      url: https://github.com/cph-cachet/carp.sensing-flutter.git
+      ref: develop
+      path: packages/carp_esense_package/
+
 
 
   # carp_core:

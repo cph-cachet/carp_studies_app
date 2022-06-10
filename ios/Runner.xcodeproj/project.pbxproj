@@ -14,6 +14,7 @@
 		E13E6D4226E8BB2F00FA7CDB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FA1CF9000F007C117D /* Main.storyboard */; };
 		E13E6D4326E8BB2F00FA7CDB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FD1CF9000F007C117D /* Assets.xcassets */; };
 		E13E6D4426E8BB2F00FA7CDB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */; };
+		E18E9691285334BE00E0AC62 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = E18E9690285334BD00E0AC62 /* libc++.tbd */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -46,6 +47,7 @@
 		97C147021CF9000F007C117D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BEE5B5C399E5E9BE41426E97 /* Pods-Runner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.debug.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.debug.xcconfig"; sourceTree = "<group>"; };
 		E10F125E270C58370054107C /* carp_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = carp_logo.png; path = Runner/Assets.xcassets/carp_logo.imageset/carp_logo.png; sourceTree = "<group>"; };
+		E18E9690285334BD00E0AC62 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		E1C4BE1A2726B5F800D42239 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E1C4BE1B2726B5F800D42239 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E1E629EF268DFF1000DDDF95 /* RunnerRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RunnerRelease.entitlements; sourceTree = "<group>"; };
@@ -56,6 +58,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E18E9691285334BE00E0AC62 /* libc++.tbd in Frameworks */,
 				59D41BB136F1C8D43A9CAE21 /* Pods_Runner.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -66,6 +69,7 @@
 		084FB2860693BC6F08FC4B38 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E18E9690285334BD00E0AC62 /* libc++.tbd */,
 				404D78DE8363EF617F53CE75 /* Pods_Runner.framework */,
 			);
 			name = Frameworks;
@@ -512,7 +516,7 @@
 				DEVELOPMENT_ASSET_PATHS = "Runner/base.lproj/Main.storyboard Runner/Assets.xcassets Runner/base.lproj/LaunchScreen.storyboard";
 				DEVELOPMENT_TEAM = 59TCTNUBMQ;
 				ENABLE_BITCODE = NO;
-				FLUTTER_ROOT = /Users/luciamontesinos/Documents/flutter;
+				FLUTTER_ROOT = /Users/luciamontesinos/flutter;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
@@ -551,7 +555,7 @@
 				DEVELOPMENT_ASSET_PATHS = "Runner/base.lproj/Main.storyboard Runner/Assets.xcassets Runner/base.lproj/LaunchScreen.storyboard";
 				DEVELOPMENT_TEAM = 59TCTNUBMQ;
 				ENABLE_BITCODE = NO;
-				FLUTTER_ROOT = /Users/luciamontesinos/Documents/flutter;
+				FLUTTER_ROOT = /Users/luciamontesinos/flutter;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",

@@ -27,9 +27,11 @@ class DataVisualizationPage extends StatelessWidget {
                     children: [
                       Text(
                         '${locale.translate('pages.data_viz.hello')} ${bloc.friendlyUsername}',
-                        style: sectionTitleStyle.copyWith(color: Theme.of(context).primaryColor),
+                        style: sectionTitleStyle.copyWith(
+                            color: Theme.of(context).primaryColor),
                       ),
-                      Text(locale.translate('pages.data_viz.thanks'), style: aboutCardSubtitleStyle),
+                      Text(locale.translate('pages.data_viz.thanks'),
+                          style: aboutCardSubtitleStyle),
                       SizedBox(height: 15),
                     ],
                   ),

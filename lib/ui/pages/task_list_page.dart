@@ -248,7 +248,7 @@ class _TaskListPageState extends State<TaskListPage> {
       Icons.settings_input_antenna,
       color: CACHET.CACHET_BLUE,
     ),
-    SensingUserTask.ONE_TIME_SENSING_TYPE: Icon(
+    BackgroundSensingUserTask.ONE_TIME_SENSING_TYPE: Icon(
       Icons.settings_input_component,
       color: CACHET.PURPLE,
     ),
@@ -332,7 +332,7 @@ class _TaskListPageState extends State<TaskListPage> {
       color: CACHET.LIGHT_BLUE_2,
     ),
     ContextSamplingPackage.AIR_QUALITY: Icon(
-      Icons.warning,
+      Icons.air,
       color: CACHET.GREY_3,
     ),
     ContextSamplingPackage.GEOFENCE: Icon(

@@ -21,11 +21,11 @@ class StudyPageViewModel extends ViewModel {
       'Copenhagen Center for Health Technology';
 
   /// Events on the state of the study executor
-  Stream<ProbeState> get studyExecutorStateEvents =>
+  Stream<ExecutorState> get studyExecutorStateEvents =>
       Sensing().controller!.executor!.stateEvents;
 
   /// Current state of the study executor (e.g., resumed, paused, ...)
-  ProbeState get studyState => Sensing().controller!.executor!.state;
+  ExecutorState get studyState => Sensing().controller!.executor!.state;
 
   /// Get all sesing events (i.e. all [DataPoint] objects being collected).
   Stream<DataPoint> get samplingEvents => Sensing().controller!.data;

@@ -20,7 +20,6 @@ import 'package:timeago/timeago.dart' as timeago;
 import 'package:intl/intl.dart';
 import 'dart:io';
 import 'package:camera/camera.dart';
-import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 import 'package:app_settings/app_settings.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
@@ -47,7 +46,7 @@ import 'package:esense_flutter/esense.dart';
 import 'package:carp_esense_package/esense.dart';
 
 import 'package:permission_handler/permission_handler.dart';
-import 'package:permission_handler_platform_interface/permission_handler_platform_interface.dart';
+// import 'package:permission_handler_platform_interface/permission_handler_platform_interface.dart';
 
 part 'blocs/app_bloc.dart';
 part 'blocs/common.dart';

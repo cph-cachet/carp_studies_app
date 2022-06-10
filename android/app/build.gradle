@@ -31,8 +31,12 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    // compileSdkVersion 29
-    compileSdkVersion 31
+    compileSdkVersion flutter.compileSdkVersion
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 
     lintOptions {
         disable 'InvalidPackage'

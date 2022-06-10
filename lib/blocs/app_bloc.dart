@@ -251,9 +251,7 @@ class StudyAppBLoC {
   /// The signed in user. Returns null if no user is signed in.
   CarpUser? get user => backend.user;
 
-  String get username => (user != null)
-      ? user!.username
-      : Sensing().controller!.deployment!.userId!;
+  String get username => (user != null) ? user!.username : Sensing().controller!.deployment!.userId!;
 
   /// The name used for friendly greating - '' if no user logged in.
   String? get friendlyUsername => (user != null) ? user!.firstName : '';
@@ -269,7 +267,7 @@ class StudyAppBLoC {
   Iterable<DeviceModel> get runningDevices => Sensing().runningDevices!.map((device) => DeviceModel(device));
 
   void connectToDevice(DeviceModel device) {
-    Sensing().client?.deviceRegistry.devices[device.type!]!.connect();
+    Sensing().client?.deviceController.devices[device.type!]!.connect();
   }
 
   /// Start sensing. Should only be called once.

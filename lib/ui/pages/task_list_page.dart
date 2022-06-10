@@ -244,7 +244,7 @@ class _TaskListPageState extends State<TaskListPage> {
       Icons.camera_alt,
       color: CACHET.YELLOW,
     ),
-    SensingUserTask.SENSING_TYPE: Icon(
+    BackgroundSensingUserTask.SENSING_TYPE: Icon(
       Icons.settings_input_antenna,
       color: CACHET.CACHET_BLUE,
     ),

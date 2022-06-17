@@ -22,6 +22,8 @@ class DeviceModel {
 
   String? get type => deviceManager.type;
   DeviceStatus get status => deviceManager.status;
+
+  /// Stream of [DeviceStatus] events
   Stream<DeviceStatus> get deviceEvents => deviceManager.statusEvents;
 
   /// The device ids
@@ -51,9 +53,10 @@ class DeviceModel {
   // /// The icon for the runtime state of this device.
   // Icon? get stateIcon => deviceStateIcon[status];
 
-  set id(String newName) {
-    _id = newName;
-    ESenseDeviceManager().setDeviceName(newName);
+  set setId(String newId) {
+    _id = newId;
+    // var eSenseDevice = bloc.deployment.connectedDevices.firstWhere((device) => device is ESenseDevice);
+    // eSenseDevice.deviceName = newId;
   }
 
   DeviceModel(this.deviceManager) : super();
@@ -61,15 +64,24 @@ class DeviceModel {
   static Map<String, String> get deviceTypeName => {
         Smartphone.DEVICE_TYPE: 'Phone',
         ESenseDevice.DEVICE_TYPE: 'eSense',
+        WeatherService.DEVICE_TYPE: 'Weather',
+        AirQualityService.DEVICE_TYPE: 'Air quality',
+        LocationService.DEVICE_TYPE: 'Location',
       };
 
   static Map<String, String> get deviceTypeDescription => {
         Smartphone.DEVICE_TYPE: 'This phone',
         ESenseDevice.DEVICE_TYPE: 'eSense ear plug',
+        WeatherService.DEVICE_TYPE: 'Weather service',
+        AirQualityService.DEVICE_TYPE: 'Air quality service',
+        LocationService.DEVICE_TYPE: 'Location service',
       };
   static Map<String, Icon> get deviceTypeIcon => {
         Smartphone.DEVICE_TYPE: Icon(Icons.phone_android),
         ESenseDevice.DEVICE_TYPE: Icon(Icons.headphones),
+        WeatherService.DEVICE_TYPE: Icon(Icons.wb_sunny_rounded),
+        AirQualityService.DEVICE_TYPE: Icon(Icons.air),
+        LocationService.DEVICE_TYPE: Icon(Icons.location_on),
       };
 
   static Map<DeviceStatus, dynamic> get deviceStatusIcon => {

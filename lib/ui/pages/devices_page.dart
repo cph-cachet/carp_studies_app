@@ -26,8 +26,19 @@ class _DevicesPageState extends State<DevicesPage> {
 
   @override
   Widget build(BuildContext context) {
-    List<DeviceModel> devices = bloc.runningDevices.toList();
+    //List<DeviceModel> devices = bloc.runningDevices.toList();
     RPLocalizations locale = RPLocalizations.of(context)!;
+
+    List<DeviceModel> physicalDevice = bloc.runningDevices
+        .where((element) =>
+            element.deviceManager is HardwareDeviceManager &&
+            element.deviceManager is! SmartphoneDeviceManager)
+        .toList();
+    List<DeviceModel> onlineService =
+        bloc.runningDevices.where((element) => element.deviceManager is OnlineServiceManager).toList();
+
+    List<DeviceModel> smartphoneDevice =
+        bloc.runningDevices.where((element) => element.deviceManager is SmartphoneDeviceManager).toList();
 
     return Scaffold(
       body: Column(
@@ -45,13 +56,12 @@ class _DevicesPageState extends State<DevicesPage> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      "Devices",
-                      style: sectionTitleStyle.copyWith(color: Theme.of(context).primaryColor),
-                    ),
-                    Text("Here you can find all the devices you will use in your study.",
+                    // Text(
+                    //   "Devices & Services".toUpperCase(),
+                    //   style: dataCardTitleStyle.copyWith(color: Theme.of(context).primaryColor),
+                    // ),
+                    Text("Here you can find all the devices and services used in your study.",
                         style: aboutCardSubtitleStyle),
-                    SizedBox(height: 15),
                   ],
                 ),
               ),
@@ -65,12 +75,48 @@ class _DevicesPageState extends State<DevicesPage> {
                   print('>> $snapshot');
                   return CustomScrollView(
                     slivers: [
+                      SliverToBoxAdapter(
+                          child: Padding(
+                        padding: const EdgeInsets.only(left: 15, right: 15, top: 10),
+                        child: Text("Phones".toUpperCase(),
+                            style: dataCardTitleStyle.copyWith(color: Theme.of(context).primaryColor)),
+                      )),
                       SliverList(
                         delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
-                          //return Text(widget.model.devices[index].bluetoothDeviceName);
-                          return _buildDeviceCard(
-                              context, devices[index], setState, selected, selectedDevice);
-                        }, childCount: devices.length),
+                          return _buildSmartphoneDeviceCard(
+                              context, smartphoneDevice[index], setState, selected, selectedDevice);
+                        }, childCount: smartphoneDevice.length),
+                      ),
+                      SliverToBoxAdapter(
+                          child: Padding(
+                        padding: const EdgeInsets.only(left: 15, right: 15, top: 10),
+                        child: Text("Other Devices".toUpperCase(),
+                            style: dataCardTitleStyle.copyWith(color: Theme.of(context).primaryColor)),
+                      )),
+                      SliverList(
+                        delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
+                          return _buildPhysicalDeviceCard(
+                              context, physicalDevice[index], setState, selected, selectedDevice);
+                        }, childCount: physicalDevice.length),
+                      ),
+                      SliverToBoxAdapter(
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 15, right: 15, top: 10),
+                          child: Text("Services".toUpperCase(),
+                              style: dataCardTitleStyle.copyWith(color: Theme.of(context).primaryColor)),
+                        ),
+                      ),
+                      SliverGrid(
+                        delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
+                          return _buildOnlineDeviceCard(
+                              context, onlineService[index], setState, selected, selectedDevice);
+                        }, childCount: onlineService.length),
+                        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                          maxCrossAxisExtent: MediaQuery.of(context).size.width / 2,
+                          mainAxisSpacing: 5.0,
+                          crossAxisSpacing: 5.0,
+                          childAspectRatio: 2.0,
+                        ),
                       ),
                     ],
                   );
@@ -85,8 +131,8 @@ class _DevicesPageState extends State<DevicesPage> {
 Widget _showBateryPercentage(BuildContext context, int bateryLevel, {double scale = 1}) {
   double width = 25 * scale;
   double height = 12 * scale;
-  return Row(children: [
-    SizedBox(width: 8),
+  return Row(mainAxisSize: MainAxisSize.min, children: [
+    //SizedBox(width: 8),
     ClipRRect(
       borderRadius: BorderRadius.all(Radius.circular(2)),
       child: Container(
@@ -112,11 +158,52 @@ Widget _showBateryPercentage(BuildContext context, int bateryLevel, {double scal
       ),
     ),
     SizedBox(width: 4),
-    Text(bateryLevel.toString() + "%")
+    Text(
+      bateryLevel.toString() + "%",
+    )
   ]);
 }
 
-Widget _buildDeviceCard(BuildContext context, DeviceModel device, setState, selected, selectedDevice) {
+Widget _showSmartphoneInfo(BuildContext context) {
+  String smartphoneInfo = "";
+  smartphoneInfo += Platform.operatingSystem + ' ';
+  smartphoneInfo += Platform.operatingSystemVersion.split(' ')[1];
+  return Text(smartphoneInfo);
+}
+
+Widget _showAppPermissions(BuildContext context) {
+  Map<Permission, Icon> possiblePermisions = {
+    Permission.unknown: Icon(Icons.question_mark),
+    Permission.calendar: Icon(Icons.calendar_month),
+    Permission.camera: Icon(Icons.camera_alt),
+    Permission.contacts: Icon(Icons.quick_contacts_dialer),
+    Permission.location: Icon(Icons.location_on),
+    Permission.microphone: Icon(Icons.mic),
+    Permission.phone: Icon(Icons.phone),
+    Permission.photos: Icon(Icons.image),
+    Permission.reminders: Icon(Icons.task_alt),
+    Permission.sensors: Icon(Icons.image),
+    Permission.sms: Icon(Icons.sms),
+    Permission.storage: Icon(Icons.storage),
+    Permission.speech: Icon(Icons.record_voice_over),
+    Permission.locationAlways: Icon(Icons.location_on),
+    Permission.locationWhenInUse: Icon(Icons.location_on),
+    Permission.mediaLibrary: Icon(Icons.perm_media),
+  };
+
+  List<Icon> grantedPermissions = [];
+
+  possiblePermisions.forEach((permission, permissionIcon) {
+    permission.isGranted.then((value) {
+      if (value) grantedPermissions.add(permissionIcon);
+    });
+  });
+
+  return Row(children: [...grantedPermissions]);
+}
+
+Widget _buildPhysicalDeviceCard(
+    BuildContext context, DeviceModel device, setState, selected, selectedDevice) {
   return Center(
     child: Card(
       color: Theme.of(context).scaffoldBackgroundColor,
@@ -127,15 +214,17 @@ Widget _buildDeviceCard(BuildContext context, DeviceModel device, setState, sele
         stream: device.deviceEvents,
         initialData: DeviceStatus.unknown,
         builder: (context, AsyncSnapshot<DeviceStatus> snapshot) => Column(
-          mainAxisSize: MainAxisSize.min,
           children: [
             ListTile(
-                leading: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-                  device.icon!,
-                ]),
-                title: Text(device.name!),
+                leading: device.icon!,
+                title: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(height: 5),
+                      Text(device.name!),
+                    ]),
                 subtitle: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(device.id),
                     SizedBox(height: 1),
@@ -143,17 +232,99 @@ Widget _buildDeviceCard(BuildContext context, DeviceModel device, setState, sele
                       children: [
                         Text(device.statusString),
                         SizedBox(width: 8),
-                        _showBateryPercentage(context, device.batteryLevel!, scale: 0.9)
+                        _showBateryPercentage(context, device.batteryLevel!, scale: 0.9),
                       ],
                     ),
                   ],
                 ),
+                isThreeLine: true,
                 trailing: device.statusIcon,
                 onTap: () async {
                   //TODO: uncomment
                   // if (device.status != DeviceStatus.connected)
                   await _showConnectionDialog(context, 1, device, setState, selected, selectedDevice);
                 }),
+          ],
+        ),
+      ),
+    ),
+  );
+}
+
+Widget _buildSmartphoneDeviceCard(
+    BuildContext context, DeviceModel device, setState, selected, selectedDevice) {
+  return Center(
+    child: Card(
+      color: Theme.of(context).scaffoldBackgroundColor,
+      margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      elevation: 0,
+      child: StreamBuilder<DeviceStatus>(
+        stream: device.deviceEvents,
+        initialData: DeviceStatus.unknown,
+        builder: (context, AsyncSnapshot<DeviceStatus> snapshot) => Column(
+          children: [
+            ListTile(
+              leading: device.icon!,
+              title: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(height: 5),
+                    Text(device.name!),
+                  ]),
+              subtitle: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _showSmartphoneInfo(context),
+                  _showAppPermissions(context),
+                  SizedBox(height: 1),
+                  Row(
+                    children: [
+                      _showBateryPercentage(context, device.batteryLevel!, scale: 0.9),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
+}
+
+Widget _buildOnlineDeviceCard(BuildContext context, DeviceModel device, setState, selected, selectedDevice) {
+  return Center(
+    child: Card(
+      color: Theme.of(context).scaffoldBackgroundColor,
+      margin: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      elevation: 5,
+      child: StreamBuilder<DeviceStatus>(
+        stream: device.deviceEvents,
+        initialData: DeviceStatus.unknown,
+        builder: (context, AsyncSnapshot<DeviceStatus> snapshot) => Column(
+          //mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              title: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    SizedBox(height: 5),
+                    device.icon!,
+                    Text(device.name!),
+                  ]),
+              subtitle: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text(device.statusString),
+                ],
+              ),
+              onTap: () async {},
+            ),
           ],
         ),
       ),
@@ -228,9 +399,10 @@ Future _showConnectionDialog(
                                             selected: bluetoothDevice.key == selected,
                                             title: Text(bluetoothDevice.value.device.name),
                                             onTap: () {
-                                              device.id = bluetoothDevice.value.device.name;
+                                              // device.id = bluetoothDevice.value.device.name;
                                               selectedDevice = bluetoothDevice.value.device;
-
+                                              device.setId = bluetoothDevice.value.device.name;
+                                              print(device._id);
                                               // bluetoothDevice.value.device.connect();
 
                                               setState(() => selected = bluetoothDevice.key);

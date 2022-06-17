@@ -40,7 +40,7 @@ class _TaskListPageState extends State<TaskListPage> {
                             alignment: Alignment.centerLeft,
                             child: Text(
                               locale.translate('pages.task_list.title'),
-                              style: sectionTitleStyle.copyWith(color: Theme.of(context).primaryColor),
+                              style: dataCardTitleStyle.copyWith(color: Theme.of(context).primaryColor),
                             ),
                           ),
                         ),

@@ -30,9 +30,6 @@ class CarpAppBar extends StatelessWidget {
                         context,
                         PageRouteBuilder(
                           pageBuilder: (c, a1, a2) => ProfilePage(bloc.data.profilePageViewModel),
-                          transitionsBuilder: (c, anim, a2, child) =>
-                              FadeTransition(opacity: anim, child: child),
-                          transitionDuration: Duration(milliseconds: 200),
                         ),
                       );
                     },

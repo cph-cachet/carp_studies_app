@@ -32,8 +32,23 @@ class CarpBanner extends StatelessWidget {
               child: Stack(
                 alignment: AlignmentDirectional.bottomEnd,
                 children: [
-                  Text(locale.translate(studyPageModel.title),
-                      style: studyNameStyle.copyWith(color: Theme.of(context).primaryColor)),
+                  Stack(
+                    children: [
+                      Text(
+                        locale.translate(studyPageModel.title),
+                        style: studyNameStyle.copyWith(
+                            // color: Theme.of(context).primaryColor,
+                            foreground: Paint()
+                              ..style = PaintingStyle.stroke
+                              ..strokeWidth = 1
+                              ..color = Theme.of(context).accentColor),
+                      ),
+                      Text(
+                        locale.translate(studyPageModel.title),
+                        style: studyNameStyle.copyWith(color: Theme.of(context).primaryColor),
+                      ),
+                    ],
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     crossAxisAlignment: CrossAxisAlignment.end,
@@ -48,7 +63,7 @@ class CarpBanner extends StatelessWidget {
         ),
         background: ClipRRect(
           child: ImageFiltered(
-            imageFilter: ui.ImageFilter.blur(sigmaX: 3, sigmaY: 3),
+            imageFilter: ui.ImageFilter.blur(sigmaX: 1, sigmaY: 1),
             child: Image.asset('./assets/images/kids.png', fit: BoxFit.fitHeight),
           ),
         ),

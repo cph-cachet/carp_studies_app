@@ -78,7 +78,7 @@ class _DevicesPageState extends State<DevicesPage> {
                       SliverToBoxAdapter(
                           child: Padding(
                         padding: const EdgeInsets.only(left: 15, right: 15, top: 10),
-                        child: Text("Phones".toUpperCase(),
+                        child: Text("Phone".toUpperCase(),
                             style: dataCardTitleStyle.copyWith(color: Theme.of(context).primaryColor)),
                       )),
                       SliverList(
@@ -90,7 +90,7 @@ class _DevicesPageState extends State<DevicesPage> {
                       SliverToBoxAdapter(
                           child: Padding(
                         padding: const EdgeInsets.only(left: 15, right: 15, top: 10),
-                        child: Text("Other Devices".toUpperCase(),
+                        child: Text("Devices".toUpperCase(),
                             style: dataCardTitleStyle.copyWith(color: Theme.of(context).primaryColor)),
                       )),
                       SliverList(
@@ -108,13 +108,12 @@ class _DevicesPageState extends State<DevicesPage> {
                       ),
                       SliverGrid(
                         delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
-                          return _buildOnlineDeviceCard(
-                              context, onlineService[index], setState, selected, selectedDevice);
+                          return _buildOnlineDeviceCard(context, onlineService[index]);
                         }, childCount: onlineService.length),
                         gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                           maxCrossAxisExtent: MediaQuery.of(context).size.width / 2,
-                          mainAxisSpacing: 5.0,
-                          crossAxisSpacing: 5.0,
+                          mainAxisSpacing: 1,
+                          crossAxisSpacing: 1,
                           childAspectRatio: 2.0,
                         ),
                       ),
@@ -164,42 +163,21 @@ Widget _showBateryPercentage(BuildContext context, int bateryLevel, {double scal
   ]);
 }
 
-Widget _showSmartphoneInfo(BuildContext context) {
-  String smartphoneInfo = "";
-  smartphoneInfo += Platform.operatingSystem + ' ';
-  smartphoneInfo += Platform.operatingSystemVersion.split(' ')[1];
-  return Text(smartphoneInfo);
-}
+Future<String> _showSmartphoneInfo(BuildContext context) async {
+  String? smartphoneInfo;
 
-Widget _showAppPermissions(BuildContext context) {
-  Map<Permission, Icon> possiblePermisions = {
-    Permission.unknown: Icon(Icons.question_mark),
-    Permission.calendar: Icon(Icons.calendar_month),
-    Permission.camera: Icon(Icons.camera_alt),
-    Permission.contacts: Icon(Icons.quick_contacts_dialer),
-    Permission.location: Icon(Icons.location_on),
-    Permission.microphone: Icon(Icons.mic),
-    Permission.phone: Icon(Icons.phone),
-    Permission.photos: Icon(Icons.image),
-    Permission.reminders: Icon(Icons.task_alt),
-    Permission.sensors: Icon(Icons.image),
-    Permission.sms: Icon(Icons.sms),
-    Permission.storage: Icon(Icons.storage),
-    Permission.speech: Icon(Icons.record_voice_over),
-    Permission.locationAlways: Icon(Icons.location_on),
-    Permission.locationWhenInUse: Icon(Icons.location_on),
-    Permission.mediaLibrary: Icon(Icons.perm_media),
-  };
+  DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+  if (Platform.isAndroid) {
+    AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+    smartphoneInfo = androidInfo.model;
+  } else if (Platform.isIOS) {
+    IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
+    smartphoneInfo = iosInfo.name;
+  }
 
-  List<Icon> grantedPermissions = [];
-
-  possiblePermisions.forEach((permission, permissionIcon) {
-    permission.isGranted.then((value) {
-      if (value) grantedPermissions.add(permissionIcon);
-    });
-  });
-
-  return Row(children: [...grantedPermissions]);
+  // smartphoneInfo += Platform.operatingSystem + ' ';
+  // smartphoneInfo += Platform.operatingSystemVersion.split(' ')[1];
+  return smartphoneInfo!;
 }
 
 Widget _buildPhysicalDeviceCard(
@@ -216,7 +194,10 @@ Widget _buildPhysicalDeviceCard(
         builder: (context, AsyncSnapshot<DeviceStatus> snapshot) => Column(
           children: [
             ListTile(
-                leading: device.icon!,
+                leading: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [device.icon!],
+                ),
                 title: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -230,15 +211,18 @@ Widget _buildPhysicalDeviceCard(
                     SizedBox(height: 1),
                     Row(
                       children: [
-                        Text(device.statusString),
-                        SizedBox(width: 8),
+                        // Text(device.statusString),
+                        // SizedBox(width: 8),
                         _showBateryPercentage(context, device.batteryLevel!, scale: 0.9),
                       ],
                     ),
                   ],
                 ),
                 isThreeLine: true,
-                trailing: device.statusIcon,
+                trailing: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [device.statusIcon],
+                ),
                 onTap: () async {
                   //TODO: uncomment
                   // if (device.status != DeviceStatus.connected)
@@ -258,30 +242,32 @@ Widget _buildSmartphoneDeviceCard(
       color: Theme.of(context).scaffoldBackgroundColor,
       margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      elevation: 0,
-      child: StreamBuilder<DeviceStatus>(
-        stream: device.deviceEvents,
-        initialData: DeviceStatus.unknown,
-        builder: (context, AsyncSnapshot<DeviceStatus> snapshot) => Column(
+      elevation: 2,
+      child: FutureBuilder<Map<String, String?>>(
+        future: device.phoneInfo,
+        builder: (context, snapshot) => Column(
           children: [
             ListTile(
-              leading: device.icon!,
+              enableFeedback: false,
+              leading: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [device.icon!],
+              ),
               title: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SizedBox(height: 5),
-                    Text(device.name!),
+                    Text(snapshot.data!["name"]!),
                   ]),
-              subtitle: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              subtitle: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  _showSmartphoneInfo(context),
-                  _showAppPermissions(context),
-                  SizedBox(height: 1),
-                  Row(
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _showBateryPercentage(context, device.batteryLevel!, scale: 0.9),
+                      Text(snapshot.data!["model"]! + " - " + snapshot.data!["version"]!),
+                      SizedBox(height: 1),
                     ],
                   ),
                 ],
@@ -294,13 +280,13 @@ Widget _buildSmartphoneDeviceCard(
   );
 }
 
-Widget _buildOnlineDeviceCard(BuildContext context, DeviceModel device, setState, selected, selectedDevice) {
+Widget _buildOnlineDeviceCard(BuildContext context, DeviceModel device) {
   return Center(
     child: Card(
       color: Theme.of(context).scaffoldBackgroundColor,
-      margin: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+      margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      elevation: 5,
+      elevation: 2,
       child: StreamBuilder<DeviceStatus>(
         stream: device.deviceEvents,
         initialData: DeviceStatus.unknown,
@@ -308,11 +294,11 @@ Widget _buildOnlineDeviceCard(BuildContext context, DeviceModel device, setState
           //mainAxisSize: MainAxisSize.min,
           children: [
             ListTile(
+              enableFeedback: false,
               title: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    SizedBox(height: 5),
                     device.icon!,
                     Text(device.name!),
                   ]),
@@ -323,7 +309,6 @@ Widget _buildOnlineDeviceCard(BuildContext context, DeviceModel device, setState
                   Text(device.statusString),
                 ],
               ),
-              onTap: () async {},
             ),
           ],
         ),

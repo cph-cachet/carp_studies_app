@@ -243,38 +243,43 @@ Widget _buildSmartphoneDeviceCard(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       elevation: 2,
       child: FutureBuilder<Map<String, String?>>(
-        future: device.phoneInfo,
-        builder: (context, snapshot) => Column(
-          children: [
-            ListTile(
-              enableFeedback: false,
-              leading: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [device.icon!],
-              ),
-              title: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(height: 5),
-                    Text(snapshot.data!["name"]!),
-                  ]),
-              subtitle: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          future: device.phoneInfo,
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) {
+              return CircularProgressIndicator();
+            } else {
+              return Column(
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(snapshot.data!["model"]! + " - " + snapshot.data!["version"]!),
-                      SizedBox(height: 1),
-                    ],
+                  ListTile(
+                    enableFeedback: false,
+                    leading: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [device.icon!],
+                    ),
+                    title: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(height: 5),
+                          Text(snapshot.data!["name"]!),
+                        ]),
+                    subtitle: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(snapshot.data!["model"]! + " - " + snapshot.data!["version"]!),
+                            SizedBox(height: 1),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ],
-              ),
-            ),
-          ],
-        ),
-      ),
+              );
+            }
+          }),
     ),
   );
 }

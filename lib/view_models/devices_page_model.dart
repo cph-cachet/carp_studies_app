@@ -118,7 +118,7 @@ class DeviceModel {
       };
 
   static Map<DeviceStatus, dynamic> get deviceStatusIcon => {
-        DeviceStatus.connected: Text("connected", style: aboutCardTitleStyle.copyWith(color: CACHET.GREEN_1)),
+        DeviceStatus.connected: Icon(Icons.sensors, color: CACHET.GREEN_1),
         DeviceStatus.disconnected: Text("CONNECT",
             style: aboutCardTitleStyle.copyWith(color: CACHET.BLUE_1)), // If its disconnected, ask to pair
         DeviceStatus.paired: Text("CONNECT",

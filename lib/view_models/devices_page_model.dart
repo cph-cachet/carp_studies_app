@@ -16,6 +16,8 @@ class DevicesPageViewModel extends ViewModel {
 
 class DeviceModel {
   DeviceManager deviceManager;
+  DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+
   //late ESenseDevice eSenseDevice;
 
   String _id = '';
@@ -27,7 +29,7 @@ class DeviceModel {
   Stream<DeviceStatus> get deviceEvents => deviceManager.statusEvents;
 
   /// The device ids
-  String get id => deviceTypeName[type!] == 'Phone' ? deviceManager.id : _id;
+  String get id => deviceManager.type == Smartphone.DEVICE_TYPE ? deviceManager.id : _id;
 
   /// A printer-friendly name for this device.
   String? get name => deviceTypeName[type!];
@@ -49,7 +51,6 @@ class DeviceModel {
   dynamic get statusIcon => deviceStatusIcon[status];
 
   String? get connectionInstructions => deviceConnectionInstructions[type!];
-
   // /// The icon for the runtime state of this device.
   // Icon? get stateIcon => deviceStateIcon[status];
 
@@ -57,6 +58,38 @@ class DeviceModel {
     _id = newId;
     // var eSenseDevice = bloc.deployment.connectedDevices.firstWhere((device) => device is ESenseDevice);
     // eSenseDevice.deviceName = newId;
+  }
+
+  // Future<dynamic> get platformDeviceInfo async {
+  //   if (Platform.isAndroid) {
+  //     return await deviceInfo.androidInfo;
+  //   } else if (Platform.isIOS) {
+  //     return deviceInfo.iosInfo;
+  //   } else
+  //     return null;
+  // }
+
+  Future<Map<String, String?>> get phoneInfo async {
+    if (Platform.isAndroid) {
+      AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+      return {
+        "name": androidInfo.host,
+        "model": androidInfo.model,
+        "version": androidInfo.version.baseOS,
+      };
+    } else if (Platform.isIOS) {
+      IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
+      return {
+        "name": iosInfo.name,
+        "model": iosInfo.model,
+        "version": iosInfo.systemName! + " " + iosInfo.systemVersion!,
+      };
+    } else
+      return {
+        "name": null,
+        "model": null,
+        "version": null,
+      };
   }
 
   DeviceModel(this.deviceManager) : super();
@@ -77,20 +110,22 @@ class DeviceModel {
         LocationService.DEVICE_TYPE: 'Location service',
       };
   static Map<String, Icon> get deviceTypeIcon => {
-        Smartphone.DEVICE_TYPE: Icon(Icons.phone_android),
-        ESenseDevice.DEVICE_TYPE: Icon(Icons.headphones),
+        Smartphone.DEVICE_TYPE: Icon(Icons.phone_android, size: 30),
+        ESenseDevice.DEVICE_TYPE: Icon(Icons.headphones, size: 30),
         WeatherService.DEVICE_TYPE: Icon(Icons.wb_sunny_rounded),
         AirQualityService.DEVICE_TYPE: Icon(Icons.air),
         LocationService.DEVICE_TYPE: Icon(Icons.location_on),
       };
 
   static Map<DeviceStatus, dynamic> get deviceStatusIcon => {
-        DeviceStatus.connected: Icon(Icons.done, color: CACHET.GREEN_1),
-        DeviceStatus.disconnected: Text("PAIR"), // If its disconnected, ask to pair
-        DeviceStatus.paired: Text("CONNECT"), // If its paired, ask to connect
+        DeviceStatus.connected: Text("CONNECTED", style: aboutCardTitleStyle.copyWith(color: CACHET.GREEN_1)),
+        DeviceStatus.disconnected: Text("CONNECT",
+            style: aboutCardTitleStyle.copyWith(color: CACHET.BLUE_1)), // If its disconnected, ask to pair
+        DeviceStatus.paired: Text("CONNECT",
+            style: aboutCardTitleStyle.copyWith(color: CACHET.BLUE_1)), // If its paired, ask to connect
         DeviceStatus.error: Icon(Icons.error_outline, color: CACHET.RED_1),
         // DeviceStatus.sampling: Icon(Icons.save_alt, color: CACHET.BLUE_1),
-        DeviceStatus.initialized: Text("READY"),
+        DeviceStatus.initialized: Text("PAIR", style: aboutCardTitleStyle.copyWith(color: CACHET.BLUE_1)),
         DeviceStatus.unknown: Icon(Icons.error_outline, color: CACHET.RED_1),
       };
 

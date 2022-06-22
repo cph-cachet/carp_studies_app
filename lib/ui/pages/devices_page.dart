@@ -224,9 +224,8 @@ Widget _buildPhysicalDeviceCard(
                   children: [device.statusIcon],
                 ),
                 onTap: () async {
-                  //TODO: uncomment
-                  // if (device.status != DeviceStatus.connected)
-                  await _showConnectionDialog(context, 1, device, setState, selected, selectedDevice);
+                  if (device.status != DeviceStatus.connected)
+                    await _showConnectionDialog(context, 1, device, setState, selected, selectedDevice);
                 }),
           ],
         ),

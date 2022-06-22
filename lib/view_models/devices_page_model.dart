@@ -118,13 +118,12 @@ class DeviceModel {
       };
 
   static Map<DeviceStatus, dynamic> get deviceStatusIcon => {
-        DeviceStatus.connected: Text("CONNECTED", style: aboutCardTitleStyle.copyWith(color: CACHET.GREEN_1)),
+        DeviceStatus.connected: Text("connected", style: aboutCardTitleStyle.copyWith(color: CACHET.GREEN_1)),
         DeviceStatus.disconnected: Text("CONNECT",
             style: aboutCardTitleStyle.copyWith(color: CACHET.BLUE_1)), // If its disconnected, ask to pair
         DeviceStatus.paired: Text("CONNECT",
             style: aboutCardTitleStyle.copyWith(color: CACHET.BLUE_1)), // If its paired, ask to connect
         DeviceStatus.error: Icon(Icons.error_outline, color: CACHET.RED_1),
-        // DeviceStatus.sampling: Icon(Icons.save_alt, color: CACHET.BLUE_1),
         DeviceStatus.initialized: Text("PAIR", style: aboutCardTitleStyle.copyWith(color: CACHET.BLUE_1)),
         DeviceStatus.unknown: Icon(Icons.error_outline, color: CACHET.RED_1),
       };

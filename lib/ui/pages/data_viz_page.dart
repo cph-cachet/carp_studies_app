@@ -69,10 +69,15 @@ class DataVisualizationPage extends StatelessWidget {
     // check which measures are in the study
     if (bloc.hasMeasure(SurveySamplingPackage.SURVEY))
       widgets.add(TaskCardWidget(model.surveysCardDataModel));
-    if (bloc.hasMeasure(AudioVideoSamplingPackage.AUDIO))
-      widgets.add(TaskCardWidget(model.audioCardDataModel));
-    if (bloc.hasMeasure(AudioVideoSamplingPackage.VIDEO)) // TODO ADD PHOTO
-      widgets.add(TaskCardWidget(model.mediaCardDataModel));
+
+    List<TaskCardViewModel> mediaModelsList = [];
+
+    // check what media types are in the study and add them to de media card
+    if (bloc.hasMeasure(MediaSamplingPackage.AUDIO)) mediaModelsList.add(model.audioCardDataModel);
+    if (bloc.hasMeasure(MediaSamplingPackage.VIDEO)) mediaModelsList.add(model.videoCardDataModel);
+    if (bloc.hasMeasure(MediaSamplingPackage.IMAGE)) mediaModelsList.add(model.imageCardDataModel);
+    if (mediaModelsList.isNotEmpty) widgets.add(MediaCardWidget(mediaModelsList));
+
     if (bloc.hasMeasure(SensorSamplingPackage.PEDOMETER))
       widgets.add(StepsOuterStatefulWidget(model.stepsCardDataModel));
     if (bloc.hasMeasure(ContextSamplingPackage.MOBILITY))

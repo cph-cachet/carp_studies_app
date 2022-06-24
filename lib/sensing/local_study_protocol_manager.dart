@@ -7,6 +7,7 @@ part of carp_study_app;
 class LocalStudyProtocolManager implements StudyProtocolManager {
   SmartphoneStudyProtocol? _protocol;
   static const String VIDEO_TYPE = 'video';
+  static const String IMAGE_TYPE = 'image';
 
   Future initialize() async {}
 
@@ -235,7 +236,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
             minutesToComplete: 5,
             notification: true,
           )..measures.add(CAMSMeasure(
-              type: AudioVideoSamplingPackage.AUDIO,
+              type: MediaSamplingPackage.AUDIO,
               name: "audio.exposure.name",
             )),
           phone);
@@ -249,7 +250,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
             minutesToComplete: 5,
             notification: true,
           )..measures.add(CAMSMeasure(
-              type: AudioVideoSamplingPackage.AUDIO,
+              type: MediaSamplingPackage.AUDIO,
               name: "audio.biosensor.name",
             )),
           phone);
@@ -396,7 +397,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
             minutesToComplete: 5,
             notification: true,
           )..measures.add(CAMSMeasure(
-              type: AudioVideoSamplingPackage.AUDIO,
+              type: MediaSamplingPackage.AUDIO,
               name: "audio.exposure.name",
             )),
           phone);
@@ -418,7 +419,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
             minutesToComplete: 5,
             notification: true,
           )..measures.add(CAMSMeasure(
-              type: AudioVideoSamplingPackage.AUDIO,
+              type: MediaSamplingPackage.AUDIO,
               name: "audio.biosensor.name",
             )),
           phone);
@@ -572,7 +573,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
             minutesToComplete: 5,
             notification: true,
           )..measures.add(CAMSMeasure(
-              type: AudioVideoSamplingPackage.AUDIO,
+              type: MediaSamplingPackage.AUDIO,
               name: "audio.biosensor.name",
             )),
           phone);
@@ -650,7 +651,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
             minutesToComplete: 5,
             notification: true,
           )..measures.add(CAMSMeasure(
-              type: AudioVideoSamplingPackage.AUDIO,
+              type: MediaSamplingPackage.AUDIO,
               name: "audio.biosensor.name",
             )),
           phone);
@@ -800,7 +801,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
             minutesToComplete: 5,
             notification: true,
           )..measures.add(CAMSMeasure(
-              type: AudioVideoSamplingPackage.AUDIO,
+              type: MediaSamplingPackage.AUDIO,
               name: "audio.biosensor.name",
             )),
           phone);
@@ -836,7 +837,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
       _protocol!.addTriggeredTask(
           ImmediateTrigger(),
           AutomaticTask()
-            ..measures = SamplingPackageRegistry().common().getMeasureList(
+            ..measures = SamplingPackageRegistry().common.getMeasureList(
               types: [
                 // SensorSamplingPackage.LIGHT,
                 SensorSamplingPackage.PEDOMETER,
@@ -855,7 +856,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
             duration: const Duration(seconds: 2),
           ),
           AutomaticTask()
-            ..measures = SamplingPackageRegistry().common().getMeasureList(
+            ..measures = SamplingPackageRegistry().common.getMeasureList(
               types: [
                 ContextSamplingPackage.LOCATION,
                 ContextSamplingPackage.WEATHER,
@@ -868,7 +869,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
       _protocol!.addTriggeredTask(
           ImmediateTrigger(),
           AutomaticTask()
-            ..measures = SamplingPackageRegistry().common().getMeasureList(
+            ..measures = SamplingPackageRegistry().common.getMeasureList(
               types: [
                 // ContextSamplingPackage.GEOLOCATION,
                 ContextSamplingPackage.ACTIVITY,
@@ -885,7 +886,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
             title: "Weather & Air Quality",
             description: "Collect local weather and air quality",
             notification: true,
-          )..measures = SamplingPackageRegistry().common().getMeasureList(
+          )..measures = SamplingPackageRegistry().common.getMeasureList(
               types: [
                 ContextSamplingPackage.WEATHER,
                 ContextSamplingPackage.AIR_QUALITY,
@@ -910,7 +911,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
               enabled: true,
               surveyTask: surveys.demographics.survey,
             ))
-            ..measures.add(SamplingPackageRegistry().common().measures[ContextSamplingPackage.LOCATION]!),
+            ..measures.add(SamplingPackageRegistry().common.measures[ContextSamplingPackage.LOCATION]!),
           phone);
 
       // collect symptoms on a daily basis - notify the user
@@ -933,7 +934,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
               enabled: true,
               surveyTask: surveys.symptoms.survey,
             ))
-            ..measures.add(SamplingPackageRegistry().common().measures[ContextSamplingPackage.LOCATION]!),
+            ..measures.add(SamplingPackageRegistry().common.measures[ContextSamplingPackage.LOCATION]!),
           phone);
 
       // collect a coughing sample on a daily basis
@@ -952,7 +953,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
       //       minutesToComplete: 1,
       //     )
       //       ..measures.add(CAMSMeasure(
-      //         type: AudioVideoSamplingPackage.AUDIO,
+      //         type: MediaSamplingPackage.AUDIO,
       //         name: "Coughing",
       //       ))
       //       ..measures.add(SamplingPackageRegistry()
@@ -983,10 +984,29 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
             minutesToComplete: 3,
           )
             ..measures.add(CAMSMeasure(
-              type: AudioVideoSamplingPackage.AUDIO,
+              type: MediaSamplingPackage.AUDIO,
               name: "Reading",
             ))
-            ..measures.add(SamplingPackageRegistry().common().measures[ContextSamplingPackage.LOCATION]!),
+            ..measures.add(SamplingPackageRegistry().common.measures[ContextSamplingPackage.LOCATION]!),
+          phone);
+
+      _protocol!.addTriggeredTask(
+          PeriodicTrigger(
+            period: Duration(days: 1),
+            duration: const Duration(seconds: 2),
+          ),
+          AppTask(
+            type: AudioUserTask.AUDIO_TYPE,
+            title: "Coughing",
+            description: 'In this small exercise we would like to collect sound samples of coughing.',
+            instructions: 'Please cough 5 times.',
+            minutesToComplete: 1,
+          )
+            ..measures.add(CAMSMeasure(
+              type: MediaSamplingPackage.AUDIO,
+              name: "Coughing",
+            ))
+            ..measures.add(SamplingPackageRegistry().common.measures[ContextSamplingPackage.LOCATION]!),
           phone);
 
       // collect a video
@@ -1017,7 +1037,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
       // collect location, and local weather and air quality
       _protocol!.addTriggeredTask(
           ConditionalSamplingEventTrigger(
-            measureType: AudioVideoSamplingPackage.AUDIO,
+            measureType: MediaSamplingPackage.AUDIO,
             resumeCondition: (DataPoint dataPoint) => true,
             pauseCondition: (DataPoint dataPoint) => true,
           ),
@@ -1025,7 +1045,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
             type: SensingUserTask.ONE_TIME_SENSING_TYPE,
             title: "Location, Weather & Air Quality",
             description: "Collect location, weather and air quality",
-          )..measures = SamplingPackageRegistry().common().getMeasureList(
+          )..measures = SamplingPackageRegistry().common.getMeasureList(
               types: [
                 ContextSamplingPackage.LOCATION,
                 ContextSamplingPackage.WEATHER,
@@ -1041,15 +1061,74 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
             duration: const Duration(seconds: 2),
           ),
           AppTask(
+            type: IMAGE_TYPE,
+            title: "Scars",
+            description: "Take a picture of your scars",
+            instructions: "Please take a picture of the scars in your skin",
+            minutesToComplete: 3,
+            notification: true,
+          )..measures.add(CAMSMeasure(
+              type: MediaSamplingPackage.IMAGE,
+              name: "Image",
+            )),
+          phone);
+
+      // video
+      _protocol!.addTriggeredTask(
+          RandomRecurrentTrigger(
+            minNumberOfTriggers: 0,
+            maxNumberOfTriggers: 4,
+            startTime: Time(hour: 14, minute: 56),
+            endTime: Time(hour: 15, minute: 05),
+            //period: const Duration(minutes: 1),
+            duration: const Duration(seconds: 2),
+          ),
+          AppTask(
             type: VIDEO_TYPE,
-            title: "Video",
+            title: "Surrounding",
             description: "Take a video of your surroundings",
             instructions: "Please take a video of whatever is next to you",
             minutesToComplete: 3,
             notification: true,
           )..measures.add(CAMSMeasure(
-              type: AudioVideoSamplingPackage.VIDEO,
+              type: MediaSamplingPackage.VIDEO,
               name: "Recording",
+            )),
+          phone);
+      _protocol!.addTriggeredTask(
+          PeriodicTrigger(
+            period: const Duration(minutes: 2),
+            duration: const Duration(seconds: 2),
+          ),
+          AppTask(
+            type: SurveyUserTask.SURVEY_TYPE,
+            title: surveys.control.title,
+            description: surveys.control.description,
+            minutesToComplete: surveys.control.minutesToComplete,
+            expire: surveys.control.expire,
+          )..measures.add(RPTaskMeasure(
+              type: SurveySamplingPackage.SURVEY,
+              name: surveys.control.title,
+              enabled: true,
+              surveyTask: surveys.control.survey,
+            )),
+          phone);
+      _protocol!.addTriggeredTask(
+          PeriodicTrigger(
+            period: const Duration(minutes: 1),
+            duration: const Duration(seconds: 2),
+          ),
+          AppTask(
+            type: SurveyUserTask.SURVEY_TYPE,
+            title: surveys.ecological.title,
+            description: surveys.ecological.description,
+            minutesToComplete: surveys.ecological.minutesToComplete,
+            expire: surveys.ecological.expire,
+          )..measures.add(RPTaskMeasure(
+              type: SurveySamplingPackage.SURVEY,
+              name: surveys.ecological.title,
+              enabled: true,
+              surveyTask: surveys.ecological.survey,
             )),
           phone);
     }

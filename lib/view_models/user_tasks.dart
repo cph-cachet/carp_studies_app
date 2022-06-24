@@ -5,6 +5,7 @@ class AppUserTaskFactory implements UserTaskFactory {
   List<String> types = [
     AudioUserTask.AUDIO_TYPE,
     VideoUserTask.VIDEO_TYPE,
+    VideoUserTask.IMAGE_TYPE,
   ];
 
   UserTask create(AppTaskExecutor executor) {
@@ -12,6 +13,8 @@ class AppUserTaskFactory implements UserTaskFactory {
       case AudioUserTask.AUDIO_TYPE:
         return AudioUserTask(executor);
       case VideoUserTask.VIDEO_TYPE:
+        return VideoUserTask(executor);
+      case VideoUserTask.IMAGE_TYPE:
         return VideoUserTask(executor);
       default:
         return SensingUserTask(executor);
@@ -81,6 +84,7 @@ class AudioUserTask extends UserTask {
 /// When started, creates a [CameraTaskPage] and shows it to the user.
 class VideoUserTask extends UserTask {
   static const String VIDEO_TYPE = 'video';
+  static const String IMAGE_TYPE = 'image';
 
   VideoUserTask(AppTaskExecutor executor) : super(executor);
 
@@ -88,20 +92,20 @@ class VideoUserTask extends UserTask {
     final cameras = await availableCameras();
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => CameraTaskPage(videoUserTask: this, cameras: cameras)),
+      MaterialPageRoute(builder: (context) => CameraTaskPage(mediaUserTask: this, cameras: cameras)),
     );
   }
 
   DateTime? _startRecordingTime, _endRecordingTime;
   XFile? file;
-  VideoType _videoType = VideoType.image;
+  MediaType _mediaType = MediaType.image;
 
   /// Callback when a picture is captured.
   void onPictureCapture(XFile image) {
     onRecordStart();
-
+    _mediaType = MediaType.image;
     // now wait for 2 secs to finish up any other sensing in the task
-    Timer(const Duration(seconds: 2), () => onRecordStop(image, videoType: VideoType.image));
+    Timer(const Duration(seconds: 2), () => onRecordStop(image, mediaType: MediaType.image));
   }
 
   /// Callback when video recording is started.
@@ -112,10 +116,10 @@ class VideoUserTask extends UserTask {
   }
 
   /// Callback when video recording is stopped.
-  void onRecordStop(XFile video, {VideoType videoType = VideoType.video}) {
+  void onRecordStop(XFile media, {MediaType mediaType = MediaType.video}) {
     executor.pause();
-    file = video;
-    _videoType = videoType;
+    file = media;
+    _mediaType = mediaType;
     state = UserTaskState.done;
   }
 
@@ -124,11 +128,11 @@ class VideoUserTask extends UserTask {
   void onSave() {
     if (file != null) {
       // create the datum directly here...
-      VideoDatum datum = VideoDatum(
+      MediaDatum datum = MediaDatum(
           filename: file!.path,
           startRecordingTime: _startRecordingTime!,
           endRecordingTime: _endRecordingTime,
-          videoType: _videoType)
+          mediaType: _mediaType)
         ..filename = file!.path.split("/").last;
 
       // ... and add it to the sensing controller
@@ -136,3 +140,61 @@ class VideoUserTask extends UserTask {
     }
   }
 }
+
+// class ImageUserTask extends UserTask {
+//   static const String IMAGE_TYPE = 'image';
+
+//   ImageUserTask(AppTaskExecutor executor) : super(executor);
+
+//   void onStart(BuildContext context) async {
+//     final cameras = await availableCameras();
+//     Navigator.push(
+//       context,
+//       MaterialPageRoute(builder: (context) => CameraTaskPage(mediaUserTask: this, cameras: cameras)),
+//     );
+//   }
+
+//   DateTime? _startRecordingTime, _endRecordingTime;
+//   XFile? file;
+//   MediaType _mediaType = MediaType.image;
+
+//   /// Callback when a picture is captured.
+//   void onPictureCapture(XFile image) {
+//     onRecordStart();
+
+//     // now wait for 2 secs to finish up any other sensing in the task
+//     Timer(const Duration(seconds: 2), () => onRecordStop(image, mediaType: MediaType.image));
+//   }
+
+//   /// Callback when video recording is started.
+//   void onRecordStart() {
+//     _startRecordingTime = DateTime.now();
+//     state = UserTaskState.started;
+//     executor.resume();
+//   }
+
+//   /// Callback when video recording is stopped.
+//   void onRecordStop(XFile video, {MediaType mediaType = MediaType.video}) {
+//     executor.pause();
+//     file = video;
+//     _mediaType = mediaType;
+//     state = UserTaskState.done;
+//   }
+
+//   /// Callback when the recorded image/video is to be "saved", i.e. committed to
+//   /// data stream.
+//   void onSave() {
+//     if (file != null) {
+//       // create the datum directly here...
+//       MediaDatum datum = MediaDatum(
+//           filename: file!.path,
+//           startRecordingTime: _startRecordingTime!,
+//           endRecordingTime: _endRecordingTime,
+//           mediaType: _mediaType)
+//         ..filename = file!.path.split("/").last;
+
+//       // ... and add it to the sensing controller
+//       bloc.addDatum(datum);
+//     }
+//   }
+// }

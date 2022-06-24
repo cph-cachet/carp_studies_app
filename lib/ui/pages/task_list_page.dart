@@ -32,8 +32,7 @@ class _TaskListPageState extends State<TaskListPage> {
                   return CustomScrollView(
                     slivers: [
                       //CarpBanner(),
-                      SliverToBoxAdapter(
-                          child: ScoreboardCardWidget(widget.model)),
+                      SliverToBoxAdapter(child: ScoreboardCardWidget(widget.model)),
                       SliverToBoxAdapter(
                         child: Padding(
                           padding: EdgeInsets.all(15),
@@ -41,8 +40,7 @@ class _TaskListPageState extends State<TaskListPage> {
                             alignment: Alignment.centerLeft,
                             child: Text(
                               locale.translate('pages.task_list.title'),
-                              style: sectionTitleStyle.copyWith(
-                                  color: Theme.of(context).primaryColor),
+                              style: sectionTitleStyle.copyWith(color: Theme.of(context).primaryColor),
                             ),
                           ),
                         ),
@@ -51,34 +49,25 @@ class _TaskListPageState extends State<TaskListPage> {
                       //   child: SizedBox(height: 15),
                       // ),
                       SliverList(
-                        delegate: SliverChildBuilderDelegate(
-                            (BuildContext context, int index) {
-                          if (widget.model.tasks[index].state !=
-                              UserTaskState.done)
-                            return _buildTaskCard(
-                                context, widget.model.tasks[index]);
+                        delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
+                          if (widget.model.tasks[index].state != UserTaskState.done)
+                            return _buildTaskCard(context, widget.model.tasks[index]);
                           else
                             return SizedBox.shrink();
                         }, childCount: widget.model.tasks.length),
                       ),
                       SliverList(
-                        delegate: SliverChildBuilderDelegate(
-                            (BuildContext context, int index) {
-                          if (widget.model.tasks[index].state ==
-                              UserTaskState.done)
-                            return _buildDoneTaskCard(
-                                context, widget.model.tasks[index]);
+                        delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
+                          if (widget.model.tasks[index].state == UserTaskState.done)
+                            return _buildDoneTaskCard(context, widget.model.tasks[index]);
                           else
                             return SizedBox.shrink();
                         }, childCount: widget.model.tasks.length),
                       ),
                       SliverList(
-                        delegate: SliverChildBuilderDelegate(
-                            (BuildContext context, int index) {
-                          if (widget.model.tasks[index].state ==
-                              UserTaskState.expired)
-                            return _buildExpiredTaskCard(
-                                context, widget.model.tasks[index]);
+                        delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
+                          if (widget.model.tasks[index].state == UserTaskState.expired)
+                            return _buildExpiredTaskCard(context, widget.model.tasks[index]);
                           else
                             return SizedBox.shrink();
                         }, childCount: widget.model.tasks.length),
@@ -108,15 +97,13 @@ class _TaskListPageState extends State<TaskListPage> {
             child: _taskTypeIcon(userTask),
           ),
           title: Text(locale.translate(userTask.title),
-              style: aboutCardTitleStyle.copyWith(
-                  color: Theme.of(context).primaryColor)),
+              style: aboutCardTitleStyle.copyWith(color: Theme.of(context).primaryColor)),
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: 5),
               Text(_subtitle(userTask),
-                  style: aboutCardSubtitleStyle.copyWith(
-                      color: Theme.of(context).primaryColor)),
+                  style: aboutCardSubtitleStyle.copyWith(color: Theme.of(context).primaryColor)),
               SizedBox(height: 5),
               Text(locale.translate(userTask.description)),
             ],
@@ -132,26 +119,23 @@ class _TaskListPageState extends State<TaskListPage> {
   /// Get an icon for the [userTask] based on its type. If there is no icon for
   /// the type, use the 1st measure in the task as an icon. If there is no
   /// icon for the measure, use a default icon.
-  Icon _taskTypeIcon(UserTask userTask) =>
-      (taskTypeIcons[userTask.type] != null)
-          ? taskTypeIcons[userTask.type] as Icon
-          : (measureTypeIcons[userTask.task.measures[0].type] != null)
-              ? measureTypeIcons[userTask.task.measures[0].type] as Icon
-              : Icon(
-                  Icons.description_outlined,
-                  color: CACHET.ORANGE,
-                );
+  Icon _taskTypeIcon(UserTask userTask) => (taskTypeIcons[userTask.type] != null)
+      ? taskTypeIcons[userTask.type] as Icon
+      : (measureTypeIcons[userTask.task.measures[0].type] != null)
+          ? measureTypeIcons[userTask.task.measures[0].type] as Icon
+          : Icon(
+              Icons.description_outlined,
+              color: CACHET.ORANGE,
+            );
 
   String _subtitle(UserTask userTask) {
     RPLocalizations locale = RPLocalizations.of(context)!;
     String str = (userTask.task.minutesToComplete != null)
-        ? '${userTask.task.minutesToComplete} ' +
-            locale.translate('pages.task_list.task.time_to_complete')
+        ? '${userTask.task.minutesToComplete} ' + locale.translate('pages.task_list.task.time_to_complete')
         : locale.translate('pages.task_list.task.auto_complete');
 
     str += (userTask.expiresIn != null)
-        ? ' - ${userTask.expiresIn!.inDays + 1} ' +
-            locale.translate('pages.task_list.task.days_remaining')
+        ? ' - ${userTask.expiresIn!.inDays + 1} ' + locale.translate('pages.task_list.task.days_remaining')
         : '';
 
     str = (str.isEmpty) ? locale.translate(userTask.description) : str;
@@ -167,8 +151,7 @@ class _TaskListPageState extends State<TaskListPage> {
         opacity: 0.6,
         child: Card(
           margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           elevation: 3,
           child: ListTile(
             leading: CircleAvatar(
@@ -176,8 +159,7 @@ class _TaskListPageState extends State<TaskListPage> {
               child: Icon(Icons.check_circle_outlined, color: CACHET.GREEN_1),
             ),
             title: Text(locale.translate(userTask.title),
-                style: aboutCardTitleStyle.copyWith(
-                    color: Theme.of(context).primaryColor)),
+                style: aboutCardTitleStyle.copyWith(color: Theme.of(context).primaryColor)),
           ),
         ),
       ),
@@ -192,8 +174,7 @@ class _TaskListPageState extends State<TaskListPage> {
         opacity: 0.6,
         child: Card(
           margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           elevation: 3,
           child: ListTile(
             leading: CircleAvatar(
@@ -201,8 +182,7 @@ class _TaskListPageState extends State<TaskListPage> {
               child: Icon(Icons.unpublished_outlined, color: CACHET.GREY_1),
             ),
             title: Text(locale.translate(userTask.title),
-                style: aboutCardTitleStyle.copyWith(
-                    color: Theme.of(context).primaryColor)),
+                style: aboutCardTitleStyle.copyWith(color: Theme.of(context).primaryColor)),
           ),
         ),
       ),
@@ -257,8 +237,12 @@ class _TaskListPageState extends State<TaskListPage> {
       color: CACHET.GREEN,
     ),
     VideoUserTask.VIDEO_TYPE: Icon(
-      Icons.camera_alt,
+      Icons.videocam,
       color: CACHET.BLUE_1,
+    ),
+    VideoUserTask.IMAGE_TYPE: Icon(
+      Icons.camera_alt,
+      color: CACHET.YELLOW,
     ),
     SensingUserTask.SENSING_TYPE: Icon(
       Icons.settings_input_antenna,
@@ -305,15 +289,19 @@ class _TaskListPageState extends State<TaskListPage> {
     //     Icon(Icons.wifi, size: 50, color: CACHET.LIGHT_PURPLE),
     // ConnectivitySamplingPackage.CONNECTIVITY:
     //     Icon(Icons.cast_connected, size: 50, color: CACHET.GREEN),
-    AudioVideoSamplingPackage.AUDIO: Icon(
+    MediaSamplingPackage.AUDIO: Icon(
       Icons.mic,
       color: CACHET.ORANGE,
     ),
-    AudioVideoSamplingPackage.NOISE: Icon(
+    MediaSamplingPackage.NOISE: Icon(
       Icons.hearing,
       color: CACHET.YELLOW,
     ),
-    AudioVideoSamplingPackage.VIDEO: Icon(
+    MediaSamplingPackage.VIDEO: Icon(
+      Icons.videocam,
+      color: CACHET.YELLOW,
+    ),
+    MediaSamplingPackage.IMAGE: Icon(
       Icons.camera_alt,
       color: CACHET.YELLOW,
     ),

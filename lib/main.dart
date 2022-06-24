@@ -27,7 +27,7 @@ import 'package:flutter_activity_recognition/flutter_activity_recognition.dart';
 // the CARP packages
 import 'package:carp_core/carp_core.dart';
 import 'package:carp_mobile_sensing/carp_mobile_sensing.dart';
-import 'package:carp_audio_package/audio.dart';
+import 'package:carp_audio_package/media.dart';
 //import 'package:carp_health_package/health_package.dart';
 //import 'package:carp_connectivity_package/connectivity.dart';
 //import 'package:carp_communication_package/communication.dart';
@@ -97,6 +97,7 @@ part 'ui/cards/activity_card.dart';
 part 'ui/cards/mobility_card.dart';
 part 'ui/cards/measures_card.dart';
 part 'ui/cards/task_card.dart';
+part 'ui/cards/media_card.dart';
 part 'ui/cards/scoreboard_card.dart';
 part 'ui/cards/study_progress_card.dart';
 

@@ -26,8 +26,8 @@ class DataVisualizationPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        '${locale.translate('pages.data_viz.hello')} ${bloc.friendlyUsername}',
-                        style: sectionTitleStyle.copyWith(color: Theme.of(context).primaryColor),
+                        '${locale.translate('pages.data_viz.hello')} ${bloc.friendlyUsername}'.toUpperCase(),
+                        style: dataCardTitleStyle.copyWith(color: Theme.of(context).primaryColor),
                       ),
                       Text(locale.translate('pages.data_viz.thanks'), style: aboutCardSubtitleStyle),
                       SizedBox(height: 15),

@@ -8,7 +8,7 @@ class DataVisualizationPageViewModel extends ViewModel {
   final TaskCardViewModel _surveysCardDataModel = TaskCardViewModel(SurveyUserTask.SURVEY_TYPE);
   final TaskCardViewModel _audioCardDataModel = TaskCardViewModel(AudioUserTask.AUDIO_TYPE);
   final TaskCardViewModel _videoCardDataModel = TaskCardViewModel(VideoUserTask.VIDEO_TYPE);
-  final TaskCardViewModel _imageCardDataModel = TaskCardViewModel(VideoUserTask.IMAGE_TYPE); // TODO ADD PHOTO
+  final TaskCardViewModel _imageCardDataModel = TaskCardViewModel(VideoUserTask.IMAGE_TYPE);
   final StudyProgressCardViewModel _studyProgressCardDataModel = StudyProgressCardViewModel();
 
   ActivityCardViewModel get activityCardDataModel => _activityCardDataModel;

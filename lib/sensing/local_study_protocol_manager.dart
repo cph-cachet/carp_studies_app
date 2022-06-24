@@ -693,7 +693,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
       // _protocol!.addConnectedDevice(eSense);
 
       ESenseDevice eSense = ESenseDevice(
-        deviceName: 'eSense-1234',
+        deviceName: '',
         samplingRate: 10,
       );
       _protocol!.addMasterDevice(phone);

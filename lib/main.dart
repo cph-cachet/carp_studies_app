@@ -5,6 +5,7 @@ import 'dart:math';
 import 'dart:convert';
 import 'dart:ui' as ui;
 
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:esense_flutter/esense.dart';
 import 'package:flutter/foundation.dart';
 import 'package:json_annotation/json_annotation.dart';

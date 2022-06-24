@@ -5,6 +5,9 @@ import 'dart:math';
 import 'dart:convert';
 import 'dart:ui' as ui;
 
+import 'package:device_info_plus/device_info_plus.dart';
+import 'package:esense_flutter/esense.dart';
+import 'package:flutter/foundation.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import 'package:flutter/services.dart';
@@ -18,8 +21,9 @@ import 'package:timeago/timeago.dart' as timeago;
 import 'package:intl/intl.dart';
 import 'dart:io';
 import 'package:camera/camera.dart';
-import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
+import 'package:app_settings/app_settings.dart';
+import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 
 // import 'package:activity_recognition_flutter/activity_recognition_flutter.dart';
 import 'package:flutter_activity_recognition/flutter_activity_recognition.dart';
@@ -29,7 +33,7 @@ import 'package:carp_core/carp_core.dart';
 import 'package:carp_mobile_sensing/carp_mobile_sensing.dart';
 import 'package:carp_audio_package/media.dart';
 //import 'package:carp_health_package/health_package.dart';
-//import 'package:carp_connectivity_package/connectivity.dart';
+//import 'package:carp_connectivity_package/connectivity.dart' as carpcon;
 //import 'package:carp_communication_package/communication.dart';
 import 'package:carp_context_package/context.dart';
 import 'package:carp_survey_package/survey.dart';
@@ -39,8 +43,11 @@ import 'package:carp_backend/carp_backend.dart';
 
 import 'package:research_package/research_package.dart';
 
+import 'package:esense_flutter/esense.dart';
+import 'package:carp_esense_package/esense.dart';
+
 import 'package:permission_handler/permission_handler.dart';
-import 'package:permission_handler_platform_interface/permission_handler_platform_interface.dart';
+// import 'package:permission_handler_platform_interface/permission_handler_platform_interface.dart';
 
 part 'blocs/app_bloc.dart';
 part 'blocs/common.dart';
@@ -58,6 +65,7 @@ part 'view_models/view_model.dart';
 part 'view_models/tasklist_page_model.dart';
 part 'view_models/study_page_model.dart';
 part 'view_models/profile_page_model.dart';
+part 'view_models/devices_page_model.dart';
 part 'view_models/data_viz_page_model.dart';
 part 'view_models/cards/activity_data_model.dart';
 part 'view_models/cards/mobility_data_model.dart';
@@ -85,6 +93,7 @@ part 'ui/pages/process_message_page.dart';
 part 'ui/pages/camera_task_page.dart';
 part 'ui/pages/display_picture_page.dart';
 part 'ui/pages/camera_page.dart';
+part 'ui/pages/devices_page.dart';
 
 part 'ui/widgets/study_card.dart';
 part 'ui/widgets/horizontal_bar.dart';

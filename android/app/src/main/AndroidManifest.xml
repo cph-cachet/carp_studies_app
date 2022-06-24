@@ -8,6 +8,13 @@
     -->
     <uses-permission android:name="android.permission.INTERNET"/>
 
+
+
+   <!-- The following permissions are used for devices management -->  
+	 <uses-permission android:name="android.permission.BLUETOOTH" />  
+	 <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />  
+
+
     <!-- The following permissions are used for CARP Mobile Sensing -->
     <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS" tools:ignore="ProtectedPermissions"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
@@ -25,8 +32,9 @@
     <!-- for Android 10 (API 29 and later), use: -->
     <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" />
 
-    <!-- The following permissions are used in the Audio Package  -->
+    <!-- The following permissions are used in the Media Package  -->
     <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
    
     <!-- Remove unused permissions 
          See https://github.com/cph-cachet/carp.sensing-flutter/wiki/5.-Best-Practice#android-manifest-file-merge  

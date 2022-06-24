@@ -12,21 +12,8 @@ class _DevicesPageState extends State<DevicesPage> {
   int selected = 40;
   dynamic selectedDevice;
 
-  // /// App settings
-  // static const MethodChannel _channel = const MethodChannel('app_settings');
-
-  // /// Future async method call to open bluetooth settings.
-  // static Future<void> openBluetoothSettings({
-  //   bool asAnotherTask = false,
-  // }) async {
-  //   _channel.invokeMethod('bluetooth', {
-  //     'asAnotherTask': asAnotherTask,
-  //   });
-  // }
-
   @override
   Widget build(BuildContext context) {
-    //List<DeviceModel> devices = bloc.runningDevices.toList();
     RPLocalizations locale = RPLocalizations.of(context)!;
 
     List<DeviceModel> physicalDevice = bloc.runningDevices
@@ -56,12 +43,8 @@ class _DevicesPageState extends State<DevicesPage> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Text(
-                    //   "Devices & Services".toUpperCase(),
-                    //   style: dataCardTitleStyle.copyWith(color: Theme.of(context).primaryColor),
-                    // ),
-                    Text("Here you can find all the devices and services used in your study.",
-                        style: aboutCardSubtitleStyle),
+                    Text(locale.translate("pages.devices.message"), style: aboutCardSubtitleStyle),
+                    SizedBox(height: 15),
                   ],
                 ),
               ),
@@ -78,19 +61,18 @@ class _DevicesPageState extends State<DevicesPage> {
                       SliverToBoxAdapter(
                           child: Padding(
                         padding: const EdgeInsets.only(left: 15, right: 15, top: 10),
-                        child: Text("Phone".toUpperCase(),
+                        child: Text(locale.translate("pages.devices.phone.title").toUpperCase(),
                             style: dataCardTitleStyle.copyWith(color: Theme.of(context).primaryColor)),
                       )),
                       SliverList(
                         delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
-                          return _buildSmartphoneDeviceCard(
-                              context, smartphoneDevice[index], setState, selected, selectedDevice);
+                          return _buildSmartphoneDeviceCard(context, smartphoneDevice[index]);
                         }, childCount: smartphoneDevice.length),
                       ),
                       SliverToBoxAdapter(
                           child: Padding(
                         padding: const EdgeInsets.only(left: 15, right: 15, top: 10),
-                        child: Text("Devices".toUpperCase(),
+                        child: Text(locale.translate("pages.devices.devices.title").toUpperCase(),
                             style: dataCardTitleStyle.copyWith(color: Theme.of(context).primaryColor)),
                       )),
                       SliverList(
@@ -102,7 +84,7 @@ class _DevicesPageState extends State<DevicesPage> {
                       SliverToBoxAdapter(
                         child: Padding(
                           padding: const EdgeInsets.only(left: 15, right: 15, top: 10),
-                          child: Text("Services".toUpperCase(),
+                          child: Text(locale.translate("pages.devices.services.title").toUpperCase(),
                               style: dataCardTitleStyle.copyWith(color: Theme.of(context).primaryColor)),
                         ),
                       ),
@@ -163,28 +145,11 @@ Widget _showBateryPercentage(BuildContext context, int bateryLevel, {double scal
   ]);
 }
 
-Future<String> _showSmartphoneInfo(BuildContext context) async {
-  String? smartphoneInfo;
-
-  DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-  if (Platform.isAndroid) {
-    AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
-    smartphoneInfo = androidInfo.model;
-  } else if (Platform.isIOS) {
-    IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
-    smartphoneInfo = iosInfo.name;
-  }
-
-  // smartphoneInfo += Platform.operatingSystem + ' ';
-  // smartphoneInfo += Platform.operatingSystemVersion.split(' ')[1];
-  return smartphoneInfo!;
-}
-
 Widget _buildPhysicalDeviceCard(
     BuildContext context, DeviceModel device, setState, selected, selectedDevice) {
+  RPLocalizations locale = RPLocalizations.of(context)!;
   return Center(
     child: Card(
-      color: Theme.of(context).scaffoldBackgroundColor,
       margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       elevation: 5,
@@ -200,28 +165,28 @@ Widget _buildPhysicalDeviceCard(
                 ),
                 title: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      SizedBox(height: 5),
-                      Text(device.name!),
+                      Text(locale.translate(device.name!)),
                     ]),
                 subtitle: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(device.id),
                     SizedBox(height: 1),
-                    Row(
-                      children: [
-                        // Text(device.statusString),
-                        // SizedBox(width: 8),
-                        _showBateryPercentage(context, device.batteryLevel!, scale: 0.9),
-                      ],
-                    ),
+                    _showBateryPercentage(context, device.batteryLevel!, scale: 0.9),
                   ],
                 ),
                 isThreeLine: true,
                 trailing: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [device.statusIcon],
+                  children: [
+                    device.statusIcon is String
+                        ? Text(locale.translate(device.statusIcon).toUpperCase(),
+                            style: aboutCardTitleStyle.copyWith(color: Theme.of(context).primaryColor))
+                        : device.statusIcon
+                  ],
                 ),
                 onTap: () async {
                   if (device.status != DeviceStatus.connected)
@@ -234,11 +199,9 @@ Widget _buildPhysicalDeviceCard(
   );
 }
 
-Widget _buildSmartphoneDeviceCard(
-    BuildContext context, DeviceModel device, setState, selected, selectedDevice) {
+Widget _buildSmartphoneDeviceCard(BuildContext context, DeviceModel device) {
   return Center(
     child: Card(
-      color: Theme.of(context).scaffoldBackgroundColor,
       margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       elevation: 2,
@@ -258,23 +221,20 @@ Widget _buildSmartphoneDeviceCard(
                     ),
                     title: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          SizedBox(height: 5),
                           Text(snapshot.data!["name"]!),
                         ]),
-                    subtitle: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    subtitle: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(snapshot.data!["model"]! + " - " + snapshot.data!["version"]!),
-                            SizedBox(height: 1),
-                          ],
-                        ),
+                        Text(snapshot.data!["model"]! + " - " + snapshot.data!["version"]!),
+                        SizedBox(height: 1),
+                        _showBateryPercentage(context, device.batteryLevel!, scale: 0.9),
                       ],
                     ),
+                    isThreeLine: true,
                   ),
                 ],
               );
@@ -285,9 +245,9 @@ Widget _buildSmartphoneDeviceCard(
 }
 
 Widget _buildOnlineDeviceCard(BuildContext context, DeviceModel device) {
+  RPLocalizations locale = RPLocalizations.of(context)!;
   return Center(
     child: Card(
-      color: Theme.of(context).scaffoldBackgroundColor,
       margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       elevation: 2,
@@ -304,13 +264,13 @@ Widget _buildOnlineDeviceCard(BuildContext context, DeviceModel device) {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     device.icon!,
-                    Text(device.name!),
+                    Text(locale.translate(device.name!)),
                   ]),
               subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text(device.statusString),
+                  Text(locale.translate(device.statusString)),
                 ],
               ),
             ),
@@ -323,6 +283,7 @@ Widget _buildOnlineDeviceCard(BuildContext context, DeviceModel device) {
 
 Future _showConnectionDialog(
     BuildContext context, _currentStep, DeviceModel device, setState, selected, selectedDevice) async {
+  RPLocalizations locale = RPLocalizations.of(context)!;
   FlutterBluePlus flutterBlue = FlutterBluePlus.instance;
   // Start Scanning devices
   flutterBlue.startScan();
@@ -366,9 +327,11 @@ Future _showConnectionDialog(
                     ? Column(
                         children: [
                           Text(
-                            "Select the name of the " +
-                                device.name! +
-                                " that you want to connect and press 'NEXT'.",
+                            locale.translate("pages.devices.connection.step.start.1") +
+                                " " +
+                                locale.translate(device.name!) +
+                                " " +
+                                locale.translate("pages.devices.connection.step.start.2"),
                             style: aboutCardContentStyle,
                             textAlign: TextAlign.justify,
                           ),
@@ -388,12 +351,8 @@ Future _showConnectionDialog(
                                             selected: bluetoothDevice.key == selected,
                                             title: Text(bluetoothDevice.value.device.name),
                                             onTap: () {
-                                              // device.id = bluetoothDevice.value.device.name;
                                               selectedDevice = bluetoothDevice.value.device;
                                               device.setId = bluetoothDevice.value.device.name;
-                                              print(device._id);
-                                              // bluetoothDevice.value.device.connect();
-
                                               setState(() => selected = bluetoothDevice.key);
                                             },
                                           ),
@@ -403,24 +362,28 @@ Future _showConnectionDialog(
                             ),
                           ),
                           Text(
-                            "If the " +
-                                device.name! +
-                                " is not in the list, make sure it is charged and turned on. If you want to know how to connect " +
-                                device.name! +
-                                " to the phone, press 'INSTRUCTIONS'.",
+                            locale.translate("pages.devices.connection.step.start.3") +
+                                " " +
+                                locale.translate(device.name!) +
+                                "  " +
+                                locale.translate("pages.devices.connection.step.start.4") +
+                                " " +
+                                locale.translate(device.name!) +
+                                " " +
+                                locale.translate("pages.devices.connection.step.start.5"),
                             style: aboutCardContentStyle,
                             textAlign: TextAlign.justify,
                           )
                         ],
                       )
-                    : stepContent(_currentStep, device, selected, flutterBlue, context),
+                    : stepContent(_currentStep, device, flutterBlue, context),
               ),
               contentPadding: EdgeInsets.symmetric(horizontal: 25),
               // actions: stepActions(_currentStep, setState, device, context),
               actions: _currentStep == 0
                   ? [
                       TextButton(
-                          child: Text("NEXT"),
+                          child: Text(locale.translate("pages.devices.connection.next").toUpperCase()),
                           onPressed: () => {
                                 setState(() {
                                   _currentStep = 1;
@@ -433,12 +396,13 @@ Future _showConnectionDialog(
                       ? [
                           // TextButton(child: Text("SETTINGS"), onPressed: () => AppSettings.openBluetoothSettings()),
                           TextButton(
-                              child: Text("INSTRUCTIONS"),
+                              child: Text(
+                                  locale.translate("pages.devices.connection.instructions").toUpperCase()),
                               onPressed: () => setState(() {
                                     _currentStep = 0;
                                   })),
                           TextButton(
-                              child: Text("NEXT"),
+                              child: Text(locale.translate("pages.devices.connection.next").toUpperCase()),
                               onPressed: () => {
                                     if (selectedDevice != null)
                                       {
@@ -450,12 +414,12 @@ Future _showConnectionDialog(
                         ]
                       : [
                           TextButton(
-                              child: Text("BACK"),
+                              child: Text(locale.translate("pages.devices.connection.back").toUpperCase()),
                               onPressed: () => setState(() {
                                     _currentStep = 1;
                                   })),
                           TextButton(
-                              child: Text("DONE"),
+                              child: Text(locale.translate("pages.devices.connection.done").toUpperCase()),
                               onPressed: () => {
                                     if (selectedDevice != null)
                                       {
@@ -473,12 +437,15 @@ Future _showConnectionDialog(
 }
 
 Widget stepTitle(_currentStep, device, context) {
+  RPLocalizations locale = RPLocalizations.of(context)!;
   if (_currentStep == 0) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Text(
-          "How to connect to " + device.name!,
+          locale.translate("pages.devices.connection.step.how_to.title") +
+              " " +
+              locale.translate(device.name!),
           style: sectionTitleStyle.copyWith(color: Theme.of(context).primaryColor),
         ),
       ],
@@ -487,7 +454,7 @@ Widget stepTitle(_currentStep, device, context) {
     return Column(
       children: [
         Text(
-          "Let's get started",
+          locale.translate("pages.devices.connection.step.start.title"),
           style: sectionTitleStyle.copyWith(color: Theme.of(context).primaryColor),
         ),
       ],
@@ -496,7 +463,9 @@ Widget stepTitle(_currentStep, device, context) {
     return Column(
       children: [
         Text(
-          device.name! + " is connected!",
+          locale.translate(device.name!) +
+              " " +
+              locale.translate("pages.devices.connection.step.confirm.title"),
           style: sectionTitleStyle.copyWith(color: Theme.of(context).primaryColor),
         ),
       ],
@@ -504,7 +473,7 @@ Widget stepTitle(_currentStep, device, context) {
 }
 
 Widget confirmDevice(DeviceModel device, FlutterBluePlus flutterBlue, BuildContext context) {
-  flutterBlue.startScan();
+  RPLocalizations locale = RPLocalizations.of(context)!;
   return Column(
     children: [
       Image(
@@ -512,11 +481,13 @@ Widget confirmDevice(DeviceModel device, FlutterBluePlus flutterBlue, BuildConte
           width: MediaQuery.of(context).size.height * 0.2,
           height: MediaQuery.of(context).size.height * 0.2),
       Text(
-        "The " +
-            device.name! +
+        locale.translate("pages.devices.connection.step.confirm.1") +
+            " " +
+            locale.translate(device.name!) +
             " " +
             device.id +
-            " has succesfully been connected to the study and is now ready to start sensing.",
+            " " +
+            locale.translate("pages.devices.connection.step.confirm.2"),
         style: aboutCardContentStyle,
         textAlign: TextAlign.justify,
       ),
@@ -525,6 +496,7 @@ Widget confirmDevice(DeviceModel device, FlutterBluePlus flutterBlue, BuildConte
 }
 
 Widget connectionInstructions(DeviceModel device, BuildContext context) {
+  RPLocalizations locale = RPLocalizations.of(context)!;
   return Column(
     children: [
       Expanded(
@@ -536,7 +508,7 @@ Widget connectionInstructions(DeviceModel device, BuildContext context) {
                   width: MediaQuery.of(context).size.height * 0.2,
                   height: MediaQuery.of(context).size.height * 0.2),
               Text(
-                device.connectionInstructions!,
+                locale.translate(device.connectionInstructions!),
                 style: aboutCardContentStyle,
                 textAlign: TextAlign.justify,
               ),
@@ -548,14 +520,9 @@ Widget connectionInstructions(DeviceModel device, BuildContext context) {
   );
 }
 
-Widget stepContent(_currentStep, device, selected, flutterBlue, context) {
+Widget stepContent(_currentStep, device, flutterBlue, context) {
   if (_currentStep == 0)
     return connectionInstructions(device, context);
-
-  // Since the step 1 it uses setState, it needs to go in the parent widget
-  // if (_currentStep == 1)
-  //   return pairDevice(device, setState, selected, flutterBlue);
-
   else
     return confirmDevice(device, flutterBlue, context);
 }

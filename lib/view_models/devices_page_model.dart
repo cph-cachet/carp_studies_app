@@ -35,14 +35,18 @@ class DeviceModel {
   String? get name => deviceTypeName[type!];
 
   /// A printer-friendly description of this device.
-  //String get description => deviceTypeDescription[type];
   String get description =>
       '${deviceTypeDescription[type!]} - $statusString\n$batteryLevel% battery remaining.';
 
   String get statusString => status.toString().split('.').last;
 
   /// The battery level of this device.
-  int? get batteryLevel => deviceManager.batteryLevel;
+  ///
+  /// Only relevant if this device is a [HardwareDeviceManager].
+  /// Returns null if not a hardware device.
+  int? get batteryLevel => (deviceManager is HardwareDeviceManager)
+      ? (deviceManager as HardwareDeviceManager).batteryLevel
+      : null;
 
   /// The icon for this type of device.
   Icon? get icon => deviceTypeIcon[type!];
@@ -58,8 +62,8 @@ class DeviceModel {
   // Icon? get stateIcon => deviceStateIcon[status];
 
   set setId(String newId) {
-    ESenseDevice eSenseDevice =
-        bloc.deployment!.connectedDevices.firstWhere((device) => device is ESenseDevice) as ESenseDevice;
+    ESenseDevice eSenseDevice = bloc.deployment!.connectedDevices
+        .firstWhere((device) => device is ESenseDevice) as ESenseDevice;
     eSenseDevice.deviceName = newId;
   }
 
@@ -109,7 +113,8 @@ class DeviceModel {
         Smartphone.DEVICE_TYPE: "pages.devices.type.smartphone.description",
         ESenseDevice.DEVICE_TYPE: "pages.devices.type.esense.description",
         WeatherService.DEVICE_TYPE: "pages.devices.type.weather.description",
-        AirQualityService.DEVICE_TYPE: "pages.devices.type.air_quality.description",
+        AirQualityService.DEVICE_TYPE:
+            "pages.devices.type.air_quality.description",
         LocationService.DEVICE_TYPE: "pages.devices.type.location.description",
       };
   static Map<String, Icon> get deviceTypeIcon => {
@@ -121,12 +126,17 @@ class DeviceModel {
       };
 
   static Map<DeviceStatus, dynamic> get deviceStatusIcon => {
-        DeviceStatus.connected: Icon(Icons.sensors, color: CACHET.GREEN_1, size: 30),
-        DeviceStatus.disconnected: "pages.devices.status.action.connect", // If its disconnected, ask to pair
-        DeviceStatus.paired: "pages.devices.status.action.connect", // If its paired, ask to connect
-        DeviceStatus.error: Icon(Icons.error_outline, color: CACHET.RED_1, size: 30),
+        DeviceStatus.connected:
+            Icon(Icons.sensors, color: CACHET.GREEN_1, size: 30),
+        DeviceStatus.disconnected:
+            "pages.devices.status.action.connect", // If its disconnected, ask to pair
+        DeviceStatus.paired:
+            "pages.devices.status.action.connect", // If its paired, ask to connect
+        DeviceStatus.error:
+            Icon(Icons.error_outline, color: CACHET.RED_1, size: 30),
         DeviceStatus.initialized: "pages.devices.status.action.pair",
-        DeviceStatus.unknown: Icon(Icons.error_outline, color: CACHET.RED_1, size: 30),
+        DeviceStatus.unknown:
+            Icon(Icons.error_outline, color: CACHET.RED_1, size: 30),
       };
 
   static Map<DeviceStatus, String> get deviceStatusText => {

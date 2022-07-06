@@ -2,7 +2,7 @@ part of carp_study_app;
 
 ThemeData carpStudyTheme = ThemeData.light().copyWith(
   primaryColor: Color(0xFF206FA2),
-  colorScheme: ColorScheme.light().copyWith(secondary: Color(0xFFFAFAFA)),
+  colorScheme: ColorScheme.light().copyWith(secondary: Color(0xFFFAFAFA), primary: Color(0xFF206FA2)),
   //accentColor: Color(0xFFFAFAFA), //Color(0xffcce8fa),
   hoverColor: Color(0xFFF1F9FF),
   scaffoldBackgroundColor: Color(0xFFFFFFFF),
@@ -42,7 +42,7 @@ ThemeData carpStudyTheme = ThemeData.light().copyWith(
 
 ThemeData carpStudyDarkTheme = ThemeData.dark().copyWith(
   primaryColor: Color(0xff81C7F3),
-  colorScheme: ColorScheme.dark().copyWith(secondary: Color(0xff4C4C4C)),
+  colorScheme: ColorScheme.dark().copyWith(secondary: Color(0xff4C4C4C), primary: Color(0xff81C7F3)),
   // accentColor: Color(0xff4C4C4C),
   disabledColor: Color(0xffcce8fa),
   textTheme: ThemeData.dark()

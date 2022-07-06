@@ -136,7 +136,7 @@ class VideoUserTask extends UserTask {
   /// Callback when the recorded image/video is to be "saved", i.e. committed to
   /// data stream.
   void onSave() {
-    debug('$runtimeType - onSave(), file: $file');
+    debug('$runtimeType - onSave(), file: ${file?.path}');
     if (file != null) {
       // create the datum directly here...
       MediaDatum datum = MediaDatum(

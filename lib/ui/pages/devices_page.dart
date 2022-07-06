@@ -34,7 +34,7 @@ class _DevicesPageState extends State<DevicesPage> {
         children: [
           CarpAppBar(),
           Container(
-            color: Theme.of(context).accentColor,
+            color: Theme.of(context).colorScheme.secondary,
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 15),
               child: Align(
@@ -118,7 +118,8 @@ Widget _showBateryPercentage(BuildContext context, int bateryLevel, {double scal
       borderRadius: BorderRadius.all(Radius.circular(2)),
       child: Container(
         decoration: BoxDecoration(
-            color: Theme.of(context).accentColor, border: Border.all(color: Theme.of(context).primaryColor)),
+            color: Theme.of(context).colorScheme.secondary,
+            border: Border.all(color: Theme.of(context).primaryColor)),
         width: width,
         height: height,
         child: Row(children: [
@@ -133,7 +134,8 @@ Widget _showBateryPercentage(BuildContext context, int bateryLevel, {double scal
       borderRadius: BorderRadius.all(Radius.circular(4)),
       child: Container(
         decoration: BoxDecoration(
-            color: Theme.of(context).accentColor, border: Border.all(color: Theme.of(context).primaryColor)),
+            color: Theme.of(context).colorScheme.secondary,
+            border: Border.all(color: Theme.of(context).primaryColor)),
         width: 2,
         height: 4,
       ),

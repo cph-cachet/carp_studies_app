@@ -23,7 +23,7 @@ class _ScoreboardCardWidgetState extends State<ScoreboardCardWidget> {
         //   //padding: const EdgeInsets.all(8.0),
         //   child:
         Container(
-      color: Theme.of(context).accentColor,
+      color: Theme.of(context).colorScheme.secondary,
       height: 110,
       child: StreamBuilder<UserTask>(
         stream: widget.model.userTaskEvents,
@@ -40,11 +40,9 @@ class _ScoreboardCardWidgetState extends State<ScoreboardCardWidget> {
                   Column(
                     children: [
                       Text(widget.model.daysInStudy.toString(),
-                          style: scoreNumberStyle.copyWith(
-                              color: Theme.of(context).primaryColor)),
+                          style: scoreNumberStyle.copyWith(color: Theme.of(context).primaryColor)),
                       Text(locale.translate('cards.scoreboard.days'),
-                          style: scoreTextStyle.copyWith(
-                              color: Theme.of(context).primaryColor)),
+                          style: scoreTextStyle.copyWith(color: Theme.of(context).primaryColor)),
                     ],
                   ),
                   Container(
@@ -56,11 +54,9 @@ class _ScoreboardCardWidgetState extends State<ScoreboardCardWidget> {
                   Column(
                     children: [
                       Text(widget.model.taskCompleted.toString(),
-                          style: scoreNumberStyle.copyWith(
-                              color: Theme.of(context).primaryColor)),
+                          style: scoreNumberStyle.copyWith(color: Theme.of(context).primaryColor)),
                       Text(locale.translate('cards.scoreboard.tasks'),
-                          style: scoreTextStyle.copyWith(
-                              color: Theme.of(context).primaryColor)),
+                          style: scoreTextStyle.copyWith(color: Theme.of(context).primaryColor)),
                     ],
                   )
                 ],

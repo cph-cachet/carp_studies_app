@@ -95,7 +95,7 @@
     "pages.devices.status.initialized": "Inicializado",
     "pages.devices.status.unknown": "Desconocido",
     "pages.devices.status.action.connect": "Conectar",
-    "pages.devices.status.action.pair": "Siincronizar",
+    "pages.devices.status.action.pair": "Sincronizar",
     "pages.devices.connection.instructions": "Instrucciones",
     "pages.devices.connection.next": "Siguiente",
     "pages.devices.connection.back": "Atrás",

@@ -44,6 +44,7 @@ class AudioUserTask extends UserTask {
         : 60;
   }
 
+  @override
   void onStart(BuildContext context) {
     super.onStart(context);
     Navigator.push(
@@ -92,13 +93,16 @@ class VideoUserTask extends UserTask {
 
   VideoUserTask(AppTaskExecutor executor) : super(executor);
 
+  @override
   void onStart(BuildContext context) async {
     super.onStart(context);
 
     final cameras = await availableCameras();
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => CameraTaskPage(mediaUserTask: this, cameras: cameras)),
+      MaterialPageRoute(
+          builder: (context) =>
+              CameraTaskPage(mediaUserTask: this, cameras: cameras)),
     );
   }
 
@@ -109,9 +113,9 @@ class VideoUserTask extends UserTask {
   /// Callback when a picture is captured.
   void onPictureCapture(XFile image) {
     onRecordStart();
-    _mediaType = MediaType.image;
     // now wait for 2 secs to finish up any other sensing in the task
-    Timer(const Duration(seconds: 2), () => onRecordStop(image, mediaType: MediaType.image));
+    Timer(const Duration(seconds: 2),
+        () => onRecordStop(image, mediaType: MediaType.image));
   }
 
   /// Callback when video recording is started.
@@ -125,13 +129,14 @@ class VideoUserTask extends UserTask {
   void onRecordStop(XFile media, {MediaType mediaType = MediaType.video}) {
     executor.pause();
     file = media;
+    _endRecordingTime = DateTime.now();
     _mediaType = mediaType;
-    state = UserTaskState.done;
   }
 
   /// Callback when the recorded image/video is to be "saved", i.e. committed to
   /// data stream.
   void onSave() {
+    debug('$runtimeType - onSave(), file: $file');
     if (file != null) {
       // create the datum directly here...
       MediaDatum datum = MediaDatum(

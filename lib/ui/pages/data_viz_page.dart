@@ -16,7 +16,7 @@ class DataVisualizationPage extends StatelessWidget {
           children: <Widget>[
             CarpAppBar(),
             Container(
-              color: Theme.of(context).accentColor,
+              color: Theme.of(context).colorScheme.secondary,
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 15),
                 child: Align(

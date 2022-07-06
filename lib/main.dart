@@ -7,7 +7,6 @@ import 'dart:ui' as ui;
 
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:esense_flutter/esense.dart';
-import 'package:flutter/foundation.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import 'package:flutter/services.dart';
@@ -22,7 +21,6 @@ import 'package:intl/intl.dart';
 import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:video_player/video_player.dart';
-import 'package:app_settings/app_settings.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 
 // import 'package:activity_recognition_flutter/activity_recognition_flutter.dart';
@@ -43,7 +41,6 @@ import 'package:carp_backend/carp_backend.dart';
 
 import 'package:research_package/research_package.dart';
 
-import 'package:esense_flutter/esense.dart';
 import 'package:carp_esense_package/esense.dart';
 
 import 'package:permission_handler/permission_handler.dart';

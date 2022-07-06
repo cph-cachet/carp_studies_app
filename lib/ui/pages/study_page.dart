@@ -73,7 +73,7 @@ class _StudyPageState extends State<StudyPage> {
                   ? Expanded(
                       child: Container(
                       height: 150.0,
-                      color: Theme.of(context).accentColor, //Color(0xFFF1F9FF),
+                      color: Theme.of(context).colorScheme.secondary, //Color(0xFFF1F9FF),
                       child: messageImage,
                     ))
                   : SizedBox.shrink()

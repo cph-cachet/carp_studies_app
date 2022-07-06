@@ -17,7 +17,7 @@ class MessageDetailsPage extends StatelessWidget {
         children: [
           Container(
             //height: MediaQuery.of(context).size.height * 0.3,
-            color: Theme.of(context).accentColor,
+            color: Theme.of(context).colorScheme.secondary,
             child: Padding(
               padding: const EdgeInsets.only(top: 35),
               child: Column(
@@ -68,7 +68,7 @@ class MessageDetailsPage extends StatelessWidget {
           ),
           Expanded(
             child: Scrollbar(
-              isAlwaysShown: true,
+              thumbVisibility: true,
               child: SingleChildScrollView(
                 scrollDirection: Axis.vertical,
                 child: Container(
@@ -117,7 +117,7 @@ class MessageDetailsPage extends StatelessWidget {
                     child: InkWell(
                       onTap: () async {
                         try {
-                          await launch(message.url!);
+                          await launchUrl(Uri.parse(message.url!));
                         } catch (error) {
                           warning("Could not launch message URL - '${message.url!}'");
                         }

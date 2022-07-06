@@ -7,8 +7,7 @@ class StudyDetailsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;
 
-    String studyDescription() =>
-        '${locale.translate(studyPageModel.description)}\n\n'
+    String studyDescription() => '${locale.translate(studyPageModel.description)}\n\n'
         '${locale.translate('widgets.study_card.title')}: \"${locale.translate(studyPageModel.title)}\".\n'
         '${locale.translate('widgets.study_card.purpose')}: \"${locale.translate(studyPageModel.purpose)}\".\n\n'
         '${locale.translate('widgets.study_card.responsibles')}:\n'
@@ -22,7 +21,7 @@ class StudyDetailsPage extends StatelessWidget {
         children: [
           Container(
             //height: MediaQuery.of(context).size.height * 0.3,
-            color: Theme.of(context).accentColor,
+            color: Theme.of(context).colorScheme.secondary,
             child: Padding(
               padding: const EdgeInsets.only(top: 35),
               child: Column(
@@ -43,8 +42,7 @@ class StudyDetailsPage extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 15),
                     child: Text(locale.translate(studyPageModel.title),
-                        style: aboutCardTitleStyle.copyWith(
-                            color: Theme.of(context).primaryColor)),
+                        style: aboutCardTitleStyle.copyWith(color: Theme.of(context).primaryColor)),
                   ),
                   SizedBox(height: 20),
                 ],
@@ -63,8 +61,7 @@ class StudyDetailsPage extends StatelessWidget {
                     child: Column(
                       children: [
                         Text(locale.translate(studyPageModel.piAffiliation),
-                            style: aboutCardSubtitleStyle.copyWith(
-                                color: Theme.of(context).primaryColor)),
+                            style: aboutCardSubtitleStyle.copyWith(color: Theme.of(context).primaryColor)),
                         SizedBox(height: 5),
                         Text(
                           studyDescription(),
@@ -86,43 +83,36 @@ class StudyDetailsPage extends StatelessWidget {
               children: [
                 InkWell(
                   onTap: () async {
-                    String url =
-                        locale.translate(studyPageModel.privacyPolicyUrl);
+                    String url = locale.translate(studyPageModel.privacyPolicyUrl);
                     try {
-                      await launch(url);
+                      await launchUrl(Uri.parse(url));
                     } catch (error) {
                       warning("Could not launch privacy policy URL - '$url'");
                     }
                   },
                   child: Row(
                     children: [
-                      Icon(Icons.policy_outlined,
-                          color: Theme.of(context).primaryColor),
+                      Icon(Icons.policy_outlined, color: Theme.of(context).primaryColor),
                       Text(locale.translate('pages.about.study.privacy'),
-                          style: aboutCardSubtitleStyle.copyWith(
-                              color: Theme.of(context).primaryColor))
+                          style: aboutCardSubtitleStyle.copyWith(color: Theme.of(context).primaryColor))
                     ],
                   ),
                 ),
                 SizedBox(width: 15),
                 InkWell(
                   onTap: () async {
-                    String url =
-                        locale.translate(studyPageModel.studyDescriptionUrl);
+                    String url = locale.translate(studyPageModel.studyDescriptionUrl);
                     try {
-                      await launch(url);
+                      await launchUrl(Uri.parse(url));
                     } catch (error) {
-                      warning(
-                          "Could not launch study description URL - '$url'");
+                      warning("Could not launch study description URL - '$url'");
                     }
                   },
                   child: Row(
                     children: [
-                      Icon(Icons.public_outlined,
-                          color: Theme.of(context).primaryColor),
+                      Icon(Icons.public_outlined, color: Theme.of(context).primaryColor),
                       Text(locale.translate('pages.about.study.website'),
-                          style: aboutCardSubtitleStyle.copyWith(
-                              color: Theme.of(context).primaryColor)),
+                          style: aboutCardSubtitleStyle.copyWith(color: Theme.of(context).primaryColor)),
                     ],
                   ),
                 ),

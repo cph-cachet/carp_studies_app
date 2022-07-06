@@ -8,7 +8,7 @@ class CarpBanner extends StatelessWidget {
     RPLocalizations locale = RPLocalizations.of(context)!;
     return SliverAppBar(
       expandedHeight: 150.0,
-      backgroundColor: Theme.of(context).accentColor,
+      backgroundColor: Theme.of(context).colorScheme.secondary,
       floating: false,
       pinned: false,
       flexibleSpace: FlexibleSpaceBar(
@@ -41,7 +41,7 @@ class CarpBanner extends StatelessWidget {
                             foreground: Paint()
                               ..style = PaintingStyle.stroke
                               ..strokeWidth = 1
-                              ..color = Theme.of(context).accentColor),
+                              ..color = Theme.of(context).colorScheme.secondary),
                       ),
                       Text(
                         locale.translate(studyPageModel.title),

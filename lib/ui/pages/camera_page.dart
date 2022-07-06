@@ -36,7 +36,6 @@ class _CameraPageState extends State<CameraPage> {
         imageFormatGroup: ImageFormatGroup.yuv420, enableAudio: true);
 
     _initializeControllerFuture = _cameraController.initialize();
-    _cameraController.setFocusMode(FocusMode.auto);
   }
 
   @override

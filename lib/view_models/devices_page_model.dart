@@ -80,23 +80,24 @@ class DeviceModel {
     if (Platform.isAndroid) {
       AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
       return {
-        "name": androidInfo.host,
-        "model": androidInfo.model,
-        "version": androidInfo.version.baseOS,
+        'name': '${androidInfo.host}',
+        'model': '${androidInfo.model} (${androidInfo.brand})',
+        'version': 'SDK ${androidInfo.version.sdkInt}',
       };
-    } else if (Platform.isIOS) {
+    }
+    if (Platform.isIOS) {
       IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
       return {
-        "name": iosInfo.name,
-        "model": iosInfo.model,
-        "version": iosInfo.systemName! + " " + iosInfo.systemVersion!,
+        'name': '${iosInfo.name}',
+        'model': '${iosInfo.model}',
+        'version': '${iosInfo.systemName} ${iosInfo.systemVersion}',
       };
-    } else
-      return {
-        "name": null,
-        "model": null,
-        "version": null,
-      };
+    }
+    return {
+      'name': 'Unknown',
+      'model': 'Unknown',
+      'version': 'Unknown',
+    };
   }
 
   DeviceModel(this.deviceManager) : super();

@@ -19,6 +19,7 @@ dependencies:
 
   #carp_communication_package: ^0.40.0
   #carp_health_package: ^0.40.0
+  # carp_esense_package: ^0.40.0
   
   # research_package: ^0.8.1
 
@@ -37,7 +38,6 @@ dependencies:
   flutter_blue_plus: ^1.1.2
   device_info_plus: ^4.0.0
   esense_flutter: ^0.6.1
-  # carp_esense_package: ^0.33.0
   
   flutter_localizations:
     sdk: flutter

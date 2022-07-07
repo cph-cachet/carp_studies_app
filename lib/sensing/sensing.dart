@@ -45,11 +45,12 @@ class Sensing {
       controller!.executor!.state == ExecutorState.resumed;
 
   /// the list of running - i.e. used - probes in this study.
-  List<Probe> get runningProbes => (_controller != null) ? _controller!.executor!.probes : [];
+  List<Probe> get runningProbes =>
+      (_controller != null) ? _controller!.executor!.probes : [];
 
   /// The list of connected devices.
   List<DeviceManager>? get runningDevices =>
-      (client != null) ? client!.deviceController.devices.values.toList() : [];
+      (client != null) ? client!.deviceController.connectedDevices : [];
 
   /// The singleton sensing instance
   factory Sensing() => _instance;
@@ -85,7 +86,8 @@ class Sensing {
 
         // get the protocol from the local study protocol manager
         // note that the study id is not used
-        SmartphoneStudyProtocol? protocol = await (LocalStudyProtocolManager().getStudyProtocol(''));
+        SmartphoneStudyProtocol? protocol =
+            await (LocalStudyProtocolManager().getStudyProtocol(''));
 
         // deploy this protocol using the on-phone deployment service
         // re-use the study deployment id - if available
@@ -111,7 +113,8 @@ class Sensing {
         deploymentService = CustomProtocolDeploymentService();
 
         // get the study deployment status
-        _status = await CustomProtocolDeploymentService().getStudyDeploymentStatus(bloc.studyDeploymentId!);
+        _status = await CustomProtocolDeploymentService()
+            .getStudyDeploymentStatus(bloc.studyDeploymentId!);
 
         break;
     }
@@ -170,5 +173,6 @@ class Sensing {
     info("Study protocol translated to local '${localization.locale}'");
   }
 
-  Future<void> askForPermissions() async => await _controller!.askForAllPermissions();
+  Future<void> askForPermissions() async =>
+      await _controller!.askForAllPermissions();
 }

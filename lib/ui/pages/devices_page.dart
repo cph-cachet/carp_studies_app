@@ -69,34 +69,40 @@ class _DevicesPageState extends State<DevicesPage> {
                           return _buildSmartphoneDeviceCard(context, smartphoneDevice[index]);
                         }, childCount: smartphoneDevice.length),
                       ),
-                      SliverToBoxAdapter(
-                          child: Padding(
-                        padding: const EdgeInsets.only(left: 15, right: 15, top: 10),
-                        child: Text(locale.translate("pages.devices.devices.title").toUpperCase(),
-                            style: dataCardTitleStyle.copyWith(color: Theme.of(context).primaryColor)),
-                      )),
+                      physicalDevice.isEmpty
+                          ? SizedBox.shrink()
+                          : SliverToBoxAdapter(
+                              child: Padding(
+                              padding: const EdgeInsets.only(left: 15, right: 15, top: 10),
+                              child: Text(locale.translate("pages.devices.devices.title").toUpperCase(),
+                                  style: dataCardTitleStyle.copyWith(color: Theme.of(context).primaryColor)),
+                            )),
                       SliverList(
                         delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
                           return _buildPhysicalDeviceCard(
                               context, physicalDevice[index], setState, selected, selectedDevice);
                         }, childCount: physicalDevice.length),
                       ),
-                      SliverToBoxAdapter(
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 15, right: 15, top: 10),
-                          child: Text(locale.translate("pages.devices.services.title").toUpperCase(),
-                              style: dataCardTitleStyle.copyWith(color: Theme.of(context).primaryColor)),
-                        ),
-                      ),
+                      onlineService.isEmpty
+                          ? SizedBox.shrink()
+                          : SliverToBoxAdapter(
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 15, right: 15, top: 10),
+                                child: Text(locale.translate("pages.devices.services.title").toUpperCase(),
+                                    style:
+                                        dataCardTitleStyle.copyWith(color: Theme.of(context).primaryColor)),
+                              ),
+                            ),
                       SliverGrid(
                         delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
                           return _buildOnlineDeviceCard(context, onlineService[index]);
                         }, childCount: onlineService.length),
-                        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                          maxCrossAxisExtent: MediaQuery.of(context).size.width / 2,
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          //maxCrossAxisExtent: MediaQuery.of(context).size.width / 2,
                           mainAxisSpacing: 1,
                           crossAxisSpacing: 1,
-                          childAspectRatio: 2.0,
+                          childAspectRatio: 1.5,
                         ),
                       ),
                     ],
@@ -248,36 +254,36 @@ Widget _buildSmartphoneDeviceCard(BuildContext context, DeviceModel device) {
 
 Widget _buildOnlineDeviceCard(BuildContext context, DeviceModel device) {
   RPLocalizations locale = RPLocalizations.of(context)!;
-  return Center(
-    child: Card(
-      margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      elevation: 2,
-      child: StreamBuilder<DeviceStatus>(
-        stream: device.deviceEvents,
-        initialData: DeviceStatus.unknown,
-        builder: (context, AsyncSnapshot<DeviceStatus> snapshot) => Column(
-          //mainAxisSize: MainAxisSize.min,
-          children: [
-            ListTile(
-              enableFeedback: false,
-              title: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    device.icon!,
-                    Text(locale.translate(device.name!)),
-                  ]),
-              subtitle: Column(
+  return Card(
+    margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+    elevation: 2,
+    child: StreamBuilder<DeviceStatus>(
+      stream: device.deviceEvents,
+      initialData: DeviceStatus.unknown,
+      builder: (context, AsyncSnapshot<DeviceStatus> snapshot) => Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          ListTile(
+            enableFeedback: false,
+            title: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text(locale.translate(device.statusString)),
-                ],
-              ),
+                  device.icon!,
+                  Text(locale.translate(device.name!)),
+                ]),
+            subtitle: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text(locale.translate(device.statusString)),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     ),
   );

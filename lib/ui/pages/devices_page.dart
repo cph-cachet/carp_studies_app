@@ -70,7 +70,7 @@ class _DevicesPageState extends State<DevicesPage> {
                         }, childCount: smartphoneDevice.length),
                       ),
                       physicalDevice.isEmpty
-                          ? SizedBox.shrink()
+                          ? SliverToBoxAdapter(child: SizedBox.shrink())
                           : SliverToBoxAdapter(
                               child: Padding(
                               padding: const EdgeInsets.only(left: 15, right: 15, top: 10),
@@ -84,7 +84,7 @@ class _DevicesPageState extends State<DevicesPage> {
                         }, childCount: physicalDevice.length),
                       ),
                       onlineService.isEmpty
-                          ? SizedBox.shrink()
+                          ? SliverToBoxAdapter(child: SizedBox.shrink())
                           : SliverToBoxAdapter(
                               child: Padding(
                                 padding: const EdgeInsets.only(left: 15, right: 15, top: 10),

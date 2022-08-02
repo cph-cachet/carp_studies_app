@@ -1,10 +1,15 @@
 part of carp_study_app;
 
-class CarpBanner extends StatelessWidget {
-  final StudyPageViewModel studyPageModel = StudyPageViewModel();
+class DetailsBanner extends StatelessWidget {
+  DetailsBanner(this.title, this.image, {this.isCarpBanner = false});
+  final String title;
+  final String? image;
+  final bool isCarpBanner;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(
+    BuildContext context,
+  ) {
     RPLocalizations locale = RPLocalizations.of(context)!;
     return SliverAppBar(
       expandedHeight: 150.0,
@@ -14,18 +19,19 @@ class CarpBanner extends StatelessWidget {
       flexibleSpace: FlexibleSpaceBar(
         centerTitle: true,
         titlePadding: EdgeInsets.only(top: 15),
+        background: image != null
+            ? ClipRRect(
+                child: ImageFiltered(
+                    imageFilter: ui.ImageFilter.blur(sigmaX: 1, sigmaY: 1),
+                    child: Image.asset(image!, fit: BoxFit.fitHeight)),
+              )
+            : SizedBox.shrink(),
         title: Container(
-          // decoration: BoxDecoration(
-          //   gradient: LinearGradient(
-          //     colors: [ui.Color.fromARGB(0, 255, 0, 0), CACHET.RED_1],
-          //     begin: Alignment.topCenter,
-          //     end: Alignment.bottomCenter,
-          //     stops: [0, 1],
-          //   ),
-          // ),
           child: InkWell(
             onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => StudyDetailsPage()));
+              isCarpBanner == true
+                  ? Navigator.push(context, MaterialPageRoute(builder: (context) => StudyDetailsPage()))
+                  : print("no");
             },
             child: Padding(
               padding: EdgeInsets.all(10),
@@ -35,7 +41,7 @@ class CarpBanner extends StatelessWidget {
                   Stack(
                     children: [
                       Text(
-                        locale.translate(studyPageModel.title),
+                        locale.translate(title),
                         style: studyNameStyle.copyWith(
                             // color: Theme.of(context).primaryColor,
                             foreground: Paint()
@@ -44,27 +50,23 @@ class CarpBanner extends StatelessWidget {
                               ..color = Theme.of(context).colorScheme.secondary),
                       ),
                       Text(
-                        locale.translate(studyPageModel.title),
+                        locale.translate(title),
                         style: studyNameStyle.copyWith(color: Theme.of(context).primaryColor),
                       ),
                     ],
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Icon(Icons.touch_app, color: Theme.of(context).primaryColor, size: 15),
-                    ],
-                  )
+                  isCarpBanner
+                      ? Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Icon(Icons.touch_app, color: Theme.of(context).primaryColor, size: 15),
+                          ],
+                        )
+                      : SizedBox.shrink(),
                 ],
               ),
             ),
-          ),
-        ),
-        background: ClipRRect(
-          child: ImageFiltered(
-            imageFilter: ui.ImageFilter.blur(sigmaX: 1, sigmaY: 1),
-            child: Image.asset('./assets/images/kids.png', fit: BoxFit.fitHeight),
           ),
         ),
       ),

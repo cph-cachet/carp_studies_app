@@ -15,16 +15,15 @@ class _StudyPageState extends State<StudyPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
+          children: [
             CarpAppBar(),
-            //StudyCard(),
             Flexible(
               child: StreamBuilder<int>(
                   stream: widget.model.messageStream,
                   builder: (context, AsyncSnapshot<int> snapshot) {
                     return CustomScrollView(
                       slivers: [
-                        CarpBanner(),
+                        DetailsBanner(widget.model.title, './assets/images/kids.png', isCarpBanner: true),
                         SliverList(
                           delegate: SliverChildBuilderDelegate(
                             (BuildContext context, int index) =>

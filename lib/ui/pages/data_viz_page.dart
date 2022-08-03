@@ -63,12 +63,11 @@ class DataVisualizationPage extends StatelessWidget {
     // always show tasks progress
     widgets.add(StudyProgressCardWidget(model.studyProgressCardDataModel));
 
-    // always show overall measure stats
-    widgets.add(MeasuresCardWidget(model.measuresCardDataModel));
+    // check to show overall measure stats
+    if (bloc.hasMeasures()) widgets.add(MeasuresCardWidget(model.measuresCardDataModel));
 
-    // check which measures are in the study
-    if (bloc.hasMeasure(SurveySamplingPackage.SURVEY))
-      widgets.add(TaskCardWidget(model.surveysCardDataModel));
+    // check to show surveys stats
+    if (bloc.hasSurveys()) widgets.add(TaskCardWidget(model.surveysCardDataModel, chartType: "pie"));
 
     List<TaskCardViewModel> mediaModelsList = [];
 
@@ -77,6 +76,11 @@ class DataVisualizationPage extends StatelessWidget {
     if (bloc.hasMeasure(MediaSamplingPackage.VIDEO)) mediaModelsList.add(model.videoCardDataModel);
     if (bloc.hasMeasure(MediaSamplingPackage.IMAGE)) mediaModelsList.add(model.imageCardDataModel);
     if (mediaModelsList.isNotEmpty) widgets.add(MediaCardWidget(mediaModelsList));
+
+    // check to show devices stats
+    if (bloc.hasDevices()) {
+      //TODO ADD DEVICES VIZ
+    }
 
     if (bloc.hasMeasure(SensorSamplingPackage.PEDOMETER))
       widgets.add(StepsOuterStatefulWidget(model.stepsCardDataModel));

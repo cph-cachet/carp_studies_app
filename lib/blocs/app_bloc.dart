@@ -107,6 +107,36 @@ class StudyAppBLoC {
     return true;
   }
 
+  bool hasMeasures() {
+    if (deployment == null) return false;
+    try {
+      deployment!.measures.isNotEmpty;
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
+
+  bool hasSurveys() {
+    if (deployment == null) return false;
+    try {
+      deployment!.tasks.isNotEmpty;
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
+
+  bool hasDevices() {
+    if (deployment == null) return false;
+    try {
+      deployment!.connectedDevices.isNotEmpty;
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
+
   /// Initialize this BLOC. Called before being used for anything.
   Future<void> initialize() async {
     if (isInitialized) return;

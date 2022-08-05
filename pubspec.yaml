@@ -1,10 +1,10 @@
 name: carp_study_app
 description: The generic CARP study app.
-publish_to: 'none'
+publish_to: "none"
 version: 0.40.0
 
 environment:
-  sdk: '>=2.17.0 <3.0.0'
+  sdk: ">=2.17.0 <3.0.0"
   flutter: ">=3.0.0"
 
 dependencies:
@@ -20,7 +20,7 @@ dependencies:
   #carp_communication_package: ^0.40.0
   #carp_health_package: ^0.40.0
   # carp_esense_package: ^0.40.0
-  
+
   # research_package: ^0.8.1
 
   flutter_launcher_icons: ^0.9.1
@@ -38,14 +38,13 @@ dependencies:
   flutter_blue_plus: ^1.1.2
   device_info_plus: ^4.0.0
   esense_flutter: ^0.6.1
-  
+
   flutter_localizations:
     sdk: flutter
 
-
 # Overriding carp libraries to use the local or github copy
 # Remove this before release of app
-dependency_overrides:  
+dependency_overrides:
   carp_core:
     git:
       url: https://github.com/cph-cachet/carp.sensing-flutter.git
@@ -90,8 +89,6 @@ dependency_overrides:
       url: https://github.com/cph-cachet/carp.sensing-flutter.git
       ref: develop
       path: packages/carp_esense_package/
-
-
 
   # carp_core:
   #   path: ../carp/carp.sensing-flutter/carp_core/
@@ -140,7 +137,6 @@ flutter_icons:
 
 # The following section is specific to Flutter.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

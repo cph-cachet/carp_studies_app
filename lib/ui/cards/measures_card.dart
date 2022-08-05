@@ -7,24 +7,30 @@ class MeasuresCardWidget extends StatefulWidget {
   _MeasuresCardWidgetState createState() => _MeasuresCardWidgetState();
 }
 
+extension StringExtension on String {
+  String truncateTo(int maxLength) =>
+      (this.length <= maxLength) ? this : '${this.substring(0, maxLength)}...';
+}
+
 class _MeasuresCardWidgetState extends State<MeasuresCardWidget> {
   static List<charts.Series<MeasureCount, String>> _createChartList(
-          BuildContext context, MeasuresCardViewModel model, List<Color> colors) =>
-      [
-        charts.Series<MeasureCount, String>(
-          colorFn: (_, index) => charts.ColorUtil.fromDartColor(colors[index!]),
-          //charts.MaterialPalette.blue.makeShades(min(7, model.samplingTable.length))[index],
-          id: 'TotalMeasures',
-          data: model.measures.sublist(0, min(7, model.samplingTable.length)),
-          domainFn: (MeasureCount measures, _) => measures.measure,
-          measureFn: (MeasureCount measures, _) => measures.size,
-        )
-      ];
+      BuildContext context, MeasuresCardViewModel model, List<Color> colors) {
+    RPLocalizations locale = RPLocalizations.of(context)!;
+
+    return [
+      charts.Series<MeasureCount, String>(
+        colorFn: (_, index) => charts.ColorUtil.fromDartColor(colors[index!]),
+        //charts.MaterialPalette.blue.makeShades(min(7, model.samplingTable.length))[index],
+        id: 'TotalMeasures',
+        data: model.measures.sublist(0, min(6, model.samplingTable.length)),
+        domainFn: (MeasureCount measures, _) => locale.translate(measures.title),
+        measureFn: (MeasureCount measures, _) => measures.size,
+      )
+    ];
+  }
 
   Widget build(BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;
-
-    // Get the measures with more events to prioritize which ones to show
 
     return Padding(
       padding: const EdgeInsets.all(5.0),
@@ -34,22 +40,21 @@ class _MeasuresCardWidgetState extends State<MeasuresCardWidget> {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
-            children: <Widget>[
+            children: [
               StreamBuilder(
                 stream: widget.model.quietMeasureEvents,
                 builder: (context, AsyncSnapshot<DataPoint> snapshot) {
-                  widget.model.orderedMeasures();
                   return Column(
                     children: [
                       Container(
                         padding: EdgeInsets.only(left: 10),
                         child: Row(
-                          children: <Widget>[
+                          children: [
                             Expanded(
-                              flex: 5,
+                              flex: 1,
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
+                                children: [
                                   SizedBox(height: 5),
                                   Text(
                                       '${widget.model.samplingSize} ' +
@@ -62,41 +67,45 @@ class _MeasuresCardWidgetState extends State<MeasuresCardWidget> {
                           ],
                         ),
                       ),
-                      Container(
-                        height: 160,
-                        child: Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            charts.PieChart<String>(
-                              _createChartList(context, widget.model, CACHET.COLOR_LIST),
-                              animate: true,
-                              behaviors: [
-                                charts.DatumLegend(
-                                  position: charts.BehaviorPosition.end,
-                                  desiredMaxRows: 7,
-                                  //entryTextStyle: charts.TextStyleSpec(fontSize: 10),
-                                  cellPadding: EdgeInsets.only(right: 3.0, bottom: 2.0),
-                                  showMeasures: true,
-                                  legendDefaultMeasure: charts.LegendDefaultMeasure.firstValue,
-                                  measureFormatter: (num? value) {
-                                    return value == null ? '-' : '$value';
-                                  },
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            child: SizedBox(
+                              height: 160,
+                              width: MediaQuery.of(context).size.width,
+                              child: charts.PieChart<String>(
+                                _createChartList(context, widget.model, CACHET.COLOR_LIST),
+                                animate: true,
+                                selectionModels: [],
+                                behaviors: [
+                                  charts.ChartTitle(
+                                    "",
+                                    behaviorPosition: charts.BehaviorPosition.start,
+                                    maxWidthStrategy: charts.MaxWidthStrategy.ellipsize,
+                                    layoutPreferredSize: 10,
+                                  ),
+                                  charts.DatumLegend(
+                                    position: charts.BehaviorPosition.start,
+                                    desiredMaxRows: 6,
+                                    cellPadding: EdgeInsets.only(bottom: 2.0, left: 10),
+                                    outsideJustification: charts.OutsideJustification.middleDrawArea,
+                                    showMeasures: false,
+                                    legendDefaultMeasure: charts.LegendDefaultMeasure.firstValue,
+                                    measureFormatter: (num? value) {
+                                      return value == null ? '-' : '$value';
+                                    },
+                                  ),
+                                ],
+                                defaultRenderer: charts.ArcRendererConfig(
+                                  arcRatio: 0.4,
+                                  layoutPaintOrder: 700,
                                 ),
-                              ],
-                              defaultRenderer: charts.ArcRendererConfig(
-                                arcWidth: 20,
                               ),
                             ),
-                            /* Positioned(
-                              left: 92,
-                              child: Text(
-                                '${widget.model.samplingSize} \nmeasures',
-                                textAlign: TextAlign.center,
-                                style: measuresStyle.copyWith(color: Theme.of(context).primaryColor),
-                              ),
-                            ), */
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ],
                   );

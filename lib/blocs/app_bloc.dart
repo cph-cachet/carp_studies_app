@@ -110,8 +110,14 @@ class StudyAppBLoC {
   bool hasMeasures() {
     if (deployment == null) return false;
     try {
-      deployment!.measures.isNotEmpty;
-      return true;
+      if (deployment!.measures.any((measure) => (measure.type != VideoUserTask.IMAGE_TYPE &&
+          measure.type != VideoUserTask.VIDEO_TYPE &&
+          measure.type != AudioUserTask.AUDIO_TYPE &&
+          measure.type != SurveyUserTask.SURVEY_TYPE))) {
+        print(deployment!.measures);
+        return true;
+      } else
+        return false;
     } catch (error) {
       return false;
     }

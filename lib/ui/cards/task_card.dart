@@ -18,7 +18,7 @@ class _TaskCardWidgetState extends State<TaskCardWidget> {
         // charts.MaterialPalette.blue.makeShades(min(7, model.samplingTable.length))[index],
         id: 'TotalTasks',
         data: model.taskCount.sublist(0, min(6, model.tasksTable.length)),
-        domainFn: (TaskCount taskCount, _) => locale.translate(taskCount.title),
+        domainFn: (TaskCount taskCount, _) => locale.translate(taskCount.title).truncateTo(12),
         measureFn: (TaskCount taskCount, _) => taskCount.size,
       )
     ];
@@ -76,31 +76,45 @@ class _TaskCardWidgetState extends State<TaskCardWidget> {
         ),
       );
     } else if (this.widget.chartType == "pie") {
-      return SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: Container(
-          height: 160,
-          width: MediaQuery.of(context).size.width,
-          child: charts.PieChart<String>(
-            _createChartList(context, widget.model, CACHET.COLOR_LIST),
-            animate: true,
-            behaviors: [
-              charts.DatumLegend(
-                position: charts.BehaviorPosition.end,
-                desiredMaxRows: 6,
-                cellPadding: EdgeInsets.only(right: 1.0, bottom: 2.0),
-                showMeasures: true,
-                legendDefaultMeasure: charts.LegendDefaultMeasure.firstValue,
-                measureFormatter: (num? value) {
-                  return value == null ? '-' : '$value';
-                },
+      return Row(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Expanded(
+            child: SizedBox(
+              height: 160,
+              width: MediaQuery.of(context).size.width,
+              child: charts.PieChart<String>(
+                _createChartList(context, widget.model, CACHET.COLOR_LIST),
+                animate: true,
+                behaviors: [
+                  charts.ChartTitle(
+                    "",
+                    behaviorPosition: charts.BehaviorPosition.start,
+                    maxWidthStrategy: charts.MaxWidthStrategy.ellipsize,
+                    layoutPreferredSize: 10,
+                  ),
+                  charts.DatumLegend(
+                    position: charts.BehaviorPosition.start,
+                    desiredMaxRows: 6,
+                    horizontalFirst: false,
+                    cellPadding: EdgeInsets.only(bottom: 2.0, left: 10),
+                    outsideJustification: charts.OutsideJustification.startDrawArea,
+                    showMeasures: true,
+                    legendDefaultMeasure: charts.LegendDefaultMeasure.firstValue,
+                    measureFormatter: (num? value) {
+                      return value == null ? '-' : '$value';
+                    },
+                  ),
+                ],
+                defaultRenderer: charts.ArcRendererConfig(
+                  arcRatio: 0.4,
+                  layoutPaintOrder: charts.LayoutViewPaintOrder.arc,
+                ),
               ),
-            ],
-            defaultRenderer: charts.ArcRendererConfig(
-              arcWidth: 20,
             ),
           ),
-        ),
+        ],
       );
     } else
       return SizedBox.shrink();

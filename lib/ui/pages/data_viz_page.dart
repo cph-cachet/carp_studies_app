@@ -64,7 +64,7 @@ class DataVisualizationPage extends StatelessWidget {
     widgets.add(StudyProgressCardWidget(model.studyProgressCardDataModel));
 
     // check to show overall measure stats
-    if (bloc.hasMeasures()) widgets.add(MeasuresCardWidget(model.measuresCardDataModel));
+    //if (bloc.hasMeasures()) widgets.add(MeasuresCardWidget(model.measuresCardDataModel));
 
     // check to show surveys stats
     if (bloc.hasSurveys()) widgets.add(TaskCardWidget(model.surveysCardDataModel, chartType: "pie"));

@@ -33,7 +33,20 @@ class HorizontalBar extends StatelessWidget {
     RPLocalizations locale = RPLocalizations.of(context)!;
     double width = MediaQuery.of(context).size.width;
     if (names!.isEmpty)
-      return Center(child: Text(locale.translate("pages.data_viz.no_data")));
+      return Center(
+        child: Padding(
+          padding: const EdgeInsets.all(3),
+          child: ClipRRect(
+            borderRadius: BorderRadius.all(Radius.circular(height! / 2)),
+            child: Container(
+              decoration: BoxDecoration(color: Theme.of(context).colorScheme.tertiary),
+              width: width,
+              height: height,
+              child: SizedBox.shrink(),
+            ),
+          ),
+        ),
+      );
     else
       return Center(
           child: MyAssetsBar(
@@ -48,6 +61,7 @@ class HorizontalBar extends StatelessWidget {
 }
 
 enum OrderType { Ascending, Descending, None }
+
 enum LabelOrientation { vertical, horizontal }
 
 class MyAsset {

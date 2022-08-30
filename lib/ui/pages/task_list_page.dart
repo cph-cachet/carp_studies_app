@@ -134,9 +134,14 @@ class _TaskListPageState extends State<TaskListPage> {
         ? '${userTask.task.minutesToComplete} ' + locale.translate('pages.task_list.task.time_to_complete')
         : locale.translate('pages.task_list.task.auto_complete');
 
-    str += (userTask.expiresIn != null)
-        ? ' - ${userTask.expiresIn!.inDays + 1} ' + locale.translate('pages.task_list.task.days_remaining')
-        : '';
+    if (userTask.expiresIn != null) {
+      if (userTask.expiresIn!.isNegative) {
+        userTask.onExpired(context);
+      }
+      str +=
+          ' - ${userTask.expiresIn!.inDays + 1} ' + locale.translate('pages.task_list.task.days_remaining');
+    }
+    str += '';
 
     str = (str.isEmpty) ? locale.translate(userTask.description) : str;
 

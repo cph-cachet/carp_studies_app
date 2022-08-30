@@ -11,6 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
 
+  carp_serializable: ^1.0.0
   # carp_mobile_sensing: ^0.40.0
   # carp_context_package: ^0.40.0
   # carp_survey_package: ^0.40.0
@@ -21,7 +22,7 @@ dependencies:
   #carp_health_package: ^0.40.0
   # carp_esense_package: ^0.40.0
 
-  # research_package: ^0.8.1
+  research_package: ^0.9.3
 
   flutter_launcher_icons: ^0.9.1
   url_launcher: ^6.0.9
@@ -80,10 +81,10 @@ dependency_overrides:
       url: https://github.com/cph-cachet/carp.sensing-flutter.git
       ref: develop
       path: backends/carp_webservices/
-  research_package:
-    git:
-      url: https://github.com/cph-cachet/research.package.git
-      ref: dev-carp-core-0_40_0
+  # research_package:
+  #   git:
+  #     url: https://github.com/cph-cachet/research.package.git
+  #     ref: dev-carp-core-0_40_0
   carp_esense_package:
     git:
       url: https://github.com/cph-cachet/carp.sensing-flutter.git

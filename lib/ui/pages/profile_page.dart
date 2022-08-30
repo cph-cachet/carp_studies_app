@@ -97,7 +97,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       print("contact researcher");
                       _contactResearcher(
                         widget.model.responsibleEmail,
-                        'Support for study: ${widget.model.studyTitle} - User: ${widget.model.username}',
+                        'Support for study: ${locale.translate(widget.model.studyTitle)} - User: ${widget.model.username}',
                       );
                     },
                   ),

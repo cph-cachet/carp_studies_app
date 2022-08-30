@@ -5,6 +5,7 @@ import 'dart:math';
 import 'dart:convert';
 import 'dart:ui' as ui;
 
+import 'package:carp_serializable/carp_serializable.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:esense_flutter/esense.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -33,7 +34,7 @@ import 'package:carp_audio_package/media.dart';
 //import 'package:carp_health_package/health_package.dart';
 //import 'package:carp_connectivity_package/connectivity.dart' as carpcon;
 //import 'package:carp_communication_package/communication.dart';
-import 'package:carp_context_package/context.dart';
+import 'package:carp_context_package/carp_context_package.dart';
 import 'package:carp_survey_package/survey.dart';
 import 'package:carp_webservices/carp_services/carp_services.dart';
 import 'package:carp_webservices/carp_auth/carp_auth.dart';
@@ -112,7 +113,8 @@ part 'main.g.dart';
 late CarpStudyApp app;
 void main() async {
   // make sure that the json functions are loaded
-  DomainJsonFactory();
+  FromJsonFactory();
+  //DomainJsonFactory();
 
   // make sure to have an instance of the WidgetsBinding, which is required
   // to use platform channels to call the native code
@@ -131,6 +133,6 @@ void main() async {
 /// or deploying it.
 final bloc = StudyAppBLoC(
   debugLevel: DebugLevel.DEBUG,
-  deploymentMode: DeploymentMode.CARP_PRODUCTION,
+  deploymentMode: DeploymentMode.LOCAL,
   forceSignOutAndStudyReload: false,
 );

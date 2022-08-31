@@ -113,8 +113,7 @@ part 'main.g.dart';
 late CarpStudyApp app;
 void main() async {
   // make sure that the json functions are loaded
-  FromJsonFactory();
-  //DomainJsonFactory();
+  CarpMobileSensing();
 
   // make sure to have an instance of the WidgetsBinding, which is required
   // to use platform channels to call the native code
@@ -133,6 +132,6 @@ void main() async {
 /// or deploying it.
 final bloc = StudyAppBLoC(
   debugLevel: DebugLevel.DEBUG,
-  deploymentMode: DeploymentMode.LOCAL,
+  deploymentMode: DeploymentMode.CARP_PRODUCTION,
   forceSignOutAndStudyReload: false,
 );

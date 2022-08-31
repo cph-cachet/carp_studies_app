@@ -96,7 +96,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     onTap: () {
                       print("contact researcher");
                       _contactResearcher(
-                        widget.model.responsibleEmail,
+                        locale.translate(widget.model.responsibleEmail),
                         'Support for study: ${locale.translate(widget.model.studyTitle)} - User: ${widget.model.username}',
                       );
                     },
@@ -118,8 +118,8 @@ class _ProfilePageState extends State<ProfilePage> {
                     title: Text(locale.translate('pages.about.study.website'),
                         style: profileActionStyle.copyWith(color: Theme.of(context).primaryColor)),
                     onTap: () async {
-                      if (await canLaunchUrl(Uri.parse(locale.translate('study.description.website')))) {
-                        await launchUrl(Uri.parse(locale.translate('study.description.website')));
+                      if (await canLaunchUrl(Uri.parse(locale.translate('study.description.url')))) {
+                        await launchUrl(Uri.parse(locale.translate('study.description.url')));
                       } else {
                         throw 'Could not launch Study URL';
                       }

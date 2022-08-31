@@ -53,7 +53,7 @@ class CarpBackend {
   CarpBackend._() : super() {
     // make sure that the json functions are loaded
     // DomainJsonFactory();
-    FromJsonFactory();
+    CarpMobileSensing();
   }
 
   factory CarpBackend() => _instance;

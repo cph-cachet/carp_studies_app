@@ -25,7 +25,7 @@ dependencies:
   research_package: ^0.9.3
 
   flutter_launcher_icons: ^0.9.1
-  url_launcher: ^6.0.9
+  url_launcher: ^6.1.5
   timeago: ^3.1.0
   expandable: ^5.0.1
   charts_flutter: ^0.12.0

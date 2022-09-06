@@ -1,11 +1,11 @@
 name: carp_study_app
 description: The generic CARP study app.
-publish_to: "none"
+publish_to: 'none'
 version: 0.40.0
 
 environment:
-  sdk: ">=2.17.0 <3.0.0"
-  flutter: ">=3.0.0"
+  sdk: '>=2.17.0 <3.0.0'
+  flutter: '>=3.0.0'
 
 dependencies:
   flutter:
@@ -54,7 +54,7 @@ dependency_overrides:
   carp_mobile_sensing:
     git:
       url: https://github.com/cph-cachet/carp.sensing-flutter.git
-      ref: develop
+      ref: 260-raisedbutton-in-authentication_form
       path: carp_mobile_sensing
   carp_context_package:
     git:
@@ -133,7 +133,7 @@ flutter_icons:
   android: true
   ios: true
   remove_alpha_ios: true
-  image_path: "assets/logo.png"
+  image_path: 'assets/logo.png'
   # image_path: "assets/app_icon.png"
 
 # The following section is specific to Flutter.

@@ -183,7 +183,7 @@ Widget _buildPhysicalDeviceCard(
                   children: [
                     Text(device.id),
                     SizedBox(height: 1),
-                    _showBateryPercentage(context, device.batteryLevel!, scale: 0.9),
+                    _showBateryPercentage(context, device.batteryLevel ?? 0, scale: 0.9),
                   ],
                 ),
                 isThreeLine: true,

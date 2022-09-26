@@ -119,7 +119,7 @@ class CarpBackend {
 
   Future<ConsentDocument?> uploadInformedConsent(RPTaskResult taskResult) async {
     RPConsentSignatureResult signatureResult =
-        taskResult.results["consentreviewstepID"].results["signatureID"];
+        (taskResult.results["consentreviewstepID"] as RPConsentSignatureResult);
     signatureResult.userID = username;
     Map<String, dynamic> informedConsent = signatureResult.toJson();
 

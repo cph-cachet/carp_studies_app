@@ -24,10 +24,10 @@ ThemeData carpStudyTheme = ThemeData.light().copyWith(
               fontWeight: FontWeight.w400,
               fontSize: 16.0,
             ),
-        subtitle1: ThemeData.light()
-            .textTheme
-            .subtitle1!
-            .copyWith(fontWeight: FontWeight.w600, fontSize: 20.0, color: Color(0xFF206FA2)),
+        subtitle1: ThemeData.light().textTheme.subtitle1!.copyWith(
+            fontWeight: FontWeight.w600,
+            fontSize: 20.0,
+            color: Color(0xFF206FA2)),
         headline6: ThemeData.light().textTheme.headline6!.copyWith(
               fontWeight: FontWeight.w500,
               fontSize: 20.0,
@@ -36,10 +36,12 @@ ThemeData carpStudyTheme = ThemeData.light().copyWith(
               fontWeight: FontWeight.w700,
               fontSize: 30.0,
             ),
+        button: ThemeData.light().textTheme.button!.copyWith(
+            fontWeight: FontWeight.w500, fontSize: 16.0, color: Colors.white),
       )
       .apply(
         fontFamily: 'MuseoSans',
-        bodyColor: Color.fromRGBO(112, 112, 112, 1),
+        // bodyColor: Color.fromRGBO(112, 112, 112, 1),
       ),
 );
 
@@ -80,10 +82,12 @@ ThemeData carpStudyDarkTheme = ThemeData.dark().copyWith(
               fontWeight: FontWeight.w700,
               fontSize: 30.0,
             ),
+        button: ThemeData.dark().textTheme.button!.copyWith(
+            fontWeight: FontWeight.w500, fontSize: 16.0, color: Colors.grey.shade800),
       )
       .apply(
         fontFamily: 'MuseoSans',
-        bodyColor: Colors.grey.shade50,
+        // bodyColor: Colors.grey.shade50,
       ),
 );
 
@@ -135,46 +139,67 @@ class AxisTheme {
   }
 }
 
-TextStyle studyTitleStyle =
-    TextStyle(fontSize: 24, fontWeight: FontWeight.w600, color: Color.fromRGBO(32, 111, 162, 1));
+TextStyle studyTitleStyle = TextStyle(
+    fontSize: 24,
+    fontWeight: FontWeight.w600,
+    color: Color.fromRGBO(32, 111, 162, 1));
 
-TextStyle readMoreStudyStyle = TextStyle(fontSize: 12, fontWeight: FontWeight.w700);
+TextStyle readMoreStudyStyle =
+    TextStyle(fontSize: 12, fontWeight: FontWeight.w700);
 
-TextStyle scoreNumberStyle =
-    TextStyle(fontSize: 36, fontWeight: FontWeight.w800, color: Color.fromRGBO(32, 111, 162, 1));
+TextStyle scoreNumberStyle = TextStyle(
+    fontSize: 36,
+    fontWeight: FontWeight.w800,
+    color: Color.fromRGBO(32, 111, 162, 1));
 
-TextStyle scoreTextStyle = TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: Color(0xff77A8C8));
+TextStyle scoreTextStyle = TextStyle(
+    fontSize: 12, fontWeight: FontWeight.w700, color: Color(0xff77A8C8));
 
-TextStyle aboutCardTitleStyle = TextStyle(fontSize: 20, fontWeight: FontWeight.w700);
+TextStyle aboutCardTitleStyle =
+    TextStyle(fontSize: 20, fontWeight: FontWeight.w700);
 
-TextStyle aboutCardInfoStyle = TextStyle(fontSize: 14, fontStyle: FontStyle.italic);
+TextStyle aboutCardInfoStyle =
+    TextStyle(fontSize: 14, fontStyle: FontStyle.italic);
 
-TextStyle aboutCardSubtitleStyle = TextStyle(fontSize: 16, fontWeight: FontWeight.w600);
+TextStyle aboutCardSubtitleStyle =
+    TextStyle(fontSize: 16, fontWeight: FontWeight.w600);
 
-TextStyle profileSectionStyle = TextStyle(fontSize: 12, fontWeight: FontWeight.w400, letterSpacing: 2);
+TextStyle profileSectionStyle =
+    TextStyle(fontSize: 12, fontWeight: FontWeight.w400, letterSpacing: 2);
 
-TextStyle aboutCardContentStyle = TextStyle(fontSize: 16, fontWeight: FontWeight.w400);
+TextStyle aboutCardContentStyle =
+    TextStyle(fontSize: 16, fontWeight: FontWeight.w400);
 
-TextStyle sectionTitleStyle = TextStyle(fontSize: 18, fontWeight: FontWeight.w700);
+TextStyle sectionTitleStyle =
+    TextStyle(fontSize: 18, fontWeight: FontWeight.w700);
 
 TextStyle inputFieldStyle = TextStyle(fontSize: 15, color: Color(0xff707070));
 
-TextStyle welcomeMessageStyle =
-    TextStyle(fontSize: 24, color: Color(0xff707070), fontWeight: FontWeight.bold);
+TextStyle welcomeMessageStyle = TextStyle(
+    fontSize: 24, color: Color(0xff707070), fontWeight: FontWeight.bold);
 
-TextStyle studyDescriptionStyle = TextStyle(fontSize: 12, fontWeight: FontWeight.w300);
-TextStyle dataCardTitleStyle = TextStyle(fontSize: 16, fontWeight: FontWeight.w400, letterSpacing: 1);
+TextStyle studyDescriptionStyle =
+    TextStyle(fontSize: 12, fontWeight: FontWeight.w300);
+TextStyle dataCardTitleStyle =
+    TextStyle(fontSize: 16, fontWeight: FontWeight.w400, letterSpacing: 1);
 TextStyle measuresStyle = TextStyle(fontSize: 18, fontWeight: FontWeight.w400);
 TextStyle legendStyle = TextStyle(fontSize: 12, fontWeight: FontWeight.w400);
 
-TextStyle audioTitleStyle = TextStyle(fontSize: 22, fontWeight: FontWeight.w700);
-TextStyle audioContentStyle = TextStyle(fontSize: 16, fontWeight: FontWeight.w500);
-TextStyle audioDescriptionStyle = TextStyle(fontSize: 14, fontWeight: FontWeight.w400);
-TextStyle audioInstructionStyle = TextStyle(fontSize: 16, fontWeight: FontWeight.w400);
+TextStyle audioTitleStyle =
+    TextStyle(fontSize: 22, fontWeight: FontWeight.w700);
+TextStyle audioContentStyle =
+    TextStyle(fontSize: 16, fontWeight: FontWeight.w500);
+TextStyle audioDescriptionStyle =
+    TextStyle(fontSize: 14, fontWeight: FontWeight.w400);
+TextStyle audioInstructionStyle =
+    TextStyle(fontSize: 16, fontWeight: FontWeight.w400);
 
-TextStyle profileTitleStyle = TextStyle(fontSize: 20, fontWeight: FontWeight.w400);
-TextStyle profileActionStyle = TextStyle(fontSize: 20, fontWeight: FontWeight.w400);
+TextStyle profileTitleStyle =
+    TextStyle(fontSize: 20, fontWeight: FontWeight.w400);
+TextStyle profileActionStyle =
+    TextStyle(fontSize: 20, fontWeight: FontWeight.w400);
 
 TextStyle timerStyle = TextStyle(fontSize: 36, fontWeight: FontWeight.w600);
 
-TextStyle studyNameStyle = TextStyle(fontSize: 16.0, fontWeight: FontWeight.w800);
+TextStyle studyNameStyle =
+    TextStyle(fontSize: 16.0, fontWeight: FontWeight.w800);

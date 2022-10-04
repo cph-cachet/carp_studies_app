@@ -21,7 +21,8 @@ class StudyAppBLoC {
   StudyDeploymentStatus? _status;
 
   List<Message> _messages = [];
-  final StreamController<int> _messageStreamController = StreamController.broadcast();
+  final StreamController<int> _messageStreamController =
+      StreamController.broadcast();
   List<Message> get messages => _messages;
 
   /// A stream of event when the list of [messages] is updated.
@@ -58,15 +59,18 @@ class StudyAppBLoC {
   /// The informed consent to be shown to the user for this study.
   RPOrderedTask? informedConsent;
 
-  InformedConsentManager get informedConsentManager => (deploymentMode == DeploymentMode.LOCAL)
-      ? LocalResourceManager()
-      : CarpResourceManager() as InformedConsentManager;
+  InformedConsentManager get informedConsentManager =>
+      (deploymentMode == DeploymentMode.LOCAL)
+          ? LocalResourceManager()
+          : CarpResourceManager() as InformedConsentManager;
 
-  LocalizationManager get localizationManager => (deploymentMode == DeploymentMode.LOCAL)
-      ? LocalResourceManager()
-      : CarpResourceManager() as LocalizationManager;
+  LocalizationManager get localizationManager =>
+      (deploymentMode == DeploymentMode.LOCAL)
+          ? LocalResourceManager()
+          : CarpResourceManager() as LocalizationManager;
 
-  LocalizationLoader get localizationLoader => ResourceLocalizationLoader(localizationManager);
+  LocalizationLoader get localizationLoader =>
+      ResourceLocalizationLoader(localizationManager);
 
   MessageManager get messageManager => (deploymentMode == DeploymentMode.LOCAL)
       ? LocalResourceManager()
@@ -110,10 +114,11 @@ class StudyAppBLoC {
   bool hasMeasures() {
     if (deployment == null) return false;
     try {
-      if (deployment!.measures.any((measure) => (measure.type != VideoUserTask.IMAGE_TYPE &&
-          measure.type != VideoUserTask.VIDEO_TYPE &&
-          measure.type != AudioUserTask.AUDIO_TYPE &&
-          measure.type != SurveyUserTask.SURVEY_TYPE))) {
+      if (deployment!.measures.any((measure) =>
+          (measure.type != VideoUserTask.IMAGE_TYPE &&
+              measure.type != VideoUserTask.VIDEO_TYPE &&
+              measure.type != AudioUserTask.AUDIO_TYPE &&
+              measure.type != SurveyUserTask.SURVEY_TYPE))) {
         print(deployment!.measures);
         return true;
       } else
@@ -153,7 +158,8 @@ class StudyAppBLoC {
     await localizationManager.initialize();
 
     _state = StudyAppState.initialized;
-    info('$runtimeType initialized - deployment mode: ${deploymentMode.toString().split('.').last}');
+    info(
+        '$runtimeType initialized - deployment mode: ${deploymentMode.toString().split('.').last}');
   }
 
   /// This methods is used to configure the entire app, including:
@@ -166,7 +172,8 @@ class StudyAppBLoC {
   ///
   /// This method is used in the [LoadingPage].
   Future<void> configure(BuildContext context) async {
-    assert(isInitialized, "$runtimeType is not initialized. Call 'initialize()' first.");
+    assert(isInitialized,
+        "$runtimeType is not initialized. Call 'initialize()' first.");
 
     // early out if already configuring (e.g. waiting for user authentication)
     if (isConfiguring) return;
@@ -184,18 +191,21 @@ class StudyAppBLoC {
 
       // check if there is a local deploymed id
       // if not, get a deployment id based on an invitation
-      if (bloc.studyDeploymentId == null) await backend.getStudyInvitation(context);
+      if (bloc.studyDeploymentId == null)
+        await backend.getStudyInvitation(context);
     }
 
     // find the right informed consent, if needed
-    bloc.informedConsent =
-        (!hasInformedConsentBeenAccepted) ? await informedConsentManager.getInformedConsent() : null;
+    bloc.informedConsent = (!hasInformedConsentBeenAccepted)
+        ? await informedConsentManager.getInformedConsent()
+        : null;
 
     // set up the messaging part
     await messageManager.initialize();
 
     // refresh the list of messages on a regular basis
-    Timer.periodic(const Duration(minutes: 30), (_) async => await refreshMessages());
+    Timer.periodic(
+        const Duration(minutes: 30), (_) async => await refreshMessages());
     await refreshMessages();
 
     // set up and initialize sensing
@@ -209,10 +219,11 @@ class StudyAppBLoC {
   }
 
   /// Does this app use location permissions?
-  bool get usingLocationPermissions => SamplingPackageRegistry().permissions.any((permission) =>
-      permission == Permission.location ||
-      permission == Permission.locationWhenInUse ||
-      permission == Permission.locationAlways);
+  bool get usingLocationPermissions =>
+      SamplingPackageRegistry().permissions.any((permission) =>
+          permission == Permission.location ||
+          permission == Permission.locationWhenInUse ||
+          permission == Permission.locationAlways);
 
   /// Configuration of permissions.
   ///
@@ -227,7 +238,8 @@ class StudyAppBLoC {
             barrierDismissible: false,
             barrierColor: Colors.black38,
             transitionBuilder: (ctx, anim1, anim2, child) => BackdropFilter(
-                  filter: ui.ImageFilter.blur(sigmaX: 4 * anim1.value, sigmaY: 4 * anim1.value),
+                  filter: ui.ImageFilter.blur(
+                      sigmaX: 4 * anim1.value, sigmaY: 4 * anim1.value),
                   child: FadeTransition(
                     child: child,
                     opacity: anim1,
@@ -259,17 +271,20 @@ class StudyAppBLoC {
   }
 
   /// Has the informed consent been shown to, and accepted by the user?
-  bool get hasInformedConsentBeenAccepted => LocalSettings().hasInformedConsentBeenAccepted;
+  bool get hasInformedConsentBeenAccepted =>
+      LocalSettings().hasInformedConsentBeenAccepted;
 
   /// Should the informed consent be shown to the user?
-  bool get shouldInformedConsentBeShown => (informedConsent != null && !hasInformedConsentBeenAccepted);
+  bool get shouldInformedConsentBeShown =>
+      (informedConsent != null && !hasInformedConsentBeenAccepted);
 
   /// Specify if the informed consent been handled.
   /// This entails that it has been:
   ///  * shown to the user
   ///  * accepted by the user
   ///  * successfully uploaded to CARP
-  set informedConsentAccepted(bool accepted) => LocalSettings().informedConsentAccepted = accepted;
+  set informedConsentAccepted(bool accepted) =>
+      LocalSettings().informedConsentAccepted = accepted;
 
   /// Refresh the list of messages (news, announcments, articles) to be shown in
   /// the Study Page of the app.
@@ -287,7 +302,9 @@ class StudyAppBLoC {
   /// The signed in user. Returns null if no user is signed in.
   CarpUser? get user => backend.user;
 
-  String get username => (user != null) ? user!.username : Sensing().controller!.deployment!.userId!;
+  String get username => (user != null)
+      ? user!.username
+      : Sensing().controller!.deployment!.userId!;
 
   /// The name used for friendly greating - '' if no user logged in.
   String? get friendlyUsername => (user != null) ? user!.firstName : '';
@@ -296,11 +313,13 @@ class StudyAppBLoC {
   bool get isRunning => Sensing().isRunning;
 
   /// the list of running - i.e. used - probes in this study.
-  List<Probe> get runningProbes =>
-      (Sensing().controller != null) ? Sensing().controller!.executor!.probes : [];
+  List<Probe> get runningProbes => (Sensing().controller != null)
+      ? Sensing().controller!.executor!.probes
+      : [];
 
   /// Get a list of running devices
-  Iterable<DeviceModel> get runningDevices => Sensing().runningDevices!.map((device) => DeviceModel(device));
+  Iterable<DeviceModel> get runningDevices =>
+      Sensing().runningDevices!.map((device) => DeviceModel(device));
 
   void connectToDevice(DeviceModel device) {
     Sensing().client?.deviceController.devices[device.type!]!.connect();
@@ -313,7 +332,8 @@ class StudyAppBLoC {
   ///
   /// If a [context] is provided, this method also translate the study protocol.
   Future<void> start() async {
-    assert(Sensing().controller != null, 'No Study Controller - the study has not been deployed.');
+    assert(Sensing().controller != null,
+        'No Study Controller - the study has not been deployed.');
 
     Sensing().controller?.start();
 
@@ -335,7 +355,8 @@ class StudyAppBLoC {
   void dispose() => stop();
 
   /// Add a [Datum] object to the stream of events.
-  void addDatum(Datum datum) => Sensing().controller!.executor!.addDataPoint(DataPoint.fromData(datum));
+  void addDatum(Datum datum) =>
+      Sensing().controller!.executor!.addDataPoint(DataPoint.fromData(datum));
 
   /// Add a error to the stream of events.
   void addError(Object error, [StackTrace? stacktrace]) =>

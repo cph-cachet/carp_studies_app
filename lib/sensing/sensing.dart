@@ -40,10 +40,13 @@ class Sensing {
   SmartphoneDeploymentController? get controller => _controller;
 
   /// Is sensing running, i.e. has the study executor been resumed?
-  bool get isRunning => (controller != null) && controller!.executor!.state == ExecutorState.resumed;
+  bool get isRunning =>
+      (controller != null) &&
+      controller!.executor!.state == ExecutorState.resumed;
 
   /// the list of running - i.e. used - probes in this study.
-  List<Probe> get runningProbes => (_controller != null) ? _controller!.executor!.probes : [];
+  List<Probe> get runningProbes =>
+      (_controller != null) ? _controller!.executor!.probes : [];
 
   /// The list of connected devices.
   List<DeviceManager>? get runningDevices =>
@@ -83,7 +86,8 @@ class Sensing {
 
         // get the protocol from the local study protocol manager
         // note that the study id is not used
-        SmartphoneStudyProtocol? protocol = await (LocalStudyProtocolManager().getStudyProtocol(''));
+        SmartphoneStudyProtocol? protocol =
+            await (LocalStudyProtocolManager().getStudyProtocol(''));
 
         // deploy this protocol using the on-phone deployment service
         // re-use the study deployment id - if available
@@ -109,7 +113,8 @@ class Sensing {
         deploymentService = CustomProtocolDeploymentService();
 
         // get the study deployment status
-        _status = await CustomProtocolDeploymentService().getStudyDeploymentStatus(bloc.studyDeploymentId!);
+        _status = await CustomProtocolDeploymentService()
+            .getStudyDeploymentStatus(bloc.studyDeploymentId!);
 
         break;
     }
@@ -145,7 +150,7 @@ class Sensing {
     controller?.start();
 
     // listening on the data stream and print them as json to the debug console
-    _controller!.data.listen((data) => print(toJsonString(data)));
+    _controller!.data.listen((data) => debug(toJsonString(data)));
 
     info('$runtimeType initialized');
   }
@@ -154,7 +159,8 @@ class Sensing {
   /// of the current master deployment.
   void translateStudyProtocol(AssetLocalizations localization) {
     // fast out, if not configured or no protocol
-    if (controller?.status != StudyStatus.Deployed || controller?.deployment == null) return;
+    if (controller?.status != StudyStatus.Deployed ||
+        controller?.deployment == null) return;
 
     for (var task in controller!.deployment!.tasks) {
       if (task.runtimeType == AppTask) {
@@ -167,5 +173,6 @@ class Sensing {
     info("Study protocol translated to local '${localization.locale}'");
   }
 
-  Future<void> askForPermissions() async => await _controller!.askForAllPermissions();
+  Future<void> askForPermissions() async =>
+      await _controller!.askForAllPermissions();
 }

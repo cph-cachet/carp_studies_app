@@ -112,7 +112,7 @@ part 'main.g.dart';
 
 late CarpStudyApp app;
 void main() async {
-  // make sure that the json functions are loaded
+  // initialize CAMS
   CarpMobileSensing();
 
   // make sure to have an instance of the WidgetsBinding, which is required

@@ -19,7 +19,7 @@ WeeklyActivities _$WeeklyActivitiesFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$WeeklyActivitiesToJson(WeeklyActivities instance) =>
     <String, dynamic>{
       'activities': instance.activities.map((k, e) => MapEntry(
-          _$ActivityTypeEnumMap[k],
+          _$ActivityTypeEnumMap[k]!,
           e.map((k, e) => MapEntry(k.toString(), e)))),
     };
 

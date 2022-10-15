@@ -123,7 +123,8 @@ class _CameraPageState extends State<CameraPage> {
                         isRecording = true;
                       });
                     } on CameraException catch (e) {
-                      print('Error: ${e.code}\n${e.description}');
+                      warning(
+                          '$runtimeType - error: ${e.code}\n${e.description}');
                     }
                   },
                   onLongPressEnd: (details) async {
@@ -143,7 +144,8 @@ class _CameraPageState extends State<CameraPage> {
                         isRecording = false;
                       });
                     } on CameraException catch (e) {
-                      print('Error: ${e.code}\n${e.description}');
+                      warning(
+                          '$runtimeType - error: ${e.code}\n${e.description}');
                     }
                   },
                   child: isRecording

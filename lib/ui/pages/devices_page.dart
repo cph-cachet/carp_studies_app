@@ -1,9 +1,6 @@
 part of carp_study_app;
 
 class DevicesPage extends StatefulWidget {
-  // final DevicesPageViewModel model;
-  // const DevicesPage(this.model);
-
   @override
   _DevicesPageState createState() => _DevicesPageState();
 }
@@ -17,12 +14,12 @@ class _DevicesPageState extends State<DevicesPage> {
   Widget build(BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;
 
-    List<DeviceModel> physicalDevice = bloc.runningDevices
+    List<DeviceModel> physicalDevices = bloc.runningDevices
         .where((element) =>
             element.deviceManager is HardwareDeviceManager &&
             element.deviceManager is! SmartphoneDeviceManager)
         .toList();
-    List<DeviceModel> onlineService = bloc.runningDevices
+    List<DeviceModel> onlineServices = bloc.runningDevices
         .where((element) => element.deviceManager is OnlineServiceManager)
         .toList();
 
@@ -59,7 +56,6 @@ class _DevicesPageState extends State<DevicesPage> {
             child: StreamBuilder<UserTask>(
                 stream: AppTaskController().userTaskEvents,
                 builder: (context, AsyncSnapshot<UserTask> snapshot) {
-                  print('>> $snapshot');
                   return CustomScrollView(
                     slivers: [
                       SliverToBoxAdapter(
@@ -80,7 +76,7 @@ class _DevicesPageState extends State<DevicesPage> {
                               context, smartphoneDevice[index]);
                         }, childCount: smartphoneDevice.length),
                       ),
-                      physicalDevice.isEmpty
+                      physicalDevices.isEmpty
                           ? SliverToBoxAdapter(child: SizedBox.shrink())
                           : SliverToBoxAdapter(
                               child: Padding(
@@ -98,13 +94,13 @@ class _DevicesPageState extends State<DevicesPage> {
                             (BuildContext context, int index) {
                           return _buildPhysicalDeviceCard(
                               context,
-                              physicalDevice[index],
+                              physicalDevices[index],
                               setState,
                               selected,
                               selectedDevice);
-                        }, childCount: physicalDevice.length),
+                        }, childCount: physicalDevices.length),
                       ),
-                      onlineService.isEmpty
+                      onlineServices.isEmpty
                           ? SliverToBoxAdapter(child: SizedBox.shrink())
                           : SliverToBoxAdapter(
                               child: Padding(
@@ -119,19 +115,12 @@ class _DevicesPageState extends State<DevicesPage> {
                                         color: Theme.of(context).primaryColor)),
                               ),
                             ),
-                      SliverGrid(
+                      SliverList(
                         delegate: SliverChildBuilderDelegate(
                             (BuildContext context, int index) {
-                          return _buildOnlineDeviceCard(
-                              context, onlineService[index]);
-                        }, childCount: onlineService.length),
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          //maxCrossAxisExtent: MediaQuery.of(context).size.width / 2,
-                          mainAxisSpacing: 1,
-                          crossAxisSpacing: 1,
-                          childAspectRatio: 1.5,
-                        ),
+                          return _buildOnlineServiceCard(
+                              context, onlineServices[index]);
+                        }, childCount: onlineServices.length),
                       ),
                     ],
                   );
@@ -179,6 +168,54 @@ class _DevicesPageState extends State<DevicesPage> {
         bateryLevel.toString() + "%",
       )
     ]);
+  }
+
+  Widget _buildSmartphoneDeviceCard(BuildContext context, DeviceModel device) {
+    return Center(
+      child: Card(
+        margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        elevation: 2,
+        child: FutureBuilder<Map<String, String?>>(
+            future: device.phoneInfo,
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) {
+                return CircularProgressIndicator();
+              } else {
+                return Column(
+                  children: [
+                    ListTile(
+                      enableFeedback: false,
+                      leading: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [device.icon!],
+                      ),
+                      title: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(snapshot.data!["name"]!),
+                          ]),
+                      subtitle: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(snapshot.data!["model"]! +
+                              " - " +
+                              snapshot.data!["version"]!),
+                          SizedBox(height: 1),
+                          _showBateryPercentage(context, device.batteryLevel!,
+                              scale: 0.9),
+                        ],
+                      ),
+                      isThreeLine: true,
+                    ),
+                  ],
+                );
+              }
+            }),
+      ),
+    );
   }
 
   Widget _buildPhysicalDeviceCard(BuildContext context, DeviceModel device,
@@ -247,86 +284,43 @@ class _DevicesPageState extends State<DevicesPage> {
     );
   }
 
-  Widget _buildSmartphoneDeviceCard(BuildContext context, DeviceModel device) {
+  Widget _buildOnlineServiceCard(BuildContext context, DeviceModel device) {
+    RPLocalizations locale = RPLocalizations.of(context)!;
     return Center(
       child: Card(
         margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        elevation: 2,
-        child: FutureBuilder<Map<String, String?>>(
-            future: device.phoneInfo,
-            builder: (context, snapshot) {
-              if (!snapshot.hasData) {
-                return CircularProgressIndicator();
-              } else {
-                return Column(
+        elevation: 5,
+        child: StreamBuilder<DeviceStatus>(
+          stream: device.deviceEvents,
+          initialData: DeviceStatus.unknown,
+          builder: (context, AsyncSnapshot<DeviceStatus> snapshot) => Column(
+            children: [
+              ListTile(
+                leading: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [device.icon!],
+                ),
+                title: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(locale.translate(device.name!)),
+                    ]),
+                trailing: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    ListTile(
-                      enableFeedback: false,
-                      leading: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [device.icon!],
-                      ),
-                      title: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Text(snapshot.data!["name"]!),
-                          ]),
-                      subtitle: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(snapshot.data!["model"]! +
-                              " - " +
-                              snapshot.data!["version"]!),
-                          SizedBox(height: 1),
-                          _showBateryPercentage(context, device.batteryLevel!,
-                              scale: 0.9),
-                        ],
-                      ),
-                      isThreeLine: true,
-                    ),
+                    device.statusIcon is String
+                        ? Text(
+                            locale.translate(device.statusIcon).toUpperCase(),
+                            style: aboutCardTitleStyle.copyWith(
+                                color: Theme.of(context).primaryColor))
+                        : device.statusIcon
                   ],
-                );
-              }
-            }),
-      ),
-    );
-  }
-
-  Widget _buildOnlineDeviceCard(BuildContext context, DeviceModel device) {
-    RPLocalizations locale = RPLocalizations.of(context)!;
-    return Card(
-      margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      elevation: 2,
-      child: StreamBuilder<DeviceStatus>(
-        stream: device.deviceEvents,
-        initialData: DeviceStatus.unknown,
-        builder: (context, AsyncSnapshot<DeviceStatus> snapshot) => Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ListTile(
-              enableFeedback: false,
-              title: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    device.icon!,
-                    Text(locale.translate(device.name!)),
-                  ]),
-              subtitle: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(locale.translate(device.statusString)),
-                ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -119,7 +119,6 @@ class StudyAppBLoC {
               measure.type != VideoUserTask.VIDEO_TYPE &&
               measure.type != AudioUserTask.AUDIO_TYPE &&
               measure.type != SurveyUserTask.SURVEY_TYPE))) {
-        print(deployment!.measures);
         return true;
       } else
         return false;
@@ -253,7 +252,7 @@ class StudyAppBLoC {
         // await Permission.locationAlways.request();
       }
     }
-    print('$runtimeType - asking for permisions');
+    info('$runtimeType - asking for permisions');
     await Sensing().askForPermissions();
   }
 

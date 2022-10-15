@@ -321,8 +321,17 @@ class StudyAppBLoC {
   Iterable<DeviceModel> get runningDevices =>
       Sensing().runningDevices!.map((device) => DeviceModel(device));
 
-  void connectToDevice(DeviceModel device) {
-    Sensing().client?.deviceController.devices[device.type!]!.connect();
+  /// Map a selected device to the device in the protocol and connect to it.
+  void connectToDevice(BluetoothDevice selectedDevice, DeviceManager device) {
+    if (device is BTLEDeviceManager) {
+      device.btleAddress = selectedDevice.id.id;
+      device.btleName = selectedDevice.name;
+    }
+
+    // when the device id is updated, save the deployment
+    Sensing().controller?.saveDeployment();
+
+    device.connect();
   }
 
   /// Start sensing. Should only be called once.

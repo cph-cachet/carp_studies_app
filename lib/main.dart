@@ -4,30 +4,28 @@ import 'dart:async';
 import 'dart:math';
 import 'dart:convert';
 import 'dart:ui' as ui;
-
-import 'package:carp_serializable/carp_serializable.dart';
-import 'package:device_info_plus/device_info_plus.dart';
-import 'package:esense_flutter/esense.dart';
-import 'package:json_annotation/json_annotation.dart';
+import 'dart:io';
 
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart' hide TimeOfDay;
-
+import 'package:device_info_plus/device_info_plus.dart';
+import 'package:json_annotation/json_annotation.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:timeago/timeago.dart' as timeago;
-// import 'package:expandable/expandable.dart';
 import 'package:intl/intl.dart';
-import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:video_player/video_player.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
+import 'package:open_settings/open_settings.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 // import 'package:activity_recognition_flutter/activity_recognition_flutter.dart';
 import 'package:flutter_activity_recognition/flutter_activity_recognition.dart';
 
 // the CARP packages
+import 'package:carp_serializable/carp_serializable.dart';
 import 'package:carp_core/carp_core.dart';
 import 'package:carp_mobile_sensing/carp_mobile_sensing.dart';
 import 'package:carp_audio_package/media.dart';
@@ -39,13 +37,9 @@ import 'package:carp_survey_package/survey.dart';
 import 'package:carp_webservices/carp_services/carp_services.dart';
 import 'package:carp_webservices/carp_auth/carp_auth.dart';
 import 'package:carp_backend/carp_backend.dart';
-
-import 'package:research_package/research_package.dart';
-
 import 'package:carp_esense_package/esense.dart';
-
-import 'package:permission_handler/permission_handler.dart';
-// import 'package:permission_handler_platform_interface/permission_handler_platform_interface.dart';
+import 'package:carp_polar_package/carp_polar_package.dart';
+import 'package:research_package/research_package.dart';
 
 part 'blocs/app_bloc.dart';
 part 'blocs/common.dart';
@@ -116,7 +110,7 @@ void main() async {
   CarpMobileSensing();
 
   // make sure to have an instance of the WidgetsBinding, which is required
-  // to use platform channels to call the native code
+  // to use platform channels to call native code
   // see also >> https://stackoverflow.com/questions/63873338/what-does-widgetsflutterbinding-ensureinitialized-do/63873689
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -132,6 +126,6 @@ void main() async {
 /// or deploying it.
 final bloc = StudyAppBLoC(
   debugLevel: DebugLevel.DEBUG,
-  deploymentMode: DeploymentMode.CARP_PRODUCTION,
+  deploymentMode: DeploymentMode.LOCAL,
   forceSignOutAndStudyReload: false,
 );

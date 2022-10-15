@@ -2058,24 +2058,24 @@ class _DemographicSurvey implements Survey {
         RPChoice(text: "Prefer not to say", value: 7),
       ]);
 
-  RPTask get survey => RPOrderedTask(identifier: "demo_survey", steps: [
+  RPTask get survey => RPOrderedTask(identifier: "demographic_survey", steps: [
         RPQuestionStep(
-          identifier: "demo_1",
+          identifier: "demographic_1",
           title: "Which is your biological sex?",
           answerFormat: _sexChoices,
         ),
         RPQuestionStep(
-          identifier: "demo_2",
+          identifier: "demographic_2",
           title: "How old are you?",
           answerFormat: _ageChoices,
         ),
         RPQuestionStep(
-          identifier: "demo_3",
+          identifier: "demographic_3",
           title: "Do you have any of these medical conditions?",
           answerFormat: _medicalChoices,
         ),
         RPQuestionStep(
-          identifier: "demo_4",
+          identifier: "demographic_4",
           title: "Do you, or have you, ever smoked (including e-cigarettes)?",
           answerFormat: _smokeChoices,
         ),
@@ -2109,7 +2109,7 @@ class _SymptomsSurvey implements Survey {
 
   RPTask get survey => RPOrderedTask(identifier: "symptoms_survey", steps: [
         RPQuestionStep(
-          identifier: "sym_1",
+          identifier: "symptoms_1",
           title: "Do you have any of the following symptoms today?",
           answerFormat: _symptomsChoices,
         ),

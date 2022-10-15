@@ -749,43 +749,45 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
 
       _protocol!.addTriggeredTask(
           ImmediateTrigger(),
-          BackgroundTask()
-            ..addMeasures([
-              Measure(type: SensorSamplingPackage.LIGHT),
-              Measure(type: SensorSamplingPackage.PEDOMETER),
-              Measure(type: DeviceSamplingPackage.MEMORY),
-              Measure(type: DeviceSamplingPackage.DEVICE),
-              Measure(type: DeviceSamplingPackage.BATTERY),
-              Measure(type: DeviceSamplingPackage.SCREEN),
-            ]),
+          BackgroundTask(measures: [
+            Measure(type: SensorSamplingPackage.LIGHT),
+            Measure(type: SensorSamplingPackage.PEDOMETER),
+            Measure(type: DeviceSamplingPackage.MEMORY),
+            Measure(type: DeviceSamplingPackage.DEVICE),
+            Measure(type: DeviceSamplingPackage.BATTERY),
+            Measure(type: DeviceSamplingPackage.SCREEN),
+            Measure(type: ContextSamplingPackage.ACTIVITY),
+          ]),
           phone);
 
-      // Add a background task that collects location on a regular basis
+      // a background task that collects location on a regular basis
+      // using the location service
       _protocol?.addTriggeredTask(
           IntervalTrigger(period: Duration(minutes: 5)),
-          BackgroundTask()
-            ..addMeasure(Measure(type: ContextSamplingPackage.LOCATION)),
+          BackgroundTask(
+              measures: [Measure(type: ContextSamplingPackage.LOCATION)]),
           locationService);
 
-      // Add a background task that continously collects geolocation and mobility
+      // a background task that continously collects geolocation and mobility
+      // using the location service
       _protocol?.addTriggeredTask(
           ImmediateTrigger(),
-          BackgroundTask()
-            ..addMeasures([
-              //Measure(type: ContextSamplingPackage.GEOLOCATION),
-              Measure(type: ContextSamplingPackage.ACTIVITY),
-              Measure(type: ContextSamplingPackage.MOBILITY),
-            ]),
-          phone);
+          BackgroundTask(measures: [
+            //Measure(type: ContextSamplingPackage.GEOLOCATION),
+            Measure(type: ContextSamplingPackage.MOBILITY),
+          ]),
+          locationService);
 
-      // Add a background task that collects weather every 30 miutes.
+      // a background task that collects weather every 30 miutes.
+      // using the weather service
       _protocol?.addTriggeredTask(
           IntervalTrigger(period: Duration(minutes: 30)),
           BackgroundTask()
             ..addMeasure(Measure(type: ContextSamplingPackage.WEATHER)),
           weatherService);
 
-      // Add a background task that air quality every 30 miutes.
+      // a background task that air quality every 30 miutes.
+      // using the air quality service
       _protocol?.addTriggeredTask(
           IntervalTrigger(period: Duration(minutes: 30)),
           BackgroundTask()
@@ -797,21 +799,19 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
       // eSense
       _protocol!.addTriggeredTask(
           ImmediateTrigger(),
-          BackgroundTask()
-            ..addMeasures([
-              Measure(type: ESenseSamplingPackage.ESENSE_BUTTON),
-              Measure(type: ESenseSamplingPackage.ESENSE_SENSOR),
-            ]),
+          BackgroundTask(measures: [
+            Measure(type: ESenseSamplingPackage.ESENSE_BUTTON),
+            Measure(type: ESenseSamplingPackage.ESENSE_SENSOR),
+          ]),
           eSense);
 
       // Polar
       _protocol!.addTriggeredTask(
           ImmediateTrigger(),
-          BackgroundTask()
-            ..addMeasures([
-              Measure(type: PolarSamplingPackage.POLAR_HR),
-              Measure(type: PolarSamplingPackage.POLAR_ECG)
-            ]),
+          BackgroundTask(measures: [
+            Measure(type: PolarSamplingPackage.POLAR_HR),
+            Measure(type: PolarSamplingPackage.POLAR_ECG)
+          ]),
           polar);
 
       // APP TASKS
@@ -823,83 +823,83 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
       // First create all the tasks.
 
       var environmentTask = AppTask(
-        type: BackgroundSensingUserTask.ONE_TIME_SENSING_TYPE,
-        title: "Location, Weather & Air Quality",
-        description: "Collect location, weather and air quality",
-      )..addMeasures([
-          Measure(type: ContextSamplingPackage.LOCATION),
-          Measure(type: ContextSamplingPackage.WEATHER),
-          Measure(type: ContextSamplingPackage.AIR_QUALITY),
-        ]);
+          type: BackgroundSensingUserTask.ONE_TIME_SENSING_TYPE,
+          title: "Location, Weather & Air Quality",
+          description: "Collect location, weather and air quality",
+          measures: [
+            Measure(type: ContextSamplingPackage.LOCATION),
+            Measure(type: ContextSamplingPackage.WEATHER),
+            Measure(type: ContextSamplingPackage.AIR_QUALITY),
+          ]);
 
       var demographicsTask = RPAppTask(
-        type: SurveyUserTask.DEMOGRAPHIC_SURVEY_TYPE,
-        title: surveys.demographics.title,
-        description: surveys.demographics.description,
-        minutesToComplete: surveys.demographics.minutesToComplete,
-        expire: surveys.demographics.expire,
-        rpTask: surveys.demographics.survey,
-      )..addMeasure(Measure(type: ContextSamplingPackage.LOCATION));
+          type: SurveyUserTask.DEMOGRAPHIC_SURVEY_TYPE,
+          title: surveys.demographics.title,
+          description: surveys.demographics.description,
+          minutesToComplete: surveys.demographics.minutesToComplete,
+          expire: surveys.demographics.expire,
+          rpTask: surveys.demographics.survey,
+          measures: [Measure(type: ContextSamplingPackage.LOCATION)]);
 
       var symptomsTask = RPAppTask(
-        type: SurveyUserTask.SURVEY_TYPE,
-        title: surveys.symptoms.title,
-        description: surveys.symptoms.description,
-        minutesToComplete: surveys.symptoms.minutesToComplete,
-        expire: surveys.symptoms.expire,
-        notification: true,
-        rpTask: surveys.symptoms.survey,
-      )..addMeasure(Measure(type: ContextSamplingPackage.LOCATION));
+          type: SurveyUserTask.SURVEY_TYPE,
+          title: surveys.symptoms.title,
+          description: surveys.symptoms.description,
+          minutesToComplete: surveys.symptoms.minutesToComplete,
+          expire: surveys.symptoms.expire,
+          notification: true,
+          rpTask: surveys.symptoms.survey,
+          measures: [Measure(type: ContextSamplingPackage.LOCATION)]);
 
       var readingTask = AppTask(
-        type: AudioUserTask.AUDIO_TYPE,
-        title: "Reading",
-        description:
-            'In this small exercise we would like to collect sound data while you are reading.',
-        instructions: 'Please read the following text aloud.\n\n'
-            'Many, many years ago lived an emperor, who thought so much of new clothes that he spent all his money in order to obtain them; his only ambition was to be always well dressed. '
-            'He did not care for his soldiers, and the theatre did not amuse him; the only thing, in fact, he thought anything of was to drive out and show a new suit of clothes. '
-            'He had a coat for every hour of the day; and as one would say of a king "He is in his cabinet," so one could say of him, "The emperor is in his dressing-room."',
-        minutesToComplete: 3,
-      )..addMeasures([
-          Measure(type: MediaSamplingPackage.AUDIO),
-          Measure(type: ContextSamplingPackage.LOCATION)
-        ]);
+          type: AudioUserTask.AUDIO_TYPE,
+          title: "Reading",
+          description:
+              'In this small exercise we would like to collect sound data while you are reading.',
+          instructions: 'Please read the following text aloud.\n\n'
+              'Many, many years ago lived an emperor, who thought so much of new clothes that he spent all his money in order to obtain them; his only ambition was to be always well dressed. '
+              'He did not care for his soldiers, and the theatre did not amuse him; the only thing, in fact, he thought anything of was to drive out and show a new suit of clothes. '
+              'He had a coat for every hour of the day; and as one would say of a king "He is in his cabinet," so one could say of him, "The emperor is in his dressing-room."',
+          minutesToComplete: 3,
+          measures: [
+            Measure(type: MediaSamplingPackage.AUDIO),
+            Measure(type: ContextSamplingPackage.LOCATION)
+          ]);
 
       var coughingTask = AppTask(
-        type: AudioUserTask.AUDIO_TYPE,
-        title: "Coughing",
-        description:
-            'In this small exercise we would like to collect sound samples of coughing.',
-        instructions: 'Please cough 5 times.',
-        minutesToComplete: 1,
-      )..addMeasures([
-          Measure(type: MediaSamplingPackage.AUDIO),
-          Measure(type: ContextSamplingPackage.LOCATION),
-          Measure(type: ContextSamplingPackage.WEATHER),
-          Measure(type: ContextSamplingPackage.AIR_QUALITY)
-        ]);
+          type: AudioUserTask.AUDIO_TYPE,
+          title: "Coughing",
+          description:
+              'In this small exercise we would like to collect sound samples of coughing.',
+          instructions: 'Please cough 5 times.',
+          minutesToComplete: 1,
+          measures: [
+            Measure(type: MediaSamplingPackage.AUDIO),
+            Measure(type: ContextSamplingPackage.LOCATION),
+            Measure(type: ContextSamplingPackage.WEATHER),
+            Measure(type: ContextSamplingPackage.AIR_QUALITY)
+          ]);
 
       var imageTask = AppTask(
-        type: IMAGE_TYPE,
-        title: "Scars",
-        description: "Take a picture of your scars",
-        instructions: "Please take a picture of the scars in your skin",
-        minutesToComplete: 3,
-      )..addMeasure(Measure(type: MediaSamplingPackage.IMAGE));
+          type: IMAGE_TYPE,
+          title: "Scars",
+          description: "Take a picture of your scars",
+          instructions: "Please take a picture of the scars in your skin",
+          minutesToComplete: 3,
+          measures: [Measure(type: MediaSamplingPackage.IMAGE)]);
 
       var videoTask = AppTask(
-        type: VIDEO_TYPE,
-        title: "Surrounding",
-        description: "Take a video of your surroundings",
-        instructions: "Please take a video of whatever is next to you",
-        minutesToComplete: 3,
-        notification: true,
-      )..addMeasure(Measure(type: MediaSamplingPackage.VIDEO));
+          type: VIDEO_TYPE,
+          title: "Surrounding",
+          description: "Take a video of your surroundings",
+          instructions: "Please take a video of whatever is next to you",
+          minutesToComplete: 3,
+          notification: true,
+          measures: [Measure(type: MediaSamplingPackage.VIDEO)]);
 
       // Then add all the tasks to the protocol to trigger once.
       _protocol!.addTriggeredTasks(
-          ImmediateTrigger(),
+          OneTimeTrigger(),
           [
             environmentTask,
             demographicsTask,

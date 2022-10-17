@@ -10,7 +10,7 @@ class StudyProgressCardViewModel extends ViewModel {
   int get taskCompleted => AppTaskController().taskCompleted;
 
   /// The number of tasks expired so far.
-  //int get taskExpired => AppTaskController().taskExpired;
+  int get taskExpired => AppTaskController().taskExpired;
 
   /// The number of tasks pending so far.
   int get taskPending => AppTaskController().taskPending;
@@ -38,7 +38,7 @@ class StudyProgressCardViewModel extends ViewModel {
 
   void updateProgress() {
     _progressTable['completed'] = taskCompleted;
-    //_progressTable['expired'] = taskExpired;
+    _progressTable['expired'] = taskExpired;
     _progressTable['pending'] = taskPending;
   }
 }

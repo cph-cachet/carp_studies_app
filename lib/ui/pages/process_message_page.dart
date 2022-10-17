@@ -29,22 +29,24 @@ class ProcessMessagePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("in message page");
     Image messageImage() {
       final Image image;
       switch (this.statusType) {
         case ProcessStatus.DONE:
           image = Image(
-              image: AssetImage('assets/icons/done.png'), height: MediaQuery.of(context).size.height * 0.35);
+              image: AssetImage('assets/icons/done.png'),
+              height: MediaQuery.of(context).size.height * 0.35);
           break;
         case ProcessStatus.ERROR:
           image = Image(
-              image: AssetImage('assets/icons/error.png'), height: MediaQuery.of(context).size.height * 0.35);
+              image: AssetImage('assets/icons/error.png'),
+              height: MediaQuery.of(context).size.height * 0.35);
           break;
         case ProcessStatus.OTHER:
         default:
           image = Image(
-              image: AssetImage('assets/icons/info.png'), height: MediaQuery.of(context).size.height * 0.35);
+              image: AssetImage('assets/icons/info.png'),
+              height: MediaQuery.of(context).size.height * 0.35);
           break;
       }
 
@@ -62,9 +64,12 @@ class ProcessMessagePage extends StatelessWidget {
                 SizedBox(height: 40),
                 messageImage(),
                 SizedBox(height: 20),
-                Center(child: Text(locale.translate(this.title), style: audioTitleStyle)),
+                Center(
+                    child: Text(locale.translate(this.title),
+                        style: audioTitleStyle)),
                 SizedBox(height: 10),
-                Text(locale.translate(this.description), style: audioContentStyle),
+                Text(locale.translate(this.description),
+                    style: audioContentStyle),
               ]),
         ),
         bottomSheet: Row(
@@ -80,7 +85,8 @@ class ProcessMessagePage extends StatelessWidget {
                             Navigator.of(context).pop();
                           },
                           child: Text(locale.translate('cancel').toUpperCase(),
-                              style: TextStyle(color: Theme.of(context).primaryColor))),
+                              style: TextStyle(
+                                  color: Theme.of(context).primaryColor))),
                       SizedBox(width: 10),
                     ],
                   )
@@ -89,7 +95,8 @@ class ProcessMessagePage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
-                  style: ElevatedButton.styleFrom(backgroundColor: Theme.of(context).primaryColor),
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Theme.of(context).primaryColor),
                   onPressed: () {
                     this.actionFunction();
                   },

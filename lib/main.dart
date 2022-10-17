@@ -68,6 +68,7 @@ part 'view_models/data_viz_page_model.dart';
 part 'view_models/cards/activity_data_model.dart';
 part 'view_models/cards/mobility_data_model.dart';
 part 'view_models/cards/steps_data_model.dart';
+part 'view_models/cards/heart_rate_data_model.dart';
 part 'view_models/cards/measures_data_model.dart';
 part 'view_models/cards/task_data_model.dart';
 part 'view_models/cards/study_progress_data_model.dart';
@@ -100,6 +101,7 @@ part 'ui/widgets/charts_legend.dart';
 part 'ui/widgets/details_banner.dart';
 
 part 'ui/cards/steps_card.dart';
+part 'ui/cards/heart_rate_card.dart';
 part 'ui/cards/activity_card.dart';
 part 'ui/cards/mobility_card.dart';
 part 'ui/cards/measures_card.dart';

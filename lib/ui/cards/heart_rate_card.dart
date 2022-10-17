@@ -1,5 +1,4 @@
 part of carp_study_app;
-
 class HeartRateCardWidget extends StatefulWidget {
   final HeartRateCardViewModel model;
   final List<Color> colors;

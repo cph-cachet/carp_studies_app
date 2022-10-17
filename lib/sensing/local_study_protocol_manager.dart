@@ -898,17 +898,13 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           measures: [Measure(type: MediaSamplingPackage.VIDEO)]);
 
       // Then add all the tasks to the protocol to trigger once.
-      _protocol!.addTriggeredTasks(
-          OneTimeTrigger(),
-          [
-            environmentTask,
-            demographicsTask,
-            symptomsTask,
-            readingTask,
-            coughingTask,
-            imageTask,
-          ],
-          phone);
+
+      _protocol!.addTriggeredTask(OneTimeTrigger(), environmentTask, phone);
+      _protocol!.addTriggeredTask(OneTimeTrigger(), demographicsTask, phone);
+      _protocol!.addTriggeredTask(OneTimeTrigger(), symptomsTask, phone);
+      _protocol!.addTriggeredTask(OneTimeTrigger(), readingTask, phone);
+      _protocol!.addTriggeredTask(OneTimeTrigger(), coughingTask, phone);
+      _protocol!.addTriggeredTask(OneTimeTrigger(), imageTask, phone);
 
       // And then add a set of user task triggers to make sure that the
       // task are added to the queque again when done

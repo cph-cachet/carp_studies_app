@@ -5,7 +5,7 @@ class StudyProgressCardWidget extends StatefulWidget {
 
   final List<Color> colors;
   StudyProgressCardWidget(this.model,
-      {this.colors = const [CACHET.BLUE_1, CACHET.BLUE_3]}); // CACHET.RED_1,
+      {this.colors = const [CACHET.BLUE_1, CACHET.BLUE_3, CACHET.RED_1]});
 
   @override
   _StudyProgressCardWidgetState createState() =>
@@ -72,6 +72,7 @@ class _StudyProgressCardWidgetState extends State<StudyProgressCardWidget> {
                                 .toList(),
                             colors: widget.colors,
                             order: OrderType.None,
+                            labelOrientation: LabelOrientation.horizontal,
                           )),
                     ],
                   );

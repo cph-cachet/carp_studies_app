@@ -10,6 +10,7 @@ class DataVisualizationPageViewModel extends ViewModel {
   final TaskCardViewModel _videoCardDataModel = TaskCardViewModel(VideoUserTask.VIDEO_TYPE);
   final TaskCardViewModel _imageCardDataModel = TaskCardViewModel(VideoUserTask.IMAGE_TYPE);
   final StudyProgressCardViewModel _studyProgressCardDataModel = StudyProgressCardViewModel();
+  final HeartRateCardViewModel _heartRateCardViewModel = HeartRateCardViewModel();
 
   ActivityCardViewModel get activityCardDataModel => _activityCardDataModel;
   StepsCardViewModel get stepsCardDataModel => _stepsCardDataModel;
@@ -19,6 +20,7 @@ class DataVisualizationPageViewModel extends ViewModel {
   TaskCardViewModel get audioCardDataModel => _audioCardDataModel;
   TaskCardViewModel get videoCardDataModel => _videoCardDataModel;
   TaskCardViewModel get imageCardDataModel => _imageCardDataModel;
+  HeartRateCardViewModel get heartRateCardViewModel => _heartRateCardViewModel;
 
   StudyProgressCardViewModel get studyProgressCardDataModel => _studyProgressCardDataModel;
 

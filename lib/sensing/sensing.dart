@@ -64,6 +64,7 @@ class Sensing {
     SamplingPackageRegistry().register(SurveySamplingPackage());
     //SamplingPackageRegistry.register(HealthSamplingPackage());
     SamplingPackageRegistry().register(ESenseSamplingPackage());
+    SamplingPackageRegistry().register(PolarSamplingPackage());
 
     // create and register external data managers
     DataManagerRegistry().register(CarpDataManager());
@@ -146,11 +147,8 @@ class Sensing {
     // Configure the controller
     await controller?.configure();
 
-    // Start samplling
-    controller?.start();
-
     // listening on the data stream and print them as json to the debug console
-    _controller!.data.listen((data) => debug(toJsonString(data)));
+    // _controller!.data.listen((data) => debug(toJsonString(data)));
 
     info('$runtimeType initialized');
   }

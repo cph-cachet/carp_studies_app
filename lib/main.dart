@@ -40,6 +40,7 @@ import 'package:carp_backend/carp_backend.dart';
 import 'package:carp_esense_package/esense.dart';
 import 'package:carp_polar_package/carp_polar_package.dart';
 import 'package:research_package/research_package.dart';
+import 'package:cognition_package/cognition_package.dart';
 
 part 'blocs/app_bloc.dart';
 part 'blocs/common.dart';
@@ -106,8 +107,9 @@ part 'main.g.dart';
 
 late CarpStudyApp app;
 void main() async {
-  // initialize CAMS
+  // initialize CAMS and Cognition Packages (loading json deserialization functions)
   CarpMobileSensing();
+  CognitionPackage();
 
   // make sure to have an instance of the WidgetsBinding, which is required
   // to use platform channels to call native code

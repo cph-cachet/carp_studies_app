@@ -7,7 +7,7 @@
     "pages.task_list.task.time_to_complete": "min to complete",
     "pages.task_list.task.auto_complete": "Completes automatically",
     "pages.task_list.task.days_remaining": "days remaining",
-    "pages.task_list.no_tasks": "There are no tasks for you at the moment.\nCheck again later",
+    "pages.task_list.no_tasks": "There are no tasks for you at the moment.\nPlease check again later.",
     "pages.data_viz.hello": "Hello",
     "pages.data_viz.thanks": "Thank you for participating in this study. This is a summary of your contribution to the study.",
     "pages.data_viz.no_data": "No data to show",

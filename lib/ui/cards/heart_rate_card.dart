@@ -2,7 +2,7 @@ part of carp_study_app;
 class HeartRateCardWidget extends StatefulWidget {
   final HeartRateCardViewModel model;
   final List<Color> colors;
-  final List<charts.Series<DailyHeartRate, String>> seriesList;
+  final List<charts.Series<HourlyHeartRate, String>> seriesList;
 
   HeartRateCardWidget(this.seriesList, this.model,
       {this.colors = const [CACHET.BLUE_1]});
@@ -10,17 +10,17 @@ class HeartRateCardWidget extends StatefulWidget {
   factory HeartRateCardWidget.withSampleData(HeartRateCardViewModel model) =>
       HeartRateCardWidget(_createChartList(model, [CACHET.BLUE_1]), model);
 
-  static List<charts.Series<DailyHeartRate, String>> _createChartList(
+  static List<charts.Series<HourlyHeartRate, String>> _createChartList(
     HeartRateCardViewModel model,
     List<Color> colors,
   ) =>
       [
-        charts.Series<DailyHeartRate, String>(
+        charts.Series<HourlyHeartRate, String>(
           colorFn: (d, i) => charts.ColorUtil.fromDartColor(colors[0]),
           id: 'DailyHeartRateList',
-          data: model.HeartRate,
-          domainFn: (DailyHeartRate HeartRate, _) => HeartRate.toString(),
-          measureFn: (DailyHeartRate HeartRate, _) => HeartRate.HeartRate,
+          data: model.hourlyHeartRate
+          domainFn: (HourlyHeartRate HeartRate, _) => HeartRate.toString(),
+          measureFn: (HourlyHeartRate HeartRate, _) => HeartRate.hourlyHeartRate,
         )
       ];
 
@@ -38,7 +38,7 @@ class _HeartRateCardWidgetState extends State<HeartRateCardWidget> {
   @override
   void initState() {
     // Get current day HeartRate
-    _selectedHeartRate = widget.model.weeklyHeartRate[DateTime.now().weekday];
+    _selectedHeartRate = widget.model.hourlyHeartRate[DateTime.now().weekday];
     super.initState();
   }
 
@@ -56,7 +56,7 @@ class _HeartRateCardWidgetState extends State<HeartRateCardWidget> {
           child: Column(
             children: <Widget>[
               StreamBuilder(
-                stream: widget.model.pedometerEvents,
+                stream: widget.model.,
                 builder: (context, AsyncSnapshot<DataPoint> snapshot) {
                   return Column(
                     children: [

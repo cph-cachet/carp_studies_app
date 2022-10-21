@@ -18,7 +18,7 @@ class HeartRateCardWidget extends StatefulWidget {
         charts.Series<HourlyHeartRate, String>(
           colorFn: (d, i) => charts.ColorUtil.fromDartColor(colors[0]),
           id: 'DailyHeartRateList',
-          data: model.hourlyHeartRate
+          data: model.hourlyHeartRate,
           domainFn: (HourlyHeartRate HeartRate, _) => HeartRate.toString(),
           measureFn: (HourlyHeartRate HeartRate, _) => HeartRate.hourlyHeartRate,
         )
@@ -33,12 +33,12 @@ class _HeartRateCardWidgetState extends State<HeartRateCardWidget> {
   charts.RenderSpec<num> renderSpecNum = AxisTheme.axisThemeNum();
   charts.RenderSpec<String> renderSpecString = AxisTheme.axisThemeOrdinal();
 
-  int? _selectedHeartRate = 0;
+  HeartRate? _selectedHeartRate = HeartRate(0);
 
   @override
   void initState() {
     // Get current day HeartRate
-    _selectedHeartRate = widget.model.hourlyHeartRate[DateTime.now().weekday];
+    _selectedHeartRate = widget.model.hourlyHeartRate[TimeOfDay.now()];
     super.initState();
   }
 

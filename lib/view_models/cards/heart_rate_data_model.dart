@@ -5,14 +5,14 @@ class HeartRateCardViewModel extends SerializableViewModel<HourlyHeartRate> {
   HourlyHeartRate createModel() => HourlyHeartRate();
 
   /// A map of weekly HeartRate organized by the day of the week.
-  Map<TimeOfDay, CurrentHeartRate> get hourlyHeartRate => model.hourlyHeartRate;
+  Map<TimeOfDay, HeartRate> get hourlyHeartRate => model.hourlyHeartRate;
 
   /// The list of HeartRate.
-  List<HourlyHeartRate> get currentHeartRate => model.heartRate;
+  HeartRate get currentHeartRate => model.heartRate;
 
   /// Stream of pedometer (step) [DataPoint] measures.
   Stream<DataPoint>? get heartRateEvents =>
-      controller?.data.where((dataPoint) => dataPoint.data is CurrentHeartRate);
+      controller?.data.where((dataPoint) => dataPoint.data is HeartRate);
 
   void init(SmartphoneDeploymentController controller) {
     super.init(controller);
@@ -28,19 +28,12 @@ class HourlyHeartRate extends DataModel {
   ///
   /// In accordance with Dart [DateTime] a week starts with Monday,
   /// which has the value 1.
-  Map<TimeOfDay, CurrentHeartRate> hourlyHeartRate = {};
+  Map<TimeOfDay, HeartRate> hourlyHeartRate = {};
 
   HourlyHeartRate();
 
-  /// The list of HeartRate listed pr. weekday.
-  List<HourlyHeartRate> get heartRate => hourlyHeartRate.entries
-      .map((key, value) => {
-        return [key, value];
-        })
-      .toList();
-
-  void increateStepCount(TimeOfDay weekday, int heartRate) =>
-      hourlyHeartRate[weekday] = (hourlyHeartRate[weekday] ?? 0) + heartRate;
+  /// The current heart rate
+  HeartRate get heartRate => hourlyHeartRate.values.last;
 
   String toString() {
     String _str = 'time | heart rate\n';
@@ -62,9 +55,8 @@ class HourlyHeartRate extends DataModel {
   }
 }
 
-class CurrentHeartRate extends HourlyMeasure {
+class HeartRate {
   final int heartRate;
 
-  CurrentHeartRate(TimeOfDay time, this.heartRate)
-      : super(time.hour, time.minute);
+  HeartRate(this.heartRate);
 }

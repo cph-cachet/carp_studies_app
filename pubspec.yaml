@@ -41,27 +41,6 @@ dependencies:
     sdk: flutter
   carp_health_package: ^2.4.0
 
-# Overriding carp libraries to use a local copy
-# dependency_overrides:
-#   carp_core:
-#     path: ../carp/carp.sensing-flutter/carp_core/
-#   carp_mobile_sensing:
-#     path: ../carp/carp.sensing-flutter/carp_mobile_sensing/
-#   carp_context_package:
-#     path: ../carp/carp.sensing-flutter/packages/carp_context_package/
-#   # carp_connectivity_package:
-#   #   path: ../carp/carp.sensing-flutter/packages/carp_connectivity_package/
-#   carp_audio_package:
-#     path: ../carp/carp.sensing-flutter/packages/carp_audio_package/
-#   carp_esense_package:
-#     path: ../carp/carp.sensing-flutter/packages/carp_esense_package/
-#   carp_survey_package:
-#     path: ../carp/carp.sensing-flutter/packages/carp_survey_package/
-#   carp_backend:
-#     path: ../carp/carp.sensing-flutter/backends/carp_backend/
-#   carp_webservices:
-#     path: ../carp/carp.sensing-flutter/backends/carp_webservices/
-
 
 dev_dependencies:
   # flutter_test:

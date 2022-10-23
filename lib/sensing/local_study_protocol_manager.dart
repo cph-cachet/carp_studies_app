@@ -833,7 +833,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           ]);
 
       var demographicsTask = RPAppTask(
-          type: SurveyUserTask.DEMOGRAPHIC_SURVEY_TYPE,
+          type: SurveyUserTask.SURVEY_TYPE,
           title: surveys.demographics.title,
           description: surveys.demographics.description,
           minutesToComplete: surveys.demographics.minutesToComplete,
@@ -897,6 +897,48 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           notification: true,
           measures: [Measure(type: MediaSamplingPackage.VIDEO)]);
 
+      var parkinsonsTask = RPAppTask(
+          type: SurveyUserTask.COGNITIVE_ASSESSMENT_TYPE,
+          title: "Parkinsons Assessment",
+          description:
+              "A simple task assessing cognitive functioning and finger tapping speed.",
+          minutesToComplete: 3,
+          rpTask: RPOrderedTask(
+            identifier: "parkinsons_assessment",
+            steps: [
+              RPInstructionStep(
+                  identifier: 'parkinsons_instruction',
+                  title: "Parkinsons Disease Assessment",
+                  text:
+                      "In the following pages, you will be asked to solve two simple test which will help assess your symptoms on a daily basis. "
+                      "Each test has an instruction page, which you should read carefully before starting the test.\n\n"
+                      "Please sit down comfortably and hold the phone in one hand while performing the test with the other."),
+              RPFlankerActivity(
+                identifier: 'flanker_1',
+                lengthOfTest: 30,
+                numberOfCards: 10,
+              ),
+              RPTappingActivity(
+                identifier: 'tapping_1',
+                lengthOfTest: 10,
+              )
+            ],
+          ),
+          measures: [
+            Measure(type: SensorSamplingPackage.ACCELEROMETER),
+            Measure(type: SensorSamplingPackage.GYROSCOPE),
+          ]);
+
+      var parkinsonsSurvey = RPAppTask(
+          type: SurveyUserTask.SURVEY_TYPE,
+          title: surveys.parkinsons.title,
+          description: surveys.parkinsons.description,
+          minutesToComplete: surveys.parkinsons.minutesToComplete,
+          expire: surveys.parkinsons.expire,
+          notification: true,
+          rpTask: surveys.parkinsons.survey,
+          measures: [Measure(type: ContextSamplingPackage.LOCATION)]);
+
       // Then add all the tasks to the protocol to trigger once.
 
       _protocol!.addTriggeredTask(OneTimeTrigger(), environmentTask, phone);
@@ -905,6 +947,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
       _protocol!.addTriggeredTask(OneTimeTrigger(), readingTask, phone);
       _protocol!.addTriggeredTask(OneTimeTrigger(), coughingTask, phone);
       _protocol!.addTriggeredTask(OneTimeTrigger(), imageTask, phone);
+      _protocol!.addTriggeredTask(OneTimeTrigger(), parkinsonsTask, phone);
 
       // And then add a set of user task triggers to make sure that the
       // task are added to the queque again when done
@@ -945,6 +988,21 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           UserTaskTrigger(
               taskName: imageTask.name, resumeCondition: UserTaskState.done),
           imageTask,
+          phone);
+
+      _protocol!.addTriggeredTask(
+          UserTaskTrigger(
+              taskName: parkinsonsTask.name,
+              resumeCondition: UserTaskState.done),
+          parkinsonsTask,
+          phone);
+
+      // also trigger the Parkinsons survey, when the task is done
+      _protocol!.addTriggeredTask(
+          UserTaskTrigger(
+              taskName: parkinsonsTask.name,
+              resumeCondition: UserTaskState.done),
+          parkinsonsSurvey,
           phone);
     }
 

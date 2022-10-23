@@ -4,10 +4,10 @@ class MediaCardWidget extends StatefulWidget {
   final List<TaskCardViewModel> modelsList;
   final List<Color> colors;
   MediaCardWidget(this.modelsList, {this.colors = CACHET.COLOR_LIST});
-  _MediaCardWidgetState createState() => _MediaCardWidgetState();
+  MediaCardWidgetState createState() => MediaCardWidgetState();
 }
 
-class _MediaCardWidgetState extends State<MediaCardWidget> {
+class MediaCardWidgetState extends State<MediaCardWidget> {
   // static List<charts.Series<TaskCount, String>> _createChartList(
   //         BuildContext context, TaskCardDataModel model, List<Color> colors) =>
   //     [
@@ -48,26 +48,33 @@ class _MediaCardWidgetState extends State<MediaCardWidget> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               SizedBox(height: 5),
-                              Text(total.toString() + ' MEDIA', style: dataCardTitleStyle),
+                              Text(total.toString() + ' MEDIA',
+                                  style: dataCardTitleStyle),
                               Column(
                                   children: widget.modelsList
                                       .asMap()
                                       .entries
                                       .map((entry) => Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
                                             children: [
                                               SizedBox(height: 15),
                                               Text(
                                                 '${entry.value.tasksDone} ' +
-                                                    locale.translate('cards.${entry.value.taskType}.title'),
-                                                style: dataCardTitleStyle.copyWith(fontSize: 14),
+                                                    locale.translate(
+                                                        'cards.${entry.value.taskType}.title'),
+                                                style: dataCardTitleStyle
+                                                    .copyWith(fontSize: 14),
                                               ),
                                               HorizontalBar(
                                                   names: entry.value.taskCount
-                                                      .map((task) => locale.translate(task.title))
+                                                      .map((task) =>
+                                                          locale.translate(
+                                                              task.title))
                                                       .toList(),
-                                                  values:
-                                                      entry.value.taskCount.map((task) => task.size).toList(),
+                                                  values: entry.value.taskCount
+                                                      .map((task) => task.size)
+                                                      .toList(),
                                                   colors: CACHET.COLOR_LIST,
                                                   height: 18),
                                             ],

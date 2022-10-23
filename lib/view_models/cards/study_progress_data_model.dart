@@ -1,5 +1,6 @@
 part of carp_study_app;
 
+/// View model for the [StudyProgressCardWidget].
 class StudyProgressCardViewModel extends ViewModel {
   final Map<String, int> _progressTable = {};
 
@@ -31,7 +32,7 @@ class StudyProgressCardViewModel extends ViewModel {
   }
 
   String toString() {
-    String _str = 'TASKS PROGRESS\t| #\n';
+    String _str = 'STUDY PROGRESS\t| #\n';
     _progressTable.forEach((type, no) => _str += '$type\t| $no\n');
     return _str;
   }

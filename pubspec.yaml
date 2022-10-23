@@ -21,22 +21,23 @@ dependencies:
   # carp_polar_package: ^0.40.0
   carp_health_package: ^2.4.0
 
-  research_package: ^0.9.3
+  research_package: ^1.2.0
+  cognition_package: ^1.3.1
 
-  flutter_launcher_icons: ^0.9.1
+  flutter_launcher_icons: ^0.10.0
   url_launcher: ^6.1.5
   timeago: ^3.1.0
   expandable: ^5.0.1
   charts_flutter: ^0.12.0
   intl: ^0.17.0
   flutter_markdown: ^0.6.4
-  camera: ^0.9.4+11
+  camera: ^0.10.0
   video_player: ^2.2.7
   path_provider: ^2.0.2
   json_annotation: ^4.4.0
   app_settings: ^4.1.5
   flutter_blue_plus: ^1.1.2
-  device_info_plus: ^4.0.0
+  device_info_plus: ^7.0.0
   esense_flutter: ^0.6.1
   open_settings: ^2.0.0
 
@@ -67,7 +68,9 @@ dependencies:
 #     path: ../carp/carp.sensing-flutter/backends/carp_webservices/
 
 # Overriding carp libraries to use github branch
-# Remove this before release of app
+#
+# NOTE - you need to run "flutter pub upgrade" and "flutter pub get" in order to download the lastest
+# versions from Github.
 dependency_overrides:  
   carp_core:
     git:
@@ -89,11 +92,11 @@ dependency_overrides:
       url: https://github.com/cph-cachet/carp.sensing-flutter.git
       ref: develop
       path: packages/carp_survey_package/
-  # carp_connectivity_package:
-  #   git:
-  #     url: https://github.com/cph-cachet/carp.sensing-flutter.git
-  #     ref: develop
-  #     path: packages/carp_connectivity_package/
+  # # carp_connectivity_package:
+  # #   git:
+  # #     url: https://github.com/cph-cachet/carp.sensing-flutter.git
+  # #     ref: develop
+  # #     path: packages/carp_connectivity_package/
   carp_audio_package:
     git:
       url: https://github.com/cph-cachet/carp.sensing-flutter.git
@@ -119,12 +122,14 @@ dependency_overrides:
       url: https://github.com/cph-cachet/carp.sensing-flutter.git
       ref: develop
       path: backends/carp_webservices/
-  # research_package:
+  # research_package: 
   #   git:
   #     url: https://github.com/cph-cachet/research.package.git
   #     ref: dev-carp-core-0_40_0
-
-
+  # cognition_package: 
+  #   git:
+  #     url: https://github.com/cph-cachet/cognition_package.git
+  #     ref: develop
 
 dev_dependencies:
   # flutter_test:

@@ -26,10 +26,13 @@ class DataVisualizationPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        '${locale.translate('pages.data_viz.hello')} ${bloc.friendlyUsername}'.toUpperCase(),
-                        style: dataCardTitleStyle.copyWith(color: Theme.of(context).primaryColor),
+                        '${locale.translate('pages.data_viz.hello')} ${bloc.friendlyUsername}'
+                            .toUpperCase(),
+                        style: dataCardTitleStyle.copyWith(
+                            color: Theme.of(context).primaryColor),
                       ),
-                      Text(locale.translate('pages.data_viz.thanks'), style: aboutCardSubtitleStyle),
+                      Text(locale.translate('pages.data_viz.thanks'),
+                          style: aboutCardSubtitleStyle),
                       SizedBox(height: 15),
                     ],
                   ),
@@ -52,7 +55,7 @@ class DataVisualizationPage extends StatelessWidget {
     );
   }
 
-  // the list of cards, depending on what measures are defined in the study
+  // The list of cards, depending on what measures are defined in the study.
   // TODO - this needs to adjusted when more measures can be visualized
   List<Widget> get _dataVizCards {
     final List<Widget> widgets = [];
@@ -67,17 +70,25 @@ class DataVisualizationPage extends StatelessWidget {
     //if (bloc.hasMeasures()) widgets.add(MeasuresCardWidget(model.measuresCardDataModel));
 
     // check to show surveys stats
-    if (bloc.hasSurveys()) widgets.add(TaskCardWidget(model.surveysCardDataModel, chartType: "pie"));
+    if (bloc.hasSurveys())
+      widgets.add(TaskCardWidget(
+        model.surveysCardDataModel,
+        chartType: TaskCardChartType.pie,
+      ));
 
     List<TaskCardViewModel> mediaModelsList = [];
 
     // check what media types are in the study and add them to de media card
-    if (bloc.hasMeasure(MediaSamplingPackage.AUDIO)) mediaModelsList.add(model.audioCardDataModel);
-    if (bloc.hasMeasure(MediaSamplingPackage.VIDEO)) mediaModelsList.add(model.videoCardDataModel);
-    if (bloc.hasMeasure(MediaSamplingPackage.IMAGE)) mediaModelsList.add(model.imageCardDataModel);
-    if (mediaModelsList.isNotEmpty) widgets.add(MediaCardWidget(mediaModelsList));
+    if (bloc.hasMeasure(MediaSamplingPackage.AUDIO))
+      mediaModelsList.add(model.audioCardDataModel);
+    if (bloc.hasMeasure(MediaSamplingPackage.VIDEO))
+      mediaModelsList.add(model.videoCardDataModel);
+    if (bloc.hasMeasure(MediaSamplingPackage.IMAGE))
+      mediaModelsList.add(model.imageCardDataModel);
+    if (mediaModelsList.isNotEmpty)
+      widgets.add(MediaCardWidget(mediaModelsList));
 
-    // check to show devices stats
+    // check to show device data visualizations
     if (bloc.hasDevices()) {
       //TODO ADD DEVICES VIZ
     }

@@ -5,8 +5,11 @@ class StepsCardWidget extends StatefulWidget {
   final List<Color> colors;
   final List<charts.Series<DailySteps, String>> seriesList;
 
-  StepsCardWidget(this.seriesList, this.model,
-      {this.colors = const [CACHET.BLUE_1]});
+  StepsCardWidget(
+    this.seriesList,
+    this.model, {
+    this.colors = const [CACHET.BLUE_1],
+  });
 
   factory StepsCardWidget.withSampleData(StepsCardViewModel model) =>
       StepsCardWidget(_createChartList(model, [CACHET.BLUE_1]), model);
@@ -26,10 +29,10 @@ class StepsCardWidget extends StatefulWidget {
       ];
 
   @override
-  _StepsCardWidgetState createState() => _StepsCardWidgetState();
+  StepsCardWidgetState createState() => StepsCardWidgetState();
 }
 
-class _StepsCardWidgetState extends State<StepsCardWidget> {
+class StepsCardWidgetState extends State<StepsCardWidget> {
   // Axis render settings
   charts.RenderSpec<num> renderSpecNum = AxisTheme.axisThemeNum();
   charts.RenderSpec<String> renderSpecString = AxisTheme.axisThemeOrdinal();

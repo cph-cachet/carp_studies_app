@@ -33,7 +33,11 @@ class LocationUsageDialog {
       ),
       actions: [
         ElevatedButton(
-          onPressed: () async => Navigator.pop(context, true),
+          onPressed: () async {
+            await LocationManager().requestPermission();
+            // OpenSettings.openLocationSourceSetting(),
+            Navigator.pop(context, true);
+          },
           child: Text(locale.translate("dialog.location.allow")),
           style: ButtonStyle(
             backgroundColor:

@@ -1,5 +1,8 @@
 part of carp_study_app;
 
+/// State of Bluetoth connection UI.
+enum CurrentStep { scan, instructions, done }
+
 class DevicesPage extends StatefulWidget {
   @override
   DevicesPageState createState() => DevicesPageState();
@@ -7,7 +10,7 @@ class DevicesPage extends StatefulWidget {
 
 class DevicesPageState extends State<DevicesPage> {
   int selected = 40;
-  dynamic selectedDevice;
+  BluetoothDevice? selectedDevice;
   FlutterBluePlus flutterBlue = FlutterBluePlus.instance;
 
   @override
@@ -72,7 +75,7 @@ class DevicesPageState extends State<DevicesPage> {
                       SliverList(
                         delegate: SliverChildBuilderDelegate(
                             (BuildContext context, int index) {
-                          return _buildSmartphoneDeviceCard(
+                          return buildSmartphoneDeviceCard(
                               context, smartphoneDevice[index]);
                         }, childCount: smartphoneDevice.length),
                       ),
@@ -92,7 +95,7 @@ class DevicesPageState extends State<DevicesPage> {
                       SliverList(
                         delegate: SliverChildBuilderDelegate(
                             (BuildContext context, int index) {
-                          return _buildPhysicalDeviceCard(
+                          return buildPhysicalDeviceCard(
                               context,
                               physicalDevices[index],
                               setState,
@@ -118,7 +121,7 @@ class DevicesPageState extends State<DevicesPage> {
                       SliverList(
                         delegate: SliverChildBuilderDelegate(
                             (BuildContext context, int index) {
-                          return _buildOnlineServiceCard(
+                          return buildOnlineServiceCard(
                               context, onlineServices[index]);
                         }, childCount: onlineServices.length),
                       ),
@@ -170,7 +173,7 @@ class DevicesPageState extends State<DevicesPage> {
     ]);
   }
 
-  Widget _buildSmartphoneDeviceCard(BuildContext context, DeviceModel device) {
+  Widget buildSmartphoneDeviceCard(BuildContext context, DeviceModel device) {
     return Center(
       child: Card(
         margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
@@ -218,8 +221,13 @@ class DevicesPageState extends State<DevicesPage> {
     );
   }
 
-  Widget _buildPhysicalDeviceCard(BuildContext context, DeviceModel device,
-      setState, selected, selectedDevice) {
+  Widget buildPhysicalDeviceCard(
+    BuildContext context,
+    DeviceModel device,
+    setState,
+    selected,
+    BluetoothDevice? selectedDevice,
+  ) {
     RPLocalizations locale = RPLocalizations.of(context)!;
     return Center(
       child: Card(
@@ -266,9 +274,9 @@ class DevicesPageState extends State<DevicesPage> {
                   ),
                   onTap: () async {
                     if (device.status != DeviceStatus.connected)
-                      await _showConnectionDialog(
+                      await showConnectionDialog(
                         context,
-                        1,
+                        CurrentStep.scan,
                         device,
                         setState,
                         selected,
@@ -284,7 +292,7 @@ class DevicesPageState extends State<DevicesPage> {
     );
   }
 
-  Widget _buildOnlineServiceCard(BuildContext context, DeviceModel device) {
+  Widget buildOnlineServiceCard(BuildContext context, DeviceModel device) {
     RPLocalizations locale = RPLocalizations.of(context)!;
     return Center(
       child: Card(
@@ -326,13 +334,13 @@ class DevicesPageState extends State<DevicesPage> {
     );
   }
 
-  Future<void> _showConnectionDialog(
+  Future<void> showConnectionDialog(
     BuildContext context,
-    _currentStep,
+    CurrentStep currentStep,
     DeviceModel device,
     setState,
     selected,
-    selectedDevice,
+    BluetoothDevice? selectedDevice,
   ) async {
     RPLocalizations locale = RPLocalizations.of(context)!;
 
@@ -366,7 +374,7 @@ class DevicesPageState extends State<DevicesPage> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          stepTitle(_currentStep, device, context),
+                          stepTitle(currentStep, device, context),
                         ],
                       ),
                     ),
@@ -374,7 +382,7 @@ class DevicesPageState extends State<DevicesPage> {
                 ),
                 content: Container(
                   height: MediaQuery.of(context).size.height * 0.6,
-                  child: _currentStep == 1
+                  child: currentStep == CurrentStep.scan
                       ? Column(
                           children: [
                             Text(
@@ -438,56 +446,51 @@ class DevicesPageState extends State<DevicesPage> {
                           ],
                         )
                       : stepContent(
-                          _currentStep,
+                          currentStep,
                           device,
                           selectedDevice,
                           context,
                         ),
                 ),
                 contentPadding: EdgeInsets.symmetric(horizontal: 25),
-                // actions: stepActions(_currentStep, setState, device, context),
-                actions: _currentStep == 0
+                actions: currentStep == CurrentStep.scan
                     ? [
                         TextButton(
                             child: Text(locale
-                                .translate("pages.devices.connection.settings")
+                                .translate(
+                                    "pages.devices.connection.instructions")
                                 .toUpperCase()),
-                            onPressed: () =>
-                                OpenSettings.openBluetoothSetting()),
+                            onPressed: () => setState(() {
+                                  currentStep = CurrentStep.instructions;
+                                })),
                         TextButton(
                             child: Text(locale
-                                .translate("pages.devices.connection.ok")
+                                .translate("pages.devices.connection.next")
                                 .toUpperCase()),
-                            onPressed: () => {
-                                  setState(() {
-                                    _currentStep = 1;
-                                  })
-                                }
-                            //settings
-                            ),
+                            onPressed: () {
+                              if (selectedDevice != null) {
+                                setState(() {
+                                  currentStep = CurrentStep.done;
+                                });
+                              }
+                            }),
                       ]
-                    : _currentStep == 1
+                    : currentStep == CurrentStep.instructions
                         ? [
                             TextButton(
                                 child: Text(locale
                                     .translate(
-                                        "pages.devices.connection.instructions")
+                                        "pages.devices.connection.settings")
                                     .toUpperCase()),
-                                onPressed: () => setState(() {
-                                      _currentStep = 0;
-                                    })),
+                                onPressed: () =>
+                                    OpenSettings.openBluetoothSetting()),
                             TextButton(
                                 child: Text(locale
-                                    .translate("pages.devices.connection.next")
+                                    .translate("pages.devices.connection.ok")
                                     .toUpperCase()),
-                                onPressed: () => {
-                                      if (selectedDevice != null)
-                                        {
-                                          setState(() {
-                                            _currentStep = 2;
-                                          })
-                                        }
-                                    }),
+                                onPressed: () => setState(() {
+                                      currentStep = CurrentStep.scan;
+                                    })),
                           ]
                         : [
                             TextButton(
@@ -495,23 +498,22 @@ class DevicesPageState extends State<DevicesPage> {
                                     .translate("pages.devices.connection.back")
                                     .toUpperCase()),
                                 onPressed: () => setState(() {
-                                      _currentStep = 1;
+                                      currentStep = CurrentStep.scan;
                                     })),
                             TextButton(
                                 child: Text(locale
                                     .translate("pages.devices.connection.done")
                                     .toUpperCase()),
-                                onPressed: () => {
-                                      flutterBlue.stopScan(),
-                                      if (selectedDevice != null)
-                                        {
-                                          bloc.connectToDevice(
-                                            selectedDevice,
-                                            device.deviceManager,
-                                          ),
-                                          Navigator.of(context).pop(),
-                                        },
-                                    }),
+                                onPressed: () {
+                                  flutterBlue.stopScan();
+                                  if (selectedDevice != null) {
+                                    bloc.connectToDevice(
+                                      selectedDevice!,
+                                      device.deviceManager,
+                                    );
+                                    Navigator.of(context).pop();
+                                  }
+                                }),
                           ]);
           },
         );
@@ -519,46 +521,54 @@ class DevicesPageState extends State<DevicesPage> {
     );
   }
 
-  Widget stepTitle(_currentStep, device, context) {
+  Widget stepTitle(
+    CurrentStep currentStep,
+    DeviceModel device,
+    BuildContext context,
+  ) {
     RPLocalizations locale = RPLocalizations.of(context)!;
-    if (_currentStep == 0) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text(
-            locale.translate("pages.devices.connection.step.how_to.title") +
-                " " +
-                locale.translate(device.name!),
-            style: sectionTitleStyle.copyWith(
-                color: Theme.of(context).primaryColor),
-          ),
-        ],
-      );
-    } else if (_currentStep == 1) {
-      return Column(
-        children: [
-          Text(
-            locale.translate("pages.devices.connection.step.start.title"),
-            style: sectionTitleStyle.copyWith(
-                color: Theme.of(context).primaryColor),
-          ),
-        ],
-      );
-    } else
-      return Column(
-        children: [
-          Text(
-            locale.translate(device.name!) +
-                " " +
-                locale.translate("pages.devices.connection.step.confirm.title"),
-            style: sectionTitleStyle.copyWith(
-                color: Theme.of(context).primaryColor),
-          ),
-        ],
-      );
+
+    switch (currentStep) {
+      case CurrentStep.scan:
+        return Column(
+          children: [
+            Text(
+              locale.translate("pages.devices.connection.step.start.title"),
+              style: sectionTitleStyle.copyWith(
+                  color: Theme.of(context).primaryColor),
+            ),
+          ],
+        );
+      case CurrentStep.instructions:
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              locale.translate("pages.devices.connection.step.how_to.title") +
+                  " " +
+                  locale.translate(device.name!),
+              style: sectionTitleStyle.copyWith(
+                  color: Theme.of(context).primaryColor),
+            ),
+          ],
+        );
+      case CurrentStep.done:
+        return Column(
+          children: [
+            Text(
+              locale.translate(device.name!) +
+                  " " +
+                  locale
+                      .translate("pages.devices.connection.step.confirm.title"),
+              style: sectionTitleStyle.copyWith(
+                  color: Theme.of(context).primaryColor),
+            ),
+          ],
+        );
+    }
   }
 
-  Widget confirmDevice(BluetoothDevice device, BuildContext context) {
+  Widget confirmDevice(BluetoothDevice? device, BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;
     return Column(
       children: [
@@ -568,9 +578,7 @@ class DevicesPageState extends State<DevicesPage> {
             height: MediaQuery.of(context).size.height * 0.2),
         Text(
           (locale.translate("pages.devices.connection.step.confirm.1") +
-                  " '" +
-                  device.name +
-                  "' " +
+                  " '${device?.name}' " +
                   locale.translate("pages.devices.connection.step.confirm.2"))
               .trim(),
           style: aboutCardContentStyle,
@@ -605,10 +613,13 @@ class DevicesPageState extends State<DevicesPage> {
     );
   }
 
-  Widget stepContent(_currentStep, device, selectedDevice, context) {
-    if (_currentStep == 0)
-      return connectionInstructions(device, context);
-    else
-      return confirmDevice(selectedDevice, context);
-  }
+  Widget stepContent(
+    CurrentStep currentStep,
+    DeviceModel device,
+    BluetoothDevice? selectedDevice,
+    BuildContext context,
+  ) =>
+      (currentStep == CurrentStep.instructions)
+          ? connectionInstructions(device, context)
+          : confirmDevice(selectedDevice, context);
 }

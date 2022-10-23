@@ -248,7 +248,7 @@ class StudyAppBLoC {
                   context,
                   "ic.location.content",
                 ));
-        await LocationManager().requestPermission();
+        // await LocationManager().requestPermission();
       }
     }
     info('$runtimeType - asking for permisions');

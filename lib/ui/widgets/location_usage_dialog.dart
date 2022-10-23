@@ -34,8 +34,9 @@ class LocationUsageDialog {
       actions: [
         ElevatedButton(
           onPressed: () async {
-            await LocationManager().requestPermission();
-            // OpenSettings.openLocationSourceSetting(),
+            var status = //await LocationManager().requestPermission();
+                await Permission.locationAlways.request();
+            print('>> location status: $status');
             Navigator.pop(context, true);
           },
           child: Text(locale.translate("dialog.location.allow")),

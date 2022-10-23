@@ -35,6 +35,7 @@
     "pages.audio_task.play": "Por favor, presiona el botón de abajo cuando estés listo. ",
     "pages.audio_task.recording": "Grabando...",
     "pages.audio_task.recording_completed": "Grabación completada. Presiona el botón verde para guardar la grabación.\n\nSi deseas repetir la grabación, presiona el botón izquierdo.",
+    "pages.audio_task.done": "Hecho!",
     "pages.audio_task.discard": "¿Descartar resultados y salir? Discard results and quit?",
     "pages.audio_task.skip": "Saltar",
     "widgets.study_card.no_description": "Descripción no disponible.",

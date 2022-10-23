@@ -2,7 +2,7 @@ part of carp_study_app;
 
 class InformedConsentPage extends StatefulWidget {
   final InformedConsentState state = InformedConsentState();
-  InformedConsentPage({Key? key}) : super(key: key);
+  InformedConsentPage({super.key});
   InformedConsentState createState() => state;
 }
 

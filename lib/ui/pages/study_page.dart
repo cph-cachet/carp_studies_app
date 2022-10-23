@@ -5,10 +5,10 @@ class StudyPage extends StatefulWidget {
   const StudyPage(this.model);
 
   @override
-  _StudyPageState createState() => _StudyPageState();
+  StudyPageState createState() => StudyPageState();
 }
 
-class _StudyPageState extends State<StudyPage> {
+class StudyPageState extends State<StudyPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(

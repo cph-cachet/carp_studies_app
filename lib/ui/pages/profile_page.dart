@@ -215,8 +215,7 @@ class ProfilePageState extends State<ProfilePage> {
           actions: <Widget>[
             TextButton(
               child: Text(locale.translate("NO")),
-              onPressed: () =>
-                  Navigator.of(context).pop(), // Dismissing the pop-up
+              onPressed: () => Navigator.of(context).pop(),
             ),
             TextButton(
               child: Text(locale.translate("YES")),
@@ -259,8 +258,7 @@ class ProfilePageState extends State<ProfilePage> {
           actions: <Widget>[
             TextButton(
               child: Text(locale.translate("NO")),
-              onPressed: () =>
-                  Navigator.of(context).pop(), // Dismissing the pop-up
+              onPressed: () => Navigator.of(context).pop(),
             ),
             TextButton(
               child: Text(locale.translate("YES")),

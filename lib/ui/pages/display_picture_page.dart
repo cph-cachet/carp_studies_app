@@ -185,8 +185,7 @@ class DisplayPicturePageState extends State<DisplayPicturePage> {
           actions: <Widget>[
             TextButton(
               child: Text(locale.translate("NO")),
-              onPressed: () =>
-                  Navigator.of(context).pop(), // Dismissing the pop-up
+              onPressed: () => Navigator.of(context).pop(),
             ),
             TextButton(
               child: Text(locale.translate("YES")),

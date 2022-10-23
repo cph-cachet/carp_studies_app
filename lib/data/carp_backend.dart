@@ -54,6 +54,7 @@ class CarpBackend {
   CarpBackend._() : super() {
     // make sure that the json functions are loaded
     CarpMobileSensing();
+    CognitionPackage();
   }
 
   factory CarpBackend() => _instance;

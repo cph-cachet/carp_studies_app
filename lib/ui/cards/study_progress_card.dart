@@ -71,7 +71,7 @@ class _StudyProgressCardWidgetState extends State<StudyProgressCardWidget> {
                                 .map((progress) => progress.value)
                                 .toList(),
                             colors: widget.colors,
-                            order: OrderType.None,
+                            order: OrderType.none,
                             labelOrientation: LabelOrientation.horizontal,
                           )),
                     ],

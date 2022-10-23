@@ -145,7 +145,7 @@ class Sensing {
     await controller?.tryDeployment(useCached: true);
 
     // Configure the controller
-    await controller?.configure();
+    await controller?.configure(askForPermissions: false);
 
     // listening on the data stream and print them as json to the debug console
     // _controller!.data.listen((data) => debug(toJsonString(data)));

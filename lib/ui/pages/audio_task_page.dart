@@ -2,13 +2,13 @@ part of carp_study_app;
 
 class AudioTaskPage extends StatefulWidget {
   final AudioUserTask? audioUserTask;
-  AudioTaskPage({Key? key, this.audioUserTask}) : super(key: key);
+  AudioTaskPage({super.key, this.audioUserTask});
 
   @override
-  _AudioTaskPageState createState() => _AudioTaskPageState(audioUserTask);
+  AudioTaskPageState createState() => AudioTaskPageState(audioUserTask);
 }
 
-class _AudioTaskPageState extends State<AudioTaskPage> {
+class AudioTaskPageState extends State<AudioTaskPage> {
   final AudioUserTask? audioUserTask;
 
   int get _currentStep {
@@ -24,7 +24,7 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
 
   List<int> steps = [0, 1, 2];
 
-  _AudioTaskPageState(this.audioUserTask) : super();
+  AudioTaskPageState(this.audioUserTask) : super();
 
   @override
   Widget build(BuildContext context) {
@@ -140,16 +140,6 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
               child: Align(
                 alignment: FractionalOffset.bottomCenter,
                 child: Padding(
-                  // padding: EdgeInsets.only(bottom: 30.0),
-                  // child: CircleAvatar(
-                  //   radius: 30,
-                  //   backgroundColor: CACHET.RED_1,
-                  //   child: IconButton(
-                  //     onPressed: () => audioUserTask!.onRecordStart(),
-                  //     padding: EdgeInsets.all(0),
-                  //     icon: Icon(Icons.mic, color: Colors.white, size: 30),
-                  //   ),
-                  // ),
                   padding: EdgeInsets.only(bottom: 30.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -298,7 +288,8 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
                 width: 220,
                 height: 220),
             SizedBox(height: 40),
-            Text(locale.translate("Done!"), style: audioTitleStyle),
+            Text(locale.translate('pages.audio_task.done'),
+                style: audioTitleStyle),
             SizedBox(height: 10),
             Text(locale.translate('pages.audio_task.recording_completed'),
                 style: audioContentStyle),

@@ -4,43 +4,39 @@ class CameraPage extends StatefulWidget {
   final VideoUserTask videoUserTask;
   final List<CameraDescription> cameras;
 
-  CameraPage({Key? key, required this.videoUserTask, required this.cameras})
-      : super(key: key);
+  CameraPage({super.key, required this.videoUserTask, required this.cameras});
 
   @override
-  _CameraPageState createState() => _CameraPageState();
+  CameraPageState createState() => CameraPageState();
 }
 
-class _CameraPageState extends State<CameraPage> {
-  @override
-  void initState() {
-    // initially selectedCamera = 0 (external camera)
-    initializeCamera(selectedCamera);
-    super.initState();
-  }
+class CameraPageState extends State<CameraPage> {
+  CameraController? _cameraController;
+  Future<void>? _initializeControllerFuture;
 
-  late CameraController _cameraController;
-  late Future<void> _initializeControllerFuture;
-
-  int selectedCamera = 0;
+  int selectedCamera = 0; // 0 = external camera
   IconData flashIcon = Icons.flash_off;
   bool isFlashOff = true;
   late File capturedImages;
   bool isRecording = false;
-  // bool _imageEnabled = videoUserTask;
-  // late bool _videoEnabled;
 
-  initializeCamera(int cameraIndex) async {
+  @override
+  void initState() {
+    initializeCamera(selectedCamera);
+    super.initState();
+  }
+
+  void initializeCamera(int cameraIndex) {
     _cameraController = CameraController(
         widget.cameras[cameraIndex], ResolutionPreset.max,
         imageFormatGroup: ImageFormatGroup.yuv420, enableAudio: true);
 
-    _initializeControllerFuture = _cameraController.initialize();
+    _initializeControllerFuture = _cameraController?.initialize();
   }
 
   @override
   void dispose() {
-    _cameraController.dispose();
+    _cameraController?.dispose();
     super.dispose();
   }
 
@@ -71,7 +67,7 @@ class _CameraPageState extends State<CameraPage> {
                   child: ClipRRect(
                       borderRadius: BorderRadius.all(Radius.circular(20)),
                       child: Container(
-                          child: CameraPreview(_cameraController),
+                          child: CameraPreview(_cameraController!),
                           height: MediaQuery.of(context).size.height * 0.7,
                           width: MediaQuery.of(context).size.width * 0.9)),
                 );
@@ -100,24 +96,26 @@ class _CameraPageState extends State<CameraPage> {
                 GestureDetector(
                   onTap: () async {
                     await _initializeControllerFuture;
-                    var xFile = await _cameraController.takePicture();
-                    widget.videoUserTask.onPictureCapture(xFile);
+                    var picture = await _cameraController!.takePicture();
+                    widget.videoUserTask.onPictureCapture(picture);
                     await Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (context) => DisplayPicturePage(
-                            file: xFile, videoUserTask: widget.videoUserTask),
+                          file: picture,
+                          videoUserTask: widget.videoUserTask,
+                        ),
                       ),
                     );
 
                     setState(() {
-                      capturedImages = File(xFile.path);
+                      capturedImages = File(picture.path);
                     });
                   },
                   onLongPress: () async {
                     await _initializeControllerFuture;
 
                     try {
-                      await _cameraController.startVideoRecording();
+                      await _cameraController!.startVideoRecording();
                       widget.videoUserTask.onRecordStart();
                       setState(() {
                         isRecording = true;
@@ -129,18 +127,18 @@ class _CameraPageState extends State<CameraPage> {
                   },
                   onLongPressEnd: (details) async {
                     try {
-                      var xFile = await _cameraController.stopVideoRecording();
+                      var video = await _cameraController!.stopVideoRecording();
 
+                      widget.videoUserTask.onRecordStop(video);
                       await Navigator.of(context).push(
                         MaterialPageRoute(
                             builder: (context) => DisplayPicturePage(
-                                file: xFile,
+                                file: video,
                                 isVideo: true,
                                 videoUserTask: widget.videoUserTask)),
                       );
-                      widget.videoUserTask.onRecordStop(xFile);
                       setState(() {
-                        capturedImages = File(xFile.path);
+                        capturedImages = File(video.path);
                         isRecording = false;
                       });
                     } on CameraException catch (e) {
@@ -183,13 +181,13 @@ class _CameraPageState extends State<CameraPage> {
                         isFlashOff = false;
                         flashIcon = Icons.flash_on;
                       });
-                      _cameraController.setFlashMode(FlashMode.always);
+                      _cameraController?.setFlashMode(FlashMode.always);
                     } else {
                       setState(() {
                         isFlashOff = true;
                         flashIcon = Icons.flash_off;
                       });
-                      _cameraController.setFlashMode(FlashMode.off);
+                      _cameraController?.setFlashMode(FlashMode.off);
                     }
                   },
                   icon: Icon(flashIcon, color: Colors.white),
@@ -203,7 +201,6 @@ class _CameraPageState extends State<CameraPage> {
     );
   }
 
-  // Taken from RP
   Future _showCancelConfirmationDialog() {
     RPLocalizations locale = RPLocalizations.of(context)!;
 

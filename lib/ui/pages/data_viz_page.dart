@@ -73,7 +73,7 @@ class DataVisualizationPage extends StatelessWidget {
     if (bloc.hasSurveys())
       widgets.add(TaskCardWidget(
         model.surveysCardDataModel,
-        chartType: TaskCardChartType.PIE,
+        chartType: TaskCardChartType.pie,
       ));
 
     List<TaskCardViewModel> mediaModelsList = [];

@@ -1,7 +1,7 @@
 part of carp_study_app;
 
 /// The type of visualization used in a [TaskCardWidget].
-enum TaskCardChartType { HORISONTAL, PIE }
+enum TaskCardChartType { horisontal, pie }
 
 class TaskCardWidget extends StatefulWidget {
   final TaskCardViewModel model;
@@ -10,7 +10,7 @@ class TaskCardWidget extends StatefulWidget {
   TaskCardWidget(
     this.model, {
     this.colors = CACHET.COLOR_LIST,
-    this.chartType = TaskCardChartType.HORISONTAL,
+    this.chartType = TaskCardChartType.horisontal,
   });
   TaskCardWidgetState createState() => TaskCardWidgetState();
 }
@@ -75,7 +75,7 @@ class TaskCardWidgetState extends State<TaskCardWidget> {
   }
 
   Widget chart(BuildContext context, RPLocalizations locale) {
-    if (this.widget.chartType == TaskCardChartType.HORISONTAL) {
+    if (this.widget.chartType == TaskCardChartType.horisontal) {
       return Container(
         height: 160,
         child: HorizontalBar(
@@ -89,7 +89,7 @@ class TaskCardWidgetState extends State<TaskCardWidget> {
           colors: CACHET.COLOR_LIST,
         ),
       );
-    } else if (this.widget.chartType == TaskCardChartType.PIE) {
+    } else if (this.widget.chartType == TaskCardChartType.pie) {
       return Row(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.start,

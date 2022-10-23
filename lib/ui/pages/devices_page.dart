@@ -2,10 +2,10 @@ part of carp_study_app;
 
 class DevicesPage extends StatefulWidget {
   @override
-  _DevicesPageState createState() => _DevicesPageState();
+  DevicesPageState createState() => DevicesPageState();
 }
 
-class _DevicesPageState extends State<DevicesPage> {
+class DevicesPageState extends State<DevicesPage> {
   int selected = 40;
   dynamic selectedDevice;
   FlutterBluePlus flutterBlue = FlutterBluePlus.instance;

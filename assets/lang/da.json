@@ -35,6 +35,7 @@
     "pages.audio_task.play": "Tryk på knappen nedenfor, når du er klar.",
     "pages.audio_task.recording": "Optager...",
     "pages.audio_task.recording_completed": "Optagelsen er færdig. Tryk på den grønne knap for at gemme denne optagelse.\n\nHvis du vil gentage optagelsen, tryk på knappen til venstre.",
+    "pages.audio_task.done": "Færdig!",
     "pages.audio_task.discard": "Kassér resultaterne og afslut?",
     "pages.audio_task.skip": "Spring over",
     "widgets.study_card.no_description": "Beskrivelse ikke tilgængelig.",

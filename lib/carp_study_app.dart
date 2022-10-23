@@ -1,7 +1,7 @@
 part of carp_study_app;
 
 class CarpStudyApp extends StatefulWidget {
-  CarpStudyApp({Key? key}) : super(key: key);
+  CarpStudyApp({super.key});
 
   static void reloadLocale(BuildContext context) async {
     _CarpStudyAppState? state =

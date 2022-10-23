@@ -8,29 +8,31 @@ class HorizontalBar extends StatelessWidget {
   final double? height;
   final LabelOrientation? labelOrientation;
 
-  HorizontalBar(
-      {this.names,
-      this.values,
-      this.colors,
-      this.order = OrderType.Descending,
-      this.height = 25,
-      this.labelOrientation = LabelOrientation.vertical});
+  HorizontalBar({
+    this.names,
+    this.values,
+    this.colors,
+    this.order = OrderType.descending,
+    this.height = 25,
+    this.labelOrientation = LabelOrientation.vertical,
+  });
 
-  List<MyAsset> _assetList() {
+  List<MyAsset> assetList() {
     List<MyAsset> assetList = [];
     for (int i = 0; i < this.names!.length; i++) {
-      print('assets');
-      print(values!.elementAt(i));
-      print(colors!.elementAt(i));
-      print(names!.elementAt(i));
-      assetList
-          .add(MyAsset(size: values!.elementAt(i), color: colors!.elementAt(i), name: names!.elementAt(i)));
+      // print('assets');
+      // print(values!.elementAt(i));
+      // print(colors!.elementAt(i));
+      // print(names!.elementAt(i));
+      assetList.add(MyAsset(
+          size: values!.elementAt(i),
+          color: colors!.elementAt(i),
+          name: names!.elementAt(i)));
     }
     return assetList;
   }
 
   Widget build(BuildContext context) {
-    RPLocalizations locale = RPLocalizations.of(context)!;
     double width = MediaQuery.of(context).size.width;
     if (names!.isEmpty)
       return Center(
@@ -39,7 +41,8 @@ class HorizontalBar extends StatelessWidget {
           child: ClipRRect(
             borderRadius: BorderRadius.all(Radius.circular(height! / 2)),
             child: Container(
-              decoration: BoxDecoration(color: Theme.of(context).colorScheme.tertiary),
+              decoration:
+                  BoxDecoration(color: Theme.of(context).colorScheme.tertiary),
               width: width,
               height: height,
               child: SizedBox.shrink(),
@@ -49,18 +52,19 @@ class HorizontalBar extends StatelessWidget {
       );
     else
       return Center(
-          child: MyAssetsBar(
-        width: width * .9,
-        background: Color(0xCFD8DC),
-        order: this.order,
-        assets: _assetList(),
-        height: this.height,
-        labelOrientation: this.labelOrientation,
-      ));
+        child: MyAssetsBar(
+          width: width * .9,
+          background: Color(0xCFD8DC),
+          order: this.order,
+          assets: assetList(),
+          height: this.height,
+          labelOrientation: this.labelOrientation,
+        ),
+      );
   }
 }
 
-enum OrderType { Ascending, Descending, None }
+enum OrderType { ascending, descending, none }
 
 enum LabelOrientation { vertical, horizontal }
 
@@ -73,16 +77,16 @@ class MyAsset {
 }
 
 class MyAssetsBar extends StatelessWidget {
-  MyAssetsBar(
-      {Key? key,
-      required this.width,
-      required this.height,
-      required this.labelOrientation,
-      this.radius,
-      required this.assets,
-      this.order,
-      this.background = Colors.grey})
-      : super(key: key);
+  MyAssetsBar({
+    super.key,
+    required this.width,
+    required this.height,
+    required this.labelOrientation,
+    this.radius,
+    required this.assets,
+    this.order,
+    this.background = Colors.grey,
+  });
 
   final double width;
   final double? height;
@@ -100,7 +104,7 @@ class MyAssetsBar extends StatelessWidget {
 
   void orderMyAssetsList() {
     switch (order) {
-      case OrderType.Ascending:
+      case OrderType.ascending:
         {
           //From the smallest to the largest
           assets.sort((a, b) {
@@ -108,7 +112,7 @@ class MyAssetsBar extends StatelessWidget {
           });
           break;
         }
-      case OrderType.Descending:
+      case OrderType.descending:
         {
           //From largest to smallest
           assets.sort((a, b) {
@@ -116,7 +120,7 @@ class MyAssetsBar extends StatelessWidget {
           });
           break;
         }
-      case OrderType.None:
+      case OrderType.none:
       default:
         {
           break;
@@ -127,7 +131,9 @@ class MyAssetsBar extends StatelessWidget {
   //single.size : assetsSum = x : width
   Widget _createSingle(MyAsset singleAsset) {
     return SizedBox(
-      width: singleAsset.size! != 0 ? singleAsset.size! * (width / _getValuesSum()) : 0,
+      width: singleAsset.size! != 0
+          ? singleAsset.size! * (width / _getValuesSum())
+          : 0,
       child: Container(color: singleAsset.color),
     );
   }
@@ -146,8 +152,13 @@ class MyAssetsBar extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Icon(Icons.circle, color: entry.value.color, size: 12.0),
-                      Text(' ' + entry.value.name! + ' ' + entry.value.size.toString(),
-                          style: legendStyle, textAlign: TextAlign.right),
+                      Text(
+                          ' ' +
+                              entry.value.name! +
+                              ' ' +
+                              entry.value.size.toString(),
+                          style: legendStyle,
+                          textAlign: TextAlign.right),
                     ],
                   )),
             )
@@ -175,7 +186,8 @@ class MyAssetsBar extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Icon(Icons.circle, color: entry.value.color, size: 12.0),
-                      Text(' ' + entry.value.size.toString(), style: legendStyle, textAlign: TextAlign.left),
+                      Text(' ' + entry.value.size.toString(),
+                          style: legendStyle, textAlign: TextAlign.left),
                       Expanded(
                           child: Text(' ' + entry.value.name!,
                               style: legendStyle,
@@ -191,7 +203,7 @@ class MyAssetsBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //Order assetsList
+    // order assetsList
     orderMyAssetsList();
 
     final double rad = radius ?? (height! / 2);
@@ -207,7 +219,10 @@ class MyAssetsBar extends StatelessWidget {
             decoration: BoxDecoration(color: background),
             width: width,
             height: height,
-            child: Row(children: assets.map((singleAsset) => _createSingle(singleAsset)).toList()),
+            child: Row(
+                children: assets
+                    .map((singleAsset) => _createSingle(singleAsset))
+                    .toList()),
           ),
         ),
         SizedBox(height: 2),

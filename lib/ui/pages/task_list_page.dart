@@ -5,10 +5,10 @@ class TaskListPage extends StatefulWidget {
   const TaskListPage(this.model);
 
   @override
-  _TaskListPageState createState() => _TaskListPageState();
+  TaskListPageState createState() => TaskListPageState();
 }
 
-class _TaskListPageState extends State<TaskListPage> {
+class TaskListPageState extends State<TaskListPage> {
   @override
   Widget build(BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;

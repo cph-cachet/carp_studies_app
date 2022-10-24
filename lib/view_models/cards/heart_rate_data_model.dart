@@ -7,8 +7,11 @@ class HeartRateCardViewModel extends SerializableViewModel<HourlyHeartRate> {
   /// A map of weekly HeartRate organized by the day of the week.
   Map<TimeOfDay, HeartRate> get hourlyHeartRate => model.hourlyHeartRate;
 
-  /// The list of HeartRate.
+  /// The current heart rate
   HeartRate get currentHeartRate => model.heartRate;
+
+  /// The dataset for the graph
+  
 
   /// Stream of pedometer (step) [DataPoint] measures.
   Stream<DataPoint>? get heartRateEvents =>

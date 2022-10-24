@@ -1,4 +1,5 @@
 part of carp_study_app;
+
 class HeartRateCardWidget extends StatefulWidget {
   final HeartRateCardViewModel model;
   final List<Color> colors;
@@ -18,9 +19,9 @@ class HeartRateCardWidget extends StatefulWidget {
         charts.Series<HourlyHeartRate, String>(
           colorFn: (d, i) => charts.ColorUtil.fromDartColor(colors[0]),
           id: 'DailyHeartRateList',
-          data: model.hourlyHeartRate,
+          data: [],
           domainFn: (HourlyHeartRate HeartRate, _) => HeartRate.toString(),
-          measureFn: (HourlyHeartRate HeartRate, _) => HeartRate.hourlyHeartRate,
+          measureFn: (HourlyHeartRate HeartRate, _) => 0,
         )
       ];
 
@@ -56,7 +57,7 @@ class _HeartRateCardWidgetState extends State<HeartRateCardWidget> {
           child: Column(
             children: <Widget>[
               StreamBuilder(
-                stream: widget.model.,
+                stream: widget.model.heartRateEvents,
                 builder: (context, AsyncSnapshot<DataPoint> snapshot) {
                   return Column(
                     children: [
@@ -73,29 +74,24 @@ class _HeartRateCardWidgetState extends State<HeartRateCardWidget> {
                       ),
                       Container(
                         height: 160,
-                        child: charts.BarChart(
-                          widget.seriesList,
-                          animate: true,
-                          defaultRenderer: charts.BarRendererConfig<String>(
-                            cornerStrategy: const charts.ConstCornerStrategy(2),
-                          ),
-                          domainAxis: charts.OrdinalAxisSpec(
-                            renderSpec: renderSpecString,
-                          ),
-                          primaryMeasureAxis:
-                              charts.NumericAxisSpec(renderSpec: renderSpecNum),
-                          defaultInteractions: false,
-                          selectionModels: [
-                            charts.SelectionModelConfig(
-                                type: charts.SelectionModelType.info,
-                                changedListener: _infoSelectionModelChanged)
-                          ],
-                          behaviors: [
-                            charts.SelectNearest(
-                                eventTrigger:
-                                    charts.SelectionTrigger.tapAndDrag),
-                            charts.DomainHighlighter(),
-                          ],
+                        child: BarChart(
+                          BarChartData(
+                              barTouchData: BarTouchData(enabled: false),
+                              titlesData: FlTitlesData(
+                                show: true,
+                                rightTitles: AxisTitles(
+                                  sideTitles: SideTitles(showTitles: false),
+                                ),
+                                topTitles: AxisTitles(
+                                  sideTitles: SideTitles(showTitles: false),
+                                ),
+                                bottomTitles: AxisTitles(
+                                  sideTitles: SideTitles(showTitles: false),
+                                ),
+                                leftTitles: AxisTitles(
+                                  sideTitles: SideTitles(showTitles: false),
+                                ),
+                              )),
                         ),
                       ),
                     ],
@@ -112,8 +108,7 @@ class _HeartRateCardWidgetState extends State<HeartRateCardWidget> {
   void _infoSelectionModelChanged(charts.SelectionModel model) {
     if (model.hasDatumSelection)
       setState(() {
-        _selectedHeartRate = model.selectedSeries[0]
-            .measureFn(model.selectedDatum[0].index) as int?;
+        _selectedHeartRate = HeartRate(0);
       });
   }
 }
@@ -127,7 +122,8 @@ class HeartRateOuterStatefulWidget extends StatefulWidget {
       _HeartRateOuterStatefulWidgetState();
 }
 
-class _HeartRateOuterStatefulWidgetState extends State<HeartRateOuterStatefulWidget> {
+class _HeartRateOuterStatefulWidgetState
+    extends State<HeartRateOuterStatefulWidget> {
   @override
   Widget build(BuildContext context) {
     return HeartRateCardWidget.withSampleData(widget.model);

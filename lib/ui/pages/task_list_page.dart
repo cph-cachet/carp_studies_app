@@ -135,7 +135,8 @@ class TaskListPageState extends State<TaskListPage> {
   Icon _taskTypeIcon(UserTask userTask) =>
       (taskTypeIcons[userTask.type] != null)
           ? taskTypeIcons[userTask.type] as Icon
-          : (measureTypeIcons[userTask.task.measures[0].type] != null)
+          : (userTask.task.measures.isNotEmpty &&
+                  measureTypeIcons[userTask.task.measures[0].type] != null)
               ? measureTypeIcons[userTask.task.measures[0].type] as Icon
               : Icon(
                   Icons.description_outlined,
@@ -247,6 +248,10 @@ class TaskListPageState extends State<TaskListPage> {
     SurveyUserTask.SURVEY_TYPE: Icon(
       Icons.description,
       color: CACHET.ORANGE,
+    ),
+    SurveyUserTask.COGNITIVE_ASSESSMENT_TYPE: Icon(
+      Icons.face_retouching_natural,
+      color: CACHET.RED_2,
     ),
     AudioUserTask.AUDIO_TYPE: Icon(
       Icons.record_voice_over,

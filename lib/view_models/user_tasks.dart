@@ -155,7 +155,8 @@ class VideoUserTask extends UserTask {
           startRecordingTime: _startRecordingTime!,
           endRecordingTime: _endRecordingTime,
           mediaType: _mediaType)
-        ..filename = _file!.path.split("/").last;
+        ..filename = _file!.path.split("/").last
+        ..path = _file!.path;
 
       // ... and add it to the sensing controller
       bloc.addDatum(datum);

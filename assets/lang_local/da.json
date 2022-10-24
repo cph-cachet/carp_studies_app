@@ -549,5 +549,13 @@
     "audio.exposure.title": "Ugentlig eksponering og respons prævention",
     "audio.exposure.description": "Beskriv den eksponeringsøvelse, du arbejder på",
     "audio.exposure.instructions": "Beskriv eksponeringsøvelsen: Hvordan vil du arbejde på tvangstanker og tvangshandlinger?",
-    "audio.exposure.name": "Ugentlig eksponering og respons prævention"
+    "audio.exposure.name": "Ugentlig eksponering og respons prævention",
+    "reading.title": "Oplæsning",
+    "reading.description": "I denne lille øvelse vil vi gerne lave en kort lydoptagelse mens vi bede dig om at læse en tekst højt.",
+    "reading.instructions": "Læs følgende tekst op højt.\n\nFor mange år siden levede en kejser, som holdt så uhyre meget af smukke nye klæder, at han gav alle sine penge ud for ret at blive pyntet. Han brød sig ikke om sine soldater, brød sig ej om komedie eller om at køre i skoven, uden alene for at vise sine nye klæder. Han havde en kjole for hver time på dagen, og ligesom man siger om en konge, han er i rådet, så sagde man altid her: 'Kejseren er i garderoben!'",
+    "wound.title": "Sårheling",
+    "wound.description": "For at vi kan følge din sårheling kan du tage et billede af det.",
+    "wound.instructions": "Tag et billede af dit sår\n\nSæt dig ned og placer legemsdelen med såret på et flad overflade, såsom et bord. Sørg for at såret er fuldstændig synlig og at der er en god belysning. Tænd evt. lyset over bordet. Hvis du har svært ved selv at tage billedet, så bed en pårørende eller en ven tage billedet for dig.",
+    "environment.title": "Lokale omgivelser",
+    "environment.description": "Indsamling af lokal vejrdata, og luftkvalitet"
 }

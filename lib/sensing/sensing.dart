@@ -147,9 +147,6 @@ class Sensing {
     // Configure the controller
     await controller?.configure(askForPermissions: false);
 
-    // listening on the data stream and print them as json to the debug console
-    // _controller!.data.listen((data) => debug(toJsonString(data)));
-
     info('$runtimeType initialized');
   }
 

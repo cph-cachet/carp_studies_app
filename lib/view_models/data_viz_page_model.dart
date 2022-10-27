@@ -5,12 +5,18 @@ class DataVisualizationPageViewModel extends ViewModel {
   final StepsCardViewModel _stepsCardDataModel = StepsCardViewModel();
   final MeasuresCardViewModel _measuresCardDataModel = MeasuresCardViewModel();
   final MobilityCardViewModel _mobilityCardDataModel = MobilityCardViewModel();
-  final TaskCardViewModel _surveysCardDataModel = TaskCardViewModel(SurveyUserTask.SURVEY_TYPE);
-  final TaskCardViewModel _audioCardDataModel = TaskCardViewModel(AudioUserTask.AUDIO_TYPE);
-  final TaskCardViewModel _videoCardDataModel = TaskCardViewModel(VideoUserTask.VIDEO_TYPE);
-  final TaskCardViewModel _imageCardDataModel = TaskCardViewModel(VideoUserTask.IMAGE_TYPE);
-  final StudyProgressCardViewModel _studyProgressCardDataModel = StudyProgressCardViewModel();
-  final HeartRateCardViewModel _heartRateCardViewModel = HeartRateCardViewModel();
+  final TaskCardViewModel _surveysCardDataModel =
+      TaskCardViewModel(SurveyUserTask.SURVEY_TYPE);
+  final TaskCardViewModel _audioCardDataModel =
+      TaskCardViewModel(AudioUserTask.AUDIO_TYPE);
+  final TaskCardViewModel _videoCardDataModel =
+      TaskCardViewModel(VideoUserTask.VIDEO_TYPE);
+  final TaskCardViewModel _imageCardDataModel =
+      TaskCardViewModel(VideoUserTask.IMAGE_TYPE);
+  final StudyProgressCardViewModel _studyProgressCardDataModel =
+      StudyProgressCardViewModel();
+  final HeartRateCardViewModel _heartRateCardDataModel =
+      HeartRateCardViewModel();
 
   ActivityCardViewModel get activityCardDataModel => _activityCardDataModel;
   StepsCardViewModel get stepsCardDataModel => _stepsCardDataModel;
@@ -20,9 +26,10 @@ class DataVisualizationPageViewModel extends ViewModel {
   TaskCardViewModel get audioCardDataModel => _audioCardDataModel;
   TaskCardViewModel get videoCardDataModel => _videoCardDataModel;
   TaskCardViewModel get imageCardDataModel => _imageCardDataModel;
-  HeartRateCardViewModel get heartRateCardViewModel => _heartRateCardViewModel;
+  HeartRateCardViewModel get heartRateCardDataModel => _heartRateCardDataModel;
 
-  StudyProgressCardViewModel get studyProgressCardDataModel => _studyProgressCardDataModel;
+  StudyProgressCardViewModel get studyProgressCardDataModel =>
+      _studyProgressCardDataModel;
 
   /// A stream of [UserTask]s as they are generated.
   Stream<UserTask> get userTaskEvents => AppTaskController().userTaskEvents;
@@ -33,8 +40,10 @@ class DataVisualizationPageViewModel extends ViewModel {
       : 0;
 
   /// The number of tasks completed so far.
-  int get taskCompleted =>
-      AppTaskController().userTaskQueue.where((task) => task.state == UserTaskState.done).length;
+  int get taskCompleted => AppTaskController()
+      .userTaskQueue
+      .where((task) => task.state == UserTaskState.done)
+      .length;
 
   DataVisualizationPageViewModel();
 

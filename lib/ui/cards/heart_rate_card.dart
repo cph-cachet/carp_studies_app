@@ -39,7 +39,7 @@ class _HeartRateCardWidgetState extends State<HeartRateCardWidget> {
   @override
   void initState() {
     // Get current day HeartRate
-    _selectedHeartRate = widget.model.hourlyHeartRate[TimeOfDay.now()];
+    _selectedHeartRate = widget.model.hourlyHeartRate[0];
     super.initState();
   }
 
@@ -62,37 +62,16 @@ class _HeartRateCardWidgetState extends State<HeartRateCardWidget> {
                   return Column(
                     children: [
                       ChartsLegend(
-                        title: locale.translate('cards.HeartRate.title'),
-                        iconAssetName: Icon(Icons.directions_walk,
+                        title: locale.translate('cards.heartrate.title'),
+                        iconAssetName: Icon(Icons.monitor_heart,
                             color: Theme.of(context).primaryColor),
                         heroTag: 'HeartRate-card',
-                        values: [
-                          '$_selectedHeartRate ' +
-                              locale.translate('cards.HeartRate.HeartRate')
-                        ],
+                        values: [locale.translate('cards.heartrate.heartrate')],
                         colors: widget.colors,
                       ),
                       Container(
                         height: 160,
-                        child: BarChart(
-                          BarChartData(
-                              barTouchData: BarTouchData(enabled: false),
-                              titlesData: FlTitlesData(
-                                show: true,
-                                rightTitles: AxisTitles(
-                                  sideTitles: SideTitles(showTitles: false),
-                                ),
-                                topTitles: AxisTitles(
-                                  sideTitles: SideTitles(showTitles: false),
-                                ),
-                                bottomTitles: AxisTitles(
-                                  sideTitles: SideTitles(showTitles: false),
-                                ),
-                                leftTitles: AxisTitles(
-                                  sideTitles: SideTitles(showTitles: false),
-                                ),
-                              )),
-                        ),
+                        child: getChart(),
                       ),
                     ],
                   );
@@ -101,6 +80,104 @@ class _HeartRateCardWidgetState extends State<HeartRateCardWidget> {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  BarChart getChart() {
+
+    return BarChart(
+      BarChartData(
+        alignment: BarChartAlignment.center,
+        barTouchData: BarTouchData(
+          enabled: false,
+        ),
+        titlesData: FlTitlesData(
+          show: true,
+          bottomTitles: AxisTitles(
+            sideTitles: SideTitles(
+              showTitles: true,
+              interval: 20,
+              getTitlesWidget: bottomTitles,
+            ),
+          ),
+          rightTitles: AxisTitles(
+            sideTitles: SideTitles(
+              showTitles: true,
+              reservedSize: 40,
+              getTitlesWidget: leftTitles,
+              interval: 50,
+            ),
+          ),
+          topTitles: AxisTitles(
+            sideTitles: SideTitles(showTitles: false),
+          ),
+          leftTitles: AxisTitles(
+            sideTitles: SideTitles(showTitles: false),
+          ),
+        ),
+        gridData: FlGridData(
+          show: true,
+          drawVerticalLine: false,
+          drawHorizontalLine: false,
+          getDrawingVerticalLine: (value) => FlLine(
+            color: const Color.fromARGB(255, 179, 179, 181),
+            strokeWidth: 1,
+          ),
+          verticalInterval: 1 / 48,
+        ),
+        borderData: FlBorderData(
+          show: false,
+        ),
+        groupsSpace: 2,
+        barGroups: widget.model.barChartData,
+        minY: 50,
+        maxY: 70,
+      ),
+    );
+  }
+
+  Widget bottomTitles(double value, TitleMeta meta) {
+    const style = TextStyle(
+      color: Color(0xff939393),
+      fontSize: 10,
+      fontWeight: FontWeight.bold,
+    );
+    String text;
+    if (value == 0) {
+      text = '0';
+    } else if (value == 6) {
+      text = '6';
+    } else if (value == 12) {
+      text = '12';
+    } else if (value == 18) {
+      text = '18';
+    } else {
+      return Container();
+    }
+
+    return SideTitleWidget(
+      axisSide: AxisSide.right,
+      space: 10,
+      child: Text(
+        text,
+        style: style,
+      ),
+    );
+  }
+
+  Widget leftTitles(double value, TitleMeta meta) {
+    final text = value.toString().split('.').first;
+    const style = TextStyle(
+      color: Color.fromARGB(255, 235, 75, 48),
+      fontSize: 10,
+      fontWeight: FontWeight.bold,
+    );
+    return SideTitleWidget(
+      axisSide: AxisSide.right,
+      child: Text(
+        text,
+        style: style,
       ),
     );
   }

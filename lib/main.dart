@@ -8,6 +8,7 @@ import 'dart:ui' as ui;
 import 'package:carp_serializable/carp_serializable.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:esense_flutter/esense.dart';
+import 'package:flutter/rendering.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import 'package:flutter/services.dart';

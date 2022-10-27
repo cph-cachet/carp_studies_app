@@ -69,10 +69,7 @@ class _HeartRateCardWidgetState extends State<HeartRateCardWidget> {
                         values: [locale.translate('cards.heartrate.heartrate')],
                         colors: widget.colors,
                       ),
-                      Container(
-                        height: 160,
-                        child: getChart(),
-                      ),
+                      Container(height: 160, child: getChart()),
                     ],
                   );
                 },
@@ -85,7 +82,6 @@ class _HeartRateCardWidgetState extends State<HeartRateCardWidget> {
   }
 
   BarChart getChart() {
-
     return BarChart(
       BarChartData(
         alignment: BarChartAlignment.center,
@@ -106,7 +102,7 @@ class _HeartRateCardWidgetState extends State<HeartRateCardWidget> {
               showTitles: true,
               reservedSize: 40,
               getTitlesWidget: leftTitles,
-              interval: 50,
+              interval: 55,
             ),
           ),
           topTitles: AxisTitles(
@@ -130,8 +126,8 @@ class _HeartRateCardWidgetState extends State<HeartRateCardWidget> {
           show: false,
         ),
         groupsSpace: 2,
-        barGroups: widget.model.barChartData,
-        minY: 50,
+        barGroups: getData(),
+        minY: 55,
         maxY: 70,
       ),
     );
@@ -205,4 +201,589 @@ class _HeartRateOuterStatefulWidgetState
   Widget build(BuildContext context) {
     return HeartRateCardWidget.withSampleData(widget.model);
   }
+}
+
+List<BarChartGroupData> getData() {
+  const normal = Color.fromARGB(255, 243, 54, 32);
+
+  return [
+    BarChartGroupData(
+      x: 0,
+      barsSpace: 0,
+      barRods: [
+        BarChartRodData(
+          toY: 70,
+          fromY: 0,
+          width: 1,
+          color: const Color.fromARGB(70, 0, 0, 0),
+        ),
+      ],
+    ),
+    BarChartGroupData(
+      x: -1,
+      barsSpace: 0,
+      barRods: [
+        BarChartRodData(
+          toY: 60,
+          fromY: 58,
+          width: 3,
+          color: normal,
+        ),
+      ],
+    ),
+    BarChartGroupData(
+      x: -1,
+      barRods: [
+        BarChartRodData(
+          toY: 68,
+          fromY: 60,
+          width: 3,
+          color: normal,
+        ),
+      ],
+    ),
+    BarChartGroupData(
+      x: -1,
+      barRods: [
+        BarChartRodData(
+          toY: 65,
+          fromY: 60,
+          width: 3,
+          color: normal,
+        ),
+      ],
+    ),
+    BarChartGroupData(
+      x: -1,
+      barRods: [
+        BarChartRodData(
+          toY: 63,
+          fromY: 59,
+          width: 3,
+          color: normal,
+        ),
+      ],
+    ),
+    BarChartGroupData(
+      x: -1,
+      barRods: [
+        BarChartRodData(
+          toY: 64,
+          fromY: 59,
+          width: 3,
+          color: normal,
+        ),
+      ],
+    ),
+    BarChartGroupData(
+      x: -1,
+      barRods: [
+        BarChartRodData(
+          toY: 68,
+          fromY: 65,
+          width: 3,
+          color: normal,
+        ),
+      ],
+    ),
+    BarChartGroupData(
+      x: -1,
+      barRods: [
+        BarChartRodData(
+          toY: 63,
+          fromY: 59,
+          width: 3,
+          color: normal,
+        ),
+      ],
+    ),
+    BarChartGroupData(
+      x: -1,
+      barRods: [
+        BarChartRodData(
+          toY: 64,
+          fromY: 59,
+          width: 3,
+          color: normal,
+        ),
+      ],
+    ),
+    BarChartGroupData(
+      x: -1,
+      barRods: [
+        BarChartRodData(
+          toY: 68,
+          fromY: 65,
+          width: 3,
+          color: normal,
+        ),
+      ],
+    ),
+    BarChartGroupData(
+      x: -1,
+      barRods: [
+        BarChartRodData(
+          toY: 68,
+          fromY: 54,
+          width: 3,
+          color: normal,
+        ),
+      ],
+    ),
+    BarChartGroupData(
+      x: -1,
+      barRods: [
+        BarChartRodData(
+          toY: 63,
+          fromY: 59,
+          width: 3,
+          color: normal,
+        ),
+      ],
+    ),
+    BarChartGroupData(
+      x: -1,
+      barRods: [
+        BarChartRodData(
+          toY: 63,
+          fromY: 56,
+          width: 3,
+          color: normal,
+        ),
+      ],
+    ),
+    BarChartGroupData(
+      x: 6,
+      barsSpace: 0,
+      barRods: [
+        BarChartRodData(
+          toY: 70,
+          fromY: 0,
+          width: 1,
+          color: const Color.fromARGB(70, 0, 0, 0),
+        ),
+      ],
+    ),
+    BarChartGroupData(
+      x: -1,
+      barRods: [
+        BarChartRodData(
+          toY: 68,
+          fromY: 60,
+          width: 3,
+          color: normal,
+        ),
+      ],
+    ),
+    BarChartGroupData(
+      x: -1,
+      barRods: [
+        BarChartRodData(
+          toY: 68,
+          fromY: 60,
+          width: 3,
+          color: normal,
+        ),
+      ],
+    ),
+    BarChartGroupData(
+      x: -1,
+      barRods: [
+        BarChartRodData(
+          toY: 65,
+          fromY: 60,
+          width: 3,
+          color: normal,
+        ),
+      ],
+    ),
+    BarChartGroupData(
+      x: -1,
+      barRods: [
+        BarChartRodData(
+          toY: 63,
+          fromY: 59,
+          width: 3,
+          color: normal,
+        ),
+      ],
+    ),
+    BarChartGroupData(
+      x: -1,
+      barRods: [
+        BarChartRodData(
+          toY: 64,
+          fromY: 59,
+          width: 3,
+          color: normal,
+        ),
+      ],
+    ),
+    BarChartGroupData(
+      x: -1,
+      barRods: [
+        BarChartRodData(
+          toY: 68,
+          fromY: 65,
+          width: 3,
+          color: normal,
+        ),
+      ],
+    ),
+    BarChartGroupData(
+      x: -1,
+      barRods: [
+        BarChartRodData(
+          toY: 63,
+          fromY: 59,
+          width: 3,
+          color: normal,
+        ),
+      ],
+    ),
+    BarChartGroupData(
+      x: -1,
+      barRods: [
+        BarChartRodData(
+          toY: 64,
+          fromY: 59,
+          width: 3,
+          color: normal,
+        ),
+      ],
+    ),
+    BarChartGroupData(
+      x: -1,
+      barRods: [
+        BarChartRodData(
+          toY: 68,
+          fromY: 65,
+          width: 3,
+          color: normal,
+        ),
+      ],
+    ),
+    BarChartGroupData(
+      x: -1,
+      barRods: [
+        BarChartRodData(
+          toY: 68,
+          fromY: 54,
+          width: 3,
+          color: normal,
+        ),
+      ],
+    ),
+    BarChartGroupData(
+      x: -1,
+      barRods: [
+        BarChartRodData(
+          toY: 63,
+          fromY: 59,
+          width: 3,
+          color: normal,
+        ),
+      ],
+    ),
+    BarChartGroupData(
+      x: -1,
+      barRods: [
+        BarChartRodData(
+          toY: 63,
+          fromY: 56,
+          width: 3,
+          color: normal,
+        ),
+      ],
+    ),
+    BarChartGroupData(
+      x: 12,
+      barsSpace: 0,
+      barRods: [
+        BarChartRodData(
+          toY: 70,
+          fromY: 0,
+          width: 1,
+          color: const Color.fromARGB(70, 0, 0, 0),
+        ),
+      ],
+    ),
+    BarChartGroupData(
+      x: -1,
+      barRods: [
+        BarChartRodData(
+          toY: 64,
+          fromY: 59,
+          width: 3,
+          color: normal,
+        ),
+      ],
+    ),
+    BarChartGroupData(
+      x: -1,
+      barRods: [
+        BarChartRodData(
+          toY: 64,
+          fromY: 59,
+          width: 3,
+          color: normal,
+        ),
+      ],
+    ),
+    BarChartGroupData(
+      x: -1,
+      barRods: [
+        BarChartRodData(
+          toY: 64,
+          fromY: 59,
+          width: 3,
+          color: normal,
+        ),
+      ],
+    ),
+    BarChartGroupData(
+      x: -1,
+      barRods: [
+        BarChartRodData(
+          toY: 68,
+          fromY: 65,
+          width: 3,
+          color: normal,
+        ),
+      ],
+    ),
+    BarChartGroupData(
+      x: -1,
+      barRods: [
+        BarChartRodData(
+          toY: 68,
+          fromY: 54,
+          width: 3,
+          color: normal,
+        ),
+      ],
+    ),
+    BarChartGroupData(
+      x: -1,
+      barRods: [
+        BarChartRodData(
+          toY: 63,
+          fromY: 59,
+          width: 3,
+          color: normal,
+        ),
+      ],
+    ),
+    BarChartGroupData(
+      x: -1,
+      barRods: [
+        BarChartRodData(
+          toY: 63,
+          fromY: 56,
+          width: 3,
+          color: normal,
+        ),
+      ],
+    ),
+    BarChartGroupData(
+      x: -1,
+      barRods: [
+        BarChartRodData(
+          toY: 65,
+          fromY: 62,
+          width: 3,
+          color: normal,
+        ),
+      ],
+    ),
+    BarChartGroupData(
+      x: -1,
+      barRods: [
+        BarChartRodData(
+          toY: 68,
+          fromY: 60,
+          width: 3,
+          color: normal,
+        ),
+      ],
+    ),
+    BarChartGroupData(
+      x: -1,
+      barRods: [
+        BarChartRodData(
+          toY: 65,
+          fromY: 60,
+          width: 3,
+          color: normal,
+        ),
+      ],
+    ),
+    BarChartGroupData(
+      x: -1,
+      barRods: [
+        BarChartRodData(
+          toY: 63,
+          fromY: 59,
+          width: 3,
+          color: normal,
+        ),
+      ],
+    ),
+    BarChartGroupData(
+      x: -1,
+      barRods: [
+        BarChartRodData(
+          toY: 64,
+          fromY: 59,
+          width: 3,
+          color: normal,
+        ),
+      ],
+    ),
+    BarChartGroupData(
+      x: 18,
+      barsSpace: 0,
+      barRods: [
+        BarChartRodData(
+          toY: 70,
+          fromY: 0,
+          width: 1,
+          color: const Color.fromARGB(70, 0, 0, 0),
+        ),
+        BarChartRodData(
+          toY: 63,
+          fromY: 59,
+          width: 3,
+          color: normal,
+        ),
+      ],
+    ),
+    BarChartGroupData(
+      x: -1,
+      barRods: [
+        BarChartRodData(
+          toY: 64,
+          fromY: 59,
+          width: 3,
+          color: normal,
+        ),
+      ],
+    ),
+    BarChartGroupData(
+      x: -1,
+      barRods: [
+        BarChartRodData(
+          toY: 68,
+          fromY: 65,
+          width: 3,
+          color: normal,
+        ),
+      ],
+    ),
+    BarChartGroupData(
+      x: -1,
+      barRods: [
+        BarChartRodData(
+          toY: 68,
+          fromY: 54,
+          width: 3,
+          color: normal,
+        ),
+      ],
+    ),
+    BarChartGroupData(
+      x: -1,
+      barRods: [
+        BarChartRodData(
+          toY: 63,
+          fromY: 59,
+          width: 3,
+          color: normal,
+        ),
+      ],
+    ),
+    BarChartGroupData(
+      x: -1,
+      barRods: [
+        BarChartRodData(
+          toY: 63,
+          fromY: 56,
+          width: 3,
+          color: normal,
+        ),
+      ],
+    ),
+    BarChartGroupData(
+      x: -1,
+      barRods: [
+        BarChartRodData(
+          toY: 65,
+          fromY: 62,
+          width: 3,
+          color: normal,
+        ),
+      ],
+    ),
+    BarChartGroupData(
+      x: -1,
+      barRods: [
+        BarChartRodData(
+          toY: 68,
+          fromY: 60,
+          width: 3,
+          color: normal,
+        ),
+      ],
+    ),
+    BarChartGroupData(
+      x: -1,
+      barRods: [
+        BarChartRodData(
+          toY: 65,
+          fromY: 60,
+          width: 3,
+          color: normal,
+        ),
+      ],
+    ),
+    BarChartGroupData(
+      x: -1,
+      barRods: [
+        BarChartRodData(
+          toY: 63,
+          fromY: 59,
+          width: 3,
+          color: normal,
+        ),
+      ],
+    ),
+    BarChartGroupData(
+      x: -1,
+      barRods: [
+        BarChartRodData(
+          toY: 64,
+          fromY: 59,
+          width: 3,
+          color: normal,
+        ),
+      ],
+    ),
+    BarChartGroupData(
+      x: -1,
+      barsSpace: 0,
+      barRods: [
+        BarChartRodData(
+          toY: 64,
+          fromY: 59,
+          width: 3,
+          color: normal,
+        ),
+        BarChartRodData(
+          toY: 70,
+          color: const Color.fromARGB(70, 0, 0, 0),
+          width: 1,
+        )
+      ],
+    ),
+  ];
 }

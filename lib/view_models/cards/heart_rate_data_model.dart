@@ -35,34 +35,6 @@ class HeartRateCardViewModel extends SerializableViewModel<HourlyHeartRate> {
 
   /// The dataset for the graph
 
-/*   List<BarChartGroupData> get barChartData {
-    List<BarChartGroupData> returnData = [];
-
-    List<BarChartGroupData> firstQuarter = [getSeparaterStick(0)];
-    List<BarChartGroupData> secondQuarter = [getSeparaterStick(6)];
-    List<BarChartGroupData> thirdQuarter = [getSeparaterStick(12)];
-    List<BarChartGroupData> fourthQuarter = [getSeparaterStick(18)];
-
-    List timeslot_rod = [];
-    var timeslot = 0.0;
-    model.hourlyHeartRate.entries.forEach((entry) {
-      var key = entry.key;
-      var value = entry.value;
-      var timeslot_sticks = (key.hour / 6).floor() * 6;
-
-
-
-      // Gives a timeslot in half hour increments in the format 0.0, 0.5, 1.0, 1.5, etc.
-      timeslot = double.parse(key.hour.toString() +
-          '.' +
-          ((key.minute / 30).floor() * 0.5).toString());
-
-
-    });
-
-    return returnData;
-  } */
-
   /// Stream of heart rate [HeartRate] measures.
   Stream<DataPoint>? get heartRateEvents =>
       controller?.data.where((dataPoint) => dataPoint.data is HeartRate);
@@ -71,10 +43,13 @@ class HeartRateCardViewModel extends SerializableViewModel<HourlyHeartRate> {
     super.init(controller);
   }
 
-  BarChartGroupData getSeparaterStick(xAxis) {
+  BarChartGroupData getSeparaterStick(xAxis, height) {
     return BarChartGroupData(x: xAxis, barsSpace: 0, barRods: [
       BarChartRodData(
-          toY: 70, fromY: 0, width: 1, color: const Color.fromARGB(70, 0, 0, 0))
+          toY: height,
+          fromY: 0,
+          width: 1,
+          color: const Color.fromARGB(70, 0, 0, 0))
     ]);
   }
 }

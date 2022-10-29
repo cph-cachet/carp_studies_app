@@ -1,7 +1,7 @@
 name: carp_study_app
 description: The generic CARP study app.
 publish_to: 'none'
-version: 0.40.0
+version: 0.40.3
 
 environment:
   sdk: '>=2.17.0 <3.0.0'
@@ -37,7 +37,6 @@ dependencies:
   json_annotation: ^4.4.0
   app_settings: ^4.1.5
   flutter_blue_plus: ^1.1.2
-  device_info_plus: ^7.0.0
   esense_flutter: ^0.6.1
   open_settings: ^2.0.0
 
@@ -107,11 +106,11 @@ dependency_overrides:
       url: https://github.com/cph-cachet/carp.sensing-flutter.git
       ref: develop
       path: packages/carp_esense_package/
-  carp_polar_package:
-    git:
-      url: https://github.com/cph-cachet/carp.sensing-flutter.git
-      ref: develop
-      path: packages/carp_polar_package/
+  # carp_polar_package:
+  #   git:
+  #     url: https://github.com/cph-cachet/carp.sensing-flutter.git
+  #     ref: develop
+  #     path: packages/carp_polar_package/
   carp_backend:
     git:
       url: https://github.com/cph-cachet/carp.sensing-flutter.git

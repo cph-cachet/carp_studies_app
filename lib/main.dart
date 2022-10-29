@@ -8,7 +8,6 @@ import 'dart:io';
 
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart' hide TimeOfDay;
-import 'package:device_info_plus/device_info_plus.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -38,7 +37,7 @@ import 'package:carp_webservices/carp_services/carp_services.dart';
 import 'package:carp_webservices/carp_auth/carp_auth.dart';
 import 'package:carp_backend/carp_backend.dart';
 import 'package:carp_esense_package/esense.dart';
-import 'package:carp_polar_package/carp_polar_package.dart';
+// import 'package:carp_polar_package/carp_polar_package.dart';
 import 'package:research_package/research_package.dart';
 import 'package:cognition_package/cognition_package.dart';
 
@@ -128,6 +127,6 @@ void main() async {
 /// or deploying it.
 final bloc = StudyAppBLoC(
   debugLevel: DebugLevel.DEBUG,
-  deploymentMode: DeploymentMode.CARP_PRODUCTION,
+  deploymentMode: DeploymentMode.LOCAL,
   forceSignOutAndStudyReload: false,
 );

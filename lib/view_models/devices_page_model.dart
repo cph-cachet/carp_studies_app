@@ -18,7 +18,6 @@ class DevicesPageViewModel extends ViewModel {
 
 class DeviceModel {
   DeviceManager deviceManager;
-  DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
 
   String? get type => deviceManager.type;
   DeviceStatus get status => deviceManager.status;
@@ -57,41 +56,12 @@ class DeviceModel {
 
   String? get connectionInstructions => deviceConnectionInstructions[type!];
 
-  // /// The icon for the runtime state of this device.
-  // Icon? get stateIcon => deviceStateIcon[status];
-
-  // Future<dynamic> get platformDeviceInfo async {
-  //   if (Platform.isAndroid) {
-  //     return await deviceInfo.androidInfo;
-  //   } else if (Platform.isIOS) {
-  //     return deviceInfo.iosInfo;
-  //   } else
-  //     return null;
-  // }
-
-  Future<Map<String, String?>> get phoneInfo async {
-    if (Platform.isAndroid) {
-      AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
-      return {
-        'name': '${androidInfo.host}',
-        'model': '${androidInfo.model} (${androidInfo.brand})',
-        'version': 'SDK ${androidInfo.version.sdkInt}',
+  Map<String, String?> get phoneInfo => {
+        'name': '${DeviceInfo().deviceID}',
+        'model':
+            '${DeviceInfo().deviceModel} (${DeviceInfo().deviceManufacturer?.toUpperCase()})',
+        'version': 'SDK ${DeviceInfo().sdk}',
       };
-    }
-    if (Platform.isIOS) {
-      IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
-      return {
-        'name': '${iosInfo.name}',
-        'model': '${iosInfo.model}',
-        'version': '${iosInfo.systemName} ${iosInfo.systemVersion}',
-      };
-    }
-    return {
-      'name': 'Unknown',
-      'model': 'Unknown',
-      'version': 'Unknown',
-    };
-  }
 
   DeviceModel(this.deviceManager) : super();
 
@@ -101,7 +71,7 @@ class DeviceModel {
         AirQualityService.DEVICE_TYPE: "pages.devices.type.air_quality.name",
         LocationService.DEVICE_TYPE: "pages.devices.type.location.name",
         ESenseDevice.DEVICE_TYPE: "pages.devices.type.esense.name",
-        PolarDevice.DEVICE_TYPE: "pages.devices.type.polar.name",
+        // PolarDevice.DEVICE_TYPE: "pages.devices.type.polar.name",
       };
 
   static Map<String, String> get deviceTypeDescription => {
@@ -111,7 +81,7 @@ class DeviceModel {
             "pages.devices.type.air_quality.description",
         LocationService.DEVICE_TYPE: "pages.devices.type.location.description",
         ESenseDevice.DEVICE_TYPE: "pages.devices.type.esense.description",
-        PolarDevice.DEVICE_TYPE: "pages.devices.type.polar.description",
+        // PolarDevice.DEVICE_TYPE: "pages.devices.type.polar.description",
       };
 
   static Map<String, Icon> get deviceTypeIcon => {
@@ -120,7 +90,7 @@ class DeviceModel {
         AirQualityService.DEVICE_TYPE: Icon(Icons.air),
         LocationService.DEVICE_TYPE: Icon(Icons.location_on),
         ESenseDevice.DEVICE_TYPE: Icon(Icons.headphones, size: 30),
-        PolarDevice.DEVICE_TYPE: Icon(Icons.monitor_heart, size: 30),
+        // PolarDevice.DEVICE_TYPE: Icon(Icons.monitor_heart, size: 30),
       };
 
   static Map<DeviceStatus, dynamic> get deviceStatusIcon => {
@@ -150,6 +120,6 @@ class DeviceModel {
   static Map<String, String> get deviceConnectionInstructions => {
         Smartphone.DEVICE_TYPE: "pages.devices.type.smartphone.instructions",
         ESenseDevice.DEVICE_TYPE: "pages.devices.type.esense.instructions",
-        PolarDevice.DEVICE_TYPE: "pages.devices.type.polar.instructions",
+        // PolarDevice.DEVICE_TYPE: "pages.devices.type.polar.instructions",
       };
 }

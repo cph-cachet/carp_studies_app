@@ -726,16 +726,16 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
             // samplingRate: 10,
             );
 
-        var polar = PolarDevice(
-          roleName: 'hr-sensor',
-          // identifier: 'B5FC172F',
-          // name: 'H10',
-          // polarDeviceType: PolarDeviceType.H10,
-        );
+        // var polar = PolarDevice(
+        //   roleName: 'hr-sensor',
+        //   // identifier: 'B5FC172F',
+        //   // name: 'H10',
+        //   // polarDeviceType: PolarDeviceType.H10,
+        // );
 
         _protocol!.addMasterDevice(phone);
         _protocol!.addConnectedDevice(eSense);
-        _protocol!.addConnectedDevice(polar);
+        // _protocol!.addConnectedDevice(polar);
 
         // ONLINE SERVICES
         //
@@ -811,14 +811,14 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
             ]),
             eSense);
 
-        // Polar
-        _protocol!.addTriggeredTask(
-            ImmediateTrigger(),
-            BackgroundTask(measures: [
-              Measure(type: PolarSamplingPackage.POLAR_HR),
-              Measure(type: PolarSamplingPackage.POLAR_ECG)
-            ]),
-            polar);
+        // // Polar
+        // _protocol!.addTriggeredTask(
+        //     ImmediateTrigger(),
+        //     BackgroundTask(measures: [
+        //       Measure(type: PolarSamplingPackage.POLAR_HR),
+        //       Measure(type: PolarSamplingPackage.POLAR_ECG)
+        //     ]),
+        //     polar);
 
         // APP TASKS
         //

@@ -179,44 +179,36 @@ class DevicesPageState extends State<DevicesPage> {
         margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         elevation: 2,
-        child: FutureBuilder<Map<String, String?>>(
-            future: device.phoneInfo,
-            builder: (context, snapshot) {
-              if (!snapshot.hasData) {
-                return CircularProgressIndicator();
-              } else {
-                return Column(
+        child: Column(
+          children: [
+            ListTile(
+              enableFeedback: false,
+              leading: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [device.icon!],
+              ),
+              title: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    ListTile(
-                      enableFeedback: false,
-                      leading: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [device.icon!],
-                      ),
-                      title: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Text(snapshot.data!["name"]!),
-                          ]),
-                      subtitle: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(snapshot.data!["model"]! +
-                              " - " +
-                              snapshot.data!["version"]!),
-                          SizedBox(height: 1),
-                          _showBateryPercentage(context, device.batteryLevel!,
-                              scale: 0.9),
-                        ],
-                      ),
-                      isThreeLine: true,
-                    ),
-                  ],
-                );
-              }
-            }),
+                    Text(device.phoneInfo["name"]!),
+                  ]),
+              subtitle: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(device.phoneInfo["model"]! +
+                      " - " +
+                      device.phoneInfo["version"]!),
+                  SizedBox(height: 1),
+                  _showBateryPercentage(context, device.batteryLevel!,
+                      scale: 0.9),
+                ],
+              ),
+              isThreeLine: true,
+            ),
+          ],
+        ),
       ),
     );
   }

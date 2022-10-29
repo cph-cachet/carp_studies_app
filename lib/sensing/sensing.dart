@@ -64,7 +64,7 @@ class Sensing {
     SamplingPackageRegistry().register(SurveySamplingPackage());
     //SamplingPackageRegistry.register(HealthSamplingPackage());
     SamplingPackageRegistry().register(ESenseSamplingPackage());
-    SamplingPackageRegistry().register(PolarSamplingPackage());
+    // SamplingPackageRegistry().register(PolarSamplingPackage());
 
     // create and register external data managers
     DataManagerRegistry().register(CarpDataManager());

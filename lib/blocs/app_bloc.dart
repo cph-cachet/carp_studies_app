@@ -119,7 +119,6 @@ class StudyAppBLoC {
               measure.type != VideoUserTask.VIDEO_TYPE &&
               measure.type != AudioUserTask.AUDIO_TYPE &&
               measure.type != SurveyUserTask.SURVEY_TYPE))) {
-        print(deployment!.measures);
         return true;
       } else
         return false;
@@ -201,12 +200,13 @@ class StudyAppBLoC {
         : null;
 
     // set up the messaging part
-    await messageManager.initialize();
-
-    // refresh the list of messages on a regular basis
-    Timer.periodic(
-        const Duration(minutes: 30), (_) async => await refreshMessages());
-    await refreshMessages();
+    messageManager.initialize().then(
+      (value) {
+        refreshMessages();
+        // refresh the list of messages on a regular basis
+        Timer.periodic(const Duration(minutes: 30), (_) => refreshMessages());
+      },
+    );
 
     // set up and initialize sensing
     await Sensing().initialize();
@@ -249,11 +249,10 @@ class StudyAppBLoC {
                   context,
                   "ic.location.content",
                 ));
-        await LocationManager().requestPermission();
-        // await Permission.locationAlways.request();
+        // await LocationManager().requestPermission();
       }
     }
-    print('$runtimeType - asking for permisions');
+    info('$runtimeType - asking for permisions');
     await Sensing().askForPermissions();
   }
 
@@ -321,8 +320,17 @@ class StudyAppBLoC {
   Iterable<DeviceModel> get runningDevices =>
       Sensing().runningDevices!.map((device) => DeviceModel(device));
 
-  void connectToDevice(DeviceModel device) {
-    Sensing().client?.deviceController.devices[device.type!]!.connect();
+  /// Map a selected device to the device in the protocol and connect to it.
+  void connectToDevice(BluetoothDevice selectedDevice, DeviceManager device) {
+    if (device is BTLEDeviceManager) {
+      device.btleAddress = selectedDevice.id.id;
+      device.btleName = selectedDevice.name;
+    }
+
+    // when the device id is updated, save the deployment
+    Sensing().controller?.saveDeployment();
+
+    device.connect();
   }
 
   /// Start sensing. Should only be called once.

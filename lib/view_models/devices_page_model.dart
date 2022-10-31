@@ -1,26 +1,23 @@
 part of carp_study_app;
 
+enum DeviceType {
+  PHONE,
+  WATCH,
+  HEADSET,
+  SCALE,
+  HOME,
+  SPEAKER,
+  HEARTRATE_MONITOR,
+  UNKNOWN,
+}
+
 class DevicesPageViewModel extends ViewModel {
-  // DevicesPageViewModel();
-
-  // /// The list of scanned bluetooth devices.
-
-  // List<BluetoothDevice> get devices => BluetoothDatum().scanResult;
-  // Stream<Datum> get scanDevices => Stream.fromFuture(BluetoothProbe().getDatum());
-
-  // // Get an icon for the device based on its type.  If there is no icon for the device, use a default icon
-
   List<DeviceModel> _devices = [];
   List<DeviceModel> get devices => _devices;
 }
 
 class DeviceModel {
   DeviceManager deviceManager;
-  DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-
-  //late ESenseDevice eSenseDevice;
-
-  //String _id = bloc.deployment!.connectedDevices.firstWhere((device) => device is deviceManager.type).deviceName;
 
   String? get type => deviceManager.type;
   DeviceStatus get status => deviceManager.status;
@@ -28,7 +25,7 @@ class DeviceModel {
   /// Stream of [DeviceStatus] events
   Stream<DeviceStatus> get deviceEvents => deviceManager.statusEvents;
 
-  /// The device ids
+  /// The device id
   String get id => deviceManager.id;
 
   /// A printer-friendly name for this device.
@@ -58,89 +55,60 @@ class DeviceModel {
   String? get statusText => deviceStatusText[status];
 
   String? get connectionInstructions => deviceConnectionInstructions[type!];
-  // /// The icon for the runtime state of this device.
-  // Icon? get stateIcon => deviceStateIcon[status];
 
-  set setId(String newId) {
-    ESenseDevice eSenseDevice = bloc.deployment!.connectedDevices
-        .firstWhere((device) => device is ESenseDevice) as ESenseDevice;
-    eSenseDevice.deviceName = newId;
-  }
-
-  // Future<dynamic> get platformDeviceInfo async {
-  //   if (Platform.isAndroid) {
-  //     return await deviceInfo.androidInfo;
-  //   } else if (Platform.isIOS) {
-  //     return deviceInfo.iosInfo;
-  //   } else
-  //     return null;
-  // }
-
-  Future<Map<String, String?>> get phoneInfo async {
-    if (Platform.isAndroid) {
-      AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
-      return {
-        'name': '${androidInfo.host}',
-        'model': '${androidInfo.model} (${androidInfo.brand})',
-        'version': 'SDK ${androidInfo.version.sdkInt}',
+  Map<String, String?> get phoneInfo => {
+        'name': '${DeviceInfo().deviceID}',
+        'model':
+            '${DeviceInfo().deviceModel} (${DeviceInfo().deviceManufacturer?.toUpperCase()})',
+        'version': 'SDK ${DeviceInfo().sdk}',
       };
-    }
-    if (Platform.isIOS) {
-      IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
-      return {
-        'name': '${iosInfo.name}',
-        'model': '${iosInfo.model}',
-        'version': '${iosInfo.systemName} ${iosInfo.systemVersion}',
-      };
-    }
-    return {
-      'name': 'Unknown',
-      'model': 'Unknown',
-      'version': 'Unknown',
-    };
-  }
 
   DeviceModel(this.deviceManager) : super();
 
   static Map<String, String> get deviceTypeName => {
         Smartphone.DEVICE_TYPE: "pages.devices.type.smartphone.name",
-        ESenseDevice.DEVICE_TYPE: "pages.devices.type.esense.name",
         WeatherService.DEVICE_TYPE: "pages.devices.type.weather.name",
         AirQualityService.DEVICE_TYPE: "pages.devices.type.air_quality.name",
         LocationService.DEVICE_TYPE: "pages.devices.type.location.name",
+        ESenseDevice.DEVICE_TYPE: "pages.devices.type.esense.name",
+        PolarDevice.DEVICE_TYPE: "pages.devices.type.polar.name",
       };
 
   static Map<String, String> get deviceTypeDescription => {
         Smartphone.DEVICE_TYPE: "pages.devices.type.smartphone.description",
-        ESenseDevice.DEVICE_TYPE: "pages.devices.type.esense.description",
         WeatherService.DEVICE_TYPE: "pages.devices.type.weather.description",
         AirQualityService.DEVICE_TYPE:
             "pages.devices.type.air_quality.description",
         LocationService.DEVICE_TYPE: "pages.devices.type.location.description",
+        ESenseDevice.DEVICE_TYPE: "pages.devices.type.esense.description",
+        PolarDevice.DEVICE_TYPE: "pages.devices.type.polar.description",
       };
+
   static Map<String, Icon> get deviceTypeIcon => {
         Smartphone.DEVICE_TYPE: Icon(Icons.phone_android, size: 30),
-        ESenseDevice.DEVICE_TYPE: Icon(Icons.headphones, size: 30),
-        WeatherService.DEVICE_TYPE: Icon(Icons.wb_sunny_rounded),
+        WeatherService.DEVICE_TYPE: Icon(Icons.wb_cloudy),
         AirQualityService.DEVICE_TYPE: Icon(Icons.air),
         LocationService.DEVICE_TYPE: Icon(Icons.location_on),
+        ESenseDevice.DEVICE_TYPE: Icon(Icons.headphones, size: 30),
+        PolarDevice.DEVICE_TYPE: Icon(Icons.monitor_heart, size: 30),
       };
 
   static Map<DeviceStatus, dynamic> get deviceStatusIcon => {
+        DeviceStatus.initialized: "pages.devices.status.action.connect",
+        DeviceStatus.connecting:
+            Icon(Icons.sensors_off, color: CACHET.GREEN_1, size: 30),
         DeviceStatus.connected:
             Icon(Icons.sensors, color: CACHET.GREEN_1, size: 30),
-        DeviceStatus.disconnected:
-            "pages.devices.status.action.connect", // If its disconnected, ask to pair
-        DeviceStatus.paired:
-            "pages.devices.status.action.connect", // If its paired, ask to connect
+        DeviceStatus.disconnected: "pages.devices.status.action.connect",
+        DeviceStatus.paired: "pages.devices.status.action.connect",
         DeviceStatus.error:
             Icon(Icons.error_outline, color: CACHET.RED_1, size: 30),
-        DeviceStatus.initialized: "pages.devices.status.action.pair",
         DeviceStatus.unknown:
             Icon(Icons.error_outline, color: CACHET.RED_1, size: 30),
       };
 
   static Map<DeviceStatus, String> get deviceStatusText => {
+        DeviceStatus.connecting: "pages.devices.status.connecting",
         DeviceStatus.connected: "pages.devices.status.connected",
         DeviceStatus.disconnected: "pages.devices.status.disconnected",
         DeviceStatus.paired: "pages.devices.status.paired",
@@ -152,18 +120,6 @@ class DeviceModel {
   static Map<String, String> get deviceConnectionInstructions => {
         Smartphone.DEVICE_TYPE: "pages.devices.type.smartphone.instructions",
         ESenseDevice.DEVICE_TYPE: "pages.devices.type.esense.instructions",
+        PolarDevice.DEVICE_TYPE: "pages.devices.type.polar.instructions",
       };
-
-  // static Map<DeviceType, Icon> get deviceTypeIcon => {
-  //       DeviceType.HEADSET: Icon(Icons.headphones),
-  //       DeviceType.PHONE: Icon(Icons.phone_android),
-  //       DeviceType.WATCH: Icon(Icons.watch),
-  //       DeviceType.HOME: Icon(Icons.home_mini_outlined),
-  //       DeviceType.SPEAKER: Icon(Icons.speaker),
-  //       DeviceType.SCALE: Icon(Icons.monitor_weight_outlined),
-  //       DeviceType.UNKNOWN: Icon(Icons.bluetooth)
-  //     };
-
 }
-
-enum DeviceType { WATCH, PHONE, HEADSET, SCALE, HOME, SPEAKER, UNKNOWN }

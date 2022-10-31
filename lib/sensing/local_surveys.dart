@@ -12,6 +12,9 @@ class _Surveys {
   Survey _symptoms = _SymptomsSurvey();
   Survey get symptoms => _symptoms;
 
+  Survey _parkinsons = _ParkinsonsSurvey();
+  Survey get parkinsons => _parkinsons;
+
   Survey _parnas = _PARNASSurvey();
   Survey get parnas => _parnas;
 
@@ -2058,24 +2061,24 @@ class _DemographicSurvey implements Survey {
         RPChoice(text: "Prefer not to say", value: 7),
       ]);
 
-  RPTask get survey => RPOrderedTask(identifier: "demo_survey", steps: [
+  RPTask get survey => RPOrderedTask(identifier: "demographic_survey", steps: [
         RPQuestionStep(
-          identifier: "demo_1",
+          identifier: "demographic_1",
           title: "Which is your biological sex?",
           answerFormat: _sexChoices,
         ),
         RPQuestionStep(
-          identifier: "demo_2",
+          identifier: "demographic_2",
           title: "How old are you?",
           answerFormat: _ageChoices,
         ),
         RPQuestionStep(
-          identifier: "demo_3",
+          identifier: "demographic_3",
           title: "Do you have any of these medical conditions?",
           answerFormat: _medicalChoices,
         ),
         RPQuestionStep(
-          identifier: "demo_4",
+          identifier: "demographic_4",
           title: "Do you, or have you, ever smoked (including e-cigarettes)?",
           answerFormat: _smokeChoices,
         ),
@@ -2109,8 +2112,73 @@ class _SymptomsSurvey implements Survey {
 
   RPTask get survey => RPOrderedTask(identifier: "symptoms_survey", steps: [
         RPQuestionStep(
-          identifier: "sym_1",
+          identifier: "symptoms_1",
           title: "Do you have any of the following symptoms today?",
+          answerFormat: _symptomsChoices,
+        ),
+      ]);
+}
+
+// NOTE that normally we would spell Parkinson's with an "'", but this makes a conclict
+// when writing it to the SQLite database.
+class _ParkinsonsSurvey implements Survey {
+  String get title => "The Parkinsons Disease Activities of Daily Living Scale";
+  String get description =>
+      "A new simple and brief subjective measure of disability in Parkinsons disease";
+  int get minutesToComplete => 1;
+  Duration get expire => const Duration(days: 1);
+
+  RPChoiceAnswerFormat _symptomsChoices = RPChoiceAnswerFormat(
+      answerStyle: RPChoiceAnswerStyle.SingleChoice,
+      choices: [
+        RPChoice(
+            text: "No difficulties with day-to-day activities.",
+            detailText:
+                "For example: Your Parkinsons disease at present is not affecting "
+                "your daily living.",
+            value: 1),
+        RPChoice(
+            text: "Mild difficulties with day-to-day activities.",
+            detailText:
+                "For example: Slowness with some aspects of housework, gardening or "
+                "shopping. Able to dress and manage personal hygiene completely "
+                "independently but rate is slower. You may feel that your medication "
+                "is not quite effective as it was.",
+            value: 2),
+        RPChoice(
+            text: "Moderate difficulties with day-to-day activities.",
+            detailText:
+                "For example: Your Parkinsons disease is interfering with your daily activities. "
+                "It is increasingly difficult to do simple activities without some help such as rising "
+                "from a chair, washing, dressing, shopping, housework. You may have some "
+                "difficulties walking and may require assistance. Difficulties with "
+                "recreational activities or the ability to drive a car. "
+                "The medication is now less effective.",
+            value: 3),
+        RPChoice(
+            text: "High levels of difficulties with day-to-day activities.",
+            detailText:
+                "For example: You now require much more assistance with activities of "
+                "daily living such as washing, dressing, housework or feeding yourself. "
+                "You may have greater difficulties with mobility and find you "
+                "are becoming more dependent for assistance from others or aids and appliances. "
+                "Your medication appears to be significantly less effective.",
+            value: 4),
+        RPChoice(
+            text: "Extreme difficulties with day-to-day activities.",
+            detailText:
+                "For example: You require assistance in all daily activities. "
+                "These may include dressing, washing, feeding yourself or walking unaided. "
+                "You may now be housebound and obtain little or no benefit from your medication.",
+            value: 5),
+      ]);
+
+  RPTask get survey => RPOrderedTask(identifier: "parkinsons_survey", steps: [
+        RPQuestionStep(
+          identifier: "parkinsons_1",
+          title:
+              "Please tick one of the descriptions that best describes how your "
+              "Parkinsons disease has affected your day-to-day activities in the last month.",
           answerFormat: _symptomsChoices,
         ),
       ]);

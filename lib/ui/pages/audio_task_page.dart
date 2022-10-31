@@ -2,13 +2,13 @@ part of carp_study_app;
 
 class AudioTaskPage extends StatefulWidget {
   final AudioUserTask? audioUserTask;
-  AudioTaskPage({Key? key, this.audioUserTask}) : super(key: key);
+  AudioTaskPage({super.key, this.audioUserTask});
 
   @override
-  _AudioTaskPageState createState() => _AudioTaskPageState(audioUserTask);
+  AudioTaskPageState createState() => AudioTaskPageState(audioUserTask);
 }
 
-class _AudioTaskPageState extends State<AudioTaskPage> {
+class AudioTaskPageState extends State<AudioTaskPage> {
   final AudioUserTask? audioUserTask;
 
   int get _currentStep {
@@ -24,12 +24,13 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
 
   List<int> steps = [0, 1, 2];
 
-  _AudioTaskPageState(this.audioUserTask) : super();
+  AudioTaskPageState(this.audioUserTask) : super();
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: (() async => _showCancelConfirmationDialog() as FutureOr<bool>),
+      onWillPop: (() async =>
+          _showCancelConfirmationDialog() as FutureOr<bool>),
       child: Scaffold(
         body: Container(
           padding: EdgeInsets.symmetric(horizontal: 15),
@@ -46,7 +47,8 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         IconButton(
-          icon: Icon(Icons.help_outline, color: Theme.of(context).primaryColor, size: 30),
+          icon: Icon(Icons.help_outline,
+              color: Theme.of(context).primaryColor, size: 30),
           tooltip: locale.translate('Help'),
           onPressed: () {
             print("Help");
@@ -71,17 +73,19 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
                           shape: BoxShape.circle,
                           color: index <= _currentStep
                               ? Theme.of(context).primaryColor
-                              : Theme.of(context).primaryColor.withOpacity(0.5)),
+                              : Theme.of(context)
+                                  .primaryColor
+                                  .withOpacity(0.5)),
                     );
                   },
                 ).toList(),
               ),
             )),
         IconButton(
-          icon: Icon(Icons.close, color: Theme.of(context).primaryColor, size: 30),
+          icon: Icon(Icons.close,
+              color: Theme.of(context).primaryColor, size: 30),
           tooltip: locale.translate('Close'),
           onPressed: () {
-            print("close");
             _showCancelConfirmationDialog();
           },
         ),
@@ -120,9 +124,13 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
             SizedBox(height: 35),
             _header(),
             SizedBox(height: 35),
-            Image(image: AssetImage('assets/icons/audio.png'), width: 220, height: 220),
+            Image(
+                image: AssetImage('assets/icons/audio.png'),
+                width: 220,
+                height: 220),
             SizedBox(height: 40),
-            Text(locale.translate(audioUserTask!.title), style: audioTitleStyle),
+            Text(locale.translate(audioUserTask!.title),
+                style: audioTitleStyle),
             SizedBox(height: 10),
             Text(
                 '${locale.translate(audioUserTask!.description)}\n\n' +
@@ -132,16 +140,6 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
               child: Align(
                 alignment: FractionalOffset.bottomCenter,
                 child: Padding(
-                  // padding: EdgeInsets.only(bottom: 30.0),
-                  // child: CircleAvatar(
-                  //   radius: 30,
-                  //   backgroundColor: CACHET.RED_1,
-                  //   child: IconButton(
-                  //     onPressed: () => audioUserTask!.onRecordStart(),
-                  //     padding: EdgeInsets.all(0),
-                  //     icon: Icon(Icons.mic, color: Colors.white, size: 30),
-                  //   ),
-                  // ),
                   padding: EdgeInsets.only(bottom: 30.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -160,7 +158,8 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
                       InkWell(
                         child: Text(
                           locale.translate("pages.audio_task.skip"),
-                          style: aboutCardTitleStyle.copyWith(color: Theme.of(context).primaryColor),
+                          style: aboutCardTitleStyle.copyWith(
+                              color: Theme.of(context).primaryColor),
                         ),
                         onTap: () {
                           audioUserTask!.onDone(context);
@@ -194,9 +193,13 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
             SizedBox(height: 35),
             _header(),
             SizedBox(height: 35),
-            Image(image: AssetImage('assets/icons/audio.png'), width: 220, height: 220),
+            Image(
+                image: AssetImage('assets/icons/audio.png'),
+                width: 220,
+                height: 220),
             SizedBox(height: 40),
-            Text(locale.translate("pages.audio_task.recording"), style: audioTitleStyle),
+            Text(locale.translate("pages.audio_task.recording"),
+                style: audioTitleStyle),
             SizedBox(height: 10),
             // If instructions are too long, create scrollable card for the extra instructions
             // TODO - the layout method below is prone to be creating problems / exceptions....
@@ -219,8 +222,8 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
                     scrollDirection: Axis.vertical, //.horizontal
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child:
-                          Text(locale.translate(audioUserTask!.instructions), style: audioInstructionStyle),
+                      child: Text(locale.translate(audioUserTask!.instructions),
+                          style: audioInstructionStyle),
                     ),
                   ),
                 ),
@@ -280,11 +283,16 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
             SizedBox(height: 35),
             _header(),
             SizedBox(height: 35),
-            Image(image: AssetImage('assets/icons/audio.png'), width: 220, height: 220),
+            Image(
+                image: AssetImage('assets/icons/audio.png'),
+                width: 220,
+                height: 220),
             SizedBox(height: 40),
-            Text(locale.translate("Done!"), style: audioTitleStyle),
+            Text(locale.translate('pages.audio_task.done'),
+                style: audioTitleStyle),
             SizedBox(height: 10),
-            Text(locale.translate('pages.audio_task.recording_completed'), style: audioContentStyle),
+            Text(locale.translate('pages.audio_task.recording_completed'),
+                style: audioContentStyle),
             Expanded(
               child: Align(
                 alignment: FractionalOffset.bottomCenter,
@@ -297,7 +305,8 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
                       IconButton(
                         onPressed: () => audioUserTask!.onRecordStart(),
                         padding: EdgeInsets.all(0),
-                        icon: Icon(Icons.replay, size: 25, color: CACHET.GREY_5),
+                        icon:
+                            Icon(Icons.replay, size: 25, color: CACHET.GREY_5),
                       ),
                       CircleAvatar(
                         radius: 30,
@@ -305,7 +314,8 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
                         child: IconButton(
                           onPressed: () => Navigator.pop(context),
                           padding: EdgeInsets.all(0),
-                          icon: Icon(Icons.check_circle_outline, color: Colors.white, size: 30),
+                          icon: Icon(Icons.check_circle_outline,
+                              color: Colors.white, size: 30),
                         ),
                       ),
                       SizedBox(width: 50),
@@ -334,7 +344,8 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
           actions: <Widget>[
             TextButton(
               child: Text(locale.translate("NO")),
-              onPressed: () => Navigator.of(context).pop(), // Dismissing the pop-up
+              onPressed: () =>
+                  Navigator.of(context).pop(), // Dismissing the pop-up
             ),
             TextButton(
               child: Text(locale.translate("YES")),

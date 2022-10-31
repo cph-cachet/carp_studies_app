@@ -1,14 +1,21 @@
 part of carp_study_app;
 
+/// The type of visualization used in a [TaskCardWidget].
+enum TaskCardChartType { horisontal, pie }
+
 class TaskCardWidget extends StatefulWidget {
   final TaskCardViewModel model;
   final List<Color> colors;
-  final String chartType;
-  TaskCardWidget(this.model, {this.colors = CACHET.COLOR_LIST, this.chartType = "horizontalBar"});
-  _TaskCardWidgetState createState() => _TaskCardWidgetState();
+  final TaskCardChartType chartType;
+  TaskCardWidget(
+    this.model, {
+    this.colors = CACHET.COLOR_LIST,
+    this.chartType = TaskCardChartType.horisontal,
+  });
+  TaskCardWidgetState createState() => TaskCardWidgetState();
 }
 
-class _TaskCardWidgetState extends State<TaskCardWidget> {
+class TaskCardWidgetState extends State<TaskCardWidget> {
   static List<charts.Series<TaskCount, String>> _createChartList(
       BuildContext context, TaskCardViewModel model, List<Color> colors) {
     RPLocalizations locale = RPLocalizations.of(context)!;
@@ -18,7 +25,8 @@ class _TaskCardWidgetState extends State<TaskCardWidget> {
         // charts.MaterialPalette.blue.makeShades(min(7, model.samplingTable.length))[index],
         id: 'TotalTasks',
         data: model.taskCount.sublist(0, min(6, model.tasksTable.length)),
-        domainFn: (TaskCount taskCount, _) => locale.translate(taskCount.title).truncateTo(12),
+        domainFn: (TaskCount taskCount, _) =>
+            locale.translate(taskCount.title).truncateTo(12),
         measureFn: (TaskCount taskCount, _) => taskCount.size,
       )
     ];
@@ -48,7 +56,8 @@ class _TaskCardWidgetState extends State<TaskCardWidget> {
                           SizedBox(height: 5),
                           Text(
                               '${widget.model.tasksDone} ' +
-                                  locale.translate('cards.${widget.model.taskType}.title'),
+                                  locale.translate(
+                                      'cards.${widget.model.taskType}.title'),
                               //textAlign: TextAlign.center,
                               style: dataCardTitleStyle),
                         ],
@@ -66,16 +75,21 @@ class _TaskCardWidgetState extends State<TaskCardWidget> {
   }
 
   Widget chart(BuildContext context, RPLocalizations locale) {
-    if (this.widget.chartType == "horizontalBar") {
+    if (this.widget.chartType == TaskCardChartType.horisontal) {
       return Container(
         height: 160,
         child: HorizontalBar(
-          names: this.widget.model.taskCount.map((task) => locale.translate(task.title)).toList(),
+          names: this
+              .widget
+              .model
+              .taskCount
+              .map((task) => locale.translate(task.title))
+              .toList(),
           values: this.widget.model.taskCount.map((task) => task.size).toList(),
           colors: CACHET.COLOR_LIST,
         ),
       );
-    } else if (this.widget.chartType == "pie") {
+    } else if (this.widget.chartType == TaskCardChartType.pie) {
       return Row(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -99,9 +113,11 @@ class _TaskCardWidgetState extends State<TaskCardWidget> {
                     desiredMaxRows: 6,
                     horizontalFirst: false,
                     cellPadding: EdgeInsets.only(bottom: 2.0, left: 10),
-                    outsideJustification: charts.OutsideJustification.startDrawArea,
+                    outsideJustification:
+                        charts.OutsideJustification.startDrawArea,
                     showMeasures: true,
-                    legendDefaultMeasure: charts.LegendDefaultMeasure.firstValue,
+                    legendDefaultMeasure:
+                        charts.LegendDefaultMeasure.firstValue,
                     measureFormatter: (num? value) {
                       return value == null ? '-' : '$value';
                     },

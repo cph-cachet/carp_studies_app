@@ -4,41 +4,44 @@ class CameraTaskPage extends StatefulWidget {
   final VideoUserTask mediaUserTask;
   final List<CameraDescription> cameras;
 
-  CameraTaskPage({Key? key, required this.mediaUserTask, required this.cameras}) : super(key: key);
+  CameraTaskPage({
+    super.key,
+    required this.mediaUserTask,
+    required this.cameras,
+  });
 
   @override
-  _CameraTaskPageState createState() => _CameraTaskPageState();
+  CameraTaskPageState createState() => CameraTaskPageState();
 }
 
-class _CameraTaskPageState extends State<CameraTaskPage> {
+class CameraTaskPageState extends State<CameraTaskPage> {
   @override
-  Widget build(BuildContext context) {
-    RPLocalizations locale = RPLocalizations.of(context)!;
-    return WillPopScope(
-      onWillPop: (() async => _showCancelConfirmationDialog() as FutureOr<bool>),
-      child: Scaffold(
-        body: Container(padding: EdgeInsets.symmetric(horizontal: 15), child: _stepSelector()),
-      ),
-    );
-  }
+  Widget build(BuildContext context) => WillPopScope(
+        onWillPop: (() async =>
+            _showCancelConfirmationDialog() as FutureOr<bool>),
+        child: Scaffold(
+          body: Container(
+              padding: EdgeInsets.symmetric(horizontal: 15),
+              child: _stepSelector()),
+        ),
+      );
 
-  Widget _stepSelector() {
-    return StreamBuilder<UserTaskState>(
-        stream: widget.mediaUserTask.stateEvents,
-        initialData: UserTaskState.enqueued,
-        builder: (context, AsyncSnapshot<UserTaskState> snapshot) {
-          switch (snapshot.data) {
-            case UserTaskState.enqueued:
-              return _stepOne();
+  Widget _stepSelector() => StreamBuilder<UserTaskState>(
+      stream: widget.mediaUserTask.stateEvents,
+      initialData: UserTaskState.enqueued,
+      builder: (context, AsyncSnapshot<UserTaskState> snapshot) {
+        switch (snapshot.data) {
+          case UserTaskState.enqueued:
+            return _stepOne();
 
-            default:
-              return SizedBox.shrink();
-          }
-        });
-  }
+          default:
+            return SizedBox.shrink();
+        }
+      });
 
   Widget _stepOne() {
     RPLocalizations locale = RPLocalizations.of(context)!;
+
     return StreamBuilder<UserTaskState>(
       stream: widget.mediaUserTask.stateEvents,
       initialData: UserTaskState.enqueued,
@@ -54,15 +57,21 @@ class _CameraTaskPageState extends State<CameraTaskPage> {
                     onPressed: () {
                       _showCancelConfirmationDialog();
                     },
-                    icon: Icon(Icons.close, color: Theme.of(context).primaryColor, size: 30))
+                    icon: Icon(Icons.close,
+                        color: Theme.of(context).primaryColor, size: 30))
               ],
             ),
             SizedBox(height: 35),
-            Image(image: AssetImage('assets/icons/camera.png'), width: 220, height: 220),
+            Image(
+                image: AssetImage('assets/icons/camera.png'),
+                width: 220,
+                height: 220),
             SizedBox(height: 40),
-            Text(locale.translate(widget.mediaUserTask.title), style: audioTitleStyle),
+            Text(locale.translate(widget.mediaUserTask.title),
+                style: audioTitleStyle),
             SizedBox(height: 10),
-            Text(locale.translate(widget.mediaUserTask.description), style: audioContentStyle),
+            Text(locale.translate(widget.mediaUserTask.description),
+                style: audioContentStyle),
             Expanded(
               child: Align(
                 alignment: FractionalOffset.bottomCenter,
@@ -80,18 +89,21 @@ class _CameraTaskPageState extends State<CameraTaskPage> {
                           onPressed: () => Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) =>
-                                  CameraPage(videoUserTask: widget.mediaUserTask, cameras: widget.cameras),
+                              builder: (context) => CameraPage(
+                                  videoUserTask: widget.mediaUserTask,
+                                  cameras: widget.cameras),
                             ),
                           ),
                           padding: EdgeInsets.all(0),
-                          icon: Icon(Icons.camera_alt, color: Colors.white, size: 30),
+                          icon: Icon(Icons.camera_alt,
+                              color: Colors.white, size: 30),
                         ),
                       ),
                       InkWell(
                         child: Text(
                           locale.translate("pages.audio_task.skip"),
-                          style: aboutCardTitleStyle.copyWith(color: Theme.of(context).primaryColor),
+                          style: aboutCardTitleStyle.copyWith(
+                              color: Theme.of(context).primaryColor),
                         ),
                         onTap: () {
                           widget.mediaUserTask.onDone(context);
@@ -124,7 +136,8 @@ class _CameraTaskPageState extends State<CameraTaskPage> {
           actions: <Widget>[
             TextButton(
               child: Text(locale.translate("NO")),
-              onPressed: () => Navigator.of(context).pop(), // Dismissing the pop-up
+              onPressed: () =>
+                  Navigator.of(context).pop(), // Dismissing the pop-up
             ),
             TextButton(
               child: Text(locale.translate("YES")),

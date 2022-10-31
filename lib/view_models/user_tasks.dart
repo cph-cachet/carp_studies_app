@@ -29,6 +29,7 @@ class AppUserTaskFactory implements UserTaskFactory {
 class AudioUserTask extends UserTask {
   static const String AUDIO_TYPE = 'audio';
 
+  late BuildContext _context;
   StreamController<int> _countDownController = StreamController.broadcast();
   Stream<int>? get countDownEvents => _countDownController.stream;
 
@@ -46,6 +47,8 @@ class AudioUserTask extends UserTask {
 
   @override
   void onStart(BuildContext context) {
+    // saving the build context for later use
+    _context = context;
     super.onStart(context);
     Navigator.push(
       context,
@@ -70,7 +73,7 @@ class AudioUserTask extends UserTask {
         _countDownController.close();
 
         executor.pause();
-        state = UserTaskState.done;
+        super.onDone(_context);
       }
     });
   }
@@ -81,7 +84,7 @@ class AudioUserTask extends UserTask {
     _countDownController.close();
 
     executor.pause();
-    state = UserTaskState.done;
+    super.onDone(_context);
   }
 }
 
@@ -91,10 +94,15 @@ class VideoUserTask extends UserTask {
   static const String VIDEO_TYPE = 'video';
   static const String IMAGE_TYPE = 'image';
 
+  late BuildContext _context;
+
   VideoUserTask(AppTaskExecutor executor) : super(executor);
 
   @override
   void onStart(BuildContext context) async {
+    // saving the build context for later use
+    _context = context;
+
     super.onStart(context);
 
     final cameras = await availableCameras();
@@ -107,48 +115,54 @@ class VideoUserTask extends UserTask {
   }
 
   DateTime? _startRecordingTime, _endRecordingTime;
-  XFile? file;
+  XFile? _file;
   MediaType _mediaType = MediaType.image;
 
   /// Callback when a picture is captured.
   void onPictureCapture(XFile image) {
-    onRecordStart();
-    // now wait for 2 secs to finish up any other sensing in the task
-    Timer(const Duration(seconds: 2),
-        () => onRecordStop(image, mediaType: MediaType.image));
+    debug('$runtimeType - onPictureCapture(), media: ${image.path}');
+    _file = image;
+    _mediaType = MediaType.image;
+    _startRecordingTime = DateTime.now();
+    _endRecordingTime = DateTime.now();
+
+    executor.resume();
   }
 
   /// Callback when video recording is started.
   void onRecordStart() {
+    debug('$runtimeType - onRecordStart()');
     _startRecordingTime = DateTime.now();
-    state = UserTaskState.started;
     executor.resume();
   }
 
   /// Callback when video recording is stopped.
-  void onRecordStop(XFile media, {MediaType mediaType = MediaType.video}) {
-    executor.pause();
-    file = media;
+  void onRecordStop(XFile media) {
+    debug('$runtimeType - onRecordStop(), media: ${media.path}');
+    _file = media;
     _endRecordingTime = DateTime.now();
-    _mediaType = mediaType;
+    _mediaType = MediaType.video;
   }
 
   /// Callback when the recorded image/video is to be "saved", i.e. committed to
-  /// data stream.
+  /// the data stream.
   void onSave() {
-    debug('$runtimeType - onSave(), file: ${file?.path}');
-    if (file != null) {
+    debug('$runtimeType - onSave(), file: ${_file?.path}');
+    if (_file != null) {
       // create the datum directly here...
       MediaDatum datum = MediaDatum(
-          filename: file!.path,
+          filename: _file!.path,
           startRecordingTime: _startRecordingTime!,
           endRecordingTime: _endRecordingTime,
           mediaType: _mediaType)
-        ..filename = file!.path.split("/").last;
+        ..filename = _file!.path.split("/").last
+        ..path = _file!.path;
 
       // ... and add it to the sensing controller
       bloc.addDatum(datum);
     }
+    executor.pause();
+    super.onDone(_context);
   }
 }
 

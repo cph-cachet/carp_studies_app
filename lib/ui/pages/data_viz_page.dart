@@ -55,7 +55,7 @@ class DataVisualizationPage extends StatelessWidget {
     );
   }
 
-  // the list of cards, depending on what measures are defined in the study
+  // The list of cards, depending on what measures are defined in the study.
   // TODO - this needs to adjusted when more measures can be visualized
   List<Widget> get _dataVizCards {
     final List<Widget> widgets = [];
@@ -73,7 +73,10 @@ class DataVisualizationPage extends StatelessWidget {
 
     // check to show surveys stats
     if (bloc.hasSurveys())
-      widgets.add(TaskCardWidget(model.surveysCardDataModel, chartType: "pie"));
+      widgets.add(TaskCardWidget(
+        model.surveysCardDataModel,
+        chartType: TaskCardChartType.pie,
+      ));
 
     List<TaskCardViewModel> mediaModelsList = [];
 
@@ -87,7 +90,7 @@ class DataVisualizationPage extends StatelessWidget {
     if (mediaModelsList.isNotEmpty)
       widgets.add(MediaCardWidget(mediaModelsList));
 
-    // check to show devices stats
+    // check to show device data visualizations
     if (bloc.hasDevices()) {
       //TODO ADD DEVICES VIZ
     }

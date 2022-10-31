@@ -2,7 +2,7 @@ part of carp_study_app;
 
 class HomePage extends StatefulWidget {
   final HomePageState state = HomePageState();
-  HomePage({Key? key}) : super(key: key);
+  HomePage({super.key});
   HomePageState createState() => state;
 }
 
@@ -15,9 +15,8 @@ class HomePageState extends State<HomePage> {
     super.initState();
 
     // check for permissions and start sensing - with a small delay
-    bloc
-        .configurePermissions(context)
-        .then((_) => Future.delayed(const Duration(seconds: 3), () => bloc.start()));
+    bloc.configurePermissions(context).then(
+        (_) => Future.delayed(const Duration(seconds: 10), () => bloc.start()));
 
     _pages.add(TaskListPage(bloc.data.taskListPageViewModel));
     _pages.add(StudyPage(bloc.data.studyPageViewModel));

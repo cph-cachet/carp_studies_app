@@ -6,8 +6,6 @@ part of carp_study_app;
 /// Dart definition.
 class LocalStudyProtocolManager implements StudyProtocolManager {
   SmartphoneStudyProtocol? _protocol;
-  static const String VIDEO_TYPE = 'video';
-  static const String IMAGE_TYPE = 'image';
 
   Future initialize() async {}
 
@@ -18,7 +16,31 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
       // _protocol ??= await _getPatientWristWatch(ignored);
       // _protocol = await _getTestWristWatch(ignored);
 
-      // add the localized description to all protocols
+      // set the data endpoint based on the deployment mode (local or CARP)
+      _protocol!.dataEndPoint = (bloc.deploymentMode == DeploymentMode.LOCAL)
+          ? SQLiteDataEndPoint()
+          : CarpDataEndPoint(
+              uploadMethod: CarpUploadMethod.DATA_POINT,
+              name: 'CARP Server',
+            );
+    }
+
+    return _protocol;
+  }
+
+  Future<bool> saveStudyProtocol(
+      String studyId, SmartphoneStudyProtocol protocol) async {
+    throw UnimplementedError();
+  }
+
+  /// ALL SURVEYS FOR THE WRIST ANGEL STUDY (FOR TESTING)
+  Future<SmartphoneStudyProtocol?> _getTestWristWatch(String studyId) async {
+    if (_protocol == null) {
+      _protocol = SmartphoneStudyProtocol(
+        name: 'Wrist Angel: All surveys immediate triggered',
+        ownerId: studyId,
+      );
+
       _protocol!.protocolDescription = StudyDescription(
           title: 'study.description.title',
           description: 'study.description.description',
@@ -34,31 +56,6 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
             name: 'study.responsible.name',
           ));
 
-      _protocol!.dataEndPoint = (bloc.deploymentMode == DeploymentMode.LOCAL)
-          ? FileDataEndPoint()
-          : CarpDataEndPoint(
-              uploadMethod: CarpUploadMethod.DATA_POINT,
-              name: 'CARP Server',
-            );
-    }
-
-    return _protocol;
-  }
-
-  Future<bool> saveStudyProtocol(
-      String studyId, SmartphoneStudyProtocol protocol) async {
-    throw UnimplementedError();
-  }
-
-  /// ALL SURVEYS STUDY (FOR TESTING)
-  Future<SmartphoneStudyProtocol?> _getTestWristWatch(String studyId) async {
-    if (_protocol == null) {
-      _protocol = SmartphoneStudyProtocol(
-        name: 'Wrist Angel: All surveys immediate triggered',
-        ownerId: studyId,
-      );
-
-      // Define which devices are used for data collection.
       Smartphone phone = Smartphone();
       _protocol!.addMasterDevice(phone);
 
@@ -218,7 +215,21 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
         ownerId: studyId,
       );
 
-      // Define which devices are used for data collection.
+      _protocol!.protocolDescription = StudyDescription(
+          title: 'study.description.title',
+          description: 'study.description.description',
+          purpose: 'study.description.purpose',
+          studyDescriptionUrl: 'study.description.url',
+          privacyPolicyUrl: 'study.description.privacy',
+          responsible: StudyResponsible(
+            id: 'study.responsible.id',
+            title: 'study.responsible.title',
+            address: 'study.responsible.address',
+            affiliation: 'study.responsible.affiliation',
+            email: 'study.responsible.email',
+            name: 'study.responsible.name',
+          ));
+
       Smartphone phone = Smartphone();
       _protocol!.addMasterDevice(phone);
 
@@ -677,145 +688,166 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
 
   Future<SmartphoneStudyProtocol?> _getGenericCARPStudy(String studyId) async {
     if (_protocol == null) {
-      _protocol = SmartphoneStudyProtocol(
-          ownerId: studyId,
-          name: 'CARP Study App Technical Test Protocol',
-          protocolDescription: StudyDescription(
-              title: 'CARP Study App Technical Study',
-              description:
-                  "We would like to have you help in testing the technical stability and the usability of the CARP Mobile Sensing app. "
-                  "Your data will be collected and store anonymously.",
-              purpose:
-                  'To investigate the technical stability and usability of the CARP Generic Study App.',
-              responsible: StudyResponsible(
-                id: 'jakba',
-                name: 'Jakob E. Bardram',
-                title: 'PhD, MSc',
-                email: 'jakba@dtu.dk',
-                affiliation: 'Technical University of Denmark',
-                address: 'Ørsteds Plads, bygn. 349, DK-2800 Kg. Lyngby',
-              )));
+      if (_protocol == null) {
+        _protocol = SmartphoneStudyProtocol(
+          name: 'CARP Demo Protocol',
+          ownerId: 'jakba',
+        );
 
-      // Define which devices are used for data collection.
-      Smartphone phone = Smartphone();
-      _protocol?.addMasterDevice(phone);
+        // add the localized description
+        _protocol!.protocolDescription = StudyDescription(
+            title: 'study.description.title',
+            description: 'study.description.description',
+            purpose: 'study.description.purpose',
+            studyDescriptionUrl: 'study.description.url',
+            privacyPolicyUrl: 'study.description.privacy',
+            responsible: StudyResponsible(
+              id: 'study.responsible.id',
+              title: 'study.responsible.title',
+              address: 'study.responsible.address',
+              affiliation: 'study.responsible.affiliation',
+              email: 'study.responsible.email',
+              name: 'study.responsible.name',
+            ));
 
-      // DeviceDescriptor eSense = DeviceDescriptor(roleName: 'The left eSense earplug');
-      // _protocol!.addConnectedDevice(eSense);
+        // add CARP as the data endpoint
+        //  * w/o authentication info - we expect to be authenticated
+        //  * upload each data point as it is collected
+        _protocol!.dataEndPoint = CarpDataEndPoint(
+          uploadMethod: CarpUploadMethod.DATA_POINT,
+          name: 'CARP Service',
+        );
 
-      ESenseDevice eSense = ESenseDevice(
-        deviceName: '',
-        samplingRate: 10,
-      );
-      _protocol!.addMasterDevice(phone);
-      _protocol!.addConnectedDevice(eSense);
+        // Define which devices are used for data collection.
+        Smartphone phone = Smartphone();
 
-      // Define online services and add it as a 'device'
-      LocationService locationService = LocationService();
-      _protocol!.addConnectedDevice(locationService);
+        var eSense = ESenseDevice(
+            // deviceName: '',
+            // samplingRate: 10,
+            );
 
-      WeatherService weatherService =
-          WeatherService(apiKey: '12b6e28582eb9298577c734a31ba9f4f');
-      _protocol!.addConnectedDevice(weatherService);
+        var polar = PolarDevice(
+          roleName: 'hr-sensor',
+          // identifier: 'B5FC172F',
+          // name: 'H10',
+          // polarDeviceType: PolarDeviceType.H10,
+        );
 
-      AirQualityService airQualityService =
-          AirQualityService(apiKey: '9e538456b2b85c92647d8b65090e29f957638c77');
-      _protocol!.addConnectedDevice(airQualityService);
+        _protocol!.addMasterDevice(phone);
+        _protocol!.addConnectedDevice(eSense);
+        _protocol!.addConnectedDevice(polar);
 
-      _protocol!.addTriggeredTask(
-          ImmediateTrigger(),
-          BackgroundTask()
-            ..addMeasures([
-              //Measure(type: SensorSamplingPackage.LIGHT),
+        // ONLINE SERVICES
+        //
+        // Define online services and add them as connected 'devices'
+        LocationService locationService = LocationService();
+        _protocol!.addConnectedDevice(locationService);
+
+        WeatherService weatherService =
+            WeatherService(apiKey: '12b6e28582eb9298577c734a31ba9f4f');
+        _protocol!.addConnectedDevice(weatherService);
+
+        AirQualityService airQualityService = AirQualityService(
+            apiKey: '9e538456b2b85c92647d8b65090e29f957638c77');
+        _protocol!.addConnectedDevice(airQualityService);
+
+        // BACKGROUND SENSING
+
+        _protocol!.addTriggeredTask(
+            ImmediateTrigger(),
+            BackgroundTask(measures: [
+              Measure(type: SensorSamplingPackage.LIGHT),
               Measure(type: SensorSamplingPackage.PEDOMETER),
-              //Measure(type:                 DeviceSamplingPackage.MEMORY),
+              Measure(type: DeviceSamplingPackage.MEMORY),
               Measure(type: DeviceSamplingPackage.DEVICE),
-              // Measure(type:                DeviceSamplingPackage.BATTERY),
+              Measure(type: DeviceSamplingPackage.BATTERY),
               Measure(type: DeviceSamplingPackage.SCREEN),
+              Measure(type: ContextSamplingPackage.ACTIVITY),
             ]),
-          phone);
+            phone);
 
-      // collect location, weather and air quality every 5 minutes
-      _protocol!.addTriggeredTask(
-          PeriodicTrigger(
-            period: Duration(minutes: 5),
-            duration: const Duration(seconds: 2),
-          ),
-          BackgroundTask()
-            ..addMeasures([
+        // a background task that collects location on a regular basis
+        // using the location service
+        _protocol?.addTriggeredTask(
+            IntervalTrigger(period: Duration(minutes: 5)),
+            BackgroundTask(
+                measures: [Measure(type: ContextSamplingPackage.LOCATION)]),
+            locationService);
+
+        // a background task that continously collects geolocation and mobility
+        // using the location service
+        _protocol?.addTriggeredTask(
+            ImmediateTrigger(),
+            BackgroundTask(measures: [
+              //Measure(type: ContextSamplingPackage.GEOLOCATION),
+              Measure(type: ContextSamplingPackage.MOBILITY),
+            ]),
+            locationService);
+
+        // a background task that collects weather every 30 miutes.
+        // using the weather service
+        _protocol?.addTriggeredTask(
+            IntervalTrigger(period: Duration(minutes: 30)),
+            BackgroundTask()
+              ..addMeasure(Measure(type: ContextSamplingPackage.WEATHER)),
+            weatherService);
+
+        // a background task that air quality every 30 miutes.
+        // using the air quality service
+        _protocol?.addTriggeredTask(
+            IntervalTrigger(period: Duration(minutes: 30)),
+            BackgroundTask()
+              ..addMeasure(Measure(type: ContextSamplingPackage.AIR_QUALITY)),
+            airQualityService);
+
+        // WEARABLE DEVICES
+
+        // eSense
+        _protocol!.addTriggeredTask(
+            ImmediateTrigger(),
+            BackgroundTask(measures: [
+              Measure(type: ESenseSamplingPackage.ESENSE_BUTTON),
+              Measure(type: ESenseSamplingPackage.ESENSE_SENSOR),
+            ]),
+            eSense);
+
+        // Polar
+        _protocol!.addTriggeredTask(
+            ImmediateTrigger(),
+            BackgroundTask(measures: [
+              Measure(type: PolarSamplingPackage.POLAR_HR),
+              Measure(type: PolarSamplingPackage.POLAR_ECG)
+            ]),
+            polar);
+
+        // APP TASKS
+        //
+        // Now creating a set of app tasks which are repeately added to the task
+        // queue again after they are done by the user.
+        // This is useful for demo purposes, so that the app tasks are always available.
+
+        // First create all the tasks.
+
+        var environmentTask = AppTask(
+            type: BackgroundSensingUserTask.ONE_TIME_SENSING_TYPE,
+            title: "environment.title",
+            description: "environment.description",
+            measures: [
               Measure(type: ContextSamplingPackage.LOCATION),
               Measure(type: ContextSamplingPackage.WEATHER),
               Measure(type: ContextSamplingPackage.AIR_QUALITY),
-            ]),
-          phone);
+            ]);
 
-      // Add a background task that collects location on a regular basis
-      _protocol?.addTriggeredTask(
-          IntervalTrigger(period: Duration(minutes: 5)),
-          BackgroundTask()
-            ..addMeasure(Measure(type: ContextSamplingPackage.LOCATION)),
-          locationService);
-
-      // Add a background task that continously collects geolocation and mobility
-      _protocol?.addTriggeredTask(
-          ImmediateTrigger(),
-          BackgroundTask()
-            ..addMeasures([
-              //Measure(type: ContextSamplingPackage.GEOLOCATION),
-              Measure(type: ContextSamplingPackage.ACTIVITY),
-              Measure(type: ContextSamplingPackage.MOBILITY),
-            ]),
-          phone);
-
-      // Add a background task that collects weather every 30 miutes.
-      _protocol?.addTriggeredTask(
-          IntervalTrigger(period: Duration(minutes: 30)),
-          BackgroundTask()
-            ..addMeasure(Measure(type: ContextSamplingPackage.WEATHER)),
-          weatherService);
-
-      // Add a background task that air quality every 30 miutes.
-      _protocol?.addTriggeredTask(
-          IntervalTrigger(period: Duration(minutes: 30)),
-          BackgroundTask()
-            ..addMeasure(Measure(type: ContextSamplingPackage.AIR_QUALITY)),
-          airQualityService);
-
-      // collect local weather and air quality as an app task - notify the user
-      _protocol!.addTriggeredTask(
-          ImmediateTrigger(),
-          AppTask(
-            type: BackgroundSensingUserTask.ONE_TIME_SENSING_TYPE,
-            title: "Weather & Air Quality",
-            description: "Collect local weather and air quality",
-            notification: true,
-          )..addMeasures([
-              Measure(type: ContextSamplingPackage.WEATHER),
-              Measure(type: ContextSamplingPackage.AIR_QUALITY),
-            ]),
-          phone);
-
-      // collect demographics only once
-      _protocol!.addTriggeredTask(
-          OneTimeTrigger(),
-          RPAppTask(
-            //type: SurveyUserTask.DEMOGRAPHIC_SURVEY_TYPE,
+        var demographicsTask = RPAppTask(
             type: SurveyUserTask.SURVEY_TYPE,
             title: surveys.demographics.title,
             description: surveys.demographics.description,
             minutesToComplete: surveys.demographics.minutesToComplete,
             expire: surveys.demographics.expire,
             rpTask: surveys.demographics.survey,
-          )..addMeasure(Measure(type: ContextSamplingPackage.LOCATION)),
-          phone);
+            measures: [Measure(type: ContextSamplingPackage.LOCATION)]);
 
-      // collect symptoms on a daily basis - notify the user
-      _protocol!.addTriggeredTask(
-          PeriodicTrigger(
-            period: Duration(hours: 1),
-            duration: const Duration(seconds: 2),
-          ),
-          RPAppTask(
+        var symptomsTask = RPAppTask(
             type: SurveyUserTask.SURVEY_TYPE,
             title: surveys.symptoms.title,
             description: surveys.symptoms.description,
@@ -823,192 +855,132 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
             expire: surveys.symptoms.expire,
             notification: true,
             rpTask: surveys.symptoms.survey,
-          )..addMeasure(Measure(type: ContextSamplingPackage.LOCATION)),
-          phone);
+            measures: [Measure(type: ContextSamplingPackage.LOCATION)]);
 
-      // collect a coughing sample on a daily basis
-      // also collect location, and local weather and air quality of this sample
-      // _protocol!.addTriggeredTask(
-      //     PeriodicTrigger(
-      //       period: Duration(days: 1),
-      //       duration: const Duration(seconds: 2),
-      //     ),
-      //     RPAppTask(
-      //       type: AudioUserTask.AUDIO_TYPE,
-      //       title: "Coughing",
-      //       description:
-      //           'In this small exercise we would like to collect sound samples of coughing.',
-      //       instructions: 'Please cough 5 times.',
-      //       minutesToComplete: 1,
-      //     )
-      //       ..measures.add(CAMSMeasure(
-      //         type: MediaSamplingPackage.AUDIO,
-      //         name: "Coughing",
-      //       ))
-      //       ..measures.add(SamplingPackageRegistry()
-      //           .common()
-      //           .measures[ContextSamplingPackage.LOCATION]!)
-      //       ..measures.add(SamplingPackageRegistry()
-      //           .common()
-      //           .measures[ContextSamplingPackage.WEATHER]!)
-      //       ..measures.add(SamplingPackageRegistry()
-      //           .common()
-      //           .measures[ContextSamplingPackage.AIR_QUALITY]!),
-      //     phone);
-
-      // collect a reading / audio sample on a daily basis
-      _protocol!.addTriggeredTask(
-          IntervalTrigger(period: Duration(minutes: 1)),
-          AppTask(
+        var readingTask = AppTask(
             type: AudioUserTask.AUDIO_TYPE,
-            title: "Reading",
-            description:
-                'In this small exercise we would like to collect sound data while you are reading.',
-            instructions: 'Please read the following text aloud.\n\n'
-                'Many, many years ago lived an emperor, who thought so much of new clothes that he spent all his money in order to obtain them; his only ambition was to be always well dressed. '
-                'He did not care for his soldiers, and the theatre did not amuse him; the only thing, in fact, he thought anything of was to drive out and show a new suit of clothes. '
-                'He had a coat for every hour of the day; and as one would say of a king "He is in his cabinet," so one could say of him, "The emperor is in his dressing-room."',
+            title: "reading.title",
+            description: 'reading.description',
+            instructions: 'reading.instructions',
             minutesToComplete: 3,
-          )..addMeasures([
+            measures: [
               Measure(type: MediaSamplingPackage.AUDIO),
               Measure(type: ContextSamplingPackage.LOCATION)
-            ]),
-          phone);
+            ]);
 
-      _protocol!.addTriggeredTask(
-          PeriodicTrigger(
-            period: Duration(days: 1),
-            duration: const Duration(seconds: 2),
-          ),
-          AppTask(
-            type: AudioUserTask.AUDIO_TYPE,
-            title: "Coughing",
+        var imageTask = AppTask(
+            type: VideoUserTask.IMAGE_TYPE,
+            title: "wound.title",
+            description: "wound.description",
+            instructions: "wound.instructions",
+            minutesToComplete: 3,
+            measures: [Measure(type: MediaSamplingPackage.IMAGE)]);
+
+        var parkinsonsTask = RPAppTask(
+            type: SurveyUserTask.COGNITIVE_ASSESSMENT_TYPE,
+            title: "Parkinsons Assessment",
             description:
-                'In this small exercise we would like to collect sound samples of coughing.',
-            instructions: 'Please cough 5 times.',
-            minutesToComplete: 1,
-          )..addMeasures([
-              Measure(type: MediaSamplingPackage.AUDIO),
-              Measure(type: ContextSamplingPackage.LOCATION)
-            ]),
-          phone);
-
-      // collect a video
-      // _protocol!.addTriggeredTask(
-      //     PeriodicTrigger(
-      //       period: Duration(minutes: 10),
-      //       duration: const Duration(seconds: 2),
-      //     ),
-      //     RPAppTask(
-      //       type: VideoUserTask.VIDEO_TYPE,
-      //       title: "Take a video or image",
-      //       description:
-      //           'In this small exercise we would like to collect a small video clip or a picture of your left hand.',
-      //       instructions:
-      //           'Please hold the phone with your right hand and take a picture of your left palm.',
-      //       minutesToComplete: 3,
-      //     )
-      //       ..measures.add(CAMSMeasure(
-      //         type: AudioVideoSamplingPackage.VIDEO,
-      //         name: "Image capture",
-      //       ))
-      //       ..measures.add(SamplingPackageRegistry()
-      //           .common()
-      //           .measures[ContextSamplingPackage.LOCATION]!),
-      //     phone);
-
-      // when the reading (audio) measure is collected, the add a user task to
-      // collect location, and local weather and air quality
-      _protocol!.addTriggeredTask(
-          ConditionalSamplingEventTrigger(
-            measureType: MediaSamplingPackage.AUDIO,
-            resumeCondition: (DataPoint dataPoint) => true,
-            pauseCondition: (DataPoint dataPoint) => true,
-          ),
-          AppTask(
-            type: BackgroundSensingUserTask.ONE_TIME_SENSING_TYPE,
-            title: "Location, Weather & Air Quality",
-            description: "Collect location, weather and air quality",
-          )..addMeasures([
-              Measure(type: ContextSamplingPackage.LOCATION),
-              Measure(type: ContextSamplingPackage.WEATHER),
-              Measure(type: ContextSamplingPackage.AIR_QUALITY),
-            ]),
-          phone);
-
-      // Video Recording task
-      _protocol!.addTriggeredTask(
-          IntervalTrigger(period: const Duration(minutes: 2)),
-          AppTask(
-            type: IMAGE_TYPE,
-            title: "Scars",
-            description: "Take a picture of your scars",
-            instructions: "Please take a picture of the scars in your skin",
+                "A simple task assessing cognitive functioning and finger tapping speed.",
             minutesToComplete: 3,
-            notification: true,
-          )..addMeasure(Measure(type: MediaSamplingPackage.IMAGE)),
-          phone);
+            rpTask: RPOrderedTask(
+              identifier: "parkinsons_assessment",
+              steps: [
+                RPInstructionStep(
+                    identifier: 'parkinsons_instruction',
+                    title: "Parkinsons Disease Assessment",
+                    text:
+                        "In the following pages, you will be asked to solve two simple test which will help assess your symptoms on a daily basis. "
+                        "Each test has an instruction page, which you should read carefully before starting the test.\n\n"
+                        "Please sit down comfortably and hold the phone in one hand while performing the test with the other."),
+                RPFlankerActivity(
+                  identifier: 'flanker_1',
+                  lengthOfTest: 30,
+                  numberOfCards: 10,
+                ),
+                RPTappingActivity(
+                  identifier: 'tapping_1',
+                  lengthOfTest: 10,
+                )
+              ],
+            ),
+            measures: [
+              Measure(type: SensorSamplingPackage.ACCELEROMETER),
+              Measure(type: SensorSamplingPackage.GYROSCOPE),
+            ]);
 
-      // video
-      _protocol!.addTriggeredTask(
-          RandomRecurrentTrigger(
-            minNumberOfTriggers: 0,
-            maxNumberOfTriggers: 4,
-            startTime: TimeOfDay(hour: 14, minute: 56),
-            endTime: TimeOfDay(hour: 15, minute: 05),
-            //period: const Duration(minutes: 1),
-            duration: const Duration(seconds: 2),
-          ),
-          AppTask(
-            type: VIDEO_TYPE,
-            title: "Surrounding",
-            description: "Take a video of your surroundings",
-            instructions: "Please take a video of whatever is next to you",
-            minutesToComplete: 3,
+        var parkinsonsSurvey = RPAppTask(
+            type: SurveyUserTask.SURVEY_TYPE,
+            title: surveys.parkinsons.title,
+            description: surveys.parkinsons.description,
+            minutesToComplete: surveys.parkinsons.minutesToComplete,
+            expire: surveys.parkinsons.expire,
             notification: true,
-          )..addMeasure(Measure(type: MediaSamplingPackage.VIDEO)),
-          phone);
-      _protocol!.addTriggeredTask(
-          PeriodicTrigger(
-            period: const Duration(minutes: 2),
-            duration: const Duration(seconds: 2),
-          ),
-          RPAppTask(
-            type: SurveyUserTask.SURVEY_TYPE,
-            title: surveys.control.title,
-            description: surveys.control.description,
-            minutesToComplete: surveys.control.minutesToComplete,
-            expire: surveys.control.expire,
-            rpTask: surveys.control.survey,
-          ),
-          phone);
-      _protocol!.addTriggeredTask(
-          PeriodicTrigger(
-            period: const Duration(minutes: 1),
-            duration: const Duration(seconds: 2),
-          ),
-          RPAppTask(
-            type: SurveyUserTask.SURVEY_TYPE,
-            title: surveys.ecological.title,
-            description: surveys.ecological.description,
-            minutesToComplete: surveys.ecological.minutesToComplete,
-            expire: surveys.ecological.expire,
-            rpTask: surveys.ecological.survey,
-          ),
-          phone);
+            rpTask: surveys.parkinsons.survey,
+            measures: [Measure(type: ContextSamplingPackage.LOCATION)]);
 
-      _protocol!.addTriggeredTask(
-          PeriodicTrigger(
-              period: const Duration(minutes: 1),
-              duration: const Duration(seconds: 20)),
-          BackgroundTask()
-            ..addMeasures([
-              Measure(type: ESenseSamplingPackage.ESENSE_BUTTON),
-              Measure(type: ESenseSamplingPackage.ESENSE_SENSOR),
-            ]),
-          eSense);
+        // Then add all the tasks to the protocol to trigger once.
+
+        _protocol!.addTriggeredTask(OneTimeTrigger(), environmentTask, phone);
+        _protocol!.addTriggeredTask(OneTimeTrigger(), demographicsTask, phone);
+        _protocol!.addTriggeredTask(OneTimeTrigger(), symptomsTask, phone);
+        _protocol!.addTriggeredTask(OneTimeTrigger(), readingTask, phone);
+        _protocol!.addTriggeredTask(OneTimeTrigger(), imageTask, phone);
+        _protocol!.addTriggeredTask(OneTimeTrigger(), parkinsonsTask, phone);
+
+        // And then add a set of user task triggers to make sure that the
+        // task are added to the queque again when done
+
+        _protocol!.addTriggeredTask(
+            UserTaskTrigger(
+                taskName: environmentTask.name,
+                resumeCondition: UserTaskState.done),
+            environmentTask,
+            phone);
+
+        _protocol!.addTriggeredTask(
+            UserTaskTrigger(
+                taskName: demographicsTask.name,
+                resumeCondition: UserTaskState.done),
+            demographicsTask,
+            phone);
+
+        _protocol!.addTriggeredTask(
+            UserTaskTrigger(
+                taskName: symptomsTask.name,
+                resumeCondition: UserTaskState.done),
+            symptomsTask,
+            phone);
+
+        _protocol!.addTriggeredTask(
+            UserTaskTrigger(
+                taskName: readingTask.name,
+                resumeCondition: UserTaskState.done),
+            readingTask,
+            phone);
+
+        _protocol!.addTriggeredTask(
+            UserTaskTrigger(
+                taskName: imageTask.name, resumeCondition: UserTaskState.done),
+            imageTask,
+            phone);
+
+        _protocol!.addTriggeredTask(
+            UserTaskTrigger(
+                taskName: parkinsonsTask.name,
+                resumeCondition: UserTaskState.done),
+            parkinsonsTask,
+            phone);
+
+        // also trigger the Parkinsons survey, when the task is done
+        _protocol!.addTriggeredTask(
+            UserTaskTrigger(
+                taskName: parkinsonsTask.name,
+                resumeCondition: UserTaskState.done),
+            parkinsonsSurvey,
+            phone);
+      }
+
+      return _protocol;
     }
-
-    return _protocol;
   }
 }

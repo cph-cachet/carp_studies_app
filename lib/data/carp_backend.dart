@@ -16,6 +16,8 @@ class CarpBackend {
   static const String CLIENT_ID = "carp";
   static const String CLIENT_SECRET = "carp";
 
+  static CarpBackend _instance = CarpBackend._();
+
   CarpApp? _app;
 
   CarpApp? get app => _app;
@@ -49,11 +51,10 @@ class CarpBackend {
     LocalSettings().studyDeploymentId = id;
   }
 
-  static CarpBackend _instance = CarpBackend._();
   CarpBackend._() : super() {
     // make sure that the json functions are loaded
-    // DomainJsonFactory();
     CarpMobileSensing();
+    CognitionPackage();
   }
 
   factory CarpBackend() => _instance;
@@ -81,7 +82,8 @@ class CarpBackend {
     if (username != null && oauthToken != null) {
       info('Authenticating with saved token - token: $oauthToken');
       try {
-        await CarpService().authenticateWithToken(username: username!, token: oauthToken!);
+        await CarpService()
+            .authenticateWithToken(username: username!, token: oauthToken!);
       } catch (error) {
         warning('Authentication with saved token unsuccessful - $error');
       }
@@ -117,7 +119,8 @@ class CarpBackend {
     info('Deployment ID: $studyDeploymentId');
   }
 
-  Future<ConsentDocument?> uploadInformedConsent(RPTaskResult taskResult) async {
+  Future<ConsentDocument?> uploadInformedConsent(
+      RPTaskResult taskResult) async {
     RPConsentSignatureResult signatureResult =
         (taskResult.results["consentreviewstepID"] as RPConsentSignatureResult);
     signatureResult.userID = username;
@@ -126,7 +129,8 @@ class CarpBackend {
     ConsentDocument? document;
     try {
       document = await CarpService().createConsentDocument(informedConsent);
-      info('Informed consent document uploaded successfully - id: ${document.id}');
+      info(
+          'Informed consent document uploaded successfully - id: ${document.id}');
       bloc.informedConsentAccepted = true;
     } on Exception {
       bloc.informedConsentAccepted = false;

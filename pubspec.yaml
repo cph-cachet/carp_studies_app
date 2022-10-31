@@ -106,11 +106,11 @@ dependency_overrides:
       url: https://github.com/cph-cachet/carp.sensing-flutter.git
       ref: develop
       path: packages/carp_esense_package/
-  # carp_polar_package:
-  #   git:
-  #     url: https://github.com/cph-cachet/carp.sensing-flutter.git
-  #     ref: develop
-  #     path: packages/carp_polar_package/
+  carp_polar_package:
+    git:
+      url: https://github.com/cph-cachet/carp.sensing-flutter.git
+      ref: develop
+      path: packages/carp_polar_package/
   carp_backend:
     git:
       url: https://github.com/cph-cachet/carp.sensing-flutter.git

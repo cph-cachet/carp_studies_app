@@ -1,46 +1,38 @@
 part of carp_study_app;
 
 class HeartRateCardViewModel extends SerializableViewModel<HourlyHeartRate> {
-  static const color = Color.fromARGB(255, 235, 75, 48);
-
   @override
   HourlyHeartRate createModel() => HourlyHeartRate();
 
   /// A map of weekly HeartRate organized by the day of the week.
   // Map<TimeOfDay, HeartRate> get hourlyHeartRate => model.hourlyHeartRate;
   // generate a map of time of day to integer heart rate in range 50 to 80
-  Map<TimeOfDay, HeartRate> get hourlyHeartRate => {
-        TimeOfDay(hour: 0, minute: 0): HeartRate(50),
-        TimeOfDay(hour: 0, minute: 2): HeartRate(53),
-        TimeOfDay(hour: 0, minute: 2, second: 4): HeartRate(54),
-        TimeOfDay(hour: 0, minute: 2, second: 5): HeartRate(52),
-        TimeOfDay(hour: 0, minute: 30): HeartRate(50),
-        TimeOfDay(hour: 0, minute: 31): HeartRate(50),
-        TimeOfDay(hour: 0, minute: 35): HeartRate(50),
-        TimeOfDay(hour: 1, minute: 0): HeartRate(60),
-        TimeOfDay(hour: 2, minute: 0): HeartRate(70),
-        TimeOfDay(hour: 3, minute: 0): HeartRate(80),
-        TimeOfDay(hour: 4, minute: 0): HeartRate(70),
-        TimeOfDay(hour: 5, minute: 0): HeartRate(60),
-        TimeOfDay(hour: 6, minute: 0): HeartRate(50),
-        TimeOfDay(hour: 7, minute: 0): HeartRate(60),
-        TimeOfDay(hour: 8, minute: 0): HeartRate(70),
-        TimeOfDay(hour: 9, minute: 0): HeartRate(80),
-        TimeOfDay(hour: 10, minute: 0): HeartRate(70),
-        TimeOfDay(hour: 11, minute: 0): HeartRate(60),
-      };
+  Map<int, HeartRateMinMaxPrHour> get hourlyHeartRate => model.hourlyHeartRate;
 
   /// The current heart rate
-  HeartRate get currentHeartRate => model.heartRate;
+  int get currentHeartRate => model.currentHeartRate;
 
   /// The dataset for the graph
+  Map<int, HeartRateMinMaxPrHour> get graphData => {};
 
-  /// Stream of heart rate [HeartRate] measures.
+  /// Stream of heart rate [PolarHRDatum] measures.
   Stream<DataPoint>? get heartRateEvents =>
-      controller?.data.where((dataPoint) => dataPoint.data is HeartRate);
+      controller?.data.where((dataPoint) => dataPoint.data is PolarHRDatum);
 
   void init(SmartphoneDeploymentController controller) {
     super.init(controller);
+
+    heartRateEvents?.listen((heartRateDataPoint) {
+      PolarHRDatum? _heartRate = heartRateDataPoint.data as PolarHRDatum;
+      model.addHeartRate(_heartRate.timestamp.hour, _heartRate.hr);
+
+      if (_heartRate.hr > model.maxHeartRate) {
+        model.maxHeartRate = _heartRate.hr;
+      }
+      if (_heartRate.hr < model.minHeartRate) {
+        model.minHeartRate = _heartRate.hr;
+      }
+    });
   }
 
   BarChartGroupData getSeparaterStick(xAxis, height) {
@@ -57,18 +49,41 @@ class HeartRateCardViewModel extends SerializableViewModel<HourlyHeartRate> {
 /// Weekly HeartRate organized by the day of the week.
 @JsonSerializable(fieldRename: FieldRename.snake, includeIfNull: false)
 class HourlyHeartRate extends DataModel {
-  /// A map of weekly HeartRate organized by the day of the week.
+  /// A map of hourly HeartRate with min and max.
   ///
   ///    (weekday,step_count)
   ///
   /// In accordance with Dart [DateTime] a week starts with Monday,
   /// which has the value 1.
-  Map<TimeOfDay, HeartRate> hourlyHeartRate = {};
+  Map<int, HeartRateMinMaxPrHour> hourlyHeartRate = {};
 
-  HourlyHeartRate();
+  HourlyHeartRate() {
+    for (int i = 0; i < 24; i++) {
+      hourlyHeartRate[i] = HeartRateMinMaxPrHour(0, 0);
+    }
+  }
 
   /// The current heart rate
-  HeartRate get heartRate => hourlyHeartRate.values.last;
+  int currentHeartRate = 50;
+
+  int maxHeartRate = 50;
+  int minHeartRate = 50;
+
+  void addHeartRate(int hour, int heartRate) {
+    currentHeartRate = heartRate;
+
+    if (hourlyHeartRate.containsKey(hour)) {
+      if (heartRate < hourlyHeartRate[hour]!.min) {
+        hourlyHeartRate[hour]!.min = heartRate;
+      }
+
+      if (heartRate > hourlyHeartRate[hour]!.max) {
+        hourlyHeartRate[hour]!.max = heartRate;
+      }
+    } else {
+      hourlyHeartRate[hour] = HeartRateMinMaxPrHour(heartRate, heartRate);
+    }
+  }
 
   String toString() {
     String _str = 'time | heart rate\n';
@@ -90,8 +105,9 @@ class HourlyHeartRate extends DataModel {
   }
 }
 
-class HeartRate {
-  final int heartRate;
+class HeartRateMinMaxPrHour {
+  int min = 50;
+  int max = 50;
 
-  HeartRate(this.heartRate);
+  HeartRateMinMaxPrHour(this.min, this.max);
 }

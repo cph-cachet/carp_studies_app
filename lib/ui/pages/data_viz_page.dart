@@ -60,8 +60,9 @@ class DataVisualizationPage extends StatelessWidget {
   List<Widget> get _dataVizCards {
     final List<Widget> widgets = [];
 
-    widgets.add(HeartRateOuterStatefulWidget(model.heartRateCardDataModel));
-
+    if (bloc.hasMeasure(PolarSamplingPackage.POLAR_HR)) {
+      widgets.add(HeartRateOuterStatefulWidget(model.heartRateCardDataModel));
+    }
     // always show scoreboard
     //widgets.add(ScoreboardCardWidget(model));
 

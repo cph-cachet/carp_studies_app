@@ -3,27 +3,11 @@ part of carp_study_app;
 class HeartRateCardWidget extends StatefulWidget {
   final HeartRateCardViewModel model;
   final List<Color> colors;
-  final List<charts.Series<HourlyHeartRate, String>> seriesList;
 
-  HeartRateCardWidget(this.seriesList, this.model,
-      {this.colors = const [CACHET.BLUE_1]});
+  HeartRateCardWidget(this.model, {this.colors = const [CACHET.BLUE_1]});
 
   factory HeartRateCardWidget.withSampleData(HeartRateCardViewModel model) =>
-      HeartRateCardWidget(_createChartList(model, [CACHET.BLUE_1]), model);
-
-  static List<charts.Series<HourlyHeartRate, String>> _createChartList(
-    HeartRateCardViewModel model,
-    List<Color> colors,
-  ) =>
-      [
-        charts.Series<HourlyHeartRate, String>(
-          colorFn: (d, i) => charts.ColorUtil.fromDartColor(colors[0]),
-          id: 'DailyHeartRateList',
-          data: [],
-          domainFn: (HourlyHeartRate HeartRate, _) => HeartRate.toString(),
-          measureFn: (HourlyHeartRate HeartRate, _) => 0,
-        )
-      ];
+      HeartRateCardWidget(model);
 
   @override
   _HeartRateCardWidgetState createState() => _HeartRateCardWidgetState();
@@ -69,7 +53,7 @@ class _HeartRateCardWidgetState extends State<HeartRateCardWidget> {
                         values: [locale.translate('cards.heartrate.heartrate')],
                         colors: widget.colors,
                       ),
-                      Container(height: 160, child: getChart()),
+                      Container(height: 160, child: barCharts),
                     ],
                   );
                 },
@@ -81,7 +65,7 @@ class _HeartRateCardWidgetState extends State<HeartRateCardWidget> {
     );
   }
 
-  BarChart getChart() {
+  BarChart get barCharts {
     return BarChart(
       BarChartData(
         alignment: BarChartAlignment.center,

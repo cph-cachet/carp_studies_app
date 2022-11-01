@@ -4,16 +4,12 @@ class HeartRateCardViewModel extends SerializableViewModel<HourlyHeartRate> {
   @override
   HourlyHeartRate createModel() => HourlyHeartRate();
 
-  /// A map of weekly HeartRate organized by the day of the week.
-  // Map<TimeOfDay, HeartRate> get hourlyHeartRate => model.hourlyHeartRate;
-  // generate a map of time of day to integer heart rate in range 50 to 80
+  /// A map of heart rate values for each hour of the day.
+  /// The key is the hour of the day (0-23) and the value is the min and max heart rate for that hour.
   Map<int, HeartRateMinMaxPrHour> get hourlyHeartRate => model.hourlyHeartRate;
 
   /// The current heart rate
   int get currentHeartRate => model.currentHeartRate;
-
-  /// The dataset for the graph
-  Map<int, HeartRateMinMaxPrHour> get graphData => {};
 
   /// Stream of heart rate [PolarHRDatum] measures.
   Stream<DataPoint>? get heartRateEvents =>
@@ -46,15 +42,14 @@ class HeartRateCardViewModel extends SerializableViewModel<HourlyHeartRate> {
   }
 }
 
-/// Weekly HeartRate organized by the day of the week.
 @JsonSerializable(fieldRename: FieldRename.snake, includeIfNull: false)
 class HourlyHeartRate extends DataModel {
-  /// A map of hourly HeartRate with min and max.
+  /// A map of heart rate values for each hour of the day.
   ///
-  ///    (weekday,step_count)
+  ///    (hour of the day, min and max heart rate for that hour)
   ///
-  /// In accordance with Dart [DateTime] a week starts with Monday,
-  /// which has the value 1.
+  /// The hour of the day is expressed as an integer between 0 and 23.
+  /// The min and max heart rate is expressed as a [HeartRateMinMaxPrHour] object.
   Map<int, HeartRateMinMaxPrHour> hourlyHeartRate = {};
 
   HourlyHeartRate() {
@@ -66,9 +61,14 @@ class HourlyHeartRate extends DataModel {
   /// The current heart rate
   int currentHeartRate = 50;
 
+  /// The minimum and maximum heart rate for the day
+  /// Used to scale the graph
   int maxHeartRate = 50;
   int minHeartRate = 50;
 
+  /// Add a heart rate value for a given hour.
+  /// If the hour already exists, the min and max values are updated.
+  /// If the hour does not exist, it is added.
   void addHeartRate(int hour, int heartRate) {
     currentHeartRate = heartRate;
 

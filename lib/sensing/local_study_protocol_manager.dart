@@ -364,8 +364,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
     return _protocol;
   }
 
-  Future<SmartphoneStudyProtocol?> _getPatientParentsWristWatch(
-      String studyId) async {
+  Future<SmartphoneStudyProtocol?> _getPatientParentsWristWatch(String studyId) async {
     if (_protocol == null) {
       _protocol = SmartphoneStudyProtocol(
         name: 'Wrist Angel: Patient Parent',
@@ -979,8 +978,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
             parkinsonsSurvey,
             phone);
       }
-
-      return _protocol;
     }
+    return _protocol;
   }
 }

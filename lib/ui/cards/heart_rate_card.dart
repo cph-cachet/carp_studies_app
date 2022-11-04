@@ -19,7 +19,8 @@ class HeartRateCardWidget extends StatefulWidget {
   _HeartRateCardWidgetState createState() => _HeartRateCardWidgetState();
 }
 
-class _HeartRateCardWidgetState extends State<HeartRateCardWidget> {
+class _HeartRateCardWidgetState extends State<HeartRateCardWidget>
+    with TickerProviderStateMixin {
   // Axis render settings
   charts.RenderSpec<num> renderSpecNum = AxisTheme.axisThemeNum();
   charts.RenderSpec<String> renderSpecString = AxisTheme.axisThemeOrdinal();
@@ -56,7 +57,7 @@ class _HeartRateCardWidgetState extends State<HeartRateCardWidget> {
                         iconAssetName: Icon(Icons.monitor_heart,
                             color: Theme.of(context).primaryColor),
                         heroTag: 'HeartRate-card',
-                        values: [locale.translate('cards.heartrate.heartrate')],
+                        values: [],
                         colors: HeartRateCardWidget.colors,
                       ),
                       Container(
@@ -65,7 +66,7 @@ class _HeartRateCardWidgetState extends State<HeartRateCardWidget> {
                       ),
                       Container(
                         height: 60,
-                        child: currentHeartRate,
+                        child: currentHeartRateWidget,
                       )
                     ],
                   );
@@ -78,8 +79,22 @@ class _HeartRateCardWidgetState extends State<HeartRateCardWidget> {
     );
   }
 
-  Widget get currentHeartRate {
+  Widget get currentHeartRateWidget {
     RPLocalizations locale = RPLocalizations.of(context)!;
+
+    var currentHeartRate = widget.model.currentHeartRate;
+
+    var animationController = AnimationController(
+      vsync: this,
+      duration:
+          Duration(milliseconds: 1000 ~/ (((currentHeartRate ?? 0) + 1) / 60)),
+      lowerBound: 0.9,
+      upperBound: 1.0,
+    )..repeat(reverse: true);
+    var _animation = CurvedAnimation(
+      parent: animationController,
+      curve: Curves.easeInBack,
+    );
 
     return Stack(
       children: [
@@ -87,12 +102,19 @@ class _HeartRateCardWidgetState extends State<HeartRateCardWidget> {
           bottom: 0,
           child: Row(
             children: [
-              // Left side logo
-              // Right side text
-              Icon(
-                Icons.favorite_rounded,
-                color: HeartRateCardWidget.colors[0],
-                size: 50,
+              ScaleTransition(
+                // scale should be _animation if the isOnWrist is true otherwise it should be no scale
+                scale: !widget.model.contactStatus
+                    ? Tween<double>(begin: 1, end: 1)
+                        .animate(animationController)
+                    : _animation,
+                child: Icon(
+                  !widget.model.contactStatus
+                      ? Icons.favorite_outline_rounded
+                      : Icons.favorite_rounded,
+                  color: HeartRateCardWidget.colors[0],
+                  size: 50,
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 8.0),
@@ -100,13 +122,23 @@ class _HeartRateCardWidgetState extends State<HeartRateCardWidget> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      widget.model.currentHeartRate.toStringAsFixed(0),
-                      style: TextStyle(
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                          color: HeartRateCardWidget.colors[0]),
-                    ),
+                    currentHeartRate != null
+                        ? Text(
+                            currentHeartRate.toStringAsFixed(0),
+                            style: TextStyle(
+                              fontSize: 30,
+                              fontWeight: FontWeight.bold,
+                              color: HeartRateCardWidget.colors[0],
+                            ),
+                          )
+                        : Text(
+                            '-',
+                            style: TextStyle(
+                              fontSize: 30,
+                              fontWeight: FontWeight.bold,
+                              color: HeartRateCardWidget.colors[0],
+                            ),
+                          ),
                     Text(
                       locale.translate('cards.heartrate.bpm'),
                       style: TextStyle(
@@ -145,7 +177,8 @@ class _HeartRateCardWidgetState extends State<HeartRateCardWidget> {
               showTitles: true,
               reservedSize: 40,
               getTitlesWidget: rightTitles,
-              interval: 55,
+              //interval should be infinity, so that only the min and max shows
+              interval: 500,
             ),
           ),
           topTitles: AxisTitles(
@@ -197,7 +230,7 @@ class _HeartRateCardWidgetState extends State<HeartRateCardWidget> {
 
     return SideTitleWidget(
       axisSide: AxisSide.right,
-      space: 10,
+      space: 0,
       child: Text(
         text,
         style: style,

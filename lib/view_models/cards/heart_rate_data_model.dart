@@ -9,9 +9,11 @@ class HeartRateCardViewModel extends SerializableViewModel<HourlyHeartRate> {
   Map<int, HeartRateMinMaxPrHour> get hourlyHeartRate => model.hourlyHeartRate;
 
   /// The current heart rate
-  double get currentHeartRate => model.currentHeartRate;
+  double? get currentHeartRate => model.currentHeartRate;
 
-  bool isOnWrist = false;
+  // If the device is touching skin. Returns true if the device is touching skin, false otherwise.
+  // If the device is not capable of detecting skin contact, this value is always true.
+  bool contactStatus = false;
 
   HeartRateMinMaxPrHour get dayMinMax =>
       HeartRateMinMaxPrHour(model.minHeartRate, model.maxHeartRate);
@@ -36,7 +38,8 @@ class HeartRateCardViewModel extends SerializableViewModel<HourlyHeartRate> {
         model.minHeartRate = _hr;
       }
 
-      isOnWrist = _heartRate.contactStatus;
+      contactStatus =
+          _heartRate.contactStatusSupported ? _heartRate.contactStatus : true;
     });
   }
 }
@@ -58,12 +61,12 @@ class HourlyHeartRate extends DataModel {
   }
 
   /// The current heart rate
-  double currentHeartRate = 65;
+  double? currentHeartRate;
 
   /// The minimum and maximum heart rate for the day
   /// Used to scale the graph
-  double maxHeartRate = 65;
-  double minHeartRate = 65;
+  double maxHeartRate = 80;
+  double minHeartRate = 80;
 
   /// Add a heart rate value for a given hour.
   /// If the hour already exists, the min and max values are updated.
@@ -105,8 +108,8 @@ class HourlyHeartRate extends DataModel {
 }
 
 class HeartRateMinMaxPrHour {
-  double min = 65;
-  double max = 65;
+  double min = 80;
+  double max = 80;
 
   HeartRateMinMaxPrHour(this.min, this.max);
 }

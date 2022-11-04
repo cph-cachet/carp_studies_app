@@ -96,49 +96,43 @@ class _HeartRateCardWidgetState extends State<HeartRateCardWidget>
       curve: Curves.easeInBack,
     );
 
+    var heartRateTextStyle = TextStyle(
+      fontSize: 60,
+      fontWeight: FontWeight.bold,
+    );
     return Stack(
       children: [
         Positioned(
           bottom: 0,
+          left: 8,
           child: Row(
             children: [
-              ScaleTransition(
-                // scale should be _animation if the isOnWrist is true otherwise it should be no scale
-                scale: !widget.model.contactStatus
-                    ? Tween<double>(begin: 1, end: 1)
-                        .animate(animationController)
-                    : _animation,
-                child: Icon(
-                  !widget.model.contactStatus
-                      ? Icons.favorite_outline_rounded
-                      : Icons.favorite_rounded,
-                  color: HeartRateCardWidget.colors[0],
-                  size: 50,
-                ),
-              ),
+              currentHeartRate != null
+                  ? Text(
+                      currentHeartRate.toStringAsFixed(0),
+                      style: heartRateTextStyle,
+                    )
+                  : Text('-', style: heartRateTextStyle),
               Padding(
-                padding: const EdgeInsets.only(left: 8.0),
+                padding: const EdgeInsets.only(left: 0.0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    currentHeartRate != null
-                        ? Text(
-                            currentHeartRate.toStringAsFixed(0),
-                            style: TextStyle(
-                              fontSize: 30,
-                              fontWeight: FontWeight.bold,
-                              color: HeartRateCardWidget.colors[0],
-                            ),
-                          )
-                        : Text(
-                            '-',
-                            style: TextStyle(
-                              fontSize: 30,
-                              fontWeight: FontWeight.bold,
-                              color: HeartRateCardWidget.colors[0],
-                            ),
-                          ),
+                    ScaleTransition(
+                      // scale should be _animation if the isOnWrist is true otherwise it should be no scale
+                      scale: !widget.model.contactStatus
+                          ? Tween<double>(begin: 1, end: 1)
+                              .animate(animationController)
+                          : _animation,
+                      child: Icon(
+                        !widget.model.contactStatus
+                            ? Icons.favorite_outline_rounded
+                            : Icons.favorite_rounded,
+                        color: HeartRateCardWidget.colors[0],
+                        size: 30,
+                      ),
+                    ),
                     Text(
                       locale.translate('cards.heartrate.bpm'),
                       style: TextStyle(

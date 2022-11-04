@@ -33,7 +33,7 @@
     "cards.steps.title": "Number of Steps",
     "cards.steps.steps": "steps",
     "cards.heartrate.title": "Heart Rate",
-    "cards.heartrate.bpm": "bpm",
+    "cards.heartrate.bpm": "BPM",
     "cards.heartrate.heartrate": "Heart rate",
     "pages.audio_task.play": "Please press the button below when ready.",
     "pages.audio_task.recording": "Recording...",

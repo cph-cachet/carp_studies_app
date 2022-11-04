@@ -58,5 +58,6 @@ class DataVisualizationPageViewModel extends ViewModel {
     _videoCardDataModel.init(controller);
     _imageCardDataModel.init(controller);
     _studyProgressCardDataModel.init(controller);
+    _heartRateCardDataModel.init(controller);
   }
 }

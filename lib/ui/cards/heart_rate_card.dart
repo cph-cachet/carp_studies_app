@@ -2,9 +2,15 @@ part of carp_study_app;
 
 class HeartRateCardWidget extends StatefulWidget {
   final HeartRateCardViewModel model;
-  final List<Color> colors;
+  static const colors = [
+    Color.fromARGB(255, 243, 54, 32),
+    Color.fromARGB(255, 179, 179, 181),
+    Color.fromARGB(70, 0, 0, 0),
+  ];
 
-  HeartRateCardWidget(this.model, {this.colors = const [CACHET.BLUE_1]});
+  HeartRateCardWidget(
+    this.model,
+  );
 
   factory HeartRateCardWidget.withSampleData(HeartRateCardViewModel model) =>
       HeartRateCardWidget(model);
@@ -51,7 +57,7 @@ class _HeartRateCardWidgetState extends State<HeartRateCardWidget> {
                             color: Theme.of(context).primaryColor),
                         heroTag: 'HeartRate-card',
                         values: [locale.translate('cards.heartrate.heartrate')],
-                        colors: widget.colors,
+                        colors: HeartRateCardWidget.colors,
                       ),
                       Container(height: 160, child: barCharts),
                     ],
@@ -62,6 +68,46 @@ class _HeartRateCardWidgetState extends State<HeartRateCardWidget> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget get currentHeartRate {
+    return Stack(
+      children: [
+        // Left side logo
+        Positioned(
+          left: 0,
+          top: 0,
+          child: Icon(Icons.favorite,
+              color: HeartRateCardWidget.colors[0], size: 50),
+        ),
+        // right side number and text
+        Positioned(
+          right: 0,
+          top: 0,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text(
+                widget.model.currentHeartRate.toStringAsFixed(0),
+                style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
+              Text(
+                'BPM',
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 
@@ -85,7 +131,7 @@ class _HeartRateCardWidgetState extends State<HeartRateCardWidget> {
             sideTitles: SideTitles(
               showTitles: true,
               reservedSize: 40,
-              getTitlesWidget: leftTitles,
+              getTitlesWidget: rightTitles,
               interval: 55,
             ),
           ),
@@ -101,7 +147,7 @@ class _HeartRateCardWidgetState extends State<HeartRateCardWidget> {
           drawVerticalLine: false,
           drawHorizontalLine: false,
           getDrawingVerticalLine: (value) => FlLine(
-            color: const Color.fromARGB(255, 179, 179, 181),
+            color: HeartRateCardWidget.colors[1],
             strokeWidth: 1,
           ),
           verticalInterval: 1 / 48,
@@ -111,15 +157,15 @@ class _HeartRateCardWidgetState extends State<HeartRateCardWidget> {
         ),
         groupsSpace: 4,
         barGroups: getHeartRateBars(),
-        minY: 55,
-        maxY: 70,
+        minY: widget.model.dayMinMax.min,
+        maxY: widget.model.dayMinMax.max,
       ),
     );
   }
 
   Widget bottomTitles(double value, TitleMeta meta) {
-    const style = TextStyle(
-      color: Color(0xff939393),
+    var style = TextStyle(
+      color: HeartRateCardWidget.colors[1],
       fontSize: 10,
       fontWeight: FontWeight.bold,
     );
@@ -146,10 +192,10 @@ class _HeartRateCardWidgetState extends State<HeartRateCardWidget> {
     );
   }
 
-  Widget leftTitles(double value, TitleMeta meta) {
-    final text = value.toString().split('.').first;
-    const style = TextStyle(
-      color: Color.fromARGB(255, 235, 75, 48),
+  Widget rightTitles(double value, TitleMeta meta) {
+    final text = value.toInt().toString();
+    var style = TextStyle(
+      color: HeartRateCardWidget.colors[0],
       fontSize: 10,
       fontWeight: FontWeight.bold,
     );
@@ -162,23 +208,30 @@ class _HeartRateCardWidgetState extends State<HeartRateCardWidget> {
     );
   }
 
-  List<BarChartGroupData> getHeartRateBars() {
-    const normal = Color.fromARGB(255, 243, 54, 32);
+  List<BarChartGroupData> getHeartRateBars() =>
+      widget.model.hourlyHeartRate.entries
+          .map((value) => BarChartGroupData(
+                x: value.key,
+                barRods: [
+                  BarChartRodData(
+                    fromY: value.value.min,
+                    toY: value.value.max,
+                    color: HeartRateCardWidget.colors[0],
+                    width: 6,
+                  ),
+                ],
+              ))
+          .toList();
 
-    return widget.model.hourlyHeartRate.entries.map((value) {
-      return BarChartGroupData(
-        x: value.key,
-        barRods: [
-          BarChartRodData(
-            fromY: value.value.min as double,
-            toY: value.value.max as double,
-            color: normal,
-            width: 6,
-          ),
-        ],
-      );
-    }).toList();
-  }
+  BarChartGroupData getSeparaterStick(xAxis, height) =>
+      BarChartGroupData(x: xAxis, barsSpace: 0, barRods: [
+        BarChartRodData(
+          toY: height,
+          fromY: 0,
+          width: 1,
+          color: HeartRateCardWidget.colors[2],
+        )
+      ]);
 }
 
 class HeartRateOuterStatefulWidget extends StatefulWidget {

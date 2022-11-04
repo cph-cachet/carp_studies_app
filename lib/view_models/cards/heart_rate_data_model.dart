@@ -9,7 +9,10 @@ class HeartRateCardViewModel extends SerializableViewModel<HourlyHeartRate> {
   Map<int, HeartRateMinMaxPrHour> get hourlyHeartRate => model.hourlyHeartRate;
 
   /// The current heart rate
-  int get currentHeartRate => model.currentHeartRate;
+  double get currentHeartRate => model.currentHeartRate;
+
+  HeartRateMinMaxPrHour get dayMinMax =>
+      HeartRateMinMaxPrHour(model.minHeartRate, model.maxHeartRate);
 
   /// Stream of heart rate [PolarHRDatum] measures.
   Stream<DataPoint>? get heartRateEvents =>
@@ -20,25 +23,17 @@ class HeartRateCardViewModel extends SerializableViewModel<HourlyHeartRate> {
 
     heartRateEvents?.listen((heartRateDataPoint) {
       PolarHRDatum? _heartRate = heartRateDataPoint.data as PolarHRDatum;
-      model.addHeartRate(_heartRate.timestamp.hour, _heartRate.hr);
 
-      if (_heartRate.hr > model.maxHeartRate) {
-        model.maxHeartRate = _heartRate.hr;
+      double _hr = _heartRate.hr.toDouble();
+      model.addHeartRate(DateTime.now().hour, _hr);
+
+      if (_hr > model.maxHeartRate) {
+        model.maxHeartRate = _hr;
       }
-      if (_heartRate.hr < model.minHeartRate) {
-        model.minHeartRate = _heartRate.hr;
+      if (_hr < model.minHeartRate) {
+        model.minHeartRate = _hr;
       }
     });
-  }
-
-  BarChartGroupData getSeparaterStick(xAxis, height) {
-    return BarChartGroupData(x: xAxis, barsSpace: 0, barRods: [
-      BarChartRodData(
-          toY: height,
-          fromY: 0,
-          width: 1,
-          color: const Color.fromARGB(70, 0, 0, 0))
-    ]);
   }
 }
 
@@ -59,17 +54,17 @@ class HourlyHeartRate extends DataModel {
   }
 
   /// The current heart rate
-  int currentHeartRate = 50;
+  double currentHeartRate = 65;
 
   /// The minimum and maximum heart rate for the day
   /// Used to scale the graph
-  int maxHeartRate = 50;
-  int minHeartRate = 50;
+  double maxHeartRate = 65;
+  double minHeartRate = 65;
 
   /// Add a heart rate value for a given hour.
   /// If the hour already exists, the min and max values are updated.
   /// If the hour does not exist, it is added.
-  void addHeartRate(int hour, int heartRate) {
+  void addHeartRate(int hour, double heartRate) {
     currentHeartRate = heartRate;
 
     if (hourlyHeartRate.containsKey(hour)) {
@@ -106,8 +101,8 @@ class HourlyHeartRate extends DataModel {
 }
 
 class HeartRateMinMaxPrHour {
-  int min = 50;
-  int max = 50;
+  double min = 65;
+  double max = 65;
 
   HeartRateMinMaxPrHour(this.min, this.max);
 }

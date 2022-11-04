@@ -29,6 +29,11 @@ class HeartRateCardViewModel extends SerializableViewModel<HourlyHeartRate> {
       PolarHRDatum? _heartRate = heartRateDataPoint.data as PolarHRDatum;
 
       double _hr = _heartRate.hr.toDouble();
+      // ignore: unnecessary_statements
+      if (!(_hr > 0)) {
+        contactStatus = false;
+        return;
+      }
       model.addHeartRate(DateTime.now().hour, _hr);
 
       if (_hr > model.maxHeartRate) {

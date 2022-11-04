@@ -11,6 +11,8 @@ class HeartRateCardViewModel extends SerializableViewModel<HourlyHeartRate> {
   /// The current heart rate
   double get currentHeartRate => model.currentHeartRate;
 
+  bool isOnWrist = false;
+
   HeartRateMinMaxPrHour get dayMinMax =>
       HeartRateMinMaxPrHour(model.minHeartRate, model.maxHeartRate);
 
@@ -33,6 +35,8 @@ class HeartRateCardViewModel extends SerializableViewModel<HourlyHeartRate> {
       if (_hr < model.minHeartRate) {
         model.minHeartRate = _hr;
       }
+
+      isOnWrist = _heartRate.contactStatus;
     });
   }
 }

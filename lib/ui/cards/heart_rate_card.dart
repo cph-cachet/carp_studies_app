@@ -59,7 +59,14 @@ class _HeartRateCardWidgetState extends State<HeartRateCardWidget> {
                         values: [locale.translate('cards.heartrate.heartrate')],
                         colors: HeartRateCardWidget.colors,
                       ),
-                      Container(height: 160, child: barCharts),
+                      Container(
+                        height: 160,
+                        child: barCharts,
+                      ),
+                      Container(
+                        height: 60,
+                        child: currentHeartRate,
+                      )
                     ],
                   );
                 },
@@ -72,36 +79,42 @@ class _HeartRateCardWidgetState extends State<HeartRateCardWidget> {
   }
 
   Widget get currentHeartRate {
+    RPLocalizations locale = RPLocalizations.of(context)!;
+
     return Stack(
       children: [
-        // Left side logo
         Positioned(
-          left: 0,
-          top: 0,
-          child: Icon(Icons.favorite,
-              color: HeartRateCardWidget.colors[0], size: 50),
-        ),
-        // right side number and text
-        Positioned(
-          right: 0,
-          top: 0,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
+          bottom: 0,
+          child: Row(
             children: [
-              Text(
-                widget.model.currentHeartRate.toStringAsFixed(0),
-                style: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
-                  color: Theme.of(context).primaryColor,
-                ),
+              // Left side logo
+              // Right side text
+              Icon(
+                Icons.favorite_rounded,
+                color: HeartRateCardWidget.colors[0],
+                size: 50,
               ),
-              Text(
-                'BPM',
-                style: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.bold,
-                  color: Theme.of(context).primaryColor,
+              Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      widget.model.currentHeartRate.toStringAsFixed(0),
+                      style: TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                          color: HeartRateCardWidget.colors[0]),
+                    ),
+                    Text(
+                      locale.translate('cards.heartrate.bpm'),
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: HeartRateCardWidget.colors[0]),
+                    ),
+                  ],
                 ),
               ),
             ],

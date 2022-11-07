@@ -100,21 +100,23 @@ class HourlyHeartRate extends DataModel {
   }
 
   @override
-  DataModel fromJson(Map<String, dynamic> json) {
-    // TODO: implement fromJson
-    throw UnimplementedError();
-  }
-
+  DataModel fromJson(Map<String, dynamic> json) =>
+      _$HourlyHeartRateFromJson(json);
   @override
-  Map<String, dynamic> toJson() {
-    // TODO: implement toJson
-    throw UnimplementedError();
-  }
+  Map<String, dynamic> toJson() => _$HourlyHeartRateToJson(this);
 }
 
+@JsonSerializable(fieldRename: FieldRename.snake, includeIfNull: false)
 class HeartRateMinMaxPrHour {
   double min = 80;
   double max = 80;
 
   HeartRateMinMaxPrHour(this.min, this.max);
+
+  @override
+  String toString() => {'min': min, 'max': max}.toString();
+
+  static HeartRateMinMaxPrHour fromJson(Map<String, dynamic> json) =>
+      _$HeartRateMinMaxPrHourFromJson(json);
+  Map<String, dynamic> toJson() => _$HeartRateMinMaxPrHourToJson(this);
 }

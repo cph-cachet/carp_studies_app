@@ -60,9 +60,6 @@ class DataVisualizationPage extends StatelessWidget {
   List<Widget> get _dataVizCards {
     final List<Widget> widgets = [];
 
-    if (bloc.hasMeasure(PolarSamplingPackage.POLAR_HR)) {
-      widgets.add(HeartRateOuterStatefulWidget(model.heartRateCardDataModel));
-    }
     // always show scoreboard
     //widgets.add(ScoreboardCardWidget(model));
 
@@ -78,6 +75,11 @@ class DataVisualizationPage extends StatelessWidget {
         model.surveysCardDataModel,
         chartType: TaskCardChartType.pie,
       ));
+
+    // check to show heart rate stats, if there is a POLAR device in the study
+    if (bloc.hasMeasure(PolarSamplingPackage.POLAR_HR)) {
+      widgets.add(HeartRateOuterStatefulWidget(model.heartRateCardDataModel));
+    }
 
     List<TaskCardViewModel> mediaModelsList = [];
 

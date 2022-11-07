@@ -20,18 +20,31 @@ class HeartRateCardWidget extends StatefulWidget {
 }
 
 class _HeartRateCardWidgetState extends State<HeartRateCardWidget>
-    with TickerProviderStateMixin {
-  // Axis render settings
-  charts.RenderSpec<num> renderSpecNum = AxisTheme.axisThemeNum();
-  charts.RenderSpec<String> renderSpecString = AxisTheme.axisThemeOrdinal();
-
-  // HeartRate? _selectedHeartRate = HeartRate(0);
+    with SingleTickerProviderStateMixin {
+  late AnimationController animationController;
+  late Animation<double> animation;
 
   @override
   void initState() {
-    // Get current day HeartRate
-    // _selectedHeartRate = widget.model.hourlyHeartRate[0];
     super.initState();
+    animationController = AnimationController(
+      vsync: this,
+      duration: Duration(
+          milliseconds:
+              1000 ~/ (((widget.model.currentHeartRate ?? 0) + 1) / 60)),
+      lowerBound: 0.9,
+      upperBound: 1.0,
+    )..repeat(reverse: true);
+    animation = CurvedAnimation(
+      parent: animationController,
+      curve: Curves.easeInBack,
+    );
+  }
+
+  @override
+  void dispose() {
+    animationController.dispose();
+    super.dispose();
   }
 
   @override
@@ -65,7 +78,7 @@ class _HeartRateCardWidgetState extends State<HeartRateCardWidget>
                         child: barCharts,
                       ),
                       Container(
-                        height: 60,
+                        height: 64,
                         child: currentHeartRateWidget,
                       )
                     ],
@@ -84,22 +97,11 @@ class _HeartRateCardWidgetState extends State<HeartRateCardWidget>
 
     var currentHeartRate = widget.model.currentHeartRate;
 
-    var animationController = AnimationController(
-      vsync: this,
-      duration:
-          Duration(milliseconds: 1000 ~/ (((currentHeartRate ?? 0) + 1) / 60)),
-      lowerBound: 0.9,
-      upperBound: 1.0,
-    )..repeat(reverse: true);
-    var _animation = CurvedAnimation(
-      parent: animationController,
-      curve: Curves.easeInBack,
-    );
-
     var heartRateTextStyle = TextStyle(
       fontSize: 60,
       fontWeight: FontWeight.bold,
     );
+
     return Stack(
       children: [
         Positioned(
@@ -124,7 +126,7 @@ class _HeartRateCardWidgetState extends State<HeartRateCardWidget>
                       scale: !widget.model.contactStatus
                           ? Tween<double>(begin: 1, end: 1)
                               .animate(animationController)
-                          : _animation,
+                          : animation,
                       child: Icon(
                         !widget.model.contactStatus
                             ? Icons.favorite_outline_rounded

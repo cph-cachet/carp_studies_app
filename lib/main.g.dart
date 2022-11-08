@@ -73,27 +73,16 @@ HourlyHeartRate _$HourlyHeartRateFromJson(Map<String, dynamic> json) =>
         (k, e) => MapEntry(int.parse(k),
             HeartRateMinMaxPrHour.fromJson(e as Map<String, dynamic>)),
       )
-      ..currentHeartRate = (json['current_heart_rate'] as num?)?.toDouble()
       ..maxHeartRate = (json['max_heart_rate'] as num).toDouble()
       ..minHeartRate = (json['min_heart_rate'] as num).toDouble();
 
-Map<String, dynamic> _$HourlyHeartRateToJson(HourlyHeartRate instance) {
-  final val = <String, dynamic>{
-    'hourly_heart_rate':
-        instance.hourlyHeartRate.map((k, e) => MapEntry(k.toString(), e)),
-  };
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('current_heart_rate', instance.currentHeartRate);
-  val['max_heart_rate'] = instance.maxHeartRate;
-  val['min_heart_rate'] = instance.minHeartRate;
-  return val;
-}
+Map<String, dynamic> _$HourlyHeartRateToJson(HourlyHeartRate instance) =>
+    <String, dynamic>{
+      'hourly_heart_rate':
+          instance.hourlyHeartRate.map((k, e) => MapEntry(k.toString(), e)),
+      'max_heart_rate': instance.maxHeartRate,
+      'min_heart_rate': instance.minHeartRate,
+    };
 
 HeartRateMinMaxPrHour _$HeartRateMinMaxPrHourFromJson(
         Map<String, dynamic> json) =>

@@ -29,17 +29,17 @@ class HeartRateCardViewModel extends SerializableViewModel<HourlyHeartRate> {
       PolarHRDatum? _heartRate = heartRateDataPoint.data as PolarHRDatum;
 
       double _hr = _heartRate.hr.toDouble();
-      // ignore: unnecessary_statements
       if (!(_hr > 0)) {
         contactStatus = false;
+        model.currentHeartRate = null;
         return;
       }
       model.addHeartRate(DateTime.now().hour, _hr);
 
-      if (_hr > model.maxHeartRate) {
+      if (_hr > (model.maxHeartRate ?? 0)) {
         model.maxHeartRate = _hr;
       }
-      if (_hr < model.minHeartRate) {
+      if (_hr < (model.minHeartRate ?? 100000)) {
         model.minHeartRate = _hr;
       }
 
@@ -61,32 +61,31 @@ class HourlyHeartRate extends DataModel {
 
   HourlyHeartRate() {
     for (int i = 0; i < 24; i++) {
-      hourlyHeartRate[i] = HeartRateMinMaxPrHour(0, 0);
+      hourlyHeartRate[i] = HeartRateMinMaxPrHour(null, null);
     }
   }
 
-  /// The current heart rate
+  /// The current heart rateJsonKey
+  @JsonKey(ignore: true)
   double? currentHeartRate;
 
   /// The minimum and maximum heart rate for the day
   /// Used to scale the graph
-  double maxHeartRate = 80;
-  double minHeartRate = 80;
+  double? maxHeartRate;
+  double? minHeartRate;
 
   /// Add a heart rate value for a given hour.
   /// If the hour already exists, the min and max values are updated.
   /// If the hour does not exist, it is added.
   void addHeartRate(int hour, double heartRate) {
     currentHeartRate = heartRate;
-
     if (hourlyHeartRate.containsKey(hour)) {
-      if (heartRate < hourlyHeartRate[hour]!.min) {
-        hourlyHeartRate[hour]!.min = heartRate;
-      }
-
-      if (heartRate > hourlyHeartRate[hour]!.max) {
-        hourlyHeartRate[hour]!.max = heartRate;
-      }
+      hourlyHeartRate.update(
+        hour,
+        (value) => value
+          ..min = value.min != null ? min(value.min!, heartRate) : heartRate
+          ..max = value.max != null ? max(value.max!, heartRate) : heartRate,
+      );
     } else {
       hourlyHeartRate[hour] = HeartRateMinMaxPrHour(heartRate, heartRate);
     }
@@ -108,8 +107,8 @@ class HourlyHeartRate extends DataModel {
 
 @JsonSerializable(fieldRename: FieldRename.snake, includeIfNull: false)
 class HeartRateMinMaxPrHour {
-  double min = 80;
-  double max = 80;
+  double? min;
+  double? max;
 
   HeartRateMinMaxPrHour(this.min, this.max);
 

@@ -32,12 +32,14 @@ class _HeartRateCardWidgetState extends State<HeartRateCardWidget>
       duration: Duration(
           milliseconds:
               1000 ~/ (((widget.model.currentHeartRate ?? 0) + 1) / 60)),
-      lowerBound: 0.9,
+      lowerBound: 0.7,
       upperBound: 1.0,
-    )..repeat(reverse: true);
+    )..repeat(
+        reverse: true,
+      );
     animation = CurvedAnimation(
       parent: animationController,
-      curve: Curves.easeInBack,
+      curve: Curves.easeOut,
     );
   }
 
@@ -66,19 +68,19 @@ class _HeartRateCardWidgetState extends State<HeartRateCardWidget>
                   return Column(
                     children: [
                       ChartsLegend(
-                        title: locale.translate('cards.heartrate.title'),
-                        iconAssetName: Icon(Icons.monitor_heart,
-                            color: Theme.of(context).primaryColor),
-                        heroTag: 'HeartRate-card',
-                        values: [],
-                        colors: HeartRateCardWidget.colors,
-                      ),
+                          title: locale.translate('cards.heartrate.title'),
+                          iconAssetName: Icon(Icons.monitor_heart,
+                              color: Theme.of(context).primaryColor),
+                          heroTag: 'HeartRate-card',
+                          values: [],
+                          colors: HeartRateCardWidget.colors),
+                      getDailyRange,
                       Container(
-                        height: 160,
+                        height: 240,
                         child: barCharts,
                       ),
                       Container(
-                        height: 64,
+                        height: 80,
                         child: currentHeartRateWidget,
                       )
                     ],
@@ -92,31 +94,74 @@ class _HeartRateCardWidgetState extends State<HeartRateCardWidget>
     );
   }
 
+  Row get getDailyRange {
+    RPLocalizations locale = RPLocalizations.of(context)!;
+
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        Container(
+          margin: EdgeInsets.only(left: 8, right: 2),
+          child: Text(
+            '${(widget.model.dayMinMax.min ?? 0).toInt()} - ${(widget.model.dayMinMax.max ?? 0).toInt()}',
+            style: TextStyle(
+              fontSize: 40,
+              fontFamily: 'Barlow',
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(bottom: 4.0),
+          child: Text(
+            locale.translate('cards.heartrate.bpm'),
+            style: TextStyle(
+              fontSize: 20,
+              fontFamily: 'Barlow',
+              fontWeight: FontWeight.w600,
+              color: Colors.grey.withOpacity(0.8),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
   Widget get currentHeartRateWidget {
     RPLocalizations locale = RPLocalizations.of(context)!;
 
     var currentHeartRate = widget.model.currentHeartRate;
 
     var heartRateTextStyle = TextStyle(
-      fontSize: 60,
-      fontWeight: FontWeight.bold,
+      fontSize: 80,
+      fontFamily: 'Barlow',
+      fontWeight: FontWeight.w600,
+      fontFamilyFallback: ['Roboto'],
+      fontFeatures: [
+        ui.FontFeature.tabularFigures(),
+      ],
     );
 
     return Stack(
       children: [
         Positioned(
           bottom: 0,
-          left: 8,
           child: Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              currentHeartRate != null
-                  ? Text(
-                      currentHeartRate.toStringAsFixed(0),
-                      style: heartRateTextStyle,
-                    )
-                  : Text('-', style: heartRateTextStyle),
+              Container(
+                margin: EdgeInsets.only(left: 8),
+                child: currentHeartRate != null ||
+                        (!widget.model.contactStatus &&
+                            currentHeartRate != null)
+                    ? Text(
+                        currentHeartRate.toStringAsFixed(0),
+                        style: heartRateTextStyle,
+                      )
+                    : Text('-', style: heartRateTextStyle),
+              ),
               Padding(
-                padding: const EdgeInsets.only(left: 0.0),
+                padding: const EdgeInsets.only(bottom: 8.0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -132,15 +177,17 @@ class _HeartRateCardWidgetState extends State<HeartRateCardWidget>
                             ? Icons.favorite_outline_rounded
                             : Icons.favorite_rounded,
                         color: HeartRateCardWidget.colors[0],
-                        size: 30,
+                        size: 32,
                       ),
                     ),
                     Text(
                       locale.translate('cards.heartrate.bpm'),
                       style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: HeartRateCardWidget.colors[0]),
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Barlow',
+                        color: HeartRateCardWidget.colors[0],
+                      ),
                     ),
                   ],
                 ),
@@ -153,11 +200,60 @@ class _HeartRateCardWidgetState extends State<HeartRateCardWidget>
   }
 
   BarChart get barCharts {
+    RPLocalizations locale = RPLocalizations.of(context)!;
+
     return BarChart(
       BarChartData(
         alignment: BarChartAlignment.center,
         barTouchData: BarTouchData(
-          enabled: false,
+          enabled: true,
+          touchTooltipData: BarTouchTooltipData(
+            tooltipBgColor: Theme.of(context).primaryColorLight,
+            getTooltipItem: (group, groupIndex, rod, rodIndex) {
+              return BarTooltipItem(
+                '',
+                textAlign: TextAlign.start,
+                children: [
+                  TextSpan(
+                    text:
+                        locale.translate('cards.heartrate.range').toUpperCase(),
+                    style: TextStyle(
+                      color: Colors.grey.withOpacity(0.6),
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  TextSpan(
+                    text: "\n${rod.fromY.toInt()} - ${rod.toY.toInt()}",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 30,
+                    ),
+                  ),
+                  TextSpan(
+                    text: "${locale.translate('cards.heartrate.bpm')}\n",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.grey.withOpacity(0.6),
+                      fontSize: 20,
+                    ),
+                  ),
+                  TextSpan(
+                    text: "$groupIndex-${groupIndex + 1} ",
+                    style: TextStyle(
+                      color: Colors.grey.withOpacity(0.6),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
+                  ),
+                ],
+                const TextStyle(
+                  fontFamily: 'Barlow',
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
+              );
+            },
+          ),
         ),
         titlesData: FlTitlesData(
           show: true,
@@ -174,7 +270,7 @@ class _HeartRateCardWidgetState extends State<HeartRateCardWidget>
               reservedSize: 40,
               getTitlesWidget: rightTitles,
               //interval should be infinity, so that only the min and max shows
-              interval: 500,
+              interval: 100,
             ),
           ),
           topTitles: AxisTitles(
@@ -185,37 +281,52 @@ class _HeartRateCardWidgetState extends State<HeartRateCardWidget>
           ),
         ),
         gridData: FlGridData(
-          show: true,
-          drawVerticalLine: false,
-          drawHorizontalLine: false,
-          getDrawingVerticalLine: (value) => FlLine(
-            color: HeartRateCardWidget.colors[1],
-            strokeWidth: 1,
-          ),
-          verticalInterval: 1 / 48,
-        ),
+            show: true,
+            drawVerticalLine: true,
+            drawHorizontalLine: true,
+            getDrawingHorizontalLine: (value) => FlLine(
+                  color: Colors.grey.withOpacity(0.2),
+                  strokeWidth: 1,
+                ),
+            checkToShowHorizontalLine: (value) => value % 100 == 0,
+            getDrawingVerticalLine: (value) => FlLine(
+                color: Colors.grey.withOpacity(0.2),
+                strokeWidth: 1,
+                dashArray: [3, 2]),
+            verticalInterval: 1 / 24,
+            checkToShowVerticalLine: (value) {
+              if (value == 1 / 4) return true;
+              if (value == 12 / 24) return true;
+              if (value == 18 / 24) return true;
+              if (value == 24 / 24) return true;
+              return false;
+            }),
         borderData: FlBorderData(
-          show: false,
+          show: true,
+          border: Border.all(
+            width: 1,
+            color: Colors.grey.withOpacity(0.2),
+          ),
         ),
         groupsSpace: 4,
         barGroups: getHeartRateBars(),
-        minY: widget.model.dayMinMax.min,
-        maxY: widget.model.dayMinMax.max,
+        minY: 0,
+        maxY: 200,
       ),
     );
   }
 
   Widget bottomTitles(double value, TitleMeta meta) {
     var style = TextStyle(
-      color: HeartRateCardWidget.colors[1],
-      fontSize: 10,
+      color: Colors.grey.withOpacity(0.6),
+      fontSize: 14,
       fontWeight: FontWeight.bold,
     );
     String text;
     if (value == 0) {
-      text = '0';
+      text = '00';
     } else if (value == 6) {
-      text = '6';
+      text = '06';
     } else if (value == 12) {
       text = '12';
     } else if (value == 18) {
@@ -237,8 +348,8 @@ class _HeartRateCardWidgetState extends State<HeartRateCardWidget>
   Widget rightTitles(double value, TitleMeta meta) {
     final text = value.toInt().toString();
     var style = TextStyle(
-      color: HeartRateCardWidget.colors[0],
-      fontSize: 10,
+      color: Colors.grey.withOpacity(0.6),
+      fontSize: 14,
       fontWeight: FontWeight.bold,
     );
     return SideTitleWidget(
@@ -257,7 +368,7 @@ class _HeartRateCardWidgetState extends State<HeartRateCardWidget>
                 barRods: [
                   BarChartRodData(
                     fromY: value.value.min,
-                    toY: value.value.max,
+                    toY: value.value.max ?? 0,
                     color: HeartRateCardWidget.colors[0],
                     width: 6,
                   ),

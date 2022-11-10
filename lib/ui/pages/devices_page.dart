@@ -264,16 +264,19 @@ class DevicesPageState extends State<DevicesPage> {
                           : device.statusIcon
                     ],
                   ),
-                  onTap: () async {
+                  onTap: () {
                     if (device.status != DeviceStatus.connected)
-                      await showConnectionDialog(
-                        context,
-                        CurrentStep.scan,
-                        device,
-                        setState,
-                        selected,
-                        selectedDevice,
-                      );
+
+                      // start scanning for BTLE devices
+                      flutterBlue.startScan();
+                    showConnectionDialog(
+                      context,
+                      CurrentStep.scan,
+                      device,
+                      setState,
+                      selected,
+                      selectedDevice,
+                    );
                     // when the modal dialog is closed, stop the scan
                     flutterBlue.stopScan();
                   }),
@@ -333,12 +336,8 @@ class DevicesPageState extends State<DevicesPage> {
     setState,
     selected,
     BluetoothDevice? selectedDevice,
-  ) async {
+  ) {
     RPLocalizations locale = RPLocalizations.of(context)!;
-
-    // start scanning for BTLE devices
-    flutterBlue.startScan();
-
     return showDialog(
       context: context,
       barrierDismissible: true,

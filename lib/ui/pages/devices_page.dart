@@ -134,7 +134,7 @@ class DevicesPageState extends State<DevicesPage> {
     );
   }
 
-  Widget _showBateryPercentage(BuildContext context, int bateryLevel,
+  Widget _showBatteryPercentage(BuildContext context, int bateryLevel,
       {double scale = 1}) {
     double width = 25 * scale;
     double height = 12 * scale;
@@ -201,7 +201,7 @@ class DevicesPageState extends State<DevicesPage> {
                       " - " +
                       device.phoneInfo["version"]!),
                   SizedBox(height: 1),
-                  _showBateryPercentage(context, device.batteryLevel!,
+                  _showBatteryPercentage(context, device.batteryLevel!,
                       scale: 0.9),
                 ],
               ),
@@ -248,7 +248,7 @@ class DevicesPageState extends State<DevicesPage> {
                     children: [
                       Text(device.id),
                       SizedBox(height: 1),
-                      _showBateryPercentage(context, device.batteryLevel ?? 0,
+                      _showBatteryPercentage(context, device.batteryLevel ?? 0,
                           scale: 0.9),
                     ],
                   ),
@@ -407,6 +407,10 @@ class DevicesPageState extends State<DevicesPage> {
                                                   selected,
                                               title: Text(bluetoothDevice
                                                   .value.device.name),
+                                              selectedTileColor:
+                                                  Theme.of(context)
+                                                      .primaryColor
+                                                      .withOpacity(0.2),
                                               onTap: () {
                                                 selectedDevice = bluetoothDevice
                                                     .value.device;

@@ -166,18 +166,20 @@ class _HeartRateCardWidgetState extends State<HeartRateCardWidget>
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    ScaleTransition(
-                      // scale should be _animation if the isOnWrist is true otherwise it should be no scale
-                      scale: !widget.model.contactStatus
-                          ? Tween<double>(begin: 1, end: 1)
-                              .animate(animationController)
-                          : animation,
-                      child: Icon(
-                        !widget.model.contactStatus
-                            ? Icons.favorite_outline_rounded
-                            : Icons.favorite_rounded,
-                        color: HeartRateCardWidget.colors[0],
-                        size: 32,
+                    RepaintBoundary(
+                      child: ScaleTransition(
+                        // scale should be _animation if the isOnWrist is true otherwise it should be no scale
+                        scale: !widget.model.contactStatus
+                            ? Tween<double>(begin: 1, end: 1)
+                                .animate(animationController)
+                            : animation,
+                        child: Icon(
+                          !widget.model.contactStatus
+                              ? Icons.favorite_outline_rounded
+                              : Icons.favorite_rounded,
+                          color: HeartRateCardWidget.colors[0],
+                          size: 32,
+                        ),
                       ),
                     ),
                     Text(

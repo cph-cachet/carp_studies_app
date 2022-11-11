@@ -264,19 +264,19 @@ class DevicesPageState extends State<DevicesPage> {
                           : device.statusIcon
                     ],
                   ),
-                  onTap: () {
-                    if (device.status != DeviceStatus.connected)
-
+                  onTap: () async {
+                    if (device.status != DeviceStatus.connected) {
                       // start scanning for BTLE devices
                       flutterBlue.startScan();
-                    showConnectionDialog(
-                      context,
-                      CurrentStep.scan,
-                      device,
-                      setState,
-                      selected,
-                      selectedDevice,
-                    );
+                      await showConnectionDialog(
+                        context,
+                        CurrentStep.scan,
+                        device,
+                        setState,
+                        selected,
+                        selectedDevice,
+                      );
+                    }
                     // when the modal dialog is closed, stop the scan
                     flutterBlue.stopScan();
                   }),

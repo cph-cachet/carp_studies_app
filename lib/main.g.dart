@@ -73,27 +73,46 @@ HourlyHeartRate _$HourlyHeartRateFromJson(Map<String, dynamic> json) =>
         (k, e) => MapEntry(int.parse(k),
             HeartRateMinMaxPrHour.fromJson(e as Map<String, dynamic>)),
       )
-      ..maxHeartRate = (json['max_heart_rate'] as num).toDouble()
-      ..minHeartRate = (json['min_heart_rate'] as num).toDouble();
+      ..lastUpdated = DateTime.parse(json['last_updated'] as String)
+      ..maxHeartRate = (json['max_heart_rate'] as num?)?.toDouble()
+      ..minHeartRate = (json['min_heart_rate'] as num?)?.toDouble();
 
-Map<String, dynamic> _$HourlyHeartRateToJson(HourlyHeartRate instance) =>
-    <String, dynamic>{
-      'hourly_heart_rate':
-          instance.hourlyHeartRate.map((k, e) => MapEntry(k.toString(), e)),
-      'max_heart_rate': instance.maxHeartRate,
-      'min_heart_rate': instance.minHeartRate,
-    };
+Map<String, dynamic> _$HourlyHeartRateToJson(HourlyHeartRate instance) {
+  final val = <String, dynamic>{
+    'hourly_heart_rate':
+        instance.hourlyHeartRate.map((k, e) => MapEntry(k.toString(), e)),
+    'last_updated': instance.lastUpdated.toIso8601String(),
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('max_heart_rate', instance.maxHeartRate);
+  writeNotNull('min_heart_rate', instance.minHeartRate);
+  return val;
+}
 
 HeartRateMinMaxPrHour _$HeartRateMinMaxPrHourFromJson(
         Map<String, dynamic> json) =>
     HeartRateMinMaxPrHour(
-      (json['min'] as num).toDouble(),
-      (json['max'] as num).toDouble(),
+      (json['min'] as num?)?.toDouble(),
+      (json['max'] as num?)?.toDouble(),
     );
 
 Map<String, dynamic> _$HeartRateMinMaxPrHourToJson(
-        HeartRateMinMaxPrHour instance) =>
-    <String, dynamic>{
-      'min': instance.min,
-      'max': instance.max,
-    };
+    HeartRateMinMaxPrHour instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('min', instance.min);
+  writeNotNull('max', instance.max);
+  return val;
+}

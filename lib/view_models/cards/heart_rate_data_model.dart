@@ -25,27 +25,31 @@ class HeartRateCardViewModel extends SerializableViewModel<HourlyHeartRate> {
   void init(SmartphoneDeploymentController controller) {
     super.init(controller);
 
-    heartRateEvents?.listen((heartRateDataPoint) {
-      PolarHRDatum? _heartRate = heartRateDataPoint.data as PolarHRDatum;
+    heartRateEvents?.listen(
+      (heartRateDataPoint) {
+        PolarHRDatum? _heartRate = heartRateDataPoint.data as PolarHRDatum;
 
-      double _hr = _heartRate.hr.toDouble();
-      if (!(_hr > 0)) {
-        contactStatus = false;
-        model.currentHeartRate = null;
-        return;
-      }
-      model.addHeartRate(DateTime.now().hour, _hr);
+        double _hr = _heartRate.hr.toDouble();
+        if (!(_hr > 0)) {
+          contactStatus = false;
+          model.currentHeartRate = null;
+          return;
+        }
+        model.addHeartRate(DateTime.now().hour, _hr);
 
-      if (_hr > (model.maxHeartRate ?? 0)) {
-        model.maxHeartRate = _hr;
-      }
-      if (_hr < (model.minHeartRate ?? 100000)) {
-        model.minHeartRate = _hr;
-      }
+        if (_hr > (model.maxHeartRate ?? 0)) {
+          model.maxHeartRate = _hr;
+        }
+        if (_hr < (model.minHeartRate ?? 100000)) {
+          model.minHeartRate = _hr;
+        }
 
-      contactStatus =
-          _heartRate.contactStatusSupported ? _heartRate.contactStatus : true;
-    });
+        contactStatus =
+            _heartRate.contactStatusSupported ? _heartRate.contactStatus : true;
+
+        model.resetDataAtMidnight();
+      },
+    );
   }
 }
 
@@ -65,7 +69,11 @@ class HourlyHeartRate extends DataModel {
     }
   }
 
-  /// The current heart rateJsonKey
+  /// The last updated time of the heart rate.
+  /// Used to reset the data at midnight.
+  DateTime lastUpdated = DateTime.now();
+
+  /// The current heart rate
   @JsonKey(ignore: true)
   double? currentHeartRate;
 
@@ -73,6 +81,17 @@ class HourlyHeartRate extends DataModel {
   /// Used to scale the graph
   double? maxHeartRate;
   double? minHeartRate;
+
+  void resetDataAtMidnight() {
+    if (lastUpdated.hour != DateTime.now().hour) {
+      for (int i = 0; i < 24; i++) {
+        hourlyHeartRate[i] = HeartRateMinMaxPrHour(null, null);
+      }
+      maxHeartRate = null;
+      minHeartRate = null;
+    }
+    lastUpdated = DateTime.now();
+  }
 
   /// Add a heart rate value for a given hour.
   /// If the hour already exists, the min and max values are updated.
@@ -99,7 +118,7 @@ class HourlyHeartRate extends DataModel {
   }
 
   @override
-  DataModel fromJson(Map<String, dynamic> json) =>
+  HourlyHeartRate fromJson(Map<String, dynamic> json) =>
       _$HourlyHeartRateFromJson(json);
   @override
   Map<String, dynamic> toJson() => _$HourlyHeartRateToJson(this);
@@ -115,7 +134,7 @@ class HeartRateMinMaxPrHour {
   @override
   String toString() => {'min': min, 'max': max}.toString();
 
-  static HeartRateMinMaxPrHour fromJson(Map<String, dynamic> json) =>
+  factory HeartRateMinMaxPrHour.fromJson(Map<String, dynamic> json) =>
       _$HeartRateMinMaxPrHourFromJson(json);
   Map<String, dynamic> toJson() => _$HeartRateMinMaxPrHourToJson(this);
 }

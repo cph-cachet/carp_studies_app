@@ -3,11 +3,12 @@ part of carp_study_app;
 class InformedConsentPage extends StatefulWidget {
   final InformedConsentState state = InformedConsentState();
   InformedConsentPage({super.key});
+  @override
   InformedConsentState createState() => state;
 }
 
 class InformedConsentState extends State<InformedConsentPage> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   void resultCallback(RPTaskResult result) async {
     await bloc.informedConsentHasBeenAccepted(result);

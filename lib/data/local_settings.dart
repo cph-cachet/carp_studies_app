@@ -1,3 +1,4 @@
+// ignore_for_file: constant_identifier_names
 part of carp_study_app;
 
 /// A local settings manager. Works as a singleton - use `LocalSettings()`

@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 part of carp_study_app;
 
 // String encode(Object object) =>
@@ -7,16 +9,16 @@ class CarpBackend {
   static const String CANS_URI = "https://cans.cachet.dk";
 
   static const Map<DeploymentMode, String> URIs = {
-    DeploymentMode.CARP_DEV: '/dev',
-    DeploymentMode.CARP_TEST: '/test',
-    DeploymentMode.CARP_STAGING: '/stage',
-    DeploymentMode.CARP_PRODUCTION: '',
+    DeploymentMode.carpDev: '/dev',
+    DeploymentMode.carpTest: '/test',
+    DeploymentMode.carpStaging: '/stage',
+    DeploymentMode.carpProduction: '',
   };
 
   static const String CLIENT_ID = "carp";
   static const String CLIENT_SECRET = "carp";
 
-  static CarpBackend _instance = CarpBackend._();
+  static final CarpBackend _instance = CarpBackend._();
 
   CarpApp? _app;
 
@@ -108,12 +110,12 @@ class CarpBackend {
   /// Get the study invitation.
   Future<void> getStudyInvitation(BuildContext context) async {
     if (studyDeploymentId == null) {
-      ActiveParticipationInvitation? _invitation =
+      ActiveParticipationInvitation? invitation =
           await CarpParticipationService().getStudyInvitation(context);
-      debug('CARP Study Invitation: $_invitation');
+      debug('CARP Study Invitation: $invitation');
 
-      studyId = _invitation?.studyId! as String;
-      studyDeploymentId = _invitation?.studyDeploymentId! as String;
+      studyId = invitation?.studyId! as String;
+      studyDeploymentId = invitation?.studyDeploymentId! as String;
     }
     info('Study ID: $studyId');
     info('Deployment ID: $studyDeploymentId');

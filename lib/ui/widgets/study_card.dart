@@ -8,8 +8,8 @@ class StudyCard extends StatelessWidget {
     RPLocalizations locale = RPLocalizations.of(context)!;
 
     String studyDescription() => '${locale.translate(studyPageModel.description)}\n\n'
-        '${locale.translate('widgets.study_card.title')}: \"${locale.translate(studyPageModel.title)}\".\n'
-        '${locale.translate('widgets.study_card.purpose')}: \"${locale.translate(studyPageModel.purpose)}\".\n\n'
+        '${locale.translate('widgets.study_card.title')}: "${locale.translate(studyPageModel.title)}".\n'
+        '${locale.translate('widgets.study_card.purpose')}: "${locale.translate(studyPageModel.purpose)}".\n\n'
         '${locale.translate('widgets.study_card.responsibles')}:\n'
         '${locale.translate(studyPageModel.piName)}, ${locale.translate(studyPageModel.piTitle)}\n\n'
         '${locale.translate(studyPageModel.piAffiliation)}\n'
@@ -19,6 +19,11 @@ class StudyCard extends StatelessWidget {
     return Card(
       semanticContainer: true,
       clipBehavior: Clip.antiAliasWithSaveLayer,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+      elevation: 5,
+      margin: const EdgeInsets.all(5),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -37,17 +42,17 @@ class StudyCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               mainAxisSize: MainAxisSize.max,
               children: [
-                SizedBox(width: 40),
-                SizedBox(width: 40),
+                const SizedBox(width: 40),
+                const SizedBox(width: 40),
                 Text(locale.translate(studyPageModel.title),
                     style: aboutCardTitleStyle.copyWith(color: Theme.of(context).primaryColor)),
-                SizedBox(width: 40),
-                SizedBox(width: 40),
+                const SizedBox(width: 40),
+                const SizedBox(width: 40),
               ],
             ),
             subtitle: Text("Tap to learn more", style: aboutCardInfoStyle),
             children: [
-              Container(
+              SizedBox(
                 height: MediaQuery.of(context).size.height * 0.3,
                 child: Scrollbar(
                   child: SingleChildScrollView(
@@ -94,11 +99,6 @@ class StudyCard extends StatelessWidget {
           ),
         ],
       ),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
-      ),
-      elevation: 5,
-      margin: EdgeInsets.all(5),
     );
   }
 }

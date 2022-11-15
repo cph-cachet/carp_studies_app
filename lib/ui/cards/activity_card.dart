@@ -4,8 +4,9 @@ class ActivityCardWidget extends StatefulWidget {
   final ActivityCardViewModel model;
   final List<charts.Series<DailyActivity, String>> seriesList;
   final List<Color> colors;
-  ActivityCardWidget(this.seriesList, this.model,
-      {this.colors = const [CACHET.BLUE_1, CACHET.BLUE_2, CACHET.BLUE_3]});
+  const ActivityCardWidget(this.seriesList, this.model,
+      {super.key,
+      this.colors = const [CACHET.BLUE_1, CACHET.BLUE_2, CACHET.BLUE_3]});
 
   factory ActivityCardWidget.withSampleData(ActivityCardViewModel model) {
     return ActivityCardWidget(
@@ -40,10 +41,10 @@ class ActivityCardWidget extends StatefulWidget {
       ];
 
   @override
-  _ActivityCardWidgetState createState() => _ActivityCardWidgetState();
+  ActivityCardWidgetState createState() => ActivityCardWidgetState();
 }
 
-class _ActivityCardWidgetState extends State<ActivityCardWidget> {
+class ActivityCardWidgetState extends State<ActivityCardWidget> {
   charts.RenderSpec<num> renderSpecNum = AxisTheme.axisThemeNum();
   charts.RenderSpec<DateTime> renderSpecTime = AxisTheme.axisThemeDateTime();
   charts.RenderSpec<String> renderSpecString = AxisTheme.axisThemeOrdinal();
@@ -83,13 +84,13 @@ class _ActivityCardWidgetState extends State<ActivityCardWidget> {
                     color: Theme.of(context).primaryColor),
                 heroTag: 'activity-card',
                 values: [
-                  '$_walk ' + locale.translate('cards.activity.walking'),
-                  '$_run ' + locale.translate('cards.activity.running'),
-                  '$_cycle ' + locale.translate('cards.activity.cycling')
+                  '$_walk ${locale.translate('cards.activity.walking')}',
+                  '$_run ${locale.translate('cards.activity.running')}',
+                  '$_cycle ${locale.translate('cards.activity.cycling')}'
                 ],
                 colors: widget.colors,
               ),
-              Container(
+              SizedBox(
                 height: 160,
                 child: charts.BarChart(
                   widget.seriesList,
@@ -128,32 +129,34 @@ class _ActivityCardWidgetState extends State<ActivityCardWidget> {
     final selectedDatum = model.selectedDatum;
     final measures = <String?, num?>{};
     if (selectedDatum.isNotEmpty) {
-      selectedDatum.forEach((charts.SeriesDatum datumPair) {
+      for (var datumPair in selectedDatum) {
         measures[datumPair.series.displayName] = datumPair.datum.minutes;
-      });
+      }
     }
     setState(() {});
 
     measures.forEach((k, v) {
-      if (k == 'walking')
+      if (k == 'walking') {
         _walk = v;
-      else if (k == 'running')
+      } else if (k == 'running') {
         _run = v;
-      else if (k == 'cycling') _cycle = v;
+      } else if (k == 'cycling') {
+        _cycle = v;
+      }
     });
   }
 }
 
 class ActivityOuterStatefulWidget extends StatefulWidget {
   final ActivityCardViewModel model;
-  ActivityOuterStatefulWidget(this.model);
+  const ActivityOuterStatefulWidget(this.model, {super.key});
 
   @override
-  _ActivityOuterStatefulWidgetState createState() =>
-      _ActivityOuterStatefulWidgetState();
+  ActivityOuterStatefulWidgetState createState() =>
+      ActivityOuterStatefulWidgetState();
 }
 
-class _ActivityOuterStatefulWidgetState
+class ActivityOuterStatefulWidgetState
     extends State<ActivityOuterStatefulWidget> {
   @override
   Widget build(BuildContext context) =>

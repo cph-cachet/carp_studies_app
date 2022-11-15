@@ -12,7 +12,7 @@ enum DeviceType {
 }
 
 class DevicesPageViewModel extends ViewModel {
-  List<DeviceModel> _devices = [];
+  final List<DeviceModel> _devices = [];
   List<DeviceModel> get devices => _devices;
 }
 
@@ -85,26 +85,26 @@ class DeviceModel {
       };
 
   static Map<String, Icon> get deviceTypeIcon => {
-        Smartphone.DEVICE_TYPE: Icon(Icons.phone_android, size: 30),
-        WeatherService.DEVICE_TYPE: Icon(Icons.wb_cloudy),
-        AirQualityService.DEVICE_TYPE: Icon(Icons.air),
-        LocationService.DEVICE_TYPE: Icon(Icons.location_on),
-        ESenseDevice.DEVICE_TYPE: Icon(Icons.headphones, size: 30),
-        PolarDevice.DEVICE_TYPE: Icon(Icons.monitor_heart, size: 30),
+        Smartphone.DEVICE_TYPE: const Icon(Icons.phone_android, size: 30),
+        WeatherService.DEVICE_TYPE: const Icon(Icons.wb_cloudy),
+        AirQualityService.DEVICE_TYPE: const Icon(Icons.air),
+        LocationService.DEVICE_TYPE: const Icon(Icons.location_on),
+        ESenseDevice.DEVICE_TYPE: const Icon(Icons.headphones, size: 30),
+        PolarDevice.DEVICE_TYPE: const Icon(Icons.monitor_heart, size: 30),
       };
 
   static Map<DeviceStatus, dynamic> get deviceStatusIcon => {
         DeviceStatus.initialized: "pages.devices.status.action.connect",
         DeviceStatus.connecting:
-            Icon(Icons.sensors_off, color: CACHET.GREEN_1, size: 30),
+            const Icon(Icons.sensors_off, color: CACHET.GREEN_1, size: 30),
         DeviceStatus.connected:
-            Icon(Icons.sensors, color: CACHET.GREEN_1, size: 30),
+            const Icon(Icons.sensors, color: CACHET.GREEN_1, size: 30),
         DeviceStatus.disconnected: "pages.devices.status.action.connect",
         DeviceStatus.paired: "pages.devices.status.action.connect",
         DeviceStatus.error:
-            Icon(Icons.error_outline, color: CACHET.RED_1, size: 30),
+            const Icon(Icons.error_outline, color: CACHET.RED_1, size: 30),
         DeviceStatus.unknown:
-            Icon(Icons.error_outline, color: CACHET.RED_1, size: 30),
+            const Icon(Icons.error_outline, color: CACHET.RED_1, size: 30),
       };
 
   static Map<DeviceStatus, String> get deviceStatusText => {

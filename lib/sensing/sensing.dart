@@ -81,7 +81,7 @@ class Sensing {
     DeviceController().registerAllAvailableDevices();
 
     switch (bloc.deploymentMode) {
-      case DeploymentMode.LOCAL:
+      case DeploymentMode.local:
         // use the local, phone-based deployment service
         deploymentService = SmartphoneDeploymentService();
 
@@ -101,10 +101,10 @@ class Sensing {
         bloc.studyDeploymentId = _status!.studyDeploymentId;
 
         break;
-      case DeploymentMode.CARP_PRODUCTION:
-      case DeploymentMode.CARP_STAGING:
-      case DeploymentMode.CARP_TEST:
-      case DeploymentMode.CARP_DEV:
+      case DeploymentMode.carpProduction:
+      case DeploymentMode.carpStaging:
+      case DeploymentMode.carpTest:
+      case DeploymentMode.carpDev:
         assert(CarpService().authenticated,
             'No user is authenticated. Call CarpService().authenticate() before using any of the CARP services.');
         assert(bloc.studyDeploymentId != null,

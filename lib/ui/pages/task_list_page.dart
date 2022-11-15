@@ -36,7 +36,7 @@ class TaskListPageState extends State<TaskListPage> {
                           child: ScoreboardCardWidget(widget.model)),
                       SliverToBoxAdapter(
                         child: Padding(
-                          padding: EdgeInsets.all(15),
+                          padding: const EdgeInsets.all(15),
                           child: Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
@@ -54,33 +54,36 @@ class TaskListPageState extends State<TaskListPage> {
                         delegate: SliverChildBuilderDelegate(
                             (BuildContext context, int index) {
                           if (widget.model.tasks[index].state !=
-                              UserTaskState.done)
+                              UserTaskState.done) {
                             return _buildTaskCard(
                                 context, widget.model.tasks[index]);
-                          else
-                            return SizedBox.shrink();
+                          } else {
+                            return const SizedBox.shrink();
+                          }
                         }, childCount: widget.model.tasks.length),
                       ),
                       SliverList(
                         delegate: SliverChildBuilderDelegate(
                             (BuildContext context, int index) {
                           if (widget.model.tasks[index].state ==
-                              UserTaskState.done)
+                              UserTaskState.done) {
                             return _buildDoneTaskCard(
                                 context, widget.model.tasks[index]);
-                          else
-                            return SizedBox.shrink();
+                          } else {
+                            return const SizedBox.shrink();
+                          }
                         }, childCount: widget.model.tasks.length),
                       ),
                       SliverList(
                         delegate: SliverChildBuilderDelegate(
                             (BuildContext context, int index) {
                           if (widget.model.tasks[index].state ==
-                              UserTaskState.expired)
+                              UserTaskState.expired) {
                             return _buildExpiredTaskCard(
                                 context, widget.model.tasks[index]);
-                          else
-                            return SizedBox.shrink();
+                          } else {
+                            return const SizedBox.shrink();
+                          }
                         }, childCount: widget.model.tasks.length),
                       ),
                     ],
@@ -99,7 +102,7 @@ class TaskListPageState extends State<TaskListPage> {
 
     return Center(
       child: Card(
-        margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+        margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         elevation: 5,
         child: ListTile(
@@ -113,11 +116,11 @@ class TaskListPageState extends State<TaskListPage> {
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 5),
+              const SizedBox(height: 5),
               Text(_subtitle(userTask),
                   style: aboutCardSubtitleStyle.copyWith(
                       color: Theme.of(context).primaryColor)),
-              SizedBox(height: 5),
+              const SizedBox(height: 5),
               Text(locale.translate(userTask.description)),
             ],
           ),
@@ -138,7 +141,7 @@ class TaskListPageState extends State<TaskListPage> {
           : (userTask.task.measures.isNotEmpty &&
                   measureTypeIcons[userTask.task.measures[0].type] != null)
               ? measureTypeIcons[userTask.task.measures[0].type] as Icon
-              : Icon(
+              : const Icon(
                   Icons.description_outlined,
                   color: CACHET.ORANGE,
                 );
@@ -146,16 +149,14 @@ class TaskListPageState extends State<TaskListPage> {
   String _subtitle(UserTask userTask) {
     RPLocalizations locale = RPLocalizations.of(context)!;
     String str = (userTask.task.minutesToComplete != null)
-        ? '${userTask.task.minutesToComplete} ' +
-            locale.translate('pages.task_list.task.time_to_complete')
+        ? '${userTask.task.minutesToComplete} ${locale.translate('pages.task_list.task.time_to_complete')}'
         : locale.translate('pages.task_list.task.auto_complete');
 
     if (userTask.expiresIn != null) {
       if (userTask.expiresIn!.isNegative) {
         userTask.onExpired(context);
       }
-      str += ' - ${userTask.expiresIn!.inDays + 1} ' +
-          locale.translate('pages.task_list.task.days_remaining');
+      str += ' - ${userTask.expiresIn!.inDays + 1} ${locale.translate('pages.task_list.task.days_remaining')}';
     }
     str += '';
 
@@ -171,12 +172,12 @@ class TaskListPageState extends State<TaskListPage> {
       child: Opacity(
         opacity: 0.6,
         child: Card(
-          margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+          margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           elevation: 3,
           child: ListTile(
-            leading: CircleAvatar(
+            leading: const CircleAvatar(
               backgroundColor: CACHET.LIGHT_GREEN_1,
               child: Icon(Icons.check_circle_outlined, color: CACHET.GREEN_1),
             ),
@@ -196,12 +197,12 @@ class TaskListPageState extends State<TaskListPage> {
       child: Opacity(
         opacity: 0.6,
         child: Card(
-          margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+          margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           elevation: 3,
           child: ListTile(
-            leading: CircleAvatar(
+            leading: const CircleAvatar(
               backgroundColor: CACHET.LIGHT_GREY_1,
               child: Icon(Icons.unpublished_outlined, color: CACHET.GREY_1),
             ),
@@ -228,13 +229,13 @@ class TaskListPageState extends State<TaskListPage> {
             color: CACHET.GREY_1,
             shape: CircleBorder(),
           ),
-          child: Icon(
+          child: const Icon(
             Icons.playlist_add_check,
             color: Colors.white,
           ),
         ),
         Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
             child: Text(
               locale.translate("pages.task_list.no_tasks"),
               style: aboutCardSubtitleStyle,
@@ -245,62 +246,62 @@ class TaskListPageState extends State<TaskListPage> {
   }
 
   static Map<String, Icon> taskTypeIcons = {
-    SurveyUserTask.SURVEY_TYPE: Icon(
+    SurveyUserTask.SURVEY_TYPE: const Icon(
       Icons.description,
       color: CACHET.ORANGE,
     ),
-    SurveyUserTask.COGNITIVE_ASSESSMENT_TYPE: Icon(
+    SurveyUserTask.COGNITIVE_ASSESSMENT_TYPE: const Icon(
       Icons.face_retouching_natural,
       color: CACHET.RED_2,
     ),
-    AudioUserTask.AUDIO_TYPE: Icon(
+    AudioUserTask.AUDIO_TYPE: const Icon(
       Icons.record_voice_over,
       color: CACHET.GREEN,
     ),
-    VideoUserTask.VIDEO_TYPE: Icon(
+    VideoUserTask.VIDEO_TYPE: const Icon(
       Icons.videocam,
       color: CACHET.BLUE_1,
     ),
-    VideoUserTask.IMAGE_TYPE: Icon(
+    VideoUserTask.IMAGE_TYPE: const Icon(
       Icons.camera_alt,
       color: CACHET.YELLOW,
     ),
-    BackgroundSensingUserTask.SENSING_TYPE: Icon(
+    BackgroundSensingUserTask.SENSING_TYPE: const Icon(
       Icons.settings_input_antenna,
       color: CACHET.CACHET_BLUE,
     ),
-    BackgroundSensingUserTask.ONE_TIME_SENSING_TYPE: Icon(
+    BackgroundSensingUserTask.ONE_TIME_SENSING_TYPE: const Icon(
       Icons.settings_input_component,
       color: CACHET.PURPLE,
     ),
   };
 
   static Map<String, Icon> measureTypeIcons = {
-    DeviceSamplingPackage.MEMORY: Icon(
+    DeviceSamplingPackage.MEMORY: const Icon(
       Icons.memory,
       color: CACHET.GREY_4,
     ),
-    DeviceSamplingPackage.DEVICE: Icon(
+    DeviceSamplingPackage.DEVICE: const Icon(
       Icons.phone_android,
       color: CACHET.GREY_4,
     ),
-    DeviceSamplingPackage.BATTERY: Icon(
+    DeviceSamplingPackage.BATTERY: const Icon(
       Icons.battery_charging_full,
       color: CACHET.GREEN,
     ),
-    SensorSamplingPackage.PEDOMETER: Icon(
+    SensorSamplingPackage.PEDOMETER: const Icon(
       Icons.directions_walk,
       color: CACHET.LIGHT_PURPLE,
     ),
-    SensorSamplingPackage.ACCELEROMETER: Icon(
+    SensorSamplingPackage.ACCELEROMETER: const Icon(
       Icons.adb,
       color: CACHET.GREY_4,
     ),
-    SensorSamplingPackage.GYROSCOPE: Icon(
+    SensorSamplingPackage.GYROSCOPE: const Icon(
       Icons.adb,
       color: CACHET.GREY_4,
     ),
-    SensorSamplingPackage.LIGHT: Icon(
+    SensorSamplingPackage.LIGHT: const Icon(
       Icons.highlight,
       color: CACHET.YELLOW,
     ),
@@ -310,19 +311,19 @@ class TaskListPageState extends State<TaskListPage> {
     //     Icon(Icons.wifi, size: 50, color: CACHET.LIGHT_PURPLE),
     // ConnectivitySamplingPackage.CONNECTIVITY:
     //     Icon(Icons.cast_connected, size: 50, color: CACHET.GREEN),
-    MediaSamplingPackage.AUDIO: Icon(
+    MediaSamplingPackage.AUDIO: const Icon(
       Icons.mic,
       color: CACHET.ORANGE,
     ),
-    MediaSamplingPackage.NOISE: Icon(
+    MediaSamplingPackage.NOISE: const Icon(
       Icons.hearing,
       color: CACHET.YELLOW,
     ),
-    MediaSamplingPackage.VIDEO: Icon(
+    MediaSamplingPackage.VIDEO: const Icon(
       Icons.videocam,
       color: CACHET.YELLOW,
     ),
-    MediaSamplingPackage.IMAGE: Icon(
+    MediaSamplingPackage.IMAGE: const Icon(
       Icons.camera_alt,
       color: CACHET.YELLOW,
     ),
@@ -332,50 +333,50 @@ class TaskListPageState extends State<TaskListPage> {
     // CommunicationSamplingPackage.TEXT_MESSAGE_LOG: Icon(Icons.textsms, size: 50, color: CACHET.LIGHT_PURPLE),
     // CommunicationSamplingPackage.PHONE_LOG: Icon(Icons.phone_in_talk, size: 50, color: CACHET.ORANGE),
     // CommunicationSamplingPackage.CALENDAR: Icon(Icons.event, size: 50, color: CACHET.CYAN),
-    DeviceSamplingPackage.SCREEN: Icon(
+    DeviceSamplingPackage.SCREEN: const Icon(
       Icons.screen_lock_portrait,
       color: CACHET.LIGHT_PURPLE,
     ),
-    ContextSamplingPackage.LOCATION: Icon(
+    ContextSamplingPackage.LOCATION: const Icon(
       Icons.location_searching,
       color: CACHET.CYAN,
     ),
-    ContextSamplingPackage.GEOLOCATION: Icon(
+    ContextSamplingPackage.GEOLOCATION: const Icon(
       Icons.my_location,
       color: CACHET.YELLOW,
     ),
-    ContextSamplingPackage.ACTIVITY: Icon(
+    ContextSamplingPackage.ACTIVITY: const Icon(
       Icons.directions_bike,
       color: CACHET.ORANGE,
     ),
-    ContextSamplingPackage.WEATHER: Icon(
+    ContextSamplingPackage.WEATHER: const Icon(
       Icons.cloud,
       color: CACHET.LIGHT_BLUE_2,
     ),
-    ContextSamplingPackage.AIR_QUALITY: Icon(
+    ContextSamplingPackage.AIR_QUALITY: const Icon(
       Icons.air,
       color: CACHET.GREY_3,
     ),
-    ContextSamplingPackage.GEOFENCE: Icon(
+    ContextSamplingPackage.GEOFENCE: const Icon(
       Icons.location_on,
       color: CACHET.CYAN,
     ),
-    ContextSamplingPackage.MOBILITY: Icon(
+    ContextSamplingPackage.MOBILITY: const Icon(
       Icons.location_on,
       color: CACHET.ORANGE,
     ),
-    SurveySamplingPackage.SURVEY: Icon(
+    SurveySamplingPackage.SURVEY: const Icon(
       Icons.description,
       color: CACHET.ORANGE,
     ),
   };
 
   static Map<UserTaskState, Icon> get taskStateIcon => {
-        UserTaskState.initialized: Icon(Icons.stream, color: CACHET.YELLOW),
-        UserTaskState.enqueued: Icon(Icons.notifications, color: CACHET.YELLOW),
-        UserTaskState.dequeued: Icon(Icons.stop, color: CACHET.YELLOW),
-        UserTaskState.started: Icon(Icons.play_arrow, color: CACHET.GREY_4),
-        UserTaskState.canceled: Icon(Icons.pause, color: CACHET.GREY_4),
-        UserTaskState.done: Icon(Icons.check, color: CACHET.GREEN),
+        UserTaskState.initialized: const Icon(Icons.stream, color: CACHET.YELLOW),
+        UserTaskState.enqueued: const Icon(Icons.notifications, color: CACHET.YELLOW),
+        UserTaskState.dequeued: const Icon(Icons.stop, color: CACHET.YELLOW),
+        UserTaskState.started: const Icon(Icons.play_arrow, color: CACHET.GREY_4),
+        UserTaskState.canceled: const Icon(Icons.pause, color: CACHET.GREY_4),
+        UserTaskState.done: const Icon(Icons.check, color: CACHET.GREEN),
       };
 }

@@ -38,13 +38,13 @@ class StudyPageViewModel extends ViewModel {
   Icon getMessageTypeIcon(MessageType type) {
     switch (type) {
       case MessageType.announcement:
-        return Icon(Icons.new_releases);
+        return const Icon(Icons.new_releases);
       case MessageType.article:
-        return Icon(Icons.description);
+        return const Icon(Icons.description);
       case MessageType.news:
-        return Icon(Icons.create_new_folder);
+        return const Icon(Icons.create_new_folder);
       default:
-        return Icon(Icons.new_releases);
+        return const Icon(Icons.new_releases);
     }
   }
 
@@ -54,8 +54,7 @@ class StudyPageViewModel extends ViewModel {
   /// If [imagePath] is null, a random image is returned.
   Image getMessageImage(String? imagePath) {
     Image image;
-    if (imagePath == null)
-      imagePath = 'assets/images/messages/img_' + (Random(10).nextInt(5) + 1).toString() + '.png';
+    imagePath ??= 'assets/images/messages/img_${Random(10).nextInt(5) + 1}.png';
 
     if (imagePath.startsWith('http')) {
       image = Image.network(imagePath, fit: BoxFit.fitHeight);
@@ -66,8 +65,4 @@ class StudyPageViewModel extends ViewModel {
   }
 
   StudyPageViewModel();
-
-  void init(SmartphoneDeploymentController controller) {
-    super.init(controller);
-  }
 }

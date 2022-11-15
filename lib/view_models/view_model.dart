@@ -9,7 +9,7 @@ abstract class ViewModel {
   /// Initialize this view model before use.
   @mustCallSuper
   void init(SmartphoneDeploymentController ctrl) {
-    this._controller = ctrl;
+    _controller = ctrl;
   }
 }
 
@@ -41,6 +41,7 @@ abstract class SerializableViewModel<D extends DataModel> extends ViewModel {
   @protected
   D createModel();
 
+  @override
   @mustCallSuper
   void init(SmartphoneDeploymentController controller) {
     super.init(controller);
@@ -109,6 +110,7 @@ class DailyMeasure {
   DailyMeasure(this.weekday);
 
   /// Get the localilzed name of the [weekday].
+  @override
   String toString() =>
       DateFormat('EEEE').format(DateTime(2021, 2, 7).add(Duration(days: weekday))).substring(0, 3);
 }
@@ -129,6 +131,7 @@ class CarpStydyAppViewModel extends ViewModel {
   ProfilePageViewModel get profilePageViewModel => _profilePageViewModel;
   DevicesPageViewModel get devicesPageViewModel => _devicesPageViewModel;
 
+  @override
   void init(SmartphoneDeploymentController controller) {
     super.init(controller);
     _dataVisualizationPageViewModel.init(controller);

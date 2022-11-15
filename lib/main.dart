@@ -117,7 +117,7 @@ void main() async {
 
   await bloc.initialize();
 
-  app = CarpStudyApp();
+  app = const CarpStudyApp();
   runApp(app);
 }
 
@@ -127,6 +127,6 @@ void main() async {
 /// or deploying it.
 final bloc = StudyAppBLoC(
   debugLevel: DebugLevel.DEBUG,
-  deploymentMode: DeploymentMode.LOCAL,
+  deploymentMode: DeploymentMode.local,
   forceSignOutAndStudyReload: false,
 );

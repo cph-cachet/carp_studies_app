@@ -2,6 +2,7 @@ part of carp_study_app;
 
 class FailedLoginPage extends StatefulWidget {
   final FailedLoginPageState state = FailedLoginPageState();
+  @override
   FailedLoginPageState createState() => state;
 }
 
@@ -20,7 +21,7 @@ class FailedLoginPageState extends State<FailedLoginPage> {
               color: CACHET.GREY_1,
               shape: CircleBorder(),
             ),
-            child: Icon(
+            child: const Icon(
               Icons.assignment_late,
               color: Colors.white,
             ),
@@ -28,7 +29,7 @@ class FailedLoginPageState extends State<FailedLoginPage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Text(
@@ -38,7 +39,7 @@ class FailedLoginPageState extends State<FailedLoginPage> {
               ),
             ],
           ),
-          TextButton(onPressed: () => print("go back"), child: Text('Back'))
+          TextButton(onPressed: () => print("go back"), child: const Text('Back'))
         ],
       ),
     );

@@ -52,7 +52,7 @@ class StudyAppBLoC {
   ///  * whether to use the locally stored credentials
   StudyAppBLoC({
     this.debugLevel = DebugLevel.INFO,
-    this.deploymentMode = DeploymentMode.LOCAL,
+    this.deploymentMode = DeploymentMode.local,
     this.forceSignOutAndStudyReload = false,
   }) : super();
 
@@ -60,19 +60,19 @@ class StudyAppBLoC {
   RPOrderedTask? informedConsent;
 
   InformedConsentManager get informedConsentManager =>
-      (deploymentMode == DeploymentMode.LOCAL)
+      (deploymentMode == DeploymentMode.local)
           ? LocalResourceManager()
           : CarpResourceManager() as InformedConsentManager;
 
   LocalizationManager get localizationManager =>
-      (deploymentMode == DeploymentMode.LOCAL)
+      (deploymentMode == DeploymentMode.local)
           ? LocalResourceManager()
           : CarpResourceManager() as LocalizationManager;
 
   LocalizationLoader get localizationLoader =>
       ResourceLocalizationLoader(localizationManager);
 
-  MessageManager get messageManager => (deploymentMode == DeploymentMode.LOCAL)
+  MessageManager get messageManager => (deploymentMode == DeploymentMode.local)
       ? LocalResourceManager()
       : CarpResourceManager() as MessageManager;
 
@@ -120,8 +120,9 @@ class StudyAppBLoC {
               measure.type != AudioUserTask.AUDIO_TYPE &&
               measure.type != SurveyUserTask.SURVEY_TYPE))) {
         return true;
-      } else
+      } else {
         return false;
+      }
     } catch (error) {
       return false;
     }
@@ -184,14 +185,15 @@ class StudyAppBLoC {
     if (forceSignOutAndStudyReload) await leaveStudyAndSignOut();
 
     //  initialize the CARP backend, if needed
-    if (deploymentMode != DeploymentMode.LOCAL) {
+    if (deploymentMode != DeploymentMode.local) {
       await backend.initialize();
       await backend.authenticate(context);
 
       // check if there is a local deploymed id
       // if not, get a deployment id based on an invitation
-      if (bloc.studyDeploymentId == null)
+      if (bloc.studyDeploymentId == null) {
         await backend.getStudyInvitation(context);
+      }
     }
 
     // find the right informed consent, if needed
@@ -241,8 +243,8 @@ class StudyAppBLoC {
                   filter: ui.ImageFilter.blur(
                       sigmaX: 4 * anim1.value, sigmaY: 4 * anim1.value),
                   child: FadeTransition(
-                    child: child,
                     opacity: anim1,
+                    child: child,
                   ),
                 ),
             pageBuilder: (context, anim1, anim2) => LocationUsageDialog().build(
@@ -265,8 +267,9 @@ class StudyAppBLoC {
   ) async {
     info('Informed consent has been accepted by user.');
     informedConsentAccepted = true;
-    if (bloc.deploymentMode != DeploymentMode.LOCAL)
+    if (bloc.deploymentMode != DeploymentMode.local) {
       await backend.uploadInformedConsent(informedConsentResult);
+    }
   }
 
   /// Has the informed consent been shown to, and accepted by the user?
@@ -346,7 +349,7 @@ class StudyAppBLoC {
     Sensing().controller?.start();
 
     // listening on the data stream and print them as json to the debug console
-    Sensing().controller!.data.listen((data) => print(toJsonString(data)));
+    Sensing().controller!.data.listen((data) => debug(toJsonString(data)));
   }
 
   // Pause sensing.

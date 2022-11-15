@@ -3,8 +3,9 @@ part of carp_study_app;
 // todo change text for survey progress
 class DataVisualizationPage extends StatelessWidget {
   final DataVisualizationPageViewModel model;
-  DataVisualizationPage(this.model);
+  const DataVisualizationPage(this.model);
 
+  @override
   Widget build(BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;
 
@@ -18,7 +19,7 @@ class DataVisualizationPage extends StatelessWidget {
             Container(
               color: Theme.of(context).colorScheme.secondary,
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 15),
+                padding: const EdgeInsets.symmetric(horizontal: 15),
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Column(
@@ -33,7 +34,7 @@ class DataVisualizationPage extends StatelessWidget {
                       ),
                       Text(locale.translate('pages.data_viz.thanks'),
                           style: aboutCardSubtitleStyle),
-                      SizedBox(height: 15),
+                      const SizedBox(height: 15),
                     ],
                   ),
                 ),
@@ -70,35 +71,43 @@ class DataVisualizationPage extends StatelessWidget {
     //if (bloc.hasMeasures()) widgets.add(MeasuresCardWidget(model.measuresCardDataModel));
 
     // check to show surveys stats
-    if (bloc.hasSurveys())
+    if (bloc.hasSurveys()) {
       widgets.add(TaskCardWidget(
         model.surveysCardDataModel,
         chartType: TaskCardChartType.pie,
       ));
+    }
 
     List<TaskCardViewModel> mediaModelsList = [];
 
     // check what media types are in the study and add them to de media card
-    if (bloc.hasMeasure(MediaSamplingPackage.AUDIO))
+    if (bloc.hasMeasure(MediaSamplingPackage.AUDIO)) {
       mediaModelsList.add(model.audioCardDataModel);
-    if (bloc.hasMeasure(MediaSamplingPackage.VIDEO))
+    }
+    if (bloc.hasMeasure(MediaSamplingPackage.VIDEO)) {
       mediaModelsList.add(model.videoCardDataModel);
-    if (bloc.hasMeasure(MediaSamplingPackage.IMAGE))
+    }
+    if (bloc.hasMeasure(MediaSamplingPackage.IMAGE)) {
       mediaModelsList.add(model.imageCardDataModel);
-    if (mediaModelsList.isNotEmpty)
+    }
+    if (mediaModelsList.isNotEmpty) {
       widgets.add(MediaCardWidget(mediaModelsList));
+    }
 
     // check to show device data visualizations
     if (bloc.hasDevices()) {
       //TODO ADD DEVICES VIZ
     }
 
-    if (bloc.hasMeasure(SensorSamplingPackage.PEDOMETER))
+    if (bloc.hasMeasure(SensorSamplingPackage.PEDOMETER)) {
       widgets.add(StepsOuterStatefulWidget(model.stepsCardDataModel));
-    if (bloc.hasMeasure(ContextSamplingPackage.MOBILITY))
+    }
+    if (bloc.hasMeasure(ContextSamplingPackage.MOBILITY)) {
       widgets.add(MobilityOuterStatefulWidget(model.mobilityCardDataModel));
-    if (bloc.hasMeasure(ContextSamplingPackage.ACTIVITY))
+    }
+    if (bloc.hasMeasure(ContextSamplingPackage.ACTIVITY)) {
       widgets.add(ActivityOuterStatefulWidget(model.activityCardDataModel));
+    }
 
     return widgets.toSet().toList();
   }

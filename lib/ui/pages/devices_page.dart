@@ -39,7 +39,7 @@ class DevicesPageState extends State<DevicesPage> {
           Container(
             color: Theme.of(context).colorScheme.secondary,
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 15),
+              padding: const EdgeInsets.symmetric(horizontal: 15),
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Column(
@@ -48,7 +48,7 @@ class DevicesPageState extends State<DevicesPage> {
                   children: [
                     Text(locale.translate("pages.devices.message"),
                         style: aboutCardSubtitleStyle),
-                    SizedBox(height: 15),
+                    const SizedBox(height: 15),
                   ],
                 ),
               ),
@@ -80,7 +80,7 @@ class DevicesPageState extends State<DevicesPage> {
                         }, childCount: smartphoneDevice.length),
                       ),
                       physicalDevices.isEmpty
-                          ? SliverToBoxAdapter(child: SizedBox.shrink())
+                          ? const SliverToBoxAdapter(child: SizedBox.shrink())
                           : SliverToBoxAdapter(
                               child: Padding(
                               padding: const EdgeInsets.only(
@@ -104,7 +104,7 @@ class DevicesPageState extends State<DevicesPage> {
                         }, childCount: physicalDevices.length),
                       ),
                       onlineServices.isEmpty
-                          ? SliverToBoxAdapter(child: SizedBox.shrink())
+                          ? const SliverToBoxAdapter(child: SizedBox.shrink())
                           : SliverToBoxAdapter(
                               child: Padding(
                                 padding: const EdgeInsets.only(
@@ -141,7 +141,7 @@ class DevicesPageState extends State<DevicesPage> {
     return Row(mainAxisSize: MainAxisSize.min, children: [
       //SizedBox(width: 8),
       ClipRRect(
-        borderRadius: BorderRadius.all(Radius.circular(2)),
+        borderRadius: const BorderRadius.all(Radius.circular(2)),
         child: Container(
           decoration: BoxDecoration(
               color: Theme.of(context).colorScheme.secondary,
@@ -157,7 +157,7 @@ class DevicesPageState extends State<DevicesPage> {
         ),
       ),
       ClipRRect(
-        borderRadius: BorderRadius.all(Radius.circular(4)),
+        borderRadius: const BorderRadius.all(Radius.circular(4)),
         child: Container(
           decoration: BoxDecoration(
               color: Theme.of(context).colorScheme.secondary,
@@ -166,9 +166,9 @@ class DevicesPageState extends State<DevicesPage> {
           height: 4,
         ),
       ),
-      SizedBox(width: 4),
+      const SizedBox(width: 4),
       Text(
-        bateryLevel.toString() + "%",
+        "$bateryLevel%",
       )
     ]);
   }
@@ -176,7 +176,7 @@ class DevicesPageState extends State<DevicesPage> {
   Widget buildSmartphoneDeviceCard(BuildContext context, DeviceModel device) {
     return Center(
       child: Card(
-        margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+        margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         elevation: 2,
         child: Column(
@@ -197,10 +197,8 @@ class DevicesPageState extends State<DevicesPage> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(device.phoneInfo["model"]! +
-                      " - " +
-                      device.phoneInfo["version"]!),
-                  SizedBox(height: 1),
+                  Text("${device.phoneInfo["model"]!} - ${device.phoneInfo["version"]!}"),
+                  const SizedBox(height: 1),
                   _showBateryPercentage(context, device.batteryLevel!,
                       scale: 0.9),
                 ],
@@ -223,7 +221,7 @@ class DevicesPageState extends State<DevicesPage> {
     RPLocalizations locale = RPLocalizations.of(context)!;
     return Center(
       child: Card(
-        margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+        margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         elevation: 5,
         child: StreamBuilder<DeviceStatus>(
@@ -247,7 +245,7 @@ class DevicesPageState extends State<DevicesPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(device.id),
-                      SizedBox(height: 1),
+                      const SizedBox(height: 1),
                       _showBateryPercentage(context, device.batteryLevel ?? 0,
                           scale: 0.9),
                     ],
@@ -265,7 +263,7 @@ class DevicesPageState extends State<DevicesPage> {
                     ],
                   ),
                   onTap: () async {
-                    if (device.status != DeviceStatus.connected)
+                    if (device.status != DeviceStatus.connected) {
                       await showConnectionDialog(
                         context,
                         CurrentStep.scan,
@@ -274,6 +272,7 @@ class DevicesPageState extends State<DevicesPage> {
                         selected,
                         selectedDevice,
                       );
+                    }
                     // when the modal dialog is closed, stop the scan
                     flutterBlue.stopScan();
                   }),
@@ -288,7 +287,7 @@ class DevicesPageState extends State<DevicesPage> {
     RPLocalizations locale = RPLocalizations.of(context)!;
     return Center(
       child: Card(
-        margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+        margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         elevation: 5,
         child: StreamBuilder<DeviceStatus>(
@@ -347,9 +346,9 @@ class DevicesPageState extends State<DevicesPage> {
           builder: (context, setState) {
             return AlertDialog(
                 scrollable: true,
-                titlePadding: EdgeInsets.symmetric(vertical: 5),
+                titlePadding: const EdgeInsets.symmetric(vertical: 5),
                 insetPadding:
-                    EdgeInsets.symmetric(vertical: 24, horizontal: 40),
+                    const EdgeInsets.symmetric(vertical: 24, horizontal: 40),
                 title: Column(
                   children: [
                     Row(
@@ -357,12 +356,12 @@ class DevicesPageState extends State<DevicesPage> {
                       children: [
                         IconButton(
                             onPressed: () => Navigator.of(context).pop(),
-                            icon: Icon(Icons.close),
-                            padding: EdgeInsets.only(right: 10)),
+                            icon: const Icon(Icons.close),
+                            padding: const EdgeInsets.only(right: 10)),
                       ],
                     ),
                     Padding(
-                      padding: EdgeInsets.only(left: 25, right: 25, bottom: 10),
+                      padding: const EdgeInsets.only(left: 25, right: 25, bottom: 10),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -372,26 +371,22 @@ class DevicesPageState extends State<DevicesPage> {
                     ),
                   ],
                 ),
-                content: Container(
+                content: SizedBox(
                   height: MediaQuery.of(context).size.height * 0.6,
                   child: currentStep == CurrentStep.scan
                       ? Column(
                           children: [
                             Text(
-                              locale.translate(
-                                      "pages.devices.connection.step.start.1") +
-                                  " " +
-                                  locale.translate(device.name!) +
-                                  " " +
-                                  locale.translate(
-                                      "pages.devices.connection.step.start.2"),
+                              "${locale.translate(
+                                      "pages.devices.connection.step.start.1")} ${locale.translate(device.name!)} ${locale.translate(
+                                      "pages.devices.connection.step.start.2")}",
                               style: aboutCardContentStyle,
                               textAlign: TextAlign.justify,
                             ),
                             Expanded(
                               child: StreamBuilder<List<ScanResult>>(
                                 stream: flutterBlue.scanResults,
-                                initialData: [],
+                                initialData: const [],
                                 builder: (context, snapshot) =>
                                     SingleChildScrollView(
                                   child: Column(
@@ -420,18 +415,10 @@ class DevicesPageState extends State<DevicesPage> {
                               ),
                             ),
                             Text(
-                              locale.translate(
-                                      "pages.devices.connection.step.start.3") +
-                                  " " +
-                                  locale.translate(device.name!) +
-                                  "  " +
-                                  locale.translate(
-                                      "pages.devices.connection.step.start.4") +
-                                  " " +
-                                  locale.translate(device.name!) +
-                                  " " +
-                                  locale.translate(
-                                      "pages.devices.connection.step.start.5"),
+                              "${locale.translate(
+                                      "pages.devices.connection.step.start.3")} ${locale.translate(device.name!)}  ${locale.translate(
+                                      "pages.devices.connection.step.start.4")} ${locale.translate(device.name!)} ${locale.translate(
+                                      "pages.devices.connection.step.start.5")}",
                               style: aboutCardContentStyle,
                               textAlign: TextAlign.justify,
                             )
@@ -444,7 +431,7 @@ class DevicesPageState extends State<DevicesPage> {
                           context,
                         ),
                 ),
-                contentPadding: EdgeInsets.symmetric(horizontal: 25),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 25),
                 actions: currentStep == CurrentStep.scan
                     ? [
                         TextButton(
@@ -536,9 +523,7 @@ class DevicesPageState extends State<DevicesPage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              locale.translate("pages.devices.connection.step.how_to.title") +
-                  " " +
-                  locale.translate(device.name!),
+              "${locale.translate("pages.devices.connection.step.how_to.title")} ${locale.translate(device.name!)}",
               style: sectionTitleStyle.copyWith(
                   color: Theme.of(context).primaryColor),
             ),
@@ -548,10 +533,8 @@ class DevicesPageState extends State<DevicesPage> {
         return Column(
           children: [
             Text(
-              locale.translate(device.name!) +
-                  " " +
-                  locale
-                      .translate("pages.devices.connection.step.confirm.title"),
+              "${locale.translate(device.name!)} ${locale
+                      .translate("pages.devices.connection.step.confirm.title")}",
               style: sectionTitleStyle.copyWith(
                   color: Theme.of(context).primaryColor),
             ),
@@ -565,13 +548,11 @@ class DevicesPageState extends State<DevicesPage> {
     return Column(
       children: [
         Image(
-            image: AssetImage('assets/icons/connection_done.png'),
+            image: const AssetImage('assets/icons/connection_done.png'),
             width: MediaQuery.of(context).size.height * 0.2,
             height: MediaQuery.of(context).size.height * 0.2),
         Text(
-          (locale.translate("pages.devices.connection.step.confirm.1") +
-                  " '${device?.name}' " +
-                  locale.translate("pages.devices.connection.step.confirm.2"))
+          ("${locale.translate("pages.devices.connection.step.confirm.1")} '${device?.name}' ${locale.translate("pages.devices.connection.step.confirm.2")}")
               .trim(),
           style: aboutCardContentStyle,
           textAlign: TextAlign.justify,
@@ -589,7 +570,7 @@ class DevicesPageState extends State<DevicesPage> {
             child: Column(
               children: [
                 Image(
-                    image: AssetImage('assets/icons/connection.png'),
+                    image: const AssetImage('assets/icons/connection.png'),
                     width: MediaQuery.of(context).size.height * 0.2,
                     height: MediaQuery.of(context).size.height * 0.2),
                 Text(

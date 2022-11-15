@@ -14,13 +14,14 @@ class ActivityCardViewModel extends SerializableViewModel<WeeklyActivities> {
   Stream<DataPoint>? get activityEvents =>
       controller?.data.where((dataPoint) => dataPoint.data is ActivityDatum);
 
+  @override
   void init(SmartphoneDeploymentController controller) {
     super.init(controller);
 
     // listen for activity events and count the minutes
-    activityEvents?.listen((_activityDataPoint) {
+    activityEvents?.listen((activityDataPoint) {
       ActivityDatum lastActivityDatum = _lastActivity.data as ActivityDatum;
-      ActivityDatum activityDatum = _activityDataPoint.data as ActivityDatum;
+      ActivityDatum activityDatum = activityDataPoint.data as ActivityDatum;
 
       if (activityDatum.type != lastActivityDatum.type) {
         // if we have a new type of activity
@@ -33,7 +34,7 @@ class ActivityCardViewModel extends SerializableViewModel<WeeklyActivities> {
           end.difference(start).inMinutes,
         );
         // and then save the new activity
-        _lastActivity = _activityDataPoint;
+        _lastActivity = activityDataPoint;
       }
     });
   }
@@ -56,12 +57,12 @@ class WeeklyActivities extends DataModel {
 
   WeeklyActivities() {
     // // Initialize every week or if is the first time opening the app
-    ActivityType.values.forEach(
-      (type) {
+    for (var type in ActivityType.values) {
         activities[type] = {};
-        for (int i = 1; i <= 7; i++) activities[type]![i] = 0;
-      },
-    );
+        for (int i = 1; i <= 7; i++) {
+          activities[type]![i] = 0;
+        }
+      }
   }
 
   /// Increase the number of minutes of doing [activityType] on [weekday] with [minutes].
@@ -73,14 +74,17 @@ class WeeklyActivities extends DataModel {
     activities[activityType]![weekday] = (activities[activityType]![weekday] ?? 0) + minutes;
   }
 
+  @override
   WeeklyActivities fromJson(Map<String, dynamic> json) => _$WeeklyActivitiesFromJson(json);
+  @override
   Map<String, dynamic> toJson() => _$WeeklyActivitiesToJson(this);
 
+  @override
   String toString() {
-    String _str = '  TYPE\t| day | min.\n';
+    String str = '  TYPE\t| day | min.\n';
     activities.forEach((type, data) =>
-        data.forEach((day, minutes) => _str += '${type.toString().split(".").last}\t|  $day  |  $minutes\n'));
-    return _str;
+        data.forEach((day, minutes) => str += '${type.toString().split(".").last}\t|  $day  |  $minutes\n'));
+    return str;
   }
 }
 

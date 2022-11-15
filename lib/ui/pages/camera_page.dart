@@ -4,7 +4,7 @@ class CameraPage extends StatefulWidget {
   final VideoUserTask videoUserTask;
   final List<CameraDescription> cameras;
 
-  CameraPage({super.key, required this.videoUserTask, required this.cameras});
+  const CameraPage({super.key, required this.videoUserTask, required this.cameras});
 
   @override
   CameraPageState createState() => CameraPageState();
@@ -46,7 +46,7 @@ class CameraPageState extends State<CameraPage> {
       backgroundColor: Colors.black,
       body: Column(
         children: [
-          SizedBox(height: 35),
+          const SizedBox(height: 35),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
@@ -54,10 +54,10 @@ class CameraPageState extends State<CameraPage> {
                   onPressed: () {
                     _showCancelConfirmationDialog();
                   },
-                  icon: Icon(Icons.close, color: Colors.white, size: 30))
+                  icon: const Icon(Icons.close, color: Colors.white, size: 30))
             ],
           ),
-          SizedBox(height: 35),
+          const SizedBox(height: 35),
           FutureBuilder<void>(
             future: _initializeControllerFuture,
             builder: (context, snapshot) {
@@ -65,18 +65,18 @@ class CameraPageState extends State<CameraPage> {
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: ClipRRect(
-                      borderRadius: BorderRadius.all(Radius.circular(20)),
-                      child: Container(
-                          child: CameraPreview(_cameraController!),
+                      borderRadius: const BorderRadius.all(Radius.circular(20)),
+                      child: SizedBox(
                           height: MediaQuery.of(context).size.height * 0.7,
-                          width: MediaQuery.of(context).size.width * 0.9)),
+                          width: MediaQuery.of(context).size.width * 0.9,
+                          child: CameraPreview(_cameraController!))),
                 );
               } else {
                 return const Center(child: CircularProgressIndicator());
               }
             },
           ),
-          Spacer(),
+          const Spacer(),
           Padding(
             padding: const EdgeInsets.only(right: 10, left: 10, bottom: 30),
             child: Row(
@@ -91,7 +91,7 @@ class CameraPageState extends State<CameraPage> {
                       });
                     }
                   },
-                  icon: Icon(Icons.flip_camera_android, color: Colors.white),
+                  icon: const Icon(Icons.flip_camera_android, color: Colors.white),
                 ),
                 GestureDetector(
                   onTap: () async {
@@ -150,7 +150,7 @@ class CameraPageState extends State<CameraPage> {
                       ? Stack(
                           alignment: Alignment.center,
                           children: [
-                            SizedBox(
+                            const SizedBox(
                               width: 65,
                               height: 65,
                               child: CircularProgressIndicator(
@@ -162,7 +162,7 @@ class CameraPageState extends State<CameraPage> {
                             Container(
                               height: 60,
                               width: 60,
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                   shape: BoxShape.circle, color: Colors.white),
                             ),
                           ],
@@ -170,7 +170,7 @@ class CameraPageState extends State<CameraPage> {
                       : Container(
                           height: 60,
                           width: 60,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                               shape: BoxShape.circle, color: Colors.white),
                         ),
                 ),
@@ -195,7 +195,7 @@ class CameraPageState extends State<CameraPage> {
               ],
             ),
           ),
-          Spacer(),
+          const Spacer(),
         ],
       ),
     );

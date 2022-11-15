@@ -1,7 +1,7 @@
 part of carp_study_app;
 
 class DetailsBanner extends StatelessWidget {
-  DetailsBanner(this.title, this.image, {this.isCarpBanner = false});
+  const DetailsBanner(this.title, this.image, {this.isCarpBanner = false});
   final String title;
   final String? image;
   final bool isCarpBanner;
@@ -18,14 +18,14 @@ class DetailsBanner extends StatelessWidget {
       pinned: false,
       flexibleSpace: FlexibleSpaceBar(
         centerTitle: true,
-        titlePadding: EdgeInsets.only(top: 15),
+        titlePadding: const EdgeInsets.only(top: 15),
         background: image != null
             ? ClipRRect(
                 child: ImageFiltered(
                     imageFilter: ui.ImageFilter.blur(sigmaX: 1, sigmaY: 1),
                     child: Image.asset(image!, fit: BoxFit.fitHeight)),
               )
-            : SizedBox.shrink(),
+            : const SizedBox.shrink(),
         title: Container(
           child: InkWell(
             onTap: () {
@@ -34,7 +34,7 @@ class DetailsBanner extends StatelessWidget {
                   : print("no");
             },
             child: Padding(
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               child: Stack(
                 alignment: AlignmentDirectional.bottomEnd,
                 children: [
@@ -63,7 +63,7 @@ class DetailsBanner extends StatelessWidget {
                             Icon(Icons.touch_app, color: Theme.of(context).primaryColor, size: 15),
                           ],
                         )
-                      : SizedBox.shrink(),
+                      : const SizedBox.shrink(),
                 ],
               ),
             ),

@@ -30,7 +30,7 @@ class AudioUserTask extends UserTask {
   static const String AUDIO_TYPE = 'audio';
 
   late BuildContext _context;
-  StreamController<int> _countDownController = StreamController.broadcast();
+  final StreamController<int> _countDownController = StreamController.broadcast();
   Stream<int>? get countDownEvents => _countDownController.stream;
 
   /// Total duration of audio recording in seconds.
@@ -65,7 +65,7 @@ class AudioUserTask extends UserTask {
     state = UserTaskState.started;
     executor.resume();
 
-    _timer = Timer.periodic(new Duration(seconds: 1), (_) {
+    _timer = Timer.periodic(const Duration(seconds: 1), (_) {
       _countDownController.add(--ongoingRecordingDuration);
 
       if (ongoingRecordingDuration <= 0) {

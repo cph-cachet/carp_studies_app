@@ -36,16 +36,17 @@ class DataVisualizationPageViewModel extends ViewModel {
 
   DataVisualizationPageViewModel();
 
-  void init(SmartphoneDeploymentController controller) {
-    super.init(controller);
-    _activityCardDataModel.init(controller);
-    _stepsCardDataModel.init(controller);
-    _measuresCardDataModel.init(controller);
-    _mobilityCardDataModel.init(controller);
-    _surveysCardDataModel.init(controller);
-    _audioCardDataModel.init(controller);
-    _videoCardDataModel.init(controller);
-    _imageCardDataModel.init(controller);
-    _studyProgressCardDataModel.init(controller);
+  @override
+  void init(SmartphoneDeploymentController ctrl) {
+    super.init(ctrl);
+    _activityCardDataModel.init(ctrl);
+    _stepsCardDataModel.init(ctrl);
+    _measuresCardDataModel.init(ctrl);
+    _mobilityCardDataModel.init(ctrl);
+    _surveysCardDataModel.init(ctrl);
+    _audioCardDataModel.init(ctrl);
+    _videoCardDataModel.init(ctrl);
+    _imageCardDataModel.init(ctrl);
+    _studyProgressCardDataModel.init(ctrl);
   }
 }

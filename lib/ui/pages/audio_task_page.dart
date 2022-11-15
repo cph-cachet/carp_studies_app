@@ -2,7 +2,7 @@ part of carp_study_app;
 
 class AudioTaskPage extends StatefulWidget {
   final AudioUserTask? audioUserTask;
-  AudioTaskPage({super.key, this.audioUserTask});
+  const AudioTaskPage({super.key, this.audioUserTask});
 
   @override
   AudioTaskPageState createState() => AudioTaskPageState(audioUserTask);
@@ -33,7 +33,7 @@ class AudioTaskPageState extends State<AudioTaskPage> {
           _showCancelConfirmationDialog() as FutureOr<bool>),
       child: Scaffold(
         body: Container(
-          padding: EdgeInsets.symmetric(horizontal: 15),
+          padding: const EdgeInsets.symmetric(horizontal: 15),
           child: _stepSelector(),
         ),
       ),
@@ -68,7 +68,7 @@ class AudioTaskPageState extends State<AudioTaskPage> {
                     return Container(
                       width: 7.0,
                       height: 7.0,
-                      margin: EdgeInsets.symmetric(horizontal: 6.0),
+                      margin: const EdgeInsets.symmetric(horizontal: 6.0),
                       decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           color: index <= _currentStep
@@ -106,7 +106,7 @@ class AudioTaskPageState extends State<AudioTaskPage> {
             case UserTaskState.done:
               return _stepThree();
             default:
-              return SizedBox.shrink();
+              return const SizedBox.shrink();
           }
         });
   }
@@ -121,38 +121,37 @@ class AudioTaskPageState extends State<AudioTaskPage> {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(height: 35),
+            const SizedBox(height: 35),
             _header(),
-            SizedBox(height: 35),
-            Image(
+            const SizedBox(height: 35),
+            const Image(
                 image: AssetImage('assets/icons/audio.png'),
                 width: 220,
                 height: 220),
-            SizedBox(height: 40),
+            const SizedBox(height: 40),
             Text(locale.translate(audioUserTask!.title),
                 style: audioTitleStyle),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Text(
-                '${locale.translate(audioUserTask!.description)}\n\n' +
-                    locale.translate('pages.audio_task.play'),
+                '${locale.translate(audioUserTask!.description)}\n\n${locale.translate('pages.audio_task.play')}',
                 style: audioContentStyle),
             Expanded(
               child: Align(
                 alignment: FractionalOffset.bottomCenter,
                 child: Padding(
-                  padding: EdgeInsets.only(bottom: 30.0),
+                  padding: const EdgeInsets.only(bottom: 30.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      SizedBox(width: 50),
-                      SizedBox(width: 30),
+                      const SizedBox(width: 50),
+                      const SizedBox(width: 30),
                       CircleAvatar(
                         radius: 30,
                         backgroundColor: CACHET.RED_1,
                         child: IconButton(
                           onPressed: () => audioUserTask!.onRecordStart(),
-                          padding: EdgeInsets.all(0),
-                          icon: Icon(Icons.mic, color: Colors.white, size: 30),
+                          padding: const EdgeInsets.all(0),
+                          icon: const Icon(Icons.mic, color: Colors.white, size: 30),
                         ),
                       ),
                       InkWell(
@@ -167,7 +166,7 @@ class AudioTaskPageState extends State<AudioTaskPage> {
                           Navigator.of(context).pop();
                         },
                       ),
-                      SizedBox(width: 30),
+                      const SizedBox(width: 30),
                     ],
                   ),
                 ),
@@ -190,17 +189,17 @@ class AudioTaskPageState extends State<AudioTaskPage> {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            SizedBox(height: 35),
+            const SizedBox(height: 35),
             _header(),
-            SizedBox(height: 35),
-            Image(
+            const SizedBox(height: 35),
+            const Image(
                 image: AssetImage('assets/icons/audio.png'),
                 width: 220,
                 height: 220),
-            SizedBox(height: 40),
+            const SizedBox(height: 40),
             Text(locale.translate("pages.audio_task.recording"),
                 style: audioTitleStyle),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             // If instructions are too long, create scrollable card for the extra instructions
             // TODO - the layout method below is prone to be creating problems / exceptions....
             //  - if, for example, the audioUserTask.instructions is a key (with no \n\n)
@@ -231,17 +230,17 @@ class AudioTaskPageState extends State<AudioTaskPage> {
             )
             // : SizedBox.shrink(),
             ,
-            SizedBox(height: 5),
+            const SizedBox(height: 5),
             Expanded(
               flex: 2,
               child: Align(
                 alignment: FractionalOffset.bottomCenter,
                 child: Padding(
-                  padding: EdgeInsets.only(bottom: 30.0),
+                  padding: const EdgeInsets.only(bottom: 30.0),
                   child: Stack(
                     alignment: Alignment.center,
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         width: 60,
                         height: 60,
                         child: CircularProgressIndicator(
@@ -255,8 +254,8 @@ class AudioTaskPageState extends State<AudioTaskPage> {
                         backgroundColor: CACHET.RED_1,
                         child: IconButton(
                           onPressed: () => audioUserTask!.onRecordStop(),
-                          padding: EdgeInsets.all(0),
-                          icon: Icon(Icons.stop, color: Colors.white, size: 30),
+                          padding: const EdgeInsets.all(0),
+                          icon: const Icon(Icons.stop, color: Colors.white, size: 30),
                         ),
                       ),
                     ],
@@ -280,46 +279,46 @@ class AudioTaskPageState extends State<AudioTaskPage> {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            SizedBox(height: 35),
+            const SizedBox(height: 35),
             _header(),
-            SizedBox(height: 35),
-            Image(
+            const SizedBox(height: 35),
+            const Image(
                 image: AssetImage('assets/icons/audio.png'),
                 width: 220,
                 height: 220),
-            SizedBox(height: 40),
+            const SizedBox(height: 40),
             Text(locale.translate('pages.audio_task.done'),
                 style: audioTitleStyle),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Text(locale.translate('pages.audio_task.recording_completed'),
                 style: audioContentStyle),
             Expanded(
               child: Align(
                 alignment: FractionalOffset.bottomCenter,
                 child: Padding(
-                  padding: EdgeInsets.only(bottom: 30.0),
+                  padding: const EdgeInsets.only(bottom: 30.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      SizedBox(width: 30),
+                      const SizedBox(width: 30),
                       IconButton(
                         onPressed: () => audioUserTask!.onRecordStart(),
-                        padding: EdgeInsets.all(0),
+                        padding: const EdgeInsets.all(0),
                         icon:
-                            Icon(Icons.replay, size: 25, color: CACHET.GREY_5),
+                            const Icon(Icons.replay, size: 25, color: CACHET.GREY_5),
                       ),
                       CircleAvatar(
                         radius: 30,
                         backgroundColor: CACHET.GREEN_1,
                         child: IconButton(
                           onPressed: () => Navigator.pop(context),
-                          padding: EdgeInsets.all(0),
-                          icon: Icon(Icons.check_circle_outline,
+                          padding: const EdgeInsets.all(0),
+                          icon: const Icon(Icons.check_circle_outline,
                               color: Colors.white, size: 30),
                         ),
                       ),
-                      SizedBox(width: 50),
-                      SizedBox(width: 30),
+                      const SizedBox(width: 50),
+                      const SizedBox(width: 30),
                     ],
                   ),
                 ),

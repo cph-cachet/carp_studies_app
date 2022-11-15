@@ -19,8 +19,4 @@ class TaskListPageViewModel extends ViewModel {
       .userTaskQueue
       .where((task) => task.state == UserTaskState.done)
       .length;
-
-  void init(SmartphoneDeploymentController controller) {
-    super.init(controller);
-  }
 }

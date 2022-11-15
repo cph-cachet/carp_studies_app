@@ -70,7 +70,7 @@ dependencies:
 #
 # NOTE - you need to run "flutter pub upgrade" and "flutter pub get" in order to download the lastest
 # versions from Github.
-dependency_overrides:  
+dependency_overrides:
   carp_core:
     git:
       url: https://github.com/cph-cachet/carp.sensing-flutter.git
@@ -121,11 +121,11 @@ dependency_overrides:
       url: https://github.com/cph-cachet/carp.sensing-flutter.git
       ref: develop
       path: backends/carp_webservices/
-  # research_package: 
+  # research_package:
   #   git:
   #     url: https://github.com/cph-cachet/research.package.git
   #     ref: dev-carp-core-0_40_0
-  # cognition_package: 
+  # cognition_package:
   #   git:
   #     url: https://github.com/cph-cachet/cognition_package.git
   #     ref: develop
@@ -139,6 +139,7 @@ dev_dependencies:
   json_serializable: any
   build_runner: any
   test: any
+  flutter_lints: any
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

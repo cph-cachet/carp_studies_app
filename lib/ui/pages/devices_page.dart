@@ -13,6 +13,19 @@ class DevicesPageState extends State<DevicesPage> {
   BluetoothDevice? selectedDevice;
   FlutterBluePlus flutterBlue = FlutterBluePlus.instance;
 
+  StreamSubscription? isScanningStream;
+  StreamSubscription? scanResultStream;
+  StreamSubscription? bluetoothStateStream;
+
+  @override
+  void dispose() {
+    flutterBlue.stopScan();
+    isScanningStream?.cancel();
+    scanResultStream?.cancel();
+    bluetoothStateStream?.cancel();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;
@@ -265,17 +278,31 @@ class DevicesPageState extends State<DevicesPage> {
                     ],
                   ),
                   onTap: () async {
-                    if (device.status != DeviceStatus.connected)
-                      await showConnectionDialog(
-                        context,
-                        CurrentStep.scan,
-                        device,
-                        setState,
-                        selected,
-                        selectedDevice,
+                    if (device.status != DeviceStatus.connected) {
+                      // start scanning for BTLE devices
+                      bool isScanning = false;
+
+                      isScanningStream = flutterBlue.isScanning.listen(
+                        (scanBool) {
+                          isScanning = scanBool;
+                        },
                       );
-                    // when the modal dialog is closed, stop the scan
-                    flutterBlue.stopScan();
+                      bluetoothStateStream = flutterBlue.state.listen((state) {
+                        if (state == BluetoothState.on && !isScanning) {
+                          flutterBlue.startScan();
+                          isScanning = true;
+                        } else {
+                          // instantly start and stop a scan to turn on the BT adapter
+                          flutterBlue.startScan();
+                          flutterBlue.stopScan();
+                        }
+                      });
+
+                      await showConnectionDialog(context, CurrentStep.scan,
+                          device, setState, selected, selectedDevice);
+
+                      flutterBlue.stopScan();
+                    }
                   }),
             ],
           ),
@@ -335,10 +362,6 @@ class DevicesPageState extends State<DevicesPage> {
     BluetoothDevice? selectedDevice,
   ) async {
     RPLocalizations locale = RPLocalizations.of(context)!;
-
-    // start scanning for BTLE devices
-    flutterBlue.startScan();
-
     return showDialog(
       context: context,
       barrierDismissible: true,
@@ -346,167 +369,177 @@ class DevicesPageState extends State<DevicesPage> {
         return StatefulBuilder(
           builder: (context, setState) {
             return AlertDialog(
-                scrollable: true,
-                titlePadding: EdgeInsets.symmetric(vertical: 5),
-                insetPadding:
-                    EdgeInsets.symmetric(vertical: 24, horizontal: 40),
-                title: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
+              scrollable: true,
+              titlePadding: EdgeInsets.symmetric(vertical: 5),
+              insetPadding: EdgeInsets.symmetric(vertical: 24, horizontal: 40),
+              title: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      IconButton(
+                          onPressed: () => Navigator.of(context).pop(),
+                          icon: Icon(Icons.close),
+                          padding: EdgeInsets.only(right: 10)),
+                    ],
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(left: 25, right: 25, bottom: 10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        IconButton(
-                            onPressed: () => Navigator.of(context).pop(),
-                            icon: Icon(Icons.close),
-                            padding: EdgeInsets.only(right: 10)),
+                        stepTitle(currentStep, device, context),
                       ],
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(left: 25, right: 25, bottom: 10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                  ),
+                ],
+              ),
+              content: Container(
+                height: MediaQuery.of(context).size.height * 0.6,
+                child: currentStep == CurrentStep.scan
+                    ? Column(
                         children: [
-                          stepTitle(currentStep, device, context),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                content: Container(
-                  height: MediaQuery.of(context).size.height * 0.6,
-                  child: currentStep == CurrentStep.scan
-                      ? Column(
-                          children: [
-                            Text(
-                              locale.translate(
-                                      "pages.devices.connection.step.start.1") +
-                                  " " +
-                                  locale.translate(device.name!) +
-                                  " " +
-                                  locale.translate(
-                                      "pages.devices.connection.step.start.2"),
-                              style: aboutCardContentStyle,
-                              textAlign: TextAlign.justify,
-                            ),
-                            Expanded(
-                              child: StreamBuilder<List<ScanResult>>(
-                                stream: flutterBlue.scanResults,
-                                initialData: [],
-                                builder: (context, snapshot) =>
-                                    SingleChildScrollView(
-                                  child: Column(
-                                      children: snapshot.data!
-                                          .where((element) =>
-                                              element.device.name.isNotEmpty)
-                                          .toList()
-                                          .asMap()
-                                          .entries
-                                          .map(
-                                            (bluetoothDevice) => ListTile(
-                                              selected: bluetoothDevice.key ==
-                                                  selected,
-                                              title: Text(bluetoothDevice
-                                                  .value.device.name),
-                                              onTap: () {
-                                                selectedDevice = bluetoothDevice
-                                                    .value.device;
-                                                setState(() => selected =
-                                                    bluetoothDevice.key);
-                                              },
-                                            ),
-                                          )
-                                          .toList()),
+                          Text(
+                            locale.translate(
+                                    "pages.devices.connection.step.start.1") +
+                                " " +
+                                locale.translate(device.name!) +
+                                " " +
+                                locale.translate(
+                                    "pages.devices.connection.step.start.2"),
+                            style: aboutCardContentStyle,
+                            textAlign: TextAlign.justify,
+                          ),
+                          Expanded(
+                            child: StreamBuilder<List<ScanResult>>(
+                              stream: flutterBlue.scanResults,
+                              initialData: [],
+                              builder: (context, snapshot) =>
+                                  SingleChildScrollView(
+                                child: Column(
+                                  children: snapshot.data!
+                                      .where((element) =>
+                                          element.device.name.isNotEmpty)
+                                      .toList()
+                                      .asMap()
+                                      .entries
+                                      .map(
+                                        (bluetoothDevice) => ListTile(
+                                          selected:
+                                              bluetoothDevice.key == selected,
+                                          title: Text(bluetoothDevice
+                                              .value.device.name),
+                                          onTap: () {
+                                            selectedDevice =
+                                                bluetoothDevice.value.device;
+                                            setState(() =>
+                                                selected = bluetoothDevice.key);
+                                          },
+                                        ),
+                                      )
+                                      .toList(),
                                 ),
                               ),
                             ),
-                            Text(
-                              locale.translate(
-                                      "pages.devices.connection.step.start.3") +
-                                  " " +
-                                  locale.translate(device.name!) +
-                                  "  " +
-                                  locale.translate(
-                                      "pages.devices.connection.step.start.4") +
-                                  " " +
-                                  locale.translate(device.name!) +
-                                  " " +
-                                  locale.translate(
-                                      "pages.devices.connection.step.start.5"),
-                              style: aboutCardContentStyle,
-                              textAlign: TextAlign.justify,
-                            )
-                          ],
-                        )
-                      : stepContent(
-                          currentStep,
-                          device,
-                          selectedDevice,
-                          context,
+                          ),
+                          Text(
+                            locale.translate(
+                                    "pages.devices.connection.step.start.3") +
+                                " " +
+                                locale.translate(device.name!) +
+                                "  " +
+                                locale.translate(
+                                    "pages.devices.connection.step.start.4") +
+                                " " +
+                                locale.translate(device.name!) +
+                                " " +
+                                locale.translate(
+                                    "pages.devices.connection.step.start.5"),
+                            style: aboutCardContentStyle,
+                            textAlign: TextAlign.justify,
+                          )
+                        ],
+                      )
+                    : stepContent(
+                        currentStep,
+                        device,
+                        selectedDevice,
+                        context,
+                      ),
+              ),
+              contentPadding: EdgeInsets.symmetric(horizontal: 25),
+              actions: currentStep == CurrentStep.scan
+                  ? [
+                      TextButton(
+                        child: Text(locale
+                            .translate("pages.devices.connection.instructions")
+                            .toUpperCase()),
+                        onPressed: () => setState(
+                          () {
+                            currentStep = CurrentStep.instructions;
+                          },
                         ),
-                ),
-                contentPadding: EdgeInsets.symmetric(horizontal: 25),
-                actions: currentStep == CurrentStep.scan
-                    ? [
-                        TextButton(
+                      ),
+                      TextButton(
+                        child: Text(locale
+                            .translate("pages.devices.connection.next")
+                            .toUpperCase()),
+                        onPressed: () {
+                          if (selectedDevice != null) {
+                            setState(
+                              () {
+                                currentStep = CurrentStep.done;
+                              },
+                            );
+                          }
+                        },
+                      ),
+                    ]
+                  : currentStep == CurrentStep.instructions
+                      ? [
+                          TextButton(
                             child: Text(locale
-                                .translate(
-                                    "pages.devices.connection.instructions")
+                                .translate("pages.devices.connection.settings")
                                 .toUpperCase()),
-                            onPressed: () => setState(() {
-                                  currentStep = CurrentStep.instructions;
-                                })),
-                        TextButton(
+                            onPressed: () =>
+                                OpenSettings.openBluetoothSetting(),
+                          ),
+                          TextButton(
                             child: Text(locale
-                                .translate("pages.devices.connection.next")
+                                .translate("pages.devices.connection.ok")
+                                .toUpperCase()),
+                            onPressed: () => setState(
+                              () {
+                                currentStep = CurrentStep.scan;
+                              },
+                            ),
+                          ),
+                        ]
+                      : [
+                          TextButton(
+                              child: Text(locale
+                                  .translate("pages.devices.connection.back")
+                                  .toUpperCase()),
+                              onPressed: () => setState(() {
+                                    currentStep = CurrentStep.scan;
+                                  })),
+                          TextButton(
+                            child: Text(locale
+                                .translate("pages.devices.connection.done")
                                 .toUpperCase()),
                             onPressed: () {
+                              flutterBlue.stopScan();
                               if (selectedDevice != null) {
-                                setState(() {
-                                  currentStep = CurrentStep.done;
-                                });
+                                bloc.connectToDevice(
+                                  selectedDevice!,
+                                  device.deviceManager,
+                                );
+                                Navigator.of(context).pop();
                               }
-                            }),
-                      ]
-                    : currentStep == CurrentStep.instructions
-                        ? [
-                            TextButton(
-                                child: Text(locale
-                                    .translate(
-                                        "pages.devices.connection.settings")
-                                    .toUpperCase()),
-                                onPressed: () =>
-                                    OpenSettings.openBluetoothSetting()),
-                            TextButton(
-                                child: Text(locale
-                                    .translate("pages.devices.connection.ok")
-                                    .toUpperCase()),
-                                onPressed: () => setState(() {
-                                      currentStep = CurrentStep.scan;
-                                    })),
-                          ]
-                        : [
-                            TextButton(
-                                child: Text(locale
-                                    .translate("pages.devices.connection.back")
-                                    .toUpperCase()),
-                                onPressed: () => setState(() {
-                                      currentStep = CurrentStep.scan;
-                                    })),
-                            TextButton(
-                                child: Text(locale
-                                    .translate("pages.devices.connection.done")
-                                    .toUpperCase()),
-                                onPressed: () {
-                                  flutterBlue.stopScan();
-                                  if (selectedDevice != null) {
-                                    bloc.connectToDevice(
-                                      selectedDevice!,
-                                      device.deviceManager,
-                                    );
-                                    Navigator.of(context).pop();
-                                  }
-                                }),
-                          ]);
+                            },
+                          ),
+                        ],
+            );
           },
         );
       },

@@ -5,14 +5,14 @@ class StudyProgressCardWidget extends StatefulWidget {
 
   final List<Color> colors;
   const StudyProgressCardWidget(this.model,
-      {this.colors = const [CACHET.BLUE_1, CACHET.BLUE_3, CACHET.RED_1]});
+      {super.key, this.colors = const [CACHET.BLUE_1, CACHET.BLUE_3, CACHET.RED_1]});
 
   @override
-  _StudyProgressCardWidgetState createState() =>
-      _StudyProgressCardWidgetState();
+  StudyProgressCardWidgetState createState() =>
+      StudyProgressCardWidgetState();
 }
 
-class _StudyProgressCardWidgetState extends State<StudyProgressCardWidget> {
+class StudyProgressCardWidgetState extends State<StudyProgressCardWidget> {
   @override
   Widget build(BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;

@@ -9,6 +9,7 @@ class HorizontalBar extends StatelessWidget {
   final LabelOrientation? labelOrientation;
 
   const HorizontalBar({
+    super.key,
     this.names,
     this.values,
     this.colors,
@@ -151,23 +152,21 @@ class MyAssetsBar extends StatelessWidget {
             .entries
             .map(
               (entry) => Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 10),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 3, horizontal: 10),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Icon(Icons.circle, color: entry.value.color, size: 12.0),
-                      Text(
-                          ' ${entry.value.name!} ${entry.value.size}',
-                          style: legendStyle,
-                          textAlign: TextAlign.right),
+                      Text(' ${entry.value.name!} ${entry.value.size}',
+                          style: legendStyle, textAlign: TextAlign.right),
                     ],
                   )),
             )
             .toList(),
       );
     } else {
-      return Container(
-          child: GridView.count(
+      return GridView.count(
         shrinkWrap: true,
         primary: true,
         physics: const ClampingScrollPhysics(),
@@ -178,27 +177,28 @@ class MyAssetsBar extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 0),
         childAspectRatio: 8,
         children: assets
-            .asMap()
-            .entries
-            .map(
-              (entry) => Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 5),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Icon(Icons.circle, color: entry.value.color, size: 12.0),
-                      Text(' ${entry.value.size}',
-                          style: legendStyle, textAlign: TextAlign.left),
-                      Expanded(
-                          child: Text(' ${entry.value.name!}',
-                              style: legendStyle,
-                              textAlign: TextAlign.left,
-                              overflow: TextOverflow.ellipsis)),
-                    ],
-                  )),
-            )
-            .toList(),
-      ));
+        .asMap()
+        .entries
+        .map(
+          (entry) => Padding(
+              padding:
+                  const EdgeInsets.symmetric(vertical: 3, horizontal: 5),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Icon(Icons.circle, color: entry.value.color, size: 12.0),
+                  Text(' ${entry.value.size}',
+                      style: legendStyle, textAlign: TextAlign.left),
+                  Expanded(
+                      child: Text(' ${entry.value.name!}',
+                          style: legendStyle,
+                          textAlign: TextAlign.left,
+                          overflow: TextOverflow.ellipsis)),
+                ],
+              )),
+        )
+        .toList(),
+      );
     }
   }
 

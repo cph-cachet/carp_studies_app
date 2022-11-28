@@ -51,7 +51,6 @@ class AudioTaskPageState extends State<AudioTaskPage> {
               color: Theme.of(context).primaryColor, size: 30),
           tooltip: locale.translate('Help'),
           onPressed: () {
-            print("Help");
             // TODO: show help
           },
         ),

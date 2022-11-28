@@ -8,7 +8,7 @@ class TaskCardWidget extends StatefulWidget {
   final List<Color> colors;
   final TaskCardChartType chartType;
   const TaskCardWidget(
-    this.model, {
+    this.model, {super.key,
     this.colors = CACHET.COLOR_LIST,
     this.chartType = TaskCardChartType.horisontal,
   });

@@ -21,9 +21,9 @@ class CarpStudyAppState extends State<CarpStudyApp> {
   }
 
   final LoadingPage loadingPage = const LoadingPage();
-  final HomePage homePage = HomePage();
-  final InformedConsentPage consentPage = InformedConsentPage();
-  final FailedLoginPage failedLoginPage = FailedLoginPage();
+  final HomePage homePage = const HomePage();
+  final InformedConsentPage consentPage = const InformedConsentPage();
+  final FailedLoginPage failedLoginPage = const FailedLoginPage();
 
   /// Research Package translations, incl. both local language assets plus
   /// translations of informed consent and surveys downloaded from CARP

@@ -1486,7 +1486,7 @@ class _ExposureSurvey implements Survey {
   Duration get expire => const Duration(days: 1);
 
   @override
-  int get minutesToComplete => 10; // TODO: review time
+  int get minutesToComplete => 10;
 
   RPChoiceAnswerFormat choiceAnswerFormat1 = RPChoiceAnswerFormat(
       answerStyle: RPChoiceAnswerStyle.SingleChoice,
@@ -1580,7 +1580,6 @@ class _ExposureSurvey implements Survey {
           answerFormat: choiceAnswerFormat3,
         ),
 
-        // TODO: if previous question is no skip
         RPQuestionStep(
           identifier: "survey.exposure.question.4.id",
           title: "survey.exposure.question.4.text",
@@ -1601,7 +1600,6 @@ class _ExposureSurvey implements Survey {
           answerFormat: choiceAnswerFormat3,
         ),
 
-        // TODO: if previous question is no skip
         RPQuestionStep(
           identifier: "survey.exposure.question.7.id",
           title: "survey.exposure.question.7.text",
@@ -1628,7 +1626,6 @@ class _ExposureSurvey implements Survey {
             imagePath: 'assets/images/timer_task.png',
             text: "survey.exposure.instruction.3.text"),
 
-        // TODO: TIMER STEP IN BETWEEN ALL OF THE FOLLOWING QUESTIONS
         RPQuestionStep(
           identifier: "survey.exposure.question.10.id",
           title: "survey.exposure.question.10.text",
@@ -1734,7 +1731,7 @@ class _ExposureOldSurvey implements Survey {
       choices: [
         RPChoice(
             text: "Denne eksponeringsopgave handler ikke om en tvangstanke",
-            value: 0), // TODO: if 0 is selected, no other option is available
+            value: 0),
         RPChoice(
             text: "Forurening/kontaminering (snavs, bakterier, sygdomme)",
             value: 1),
@@ -1770,7 +1767,7 @@ class _ExposureOldSurvey implements Survey {
             text:
                 "Ubehagelig fornemmelse af, at det ikke føles rigtigt, føles ufuldstændigt eller tomhedsfornemmelse, når ritualer ikke udføres på en bestemt måde",
             value: 15),
-        RPChoice(text: "Andet", value: 16), // TODO: textbox to describe
+        RPChoice(text: "Andet", value: 16),
       ]);
 
   RPChoiceAnswerFormat choiceAnswerFormat3 = RPChoiceAnswerFormat(
@@ -1778,7 +1775,7 @@ class _ExposureOldSurvey implements Survey {
       choices: [
         RPChoice(
             text: "Denne eksponeringsopgave handler ikke om en tvangstanke",
-            value: 0), // TODO: if 0 is selected, no other option is available
+            value: 0),
         RPChoice(text: "Renlighed eller rengøring", value: 1),
         RPChoice(text: "Kontrollere eller tjekke", value: 2),
         RPChoice(text: "Gentage", value: 3),
@@ -1805,7 +1802,7 @@ class _ExposureOldSurvey implements Survey {
         RPChoice(text: "Trække hår ud", value: 16),
         RPChoice(
             text: "Anden selvskadende eller selvdestruktiv adfærd", value: 17),
-        RPChoice(text: "Andet", value: 18), // TODO: textbox to describe
+        RPChoice(text: "Andet", value: 18),
       ]);
 
   RPChoiceAnswerFormat choiceAnswerFormat6 = RPChoiceAnswerFormat(

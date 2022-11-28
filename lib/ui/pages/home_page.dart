@@ -1,10 +1,9 @@
 part of carp_study_app;
 
 class HomePage extends StatefulWidget {
-  final HomePageState state = HomePageState();
-  HomePage({super.key});
+  const HomePage({super.key});
   @override
-  HomePageState createState() => state;
+  HomePageState createState() => HomePageState();
 }
 
 class HomePageState extends State<HomePage> {
@@ -22,7 +21,7 @@ class HomePageState extends State<HomePage> {
     _pages.add(TaskListPage(bloc.data.taskListPageViewModel));
     _pages.add(StudyPage(bloc.data.studyPageViewModel));
     _pages.add(DataVisualizationPage(bloc.data.dataVisualizationPageViewModel));
-    _pages.add(DevicesPage());
+    _pages.add(const DevicesPage());
   }
 
   @override

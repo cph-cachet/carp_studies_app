@@ -20,7 +20,8 @@ class ProcessMessagePage extends StatelessWidget {
   final bool canCancel;
 
   const ProcessMessagePage(
-      {required this.statusType,
+      {super.key,
+      required this.statusType,
       required this.title,
       required this.description,
       required this.actionFunction,
@@ -65,11 +66,10 @@ class ProcessMessagePage extends StatelessWidget {
                 messageImage(),
                 const SizedBox(height: 20),
                 Center(
-                    child: Text(locale.translate(title),
-                        style: audioTitleStyle)),
+                    child:
+                        Text(locale.translate(title), style: audioTitleStyle)),
                 const SizedBox(height: 10),
-                Text(locale.translate(description),
-                    style: audioContentStyle),
+                Text(locale.translate(description), style: audioContentStyle),
               ]),
         ),
         bottomSheet: Row(

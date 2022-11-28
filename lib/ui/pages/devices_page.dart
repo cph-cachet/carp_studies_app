@@ -4,6 +4,8 @@ part of carp_study_app;
 enum CurrentStep { scan, instructions, done }
 
 class DevicesPage extends StatefulWidget {
+  const DevicesPage({super.key});
+
   @override
   DevicesPageState createState() => DevicesPageState();
 }
@@ -35,7 +37,7 @@ class DevicesPageState extends State<DevicesPage> {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          CarpAppBar(),
+          const CarpAppBar(),
           Container(
             color: Theme.of(context).colorScheme.secondary,
             child: Padding(

@@ -3,55 +3,53 @@ part of carp_study_app;
 // todo change text for survey progress
 class DataVisualizationPage extends StatelessWidget {
   final DataVisualizationPageViewModel model;
-  const DataVisualizationPage(this.model);
+  const DataVisualizationPage(this.model, {super.key});
 
   @override
   Widget build(BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;
 
     return Scaffold(
-      body: Container(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            CarpAppBar(),
-            Container(
-              color: Theme.of(context).colorScheme.secondary,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        '${locale.translate('pages.data_viz.hello')} ${bloc.friendlyUsername}'
-                            .toUpperCase(),
-                        style: dataCardTitleStyle.copyWith(
-                            color: Theme.of(context).primaryColor),
-                      ),
-                      Text(locale.translate('pages.data_viz.thanks'),
-                          style: aboutCardSubtitleStyle),
-                      const SizedBox(height: 15),
-                    ],
-                  ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          const CarpAppBar(),
+          Container(
+            color: Theme.of(context).colorScheme.secondary,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '${locale.translate('pages.data_viz.hello')} ${bloc.friendlyUsername}'
+                          .toUpperCase(),
+                      style: dataCardTitleStyle.copyWith(
+                          color: Theme.of(context).primaryColor),
+                    ),
+                    Text(locale.translate('pages.data_viz.thanks'),
+                        style: aboutCardSubtitleStyle),
+                    const SizedBox(height: 15),
+                  ],
                 ),
               ),
             ),
-            Expanded(
-              flex: 4,
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: _dataVizCards,
-                ),
+          ),
+          Expanded(
+            flex: 4,
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: _dataVizCards,
               ),
-            )
-          ],
-        ),
+            ),
+          )
+        ],
       ),
     );
   }

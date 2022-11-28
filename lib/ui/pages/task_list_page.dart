@@ -2,7 +2,7 @@ part of carp_study_app;
 
 class TaskListPage extends StatefulWidget {
   final TaskListPageViewModel model;
-  const TaskListPage(this.model);
+  const TaskListPage(this.model, {super.key});
 
   @override
   TaskListPageState createState() => TaskListPageState();
@@ -17,7 +17,7 @@ class TaskListPageState extends State<TaskListPage> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          CarpAppBar(),
+          const CarpAppBar(),
           // _scoreBoard(),
           // SizedBox(height: 15),
 

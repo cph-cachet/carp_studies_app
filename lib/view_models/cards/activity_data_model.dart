@@ -15,8 +15,8 @@ class ActivityCardViewModel extends SerializableViewModel<WeeklyActivities> {
       controller?.data.where((dataPoint) => dataPoint.data is ActivityDatum);
 
   @override
-  void init(SmartphoneDeploymentController controller) {
-    super.init(controller);
+  void init(SmartphoneDeploymentController ctrl) {
+    super.init(ctrl);
 
     // listen for activity events and count the minutes
     activityEvents?.listen((activityDataPoint) {

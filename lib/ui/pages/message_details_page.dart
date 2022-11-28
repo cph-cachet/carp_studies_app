@@ -5,6 +5,7 @@ class MessageDetailsPage extends StatelessWidget {
   final Image messageImage;
 
   const MessageDetailsPage({
+    super.key,
     required this.message,
     required this.messageImage,
   });
@@ -37,21 +38,14 @@ class MessageDetailsPage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                                '${locale.translate(message.type.toString().split('.').last.toLowerCase())} - ${timeago.format(
-                                        DateTime.now().copyWithAdditional(
-                                            years: -DateTime.now().year + message.timestamp.year,
-                                            months: -DateTime.now().month + message.timestamp.month,
-                                            days: -DateTime.now().day + message.timestamp.day,
-                                            hours: -DateTime.now().hour + message.timestamp.hour,
-                                            minutes: -DateTime.now().minute + message.timestamp.minute),
-                                        locale: Localizations.localeOf(context).languageCode)}',
-                                style:
-                                    aboutCardSubtitleStyle.copyWith(color: Theme.of(context).primaryColor)),
+                                '${locale.translate(message.type.toString().split('.').last.toLowerCase())} - ${timeago.format(DateTime.now().copyWithAdditional(years: -DateTime.now().year + message.timestamp.year, months: -DateTime.now().month + message.timestamp.month, days: -DateTime.now().day + message.timestamp.day, hours: -DateTime.now().hour + message.timestamp.hour, minutes: -DateTime.now().minute + message.timestamp.minute), locale: Localizations.localeOf(context).languageCode)}',
+                                style: aboutCardSubtitleStyle.copyWith(
+                                    color: Theme.of(context).primaryColor)),
                             const SizedBox(height: 5),
                             message.subTitle != null
                                 ? Text(locale.translate(message.subTitle!),
-                                    style:
-                                        aboutCardContentStyle.copyWith(color: Theme.of(context).primaryColor))
+                                    style: aboutCardContentStyle.copyWith(
+                                        color: Theme.of(context).primaryColor))
                                 : const SizedBox.shrink(),
                             const SizedBox(height: 5),
                             message.message != null
@@ -78,16 +72,19 @@ class MessageDetailsPage extends StatelessWidget {
                             try {
                               await launchUrl(Uri.parse(message.url!));
                             } catch (error) {
-                              warning("Could not launch message URL - '${message.url!}'");
+                              warning(
+                                  "Could not launch message URL - '${message.url!}'");
                             }
                           },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(Icons.public_outlined, color: Theme.of(context).primaryColor),
-                              Text(locale.translate('pages.about.study.website'),
-                                  style:
-                                      aboutCardSubtitleStyle.copyWith(color: Theme.of(context).primaryColor)),
+                              Icon(Icons.public_outlined,
+                                  color: Theme.of(context).primaryColor),
+                              Text(
+                                  locale.translate('pages.about.study.website'),
+                                  style: aboutCardSubtitleStyle.copyWith(
+                                      color: Theme.of(context).primaryColor)),
                             ],
                           ),
                         ),

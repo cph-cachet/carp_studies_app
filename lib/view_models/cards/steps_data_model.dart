@@ -17,8 +17,8 @@ class StepsCardViewModel extends SerializableViewModel<WeeklySteps> {
       controller?.data.where((dataPoint) => dataPoint.data is PedometerDatum);
 
   @override
-  void init(SmartphoneDeploymentController controller) {
-    super.init(controller);
+  void init(SmartphoneDeploymentController ctrl) {
+    super.init(ctrl);
 
     // listen for pedometer events and count them
     pedometerEvents?.listen((pedometerDataPoint) {

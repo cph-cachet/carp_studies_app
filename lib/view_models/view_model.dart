@@ -43,8 +43,8 @@ abstract class SerializableViewModel<D extends DataModel> extends ViewModel {
 
   @override
   @mustCallSuper
-  void init(SmartphoneDeploymentController controller) {
-    super.init(controller);
+  void init(SmartphoneDeploymentController ctrl) {
+    super.init(ctrl);
     _model = createModel();
 
     // restore the data model (if any saved)
@@ -132,12 +132,12 @@ class CarpStydyAppViewModel extends ViewModel {
   DevicesPageViewModel get devicesPageViewModel => _devicesPageViewModel;
 
   @override
-  void init(SmartphoneDeploymentController controller) {
-    super.init(controller);
-    _dataVisualizationPageViewModel.init(controller);
-    _studyPageViewModel.init(controller);
-    _taskListPageViewModel.init(controller);
-    _profilePageViewModel.init(controller);
-    _devicesPageViewModel.init(controller);
+  void init(SmartphoneDeploymentController ctrl) {
+    super.init(ctrl);
+    _dataVisualizationPageViewModel.init(ctrl);
+    _studyPageViewModel.init(ctrl);
+    _taskListPageViewModel.init(ctrl);
+    _profilePageViewModel.init(ctrl);
+    _devicesPageViewModel.init(ctrl);
   }
 }

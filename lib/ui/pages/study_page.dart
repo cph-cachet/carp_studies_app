@@ -2,7 +2,7 @@ part of carp_study_app;
 
 class StudyPage extends StatefulWidget {
   final StudyPageViewModel model;
-  const StudyPage(this.model);
+  const StudyPage(this.model, {super.key});
 
   @override
   StudyPageState createState() => StudyPageState();
@@ -12,35 +12,33 @@ class StudyPageState extends State<StudyPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            CarpAppBar(),
-            Flexible(
-              child: StreamBuilder<int>(
-                  stream: widget.model.messageStream,
-                  builder: (context, AsyncSnapshot<int> snapshot) {
-                    return CustomScrollView(
-                      slivers: [
-                        DetailsBanner(
-                            widget.model.title, './assets/images/kids.png',
-                            isCarpBanner: true),
-                        SliverList(
-                          delegate: SliverChildBuilderDelegate(
-                            (BuildContext context, int index) =>
-                                _aboutStudyCard(
-                                    context, widget.model.messages[index]),
-                            childCount: widget.model.messages.length,
-                          ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const CarpAppBar(),
+          Flexible(
+            child: StreamBuilder<int>(
+                stream: widget.model.messageStream,
+                builder: (context, AsyncSnapshot<int> snapshot) {
+                  return CustomScrollView(
+                    slivers: [
+                      DetailsBanner(
+                          widget.model.title, './assets/images/kids.png',
+                          isCarpBanner: true),
+                      SliverList(
+                        delegate: SliverChildBuilderDelegate(
+                          (BuildContext context, int index) =>
+                              _aboutStudyCard(
+                                  context, widget.model.messages[index]),
+                          childCount: widget.model.messages.length,
                         ),
-                      ],
-                    );
-                  }),
-            ),
-          ],
-        ),
+                      ),
+                    ],
+                  );
+                }),
+          ),
+        ],
       ),
     );
   }

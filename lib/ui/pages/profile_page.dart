@@ -2,7 +2,7 @@ part of carp_study_app;
 
 class ProfilePage extends StatefulWidget {
   final ProfilePageViewModel model;
-  const ProfilePage(this.model);
+  const ProfilePage(this.model, {super.key});
 
   @override
   ProfilePageState createState() => ProfilePageState();

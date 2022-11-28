@@ -17,8 +17,8 @@ class MobilityCardViewModel extends SerializableViewModel<WeeklyMobility> {
 
   MobilityCardViewModel();
   @override
-  void init(SmartphoneDeploymentController controller) {
-    super.init(controller);
+  void init(SmartphoneDeploymentController ctrl) {
+    super.init(ctrl);
 
     // listen for mobility events and update the features
     mobilityEvents?.listen((mobilityDataPoint) {

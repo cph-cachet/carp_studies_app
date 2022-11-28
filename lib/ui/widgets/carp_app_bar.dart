@@ -1,6 +1,8 @@
 part of carp_study_app;
 
 class CarpAppBar extends StatelessWidget {
+  const CarpAppBar({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(

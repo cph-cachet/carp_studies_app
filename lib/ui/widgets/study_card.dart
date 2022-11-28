@@ -3,6 +3,8 @@ part of carp_study_app;
 class StudyCard extends StatelessWidget {
   final StudyPageViewModel studyPageModel = StudyPageViewModel();
 
+  StudyCard({super.key});
+
   @override
   Widget build(BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;

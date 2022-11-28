@@ -1,9 +1,9 @@
 part of carp_study_app;
 
 class FailedLoginPage extends StatefulWidget {
-  final FailedLoginPageState state = FailedLoginPageState();
+  const FailedLoginPage({super.key});
   @override
-  FailedLoginPageState createState() => state;
+  FailedLoginPageState createState() => FailedLoginPageState();
 }
 
 class FailedLoginPageState extends State<FailedLoginPage> {
@@ -39,7 +39,7 @@ class FailedLoginPageState extends State<FailedLoginPage> {
               ),
             ],
           ),
-          TextButton(onPressed: () => print("go back"), child: const Text('Back'))
+          const Text('Back')
         ],
       ),
     );

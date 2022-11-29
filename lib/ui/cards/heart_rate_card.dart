@@ -104,10 +104,8 @@ class _HeartRateCardWidgetState extends State<HeartRateCardWidget>
           margin: EdgeInsets.only(left: 8, right: 2),
           child: Text(
             '${(widget.model.dayMinMax.min ?? 0).toInt()} - ${(widget.model.dayMinMax.max ?? 0).toInt()}',
-            style: TextStyle(
+            style: hrVisualisationTextStyle(
               fontSize: 40,
-              fontFamily: 'Barlow',
-              fontWeight: FontWeight.w600,
             ),
           ),
         ),
@@ -115,15 +113,23 @@ class _HeartRateCardWidgetState extends State<HeartRateCardWidget>
           padding: const EdgeInsets.only(bottom: 4.0),
           child: Text(
             locale.translate('cards.heartrate.bpm'),
-            style: TextStyle(
-              fontSize: 20,
-              fontFamily: 'Barlow',
-              fontWeight: FontWeight.w600,
+            style: hrVisualisationTextStyle(
               color: Colors.grey.withOpacity(0.8),
+              fontSize: 20,
             ),
           ),
         ),
       ],
+    );
+  }
+
+  TextStyle hrVisualisationTextStyle(
+      {double? fontSize, Color? color, List<ui.FontFeature>? fontFeatures}) {
+    return GoogleFonts.barlow(
+      fontSize: fontSize,
+      fontWeight: FontWeight.w600,
+      color: color,
+      fontFeatures: fontFeatures,
     );
   }
 
@@ -132,14 +138,9 @@ class _HeartRateCardWidgetState extends State<HeartRateCardWidget>
 
     var currentHeartRate = widget.model.currentHeartRate;
 
-    var heartRateTextStyle = TextStyle(
+    var heartRateTextStyle = hrVisualisationTextStyle(
       fontSize: 80,
-      fontFamily: 'Barlow',
-      fontWeight: FontWeight.w600,
-      fontFamilyFallback: ['Roboto'],
-      fontFeatures: [
-        ui.FontFeature.tabularFigures(),
-      ],
+      fontFeatures: [ui.FontFeature.tabularFigures()],
     );
 
     return Stack(
@@ -184,12 +185,8 @@ class _HeartRateCardWidgetState extends State<HeartRateCardWidget>
                     ),
                     Text(
                       locale.translate('cards.heartrate.bpm'),
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'Barlow',
-                        color: HeartRateCardWidget.colors[0],
-                      ),
+                      style: hrVisualisationTextStyle(
+                          fontSize: 20, color: HeartRateCardWidget.colors[0]),
                     ),
                   ],
                 ),
@@ -248,9 +245,7 @@ class _HeartRateCardWidgetState extends State<HeartRateCardWidget>
                     ),
                   ),
                 ],
-                const TextStyle(
-                  fontFamily: 'Barlow',
-                  fontWeight: FontWeight.bold,
+                hrVisualisationTextStyle(
                   fontSize: 20,
                 ),
               );
@@ -349,10 +344,9 @@ class _HeartRateCardWidgetState extends State<HeartRateCardWidget>
 
   Widget rightTitles(double value, TitleMeta meta) {
     final text = value.toInt().toString();
-    var style = TextStyle(
+    var style = hrVisualisationTextStyle(
       color: Colors.grey.withOpacity(0.6),
       fontSize: 14,
-      fontWeight: FontWeight.bold,
     );
     return SideTitleWidget(
       axisSide: AxisSide.right,

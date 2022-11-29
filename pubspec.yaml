@@ -43,6 +43,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   fl_chart: ^0.55.2
+  google_fonts: ^3.0.1
 
 dependency_overrides:
   carp_core:
@@ -159,28 +160,6 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  fonts:
-    - family: Barlow
-      fonts:
-        - asset: assets/fonts/Barlow/Barlow-Black.ttf
-        - asset: assets/fonts/Barlow/Barlow-BlackItalic.ttf
-        - asset: assets/fonts/Barlow/Barlow-Bold.ttf
-        - asset: assets/fonts/Barlow/Barlow-BoldItalic.ttf
-        - asset: assets/fonts/Barlow/Barlow-ExtraBold.ttf
-        - asset: assets/fonts/Barlow/Barlow-ExtraBoldItalic.ttf
-        - asset: assets/fonts/Barlow/Barlow-ExtraLight.ttf
-        - asset: assets/fonts/Barlow/Barlow-ExtraLightItalic.ttf
-        - asset: assets/fonts/Barlow/Barlow-Italic.ttf
-        - asset: assets/fonts/Barlow/Barlow-Light.ttf
-        - asset: assets/fonts/Barlow/Barlow-LightItalic.ttf
-        - asset: assets/fonts/Barlow/Barlow-Medium.ttf
-        - asset: assets/fonts/Barlow/Barlow-MediumItalic.ttf
-        - asset: assets/fonts/Barlow/Barlow-Regular.ttf
-        - asset: assets/fonts/Barlow/Barlow-SemiBold.ttf
-        - asset: assets/fonts/Barlow/Barlow-SemiBoldItalic.ttf
-        - asset: assets/fonts/Barlow/Barlow-Thin.ttf
-        - asset: assets/fonts/Barlow/Barlow-ThinItalic.ttf
-
   #   - family: Schyler
   #     fonts:
   #       - asset: fonts/Schyler-Regular.ttf

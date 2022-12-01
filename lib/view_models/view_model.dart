@@ -110,6 +110,7 @@ class DailyMeasure {
   DailyMeasure(this.weekday);
 
   /// Get the localilzed name of the [weekday].
+  @override
   String toString() => DateFormat('EEEE')
       .format(DateTime(2021, 2, 7).add(Duration(days: weekday)))
       .substring(0, 3);
@@ -123,6 +124,7 @@ class HourlyMeasure {
 
   HourlyMeasure(this.hour, this.minute);
 
+  @override
   String toString() => '$hour:$minute';
 }
 

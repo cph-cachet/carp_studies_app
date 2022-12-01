@@ -4,19 +4,19 @@ part of carp_study_app;
 class AppUserTaskFactory implements UserTaskFactory {
   @override
   List<String> types = [
-    AudioUserTask.AUDIO_TYPE,
-    VideoUserTask.VIDEO_TYPE,
-    VideoUserTask.IMAGE_TYPE,
+    AudioUserTask.audioType,
+    VideoUserTask.videoType,
+    VideoUserTask.imageType,
   ];
 
   @override
   UserTask create(AppTaskExecutor executor) {
     switch (executor.task.type) {
-      case AudioUserTask.AUDIO_TYPE:
+      case AudioUserTask.audioType:
         return AudioUserTask(executor);
-      case VideoUserTask.VIDEO_TYPE:
+      case VideoUserTask.videoType:
         return VideoUserTask(executor);
-      case VideoUserTask.IMAGE_TYPE:
+      case VideoUserTask.imageType:
         return VideoUserTask(executor);
       default:
         return BackgroundSensingUserTask(executor);
@@ -27,10 +27,11 @@ class AppUserTaskFactory implements UserTaskFactory {
 /// A user task handling audio recordings.
 /// When started, creates a [AudioTaskPage] and shows it to the user.
 class AudioUserTask extends UserTask {
-  static const String AUDIO_TYPE = 'audio';
+  static const String audioType = 'audio';
 
   late BuildContext _context;
-  final StreamController<int> _countDownController = StreamController.broadcast();
+  final StreamController<int> _countDownController =
+      StreamController.broadcast();
   Stream<int>? get countDownEvents => _countDownController.stream;
 
   /// Total duration of audio recording in seconds.
@@ -91,8 +92,8 @@ class AudioUserTask extends UserTask {
 /// A user task handling video and image recordings.
 /// When started, creates a [CameraTaskPage] and shows it to the user.
 class VideoUserTask extends UserTask {
-  static const String VIDEO_TYPE = 'video';
-  static const String IMAGE_TYPE = 'image';
+  static const String videoType = 'video';
+  static const String imageType = 'image';
 
   late BuildContext _context;
 

@@ -156,7 +156,8 @@ class TaskListPageState extends State<TaskListPage> {
       if (userTask.expiresIn!.isNegative) {
         userTask.onExpired(context);
       }
-      str += ' - ${userTask.expiresIn!.inDays + 1} ${locale.translate('pages.task_list.task.days_remaining')}';
+      str +=
+          ' - ${userTask.expiresIn!.inDays + 1} ${locale.translate('pages.task_list.task.days_remaining')}';
     }
     str += '';
 
@@ -254,15 +255,15 @@ class TaskListPageState extends State<TaskListPage> {
       Icons.face_retouching_natural,
       color: CACHET.RED_2,
     ),
-    AudioUserTask.AUDIO_TYPE: const Icon(
+    AudioUserTask.audioType: const Icon(
       Icons.record_voice_over,
       color: CACHET.GREEN,
     ),
-    VideoUserTask.VIDEO_TYPE: const Icon(
+    VideoUserTask.videoType: const Icon(
       Icons.videocam,
       color: CACHET.BLUE_1,
     ),
-    VideoUserTask.IMAGE_TYPE: const Icon(
+    VideoUserTask.imageType: const Icon(
       Icons.camera_alt,
       color: CACHET.YELLOW,
     ),
@@ -372,10 +373,13 @@ class TaskListPageState extends State<TaskListPage> {
   };
 
   static Map<UserTaskState, Icon> get taskStateIcon => {
-        UserTaskState.initialized: const Icon(Icons.stream, color: CACHET.YELLOW),
-        UserTaskState.enqueued: const Icon(Icons.notifications, color: CACHET.YELLOW),
+        UserTaskState.initialized:
+            const Icon(Icons.stream, color: CACHET.YELLOW),
+        UserTaskState.enqueued:
+            const Icon(Icons.notifications, color: CACHET.YELLOW),
         UserTaskState.dequeued: const Icon(Icons.stop, color: CACHET.YELLOW),
-        UserTaskState.started: const Icon(Icons.play_arrow, color: CACHET.GREY_4),
+        UserTaskState.started:
+            const Icon(Icons.play_arrow, color: CACHET.GREY_4),
         UserTaskState.canceled: const Icon(Icons.pause, color: CACHET.GREY_4),
         UserTaskState.done: const Icon(Icons.check, color: CACHET.GREEN),
       };

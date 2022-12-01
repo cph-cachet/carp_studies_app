@@ -190,7 +190,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
       _protocol!.addTriggeredTask(
           ElapsedTimeTrigger(elapsedTime: const Duration(seconds: 15)),
           AppTask(
-            type: AudioUserTask.AUDIO_TYPE,
+            type: AudioUserTask.audioType,
             title: "audio.exposure.title",
             description: "audio.exposure.description",
             instructions: "audio.exposure.instructions",
@@ -201,7 +201,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
       _protocol!.addTriggeredTask(
           ElapsedTimeTrigger(elapsedTime: const Duration(seconds: 15)),
           AppTask(
-            type: AudioUserTask.AUDIO_TYPE,
+            type: AudioUserTask.audioType,
             title: "audio.biosensor.title",
             description: "audio.biosensor.description",
             instructions: "audio.biosensor.instructions",
@@ -254,7 +254,8 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
       /// collect exposure exercises - triggers daily
       _protocol!.addTriggeredTask(
           RecurrentScheduledTrigger(
-              type: RecurrentType.daily, time: const TimeOfDay(hour: 6, minute: 00)),
+              type: RecurrentType.daily,
+              time: const TimeOfDay(hour: 6, minute: 00)),
           RPAppTask(
             type: SurveyUserTask.SURVEY_TYPE,
             title: surveys.exposure.title,
@@ -335,9 +336,10 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           //   recurrenceRule: RecurrenceRule(Frequency.DAILY),
           // ),
           RecurrentScheduledTrigger(
-              type: RecurrentType.daily, time: const TimeOfDay(hour: 6, minute: 00)),
+              type: RecurrentType.daily,
+              time: const TimeOfDay(hour: 6, minute: 00)),
           AppTask(
-            type: AudioUserTask.AUDIO_TYPE,
+            type: AudioUserTask.audioType,
             title: "audio.exposure.title",
             description: "audio.exposure.description",
             instructions: "audio.exposure.instructions",
@@ -356,7 +358,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           // RecurrentScheduledTrigger(
           //     type: RecurrentType.weekly, time: Time(hour: 6, minute: 00), dayOfWeek: DateTime.monday),
           AppTask(
-            type: AudioUserTask.AUDIO_TYPE,
+            type: AudioUserTask.audioType,
             title: "audio.biosensor.title",
             description: "audio.biosensor.description",
             instructions: "audio.biosensor.instructions",
@@ -369,7 +371,8 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
     return _protocol;
   }
 
-  Future<SmartphoneStudyProtocol?> _getPatientParentsWristWatch(String studyId) async {
+  Future<SmartphoneStudyProtocol?> _getPatientParentsWristWatch(
+      String studyId) async {
     if (_protocol == null) {
       _protocol = SmartphoneStudyProtocol(
         name: 'Wrist Angel: Patient Parent',
@@ -484,7 +487,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           //   recurrenceRule: RecurrenceRule(Frequency.WEEKLY),
           // ),
           AppTask(
-            type: AudioUserTask.AUDIO_TYPE,
+            type: AudioUserTask.audioType,
             title: "audio.biosensor.title",
             description: "audio.biosensor.description",
             instructions: "audio.biosensor.instructions",
@@ -551,7 +554,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           //   recurrenceRule: RecurrenceRule(Frequency.WEEKLY),
           // ),
           AppTask(
-            type: AudioUserTask.AUDIO_TYPE,
+            type: AudioUserTask.audioType,
             title: "audio.biosensor.title",
             description: "audio.biosensor.description",
             instructions: "audio.biosensor.instructions",
@@ -677,7 +680,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           //   recurrenceRule: RecurrenceRule(Frequency.WEEKLY),
           // ),
           AppTask(
-            type: AudioUserTask.AUDIO_TYPE,
+            type: AudioUserTask.audioType,
             title: "audio.biosensor.title",
             description: "audio.biosensor.description",
             instructions: "audio.biosensor.instructions",
@@ -862,7 +865,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
             measures: [Measure(type: ContextSamplingPackage.LOCATION)]);
 
         var readingTask = AppTask(
-            type: AudioUserTask.AUDIO_TYPE,
+            type: AudioUserTask.audioType,
             title: "reading.title",
             description: 'reading.description',
             instructions: 'reading.instructions',
@@ -873,7 +876,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
             ]);
 
         var imageTask = AppTask(
-            type: VideoUserTask.IMAGE_TYPE,
+            type: VideoUserTask.imageType,
             title: "wound.title",
             description: "wound.description",
             instructions: "wound.instructions",

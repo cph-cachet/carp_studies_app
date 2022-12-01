@@ -372,7 +372,7 @@
 				DEVELOPMENT_ASSET_PATHS = "Runner/base.lproj/Main.storyboard Runner/Assets.xcassets Runner/base.lproj/LaunchScreen.storyboard";
 				DEVELOPMENT_TEAM = 59TCTNUBMQ;
 				ENABLE_BITCODE = NO;
-				FLUTTER_ROOT = /usr/local/Caskroom/flutter/3.3.0/flutter;
+				FLUTTER_ROOT = /usr/local/Caskroom/flutter/3.3.6/flutter;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
@@ -525,7 +525,7 @@
 				DEVELOPMENT_ASSET_PATHS = "Runner/base.lproj/Main.storyboard Runner/Assets.xcassets Runner/base.lproj/LaunchScreen.storyboard";
 				DEVELOPMENT_TEAM = 59TCTNUBMQ;
 				ENABLE_BITCODE = NO;
-				FLUTTER_ROOT = /usr/local/Caskroom/flutter/3.3.0/flutter;
+				FLUTTER_ROOT = /usr/local/Caskroom/flutter/3.3.6/flutter;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
@@ -565,7 +565,7 @@
 				DEVELOPMENT_ASSET_PATHS = "Runner/base.lproj/Main.storyboard Runner/Assets.xcassets Runner/base.lproj/LaunchScreen.storyboard";
 				DEVELOPMENT_TEAM = 59TCTNUBMQ;
 				ENABLE_BITCODE = NO;
-				FLUTTER_ROOT = /usr/local/Caskroom/flutter/3.3.0/flutter;
+				FLUTTER_ROOT = /usr/local/Caskroom/flutter/3.3.6/flutter;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",

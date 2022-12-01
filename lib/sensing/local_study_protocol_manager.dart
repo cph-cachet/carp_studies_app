@@ -369,8 +369,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
     return _protocol;
   }
 
-  Future<SmartphoneStudyProtocol?> _getPatientParentsWristWatch(
-      String studyId) async {
+  Future<SmartphoneStudyProtocol?> _getPatientParentsWristWatch(String studyId) async {
     if (_protocol == null) {
       _protocol = SmartphoneStudyProtocol(
         name: 'Wrist Angel: Patient Parent',

@@ -42,35 +42,10 @@ dependencies:
 
   flutter_localizations:
     sdk: flutter
+  fl_chart: ^0.55.2
+  google_fonts: ^3.0.1
 
-# Overriding carp libraries to use a local copy
-# dependency_overrides:
-#   carp_core:
-#     path: ../carp/carp.sensing-flutter/carp_core/
-#   carp_mobile_sensing:
-#     path: ../carp/carp.sensing-flutter/carp_mobile_sensing/
-#   carp_context_package:
-#     path: ../carp/carp.sensing-flutter/packages/carp_context_package/
-#   # carp_connectivity_package:
-#   #   path: ../carp/carp.sensing-flutter/packages/carp_connectivity_package/
-#   carp_audio_package:
-#     path: ../carp/carp.sensing-flutter/packages/carp_audio_package/
-#   carp_survey_package:
-#     path: ../carp/carp.sensing-flutter/packages/carp_survey_package/
-#   carp_esense_package:
-#     path: ../carp/carp.sensing-flutter/packages/carp_esense_package/
-#   carp_polar_package:
-#     path: ../carp/carp.sensing-flutter/packages/carp_polar_package/
-#   carp_backend:
-#     path: ../carp/carp.sensing-flutter/backends/carp_backend/
-#   carp_webservices:
-#     path: ../carp/carp.sensing-flutter/backends/carp_webservices/
-
-# Overriding carp libraries to use github branch
-#
-# NOTE - you need to run "flutter pub upgrade" and "flutter pub get" in order to download the lastest
-# versions from Github.
-dependency_overrides:  
+dependency_overrides:
   carp_core:
     git:
       url: https://github.com/cph-cachet/carp.sensing-flutter.git
@@ -121,14 +96,15 @@ dependency_overrides:
       url: https://github.com/cph-cachet/carp.sensing-flutter.git
       ref: develop
       path: backends/carp_webservices/
-  # research_package: 
+  # research_package:
   #   git:
   #     url: https://github.com/cph-cachet/research.package.git
   #     ref: dev-carp-core-0_40_0
-  # cognition_package: 
+  # cognition_package:
   #   git:
   #     url: https://github.com/cph-cachet/cognition_package.git
   #     ref: develop
+
 
 dev_dependencies:
   # flutter_test:
@@ -184,7 +160,6 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
   #   - family: Schyler
   #     fonts:
   #       - asset: fonts/Schyler-Regular.ttf

@@ -109,13 +109,26 @@ class DailyMeasure {
   DailyMeasure(this.weekday);
 
   /// Get the localilzed name of the [weekday].
-  String toString() =>
-      DateFormat('EEEE').format(DateTime(2021, 2, 7).add(Duration(days: weekday))).substring(0, 3);
+  String toString() => DateFormat('EEEE')
+      .format(DateTime(2021, 2, 7).add(Duration(days: weekday)))
+      .substring(0, 3);
+}
+
+/// A measure for a specific hour of the day. [hour] and [minute] is the time of the day in 24 hour format.
+/// [hour] is numbered in accordance with Dart [DateTime] a day starts with 0.
+class HourlyMeasure {
+  final int hour;
+  final int minute;
+
+  HourlyMeasure(this.hour, this.minute);
+
+  String toString() => '$hour:$minute';
 }
 
 /// The view model for the entire app.
 class CarpStydyAppViewModel extends ViewModel {
-  final DataVisualizationPageViewModel _dataVisualizationPageViewModel = DataVisualizationPageViewModel();
+  final DataVisualizationPageViewModel _dataVisualizationPageViewModel =
+      DataVisualizationPageViewModel();
   final StudyPageViewModel _studyPageViewModel = StudyPageViewModel();
   final TaskListPageViewModel _taskListPageViewModel = TaskListPageViewModel();
   final ProfilePageViewModel _profilePageViewModel = ProfilePageViewModel();
@@ -123,7 +136,8 @@ class CarpStydyAppViewModel extends ViewModel {
 
   CarpStydyAppViewModel() : super();
 
-  DataVisualizationPageViewModel get dataVisualizationPageViewModel => _dataVisualizationPageViewModel;
+  DataVisualizationPageViewModel get dataVisualizationPageViewModel =>
+      _dataVisualizationPageViewModel;
   StudyPageViewModel get studyPageViewModel => _studyPageViewModel;
   TaskListPageViewModel get taskListPageViewModel => _taskListPageViewModel;
   ProfilePageViewModel get profilePageViewModel => _profilePageViewModel;

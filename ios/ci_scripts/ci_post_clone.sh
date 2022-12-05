@@ -22,4 +22,6 @@ curl https://raw.githubusercontent.com/cph-cachet/flutter-plugins/master/package
 # Install CocoaPods dependencies.
 cd ios && pod install # run `pod install` in the `ios` directory.
 
+ls -la Pods/Target\ Support\ Files/Pods-Runner/
+
 exit 0

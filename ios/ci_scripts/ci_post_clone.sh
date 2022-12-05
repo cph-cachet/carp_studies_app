@@ -18,7 +18,8 @@ HOMEBREW_NO_AUTO_UPDATE=1 # disable homebrew's automatic updates.
 brew install cocoapods
 
 echo "ls ios"
-ls ios
+ls -a ios
+ls a ios/.symlinks
 
 curl https://raw.githubusercontent.com/cph-cachet/flutter-plugins/master/packages/esense_flutter/ios/esense_flutter.podspec > ios/.symlinks/plugins/esense_flutter/ios/esense_flutter.podspec
 

@@ -17,8 +17,8 @@ flutter pub get
 HOMEBREW_NO_AUTO_UPDATE=1 # disable homebrew's automatic updates.
 brew install cocoapods
 
-echo "ls CI_WORKSPACE"
-ls
+echo "ls ios"
+ls ios
 
 curl https://raw.githubusercontent.com/cph-cachet/flutter-plugins/master/packages/esense_flutter/ios/esense_flutter.podspec > ios/.symlinks/plugins/esense_flutter/ios/esense_flutter.podspec
 
@@ -26,6 +26,6 @@ curl https://raw.githubusercontent.com/cph-cachet/flutter-plugins/master/package
 cd ios && pod install # run `pod install` in the `ios` directory.
 
 echo "ls Pods-Runnner"
-ls -la Pods/Target Support Files/Pods-Runner
+ls -la Pods/Target\ Support\ Files/Pods-Runner
 
 exit 0

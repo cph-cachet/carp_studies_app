@@ -6,7 +6,7 @@ cd $CI_WORKSPACE # change working directory to the root of your cloned repo.
 echo "ls !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
 ls -a1Rm
 
-ls -la Pods/Target\ Support\ Files/
+ls -la ios/Pods/Target\ Support\ Files/
 pwd
 
 

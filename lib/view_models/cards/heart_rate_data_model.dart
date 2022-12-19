@@ -83,7 +83,7 @@ class HourlyHeartRate extends DataModel {
   double? minHeartRate;
 
   void resetDataAtMidnight() {
-    if (lastUpdated.hour != DateTime.now().hour) {
+    if (lastUpdated.day != DateTime.now().day) {
       for (int i = 0; i < 24; i++) {
         hourlyHeartRate[i] = HeartRateMinMaxPrHour(null, null);
       }

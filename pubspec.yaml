@@ -49,22 +49,22 @@ dependency_overrides:
   carp_core:
     git:
       url: https://github.com/cph-cachet/carp.sensing-flutter.git
-      ref: develop
+      ref: 8c7d6e
       path: carp_core
   carp_mobile_sensing:
     git:
       url: https://github.com/cph-cachet/carp.sensing-flutter.git
-      ref: develop
+      ref: 8c7d6e
       path: carp_mobile_sensing
   carp_context_package:
     git:
       url: https://github.com/cph-cachet/carp.sensing-flutter.git
-      ref: develop
+      ref: 8c7d6e
       path: packages/carp_context_package/
   carp_survey_package:
     git:
       url: https://github.com/cph-cachet/carp.sensing-flutter.git
-      ref: develop
+      ref: 8c7d6e
       path: packages/carp_survey_package/
   # # carp_connectivity_package:
   # #   git:
@@ -74,27 +74,27 @@ dependency_overrides:
   carp_audio_package:
     git:
       url: https://github.com/cph-cachet/carp.sensing-flutter.git
-      ref: develop
+      ref: 8c7d6e
       path: packages/carp_audio_package/
   carp_esense_package:
     git:
       url: https://github.com/cph-cachet/carp.sensing-flutter.git
-      ref: develop
+      ref: 8c7d6e
       path: packages/carp_esense_package/
   carp_polar_package:
     git:
       url: https://github.com/cph-cachet/carp.sensing-flutter.git
-      ref: develop
+      ref: 8c7d6e
       path: packages/carp_polar_package/
   carp_backend:
     git:
       url: https://github.com/cph-cachet/carp.sensing-flutter.git
-      ref: develop
+      ref: 8c7d6e
       path: backends/carp_backend/
   carp_webservices:
     git:
       url: https://github.com/cph-cachet/carp.sensing-flutter.git
-      ref: develop
+      ref: 8c7d6e
       path: backends/carp_webservices/
   # research_package:
   #   git:

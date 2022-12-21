@@ -215,7 +215,7 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
                     text:
                         locale.translate('cards.heartrate.range').toUpperCase(),
                     style: TextStyle(
-                      color: Colors.grey.withOpacity(0.6),
+                      color: Theme.of(context).primaryTextTheme.caption?.color,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -230,14 +230,14 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
                     text: "${locale.translate('cards.heartrate.bpm')}\n",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      color: Colors.grey.withOpacity(0.6),
+                      color: Theme.of(context).primaryTextTheme.caption?.color,
                       fontSize: 20,
                     ),
                   ),
                   TextSpan(
                     text: "$groupIndex-${groupIndex + 1} ",
                     style: TextStyle(
-                      color: Colors.grey.withOpacity(0.6),
+                      color: Theme.of(context).primaryTextTheme.caption?.color,
                       fontWeight: FontWeight.bold,
                       fontSize: 20,
                     ),
@@ -369,16 +369,6 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
                 ],
               ))
           .toList();
-
-  BarChartGroupData getSeparaterStick(xAxis, height) =>
-      BarChartGroupData(x: xAxis, barsSpace: 0, barRods: [
-        BarChartRodData(
-          toY: height,
-          fromY: 0,
-          width: 1,
-          color: HeartRateCardWidget.colors[2],
-        )
-      ]);
 }
 
 class HeartRateOuterStatefulWidget extends StatefulWidget {

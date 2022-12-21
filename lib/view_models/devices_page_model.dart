@@ -1,16 +1,14 @@
-// ignore_for_file: constant_identifier_names
-
 part of carp_study_app;
 
 enum DeviceType {
-  PHONE,
-  WATCH,
-  HEADSET,
-  SCALE,
-  HOME,
-  SPEAKER,
-  HEARTRATE_MONITOR,
-  UNKNOWN,
+  phone,
+  watch,
+  headset,
+  scale,
+  home,
+  speaker,
+  heartrateMonitor,
+  unknown,
 }
 
 class DevicesPageViewModel extends ViewModel {

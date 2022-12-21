@@ -1,22 +1,17 @@
-// ignore_for_file: constant_identifier_names
-
 part of carp_study_app;
 
 // String encode(Object object) =>
 //     const JsonEncoder.withIndent(' ').convert(object);
 
 class CarpBackend {
-  static const String CANS_URI = "https://cans.cachet.dk";
+  static const String cansURI = "https://cans.cachet.dk";
 
-  static const Map<DeploymentMode, String> URIs = {
+  static const Map<DeploymentMode, String> uris = {
     DeploymentMode.carpDev: '/dev',
     DeploymentMode.carpTest: '/test',
     DeploymentMode.carpStaging: '/stage',
     DeploymentMode.carpProduction: '',
   };
-
-  static const String CLIENT_ID = "carp";
-  static const String CLIENT_SECRET = "carp";
 
   static final CarpBackend _instance = CarpBackend._();
 
@@ -28,10 +23,10 @@ class CarpBackend {
   CarpUser? get user => CarpService().currentUser;
 
   /// The URI of the CANS server - depending on deployment mode.
-  String get uri => '$CANS_URI${URIs[bloc.deploymentMode]}';
+  String get uri => '$cansURI${uris[bloc.deploymentMode]}';
 
-  String get clientID => CLIENT_ID;
-  String get clientSecret => CLIENT_SECRET;
+  String get clientID => "carp";
+  String get clientSecret => "carp";
 
   OAuthToken? get oauthToken => LocalSettings().oauthToken;
   set oauthToken(OAuthToken? token) => LocalSettings().oauthToken = token;
@@ -65,7 +60,7 @@ class CarpBackend {
     _app = CarpApp(
       name: "CANS @ DTU",
       uri: Uri.parse(uri),
-      oauth: OAuthEndPoint(clientID: CLIENT_ID, clientSecret: CLIENT_SECRET),
+      oauth: OAuthEndPoint(clientID: clientID, clientSecret: clientSecret),
       studyId: LocalSettings().studyId,
       studyDeploymentId: LocalSettings().studyDeploymentId,
     );

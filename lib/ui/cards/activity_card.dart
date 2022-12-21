@@ -135,13 +135,13 @@ class ActivityCardWidgetState extends State<ActivityCardWidget> {
     }
     setState(() {});
 
-    measures.forEach((k, v) {
-      if (k == 'walking') {
-        _walk = v;
-      } else if (k == 'running') {
-        _run = v;
-      } else if (k == 'cycling') {
-        _cycle = v;
+    measures.forEach((key, value) {
+      if (key == 'walking') {
+        _walk = value;
+      } else if (key == 'running') {
+        _run = value;
+      } else if (key == 'cycling') {
+        _cycle = value;
       }
     });
   }

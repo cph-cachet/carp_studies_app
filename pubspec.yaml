@@ -47,7 +47,7 @@ dependencies:
 
 # Overriding carp libraries to use github branch
 #
-# NOTE - you need to run "flutter pub upgrade" and "flutter pub get" in order to download the lastest
+# NOTE - you need to run `flutter pub upgrade` and `flutter pub get` in order to download the latest
 # versions from Github.
 dependency_overrides:
   carp_core:

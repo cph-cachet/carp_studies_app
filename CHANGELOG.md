@@ -1,3 +1,6 @@
+## 0.40.0
+* upgrade to `carp_mobile_sensing` v 0.40.0
+
 ## 0.32.1
 * server-side messaging
 

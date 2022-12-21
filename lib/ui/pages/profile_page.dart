@@ -5,10 +5,10 @@ class ProfilePage extends StatefulWidget {
   const ProfilePage(this.model);
 
   @override
-  _ProfilePageState createState() => _ProfilePageState();
+  ProfilePageState createState() => ProfilePageState();
 }
 
-class _ProfilePageState extends State<ProfilePage> {
+class ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;
@@ -120,10 +120,9 @@ class _ProfilePageState extends State<ProfilePage> {
                         style: profileActionStyle.copyWith(
                             color: Theme.of(context).primaryColor)),
                     onTap: () {
-                      print("contact researcher");
                       _contactResearcher(
-                        widget.model.responsibleEmail,
-                        'Support for study: ${widget.model.studyTitle} - User: ${widget.model.username}',
+                        locale.translate(widget.model.responsibleEmail),
+                        'Support for study: ${locale.translate(widget.model.studyTitle)} - User: ${widget.model.username}',
                       );
                     },
                   ),
@@ -134,10 +133,10 @@ class _ProfilePageState extends State<ProfilePage> {
                         style: profileActionStyle.copyWith(
                             color: Theme.of(context).primaryColor)),
                     onTap: () async {
-                      if (await canLaunch(
-                          locale.translate('study.description.privacy'))) {
-                        await launch(
-                            locale.translate('study.description.privacy'));
+                      if (await canLaunchUrl(Uri.parse(
+                          locale.translate('study.description.privacy')))) {
+                        await launchUrl(Uri.parse(
+                            locale.translate('study.description.privacy')));
                       } else {
                         throw 'Could not launch privacy policy URL';
                       }
@@ -150,10 +149,10 @@ class _ProfilePageState extends State<ProfilePage> {
                         style: profileActionStyle.copyWith(
                             color: Theme.of(context).primaryColor)),
                     onTap: () async {
-                      if (await canLaunch(
-                          locale.translate('study.description.website'))) {
-                        await launch(
-                            locale.translate('study.description.website'));
+                      if (await canLaunchUrl(Uri.parse(
+                          locale.translate('study.description.url')))) {
+                        await launchUrl(Uri.parse(
+                            locale.translate('study.description.url')));
                       } else {
                         throw 'Could not launch Study URL';
                       }
@@ -196,8 +195,8 @@ class _ProfilePageState extends State<ProfilePage> {
 
     var url = _emailLaunchUri.toString().replaceAll("+", "%20");
 
-    if (await canLaunch(url)) {
-      await launch(url);
+    if (await canLaunchUrl(Uri.parse(url))) {
+      await launchUrl(Uri.parse(url));
     } else {
       throw 'Could not launch $url';
     }
@@ -216,8 +215,7 @@ class _ProfilePageState extends State<ProfilePage> {
           actions: <Widget>[
             TextButton(
               child: Text(locale.translate("NO")),
-              onPressed: () =>
-                  Navigator.of(context).pop(), // Dismissing the pop-up
+              onPressed: () => Navigator.of(context).pop(),
             ),
             TextButton(
               child: Text(locale.translate("YES")),
@@ -260,8 +258,7 @@ class _ProfilePageState extends State<ProfilePage> {
           actions: <Widget>[
             TextButton(
               child: Text(locale.translate("NO")),
-              onPressed: () =>
-                  Navigator.of(context).pop(), // Dismissing the pop-up
+              onPressed: () => Navigator.of(context).pop(),
             ),
             TextButton(
               child: Text(locale.translate("YES")),

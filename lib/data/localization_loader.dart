@@ -13,9 +13,9 @@ class ResourceLocalizationLoader implements LocalizationLoader {
     // fail since the user is not authenticated - but will be available on re-load
     try {
       translations = await localizationManager.getLocalizations(locale) ?? {};
-      print("$runtimeType - translations for ´$locale' loaded.");
+      info("$runtimeType - translations for ´$locale' loaded.");
     } catch (error) {
-      print(
+      warning(
           "$runtimeType - could not load translations for '$locale' - $error");
     }
 

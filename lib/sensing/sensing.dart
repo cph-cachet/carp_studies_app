@@ -22,10 +22,10 @@ class Sensing {
 
   DeploymentService? deploymentService;
   SmartPhoneClientManager? client;
+  Study? study;
 
   /// The deployment running on this phone.
-  SmartphoneDeployment? get deployment =>
-      _controller?.deployment as SmartphoneDeployment?;
+  SmartphoneDeployment? get deployment => _controller?.deployment;
 
   /// Get the latest status of the study deployment.
   StudyDeploymentStatus? get status => _status;
@@ -41,7 +41,8 @@ class Sensing {
 
   /// Is sensing running, i.e. has the study executor been resumed?
   bool get isRunning =>
-      (controller != null) && controller!.executor!.state == ProbeState.resumed;
+      (controller != null) &&
+      controller!.executor!.state == ExecutorState.resumed;
 
   /// the list of running - i.e. used - probes in this study.
   List<Probe> get runningProbes =>
@@ -49,19 +50,21 @@ class Sensing {
 
   /// The list of connected devices.
   List<DeviceManager>? get runningDevices =>
-      client?.deviceRegistry.devices.values.toList();
+      (client != null) ? client!.deviceController.connectedDevices : [];
 
   /// The singleton sensing instance
   factory Sensing() => _instance;
 
   Sensing._() {
     // create and register external sampling packages
-    //SamplingPackageRegistry.register(ConnectivitySamplingPackage());
+    //SamplingPackageRegistry().register(ConnectivitySamplingPackage());
     SamplingPackageRegistry().register(ContextSamplingPackage());
     //SamplingPackageRegistry.register(CommunicationSamplingPackage());
-    SamplingPackageRegistry().register(AudioVideoSamplingPackage());
+    SamplingPackageRegistry().register(MediaSamplingPackage());
     SamplingPackageRegistry().register(SurveySamplingPackage());
     //SamplingPackageRegistry.register(HealthSamplingPackage());
+    SamplingPackageRegistry().register(ESenseSamplingPackage());
+    SamplingPackageRegistry().register(PolarSamplingPackage());
 
     // create and register external data managers
     DataManagerRegistry().register(CarpDataManager());
@@ -117,22 +120,32 @@ class Sensing {
         break;
     }
 
-    // create and configure a client manager for this phone
-    client = SmartPhoneClientManager(
+    // Create and configure a client manager for this phone
+    client = SmartPhoneClientManager();
+    await client?.configure(
       deploymentService: deploymentService,
-      deviceRegistry: DeviceController(),
+      deviceController: DeviceController(),
     );
-    await client!.configure();
 
-    // add and deploy this study deployment
-    _controller = await client!.addStudy(studyDeploymentId!, deviceRolename!);
-    await _controller?.tryDeployment();
+    // Define the study and add it to the client.
+    study = Study(
+      bloc.studyDeploymentId!,
+      deviceRolename!,
+    );
+    await client?.addStudy(study!);
 
-    // configure the controller
-    await _controller?.configure(askForPermissions: false);
+    // Get the study controller and try to deploy the study.
+    //
+    // Note that if the study has already been deployed on this phone
+    // it has been cached locally in a file and the local cache will
+    // be used pr. default.
+    // If not deployed before (i.e., cached) the study deployment will be
+    // fetched from the deployment service.
+    _controller = client?.getStudyRuntime(study!);
+    await controller?.tryDeployment(useCached: true);
 
-    // listening on the data stream and print them as json to the debug console
-    _controller?.data.listen((data) => print(toJsonString(data)));
+    // Configure the controller
+    await controller?.configure(askForPermissions: false);
 
     info('$runtimeType initialized');
   }
@@ -141,10 +154,10 @@ class Sensing {
   /// of the current master deployment.
   void translateStudyProtocol(AssetLocalizations localization) {
     // fast out, if not configured or no protocol
-    if (controller?.status != StudyRuntimeStatus.Configured ||
-        controller?.masterDeployment == null) return;
+    if (controller?.status != StudyStatus.Deployed ||
+        controller?.deployment == null) return;
 
-    for (var task in controller!.masterDeployment!.tasks) {
+    for (var task in controller!.deployment!.tasks) {
       if (task.runtimeType == AppTask) {
         AppTask appTask = task as AppTask;
         appTask.title = localization.translate(appTask.title);

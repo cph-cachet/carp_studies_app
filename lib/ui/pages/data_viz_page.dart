@@ -16,7 +16,7 @@ class DataVisualizationPage extends StatelessWidget {
           children: <Widget>[
             CarpAppBar(),
             Container(
-              color: Theme.of(context).accentColor,
+              color: Theme.of(context).colorScheme.secondary,
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 15),
                 child: Align(
@@ -26,8 +26,9 @@ class DataVisualizationPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        '${locale.translate('pages.data_viz.hello')} ${bloc.friendlyUsername}',
-                        style: sectionTitleStyle.copyWith(
+                        '${locale.translate('pages.data_viz.hello')} ${bloc.friendlyUsername}'
+                            .toUpperCase(),
+                        style: dataCardTitleStyle.copyWith(
                             color: Theme.of(context).primaryColor),
                       ),
                       Text(locale.translate('pages.data_viz.thanks'),
@@ -54,7 +55,7 @@ class DataVisualizationPage extends StatelessWidget {
     );
   }
 
-  // the list of cards, depending on what measures are defined in the study
+  // The list of cards, depending on what measures are defined in the study.
   // TODO - this needs to adjusted when more measures can be visualized
   List<Widget> get _dataVizCards {
     final List<Widget> widgets = [];
@@ -65,14 +66,38 @@ class DataVisualizationPage extends StatelessWidget {
     // always show tasks progress
     widgets.add(StudyProgressCardWidget(model.studyProgressCardDataModel));
 
-    // always show overall measure stats
-    widgets.add(MeasuresCardWidget(model.measuresCardDataModel));
+    // check to show overall measure stats
+    //if (bloc.hasMeasures()) widgets.add(MeasuresCardWidget(model.measuresCardDataModel));
 
-    // check which measures are in the study
-    if (bloc.hasMeasure(SurveySamplingPackage.SURVEY))
-      widgets.add(TaskCardWidget(model.surveysCardDataModel));
-    if (bloc.hasMeasure(AudioVideoSamplingPackage.AUDIO))
-      widgets.add(TaskCardWidget(model.audioCardDataModel));
+    // check to show heart rate stats, if there is a POLAR device in the study
+    if (bloc.hasMeasure(PolarSamplingPackage.POLAR_HR)) {
+      widgets.add(HeartRateOuterStatefulWidget(model.heartRateCardDataModel));
+    }
+
+    // check to show surveys stats
+    if (bloc.hasSurveys())
+      widgets.add(TaskCardWidget(
+        model.surveysCardDataModel,
+        chartType: TaskCardChartType.pie,
+      ));
+
+    List<TaskCardViewModel> mediaModelsList = [];
+
+    // check what media types are in the study and add them to de media card
+    if (bloc.hasMeasure(MediaSamplingPackage.AUDIO))
+      mediaModelsList.add(model.audioCardDataModel);
+    if (bloc.hasMeasure(MediaSamplingPackage.VIDEO))
+      mediaModelsList.add(model.videoCardDataModel);
+    if (bloc.hasMeasure(MediaSamplingPackage.IMAGE))
+      mediaModelsList.add(model.imageCardDataModel);
+    if (mediaModelsList.isNotEmpty)
+      widgets.add(MediaCardWidget(mediaModelsList));
+
+    // check to show device data visualizations
+    if (bloc.hasDevices()) {
+      //TODO ADD DEVICES VIZ
+    }
+
     if (bloc.hasMeasure(SensorSamplingPackage.PEDOMETER))
       widgets.add(StepsOuterStatefulWidget(model.stepsCardDataModel));
     if (bloc.hasMeasure(ContextSamplingPackage.MOBILITY))

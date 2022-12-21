@@ -2,13 +2,13 @@ part of carp_study_app;
 
 class AudioTaskPage extends StatefulWidget {
   final AudioUserTask? audioUserTask;
-  AudioTaskPage({Key? key, this.audioUserTask}) : super(key: key);
+  AudioTaskPage({super.key, this.audioUserTask});
 
   @override
-  _AudioTaskPageState createState() => _AudioTaskPageState(audioUserTask);
+  AudioTaskPageState createState() => AudioTaskPageState(audioUserTask);
 }
 
-class _AudioTaskPageState extends State<AudioTaskPage> {
+class AudioTaskPageState extends State<AudioTaskPage> {
   final AudioUserTask? audioUserTask;
 
   int get _currentStep {
@@ -24,7 +24,7 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
 
   List<int> steps = [0, 1, 2];
 
-  _AudioTaskPageState(this.audioUserTask) : super();
+  AudioTaskPageState(this.audioUserTask) : super();
 
   @override
   Widget build(BuildContext context) {
@@ -86,7 +86,6 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
               color: Theme.of(context).primaryColor, size: 30),
           tooltip: locale.translate('Close'),
           onPressed: () {
-            print("close");
             _showCancelConfirmationDialog();
           },
         ),
@@ -141,16 +140,6 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
               child: Align(
                 alignment: FractionalOffset.bottomCenter,
                 child: Padding(
-                  // padding: EdgeInsets.only(bottom: 30.0),
-                  // child: CircleAvatar(
-                  //   radius: 30,
-                  //   backgroundColor: CACHET.RED_1,
-                  //   child: IconButton(
-                  //     onPressed: () => audioUserTask!.onRecordStart(),
-                  //     padding: EdgeInsets.all(0),
-                  //     icon: Icon(Icons.mic, color: Colors.white, size: 30),
-                  //   ),
-                  // ),
                   padding: EdgeInsets.only(bottom: 30.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -217,33 +206,31 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
             //  - if, for example, the audioUserTask.instructions is a key (with no \n\n)
             //  - or if there is no \n\n
             // IMO we need another solution, which does not rely on assuming \n\n to be in the text
-            Text(locale.translate(audioUserTask!.instructions).split('\n\n')[0],
-                style: audioContentStyle),
-            SizedBox(height: 10),
-            audioUserTask!.instructions.split('\n\n').length >= 1
-                ? Expanded(
-                    flex: 3,
-                    child: Card(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      elevation: 4,
-                      child: Scrollbar(
-                        child: SingleChildScrollView(
-                          scrollDirection: Axis.vertical, //.horizontal
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                                locale
-                                    .translate(audioUserTask!.instructions)
-                                    .split('\n\n')[1],
-                                style: audioInstructionStyle),
-                          ),
-                        ),
-                      ),
+            // Text(locale.translate(audioUserTask!.instructions).split('\n\n')[0], style: audioContentStyle),
+            // SizedBox(height: 10),
+            // audioUserTask!.instructions.split('\n\n').length >= 1
+            //     ?
+            Expanded(
+              flex: 3,
+              child: Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                elevation: 4,
+                child: Scrollbar(
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.vertical, //.horizontal
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(locale.translate(audioUserTask!.instructions),
+                          style: audioInstructionStyle),
                     ),
-                  )
-                : SizedBox.shrink(),
+                  ),
+                ),
+              ),
+            )
+            // : SizedBox.shrink(),
+            ,
             SizedBox(height: 5),
             Expanded(
               flex: 2,
@@ -301,7 +288,8 @@ class _AudioTaskPageState extends State<AudioTaskPage> {
                 width: 220,
                 height: 220),
             SizedBox(height: 40),
-            Text(locale.translate("Done!"), style: audioTitleStyle),
+            Text(locale.translate('pages.audio_task.done'),
+                style: audioTitleStyle),
             SizedBox(height: 10),
             Text(locale.translate('pages.audio_task.recording_completed'),
                 style: audioContentStyle),

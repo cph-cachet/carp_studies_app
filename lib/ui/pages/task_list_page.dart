@@ -5,10 +5,10 @@ class TaskListPage extends StatefulWidget {
   const TaskListPage(this.model);
 
   @override
-  _TaskListPageState createState() => _TaskListPageState();
+  TaskListPageState createState() => TaskListPageState();
 }
 
-class _TaskListPageState extends State<TaskListPage> {
+class TaskListPageState extends State<TaskListPage> {
   @override
   Widget build(BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;
@@ -41,7 +41,7 @@ class _TaskListPageState extends State<TaskListPage> {
                             alignment: Alignment.centerLeft,
                             child: Text(
                               locale.translate('pages.task_list.title'),
-                              style: sectionTitleStyle.copyWith(
+                              style: dataCardTitleStyle.copyWith(
                                   color: Theme.of(context).primaryColor),
                             ),
                           ),
@@ -135,7 +135,8 @@ class _TaskListPageState extends State<TaskListPage> {
   Icon _taskTypeIcon(UserTask userTask) =>
       (taskTypeIcons[userTask.type] != null)
           ? taskTypeIcons[userTask.type] as Icon
-          : (measureTypeIcons[userTask.task.measures[0].type] != null)
+          : (userTask.task.measures.isNotEmpty &&
+                  measureTypeIcons[userTask.task.measures[0].type] != null)
               ? measureTypeIcons[userTask.task.measures[0].type] as Icon
               : Icon(
                   Icons.description_outlined,
@@ -149,10 +150,14 @@ class _TaskListPageState extends State<TaskListPage> {
             locale.translate('pages.task_list.task.time_to_complete')
         : locale.translate('pages.task_list.task.auto_complete');
 
-    str += (userTask.expiresIn != null)
-        ? ' - ${userTask.expiresIn!.inDays + 1} ' +
-            locale.translate('pages.task_list.task.days_remaining')
-        : '';
+    if (userTask.expiresIn != null) {
+      if (userTask.expiresIn!.isNegative) {
+        userTask.onExpired(context);
+      }
+      str += ' - ${userTask.expiresIn!.inDays + 1} ' +
+          locale.translate('pages.task_list.task.days_remaining');
+    }
+    str += '';
 
     str = (str.isEmpty) ? locale.translate(userTask.description) : str;
 
@@ -240,31 +245,31 @@ class _TaskListPageState extends State<TaskListPage> {
   }
 
   static Map<String, Icon> taskTypeIcons = {
-    SurveyUserTask.WHO5_SURVEY_TYPE: Icon(
-      Icons.design_services,
-      color: CACHET.ORANGE,
-    ),
-    SurveyUserTask.DEMOGRAPHIC_SURVEY_TYPE: Icon(
-      Icons.person,
-      color: CACHET.ORANGE,
-    ),
     SurveyUserTask.SURVEY_TYPE: Icon(
       Icons.description,
       color: CACHET.ORANGE,
+    ),
+    SurveyUserTask.COGNITIVE_ASSESSMENT_TYPE: Icon(
+      Icons.face_retouching_natural,
+      color: CACHET.RED_2,
     ),
     AudioUserTask.AUDIO_TYPE: Icon(
       Icons.record_voice_over,
       color: CACHET.GREEN,
     ),
     VideoUserTask.VIDEO_TYPE: Icon(
-      Icons.camera_alt,
+      Icons.videocam,
       color: CACHET.BLUE_1,
     ),
-    SensingUserTask.SENSING_TYPE: Icon(
+    VideoUserTask.IMAGE_TYPE: Icon(
+      Icons.camera_alt,
+      color: CACHET.YELLOW,
+    ),
+    BackgroundSensingUserTask.SENSING_TYPE: Icon(
       Icons.settings_input_antenna,
       color: CACHET.CACHET_BLUE,
     ),
-    SensingUserTask.ONE_TIME_SENSING_TYPE: Icon(
+    BackgroundSensingUserTask.ONE_TIME_SENSING_TYPE: Icon(
       Icons.settings_input_component,
       color: CACHET.PURPLE,
     ),
@@ -305,15 +310,19 @@ class _TaskListPageState extends State<TaskListPage> {
     //     Icon(Icons.wifi, size: 50, color: CACHET.LIGHT_PURPLE),
     // ConnectivitySamplingPackage.CONNECTIVITY:
     //     Icon(Icons.cast_connected, size: 50, color: CACHET.GREEN),
-    AudioVideoSamplingPackage.AUDIO: Icon(
+    MediaSamplingPackage.AUDIO: Icon(
       Icons.mic,
       color: CACHET.ORANGE,
     ),
-    AudioVideoSamplingPackage.NOISE: Icon(
+    MediaSamplingPackage.NOISE: Icon(
       Icons.hearing,
       color: CACHET.YELLOW,
     ),
-    AudioVideoSamplingPackage.VIDEO: Icon(
+    MediaSamplingPackage.VIDEO: Icon(
+      Icons.videocam,
+      color: CACHET.YELLOW,
+    ),
+    MediaSamplingPackage.IMAGE: Icon(
       Icons.camera_alt,
       color: CACHET.YELLOW,
     ),
@@ -344,7 +353,7 @@ class _TaskListPageState extends State<TaskListPage> {
       color: CACHET.LIGHT_BLUE_2,
     ),
     ContextSamplingPackage.AIR_QUALITY: Icon(
-      Icons.warning,
+      Icons.air,
       color: CACHET.GREY_3,
     ),
     ContextSamplingPackage.GEOFENCE: Icon(

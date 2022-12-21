@@ -19,7 +19,6 @@ class StudyAppBLoC {
   final CarpBackend _backend = CarpBackend();
   final CarpStydyAppViewModel _data = CarpStydyAppViewModel();
   StudyDeploymentStatus? _status;
-  DateTime? _studyStartTimestamp;
 
   List<Message> _messages = [];
   final StreamController<int> _messageStreamController =
@@ -82,19 +81,19 @@ class StudyAppBLoC {
   /// The id of the currently running study deployment.
   /// Typical set based on an invitation.
   /// `null` if no deployment have been specified.
-  String? get studyDeploymentId => Settings().studyDeploymentId;
-  set studyDeploymentId(String? id) => Settings().studyDeploymentId = id;
+  String? get studyDeploymentId => LocalSettings().studyDeploymentId;
+  set studyDeploymentId(String? id) => LocalSettings().studyDeploymentId = id;
 
   // String? get studyDeploymentId => deployment?.studyDeploymentId;
 
   /// The deployment running on this phone.
-  SmartphoneDeployment? get deployment =>
-      Sensing().controller?.deployment as SmartphoneDeployment?;
+  SmartphoneDeployment? get deployment => Sensing().controller?.deployment;
 
   /// Get the latest status of the study deployment.
   StudyDeploymentStatus? get status => _status;
 
-  DateTime? get studyStartTimestamp => _studyStartTimestamp;
+  /// When was this study deployed on this phone.
+  DateTime? get studyStartTimestamp => deployment?.deployed;
 
   /// The overall data model for this app
   CarpStydyAppViewModel get data => _data;
@@ -110,6 +109,42 @@ class StudyAppBLoC {
     }
 
     return true;
+  }
+
+  bool hasMeasures() {
+    if (deployment == null) return false;
+    try {
+      if (deployment!.measures.any((measure) =>
+          (measure.type != VideoUserTask.IMAGE_TYPE &&
+              measure.type != VideoUserTask.VIDEO_TYPE &&
+              measure.type != AudioUserTask.AUDIO_TYPE &&
+              measure.type != SurveyUserTask.SURVEY_TYPE))) {
+        return true;
+      } else
+        return false;
+    } catch (error) {
+      return false;
+    }
+  }
+
+  bool hasSurveys() {
+    if (deployment == null) return false;
+    try {
+      deployment!.tasks.isNotEmpty;
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
+
+  bool hasDevices() {
+    if (deployment == null) return false;
+    try {
+      deployment!.connectedDevices.isNotEmpty;
+      return true;
+    } catch (error) {
+      return false;
+    }
   }
 
   /// Initialize this BLOC. Called before being used for anything.
@@ -165,12 +200,13 @@ class StudyAppBLoC {
         : null;
 
     // set up the messaging part
-    await messageManager.initialize();
-
-    // refresh the list of messages on a regular basis
-    Timer.periodic(
-        const Duration(minutes: 30), (_) async => await refreshMessages());
-    await refreshMessages();
+    messageManager.initialize().then(
+      (value) {
+        refreshMessages();
+        // refresh the list of messages on a regular basis
+        Timer.periodic(const Duration(minutes: 30), (_) => refreshMessages());
+      },
+    );
 
     // set up and initialize sensing
     await Sensing().initialize();
@@ -213,11 +249,10 @@ class StudyAppBLoC {
                   context,
                   "ic.location.content",
                 ));
-        await LocationManager().requestPermission();
-        // await Permission.locationAlways.request();
+        // await LocationManager().requestPermission();
       }
     }
-    print('$runtimeType - asking for permisions');
+    info('$runtimeType - asking for permisions');
     await Sensing().askForPermissions();
   }
 
@@ -268,7 +303,7 @@ class StudyAppBLoC {
 
   String get username => (user != null)
       ? user!.username
-      : Sensing().controller!.masterDeployment!.userId!;
+      : Sensing().controller!.deployment!.userId!;
 
   /// The name used for friendly greating - '' if no user logged in.
   String? get friendlyUsername => (user != null) ? user!.firstName : '';
@@ -281,6 +316,23 @@ class StudyAppBLoC {
       ? Sensing().controller!.executor!.probes
       : [];
 
+  /// Get a list of running devices
+  Iterable<DeviceModel> get runningDevices =>
+      Sensing().runningDevices!.map((device) => DeviceModel(device));
+
+  /// Map a selected device to the device in the protocol and connect to it.
+  void connectToDevice(BluetoothDevice selectedDevice, DeviceManager device) {
+    if (device is BTLEDeviceManager) {
+      device.btleAddress = selectedDevice.id.id;
+      device.btleName = selectedDevice.name;
+    }
+
+    // when the device id is updated, save the deployment
+    Sensing().controller?.saveDeployment();
+
+    device.connect();
+  }
+
   /// Start sensing. Should only be called once.
   /// Use [resume] and [pause] if pausing/resuming sensing.
   ///
@@ -291,18 +343,17 @@ class StudyAppBLoC {
     assert(Sensing().controller != null,
         'No Study Controller - the study has not been deployed.');
 
-    Sensing().controller!.resume();
-    _studyStartTimestamp = Sensing().controller!.studyDeploymentStartTime;
+    Sensing().controller?.start();
 
     // listening on the data stream and print them as json to the debug console
     Sensing().controller!.data.listen((data) => print(toJsonString(data)));
   }
 
   // Pause sensing.
-  void pause() => Sensing().controller!.pause();
+  void pause() => Sensing().controller?.executor?.pause();
 
   /// Resume sensing.
-  void resume() => Sensing().controller!.resume();
+  void resume() => Sensing().controller?.executor?.resume();
 
   /// Stop sensing.
   /// Once sensing is stopped, it cannot be (re)started.

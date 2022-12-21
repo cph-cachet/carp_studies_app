@@ -1,5 +1,6 @@
 part of carp_study_app;
 
+/// View model for the [StudyProgressCardWidget].
 class StudyProgressCardViewModel extends ViewModel {
   final Map<String, int> _progressTable = {};
 
@@ -10,7 +11,7 @@ class StudyProgressCardViewModel extends ViewModel {
   int get taskCompleted => AppTaskController().taskCompleted;
 
   /// The number of tasks expired so far.
-  //int get taskExpired => AppTaskController().taskExpired;
+  int get taskExpired => AppTaskController().taskExpired;
 
   /// The number of tasks pending so far.
   int get taskPending => AppTaskController().taskPending;
@@ -31,14 +32,14 @@ class StudyProgressCardViewModel extends ViewModel {
   }
 
   String toString() {
-    String _str = 'TASKS PROGRESS\t| #\n';
+    String _str = 'STUDY PROGRESS\t| #\n';
     _progressTable.forEach((type, no) => _str += '$type\t| $no\n');
     return _str;
   }
 
   void updateProgress() {
     _progressTable['completed'] = taskCompleted;
-    //_progressTable['expired'] = taskExpired;
+    _progressTable['expired'] = taskExpired;
     _progressTable['pending'] = taskPending;
   }
 }

@@ -19,7 +19,7 @@ WeeklyActivities _$WeeklyActivitiesFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$WeeklyActivitiesToJson(WeeklyActivities instance) =>
     <String, dynamic>{
       'activities': instance.activities.map((k, e) => MapEntry(
-          _$ActivityTypeEnumMap[k],
+          _$ActivityTypeEnumMap[k]!,
           e.map((k, e) => MapEntry(k.toString(), e)))),
     };
 
@@ -65,3 +65,54 @@ Map<String, dynamic> _$WeeklyStepsToJson(WeeklySteps instance) =>
       'weekly_steps':
           instance.weeklySteps.map((k, e) => MapEntry(k.toString(), e)),
     };
+
+HourlyHeartRate _$HourlyHeartRateFromJson(Map<String, dynamic> json) =>
+    HourlyHeartRate()
+      ..hourlyHeartRate =
+          (json['hourly_heart_rate'] as Map<String, dynamic>).map(
+        (k, e) => MapEntry(int.parse(k),
+            HeartRateMinMaxPrHour.fromJson(e as Map<String, dynamic>)),
+      )
+      ..lastUpdated = DateTime.parse(json['last_updated'] as String)
+      ..maxHeartRate = (json['max_heart_rate'] as num?)?.toDouble()
+      ..minHeartRate = (json['min_heart_rate'] as num?)?.toDouble();
+
+Map<String, dynamic> _$HourlyHeartRateToJson(HourlyHeartRate instance) {
+  final val = <String, dynamic>{
+    'hourly_heart_rate':
+        instance.hourlyHeartRate.map((k, e) => MapEntry(k.toString(), e)),
+    'last_updated': instance.lastUpdated.toIso8601String(),
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('max_heart_rate', instance.maxHeartRate);
+  writeNotNull('min_heart_rate', instance.minHeartRate);
+  return val;
+}
+
+HeartRateMinMaxPrHour _$HeartRateMinMaxPrHourFromJson(
+        Map<String, dynamic> json) =>
+    HeartRateMinMaxPrHour(
+      (json['min'] as num?)?.toDouble(),
+      (json['max'] as num?)?.toDouble(),
+    );
+
+Map<String, dynamic> _$HeartRateMinMaxPrHourToJson(
+    HeartRateMinMaxPrHour instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('min', instance.min);
+  writeNotNull('max', instance.max);
+  return val;
+}

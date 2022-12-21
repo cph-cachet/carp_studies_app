@@ -16,6 +16,8 @@ class CarpBackend {
   static const String CLIENT_ID = "carp";
   static const String CLIENT_SECRET = "carp";
 
+  static CarpBackend _instance = CarpBackend._();
+
   CarpApp? _app;
 
   CarpApp? get app => _app;
@@ -49,10 +51,10 @@ class CarpBackend {
     LocalSettings().studyDeploymentId = id;
   }
 
-  static CarpBackend _instance = CarpBackend._();
   CarpBackend._() : super() {
     // make sure that the json functions are loaded
-    DomainJsonFactory();
+    CarpMobileSensing();
+    CognitionPackage();
   }
 
   factory CarpBackend() => _instance;
@@ -120,7 +122,7 @@ class CarpBackend {
   Future<ConsentDocument?> uploadInformedConsent(
       RPTaskResult taskResult) async {
     RPConsentSignatureResult signatureResult =
-        taskResult.results["consentreviewstepID"].results["signatureID"];
+        (taskResult.results["consentreviewstepID"] as RPConsentSignatureResult);
     signatureResult.userID = username;
     Map<String, dynamic> informedConsent = signatureResult.toJson();
 

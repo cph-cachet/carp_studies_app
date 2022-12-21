@@ -55,7 +55,7 @@ abstract class SerializableViewModel<D extends DataModel> extends ViewModel {
 
   /// Current path and filename of the data.
   Future<String> get filename async {
-    String path = await Settings().deploymentBasePath ?? '';
+    String path = await LocalSettings().deploymentBasePath ?? '';
     return '$path/$runtimeType.json';
   }
 
@@ -114,6 +114,17 @@ class DailyMeasure {
       .substring(0, 3);
 }
 
+/// A measure for a specific hour of the day. [hour] and [minute] is the time of the day in 24 hour format.
+/// [hour] is numbered in accordance with Dart [DateTime] a day starts with 0.
+class HourlyMeasure {
+  final int hour;
+  final int minute;
+
+  HourlyMeasure(this.hour, this.minute);
+
+  String toString() => '$hour:$minute';
+}
+
 /// The view model for the entire app.
 class CarpStydyAppViewModel extends ViewModel {
   final DataVisualizationPageViewModel _dataVisualizationPageViewModel =
@@ -121,6 +132,7 @@ class CarpStydyAppViewModel extends ViewModel {
   final StudyPageViewModel _studyPageViewModel = StudyPageViewModel();
   final TaskListPageViewModel _taskListPageViewModel = TaskListPageViewModel();
   final ProfilePageViewModel _profilePageViewModel = ProfilePageViewModel();
+  final DevicesPageViewModel _devicesPageViewModel = DevicesPageViewModel();
 
   CarpStydyAppViewModel() : super();
 
@@ -129,6 +141,7 @@ class CarpStydyAppViewModel extends ViewModel {
   StudyPageViewModel get studyPageViewModel => _studyPageViewModel;
   TaskListPageViewModel get taskListPageViewModel => _taskListPageViewModel;
   ProfilePageViewModel get profilePageViewModel => _profilePageViewModel;
+  DevicesPageViewModel get devicesPageViewModel => _devicesPageViewModel;
 
   void init(SmartphoneDeploymentController controller) {
     super.init(controller);
@@ -136,5 +149,6 @@ class CarpStydyAppViewModel extends ViewModel {
     _studyPageViewModel.init(controller);
     _taskListPageViewModel.init(controller);
     _profilePageViewModel.init(controller);
+    _devicesPageViewModel.init(controller);
   }
 }

@@ -5,26 +5,27 @@ class StudyPage extends StatefulWidget {
   const StudyPage(this.model);
 
   @override
-  _StudyPageState createState() => _StudyPageState();
+  StudyPageState createState() => StudyPageState();
 }
 
-class _StudyPageState extends State<StudyPage> {
+class StudyPageState extends State<StudyPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
+          children: [
             CarpAppBar(),
-            //StudyCard(),
             Flexible(
               child: StreamBuilder<int>(
                   stream: widget.model.messageStream,
                   builder: (context, AsyncSnapshot<int> snapshot) {
                     return CustomScrollView(
                       slivers: [
-                        CarpBanner(),
+                        DetailsBanner(
+                            widget.model.title, './assets/images/kids.png',
+                            isCarpBanner: true),
                         SliverList(
                           delegate: SliverChildBuilderDelegate(
                             (BuildContext context, int index) =>
@@ -74,7 +75,9 @@ class _StudyPageState extends State<StudyPage> {
                   ? Expanded(
                       child: Container(
                       height: 150.0,
-                      color: Color(0xFFF1F9FF),
+                      color: Theme.of(context)
+                          .colorScheme
+                          .secondary, //Color(0xFFF1F9FF),
                       child: messageImage,
                     ))
                   : SizedBox.shrink()
@@ -104,11 +107,18 @@ class _StudyPageState extends State<StudyPage> {
                           .toLowerCase()) +
                       ' - ' +
                       timeago.format(
-                          DateTime.now().subtract(Duration(
-                              days: message.timestamp.day,
-                              hours: message.timestamp.hour,
-                              minutes: message.timestamp.minute)),
-                          locale: Localizations.localeOf(context).languageCode),
+                        DateTime.now().copyWithAdditional(
+                            years:
+                                -DateTime.now().year + message.timestamp.year,
+                            months:
+                                -DateTime.now().month + message.timestamp.month,
+                            days: -DateTime.now().day + message.timestamp.day,
+                            hours:
+                                -DateTime.now().hour + message.timestamp.hour,
+                            minutes: -DateTime.now().minute +
+                                message.timestamp.minute),
+                        locale: Localizations.localeOf(context).languageCode,
+                      ),
                   style: aboutCardSubtitleStyle.copyWith(
                       color: Theme.of(context).primaryColor)),
             ]),
@@ -136,14 +146,14 @@ class _StudyPageState extends State<StudyPage> {
               SizedBox(width: 15),
             ]),
             SizedBox(height: 5),
-            Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-              Icon(Icons.touch_app, color: Theme.of(context).primaryColor),
-              // Text(locale.translate("pages.about.message.read_more"),
-              //     style: aboutCardContentStyle.copyWith(
-              //         color: Theme.of(context).primaryColor, fontStyle: FontStyle.italic),
-              //     textAlign: TextAlign.right),
-              SizedBox(width: 15),
-            ]),
+            // Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+            //   Icon(Icons.touch_app, color: Theme.of(context).primaryColor, size: 18),
+            //   // Text(locale.translate("pages.about.message.read_more"),
+            //   //     style: aboutCardContentStyle.copyWith(
+            //   //         color: Theme.of(context).primaryColor, fontStyle: FontStyle.italic),
+            //   //     textAlign: TextAlign.right),
+            //   SizedBox(width: 15),
+            // ]),
             SizedBox(height: 10),
           ],
         ),
@@ -153,6 +163,30 @@ class _StudyPageState extends State<StudyPage> {
       ),
       elevation: 4,
       margin: EdgeInsets.all(5),
+    );
+  }
+}
+
+extension CopyWithAdditional on DateTime {
+  DateTime copyWithAdditional({
+    int years = 0,
+    int months = 0,
+    int days = 0,
+    int hours = 0,
+    int minutes = 0,
+    int seconds = 0,
+    int milliseconds = 0,
+    int microseconds = 0,
+  }) {
+    return DateTime(
+      year + years,
+      month + months,
+      day + days,
+      hour + hours,
+      minute + minutes,
+      second + seconds,
+      millisecond + milliseconds,
+      microsecond + microseconds,
     );
   }
 }

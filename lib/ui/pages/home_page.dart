@@ -2,7 +2,7 @@ part of carp_study_app;
 
 class HomePage extends StatefulWidget {
   final HomePageState state = HomePageState();
-  HomePage({Key? key}) : super(key: key);
+  HomePage({super.key});
   HomePageState createState() => state;
 }
 
@@ -16,11 +16,12 @@ class HomePageState extends State<HomePage> {
 
     // check for permissions and start sensing - with a small delay
     bloc.configurePermissions(context).then(
-        (_) => Future.delayed(const Duration(seconds: 3), () => bloc.start()));
+        (_) => Future.delayed(const Duration(seconds: 10), () => bloc.start()));
 
     _pages.add(TaskListPage(bloc.data.taskListPageViewModel));
     _pages.add(StudyPage(bloc.data.studyPageViewModel));
     _pages.add(DataVisualizationPage(bloc.data.dataVisualizationPageViewModel));
+    _pages.add(DevicesPage());
   }
 
   @override
@@ -47,7 +48,9 @@ class HomePageState extends State<HomePage> {
     return Scaffold(
       body: _pages[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
         selectedItemColor: Theme.of(context).primaryColor,
+        //unselectedItemColor: Theme.of(context).primaryColor.withOpacity(0.8),
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.playlist_add_check_outlined),
@@ -62,6 +65,10 @@ class HomePageState extends State<HomePage> {
               icon: Icon(Icons.leaderboard_outlined),
               label: locale.translate('app_home.nav_bar_item.data'),
               activeIcon: Icon(Icons.leaderboard)),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.devices_other_outlined),
+              label: locale.translate('app_home.nav_bar_item.devices'),
+              activeIcon: Icon(Icons.devices_other)),
         ],
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,

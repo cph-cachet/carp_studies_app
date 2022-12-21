@@ -3,7 +3,7 @@ part of carp_study_app;
 /// A local in-memory resource manager handling:
 ///  * informed consent
 ///  * localization
-///  * study descriptions
+///  * messages
 ///
 /// Localization json files should be added to the app as assets in the
 /// `assets/lang_local` folder and added to the `pubsepc.yaml` file.
@@ -17,17 +17,18 @@ class LocalResourceManager
 
   LocalResourceManager._() {
     // to initialize json serialization for RP classes
-    RPOrderedTask(identifier: '', steps: []);
+    ResearchPackage();
   }
 
   @override
   Future initialize() async {
     setMessage(Message(
       type: MessageType.announcement,
-      title: 'Study overview',
+      title: 'CACHET Research Platform',
       subTitle: '',
-      message: 'Click here to get a preview of the WristAngel Study',
-      url: 'https://docdro.id/rk21nkz',
+      message:
+          'Click here to see a description of the CACHET Research Platform (CARP)',
+      url: 'https://carp.cachet.dk/',
     ));
     setMessage(Message(
       type: MessageType.article,
@@ -35,6 +36,7 @@ class LocalResourceManager
       subTitle: "pages.about.message.1.subtitle",
       message: "pages.about.message.1.message",
       imagePath: 'assets/images/park.png',
+      timestamp: DateTime(2021, 12, 14),
     ));
     setMessage(Message(
         type: MessageType.announcement,
@@ -102,27 +104,32 @@ class LocalResourceManager
       RPConsentSignature signature =
           RPConsentSignature(identifier: "signatureID");
 
-      RPConsentDocument consentDocument =
-          RPConsentDocument(title: 'CACHET Research Platfom', sections: [
-        overviewSection,
-        whoAreWeSection,
-        tasksSection,
-        durationSection,
-        dataHandlingSection,
-        locationSection,
-        rightsSection,
-        summarySection,
-      ])
-            ..addSignature(signature);
+      RPConsentDocument consentDocument = RPConsentDocument(
+        title: 'CACHET Research Platfom',
+        sections: [
+          overviewSection,
+          whoAreWeSection,
+          tasksSection,
+          durationSection,
+          dataHandlingSection,
+          locationSection,
+          rightsSection,
+          summarySection,
+        ],
+      )..addSignature(signature);
 
       RPConsentReviewStep consentReviewStep = RPConsentReviewStep(
-          identifier: "consentreviewstepID", consentDocument: consentDocument)
-        ..title = "ic.review.title"
-        ..reasonForConsent = "ic.review.reason"
-        ..text = "ic.review.text";
+        identifier: "consentreviewstepID",
+        title: "ic.review.title",
+        text: "ic.review.text",
+        consentDocument: consentDocument,
+        reasonForConsent: "ic.review.reason",
+      );
 
       RPVisualConsentStep consentVisualStep = RPVisualConsentStep(
-          identifier: "visualStep", consentDocument: consentDocument);
+        identifier: "visualStep",
+        consentDocument: consentDocument,
+      );
 
       RPCompletionStep completionStep = RPCompletionStep(
           identifier: "completionID",

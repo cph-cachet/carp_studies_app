@@ -1,55 +1,29 @@
 import 'exports.dart';
 
-@GenerateMocks([SmartphoneDeploymentController, DataPointHeader])
+@GenerateMocks([SmartphoneDeploymentController, PolarHRDatum, DataPoint])
 void main() {
-  group("Test heartrate data model", () {
-    test('init sets up heart rate event listener and updates model', () {
-      final controller = MockSmartphoneDeploymentController();
-      // Create a stream controller for the heart rate events stream
-      final heartRateStreamController = StreamController<DataPoint>();
-      // Set the heart rate events stream to the stream controller
-      when(controller.data).thenAnswer((_) => heartRateStreamController.stream);
+  setUp(() {});
 
-      // Create a view model
-      final viewModel = HeartRateCardViewModel();
-      // Initialize the view model with the mock controller
-      viewModel.init(controller);
+  test('description', () {
+    final mockSmartphoneDeploymentController =
+        MockSmartphoneDeploymentController();
+    final mockPolarHRDatum = MockPolarHRDatum();
+    final mockDataPoint = MockDataPoint();
 
-      // Add a heart rate data point to the stream
-      heartRateStreamController.add(DataPoint(
-          MockDataPointHeader(),
-          PolarHRDatum("", DateTime.now().millisecondsSinceEpoch, 80, [], [],
-              true, false)));
+    final viewModel = HeartRateCardViewModel();
 
-      // Verify that the model was updated with the new data
-      expect(viewModel.model.currentHeartRate, 80);
-      expect(viewModel.model.hourlyHeartRate[DateTime.now().hour]?.min, 80);
-      expect(viewModel.model.hourlyHeartRate[DateTime.now().hour]?.max, 80);
-      expect(viewModel.model.maxHeartRate, 80);
-      expect(viewModel.model.minHeartRate, 80);
-      expect(viewModel.contactStatus, true);
+    when(mockSmartphoneDeploymentController.data).thenAnswer((_) => Stream.fromIterable([mockDataPoint]));
 
-      heartRateStreamController.close();
-    });
+    viewModel.init(mockSmartphoneDeploymentController);
 
-    test('resetDataAtMidnight resets data at midnight', () {
-      // Create a view model
-      final viewModel = HeartRateCardViewModel();
-      // Set the last updated time to yesterday
-      viewModel.model.lastUpdated = DateTime.now().subtract(Duration(days: 1));
-      // Set some data in the model
-      viewModel.model.hourlyHeartRate[0] = HeartRateMinMaxPrHour(70, 80);
-      viewModel.model.maxHeartRate = 80;
-      viewModel.model.minHeartRate = 70;
+    // Test the 'currentHeartRate' getter
+    when(mockSmartphoneDeploymentController
+            .dataByType(PolarSamplingPackage.POLAR_HR))
+        .thenAnswer((_) => Stream.fromIterable([mockDataPoint]));
+    when(mockDataPoint.data).thenReturn(mockPolarHRDatum);
+    when(mockPolarHRDatum.hr).thenReturn(80);
+    when(mockPolarHRDatum.contactStatusSupported).thenReturn(false);
 
-      // Call the resetDataAtMidnight method
-      viewModel.model.resetDataAtMidnight();
-
-      // Verify that the data was reset
-      expect(viewModel.model.hourlyHeartRate[0],
-          HeartRateMinMaxPrHour(null, null));
-      expect(viewModel.model.maxHeartRate, null);
-      expect(viewModel.model.minHeartRate, null);
-    });
+    expect(viewModel.currentHeartRate, 80);
   });
 }

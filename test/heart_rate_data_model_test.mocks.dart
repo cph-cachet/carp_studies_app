@@ -7,6 +7,7 @@ import 'dart:async' as _i5;
 
 import 'package:carp_core/carp_core.dart' as _i3;
 import 'package:carp_mobile_sensing/carp_mobile_sensing.dart' as _i2;
+import 'package:carp_polar_package/carp_polar_package.dart' as _i6;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:permission_handler/permission_handler.dart' as _i4;
 
@@ -66,6 +67,27 @@ class _FakeStudyDeploymentStatus_3 extends _i1.SmartFake
 
 class _FakeDataFormat_4 extends _i1.SmartFake implements _i3.DataFormat {
   _FakeDataFormat_4(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeDateTime_5 extends _i1.SmartFake implements DateTime {
+  _FakeDateTime_5(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeDataPointHeader_6 extends _i1.SmartFake
+    implements _i3.DataPointHeader {
+  _FakeDataPointHeader_6(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -354,14 +376,183 @@ class MockSmartphoneDeploymentController extends _i1.Mock
       ) as _i5.Future<void>);
 }
 
-/// A class which mocks [DataPointHeader].
+/// A class which mocks [PolarHRDatum].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockDataPointHeader extends _i1.Mock implements _i3.DataPointHeader {
-  MockDataPointHeader() {
+class MockPolarHRDatum extends _i1.Mock implements _i6.PolarHRDatum {
+  MockPolarHRDatum() {
     _i1.throwOnMissingStub(this);
   }
 
+  @override
+  int get hr => (super.noSuchMethod(
+        Invocation.getter(#hr),
+        returnValue: 0,
+      ) as int);
+  @override
+  set hr(int? _hr) => super.noSuchMethod(
+        Invocation.setter(
+          #hr,
+          _hr,
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  List<int> get rrs => (super.noSuchMethod(
+        Invocation.getter(#rrs),
+        returnValue: <int>[],
+      ) as List<int>);
+  @override
+  set rrs(List<int>? _rrs) => super.noSuchMethod(
+        Invocation.setter(
+          #rrs,
+          _rrs,
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  List<int> get rrsMs => (super.noSuchMethod(
+        Invocation.getter(#rrsMs),
+        returnValue: <int>[],
+      ) as List<int>);
+  @override
+  set rrsMs(List<int>? _rrsMs) => super.noSuchMethod(
+        Invocation.setter(
+          #rrsMs,
+          _rrsMs,
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  bool get contactStatus => (super.noSuchMethod(
+        Invocation.getter(#contactStatus),
+        returnValue: false,
+      ) as bool);
+  @override
+  set contactStatus(bool? _contactStatus) => super.noSuchMethod(
+        Invocation.setter(
+          #contactStatus,
+          _contactStatus,
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  bool get contactStatusSupported => (super.noSuchMethod(
+        Invocation.getter(#contactStatusSupported),
+        returnValue: false,
+      ) as bool);
+  @override
+  set contactStatusSupported(bool? _contactStatusSupported) =>
+      super.noSuchMethod(
+        Invocation.setter(
+          #contactStatusSupported,
+          _contactStatusSupported,
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  _i3.DataFormat get format => (super.noSuchMethod(
+        Invocation.getter(#format),
+        returnValue: _FakeDataFormat_4(
+          this,
+          Invocation.getter(#format),
+        ),
+      ) as _i3.DataFormat);
+  @override
+  String get deviceIdentifier => (super.noSuchMethod(
+        Invocation.getter(#deviceIdentifier),
+        returnValue: '',
+      ) as String);
+  @override
+  set deviceIdentifier(String? _deviceIdentifier) => super.noSuchMethod(
+        Invocation.setter(
+          #deviceIdentifier,
+          _deviceIdentifier,
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  set deviceTimestamp(int? _deviceTimestamp) => super.noSuchMethod(
+        Invocation.setter(
+          #deviceTimestamp,
+          _deviceTimestamp,
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  set id(String? _id) => super.noSuchMethod(
+        Invocation.setter(
+          #id,
+          _id,
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  DateTime get timestamp => (super.noSuchMethod(
+        Invocation.getter(#timestamp),
+        returnValue: _FakeDateTime_5(
+          this,
+          Invocation.getter(#timestamp),
+        ),
+      ) as DateTime);
+  @override
+  set timestamp(DateTime? _timestamp) => super.noSuchMethod(
+        Invocation.setter(
+          #timestamp,
+          _timestamp,
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  set format(_i3.DataFormat? _format) => super.noSuchMethod(
+        Invocation.setter(
+          #format,
+          _format,
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  Map<String, dynamic> toJson() => (super.noSuchMethod(
+        Invocation.method(
+          #toJson,
+          [],
+        ),
+        returnValue: <String, dynamic>{},
+      ) as Map<String, dynamic>);
+  @override
+  bool equivalentTo(_i2.ConditionalEvent? event) => (super.noSuchMethod(
+        Invocation.method(
+          #equivalentTo,
+          [event],
+        ),
+        returnValue: false,
+      ) as bool);
+}
+
+/// A class which mocks [DataPoint].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockDataPoint extends _i1.Mock implements _i3.DataPoint {
+  MockDataPoint() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  set id(int? _id) => super.noSuchMethod(
+        Invocation.setter(
+          #id,
+          _id,
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  set createdByUserId(int? _createdByUserId) => super.noSuchMethod(
+        Invocation.setter(
+          #createdByUserId,
+          _createdByUserId,
+        ),
+        returnValueForMissingStub: null,
+      );
   @override
   set studyId(String? _studyId) => super.noSuchMethod(
         Invocation.setter(
@@ -371,66 +562,34 @@ class MockDataPointHeader extends _i1.Mock implements _i3.DataPointHeader {
         returnValueForMissingStub: null,
       );
   @override
-  set deviceRoleName(String? _deviceRoleName) => super.noSuchMethod(
-        Invocation.setter(
-          #deviceRoleName,
-          _deviceRoleName,
-        ),
-        returnValueForMissingStub: null,
-      );
-  @override
-  set triggerId(String? _triggerId) => super.noSuchMethod(
-        Invocation.setter(
-          #triggerId,
-          _triggerId,
-        ),
-        returnValueForMissingStub: null,
-      );
-  @override
-  set userId(String? _userId) => super.noSuchMethod(
-        Invocation.setter(
-          #userId,
-          _userId,
-        ),
-        returnValueForMissingStub: null,
-      );
-  @override
-  set uploadTime(DateTime? _uploadTime) => super.noSuchMethod(
-        Invocation.setter(
-          #uploadTime,
-          _uploadTime,
-        ),
-        returnValueForMissingStub: null,
-      );
-  @override
-  set startTime(DateTime? _startTime) => super.noSuchMethod(
-        Invocation.setter(
-          #startTime,
-          _startTime,
-        ),
-        returnValueForMissingStub: null,
-      );
-  @override
-  set endTime(DateTime? _endTime) => super.noSuchMethod(
-        Invocation.setter(
-          #endTime,
-          _endTime,
-        ),
-        returnValueForMissingStub: null,
-      );
-  @override
-  _i3.DataFormat get dataFormat => (super.noSuchMethod(
-        Invocation.getter(#dataFormat),
-        returnValue: _FakeDataFormat_4(
+  _i3.DataPointHeader get carpHeader => (super.noSuchMethod(
+        Invocation.getter(#carpHeader),
+        returnValue: _FakeDataPointHeader_6(
           this,
-          Invocation.getter(#dataFormat),
+          Invocation.getter(#carpHeader),
         ),
-      ) as _i3.DataFormat);
+      ) as _i3.DataPointHeader);
   @override
-  set dataFormat(_i3.DataFormat? _dataFormat) => super.noSuchMethod(
+  set carpHeader(_i3.DataPointHeader? _carpHeader) => super.noSuchMethod(
         Invocation.setter(
-          #dataFormat,
-          _dataFormat,
+          #carpHeader,
+          _carpHeader,
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  set data(_i3.Data? _data) => super.noSuchMethod(
+        Invocation.setter(
+          #data,
+          _data,
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  set carpBody(Map<String, dynamic>? data) => super.noSuchMethod(
+        Invocation.setter(
+          #carpBody,
+          data,
         ),
         returnValueForMissingStub: null,
       );

@@ -127,5 +127,4 @@ class _LoadingPageState extends State<LoadingPage> {
           children: [CircularProgressIndicator()],
         )));
   }
-
 }

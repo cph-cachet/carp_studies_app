@@ -30,7 +30,10 @@ class DetailsBanner extends StatelessWidget {
           child: InkWell(
             onTap: () {
               isCarpBanner == true
-                  ? Navigator.push(context, MaterialPageRoute(builder: (context) => StudyDetailsPage()))
+                  ? Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => StudyDetailsPage()))
                   : print("no");
             },
             child: Padding(
@@ -47,11 +50,13 @@ class DetailsBanner extends StatelessWidget {
                             foreground: Paint()
                               ..style = PaintingStyle.stroke
                               ..strokeWidth = 1
-                              ..color = Theme.of(context).colorScheme.secondary),
+                              ..color =
+                                  Theme.of(context).colorScheme.secondary),
                       ),
                       Text(
                         locale.translate(title),
-                        style: studyNameStyle.copyWith(color: Theme.of(context).primaryColor),
+                        style: studyNameStyle.copyWith(
+                            color: Theme.of(context).primaryColor),
                       ),
                     ],
                   ),
@@ -60,7 +65,9 @@ class DetailsBanner extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.end,
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            Icon(Icons.touch_app, color: Theme.of(context).primaryColor, size: 15),
+                            Icon(Icons.touch_app,
+                                color: Theme.of(context).primaryColor,
+                                size: 15),
                           ],
                         )
                       : SizedBox.shrink(),

@@ -83,7 +83,9 @@ ThemeData carpStudyDarkTheme = ThemeData.dark().copyWith(
               fontSize: 30.0,
             ),
         button: ThemeData.dark().textTheme.button!.copyWith(
-            fontWeight: FontWeight.w500, fontSize: 16.0, color: Colors.grey.shade800),
+            fontWeight: FontWeight.w500,
+            fontSize: 16.0,
+            color: Colors.grey.shade800),
       )
       .apply(
         fontFamily: 'MuseoSans',

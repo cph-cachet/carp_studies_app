@@ -40,9 +40,11 @@ class _ScoreboardCardWidgetState extends State<ScoreboardCardWidget> {
                   Column(
                     children: [
                       Text(widget.model.daysInStudy.toString(),
-                          style: scoreNumberStyle.copyWith(color: Theme.of(context).primaryColor)),
+                          style: scoreNumberStyle.copyWith(
+                              color: Theme.of(context).primaryColor)),
                       Text(locale.translate('cards.scoreboard.days'),
-                          style: scoreTextStyle.copyWith(color: Theme.of(context).primaryColor)),
+                          style: scoreTextStyle.copyWith(
+                              color: Theme.of(context).primaryColor)),
                     ],
                   ),
                   Container(
@@ -54,9 +56,11 @@ class _ScoreboardCardWidgetState extends State<ScoreboardCardWidget> {
                   Column(
                     children: [
                       Text(widget.model.taskCompleted.toString(),
-                          style: scoreNumberStyle.copyWith(color: Theme.of(context).primaryColor)),
+                          style: scoreNumberStyle.copyWith(
+                              color: Theme.of(context).primaryColor)),
                       Text(locale.translate('cards.scoreboard.tasks'),
-                          style: scoreTextStyle.copyWith(color: Theme.of(context).primaryColor)),
+                          style: scoreTextStyle.copyWith(
+                              color: Theme.of(context).primaryColor)),
                     ],
                   )
                 ],

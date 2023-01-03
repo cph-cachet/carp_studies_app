@@ -128,18 +128,4 @@ class _LoadingPageState extends State<LoadingPage> {
         )));
   }
 
-  Widget get _splashImage => Container(
-        decoration: const BoxDecoration(
-          image: const DecorationImage(
-            image: AssetImage("assets/images/splash_background.png"),
-            fit: BoxFit.cover,
-          ),
-        ),
-        child: Center(
-            child: Hero(
-          tag: "tick",
-          child: Image.asset('assets/images/splash_cachet.png',
-              width: 150.0, height: 150.0, scale: 1.0),
-        )),
-      );
 }

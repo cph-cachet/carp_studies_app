@@ -26,15 +26,17 @@ class StudyProgressCardViewModel extends ViewModel {
 
   StudyProgressCardViewModel() : super();
 
-  void init(SmartphoneDeploymentController controller) {
-    super.init(controller);
+  @override
+  void init(SmartphoneDeploymentController ctrl) {
+    super.init(ctrl);
     updateProgress();
   }
 
+  @override
   String toString() {
-    String _str = 'STUDY PROGRESS\t| #\n';
-    _progressTable.forEach((type, no) => _str += '$type\t| $no\n');
-    return _str;
+    String str = 'STUDY PROGRESS\t| #\n';
+    _progressTable.forEach((type, no) => str += '$type\t| $no\n');
+    return str;
   }
 
   void updateProgress() {

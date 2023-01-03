@@ -1,9 +1,9 @@
 part of carp_study_app;
 
 class HomePage extends StatefulWidget {
-  final HomePageState state = HomePageState();
-  HomePage({super.key});
-  HomePageState createState() => state;
+  const HomePage({super.key});
+  @override
+  HomePageState createState() => HomePageState();
 }
 
 class HomePageState extends State<HomePage> {
@@ -21,7 +21,7 @@ class HomePageState extends State<HomePage> {
     _pages.add(TaskListPage(bloc.data.taskListPageViewModel));
     _pages.add(StudyPage(bloc.data.studyPageViewModel));
     _pages.add(DataVisualizationPage(bloc.data.dataVisualizationPageViewModel));
-    _pages.add(DevicesPage());
+    _pages.add(const DevicesPage());
   }
 
   @override
@@ -53,22 +53,22 @@ class HomePageState extends State<HomePage> {
         //unselectedItemColor: Theme.of(context).primaryColor.withOpacity(0.8),
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.playlist_add_check_outlined),
+            icon: const Icon(Icons.playlist_add_check_outlined),
             label: locale.translate('app_home.nav_bar_item.tasks'),
-            activeIcon: Icon(Icons.playlist_add_check),
+            activeIcon: const Icon(Icons.playlist_add_check),
           ),
           BottomNavigationBarItem(
-              icon: Icon(Icons.announcement_outlined),
+              icon: const Icon(Icons.announcement_outlined),
               label: locale.translate('app_home.nav_bar_item.about'),
-              activeIcon: Icon(Icons.announcement)),
+              activeIcon: const Icon(Icons.announcement)),
           BottomNavigationBarItem(
-              icon: Icon(Icons.leaderboard_outlined),
+              icon: const Icon(Icons.leaderboard_outlined),
               label: locale.translate('app_home.nav_bar_item.data'),
-              activeIcon: Icon(Icons.leaderboard)),
+              activeIcon: const Icon(Icons.leaderboard)),
           BottomNavigationBarItem(
-              icon: Icon(Icons.devices_other_outlined),
+              icon: const Icon(Icons.devices_other_outlined),
               label: locale.translate('app_home.nav_bar_item.devices'),
-              activeIcon: Icon(Icons.devices_other)),
+              activeIcon: const Icon(Icons.devices_other)),
         ],
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
@@ -89,10 +89,11 @@ class HomePageState extends State<HomePage> {
 
   void _restart() {
     setState(() {
-      if (bloc.isRunning)
+      if (bloc.isRunning) {
         bloc.pause();
-      else
+      } else {
         bloc.resume();
+      }
     });
   }
 }

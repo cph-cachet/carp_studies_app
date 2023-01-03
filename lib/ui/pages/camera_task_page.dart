@@ -4,7 +4,7 @@ class CameraTaskPage extends StatefulWidget {
   final VideoUserTask mediaUserTask;
   final List<CameraDescription> cameras;
 
-  CameraTaskPage({
+  const CameraTaskPage({
     super.key,
     required this.mediaUserTask,
     required this.cameras,
@@ -21,7 +21,7 @@ class CameraTaskPageState extends State<CameraTaskPage> {
             _showCancelConfirmationDialog() as FutureOr<bool>),
         child: Scaffold(
           body: Container(
-              padding: EdgeInsets.symmetric(horizontal: 15),
+              padding: const EdgeInsets.symmetric(horizontal: 15),
               child: _stepSelector()),
         ),
       );
@@ -35,7 +35,7 @@ class CameraTaskPageState extends State<CameraTaskPage> {
             return _stepOne();
 
           default:
-            return SizedBox.shrink();
+            return const SizedBox.shrink();
         }
       });
 
@@ -49,7 +49,7 @@ class CameraTaskPageState extends State<CameraTaskPage> {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(height: 35),
+            const SizedBox(height: 35),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
@@ -61,27 +61,27 @@ class CameraTaskPageState extends State<CameraTaskPage> {
                         color: Theme.of(context).primaryColor, size: 30))
               ],
             ),
-            SizedBox(height: 35),
-            Image(
+            const SizedBox(height: 35),
+            const Image(
                 image: AssetImage('assets/icons/camera.png'),
                 width: 220,
                 height: 220),
-            SizedBox(height: 40),
+            const SizedBox(height: 40),
             Text(locale.translate(widget.mediaUserTask.title),
                 style: audioTitleStyle),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Text(locale.translate(widget.mediaUserTask.description),
                 style: audioContentStyle),
             Expanded(
               child: Align(
                 alignment: FractionalOffset.bottomCenter,
                 child: Padding(
-                  padding: EdgeInsets.only(bottom: 30.0),
+                  padding: const EdgeInsets.only(bottom: 30.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      SizedBox(width: 50),
-                      SizedBox(width: 30),
+                      const SizedBox(width: 50),
+                      const SizedBox(width: 30),
                       CircleAvatar(
                         radius: 30,
                         backgroundColor: CACHET.RED_1,
@@ -94,8 +94,8 @@ class CameraTaskPageState extends State<CameraTaskPage> {
                                   cameras: widget.cameras),
                             ),
                           ),
-                          padding: EdgeInsets.all(0),
-                          icon: Icon(Icons.camera_alt,
+                          padding: const EdgeInsets.all(0),
+                          icon: const Icon(Icons.camera_alt,
                               color: Colors.white, size: 30),
                         ),
                       ),
@@ -111,7 +111,7 @@ class CameraTaskPageState extends State<CameraTaskPage> {
                           Navigator.of(context).pop();
                         },
                       ),
-                      SizedBox(width: 30),
+                      const SizedBox(width: 30),
                     ],
                   ),
                 ),

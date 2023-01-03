@@ -4,15 +4,15 @@ class StudyProgressCardWidget extends StatefulWidget {
   final StudyProgressCardViewModel model;
 
   final List<Color> colors;
-  StudyProgressCardWidget(this.model,
-      {this.colors = const [CACHET.BLUE_1, CACHET.BLUE_3, CACHET.RED_1]});
+  const StudyProgressCardWidget(this.model,
+      {super.key, this.colors = const [CACHET.BLUE_1, CACHET.BLUE_3, CACHET.RED_1]});
 
   @override
-  _StudyProgressCardWidgetState createState() =>
-      _StudyProgressCardWidgetState();
+  StudyProgressCardWidgetState createState() =>
+      StudyProgressCardWidgetState();
 }
 
-class _StudyProgressCardWidgetState extends State<StudyProgressCardWidget> {
+class StudyProgressCardWidgetState extends State<StudyProgressCardWidget> {
   @override
   Widget build(BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;
@@ -35,7 +35,7 @@ class _StudyProgressCardWidgetState extends State<StudyProgressCardWidget> {
                   return Column(
                     children: [
                       Container(
-                        padding: EdgeInsets.only(left: 10),
+                        padding: const EdgeInsets.only(left: 10),
                         child: Row(
                           children: <Widget>[
                             Expanded(
@@ -43,7 +43,7 @@ class _StudyProgressCardWidgetState extends State<StudyProgressCardWidget> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
-                                  SizedBox(height: 5),
+                                  const SizedBox(height: 5),
                                   Text(
                                       locale.translate(
                                           'cards.study_progress.title'),
@@ -54,18 +54,16 @@ class _StudyProgressCardWidgetState extends State<StudyProgressCardWidget> {
                           ],
                         ),
                       ),
-                      Container(
+                      SizedBox(
                           height: 160,
                           child: HorizontalBar(
-                            names: this
-                                .widget
+                            names: widget
                                 .model
                                 .progress
                                 .map((progress) =>
                                     locale.translate(progress.state))
                                 .toList(),
-                            values: this
-                                .widget
+                            values: widget
                                 .model
                                 .progress
                                 .map((progress) => progress.value)

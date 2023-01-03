@@ -1,14 +1,14 @@
 part of carp_study_app;
 
 ThemeData carpStudyTheme = ThemeData.light().copyWith(
-  primaryColor: Color(0xFF206FA2),
-  colorScheme: ColorScheme.light().copyWith(
-      secondary: Color(0xFFFAFAFA),
-      primary: Color(0xFF206FA2),
-      tertiary: ui.Color.fromARGB(255, 230, 230, 230)),
+  primaryColor: const Color(0xFF206FA2),
+  colorScheme: const ColorScheme.light().copyWith(
+      secondary: const Color(0xFFFAFAFA),
+      primary: const Color(0xFF206FA2),
+      tertiary: const ui.Color.fromARGB(255, 230, 230, 230)),
   //accentColor: Color(0xFFFAFAFA), //Color(0xffcce8fa),
-  hoverColor: Color(0xFFF1F9FF),
-  scaffoldBackgroundColor: Color(0xFFFFFFFF),
+  hoverColor: const Color(0xFFF1F9FF),
+  scaffoldBackgroundColor: const Color(0xFFFFFFFF),
   textTheme: ThemeData.light()
       .textTheme
       .copyWith(
@@ -27,7 +27,7 @@ ThemeData carpStudyTheme = ThemeData.light().copyWith(
         subtitle1: ThemeData.light().textTheme.subtitle1!.copyWith(
             fontWeight: FontWeight.w600,
             fontSize: 20.0,
-            color: Color(0xFF206FA2)),
+            color: const Color(0xFF206FA2)),
         headline6: ThemeData.light().textTheme.headline6!.copyWith(
               fontWeight: FontWeight.w500,
               fontSize: 20.0,
@@ -46,14 +46,14 @@ ThemeData carpStudyTheme = ThemeData.light().copyWith(
 );
 
 ThemeData carpStudyDarkTheme = ThemeData.dark().copyWith(
-  primaryColor: Color(0xff81C7F3),
-  colorScheme: ColorScheme.dark().copyWith(
-    secondary: Color(0xff4C4C4C),
-    primary: Color(0xff81C7F3),
-    tertiary: (Color(0xff4C4C4C)),
+  primaryColor: const Color(0xff81C7F3),
+  colorScheme: const ColorScheme.dark().copyWith(
+    secondary: const Color(0xff4C4C4C),
+    primary: const Color(0xff81C7F3),
+    tertiary: (const Color(0xff4C4C4C)),
   ),
   // accentColor: Color(0xff4C4C4C),
-  disabledColor: Color(0xffcce8fa),
+  disabledColor: const Color(0xffcce8fa),
   textTheme: ThemeData.dark()
       .textTheme
       .copyWith(
@@ -72,7 +72,7 @@ ThemeData carpStudyDarkTheme = ThemeData.dark().copyWith(
         subtitle1: ThemeData.dark().textTheme.subtitle1!.copyWith(
               fontWeight: FontWeight.w600,
               fontSize: 20.0,
-              color: Color(0xff81C7F3),
+              color: const Color(0xff81C7F3),
             ),
         headline6: ThemeData.dark().textTheme.headline6!.copyWith(
               fontWeight: FontWeight.w500,
@@ -121,7 +121,7 @@ class AxisTheme {
       labelStyle: charts.TextStyleSpec(
         color: charts.MaterialPalette.gray.shade500,
       ),
-      lineStyle: charts.LineStyleSpec(
+      lineStyle: const charts.LineStyleSpec(
         color: charts.MaterialPalette.transparent,
       ),
     );
@@ -132,74 +132,74 @@ class AxisTheme {
       labelStyle: charts.TextStyleSpec(
         color: charts.MaterialPalette.gray.shade500,
       ),
-      lineStyle: charts.LineStyleSpec(
+      lineStyle: const charts.LineStyleSpec(
         color: charts.MaterialPalette.transparent,
       ),
     );
   }
 }
 
-TextStyle studyTitleStyle = TextStyle(
+TextStyle studyTitleStyle = const TextStyle(
     fontSize: 24,
     fontWeight: FontWeight.w600,
     color: Color.fromRGBO(32, 111, 162, 1));
 
 TextStyle readMoreStudyStyle =
-    TextStyle(fontSize: 12, fontWeight: FontWeight.w700);
+    const TextStyle(fontSize: 12, fontWeight: FontWeight.w700);
 
-TextStyle scoreNumberStyle = TextStyle(
+TextStyle scoreNumberStyle = const TextStyle(
     fontSize: 36,
     fontWeight: FontWeight.w800,
     color: Color.fromRGBO(32, 111, 162, 1));
 
-TextStyle scoreTextStyle = TextStyle(
+TextStyle scoreTextStyle = const TextStyle(
     fontSize: 12, fontWeight: FontWeight.w700, color: Color(0xff77A8C8));
 
 TextStyle aboutCardTitleStyle =
-    TextStyle(fontSize: 20, fontWeight: FontWeight.w700);
+    const TextStyle(fontSize: 20, fontWeight: FontWeight.w700);
 
 TextStyle aboutCardInfoStyle =
-    TextStyle(fontSize: 14, fontStyle: FontStyle.italic);
+    const TextStyle(fontSize: 14, fontStyle: FontStyle.italic);
 
 TextStyle aboutCardSubtitleStyle =
-    TextStyle(fontSize: 16, fontWeight: FontWeight.w600);
+    const TextStyle(fontSize: 16, fontWeight: FontWeight.w600);
 
 TextStyle profileSectionStyle =
-    TextStyle(fontSize: 12, fontWeight: FontWeight.w400, letterSpacing: 2);
+    const TextStyle(fontSize: 12, fontWeight: FontWeight.w400, letterSpacing: 2);
 
 TextStyle aboutCardContentStyle =
-    TextStyle(fontSize: 16, fontWeight: FontWeight.w400);
+    const TextStyle(fontSize: 16, fontWeight: FontWeight.w400);
 
 TextStyle sectionTitleStyle =
-    TextStyle(fontSize: 18, fontWeight: FontWeight.w700);
+    const TextStyle(fontSize: 18, fontWeight: FontWeight.w700);
 
-TextStyle inputFieldStyle = TextStyle(fontSize: 15, color: Color(0xff707070));
+TextStyle inputFieldStyle = const TextStyle(fontSize: 15, color: Color(0xff707070));
 
-TextStyle welcomeMessageStyle = TextStyle(
+TextStyle welcomeMessageStyle = const TextStyle(
     fontSize: 24, color: Color(0xff707070), fontWeight: FontWeight.bold);
 
 TextStyle studyDescriptionStyle =
-    TextStyle(fontSize: 12, fontWeight: FontWeight.w300);
+    const TextStyle(fontSize: 12, fontWeight: FontWeight.w300);
 TextStyle dataCardTitleStyle =
-    TextStyle(fontSize: 16, fontWeight: FontWeight.w400, letterSpacing: 1);
-TextStyle measuresStyle = TextStyle(fontSize: 18, fontWeight: FontWeight.w400);
-TextStyle legendStyle = TextStyle(fontSize: 12, fontWeight: FontWeight.w400);
+    const TextStyle(fontSize: 16, fontWeight: FontWeight.w400, letterSpacing: 1);
+TextStyle measuresStyle = const TextStyle(fontSize: 18, fontWeight: FontWeight.w400);
+TextStyle legendStyle = const TextStyle(fontSize: 12, fontWeight: FontWeight.w400);
 
 TextStyle audioTitleStyle =
-    TextStyle(fontSize: 22, fontWeight: FontWeight.w700);
+    const TextStyle(fontSize: 22, fontWeight: FontWeight.w700);
 TextStyle audioContentStyle =
-    TextStyle(fontSize: 16, fontWeight: FontWeight.w500);
+    const TextStyle(fontSize: 16, fontWeight: FontWeight.w500);
 TextStyle audioDescriptionStyle =
-    TextStyle(fontSize: 14, fontWeight: FontWeight.w400);
+    const TextStyle(fontSize: 14, fontWeight: FontWeight.w400);
 TextStyle audioInstructionStyle =
-    TextStyle(fontSize: 16, fontWeight: FontWeight.w400);
+    const TextStyle(fontSize: 16, fontWeight: FontWeight.w400);
 
 TextStyle profileTitleStyle =
-    TextStyle(fontSize: 20, fontWeight: FontWeight.w400);
+    const TextStyle(fontSize: 20, fontWeight: FontWeight.w400);
 TextStyle profileActionStyle =
-    TextStyle(fontSize: 20, fontWeight: FontWeight.w400);
+    const TextStyle(fontSize: 20, fontWeight: FontWeight.w400);
 
-TextStyle timerStyle = TextStyle(fontSize: 36, fontWeight: FontWeight.w600);
+TextStyle timerStyle = const TextStyle(fontSize: 36, fontWeight: FontWeight.w600);
 
 TextStyle studyNameStyle =
-    TextStyle(fontSize: 16.0, fontWeight: FontWeight.w800);
+    const TextStyle(fontSize: 16.0, fontWeight: FontWeight.w800);

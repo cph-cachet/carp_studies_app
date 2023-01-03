@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 part of carp_study_app;
 
 class CACHET {
@@ -33,7 +35,7 @@ class CACHET {
   static const Color GREEN_1 = Color.fromRGBO(144, 216, 143, 1);
   static const Color LIGHT_GREEN_1 = Color.fromRGBO(144, 216, 143, .2);
 
-  static Color pie = createMaterialColor(Color.fromRGBO(225, 244, 250, 1));
+  static Color pie = createMaterialColor(const Color.fromRGBO(225, 244, 250, 1));
 
   static const List<Color> COLOR_LIST = [
     Color(0xFF7FC9E3),
@@ -67,7 +69,7 @@ MaterialColor createMaterialColor(Color color) {
   for (int i = 1; i < 10; i++) {
     strengths.add(0.1 * i);
   }
-  strengths.forEach((strength) {
+  for (var strength in strengths) {
     final double ds = 0.5 - strength;
     swatch[(strength * 1000).round()] = Color.fromRGBO(
       r + ((ds < 0 ? r : (255 - r)) * ds).round(),
@@ -75,6 +77,6 @@ MaterialColor createMaterialColor(Color color) {
       b + ((ds < 0 ? b : (255 - b)) * ds).round(),
       1,
     );
-  });
+  }
   return MaterialColor(color.value, swatch as Map<int, Color>);
 }

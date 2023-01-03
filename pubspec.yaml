@@ -45,6 +45,10 @@ dependencies:
   fl_chart: ^0.55.2
   google_fonts: ^3.0.1
 
+# Overriding carp libraries to use github branch
+#
+# NOTE - you need to run `flutter pub upgrade` and `flutter pub get` in order to download the latest
+# versions from Github.
 dependency_overrides:
   carp_core:
     git:
@@ -115,6 +119,7 @@ dev_dependencies:
   json_serializable: any
   build_runner: any
   test: any
+  flutter_lints: any
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

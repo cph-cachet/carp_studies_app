@@ -1,7 +1,7 @@
 part of carp_study_app;
 
 class MeasuresCardViewModel extends ViewModel {
-  Map<String, int> _samplingTable = {};
+  final Map<String, int> _samplingTable = {};
 
   /// Stream of [DataPoint] measures.
   Stream<DataPoint>? get measureEvents => controller?.data;
@@ -16,7 +16,7 @@ class MeasuresCardViewModel extends ViewModel {
 
   /// A table with sampling size of each measure type
   Map<String, int> get samplingTable {
-    this.quietMeasureEvents?.listen((dataPoint) {
+    quietMeasureEvents?.listen((dataPoint) {
       String key = dataPoint.carpHeader.dataFormat.name;
       if (!_samplingTable.containsKey(key)) _samplingTable[key] = 0;
       _samplingTable[key] = _samplingTable[key]! + 1;
@@ -51,10 +51,11 @@ class MeasuresCardViewModel extends ViewModel {
   //   });
   // }
 
+  @override
   String toString() {
-    String _str = 'MEASURE\t| #\n';
-    samplingTable.forEach((type, no) => _str += '$type\t| $no\n');
-    return _str;
+    String str = 'MEASURE\t| #\n';
+    samplingTable.forEach((type, no) => str += '$type\t| $no\n');
+    return str;
   }
 
   // /// Order the measures based on the amount of entries

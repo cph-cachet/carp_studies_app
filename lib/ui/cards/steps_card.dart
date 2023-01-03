@@ -5,9 +5,10 @@ class StepsCardWidget extends StatefulWidget {
   final List<Color> colors;
   final List<charts.Series<DailySteps, String>> seriesList;
 
-  StepsCardWidget(
+  const StepsCardWidget(
     this.seriesList,
     this.model, {
+    super.key,
     this.colors = const [CACHET.BLUE_1],
   });
 
@@ -70,12 +71,11 @@ class StepsCardWidgetState extends State<StepsCardWidget> {
                             color: Theme.of(context).primaryColor),
                         heroTag: 'steps-card',
                         values: [
-                          '$_selectedSteps ' +
-                              locale.translate('cards.steps.steps')
+                          '$_selectedSteps ${locale.translate('cards.steps.steps')}'
                         ],
                         colors: widget.colors,
                       ),
-                      Container(
+                      SizedBox(
                         height: 160,
                         child: charts.BarChart(
                           widget.seriesList,
@@ -114,24 +114,25 @@ class StepsCardWidgetState extends State<StepsCardWidget> {
   }
 
   void _infoSelectionModelChanged(charts.SelectionModel model) {
-    if (model.hasDatumSelection)
+    if (model.hasDatumSelection) {
       setState(() {
         _selectedSteps = model.selectedSeries[0]
             .measureFn(model.selectedDatum[0].index) as int?;
       });
+    }
   }
 }
 
 class StepsOuterStatefulWidget extends StatefulWidget {
   final StepsCardViewModel model;
-  StepsOuterStatefulWidget(this.model);
+  const StepsOuterStatefulWidget(this.model, {super.key});
 
   @override
-  _StepsOuterStatefulWidgetState createState() =>
-      _StepsOuterStatefulWidgetState();
+  StepsOuterStatefulWidgetState createState() =>
+      StepsOuterStatefulWidgetState();
 }
 
-class _StepsOuterStatefulWidgetState extends State<StepsOuterStatefulWidget> {
+class StepsOuterStatefulWidgetState extends State<StepsOuterStatefulWidget> {
   @override
   Widget build(BuildContext context) {
     return StepsCardWidget.withSampleData(widget.model);

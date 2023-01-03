@@ -22,30 +22,31 @@ class HeartRateCardViewModel extends SerializableViewModel<HourlyHeartRate> {
   Stream<DataPoint>? get heartRateEvents =>
       controller?.data.where((dataPoint) => dataPoint.data is PolarHRDatum);
 
-  void init(SmartphoneDeploymentController controller) {
-    super.init(controller);
+  @override
+  void init(SmartphoneDeploymentController ctrl) {
+    super.init(ctrl);
 
     heartRateEvents?.listen(
       (heartRateDataPoint) {
-        PolarHRDatum? _heartRate = heartRateDataPoint.data as PolarHRDatum;
+        PolarHRDatum? heartRate = heartRateDataPoint.data as PolarHRDatum;
 
-        double _hr = _heartRate.hr.toDouble();
-        if (!(_hr > 0)) {
+        double hr = heartRate.hr.toDouble();
+        if (!(hr > 0)) {
           contactStatus = false;
           model.currentHeartRate = null;
           return;
         }
-        model.addHeartRate(DateTime.now().hour, _hr);
+        model.addHeartRate(DateTime.now().hour, hr);
 
-        if (_hr > (model.maxHeartRate ?? 0)) {
-          model.maxHeartRate = _hr;
+        if (hr > (model.maxHeartRate ?? 0)) {
+          model.maxHeartRate = hr;
         }
-        if (_hr < (model.minHeartRate ?? 100000)) {
-          model.minHeartRate = _hr;
+        if (hr < (model.minHeartRate ?? 100000)) {
+          model.minHeartRate = hr;
         }
 
         contactStatus =
-            _heartRate.contactStatusSupported ? _heartRate.contactStatus : true;
+            heartRate.contactStatusSupported ? heartRate.contactStatus : true;
 
         model.resetDataAtMidnight();
       },
@@ -110,11 +111,12 @@ class HourlyHeartRate extends DataModel {
     }
   }
 
+  @override
   String toString() {
-    String _str = 'time | heart rate\n';
+    String str = 'time | heart rate\n';
     hourlyHeartRate
-        .forEach((time, heartRate) => _str += '$time  | $heartRate\n');
-    return _str;
+        .forEach((time, heartRate) => str += '$time  | $heartRate\n');
+    return str;
   }
 
   @override

@@ -8,12 +8,19 @@ class ChartsLegend extends StatelessWidget {
   final String? routeName;
   final List<Color>? colors;
 
-  ChartsLegend({this.heroTag, this.iconAssetName, this.title, this.values, this.routeName, this.colors});
+  const ChartsLegend(
+      {super.key,
+      this.heroTag,
+      this.iconAssetName,
+      this.title,
+      this.values,
+      this.routeName,
+      this.colors});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(left: 10),
+      padding: const EdgeInsets.only(left: 10),
       child: Row(
         children: [
           /* Expanded(
@@ -26,7 +33,7 @@ class ChartsLegend extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(title!.toUpperCase(), style: dataCardTitleStyle),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Row(
                   children: values!
                       .asMap()
@@ -35,8 +42,9 @@ class ChartsLegend extends StatelessWidget {
                         (entry) => Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            Icon(Icons.circle, color: colors![entry.key], size: 12.0),
-                            Text(' ' + entry.value + ' ', style: legendStyle),
+                            Icon(Icons.circle,
+                                color: colors![entry.key], size: 12.0),
+                            Text(' ${entry.value} ', style: legendStyle),
                           ],
                         ),
                       )

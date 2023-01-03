@@ -4,8 +4,8 @@ class MobilityCardWidget extends StatefulWidget {
   final List<Color> colors;
   final List<charts.Series<DailyMobility, String>> seriesList;
   final MobilityCardViewModel model;
-  MobilityCardWidget(this.seriesList, this.model,
-      {this.colors = const [CACHET.BLUE_2, CACHET.BLUE_1, CACHET.RED_1]});
+  const MobilityCardWidget(this.seriesList, this.model,
+      {super.key, this.colors = const [CACHET.BLUE_2, CACHET.BLUE_1, CACHET.RED_1]});
 
   factory MobilityCardWidget.withSampleData(MobilityCardViewModel model) {
     return MobilityCardWidget(
@@ -42,16 +42,15 @@ class MobilityCardWidget extends StatefulWidget {
       ];
 
   @override
-  _MobilityCardWidgetState createState() => _MobilityCardWidgetState();
+  MobilityCardWidgetState createState() => MobilityCardWidgetState();
 }
 
-class _MobilityCardWidgetState extends State<MobilityCardWidget> {
+class MobilityCardWidgetState extends State<MobilityCardWidget> {
   // Axis rendering settings
   charts.RenderSpec<num> renderSpecNum = AxisTheme.axisThemeNum();
   charts.RenderSpec<DateTime> renderSpecTime = AxisTheme.axisThemeDateTime();
   charts.RenderSpec<String> renderSpecString = AxisTheme.axisThemeOrdinal();
 
-  // TODO: refactor
   final _measures = <String?, List<num?>>{
     'weeklyDistanceTraveled': [0, 0, 0],
     'weeklyHomeStay': [0, 0, 0],
@@ -60,7 +59,6 @@ class _MobilityCardWidgetState extends State<MobilityCardWidget> {
 
   @override
   void initState() {
-    // Get current day mobility // TODO: REFACTOR
     _measures['weeklyHomeStay']![1] =
         widget.model.weeklyHomeStay[DateTime.now().weekday];
     _measures['weeklyDistanceTraveled']![0] =
@@ -90,16 +88,13 @@ class _MobilityCardWidgetState extends State<MobilityCardWidget> {
                     color: Theme.of(context).primaryColor),
                 heroTag: 'mobility-card',
                 values: [
-                  '${_measures['weeklyDistanceTraveled']![0]} ' +
-                      locale.translate('cards.mobility.distance'),
-                  '${_measures['weeklyHomeStay']![1]} ' +
-                      locale.translate('cards.mobility.homestay'),
-                  '${_measures['weeklyPlaces']![2]} ' +
-                      locale.translate('cards.mobility.places'),
+                  '${_measures['weeklyDistanceTraveled']![0]} ${locale.translate('cards.mobility.distance')}',
+                  '${_measures['weeklyHomeStay']![1]} ${locale.translate('cards.mobility.homestay')}',
+                  '${_measures['weeklyPlaces']![2]} ${locale.translate('cards.mobility.places')}',
                 ],
                 colors: widget.colors,
               ),
-              Container(
+              SizedBox(
                 height: 160,
                 child: charts.OrdinalComboChart(
                   widget.seriesList,
@@ -109,11 +104,11 @@ class _MobilityCardWidgetState extends State<MobilityCardWidget> {
                   ),
                   primaryMeasureAxis: charts.NumericAxisSpec(
                       renderSpec: renderSpecNum,
-                      tickProviderSpec: charts.BasicNumericTickProviderSpec(
+                      tickProviderSpec: const charts.BasicNumericTickProviderSpec(
                           desiredTickCount: 3)),
                   secondaryMeasureAxis: charts.NumericAxisSpec(
                       renderSpec: renderSpecNum,
-                      tickProviderSpec: charts.BasicNumericTickProviderSpec(
+                      tickProviderSpec: const charts.BasicNumericTickProviderSpec(
                           desiredTickCount: 3)),
                   customSeriesRenderers: [
                     charts.LineRendererConfig(
@@ -153,18 +148,17 @@ class _MobilityCardWidgetState extends State<MobilityCardWidget> {
     );
   }
 
-  // TODO: refactor
   void _infoSelectionModelChanged(charts.SelectionModel model) {
     final selectedDatum = model.selectedDatum;
     if (selectedDatum.isNotEmpty) {
       setState(() {
-        selectedDatum.forEach((charts.SeriesDatum datumPair) {
+        for (var datumPair in selectedDatum) {
           _measures[datumPair.series.displayName] = [
             datumPair.datum.distance,
             datumPair.datum.homeStay,
             datumPair.datum.places
           ];
-        });
+        }
       });
     }
   }
@@ -172,14 +166,14 @@ class _MobilityCardWidgetState extends State<MobilityCardWidget> {
 
 class MobilityOuterStatefulWidget extends StatefulWidget {
   final MobilityCardViewModel model;
-  MobilityOuterStatefulWidget(this.model);
+  const MobilityOuterStatefulWidget(this.model, {super.key});
 
   @override
-  _MobilityOuterStatefulWidgetState createState() =>
-      _MobilityOuterStatefulWidgetState();
+  MobilityOuterStatefulWidgetState createState() =>
+      MobilityOuterStatefulWidgetState();
 }
 
-class _MobilityOuterStatefulWidgetState
+class MobilityOuterStatefulWidgetState
     extends State<MobilityOuterStatefulWidget> {
   @override
   Widget build(BuildContext context) {

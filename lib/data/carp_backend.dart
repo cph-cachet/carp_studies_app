@@ -4,19 +4,16 @@ part of carp_study_app;
 //     const JsonEncoder.withIndent(' ').convert(object);
 
 class CarpBackend {
-  static const String CANS_URI = "https://cans.cachet.dk";
+  static const String cansURI = "https://cans.cachet.dk";
 
-  static const Map<DeploymentMode, String> URIs = {
-    DeploymentMode.CARP_DEV: '/dev',
-    DeploymentMode.CARP_TEST: '/test',
-    DeploymentMode.CARP_STAGING: '/stage',
-    DeploymentMode.CARP_PRODUCTION: '',
+  static const Map<DeploymentMode, String> uris = {
+    DeploymentMode.carpDev: '/dev',
+    DeploymentMode.carpTest: '/test',
+    DeploymentMode.carpStaging: '/stage',
+    DeploymentMode.carpProduction: '',
   };
 
-  static const String CLIENT_ID = "carp";
-  static const String CLIENT_SECRET = "carp";
-
-  static CarpBackend _instance = CarpBackend._();
+  static final CarpBackend _instance = CarpBackend._();
 
   CarpApp? _app;
 
@@ -26,10 +23,10 @@ class CarpBackend {
   CarpUser? get user => CarpService().currentUser;
 
   /// The URI of the CANS server - depending on deployment mode.
-  String get uri => '$CANS_URI${URIs[bloc.deploymentMode]}';
+  String get uri => '$cansURI${uris[bloc.deploymentMode]}';
 
-  String get clientID => CLIENT_ID;
-  String get clientSecret => CLIENT_SECRET;
+  String get clientID => "carp";
+  String get clientSecret => "carp";
 
   OAuthToken? get oauthToken => LocalSettings().oauthToken;
   set oauthToken(OAuthToken? token) => LocalSettings().oauthToken = token;
@@ -63,7 +60,7 @@ class CarpBackend {
     _app = CarpApp(
       name: "CANS @ DTU",
       uri: Uri.parse(uri),
-      oauth: OAuthEndPoint(clientID: CLIENT_ID, clientSecret: CLIENT_SECRET),
+      oauth: OAuthEndPoint(clientID: clientID, clientSecret: clientSecret),
       studyId: LocalSettings().studyId,
       studyDeploymentId: LocalSettings().studyDeploymentId,
     );
@@ -108,12 +105,12 @@ class CarpBackend {
   /// Get the study invitation.
   Future<void> getStudyInvitation(BuildContext context) async {
     if (studyDeploymentId == null) {
-      ActiveParticipationInvitation? _invitation =
+      ActiveParticipationInvitation? invitation =
           await CarpParticipationService().getStudyInvitation(context);
-      debug('CARP Study Invitation: $_invitation');
+      debug('CARP Study Invitation: $invitation');
 
-      studyId = _invitation?.studyId! as String;
-      studyDeploymentId = _invitation?.studyDeploymentId! as String;
+      studyId = invitation?.studyId! as String;
+      studyDeploymentId = invitation?.studyDeploymentId! as String;
     }
     info('Study ID: $studyId');
     info('Deployment ID: $studyDeploymentId');

@@ -16,17 +16,19 @@ class StepsCardViewModel extends SerializableViewModel<WeeklySteps> {
   Stream<DataPoint>? get pedometerEvents =>
       controller?.data.where((dataPoint) => dataPoint.data is PedometerDatum);
 
-  void init(SmartphoneDeploymentController controller) {
-    super.init(controller);
+  @override
+  void init(SmartphoneDeploymentController ctrl) {
+    super.init(ctrl);
 
     // listen for pedometer events and count them
     pedometerEvents?.listen((pedometerDataPoint) {
-      PedometerDatum? _step = pedometerDataPoint.data as PedometerDatum?;
-      if (_lastStep != null)
+      PedometerDatum? step = pedometerDataPoint.data as PedometerDatum?;
+      if (_lastStep != null) {
         model.increateStepCount(
-            DateTime.now().weekday, _step!.stepCount! - _lastStep!.stepCount!);
+            DateTime.now().weekday, step!.stepCount! - _lastStep!.stepCount!);
+      }
 
-      _lastStep = _step;
+      _lastStep = step;
     });
   }
 }
@@ -44,7 +46,9 @@ class WeeklySteps extends DataModel {
 
   WeeklySteps() {
     // initialize the weekly steps table
-    for (int i = 1; i <= 7; i++) weeklySteps[i] = 0;
+    for (int i = 1; i <= 7; i++) {
+      weeklySteps[i] = 0;
+    }
   }
 
   /// The list of steps listed pr. weekday.
@@ -55,14 +59,17 @@ class WeeklySteps extends DataModel {
   void increateStepCount(int weekday, int steps) =>
       weeklySteps[weekday] = (weeklySteps[weekday] ?? 0) + steps;
 
+  @override
   String toString() {
-    String _str = ' day | steps\n';
-    weeklySteps.forEach((day, steps) => _str += '  $day  | $steps\n');
-    return _str;
+    String str = ' day | steps\n';
+    weeklySteps.forEach((day, steps) => str += '  $day  | $steps\n');
+    return str;
   }
 
+  @override
   WeeklySteps fromJson(Map<String, dynamic> json) =>
       _$WeeklyStepsFromJson(json);
+  @override
   Map<String, dynamic> toJson() => _$WeeklyStepsToJson(this);
 }
 

@@ -3,58 +3,58 @@ part of carp_study_app;
 final surveys = _Surveys();
 
 class _Surveys {
-  Survey _who5 = _WHO5Survey();
+  final Survey _who5 = _WHO5Survey();
   Survey get who5 => _who5;
 
-  Survey _demographics = _DemographicSurvey();
+  final Survey _demographics = _DemographicSurvey();
   Survey get demographics => _demographics;
 
-  Survey _symptoms = _SymptomsSurvey();
+  final Survey _symptoms = _SymptomsSurvey();
   Survey get symptoms => _symptoms;
 
-  Survey _parkinsons = _ParkinsonsSurvey();
+  final Survey _parkinsons = _ParkinsonsSurvey();
   Survey get parkinsons => _parkinsons;
 
-  Survey _parnas = _PARNASSurvey();
+  final Survey _parnas = _PARNASSurvey();
   Survey get parnas => _parnas;
 
-  Survey _exposure = _ExposureSurvey();
+  final Survey _exposure = _ExposureSurvey();
   Survey get exposure => _exposure;
 
-  Survey _control = _ControlSurvey();
+  final Survey _control = _ControlSurvey();
   Survey get control => _control;
 
-  Survey _controlParents = _ControlParentsSurvey();
+  final Survey _controlParents = _ControlParentsSurvey();
   Survey get controlParents => _controlParents;
 
-  Survey _patient = _PatientSurvey();
+  final Survey _patient = _PatientSurvey();
   Survey get patient => _patient;
 
-  Survey _patientParents = _PatientParentsSurvey();
+  final Survey _patientParents = _PatientParentsSurvey();
   Survey get patientParents => _patientParents;
 
-  Survey _ecological = _EcologicalSurvey();
+  final Survey _ecological = _EcologicalSurvey();
   Survey get ecological => _ecological;
 
-  Survey _ecologicalParents = _EcologicalParentsSurvey();
+  final Survey _ecologicalParents = _EcologicalParentsSurvey();
   Survey get ecologicalParents => _ecologicalParents;
 
-  Survey _appUX = _AppUXSurvey();
+  final Survey _appUX = _AppUXSurvey();
   Survey get appUX => _appUX;
 
-  Survey _informedConsent = _InformedConsentSurvey();
+  final Survey _informedConsent = _InformedConsentSurvey();
   Survey get informedConsent => _informedConsent;
 
-  Survey _trustScale = _TrustScaleSurvey();
+  final Survey _trustScale = _TrustScaleSurvey();
   Survey get trustScale => _trustScale;
 
-  Survey _timedExposure = _TimedExposureSurvey();
+  final Survey _timedExposure = _TimedExposureSurvey();
   Survey get timedExposure => _timedExposure;
 
-  Survey _symptomHierarchyObsessions = _SymptomHierarchySurveyObsessions();
+  final Survey _symptomHierarchyObsessions = _SymptomHierarchySurveyObsessions();
   Survey get symptomHierarchyObsessions => _symptomHierarchyObsessions;
 
-  Survey _symptomHierarchyCompulsions = _SymptomHierarchySurveyCompulsions();
+  final Survey _symptomHierarchyCompulsions = _SymptomHierarchySurveyCompulsions();
   Survey get symptomHierarchyCoumpulsions => _symptomHierarchyCompulsions;
 }
 
@@ -76,13 +76,18 @@ abstract class Survey {
 }
 
 class _SymptomHierarchySurveyObsessions implements Survey {
+  @override
   String get title => "survey.symptoms.obsessions.title";
 
+  @override
   String get description => "survey.symptoms.obsessions.description";
+  @override
   Duration get expire => const Duration(days: 7);
 
+  @override
   int get minutesToComplete => 5;
 
+  @override
   RPTask get survey =>
       RPOrderedTask(identifier: "survey.symptoms.obsessions.title", steps: [
         RPInstructionStep(
@@ -166,13 +171,18 @@ class _SymptomHierarchySurveyObsessions implements Survey {
 }
 
 class _SymptomHierarchySurveyCompulsions implements Survey {
+  @override
   String get title => "survey.symptoms.compulsions.title";
 
+  @override
   String get description => "survey.symptoms.compulsions.description";
+  @override
   Duration get expire => const Duration(days: 7);
 
+  @override
   int get minutesToComplete => 5;
 
+  @override
   RPTask get survey =>
       RPOrderedTask(identifier: "survey.symptoms.compulsions.title", steps: [
         RPInstructionStep(
@@ -257,15 +267,19 @@ class _SymptomHierarchySurveyCompulsions implements Survey {
 }
 
 class _TimedExposureSurvey implements Survey {
+  @override
   String get title => "survey.symptoms.exposure.title";
 
+  @override
   String get description => "survey.symptoms.exposure.description";
 
+  @override
   Duration get expire => const Duration(days: 7);
 
+  @override
   int get minutesToComplete => 10;
 
-  RPImageChoiceAnswerFormat _imageChoiceAnswerFormat =
+  final RPImageChoiceAnswerFormat _imageChoiceAnswerFormat =
       RPImageChoiceAnswerFormat(choices: [
     RPImageChoice(
         imageUrl: 'assets/icons/very-sad.png',
@@ -289,6 +303,7 @@ class _TimedExposureSurvey implements Survey {
         description: "survey.answerFormat.discomfort.calm"),
   ]);
 
+  @override
   RPTask get survey =>
       RPOrderedTask(identifier: "survey.symptoms.exposure.title", steps: [
         RPQuestionStep(
@@ -300,12 +315,16 @@ class _TimedExposureSurvey implements Survey {
 }
 
 class _TrustScaleSurvey implements Survey {
+  @override
   String get title => "survey.trustscale.title";
 
+  @override
   String get description => "survey.trustscale.description";
 
+  @override
   Duration get expire => const Duration(days: 7);
 
+  @override
   int get minutesToComplete => 2;
 
   RPChoiceAnswerFormat choiceAnswerFormat1 = RPChoiceAnswerFormat(
@@ -319,6 +338,7 @@ class _TrustScaleSurvey implements Survey {
             text: "survey.answerFormat.agreement.strongly.agree", value: 3),
       ]);
 
+  @override
   RPTask get survey =>
       RPOrderedTask(identifier: "survey.trustscale.title", steps: [
         RPInstructionStep(
@@ -400,12 +420,16 @@ class _TrustScaleSurvey implements Survey {
 }
 
 class _InformedConsentSurvey implements Survey {
+  @override
   String get title => "survey.informedconsent.title";
 
+  @override
   String get description => "survey.informedconsent.description";
 
+  @override
   Duration get expire => const Duration(days: 7);
 
+  @override
   int get minutesToComplete => 4;
 
   RPChoiceAnswerFormat choiceAnswerFormat1 = RPChoiceAnswerFormat(
@@ -540,6 +564,7 @@ class _InformedConsentSurvey implements Survey {
             text: "survey.answerFormat.organization.extremely.cluttered",
             value: 3),
       ]);
+  @override
   RPTask get survey =>
       RPOrderedTask(identifier: "survey.informedconsent.title", steps: [
         RPInstructionStep(
@@ -615,12 +640,16 @@ class _InformedConsentSurvey implements Survey {
 }
 
 class _AppUXSurvey implements Survey {
+  @override
   String get title => "survey.appux.title";
 
+  @override
   String get description => "survey.appux.description";
 
+  @override
   Duration get expire => const Duration(days: 7);
 
+  @override
   int get minutesToComplete => 2;
 
   RPChoiceAnswerFormat choiceAnswerFormat1 = RPChoiceAnswerFormat(
@@ -720,6 +749,7 @@ class _AppUXSurvey implements Survey {
             text: "survey.answerFormat.innovation.extremely.leading", value: 3),
       ]);
 
+  @override
   RPTask get survey => RPOrderedTask(identifier: "survey.appux.title", steps: [
         RPInstructionStep(
             identifier: "survey.appux.instruction.id",
@@ -774,12 +804,16 @@ class _AppUXSurvey implements Survey {
 }
 
 class _EcologicalParentsSurvey implements Survey {
+  @override
   String get title => "survey.ecological.parents.title";
 
+  @override
   String get description => "survey.ecological.parents.description";
 
+  @override
   Duration get expire => const Duration(days: 1);
 
+  @override
   int get minutesToComplete => 10;
 
   RPChoiceAnswerFormat choiceAnswerFormat1 = RPChoiceAnswerFormat(
@@ -809,6 +843,7 @@ class _EcologicalParentsSurvey implements Survey {
         RPChoice(text: "survey.answerFormat.company.others", value: 5)
       ]);
 
+  @override
   RPTask get survey => RPOrderedTask(
         identifier: "survey.ecological.parents.title",
         steps: [
@@ -881,12 +916,16 @@ class _EcologicalParentsSurvey implements Survey {
 }
 
 class _EcologicalSurvey implements Survey {
+  @override
   String get title => "survey.ecological.child.title";
 
+  @override
   String get description => "survey.ecological.child.description";
 
+  @override
   Duration get expire => const Duration(days: 1);
 
+  @override
   int get minutesToComplete => 10;
 
   RPChoiceAnswerFormat choiceAnswerFormat1 = RPChoiceAnswerFormat(
@@ -915,6 +954,7 @@ class _EcologicalSurvey implements Survey {
         RPChoice(text: "survey.answerFormat.company.others", value: 5)
       ]);
 
+  @override
   RPTask get survey => RPOrderedTask(
         identifier: "survey.ecological.child.title",
         steps: [
@@ -988,11 +1028,15 @@ class _EcologicalSurvey implements Survey {
 }
 
 class _PatientParentsSurvey implements Survey {
+  @override
   String get title => "survey.biosensor.patient.parent.title";
 
+  @override
   String get description => "survey.biosensor.patient.parent.description";
+  @override
   Duration get expire => const Duration(days: 7);
 
+  @override
   int get minutesToComplete => 5;
 
   RPChoiceAnswerFormat choiceAnswerFormat1 = RPChoiceAnswerFormat(
@@ -1006,6 +1050,7 @@ class _PatientParentsSurvey implements Survey {
             text: "survey.answerFormat.agreement.strongly.agree", value: 3),
       ]);
 
+  @override
   RPTask get survey => RPOrderedTask(
         identifier: "survey.biosensor.patient.parent.title",
         steps: [
@@ -1095,11 +1140,15 @@ class _PatientParentsSurvey implements Survey {
 }
 
 class _PatientSurvey implements Survey {
+  @override
   String get title => "survey.biosensor.patient.title";
 
+  @override
   String get description => "survey.biosensor.patient.description";
+  @override
   Duration get expire => const Duration(days: 7);
 
+  @override
   int get minutesToComplete => 5;
 
   RPChoiceAnswerFormat choiceAnswerFormat1 = RPChoiceAnswerFormat(
@@ -1113,6 +1162,7 @@ class _PatientSurvey implements Survey {
             text: "survey.answerFormat.agreement.strongly.agree", value: 3),
       ]);
 
+  @override
   RPTask get survey => RPOrderedTask(
         identifier: "survey.biosensor.patient.title",
         steps: [
@@ -1202,11 +1252,15 @@ class _PatientSurvey implements Survey {
 }
 
 class _ControlParentsSurvey implements Survey {
+  @override
   String get title => "survey.biosensor.control.parent.title";
 
+  @override
   String get description => "survey.biosensor.control.parent.description";
+  @override
   Duration get expire => const Duration(days: 7);
 
+  @override
   int get minutesToComplete => 5;
 
   RPChoiceAnswerFormat choiceAnswerFormat1 = RPChoiceAnswerFormat(
@@ -1220,6 +1274,7 @@ class _ControlParentsSurvey implements Survey {
             text: "survey.answerFormat.agreement.strongly.agree", value: 3),
       ]);
 
+  @override
   RPTask get survey => RPOrderedTask(
         identifier: "survey.biosensor.control.parent.title",
         steps: [
@@ -1309,11 +1364,15 @@ class _ControlParentsSurvey implements Survey {
 }
 
 class _ControlSurvey implements Survey {
+  @override
   String get title => "survey.biosensor.control.patient.title";
 
+  @override
   String get description => "survey.biosensor.control.patient.description";
+  @override
   Duration get expire => const Duration(days: 7);
 
+  @override
   int get minutesToComplete => 5;
 
   RPChoiceAnswerFormat choiceAnswerFormat1 = RPChoiceAnswerFormat(
@@ -1327,6 +1386,7 @@ class _ControlSurvey implements Survey {
             text: "survey.answerFormat.agreement.strongly.agree", value: 3),
       ]);
 
+  @override
   RPTask get survey => RPOrderedTask(
         identifier: "survey.biosensor.control.patient.title",
         steps: [
@@ -1416,13 +1476,17 @@ class _ControlSurvey implements Survey {
 }
 
 class _ExposureSurvey implements Survey {
+  @override
   String get title => "survey.exposure.title";
 
+  @override
   String get description => "survey.exposure.description";
 
+  @override
   Duration get expire => const Duration(days: 1);
 
-  int get minutesToComplete => 10; // TODO: review time
+  @override
+  int get minutesToComplete => 10;
 
   RPChoiceAnswerFormat choiceAnswerFormat1 = RPChoiceAnswerFormat(
       answerStyle: RPChoiceAnswerStyle.SingleChoice,
@@ -1487,6 +1551,7 @@ class _ExposureSurvey implements Survey {
         RPChoice(text: "survey.answerFormat.discomfort.less", value: 3),
       ]);
 
+  @override
   RPTask get survey =>
       RPOrderedTask(identifier: "survey.exposure.title", steps: [
         RPInstructionStep(
@@ -1515,7 +1580,6 @@ class _ExposureSurvey implements Survey {
           answerFormat: choiceAnswerFormat3,
         ),
 
-        // TODO: if previous question is no skip
         RPQuestionStep(
           identifier: "survey.exposure.question.4.id",
           title: "survey.exposure.question.4.text",
@@ -1536,7 +1600,6 @@ class _ExposureSurvey implements Survey {
           answerFormat: choiceAnswerFormat3,
         ),
 
-        // TODO: if previous question is no skip
         RPQuestionStep(
           identifier: "survey.exposure.question.7.id",
           title: "survey.exposure.question.7.text",
@@ -1563,7 +1626,6 @@ class _ExposureSurvey implements Survey {
             imagePath: 'assets/images/timer_task.png',
             text: "survey.exposure.instruction.3.text"),
 
-        // TODO: TIMER STEP IN BETWEEN ALL OF THE FOLLOWING QUESTIONS
         RPQuestionStep(
           identifier: "survey.exposure.question.10.id",
           title: "survey.exposure.question.10.text",
@@ -1620,16 +1682,20 @@ class _ExposureSurvey implements Survey {
 }
 
 class _ExposureOldSurvey implements Survey {
+  @override
   String get title => 'Tvangstanker & -handlinger';
 
+  @override
   String get description =>
       'Skriv tvangstanken og/eller tvangshandlingen som du arbejder på';
 
+  @override
   Duration get expire => const Duration(days: 2);
 
+  @override
   int get minutesToComplete => 10;
 
-  RPImageChoiceAnswerFormat _imageChoiceAnswerFormat =
+  final RPImageChoiceAnswerFormat _imageChoiceAnswerFormat =
       RPImageChoiceAnswerFormat(choices: [
     RPImageChoice(
         imageUrl: 'assets/icons/very-sad.png',
@@ -1665,7 +1731,7 @@ class _ExposureOldSurvey implements Survey {
       choices: [
         RPChoice(
             text: "Denne eksponeringsopgave handler ikke om en tvangstanke",
-            value: 0), // TODO: if 0 is selected, no other option is available
+            value: 0),
         RPChoice(
             text: "Forurening/kontaminering (snavs, bakterier, sygdomme)",
             value: 1),
@@ -1701,7 +1767,7 @@ class _ExposureOldSurvey implements Survey {
             text:
                 "Ubehagelig fornemmelse af, at det ikke føles rigtigt, føles ufuldstændigt eller tomhedsfornemmelse, når ritualer ikke udføres på en bestemt måde",
             value: 15),
-        RPChoice(text: "Andet", value: 16), // TODO: textbox to describe
+        RPChoice(text: "Andet", value: 16),
       ]);
 
   RPChoiceAnswerFormat choiceAnswerFormat3 = RPChoiceAnswerFormat(
@@ -1709,7 +1775,7 @@ class _ExposureOldSurvey implements Survey {
       choices: [
         RPChoice(
             text: "Denne eksponeringsopgave handler ikke om en tvangstanke",
-            value: 0), // TODO: if 0 is selected, no other option is available
+            value: 0),
         RPChoice(text: "Renlighed eller rengøring", value: 1),
         RPChoice(text: "Kontrollere eller tjekke", value: 2),
         RPChoice(text: "Gentage", value: 3),
@@ -1736,7 +1802,7 @@ class _ExposureOldSurvey implements Survey {
         RPChoice(text: "Trække hår ud", value: 16),
         RPChoice(
             text: "Anden selvskadende eller selvdestruktiv adfærd", value: 17),
-        RPChoice(text: "Andet", value: 18), // TODO: textbox to describe
+        RPChoice(text: "Andet", value: 18),
       ]);
 
   RPChoiceAnswerFormat choiceAnswerFormat6 = RPChoiceAnswerFormat(
@@ -1747,6 +1813,7 @@ class _ExposureOldSurvey implements Survey {
         RPChoice(text: "Nej", value: 2),
       ]);
 
+  @override
   RPTask get survey => RPOrderedTask(identifier: "demo_survey", steps: [
         RPQuestionStep(
           identifier: "questionStep1ID",
@@ -1835,12 +1902,16 @@ class _ExposureOldSurvey implements Survey {
 }
 
 class _PARNASSurvey implements Survey {
+  @override
   String get title => 'Positive & Negative Affect';
 
+  @override
   String get description => 'A short survey on you current fealings';
 
+  @override
   Duration get expire => const Duration(days: 2);
 
+  @override
   int get minutesToComplete => 4;
 
   final RPChoiceAnswerFormat _locationChoices = RPChoiceAnswerFormat(
@@ -1866,6 +1937,7 @@ class _PARNASSurvey implements Survey {
         RPChoice(text: "Not at all", value: 1),
       ]);
 
+  @override
   RPTask get survey => RPOrderedTask(identifier: "demo_survey", steps: [
         RPInstructionStep(
             identifier: "parnas_instrux",
@@ -1936,12 +2008,16 @@ class _PARNASSurvey implements Survey {
 }
 
 class _WHO5Survey implements Survey {
+  @override
   String get title => "WHO5 Well-Being";
+  @override
   String get description => "A short 5-item survey on your well-being.";
+  @override
   int get minutesToComplete => 1;
+  @override
   Duration get expire => const Duration(days: 5);
 
-  static List<RPChoice> _choices = [
+  static final List<RPChoice> _choices = [
     RPChoice(text: "All of the time", value: 5),
     RPChoice(text: "Most of the time", value: 4),
     RPChoice(text: "More than half of the time", value: 3),
@@ -1953,6 +2029,7 @@ class _WHO5Survey implements Survey {
   final RPChoiceAnswerFormat _choiceAnswerFormat = RPChoiceAnswerFormat(
       answerStyle: RPChoiceAnswerStyle.SingleChoice, choices: _choices);
 
+  @override
   RPTask get survey => RPOrderedTask(identifier: "who5_survey", steps: [
         RPInstructionStep(
             identifier: "who_5_instrux",
@@ -1996,9 +2073,13 @@ class _WHO5Survey implements Survey {
 }
 
 class _DemographicSurvey implements Survey {
+  @override
   String get title => "Demographics";
+  @override
   String get description => "A short 4-item survey on your background.";
+  @override
   int get minutesToComplete => 2;
+  @override
   Duration get expire => const Duration(days: 5);
 
   final RPChoiceAnswerFormat _sexChoices = RPChoiceAnswerFormat(
@@ -2061,6 +2142,7 @@ class _DemographicSurvey implements Survey {
         RPChoice(text: "Prefer not to say", value: 7),
       ]);
 
+  @override
   RPTask get survey => RPOrderedTask(identifier: "demographic_survey", steps: [
         RPQuestionStep(
           identifier: "demographic_1",
@@ -2086,12 +2168,16 @@ class _DemographicSurvey implements Survey {
 }
 
 class _SymptomsSurvey implements Survey {
+  @override
   String get title => "Symptoms";
+  @override
   String get description => "A short 1-item survey on your daily symptoms.";
+  @override
   int get minutesToComplete => 1;
+  @override
   Duration get expire => const Duration(days: 1);
 
-  RPChoiceAnswerFormat _symptomsChoices = RPChoiceAnswerFormat(
+  final RPChoiceAnswerFormat _symptomsChoices = RPChoiceAnswerFormat(
       answerStyle: RPChoiceAnswerStyle.MultipleChoice,
       choices: [
         RPChoice(text: "None", value: 1),
@@ -2110,6 +2196,7 @@ class _SymptomsSurvey implements Survey {
         RPChoice(text: "Prefer not to say", value: 13),
       ]);
 
+  @override
   RPTask get survey => RPOrderedTask(identifier: "symptoms_survey", steps: [
         RPQuestionStep(
           identifier: "symptoms_1",
@@ -2122,13 +2209,17 @@ class _SymptomsSurvey implements Survey {
 // NOTE that normally we would spell Parkinson's with an "'", but this makes a conclict
 // when writing it to the SQLite database.
 class _ParkinsonsSurvey implements Survey {
+  @override
   String get title => "The Parkinsons Disease Activities of Daily Living Scale";
+  @override
   String get description =>
       "A new simple and brief subjective measure of disability in Parkinsons disease";
+  @override
   int get minutesToComplete => 1;
+  @override
   Duration get expire => const Duration(days: 1);
 
-  RPChoiceAnswerFormat _symptomsChoices = RPChoiceAnswerFormat(
+  final RPChoiceAnswerFormat _symptomsChoices = RPChoiceAnswerFormat(
       answerStyle: RPChoiceAnswerStyle.SingleChoice,
       choices: [
         RPChoice(
@@ -2173,6 +2264,7 @@ class _ParkinsonsSurvey implements Survey {
             value: 5),
       ]);
 
+  @override
   RPTask get survey => RPOrderedTask(identifier: "parkinsons_survey", steps: [
         RPQuestionStep(
           identifier: "parkinsons_1",

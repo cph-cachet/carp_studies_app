@@ -16,13 +16,14 @@ class MobilityCardViewModel extends SerializableViewModel<WeeklyMobility> {
       controller?.data.where((dataPoint) => dataPoint.data is MobilityDatum);
 
   MobilityCardViewModel();
-  void init(SmartphoneDeploymentController controller) {
-    super.init(controller);
+  @override
+  void init(SmartphoneDeploymentController ctrl) {
+    super.init(ctrl);
 
     // listen for mobility events and update the features
     mobilityEvents?.listen((mobilityDataPoint) {
-      MobilityDatum _mobility = mobilityDataPoint.data as MobilityDatum;
-      model.setMobilityFeatures(_mobility);
+      MobilityDatum mobility = mobilityDataPoint.data as MobilityDatum;
+      model.setMobilityFeatures(mobility);
     });
   }
 }
@@ -72,19 +73,24 @@ class WeeklyMobility extends DataModel {
   void setMobilityFeatures(MobilityDatum data) {
     DateTime day = data.date ?? DateTime.now();
 
-    if (data.distanceTravelled != null)
+    if (data.distanceTravelled != null) {
       weeklyDistanceTraveled[day.weekday] = data.distanceTravelled!;
-    if (data.numberOfPlaces != null)
+    }
+    if (data.numberOfPlaces != null) {
       weeklyPlaces[day.weekday] = data.numberOfPlaces!;
+    }
 
     // only set homestay % if larger than zero (can return -1)
     // also convert to int (1-100) instead of double (0-1)
-    if (data.homeStay != null && data.homeStay! > 0)
+    if (data.homeStay != null && data.homeStay! > 0) {
       weeklyHomeStay[day.weekday] = (100 * data.homeStay!).toInt();
+    }
   }
 
+  @override
   WeeklyMobility fromJson(Map<String, dynamic> json) =>
       _$WeeklyMobilityFromJson(json);
+  @override
   Map<String, dynamic> toJson() => _$WeeklyMobilityToJson(this);
 }
 

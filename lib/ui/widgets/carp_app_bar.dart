@@ -1,6 +1,8 @@
 part of carp_study_app;
 
 class CarpAppBar extends StatelessWidget {
+  const CarpAppBar({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -9,7 +11,7 @@ class CarpAppBar extends StatelessWidget {
         children: [
           Column(
             children: [
-              SizedBox(height: 35),
+              const SizedBox(height: 35),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -20,7 +22,7 @@ class CarpAppBar extends StatelessWidget {
                       height: 30,
                     ),
                   ),
-                  SizedBox(width: 3),
+                  const SizedBox(width: 3),
                   IconButton(
                     icon:
                         Icon(Icons.account_circle_outlined, color: Theme.of(context).primaryColor, size: 30),

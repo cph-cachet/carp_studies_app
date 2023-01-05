@@ -2,36 +2,40 @@ part of carp_study_app;
 
 enum DeploymentMode {
   /// Use a local study protocol & deployment and store data locally in a file.
-  LOCAL,
+  local,
 
   /// Use the CARP production server to get the study deployment and store data.
-  CARP_PRODUCTION,
+  carpProduction,
 
   /// Use the CARP staging server to get the study deployment and store data.
-  CARP_STAGING,
+  carpStaging,
 
   /// Use the CARP testing server to get the study deployment and store data.
-  CARP_TEST,
+  carpTest,
 
   /// Use the CARP development server to get the study deployment and store data.
-  CARP_DEV,
+  carpDev,
 }
 
 enum LoginStatus {
   /// No invitation selected (tap outside the invitation box) - Navigate to login screen
-  NOSELECTION,
+  noSelection,
 
   /// Informed Consent not accepted - Navigate to message screen / login
-  NOCONSENT,
+  noConsent,
 
   /// User registered but no current ongoing studies - Navigate to message screen
-  NOINVITATION,
+  noInvitation,
 
   /// User temproary blocked for introducing the login credentials wrongly 3 times - Navigate to message screen
-  TEMPORARYBLOCK,
+  temporaryBlock,
 
   /// Successful login - Navigate to home page
-  SUCCESSFUL
+  succesful,
 }
 
-enum ProcessStatus { DONE, ERROR, OTHER }
+enum ProcessStatus {
+  done,
+  error,
+  other,
+}

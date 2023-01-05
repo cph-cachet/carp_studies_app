@@ -19,8 +19,8 @@ class LocationUsageDialog {
               style: aboutCardTitleStyle),
         ],
       ),
-      contentPadding: EdgeInsets.all(15),
-      insetPadding: EdgeInsets.all(30),
+      contentPadding: const EdgeInsets.all(15),
+      insetPadding: const EdgeInsets.all(30),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -39,11 +39,11 @@ class LocationUsageDialog {
             print('>> location status: $status');
             Navigator.pop(context, true);
           },
-          child: Text(locale.translate("dialog.location.allow")),
           style: ButtonStyle(
             backgroundColor:
                 MaterialStateProperty.all(Theme.of(context).primaryColor),
           ),
+          child: Text(locale.translate("dialog.location.allow")),
         ),
       ],
     );

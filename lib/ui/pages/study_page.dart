@@ -2,44 +2,43 @@ part of carp_study_app;
 
 class StudyPage extends StatefulWidget {
   final StudyPageViewModel model;
-  const StudyPage(this.model);
+  const StudyPage(this.model, {super.key});
 
   @override
   StudyPageState createState() => StudyPageState();
 }
 
 class StudyPageState extends State<StudyPage> {
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            CarpAppBar(),
-            Flexible(
-              child: StreamBuilder<int>(
-                  stream: widget.model.messageStream,
-                  builder: (context, AsyncSnapshot<int> snapshot) {
-                    return CustomScrollView(
-                      slivers: [
-                        DetailsBanner(
-                            widget.model.title, './assets/images/kids.png',
-                            isCarpBanner: true),
-                        SliverList(
-                          delegate: SliverChildBuilderDelegate(
-                            (BuildContext context, int index) =>
-                                _aboutStudyCard(
-                                    context, widget.model.messages[index]),
-                            childCount: widget.model.messages.length,
-                          ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const CarpAppBar(),
+          Flexible(
+            child: StreamBuilder<int>(
+                stream: widget.model.messageStream,
+                builder: (context, AsyncSnapshot<int> snapshot) {
+                  return CustomScrollView(
+                    slivers: [
+                      DetailsBanner(
+                          widget.model.title, './assets/images/kids.png',
+                          isCarpBanner: true),
+                      SliverList(
+                        delegate: SliverChildBuilderDelegate(
+                          (BuildContext context, int index) =>
+                              _aboutStudyCard(
+                                  context, widget.model.messages[index]),
+                          childCount: widget.model.messages.length,
                         ),
-                      ],
-                    );
-                  }),
-            ),
-          ],
-        ),
+                      ),
+                    ],
+                  );
+                }),
+          ),
+        ],
       ),
     );
   }
@@ -56,6 +55,11 @@ class StudyPageState extends State<StudyPage> {
     return Card(
       semanticContainer: true,
       clipBehavior: Clip.antiAliasWithSaveLayer,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+      elevation: 4,
+      margin: const EdgeInsets.all(5),
       child: InkWell(
         onTap: () {
           Navigator.push(
@@ -80,33 +84,31 @@ class StudyPageState extends State<StudyPage> {
                           .secondary, //Color(0xFFF1F9FF),
                       child: messageImage,
                     ))
-                  : SizedBox.shrink()
+                  : const SizedBox.shrink()
             ]),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Row(
               crossAxisAlignment: CrossAxisAlignment.baseline,
               textBaseline: TextBaseline.ideographic,
               children: [
-                SizedBox(width: 15),
+                const SizedBox(width: 15),
                 Expanded(
                     child: Text(locale.translate(message.title!),
                         style: aboutCardTitleStyle.copyWith(
                             color: Theme.of(context).primaryColor))),
               ],
             ),
-            SizedBox(height: 5),
+            const SizedBox(height: 5),
             Row(children: [
-              SizedBox(width: 15),
+              const SizedBox(width: 15),
               Text(
                   // locale.translate(message.type.toString().split('.')[1][0].toUpperCase() +
                   //         message.type.toString().split('.')[1].substring(1)) +
-                  locale.translate(message.type
+                  '${locale.translate(message.type
                           .toString()
                           .split('.')
                           .last
-                          .toLowerCase()) +
-                      ' - ' +
-                      timeago.format(
+                          .toLowerCase())} - ${timeago.format(
                         DateTime.now().copyWithAdditional(
                             years:
                                 -DateTime.now().year + message.timestamp.year,
@@ -118,34 +120,33 @@ class StudyPageState extends State<StudyPage> {
                             minutes: -DateTime.now().minute +
                                 message.timestamp.minute),
                         locale: Localizations.localeOf(context).languageCode,
-                      ),
+                      )}',
                   style: aboutCardSubtitleStyle.copyWith(
                       color: Theme.of(context).primaryColor)),
             ]),
-            SizedBox(height: 5),
+            const SizedBox(height: 5),
             Row(children: [
-              SizedBox(width: 15),
+              const SizedBox(width: 15),
               if (message.subTitle!.isNotEmpty)
                 Expanded(
                     child: Text(locale.translate(message.subTitle!),
                         style: aboutCardContentStyle.copyWith(
                             color: Theme.of(context).primaryColor))),
             ]),
-            SizedBox(height: 5),
+            const SizedBox(height: 5),
             Row(children: [
-              SizedBox(width: 15),
+              const SizedBox(width: 15),
               if (message.message != null && message.message!.isNotEmpty)
                 Expanded(
                     child: Text(
-                  locale.translate(message.message!).substring(
-                          0, (message.message!.length > 150) ? 150 : null) +
-                      "...",
+                  "${locale.translate(message.message!).substring(
+                          0, (message.message!.length > 150) ? 150 : null)}...",
                   style: aboutCardContentStyle,
                   textAlign: TextAlign.justify,
                 )),
-              SizedBox(width: 15),
+              const SizedBox(width: 15),
             ]),
-            SizedBox(height: 5),
+            const SizedBox(height: 5),
             // Row(mainAxisAlignment: MainAxisAlignment.end, children: [
             //   Icon(Icons.touch_app, color: Theme.of(context).primaryColor, size: 18),
             //   // Text(locale.translate("pages.about.message.read_more"),
@@ -154,15 +155,10 @@ class StudyPageState extends State<StudyPage> {
             //   //     textAlign: TextAlign.right),
             //   SizedBox(width: 15),
             // ]),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
           ],
         ),
       ),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
-      ),
-      elevation: 4,
-      margin: EdgeInsets.all(5),
     );
   }
 }

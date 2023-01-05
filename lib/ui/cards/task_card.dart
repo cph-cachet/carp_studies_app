@@ -7,11 +7,12 @@ class TaskCardWidget extends StatefulWidget {
   final TaskCardViewModel model;
   final List<Color> colors;
   final TaskCardChartType chartType;
-  TaskCardWidget(
-    this.model, {
+  const TaskCardWidget(
+    this.model, {super.key,
     this.colors = CACHET.COLOR_LIST,
     this.chartType = TaskCardChartType.horisontal,
   });
+  @override
   TaskCardWidgetState createState() => TaskCardWidgetState();
 }
 
@@ -32,6 +33,7 @@ class TaskCardWidgetState extends State<TaskCardWidget> {
     ];
   }
 
+  @override
   Widget build(BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;
 
@@ -45,7 +47,7 @@ class TaskCardWidgetState extends State<TaskCardWidget> {
           child: Column(
             children: [
               Container(
-                padding: EdgeInsets.only(left: 10),
+                padding: const EdgeInsets.only(left: 10),
                 child: Row(
                   children: [
                     Expanded(
@@ -53,11 +55,10 @@ class TaskCardWidgetState extends State<TaskCardWidget> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SizedBox(height: 5),
+                          const SizedBox(height: 5),
                           Text(
-                              '${widget.model.tasksDone} ' +
-                                  locale.translate(
-                                      'cards.${widget.model.taskType}.title'),
+                              '${widget.model.tasksDone} ${locale.translate(
+                                      'cards.${widget.model.taskType}.title')}',
                               //textAlign: TextAlign.center,
                               style: dataCardTitleStyle),
                         ],
@@ -75,21 +76,20 @@ class TaskCardWidgetState extends State<TaskCardWidget> {
   }
 
   Widget chart(BuildContext context, RPLocalizations locale) {
-    if (this.widget.chartType == TaskCardChartType.horisontal) {
-      return Container(
+    if (widget.chartType == TaskCardChartType.horisontal) {
+      return SizedBox(
         height: 160,
         child: HorizontalBar(
-          names: this
-              .widget
+          names: widget
               .model
               .taskCount
               .map((task) => locale.translate(task.title))
               .toList(),
-          values: this.widget.model.taskCount.map((task) => task.size).toList(),
+          values: widget.model.taskCount.map((task) => task.size).toList(),
           colors: CACHET.COLOR_LIST,
         ),
       );
-    } else if (this.widget.chartType == TaskCardChartType.pie) {
+    } else if (widget.chartType == TaskCardChartType.pie) {
       return Row(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -112,7 +112,7 @@ class TaskCardWidgetState extends State<TaskCardWidget> {
                     position: charts.BehaviorPosition.start,
                     desiredMaxRows: 6,
                     horizontalFirst: false,
-                    cellPadding: EdgeInsets.only(bottom: 2.0, left: 10),
+                    cellPadding: const EdgeInsets.only(bottom: 2.0, left: 10),
                     outsideJustification:
                         charts.OutsideJustification.startDrawArea,
                     showMeasures: true,
@@ -132,7 +132,8 @@ class TaskCardWidgetState extends State<TaskCardWidget> {
           ),
         ],
       );
-    } else
-      return SizedBox.shrink();
+    } else {
+      return const SizedBox.shrink();
+    }
   }
 }

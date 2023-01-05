@@ -8,18 +8,16 @@ class HeartRateCardWidget extends StatefulWidget {
     Color.fromARGB(70, 0, 0, 0),
   ];
 
-  HeartRateCardWidget(
-    this.model,
-  );
+  const HeartRateCardWidget(this.model, {super.key});
 
   factory HeartRateCardWidget.withSampleData(HeartRateCardViewModel model) =>
       HeartRateCardWidget(model);
 
   @override
-  _HeartRateCardWidgetState createState() => _HeartRateCardWidgetState();
+  HeartRateCardWidgetState createState() => HeartRateCardWidgetState();
 }
 
-class _HeartRateCardWidgetState extends State<HeartRateCardWidget>
+class HeartRateCardWidgetState extends State<HeartRateCardWidget>
     with SingleTickerProviderStateMixin {
   late AnimationController animationController;
   late Animation<double> animation;
@@ -72,14 +70,14 @@ class _HeartRateCardWidgetState extends State<HeartRateCardWidget>
                           iconAssetName: Icon(Icons.monitor_heart,
                               color: Theme.of(context).primaryColor),
                           heroTag: 'HeartRate-card',
-                          values: [],
+                          values: const [],
                           colors: HeartRateCardWidget.colors),
                       getDailyRange,
-                      Container(
+                      SizedBox(
                         height: 240,
                         child: barCharts,
                       ),
-                      Container(
+                      SizedBox(
                         height: 80,
                         child: currentHeartRateWidget,
                       )
@@ -101,7 +99,7 @@ class _HeartRateCardWidgetState extends State<HeartRateCardWidget>
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         Container(
-          margin: EdgeInsets.only(left: 8, right: 2),
+          margin: const EdgeInsets.only(left: 8, right: 2),
           child: Text(
             '${(widget.model.dayMinMax.min ?? 0).toInt()} - ${(widget.model.dayMinMax.max ?? 0).toInt()}',
             style: hrVisualisationTextStyle(
@@ -140,7 +138,7 @@ class _HeartRateCardWidgetState extends State<HeartRateCardWidget>
 
     var heartRateTextStyle = hrVisualisationTextStyle(
       fontSize: 80,
-      fontFeatures: [ui.FontFeature.tabularFigures()],
+      fontFeatures: [const ui.FontFeature.tabularFigures()],
     );
 
     return Stack(
@@ -151,7 +149,7 @@ class _HeartRateCardWidgetState extends State<HeartRateCardWidget>
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Container(
-                margin: EdgeInsets.only(left: 8),
+                margin: const EdgeInsets.only(left: 8),
                 child: currentHeartRate != null ||
                         (!widget.model.contactStatus &&
                             currentHeartRate != null)
@@ -223,7 +221,7 @@ class _HeartRateCardWidgetState extends State<HeartRateCardWidget>
                   ),
                   TextSpan(
                     text: "\n${rod.fromY.toInt()} - ${rod.toY.toInt()}",
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 30,
                     ),
@@ -375,14 +373,14 @@ class _HeartRateCardWidgetState extends State<HeartRateCardWidget>
 
 class HeartRateOuterStatefulWidget extends StatefulWidget {
   final HeartRateCardViewModel model;
-  HeartRateOuterStatefulWidget(this.model);
+  const HeartRateOuterStatefulWidget(this.model, {super.key});
 
   @override
-  _HeartRateOuterStatefulWidgetState createState() =>
-      _HeartRateOuterStatefulWidgetState();
+  HeartRateOuterStatefulWidgetState createState() =>
+      HeartRateOuterStatefulWidgetState();
 }
 
-class _HeartRateOuterStatefulWidgetState
+class HeartRateOuterStatefulWidgetState
     extends State<HeartRateOuterStatefulWidget> {
   @override
   Widget build(BuildContext context) {

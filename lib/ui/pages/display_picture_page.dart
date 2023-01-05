@@ -48,7 +48,7 @@ class DisplayPicturePageState extends State<DisplayPicturePage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            SizedBox(height: 35),
+            const SizedBox(height: 35),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
@@ -64,8 +64,8 @@ class DisplayPicturePageState extends State<DisplayPicturePage> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: ClipRRect(
-                borderRadius: BorderRadius.all(Radius.circular(20)),
-                child: Container(
+                borderRadius: const BorderRadius.all(Radius.circular(20)),
+                child: SizedBox(
                   height: MediaQuery.of(context).size.height * 0.7,
                   width: MediaQuery.of(context).size.width * 0.9,
                   child: (widget.isVideo && _videoPlayerController != null)
@@ -74,12 +74,12 @@ class DisplayPicturePageState extends State<DisplayPicturePage> {
                               aspectRatio:
                                   _videoPlayerController!.value.aspectRatio,
                               child: VideoPlayer(_videoPlayerController!))
-                          : CircularProgressIndicator()
+                          : const CircularProgressIndicator()
                       : Image.file(File(videoFilePath)),
                 ),
               ),
             ),
-            SizedBox(height: 40),
+            const SizedBox(height: 40),
             Padding(
                 padding: const EdgeInsets.only(bottom: 30, left: 10, right: 10),
                 child: Column(
@@ -87,27 +87,27 @@ class DisplayPicturePageState extends State<DisplayPicturePage> {
                     children: [
                       Text(locale.translate('pages.audio_task.done'),
                           style: audioTitleStyle),
-                      SizedBox(height: 40),
+                      const SizedBox(height: 40),
                       Text(
                           locale.translate(
                               'pages.audio_task.recording_completed'),
                           style: audioContentStyle),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       Align(
                         alignment: FractionalOffset.bottomCenter,
                         child: Padding(
-                          padding: EdgeInsets.only(bottom: 30.0),
+                          padding: const EdgeInsets.only(bottom: 30.0),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              SizedBox(width: 30),
+                              const SizedBox(width: 30),
                               IconButton(
                                 onPressed: () => Navigator.of(context).pop(),
-                                padding: EdgeInsets.all(0),
-                                icon: Icon(Icons.replay,
+                                padding: const EdgeInsets.all(0),
+                                icon: const Icon(Icons.replay,
                                     size: 25, color: CACHET.GREY_5),
                               ),
-                              SizedBox(width: 20),
+                              const SizedBox(width: 20),
                               CircleAvatar(
                                 radius: 30,
                                 backgroundColor: CACHET.GREEN_1,
@@ -118,13 +118,13 @@ class DisplayPicturePageState extends State<DisplayPicturePage> {
                                     Navigator.of(context).pop();
                                     Navigator.of(context).pop();
                                   },
-                                  padding: EdgeInsets.all(0),
-                                  icon: Icon(Icons.check_circle_outline,
+                                  padding: const EdgeInsets.all(0),
+                                  icon: const Icon(Icons.check_circle_outline,
                                       color: Colors.white, size: 30),
                                 ),
                               ),
-                              SizedBox(width: 50),
-                              SizedBox(width: 30),
+                              const SizedBox(width: 50),
+                              const SizedBox(width: 30),
                             ],
                           ),
                         ),

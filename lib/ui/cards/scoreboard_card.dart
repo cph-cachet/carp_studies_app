@@ -2,11 +2,12 @@ part of carp_study_app;
 
 class ScoreboardCardWidget extends StatefulWidget {
   final TaskListPageViewModel model;
-  ScoreboardCardWidget(this.model);
-  _ScoreboardCardWidgetState createState() => _ScoreboardCardWidgetState();
+  const ScoreboardCardWidget(this.model, {super.key});
+  @override
+  ScoreboardCardWidgetState createState() => ScoreboardCardWidgetState();
 }
 
-class _ScoreboardCardWidgetState extends State<ScoreboardCardWidget> {
+class ScoreboardCardWidgetState extends State<ScoreboardCardWidget> {
   @override
   Widget build(BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;
@@ -47,7 +48,7 @@ class _ScoreboardCardWidgetState extends State<ScoreboardCardWidget> {
                               color: Theme.of(context).primaryColor)),
                     ],
                   ),
-                  Container(
+                  SizedBox(
                       height: 66,
                       child: VerticalDivider(
                         color: Theme.of(context).primaryColor,

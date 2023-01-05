@@ -3,16 +3,17 @@ part of carp_study_app;
 class MeasuresCardWidget extends StatefulWidget {
   final MeasuresCardViewModel model;
   final List<Color> colors;
-  MeasuresCardWidget(this.model, {this.colors = CACHET.COLOR_LIST});
-  _MeasuresCardWidgetState createState() => _MeasuresCardWidgetState();
+  const MeasuresCardWidget(this.model, {super.key, this.colors = CACHET.COLOR_LIST});
+  @override
+  MeasuresCardWidgetState createState() => MeasuresCardWidgetState();
 }
 
 extension StringExtension on String {
   String truncateTo(int maxLength) =>
-      (this.length <= maxLength) ? this : '${this.substring(0, maxLength)}...';
+      (length <= maxLength) ? this : '${substring(0, maxLength)}...';
 }
 
-class _MeasuresCardWidgetState extends State<MeasuresCardWidget> {
+class MeasuresCardWidgetState extends State<MeasuresCardWidget> {
   static List<charts.Series<MeasureCount, String>> _createChartList(
       BuildContext context, MeasuresCardViewModel model, List<Color> colors) {
     RPLocalizations locale = RPLocalizations.of(context)!;
@@ -30,6 +31,7 @@ class _MeasuresCardWidgetState extends State<MeasuresCardWidget> {
     ];
   }
 
+  @override
   Widget build(BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;
 
@@ -48,7 +50,7 @@ class _MeasuresCardWidgetState extends State<MeasuresCardWidget> {
                   return Column(
                     children: [
                       Container(
-                        padding: EdgeInsets.only(left: 10),
+                        padding: const EdgeInsets.only(left: 10),
                         child: Row(
                           children: [
                             Expanded(
@@ -56,11 +58,9 @@ class _MeasuresCardWidgetState extends State<MeasuresCardWidget> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  SizedBox(height: 5),
+                                  const SizedBox(height: 5),
                                   Text(
-                                      '${widget.model.samplingSize} ' +
-                                          locale.translate(
-                                              'cards.measures.title'),
+                                      '${widget.model.samplingSize} ${locale.translate('cards.measures.title')}',
                                       //textAlign: TextAlign.center,
                                       style: dataCardTitleStyle),
                                 ],
@@ -81,7 +81,7 @@ class _MeasuresCardWidgetState extends State<MeasuresCardWidget> {
                                 _createChartList(
                                     context, widget.model, CACHET.COLOR_LIST),
                                 animate: true,
-                                selectionModels: [],
+                                selectionModels: const [],
                                 behaviors: [
                                   charts.ChartTitle(
                                     "",
@@ -94,10 +94,8 @@ class _MeasuresCardWidgetState extends State<MeasuresCardWidget> {
                                   charts.DatumLegend(
                                     position: charts.BehaviorPosition.start,
                                     desiredMaxRows: 6,
-                                    cellPadding:
-                                        EdgeInsets.only(bottom: 2.0, left: 10),
-                                    outsideJustification: charts
-                                        .OutsideJustification.middleDrawArea,
+                                    cellPadding: const EdgeInsets.only(bottom: 2.0, left: 10),
+                                    outsideJustification: charts.OutsideJustification.middleDrawArea,
                                     showMeasures: false,
                                     legendDefaultMeasure:
                                         charts.LegendDefaultMeasure.firstValue,

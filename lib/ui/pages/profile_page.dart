@@ -2,7 +2,7 @@ part of carp_study_app;
 
 class ProfilePage extends StatefulWidget {
   final ProfilePageViewModel model;
-  const ProfilePage(this.model);
+  const ProfilePage(this.model, {super.key});
 
   @override
   ProfilePageState createState() => ProfilePageState();
@@ -18,9 +18,9 @@ class ProfilePageState extends State<ProfilePage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          SizedBox(height: 35),
+          const SizedBox(height: 35),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10.0),
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -44,7 +44,7 @@ class ProfilePageState extends State<ProfilePage> {
           ),
           Flexible(
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 15),
+              padding: const EdgeInsets.symmetric(horizontal: 15),
               child: ListView(
                 padding: EdgeInsets.zero,
                 children: ListTile.divideTiles(context: context, tiles: [
@@ -90,9 +90,7 @@ class ProfilePageState extends State<ProfilePage> {
                             style: profileSectionStyle.copyWith(
                                 color: Theme.of(context).primaryColor)),
                         Text(
-                            widget.model.firstname +
-                                ' ' +
-                                widget.model.lastname,
+                            '${widget.model.firstname} ${widget.model.lastname}',
                             style: profileTitleStyle),
                       ],
                     ),
@@ -160,7 +158,7 @@ class ProfilePageState extends State<ProfilePage> {
                   ),
                   ListTile(
                     leading:
-                        Icon(Icons.power_settings_new, color: CACHET.RED_1),
+                        const Icon(Icons.power_settings_new, color: CACHET.RED_1),
                     title: Text(locale.translate('pages.profile.log_out'),
                         style:
                             profileActionStyle.copyWith(color: CACHET.RED_1)),
@@ -170,7 +168,7 @@ class ProfilePageState extends State<ProfilePage> {
                     },
                   ),
                   ListTile(
-                    leading: Icon(Icons.logout, color: CACHET.RED_1),
+                    leading: const Icon(Icons.logout, color: CACHET.RED_1),
                     title: Text(locale.translate('pages.profile.leave_study'),
                         style:
                             profileActionStyle.copyWith(color: CACHET.RED_1)),
@@ -190,10 +188,10 @@ class ProfilePageState extends State<ProfilePage> {
 
   // Sends and email to the researcher with the name of the study + user id
   void _contactResearcher(String email, String subject) async {
-    final Uri _emailLaunchUri = Uri(
+    final Uri emailLaunchUri = Uri(
         scheme: 'mailto', path: email, queryParameters: {'subject': subject});
 
-    var url = _emailLaunchUri.toString().replaceAll("+", "%20");
+    var url = emailLaunchUri.toString().replaceAll("+", "%20");
 
     if (await canLaunchUrl(Uri.parse(url))) {
       await launchUrl(Uri.parse(url));

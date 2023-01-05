@@ -1,35 +1,35 @@
 part of carp_study_app;
 
 class CarpStudyApp extends StatefulWidget {
-  CarpStudyApp({super.key});
+  const CarpStudyApp({super.key});
 
   static void reloadLocale(BuildContext context) async {
-    _CarpStudyAppState? state =
-        context.findAncestorStateOfType<_CarpStudyAppState>();
+    CarpStudyAppState? state =
+        context.findAncestorStateOfType<CarpStudyAppState>();
     state?.reloadLocale();
   }
 
   @override
-  _CarpStudyAppState createState() => _CarpStudyAppState();
+  CarpStudyAppState createState() => CarpStudyAppState();
 }
 
-class _CarpStudyAppState extends State<CarpStudyApp> {
+class CarpStudyAppState extends State<CarpStudyApp> {
   reloadLocale() {
     setState(() {
       rpLocalizationsDelegate.reload();
     });
   }
 
-  final LoadingPage loadingPage = LoadingPage();
-  final HomePage homePage = HomePage();
-  final InformedConsentPage consentPage = InformedConsentPage();
-  final FailedLoginPage failedLoginPage = FailedLoginPage();
+  final LoadingPage loadingPage = const LoadingPage();
+  final HomePage homePage = const HomePage();
+  final InformedConsentPage consentPage = const InformedConsentPage();
+  final FailedLoginPage failedLoginPage = const FailedLoginPage();
 
   /// Research Package translations, incl. both local language assets plus
   /// translations of informed consent and surveys downloaded from CARP
   final RPLocalizationsDelegate rpLocalizationsDelegate =
       RPLocalizationsDelegate(loaders: [
-    AssetLocalizationLoader(),
+    const AssetLocalizationLoader(),
     bloc.localizationLoader,
   ]);
 
@@ -79,10 +79,13 @@ class _CarpStudyAppState extends State<CarpStudyApp> {
 }
 
 class LoadingPage extends StatefulWidget {
-  _LoadingPageState createState() => new _LoadingPageState();
+  const LoadingPage({super.key});
+
+  @override
+  LoadingPageState createState() => LoadingPageState();
 }
 
-class _LoadingPageState extends State<LoadingPage> {
+class LoadingPageState extends State<LoadingPage> {
   @override
   initState() {
     super.initState();
@@ -124,7 +127,7 @@ class _LoadingPageState extends State<LoadingPage> {
         body: Center(
             child: Column(
           mainAxisSize: MainAxisSize.min,
-          children: [CircularProgressIndicator()],
+          children: const [CircularProgressIndicator()],
         )));
   }
 }

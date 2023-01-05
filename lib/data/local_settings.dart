@@ -3,25 +3,25 @@ part of carp_study_app;
 /// A local settings manager. Works as a singleton - use `LocalSettings()`
 /// for accessing settings.
 class LocalSettings {
-  static const String STUDY_DEPLOYMENT_ID_KEY = 'study_deployment_id';
+  static const String studyDeploymentIdKey = 'study_deployment_id';
 
   static final LocalSettings _instance = LocalSettings._();
   factory LocalSettings() => _instance;
   LocalSettings._() : super();
 
   // Keys for storing in shared preferences
-  static const String OAUTH_TOKEN_KEY = 'token';
-  static const String USERNAME_KEY = 'username';
-  static const String STUDY_ID_KEY = 'study_id';
-  static const INFORMED_CONSENT_ACCEPTED_KEY = 'informed_consent_accepted';
+  static const String oauthTokenKey  = 'token';
+  static const String usernameKey = 'username';
+  static const String studyIdKey = 'study_id';
+  static const informedConsentAcceptedKey = 'informed_consent_accepted';
 
   String get _oauthTokenKey =>
-      '${Settings().appName}.$OAUTH_TOKEN_KEY'.toLowerCase();
+      '${Settings().appName}.$oauthTokenKey'.toLowerCase();
   String get _usernameKey =>
-      '${Settings().appName}.$USERNAME_KEY'.toLowerCase();
-  String get _studyIdKey => '${Settings().appName}.$STUDY_ID_KEY'.toLowerCase();
+      '${Settings().appName}.$usernameKey'.toLowerCase();
+  String get _studyIdKey => '${Settings().appName}.$studyIdKey'.toLowerCase();
   String get _informedConsentAcceptedKey =>
-      '$studyDeploymentId.$INFORMED_CONSENT_ACCEPTED_KEY'.toLowerCase();
+      '$studyDeploymentId.$informedConsentAcceptedKey'.toLowerCase();
 
   OAuthToken? _oauthToken;
   String? _username;
@@ -68,7 +68,7 @@ class LocalSettings {
   /// Returns the deployment id cached locally on the phone (if available).
   /// Returns `null` if no study is deployed (yet).
   String? get studyDeploymentId => (_studyDeploymentId ??=
-      Settings().preferences?.getString(STUDY_DEPLOYMENT_ID_KEY));
+      Settings().preferences?.getString(studyDeploymentIdKey));
 
   /// Set the study deployment id for the currently running deployment.
   /// This study deployment id will be cached locally on the phone.
@@ -78,13 +78,13 @@ class LocalSettings {
         'Cannot set the study deployment id to null in Settings. '
         "Use the 'eraseStudyDeployment()' method to erase study deployment information.");
     _studyDeploymentId = id;
-    Settings().preferences?.setString(STUDY_DEPLOYMENT_ID_KEY, id!);
+    Settings().preferences?.setString(studyDeploymentIdKey, id!);
   }
 
   /// Erase all study deployment information cached locally on this phone.
   Future<void> eraseStudyDeployment() async {
     _studyDeploymentId = null;
-    await Settings().preferences!.remove(STUDY_DEPLOYMENT_ID_KEY);
+    await Settings().preferences!.remove(studyDeploymentIdKey);
   }
 
   Future<String?> get deploymentBasePath async => (studyDeploymentId == null)

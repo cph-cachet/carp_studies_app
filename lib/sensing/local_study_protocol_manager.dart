@@ -7,9 +7,11 @@ part of carp_study_app;
 class LocalStudyProtocolManager implements StudyProtocolManager {
   SmartphoneStudyProtocol? _protocol;
 
+  @override
   Future initialize() async {}
 
   /// Create a new CAMS study protocol.
+  @override
   Future<SmartphoneStudyProtocol?> getStudyProtocol(String ignored) async {
     if (_protocol == null) {
       _protocol ??= await _getGenericCARPStudy(ignored);
@@ -17,7 +19,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
       // _protocol = await _getTestWristWatch(ignored);
 
       // set the data endpoint based on the deployment mode (local or CARP)
-      _protocol!.dataEndPoint = (bloc.deploymentMode == DeploymentMode.LOCAL)
+      _protocol!.dataEndPoint = (bloc.deploymentMode == DeploymentMode.local)
           ? SQLiteDataEndPoint()
           : CarpDataEndPoint(
               uploadMethod: CarpUploadMethod.DATA_POINT,
@@ -28,6 +30,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
     return _protocol;
   }
 
+  @override
   Future<bool> saveStudyProtocol(
       String studyId, SmartphoneStudyProtocol protocol) async {
     throw UnimplementedError();
@@ -116,7 +119,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
         // a background task that collects location on a regular basis
         // using the location service
         _protocol?.addTriggeredTask(
-            IntervalTrigger(period: Duration(minutes: 5)),
+            IntervalTrigger(period: const Duration(minutes: 5)),
             BackgroundTask(
                 measures: [Measure(type: ContextSamplingPackage.LOCATION)]),
             locationService);
@@ -134,7 +137,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
         // a background task that collects weather every 30 miutes.
         // using the weather service
         _protocol?.addTriggeredTask(
-            IntervalTrigger(period: Duration(minutes: 30)),
+            IntervalTrigger(period: const Duration(minutes: 30)),
             BackgroundTask()
               ..addMeasure(Measure(type: ContextSamplingPackage.WEATHER)),
             weatherService);
@@ -142,7 +145,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
         // a background task that air quality every 30 miutes.
         // using the air quality service
         _protocol?.addTriggeredTask(
-            IntervalTrigger(period: Duration(minutes: 30)),
+            IntervalTrigger(period: const Duration(minutes: 30)),
             BackgroundTask()
               ..addMeasure(Measure(type: ContextSamplingPackage.AIR_QUALITY)),
             airQualityService);
@@ -205,7 +208,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
             measures: [Measure(type: ContextSamplingPackage.LOCATION)]);
 
         var readingTask = AppTask(
-            type: AudioUserTask.AUDIO_TYPE,
+            type: AudioUserTask.audioType,
             title: "reading.title",
             description: 'reading.description',
             instructions: 'reading.instructions',
@@ -216,7 +219,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
             ]);
 
         var imageTask = AppTask(
-            type: VideoUserTask.IMAGE_TYPE,
+            type: VideoUserTask.imageType,
             title: "wound.title",
             description: "wound.description",
             instructions: "wound.instructions",
@@ -326,7 +329,8 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
             parkinsonsSurvey,
             phone);
       }
+      return _protocol;
     }
-    return _protocol;
+    return null;
   }
 }

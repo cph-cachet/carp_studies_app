@@ -3,14 +3,16 @@ part of carp_study_app;
 class StudyDetailsPage extends StatelessWidget {
   final StudyPageViewModel studyPageModel = StudyPageViewModel();
 
+  StudyDetailsPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;
 
     String studyDescription() =>
         '${locale.translate(studyPageModel.description)}\n\n'
-        '${locale.translate('widgets.study_card.title')}: \"${locale.translate(studyPageModel.title)}\".\n'
-        '${locale.translate('widgets.study_card.purpose')}: \"${locale.translate(studyPageModel.purpose)}\".\n\n'
+        '${locale.translate('widgets.study_card.title')}: "${locale.translate(studyPageModel.title)}".\n'
+        '${locale.translate('widgets.study_card.purpose')}: "${locale.translate(studyPageModel.purpose)}".\n\n'
         '${locale.translate('widgets.study_card.responsibles')}:\n'
         '${locale.translate(studyPageModel.piName)}, ${locale.translate(studyPageModel.piTitle)}\n\n'
         '${locale.translate(studyPageModel.piAffiliation)}\n'
@@ -28,7 +30,7 @@ class StudyDetailsPage extends StatelessWidget {
               Row(mainAxisAlignment: MainAxisAlignment.end, children: [
                 IconButton(
                     onPressed: () => Navigator.pop(context),
-                    icon: Icon(Icons.close))
+                    icon: const Icon(Icons.close))
               ]),
               Flexible(
                 child: CustomScrollView(
@@ -44,13 +46,13 @@ class StudyDetailsPage extends StatelessWidget {
                             Text(locale.translate(studyPageModel.piAffiliation),
                                 style: aboutCardSubtitleStyle.copyWith(
                                     color: Theme.of(context).primaryColor)),
-                            SizedBox(height: 5),
+                            const SizedBox(height: 5),
                             Text(
                               studyDescription(),
                               style: aboutCardContentStyle,
                               textAlign: TextAlign.justify,
                             ),
-                            SizedBox(height: 50),
+                            const SizedBox(height: 50),
                           ],
                         ),
                       ),
@@ -84,7 +86,7 @@ class StudyDetailsPage extends StatelessWidget {
                         ],
                       ),
                     ),
-                    SizedBox(width: 15),
+                    const SizedBox(width: 15),
                     InkWell(
                       onTap: () async {
                         String url = locale

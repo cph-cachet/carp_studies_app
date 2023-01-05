@@ -772,3 +772,214 @@ class MockDataPoint extends _i1.Mock implements _i3.DataPoint {
         returnValueForMissingStub: <String, dynamic>{},
       ) as Map<String, dynamic>);
 }
+
+/// A class which mocks [DataPointHeader].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockDataPointHeader extends _i1.Mock implements _i3.DataPointHeader {
+  @override
+  set studyId(String? _studyId) => super.noSuchMethod(
+        Invocation.setter(
+          #studyId,
+          _studyId,
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  set deviceRoleName(String? _deviceRoleName) => super.noSuchMethod(
+        Invocation.setter(
+          #deviceRoleName,
+          _deviceRoleName,
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  set triggerId(String? _triggerId) => super.noSuchMethod(
+        Invocation.setter(
+          #triggerId,
+          _triggerId,
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  set userId(String? _userId) => super.noSuchMethod(
+        Invocation.setter(
+          #userId,
+          _userId,
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  set uploadTime(DateTime? _uploadTime) => super.noSuchMethod(
+        Invocation.setter(
+          #uploadTime,
+          _uploadTime,
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  set startTime(DateTime? _startTime) => super.noSuchMethod(
+        Invocation.setter(
+          #startTime,
+          _startTime,
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  set endTime(DateTime? _endTime) => super.noSuchMethod(
+        Invocation.setter(
+          #endTime,
+          _endTime,
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  _i3.DataFormat get dataFormat => (super.noSuchMethod(
+        Invocation.getter(#dataFormat),
+        returnValue: _FakeDataFormat_6(
+          this,
+          Invocation.getter(#dataFormat),
+        ),
+        returnValueForMissingStub: _FakeDataFormat_6(
+          this,
+          Invocation.getter(#dataFormat),
+        ),
+      ) as _i3.DataFormat);
+  @override
+  set dataFormat(_i3.DataFormat? _dataFormat) => super.noSuchMethod(
+        Invocation.setter(
+          #dataFormat,
+          _dataFormat,
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  Map<String, dynamic> toJson() => (super.noSuchMethod(
+        Invocation.method(
+          #toJson,
+          [],
+        ),
+        returnValue: <String, dynamic>{},
+        returnValueForMissingStub: <String, dynamic>{},
+      ) as Map<String, dynamic>);
+}
+
+/// A class which mocks [HourlyHeartRate].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockHourlyHeartRate extends _i1.Mock implements _i4.HourlyHeartRate {
+  @override
+  Map<int, _i4.HeartRateMinMaxPrHour> get hourlyHeartRate =>
+      (super.noSuchMethod(
+        Invocation.getter(#hourlyHeartRate),
+        returnValue: <int, _i4.HeartRateMinMaxPrHour>{},
+        returnValueForMissingStub: <int, _i4.HeartRateMinMaxPrHour>{},
+      ) as Map<int, _i4.HeartRateMinMaxPrHour>);
+  @override
+  set hourlyHeartRate(Map<int, _i4.HeartRateMinMaxPrHour>? _hourlyHeartRate) =>
+      super.noSuchMethod(
+        Invocation.setter(
+          #hourlyHeartRate,
+          _hourlyHeartRate,
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  DateTime get lastUpdated => (super.noSuchMethod(
+        Invocation.getter(#lastUpdated),
+        returnValue: _FakeDateTime_7(
+          this,
+          Invocation.getter(#lastUpdated),
+        ),
+        returnValueForMissingStub: _FakeDateTime_7(
+          this,
+          Invocation.getter(#lastUpdated),
+        ),
+      ) as DateTime);
+  @override
+  set lastUpdated(DateTime? _lastUpdated) => super.noSuchMethod(
+        Invocation.setter(
+          #lastUpdated,
+          _lastUpdated,
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  set currentHeartRate(double? _currentHeartRate) => super.noSuchMethod(
+        Invocation.setter(
+          #currentHeartRate,
+          _currentHeartRate,
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  set maxHeartRate(double? _maxHeartRate) => super.noSuchMethod(
+        Invocation.setter(
+          #maxHeartRate,
+          _maxHeartRate,
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  set minHeartRate(double? _minHeartRate) => super.noSuchMethod(
+        Invocation.setter(
+          #minHeartRate,
+          _minHeartRate,
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  void resetDataAtMidnight() => super.noSuchMethod(
+        Invocation.method(
+          #resetDataAtMidnight,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  void addHeartRate(
+    int? hour,
+    double? heartRate,
+  ) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #addHeartRate,
+          [
+            hour,
+            heartRate,
+          ],
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  _i4.HourlyHeartRate fromJson(Map<String, dynamic>? json) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #fromJson,
+          [json],
+        ),
+        returnValue: _FakeHourlyHeartRate_5(
+          this,
+          Invocation.method(
+            #fromJson,
+            [json],
+          ),
+        ),
+        returnValueForMissingStub: _FakeHourlyHeartRate_5(
+          this,
+          Invocation.method(
+            #fromJson,
+            [json],
+          ),
+        ),
+      ) as _i4.HourlyHeartRate);
+  @override
+  Map<String, dynamic> toJson() => (super.noSuchMethod(
+        Invocation.method(
+          #toJson,
+          [],
+        ),
+        returnValue: <String, dynamic>{},
+        returnValueForMissingStub: <String, dynamic>{},
+      ) as Map<String, dynamic>);
+}

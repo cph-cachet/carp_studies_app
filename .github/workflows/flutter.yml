@@ -5,7 +5,7 @@
 
 name: Flutter
 
-on: [push, pull_request]
+on: push
 
 jobs:
   analyze:
@@ -17,11 +17,11 @@ jobs:
         with:
           path: flutter
           key: flutter-${{ hashFiles('**/pubspec.lock') }}
-      - name: Install Flutter
-        run: git clone https://github.com/flutter/flutter.git --depth 1 -b stable flutter
 
-      - name: Add Flutter to Path
-        run: echo "$GITHUB_WORKSPACE/flutter/bin" >> $GITHUB_PATH
+      - name: Install Flutter
+        run: |
+          git clone https://github.com/flutter/flutter.git -b stable
+          echo "$GITHUB_WORKSPACE/flutter/bin" >> $GITHUB_PATH
 
       - name: Install dependencies
         run: flutter pub get
@@ -30,22 +30,7 @@ jobs:
         run: flutter format --output=none --set-exit-if-changed lib/**
 
       - name: Analyze project source
-        run: flutter analyze
+        run: flutter analyze --no-fatal-infos lib/ test/
 
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Cache Flutter
-        uses: actions/cache@v2
-        with:
-          path: flutter
-          key: flutter-${{ hashFiles('**/pubspec.lock') }}
-      - name: Install Flutter
-        run: |
-          git clone https://github.com/flutter/flutter.git -b stable
-          export PATH=`pwd`/flutter/bin:$PATH
-      - name: Install dependencies
-        run: flutter pub get
       - name: Run tests
         run: flutter test

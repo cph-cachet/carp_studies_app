@@ -119,6 +119,16 @@ class _FakeDataPointHeader_8 extends _i1.SmartFake
         );
 }
 
+class _FakeDataModel_9 extends _i1.SmartFake implements _i4.DataModel {
+  _FakeDataModel_9(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
 /// A class which mocks [SmartphoneDeploymentController].
 ///
 /// See the documentation for Mockito's code generation for more information.
@@ -973,6 +983,42 @@ class MockHourlyHeartRate extends _i1.Mock implements _i4.HourlyHeartRate {
           ),
         ),
       ) as _i4.HourlyHeartRate);
+  @override
+  Map<String, dynamic> toJson() => (super.noSuchMethod(
+        Invocation.method(
+          #toJson,
+          [],
+        ),
+        returnValue: <String, dynamic>{},
+        returnValueForMissingStub: <String, dynamic>{},
+      ) as Map<String, dynamic>);
+}
+
+/// A class which mocks [DataModel].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockDataModel extends _i1.Mock implements _i4.DataModel {
+  @override
+  _i4.DataModel fromJson(Map<String, dynamic>? json) => (super.noSuchMethod(
+        Invocation.method(
+          #fromJson,
+          [json],
+        ),
+        returnValue: _FakeDataModel_9(
+          this,
+          Invocation.method(
+            #fromJson,
+            [json],
+          ),
+        ),
+        returnValueForMissingStub: _FakeDataModel_9(
+          this,
+          Invocation.method(
+            #fromJson,
+            [json],
+          ),
+        ),
+      ) as _i4.DataModel);
   @override
   Map<String, dynamic> toJson() => (super.noSuchMethod(
         Invocation.method(

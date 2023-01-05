@@ -3,7 +3,8 @@ part of carp_study_app;
 class MeasuresCardWidget extends StatefulWidget {
   final MeasuresCardViewModel model;
   final List<Color> colors;
-  const MeasuresCardWidget(this.model, {super.key, this.colors = CACHET.COLOR_LIST});
+  const MeasuresCardWidget(this.model,
+      {super.key, this.colors = CACHET.COLOR_LIST});
   @override
   MeasuresCardWidgetState createState() => MeasuresCardWidgetState();
 }
@@ -94,8 +95,10 @@ class MeasuresCardWidgetState extends State<MeasuresCardWidget> {
                                   charts.DatumLegend(
                                     position: charts.BehaviorPosition.start,
                                     desiredMaxRows: 6,
-                                    cellPadding: const EdgeInsets.only(bottom: 2.0, left: 10),
-                                    outsideJustification: charts.OutsideJustification.middleDrawArea,
+                                    cellPadding: const EdgeInsets.only(
+                                        bottom: 2.0, left: 10),
+                                    outsideJustification: charts
+                                        .OutsideJustification.middleDrawArea,
                                     showMeasures: false,
                                     legendDefaultMeasure:
                                         charts.LegendDefaultMeasure.firstValue,

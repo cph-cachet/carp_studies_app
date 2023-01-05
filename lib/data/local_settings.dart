@@ -10,15 +10,14 @@ class LocalSettings {
   LocalSettings._() : super();
 
   // Keys for storing in shared preferences
-  static const String oauthTokenKey  = 'token';
+  static const String oauthTokenKey = 'token';
   static const String usernameKey = 'username';
   static const String studyIdKey = 'study_id';
   static const informedConsentAcceptedKey = 'informed_consent_accepted';
 
   String get _oauthTokenKey =>
       '${Settings().appName}.$oauthTokenKey'.toLowerCase();
-  String get _usernameKey =>
-      '${Settings().appName}.$usernameKey'.toLowerCase();
+  String get _usernameKey => '${Settings().appName}.$usernameKey'.toLowerCase();
   String get _studyIdKey => '${Settings().appName}.$studyIdKey'.toLowerCase();
   String get _informedConsentAcceptedKey =>
       '$studyDeploymentId.$informedConsentAcceptedKey'.toLowerCase();

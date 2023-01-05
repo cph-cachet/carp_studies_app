@@ -166,8 +166,8 @@ TextStyle aboutCardInfoStyle =
 TextStyle aboutCardSubtitleStyle =
     const TextStyle(fontSize: 16, fontWeight: FontWeight.w600);
 
-TextStyle profileSectionStyle =
-    const TextStyle(fontSize: 12, fontWeight: FontWeight.w400, letterSpacing: 2);
+TextStyle profileSectionStyle = const TextStyle(
+    fontSize: 12, fontWeight: FontWeight.w400, letterSpacing: 2);
 
 TextStyle aboutCardContentStyle =
     const TextStyle(fontSize: 16, fontWeight: FontWeight.w400);
@@ -175,17 +175,20 @@ TextStyle aboutCardContentStyle =
 TextStyle sectionTitleStyle =
     const TextStyle(fontSize: 18, fontWeight: FontWeight.w700);
 
-TextStyle inputFieldStyle = const TextStyle(fontSize: 15, color: Color(0xff707070));
+TextStyle inputFieldStyle =
+    const TextStyle(fontSize: 15, color: Color(0xff707070));
 
 TextStyle welcomeMessageStyle = const TextStyle(
     fontSize: 24, color: Color(0xff707070), fontWeight: FontWeight.bold);
 
 TextStyle studyDescriptionStyle =
     const TextStyle(fontSize: 12, fontWeight: FontWeight.w300);
-TextStyle dataCardTitleStyle =
-    const TextStyle(fontSize: 16, fontWeight: FontWeight.w400, letterSpacing: 1);
-TextStyle measuresStyle = const TextStyle(fontSize: 18, fontWeight: FontWeight.w400);
-TextStyle legendStyle = const TextStyle(fontSize: 12, fontWeight: FontWeight.w400);
+TextStyle dataCardTitleStyle = const TextStyle(
+    fontSize: 16, fontWeight: FontWeight.w400, letterSpacing: 1);
+TextStyle measuresStyle =
+    const TextStyle(fontSize: 18, fontWeight: FontWeight.w400);
+TextStyle legendStyle =
+    const TextStyle(fontSize: 12, fontWeight: FontWeight.w400);
 
 TextStyle audioTitleStyle =
     const TextStyle(fontSize: 22, fontWeight: FontWeight.w700);
@@ -201,7 +204,8 @@ TextStyle profileTitleStyle =
 TextStyle profileActionStyle =
     const TextStyle(fontSize: 20, fontWeight: FontWeight.w400);
 
-TextStyle timerStyle = const TextStyle(fontSize: 36, fontWeight: FontWeight.w600);
+TextStyle timerStyle =
+    const TextStyle(fontSize: 36, fontWeight: FontWeight.w600);
 
 TextStyle studyNameStyle =
     const TextStyle(fontSize: 16.0, fontWeight: FontWeight.w800);

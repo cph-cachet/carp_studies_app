@@ -62,11 +62,11 @@ class WeeklyActivities extends DataModel {
   WeeklyActivities() {
     // // Initialize every week or if is the first time opening the app
     for (var type in ActivityType.values) {
-        activities[type] = {};
-        for (int i = 1; i <= 7; i++) {
-          activities[type]![i] = 0;
-        }
+      activities[type] = {};
+      for (int i = 1; i <= 7; i++) {
+        activities[type]![i] = 0;
       }
+    }
   }
 
   /// Increase the number of minutes of doing [activityType] on [weekday] with [minutes].
@@ -80,15 +80,16 @@ class WeeklyActivities extends DataModel {
   }
 
   @override
-  WeeklyActivities fromJson(Map<String, dynamic> json) => _$WeeklyActivitiesFromJson(json);
+  WeeklyActivities fromJson(Map<String, dynamic> json) =>
+      _$WeeklyActivitiesFromJson(json);
   @override
   Map<String, dynamic> toJson() => _$WeeklyActivitiesToJson(this);
 
   @override
   String toString() {
     String str = '  TYPE\t| day | min.\n';
-    activities.forEach((type, data) =>
-        data.forEach((day, minutes) => str += '${type.toString().split(".").last}\t|  $day  |  $minutes\n'));
+    activities.forEach((type, data) => data.forEach((day, minutes) =>
+        str += '${type.toString().split(".").last}\t|  $day  |  $minutes\n'));
     return str;
   }
 }

@@ -9,7 +9,8 @@ class StudyCard extends StatelessWidget {
   Widget build(BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;
 
-    String studyDescription() => '${locale.translate(studyPageModel.description)}\n\n'
+    String studyDescription() =>
+        '${locale.translate(studyPageModel.description)}\n\n'
         '${locale.translate('widgets.study_card.title')}: "${locale.translate(studyPageModel.title)}".\n'
         '${locale.translate('widgets.study_card.purpose')}: "${locale.translate(studyPageModel.purpose)}".\n\n'
         '${locale.translate('widgets.study_card.responsibles')}:\n'
@@ -47,7 +48,8 @@ class StudyCard extends StatelessWidget {
                 const SizedBox(width: 40),
                 const SizedBox(width: 40),
                 Text(locale.translate(studyPageModel.title),
-                    style: aboutCardTitleStyle.copyWith(color: Theme.of(context).primaryColor)),
+                    style: aboutCardTitleStyle.copyWith(
+                        color: Theme.of(context).primaryColor)),
                 const SizedBox(width: 40),
                 const SizedBox(width: 40),
               ],

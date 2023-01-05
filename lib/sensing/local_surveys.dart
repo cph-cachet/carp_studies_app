@@ -51,10 +51,12 @@ class _Surveys {
   final Survey _timedExposure = _TimedExposureSurvey();
   Survey get timedExposure => _timedExposure;
 
-  final Survey _symptomHierarchyObsessions = _SymptomHierarchySurveyObsessions();
+  final Survey _symptomHierarchyObsessions =
+      _SymptomHierarchySurveyObsessions();
   Survey get symptomHierarchyObsessions => _symptomHierarchyObsessions;
 
-  final Survey _symptomHierarchyCompulsions = _SymptomHierarchySurveyCompulsions();
+  final Survey _symptomHierarchyCompulsions =
+      _SymptomHierarchySurveyCompulsions();
   Survey get symptomHierarchyCoumpulsions => _symptomHierarchyCompulsions;
 }
 

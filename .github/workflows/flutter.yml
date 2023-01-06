@@ -7,6 +7,9 @@ name: Flutter
 
 on: push
 
+env:
+  FOLDER: $GITHUB_WORKSPACE/flutter
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -20,7 +23,9 @@ jobs:
 
       - name: Install Flutter
         run: |
-          git clone https://github.com/flutter/flutter.git -b stable
+          if [ ! -d $FOLDER ] ; then
+            git clone https://github.com/flutter/flutter.git --depth 1 -b stable $FOLDER
+          fi
           echo "$GITHUB_WORKSPACE/flutter/bin" >> $GITHUB_PATH
 
       - name: Install dependencies

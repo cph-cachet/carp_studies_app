@@ -375,10 +375,11 @@ class StudyAppBLoC {
 
   Future<void> leaveStudy() async {
     hasSignedOut = true;
-    if (Sensing().isRunning) Sensing().controller!.stop();
+    if (Sensing().isRunning) Sensing().controller!.stop(); // move to CAMS
+    // Sensing().client.removeStudy(bloc.studyDeploymentId, bloc.deployment.rolename);
     informedConsentAccepted = false;
     _state = StudyAppState.initialized;
-    await backend.leaveStudy();
+    await LocalSettings().eraseStudyIds();
   }
 
   Future<void> leaveStudyAndSignOut() async {

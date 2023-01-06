@@ -137,8 +137,6 @@ class CarpBackend {
     return document;
   }
 
-  Future<void> leaveStudy() async => await LocalSettings().eraseStudyIds();
-
   Future<void> signOut() async {
     if (CarpService().authenticated) await CarpService().signOut();
     await LocalSettings().eraseAuthCredentials();

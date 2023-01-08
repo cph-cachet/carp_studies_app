@@ -94,12 +94,12 @@ class LoadingPageState extends State<LoadingPage> {
   @override
   Widget build(BuildContext context) {
     // configure the BLOC if not already done or in progress
-    // note that this build() method can be called several time, but we only
+    // note that this build method can be called several time, but we only
     // want the bloc to be configured once.
     //
     // the only reason to call it here - instead of in the initState() method -
     // is to have a handle to the context object, which is to be used in the
-    // pop-up windows from CARP
+    // pop-up windows from CAWS
     if (!bloc.isConfiguring) {
       bloc.configure(context).then((_) {
         // when the configure is done, the localizations should have been downloaded
@@ -112,15 +112,16 @@ class LoadingPageState extends State<LoadingPage> {
       });
     }
 
-    // If the user has left the study it is still logged in and should be redirected to invitation screen
-    if (bloc.hasLeftStudy) {
-      bloc.hasLeftStudy = false;
-    }
+    // // if the user has left the study but is still logged in,
+    // // then redirect to the invitation screen
+    // if (bloc.hasLeftStudy) {
+    //   bloc.hasLeftStudy = false;
+    // }
 
-    // If the user is loged out, redirect to authentication screen
-    if (bloc.hasSignedOut) {
-      bloc.hasSignedOut = false;
-    }
+    // // if the user is logged out, redirect to authentication screen
+    // if (bloc.hasSignedOut) {
+    //   bloc.hasSignedOut = false;
+    // }
 
     return Scaffold(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,

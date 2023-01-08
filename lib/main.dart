@@ -131,6 +131,6 @@ void main() async {
 /// or deploying it.
 final bloc = StudyAppBLoC(
   debugLevel: DebugLevel.DEBUG,
-  deploymentMode: DeploymentMode.carpProduction,
+  deploymentMode: DeploymentMode.cawsProduction,
   forceSignOutAndStudyReload: false,
 );

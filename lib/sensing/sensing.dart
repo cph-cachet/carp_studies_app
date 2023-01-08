@@ -101,10 +101,10 @@ class Sensing {
         bloc.studyDeploymentId = _status!.studyDeploymentId;
 
         break;
-      case DeploymentMode.carpProduction:
-      case DeploymentMode.carpStaging:
-      case DeploymentMode.carpTest:
-      case DeploymentMode.carpDev:
+      case DeploymentMode.cawsProduction:
+      case DeploymentMode.cawsStaging:
+      case DeploymentMode.cawsTest:
+      case DeploymentMode.cawsDev:
         assert(CarpService().authenticated,
             'No user is authenticated. Call CarpService().authenticate() before using any of the CARP services.');
         assert(bloc.studyDeploymentId != null,
@@ -148,6 +148,10 @@ class Sensing {
     await controller?.configure(askForPermissions: false);
 
     info('$runtimeType initialized');
+  }
+
+  Future<void> remove() async {
+    if (study != null) await client?.removeStudy(study!);
   }
 
   /// Translate the title and description of all AppTask in the study protocol

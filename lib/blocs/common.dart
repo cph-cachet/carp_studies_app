@@ -5,16 +5,16 @@ enum DeploymentMode {
   local,
 
   /// Use the CARP production server to get the study deployment and store data.
-  carpProduction,
+  cawsProduction,
 
   /// Use the CARP staging server to get the study deployment and store data.
-  carpStaging,
+  cawsStaging,
 
   /// Use the CARP testing server to get the study deployment and store data.
-  carpTest,
+  cawsTest,
 
   /// Use the CARP development server to get the study deployment and store data.
-  carpDev,
+  cawsDev,
 }
 
 enum LoginStatus {

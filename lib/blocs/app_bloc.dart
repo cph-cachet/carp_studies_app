@@ -17,7 +17,7 @@ enum StudyAppState {
 class StudyAppBLoC {
   StudyAppState _state = StudyAppState.created;
   final CarpBackend _backend = CarpBackend();
-  final CarpStydyAppViewModel _data = CarpStydyAppViewModel();
+  final CarpStudyAppViewModel _data = CarpStudyAppViewModel();
   StudyDeploymentStatus? _status;
 
   List<Message> _messages = [];
@@ -34,10 +34,7 @@ class StudyAppBLoC {
   bool get isConfiguring => _state.index >= 2;
   bool get isConfigured => _state.index >= 3;
 
-  bool hasSignedOut = false;
-  bool hasLeftStudy = false;
-
-  /// Debug level for this app (and CAMS).
+  /// Debug level for the app and CAMS.
   DebugLevel debugLevel;
 
   /// What kind of deployment are we running - LOCAL or CARP?
@@ -96,7 +93,7 @@ class StudyAppBLoC {
   DateTime? get studyStartTimestamp => deployment?.deployed;
 
   /// The overall data model for this app
-  CarpStydyAppViewModel get data => _data;
+  CarpStudyAppViewModel get data => _data;
 
   /// Does this [deployment] have the measure of [type].
   bool hasMeasure(String type) {
@@ -189,7 +186,7 @@ class StudyAppBLoC {
       await backend.initialize();
       await backend.authenticate(context);
 
-      // check if there is a local deploymed id
+      // check if there is a local deployed id
       // if not, get a deployment id based on an invitation
       if (bloc.studyDeploymentId == null) {
         await backend.getStudyInvitation(context);
@@ -340,8 +337,6 @@ class StudyAppBLoC {
   /// Use [resume] and [pause] if pausing/resuming sensing.
   ///
   /// Ensures that permissions are requested.
-  ///
-  /// If a [context] is provided, this method also translate the study protocol.
   Future<void> start() async {
     assert(Sensing().controller != null,
         'No Study Controller - the study has not been deployed.');
@@ -358,12 +353,8 @@ class StudyAppBLoC {
   /// Resume sensing.
   void resume() => Sensing().controller?.executor?.resume();
 
-  /// Stop sensing.
-  /// Once sensing is stopped, it cannot be (re)started.
-  void stop() => Sensing().controller!.stop();
-
   // Dispose the entire sensing.
-  void dispose() => stop();
+  void dispose() => Sensing().controller?.dispose();
 
   /// Add a [Datum] object to the stream of events.
   void addDatum(Datum datum) =>
@@ -373,22 +364,29 @@ class StudyAppBLoC {
   void addError(Object error, [StackTrace? stacktrace]) =>
       Sensing().controller!.executor!.addError(error, stacktrace);
 
+  /// Leave the study deployed on this phone.
+  ///
+  /// This entails
+  ///  * stopping sensing
+  ///  * removing the study from the phone
+  ///  * erasing all study deployment information
+  ///  * deleting all data visualization stored locally on the phone
+  ///  * returning the user to select an invitation for another study (if any)
   Future<void> leaveStudy() async {
-    hasSignedOut = true;
-    if (Sensing().isRunning) Sensing().controller!.stop(); // move to CAMS
-    // Sensing().client.removeStudy(bloc.studyDeploymentId, bloc.deployment.rolename);
-    informedConsentAccepted = false;
     _state = StudyAppState.initialized;
+    await Sensing().remove();
     await LocalSettings().eraseStudyIds();
   }
 
+  /// Leave the study and also sign out the user.
+  ///
+  /// This entails everything from the [leaveStudy] method plus permanently
+  /// deleting all user authentication information from this phone, including
+  /// the authentication and refresh tokens.
+  ///
+  /// Will return the user to the login screen.
   Future<void> leaveStudyAndSignOut() async {
     await leaveStudy();
-    await backend.signOut();
-  }
-
-  Future<void> signOut() async {
-    bloc.hasSignedOut = true;
     await backend.signOut();
   }
 }

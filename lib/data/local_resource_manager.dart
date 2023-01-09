@@ -18,10 +18,8 @@ class LocalResourceManager
   LocalResourceManager._() {
     // to initialize json serialization for RP classes
     ResearchPackage();
-  }
 
-  @override
-  Future initialize() async {
+    // add two test messages
     setMessage(Message(
       type: MessageType.announcement,
       title: 'CACHET Research Platform',
@@ -32,13 +30,16 @@ class LocalResourceManager
     ));
     setMessage(Message(
       type: MessageType.article,
-      title: "pages.about.message.1.title",
-      subTitle: "pages.about.message.1.subtitle",
-      message: "pages.about.message.1.message",
+      title: "message.1.title",
+      subTitle: "message.1.subtitle",
+      message: "message.1.message",
       imagePath: 'assets/images/park.png',
       timestamp: DateTime(2022, 12, 14),
     ));
   }
+
+  @override
+  Future initialize() async {}
 
   // INFORMED CONSENT
 

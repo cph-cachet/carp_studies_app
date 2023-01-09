@@ -36,13 +36,8 @@ class LocalResourceManager
       subTitle: "pages.about.message.1.subtitle",
       message: "pages.about.message.1.message",
       imagePath: 'assets/images/park.png',
-      timestamp: DateTime(2021, 12, 14),
+      timestamp: DateTime(2022, 12, 14),
     ));
-    setMessage(Message(
-        type: MessageType.announcement,
-        title: "pages.about.message.2.title",
-        subTitle: "pages.about.message.2.subtitle",
-        message: "pages.about.message.2.message"));
   }
 
   // INFORMED CONSENT

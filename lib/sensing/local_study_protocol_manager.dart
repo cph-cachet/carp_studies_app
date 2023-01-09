@@ -296,7 +296,9 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
 
         _protocol!.addTriggeredTask(
             UserTaskTrigger(
-                taskName: imageTask.name, resumeCondition: UserTaskState.done),
+              taskName: imageTask.name,
+              resumeCondition: UserTaskState.done,
+            ),
             imageTask,
             phone);
 

@@ -254,7 +254,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
             rpTask: surveys.parkinsons.survey,
             measures: [Measure(type: ContextSamplingPackage.LOCATION)]);
 
-        // Then add all the tasks to the protocol to trigger once.
+        // Second, add all the tasks to the protocol to trigger once.
 
         _protocol!.addTriggeredTask(OneTimeTrigger(), environmentTask, phone);
         _protocol!.addTriggeredTask(OneTimeTrigger(), demographicsTask, phone);
@@ -263,7 +263,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
         _protocol!.addTriggeredTask(OneTimeTrigger(), imageTask, phone);
         _protocol!.addTriggeredTask(OneTimeTrigger(), parkinsonsTask, phone);
 
-        // And then add a set of user task triggers to make sure that the
+        // Third, add a set of user task triggers to make sure that the
         // task are added to the queue again when done
 
         _protocol!.addTriggeredTask(
@@ -309,7 +309,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
             parkinsonsTask,
             phone);
 
-        // Also trigger the Parkinson's survey, when the task is done
+        // Fourth, also trigger the Parkinson's survey, when the task is done
         _protocol!.addTriggeredTask(
             UserTaskTrigger(
                 taskName: parkinsonsTask.name,

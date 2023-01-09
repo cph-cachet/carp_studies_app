@@ -15,8 +15,6 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
   Future<SmartphoneStudyProtocol?> getStudyProtocol(String ignored) async {
     if (_protocol == null) {
       _protocol ??= await _getGenericCARPStudy(ignored);
-      // _protocol ??= await _getPatientWristWatch(ignored);
-      // _protocol = await _getTestWristWatch(ignored);
 
       // set the data endpoint based on the deployment mode (local or CARP)
       _protocol!.dataEndPoint = (bloc.deploymentMode == DeploymentMode.local)
@@ -35,11 +33,6 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
       String studyId, SmartphoneStudyProtocol protocol) async {
     throw UnimplementedError();
   }
-
-
-
-
-
 
   Future<SmartphoneStudyProtocol?> _getGenericCARPStudy(String studyId) async {
     if (_protocol == null) {
@@ -76,24 +69,16 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
         // Define which devices are used for data collection.
         Smartphone phone = Smartphone();
 
-        var eSense = ESenseDevice(
-            // deviceName: '',
-            // samplingRate: 10,
-            );
+        var eSense = ESenseDevice();
 
-        var polar = PolarDevice(
-          roleName: 'hr-sensor',
-          // identifier: 'B5FC172F',
-          // name: 'H10',
-          // polarDeviceType: PolarDeviceType.H10,
-        );
+        var polar = PolarDevice();
 
         _protocol!.addMasterDevice(phone);
         _protocol!.addConnectedDevice(eSense);
         _protocol!.addConnectedDevice(polar);
 
         // ONLINE SERVICES
-        //
+
         // Define online services and add them as connected 'devices'
         LocationService locationService = LocationService();
         _protocol!.addConnectedDevice(locationService);
@@ -129,7 +114,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
                 measures: [Measure(type: ContextSamplingPackage.LOCATION)]),
             locationService);
 
-        // a background task that continously collects geolocation and mobility
+        // a background task that continuously collects geo location and mobility
         // using the location service
         _protocol?.addTriggeredTask(
             ImmediateTrigger(),
@@ -139,7 +124,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
             ]),
             locationService);
 
-        // a background task that collects weather every 30 miutes.
+        // a background task that collects weather every 30 minutes.
         // using the weather service
         _protocol?.addTriggeredTask(
             IntervalTrigger(period: const Duration(minutes: 30)),
@@ -147,7 +132,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
               ..addMeasure(Measure(type: ContextSamplingPackage.WEATHER)),
             weatherService);
 
-        // a background task that air quality every 30 miutes.
+        // a background task that air quality every 30 minutes.
         // using the air quality service
         _protocol?.addTriggeredTask(
             IntervalTrigger(period: const Duration(minutes: 30)),
@@ -176,8 +161,8 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
             polar);
 
         // APP TASKS
-        //
-        // Now creating a set of app tasks which are repeately added to the task
+
+        // Now creating a set of app tasks which are repeatedly added to the task
         // queue again after they are done by the user.
         // This is useful for demo purposes, so that the app tasks are always available.
 
@@ -233,20 +218,16 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
 
         var parkinsonsTask = RPAppTask(
             type: SurveyUserTask.COGNITIVE_ASSESSMENT_TYPE,
-            title: "Parkinsons Assessment",
-            description:
-                "A simple task assessing cognitive functioning and finger tapping speed.",
+            title: "parkinsons.title",
+            description: "parkinsons.description",
             minutesToComplete: 3,
             rpTask: RPOrderedTask(
               identifier: "parkinsons_assessment",
               steps: [
                 RPInstructionStep(
                     identifier: 'parkinsons_instruction',
-                    title: "Parkinsons Disease Assessment",
-                    text:
-                        "In the following pages, you will be asked to solve two simple test which will help assess your symptoms on a daily basis. "
-                        "Each test has an instruction page, which you should read carefully before starting the test.\n\n"
-                        "Please sit down comfortably and hold the phone in one hand while performing the test with the other."),
+                    title: "parkinsons.instructions.title",
+                    text: "parkinsons.instructions.text"),
                 RPFlankerActivity(
                   identifier: 'flanker_1',
                   lengthOfTest: 30,
@@ -283,7 +264,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
         _protocol!.addTriggeredTask(OneTimeTrigger(), parkinsonsTask, phone);
 
         // And then add a set of user task triggers to make sure that the
-        // task are added to the queque again when done
+        // task are added to the queue again when done
 
         _protocol!.addTriggeredTask(
             UserTaskTrigger(
@@ -326,7 +307,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
             parkinsonsTask,
             phone);
 
-        // also trigger the Parkinsons survey, when the task is done
+        // Also trigger the Parkinson's survey, when the task is done
         _protocol!.addTriggeredTask(
             UserTaskTrigger(
                 taskName: parkinsonsTask.name,

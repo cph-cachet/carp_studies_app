@@ -25,7 +25,6 @@ void main() {
     });
 
     test('should update the model on an emit of data', () async {
-      //ugh nothing works yet but it feels like it should
       final mockSmartphoneDeploymentController =
           MockSmartphoneDeploymentController();
       final mockPolarHRDatum = MockPolarHRDatum();
@@ -47,8 +46,7 @@ void main() {
       heartRateStreamController.sink.add(mockDataPoint);
 
       // await Future.delayed(Duration(seconds: 2));
-
-      expectLater(heartRateStreamController.stream, emits(mockDataPoint));
+      await expectLater(viewModel.heartRateEvents, emits() );
 
       expect(viewModel.currentHeartRate, equals(80));
       heartRateStreamController.close();

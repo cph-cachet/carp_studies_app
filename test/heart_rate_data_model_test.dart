@@ -11,8 +11,8 @@ import 'exports.dart';
 ])
 void main() {
   setUp(() {});
-  group("HeartRateCardViewModel tests", skip: true, () {
-    test('initializes HeartRateCardViewModel', () {
+  group("HeartRateCardViewModel", skip: false, () {
+    test('initializes HeartRateCardViewModel', skip: true, () {
       final controller = MockSmartphoneDeploymentController();
       final model = MockHeartRateCardViewModel();
       final dataModel = MockHourlyHeartRate();
@@ -24,7 +24,7 @@ void main() {
       verify(model.createModel());
     });
 
-    test('description', () {
+    test('should update the model on an emit of data', () async {
       //ugh nothing works yet but it feels like it should
       final mockSmartphoneDeploymentController =
           MockSmartphoneDeploymentController();
@@ -34,15 +34,7 @@ void main() {
 
       final heartRateStreamController =
           StreamController<MockDataPoint>.broadcast();
-      heartRateStreamController.sink.add(mockDataPoint);
 
-      logInvocations([
-        mockDataPoint,
-        mockPolarHRDatum,
-        mockSmartphoneDeploymentController
-      ]);
-
-      // Set the heart rate events stream to the stream controller
       when(mockSmartphoneDeploymentController.data)
           .thenAnswer((_) => heartRateStreamController.stream);
 
@@ -52,7 +44,13 @@ void main() {
 
       viewModel.init(mockSmartphoneDeploymentController);
 
-      expect(viewModel.currentHeartRate, 80);
+      heartRateStreamController.sink.add(mockDataPoint);
+
+      // await Future.delayed(Duration(seconds: 2));
+
+      expectLater(heartRateStreamController.stream, emits(mockDataPoint));
+
+      expect(viewModel.currentHeartRate, equals(80));
       heartRateStreamController.close();
     });
   });

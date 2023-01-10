@@ -29,12 +29,10 @@ class DetailsBanner extends StatelessWidget {
             : const SizedBox.shrink(),
         title: InkWell(
           onTap: () {
-            isCarpBanner == true
-                ? Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => StudyDetailsPage()))
-                : print("no");
+            if (isCarpBanner) {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => StudyDetailsPage()));
+            }
           },
           child: Padding(
             padding: const EdgeInsets.all(10),
@@ -50,8 +48,7 @@ class DetailsBanner extends StatelessWidget {
                           foreground: Paint()
                             ..style = PaintingStyle.stroke
                             ..strokeWidth = 1
-                            ..color =
-                                Theme.of(context).colorScheme.secondary),
+                            ..color = Theme.of(context).colorScheme.secondary),
                     ),
                     Text(
                       locale.translate(title),
@@ -66,8 +63,7 @@ class DetailsBanner extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Icon(Icons.touch_app,
-                              color: Theme.of(context).primaryColor,
-                              size: 15),
+                              color: Theme.of(context).primaryColor, size: 15),
                         ],
                       )
                     : const SizedBox.shrink(),

@@ -36,11 +36,6 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
     throw UnimplementedError();
   }
 
-
-
-
-
-
   Future<SmartphoneStudyProtocol?> _getGenericCARPStudy(String studyId) async {
     if (_protocol == null) {
       if (_protocol == null) {
@@ -334,7 +329,6 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
             parkinsonsSurvey,
             phone);
       }
-
       return _protocol;
     }
     return null;

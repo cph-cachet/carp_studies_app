@@ -157,8 +157,8 @@ class ProfilePageState extends State<ProfilePage> {
                     },
                   ),
                   ListTile(
-                    leading:
-                        const Icon(Icons.power_settings_new, color: CACHET.RED_1),
+                    leading: const Icon(Icons.power_settings_new,
+                        color: CACHET.RED_1),
                     title: Text(locale.translate('pages.profile.log_out'),
                         style:
                             profileActionStyle.copyWith(color: CACHET.RED_1)),

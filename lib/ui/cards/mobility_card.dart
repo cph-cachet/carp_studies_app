@@ -5,7 +5,8 @@ class MobilityCardWidget extends StatefulWidget {
   final List<charts.Series<DailyMobility, String>> seriesList;
   final MobilityCardViewModel model;
   const MobilityCardWidget(this.seriesList, this.model,
-      {super.key, this.colors = const [CACHET.BLUE_2, CACHET.BLUE_1, CACHET.RED_1]});
+      {super.key,
+      this.colors = const [CACHET.BLUE_2, CACHET.BLUE_1, CACHET.RED_1]});
 
   factory MobilityCardWidget.withSampleData(MobilityCardViewModel model) {
     return MobilityCardWidget(
@@ -104,12 +105,14 @@ class MobilityCardWidgetState extends State<MobilityCardWidget> {
                   ),
                   primaryMeasureAxis: charts.NumericAxisSpec(
                       renderSpec: renderSpecNum,
-                      tickProviderSpec: const charts.BasicNumericTickProviderSpec(
-                          desiredTickCount: 3)),
+                      tickProviderSpec:
+                          const charts.BasicNumericTickProviderSpec(
+                              desiredTickCount: 3)),
                   secondaryMeasureAxis: charts.NumericAxisSpec(
                       renderSpec: renderSpecNum,
-                      tickProviderSpec: const charts.BasicNumericTickProviderSpec(
-                          desiredTickCount: 3)),
+                      tickProviderSpec:
+                          const charts.BasicNumericTickProviderSpec(
+                              desiredTickCount: 3)),
                   customSeriesRenderers: [
                     charts.LineRendererConfig(
                       customRendererId: 'customLine',

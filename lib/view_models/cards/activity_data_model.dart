@@ -1,12 +1,14 @@
 part of carp_study_app;
 
 class ActivityCardViewModel extends SerializableViewModel<WeeklyActivities> {
-  DataPoint _lastActivity = DataPoint.fromData(ActivityDatum(ActivityType.STILL, 100));
+  DataPoint _lastActivity =
+      DataPoint.fromData(ActivityDatum(ActivityType.STILL, 100));
 
   @override
   WeeklyActivities createModel() => WeeklyActivities();
   Map<ActivityType, Map<int, int>> get activities => model.activities;
-  List<DailyActivity> activitiesByType(ActivityType type) => model.activitiesByType(type);
+  List<DailyActivity> activitiesByType(ActivityType type) =>
+      model.activitiesByType(type);
 
   ActivityCardViewModel() : super();
 
@@ -52,17 +54,19 @@ class WeeklyActivities extends DataModel {
   Map<ActivityType, Map<int, int>> activities = {};
 
   /// A list of activities of a specific [type].
-  List<DailyActivity> activitiesByType(ActivityType type) =>
-      activities[type]!.entries.map((entry) => DailyActivity(entry.key, entry.value)).toList();
+  List<DailyActivity> activitiesByType(ActivityType type) => activities[type]!
+      .entries
+      .map((entry) => DailyActivity(entry.key, entry.value))
+      .toList();
 
   WeeklyActivities() {
     // // Initialize every week or if is the first time opening the app
     for (var type in ActivityType.values) {
-        activities[type] = {};
-        for (int i = 1; i <= 7; i++) {
-          activities[type]![i] = 0;
-        }
+      activities[type] = {};
+      for (int i = 1; i <= 7; i++) {
+        activities[type]![i] = 0;
       }
+    }
   }
 
   /// Increase the number of minutes of doing [activityType] on [weekday] with [minutes].
@@ -71,19 +75,21 @@ class WeeklyActivities extends DataModel {
     int weekday,
     int minutes,
   ) {
-    activities[activityType]![weekday] = (activities[activityType]![weekday] ?? 0) + minutes;
+    activities[activityType]![weekday] =
+        (activities[activityType]![weekday] ?? 0) + minutes;
   }
 
   @override
-  WeeklyActivities fromJson(Map<String, dynamic> json) => _$WeeklyActivitiesFromJson(json);
+  WeeklyActivities fromJson(Map<String, dynamic> json) =>
+      _$WeeklyActivitiesFromJson(json);
   @override
   Map<String, dynamic> toJson() => _$WeeklyActivitiesToJson(this);
 
   @override
   String toString() {
     String str = '  TYPE\t| day | min.\n';
-    activities.forEach((type, data) =>
-        data.forEach((day, minutes) => str += '${type.toString().split(".").last}\t|  $day  |  $minutes\n'));
+    activities.forEach((type, data) => data.forEach((day, minutes) =>
+        str += '${type.toString().split(".").last}\t|  $day  |  $minutes\n'));
     return str;
   }
 }

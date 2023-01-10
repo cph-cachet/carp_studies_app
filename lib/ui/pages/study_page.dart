@@ -28,9 +28,8 @@ class StudyPageState extends State<StudyPage> {
                           isCarpBanner: true),
                       SliverList(
                         delegate: SliverChildBuilderDelegate(
-                          (BuildContext context, int index) =>
-                              _aboutStudyCard(
-                                  context, widget.model.messages[index]),
+                          (BuildContext context, int index) => _aboutStudyCard(
+                              context, widget.model.messages[index]),
                           childCount: widget.model.messages.length,
                         ),
                       ),
@@ -104,23 +103,16 @@ class StudyPageState extends State<StudyPage> {
               Text(
                   // locale.translate(message.type.toString().split('.')[1][0].toUpperCase() +
                   //         message.type.toString().split('.')[1].substring(1)) +
-                  '${locale.translate(message.type
-                          .toString()
-                          .split('.')
-                          .last
-                          .toLowerCase())} - ${timeago.format(
-                        DateTime.now().copyWithAdditional(
-                            years:
-                                -DateTime.now().year + message.timestamp.year,
-                            months:
-                                -DateTime.now().month + message.timestamp.month,
-                            days: -DateTime.now().day + message.timestamp.day,
-                            hours:
-                                -DateTime.now().hour + message.timestamp.hour,
-                            minutes: -DateTime.now().minute +
-                                message.timestamp.minute),
-                        locale: Localizations.localeOf(context).languageCode,
-                      )}',
+                  '${locale.translate(message.type.toString().split('.').last.toLowerCase())} - ${timeago.format(
+                    DateTime.now().copyWithAdditional(
+                        years: -DateTime.now().year + message.timestamp.year,
+                        months: -DateTime.now().month + message.timestamp.month,
+                        days: -DateTime.now().day + message.timestamp.day,
+                        hours: -DateTime.now().hour + message.timestamp.hour,
+                        minutes:
+                            -DateTime.now().minute + message.timestamp.minute),
+                    locale: Localizations.localeOf(context).languageCode,
+                  )}',
                   style: aboutCardSubtitleStyle.copyWith(
                       color: Theme.of(context).primaryColor)),
             ]),
@@ -139,8 +131,7 @@ class StudyPageState extends State<StudyPage> {
               if (message.message != null && message.message!.isNotEmpty)
                 Expanded(
                     child: Text(
-                  "${locale.translate(message.message!).substring(
-                          0, (message.message!.length > 150) ? 150 : null)}...",
+                  "${locale.translate(message.message!).substring(0, (message.message!.length > 150) ? 150 : null)}...",
                   style: aboutCardContentStyle,
                   textAlign: TextAlign.justify,
                 )),

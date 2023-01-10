@@ -8,7 +8,8 @@ class TaskCardWidget extends StatefulWidget {
   final List<Color> colors;
   final TaskCardChartType chartType;
   const TaskCardWidget(
-    this.model, {super.key,
+    this.model, {
+    super.key,
     this.colors = CACHET.COLOR_LIST,
     this.chartType = TaskCardChartType.horisontal,
   });
@@ -57,8 +58,7 @@ class TaskCardWidgetState extends State<TaskCardWidget> {
                         children: [
                           const SizedBox(height: 5),
                           Text(
-                              '${widget.model.tasksDone} ${locale.translate(
-                                      'cards.${widget.model.taskType}.title')}',
+                              '${widget.model.tasksDone} ${locale.translate('cards.${widget.model.taskType}.title')}',
                               //textAlign: TextAlign.center,
                               style: dataCardTitleStyle),
                         ],
@@ -80,9 +80,7 @@ class TaskCardWidgetState extends State<TaskCardWidget> {
       return SizedBox(
         height: 160,
         child: HorizontalBar(
-          names: widget
-              .model
-              .taskCount
+          names: widget.model.taskCount
               .map((task) => locale.translate(task.title))
               .toList(),
           values: widget.model.taskCount.map((task) => task.size).toList(),

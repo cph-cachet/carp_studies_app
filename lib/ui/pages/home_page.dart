@@ -87,13 +87,12 @@ class HomePageState extends State<HomePage> {
     });
   }
 
-  void _restart() {
-    setState(() {
-      if (bloc.isRunning) {
-        bloc.pause();
-      } else {
-        bloc.resume();
-      }
-    });
-  }
+  // void _restart() {
+  //   setState(() {
+  //     if (bloc.isRunning)
+  //       bloc.pause();
+  //     else
+  //       bloc.resume();
+  //   });
+  // }
 }

@@ -11,7 +11,7 @@ import 'exports.dart';
 ])
 void main() {
   setUp(() {});
-  group("HeartRateCardViewModel", skip: false, () {
+  group("HeartRateCardViewModel", () {
     test('initializes HeartRateCardViewModel', skip: true, () {
       final controller = MockSmartphoneDeploymentController();
       final model = MockHeartRateCardViewModel();
@@ -19,65 +19,102 @@ void main() {
       when(model.createModel()).thenReturn(dataModel);
 
       final viewModel = HeartRateCardViewModel();
-      model.init(controller);
+      viewModel.init(controller);
 
       verify(model.createModel());
     });
-    test('should update the model on an emit of data',
-        timeout: const Timeout(Duration(seconds: 10)), () async {
-      final mockSmartphoneDeploymentController =
-          MockSmartphoneDeploymentController();
-      final mockPolarHRDatum = MockPolarHRDatum();
-      final mockDataPoint = MockDataPoint();
-      final viewModel = HeartRateCardViewModel();
+    group('init', () {
+      group('should listen to heart rate events', () {
+        final mockSmartphoneDeploymentController =
+            MockSmartphoneDeploymentController();
+        final mockPolarHRDatum = MockPolarHRDatum();
+        final mockDataPoint = MockDataPoint();
+        final viewModel = HeartRateCardViewModel();
+        final heartRateStreamController =
+            StreamController<MockDataPoint>.broadcast();
 
-      final heartRateStreamController =
-          StreamController<MockDataPoint>.broadcast();
+        setUp(() {
+          when(mockSmartphoneDeploymentController.data)
+              .thenAnswer((_) => heartRateStreamController.stream);
+        });
+        tearDownAll(() {
+          heartRateStreamController.close();
+        });
+        group('and update model variables', () {
+          test('with one event', () async {
+            viewModel.init(mockSmartphoneDeploymentController);
+            // Add a heart rate data point to the stream
+            when(mockPolarHRDatum.hr).thenReturn(80);
+            when(mockDataPoint.data).thenReturn(mockPolarHRDatum);
 
-      when(mockSmartphoneDeploymentController.data)
-          .thenAnswer((_) => heartRateStreamController.stream);
+            heartRateStreamController.sink.add(mockDataPoint);
 
-      // Add a heart rate data point to the stream
-      when(mockPolarHRDatum.hr).thenReturn(80);
-      when(mockDataPoint.data).thenReturn(mockPolarHRDatum);
+            await Future.delayed(const Duration(seconds: 1));
+            expect(viewModel.currentHeartRate, equals(80.0));
+            expect(viewModel.dayMinMax, equals(HeartRateMinMaxPrHour(80, 80)));
+            expect(
+                viewModel.hourlyHeartRate,
+                equals((HourlyHeartRate().addHeartRate(DateTime.now().hour, 80))
+                    .hourlyHeartRate));
+          });
+          test('with multiple events', () async {
+            viewModel.init(mockSmartphoneDeploymentController);
+            // Add a heart rate data point to the stream
+            when(mockPolarHRDatum.hr).thenReturn(90);
+            when(mockDataPoint.data).thenReturn(mockPolarHRDatum);
 
-      viewModel.init(mockSmartphoneDeploymentController);
+            heartRateStreamController.sink.add(mockDataPoint);
 
-/*
-      heartRateStreamController.sink.add(mockDataPoint);
-      final completer = Completer<DataPoint>();
-      final future = completer.future;
+            await Future.delayed(const Duration(seconds: 1));
+            when(mockPolarHRDatum.hr).thenReturn(60);
+            when(mockDataPoint.data).thenReturn(mockPolarHRDatum);
 
-    // Set up a listener on the stream to complete the Future when the value of viewModel.currentHeartRate is updated
-      viewModel.heartRateEvents?.listen((heartRate) {
-        completer.complete(heartRate);
+            heartRateStreamController.sink.add(mockDataPoint);
+
+            await Future.delayed(const Duration(seconds: 1));
+            expect(viewModel.currentHeartRate, equals(60));
+            expect(viewModel.dayMinMax, equals(HeartRateMinMaxPrHour(60, 90)));
+            expect(
+                viewModel.hourlyHeartRate,
+                equals((HourlyHeartRate()
+                        .addHeartRate(DateTime.now().hour, 60)
+                        .addHeartRate(DateTime.now().hour, 90))
+                    .hourlyHeartRate));
+          });
+          test('with events with data that is 0', () async {
+            viewModel.init(mockSmartphoneDeploymentController);
+            // Add a heart rate data point to the stream
+            when(mockPolarHRDatum.hr).thenReturn(0);
+            when(mockDataPoint.data).thenReturn(mockPolarHRDatum);
+
+            heartRateStreamController.sink.add(mockDataPoint);
+
+            await Future.delayed(const Duration(seconds: 1));
+            expect(viewModel.currentHeartRate, equals(null));
+            expect(
+                viewModel.dayMinMax, equals(HeartRateMinMaxPrHour(null, null)));
+            expect(viewModel.hourlyHeartRate,
+                equals((HourlyHeartRate()).hourlyHeartRate));
+            expect(viewModel.contactStatus, equals(false));
+          });
+          test('with contactStatus being true', () async {
+            viewModel.init(mockSmartphoneDeploymentController);
+            // Add a heart rate data point to the stream
+            when(mockPolarHRDatum.hr).thenReturn(1);
+            when(mockPolarHRDatum.contactStatusSupported).thenReturn(true);
+            when(mockPolarHRDatum.contactStatus).thenReturn(true);
+            when(mockDataPoint.data).thenReturn(mockPolarHRDatum);
+
+            heartRateStreamController.sink.add(mockDataPoint);
+
+            await Future.delayed(const Duration(seconds: 1));
+            expect(viewModel.currentHeartRate, equals(anything));
+            expect(viewModel.dayMinMax, equals(anything));
+            expect(viewModel.hourlyHeartRate, equals(anything));
+            expect(viewModel.contactStatus, equals(true));
+          });
+        });
       });
-
-
-      // Wait for the Future to complete before running the expect statement
-      await future;
-*/
-      heartRateStreamController.sink.add(mockDataPoint);
-/*
-      final completer = Completer();
-      viewModel.heartRateEvents?.listen((heartRate) {
-        if ((heartRate.data as PolarHRDatum).hr == 80) {
-          completer.complete();
-        }
-      });
-
-      await completer.future;
-      expect(completer.future, completes);
-      // expect((heartRate.data as MockPolarHRDatum).hr, equals(80));
-      // await expectLater(viewModel.heartRateEvents, emits(mockDataPoint));
-      // await expectLater(viewModel.currentHeartRate, equals(80));
- */
-
-      await Future.delayed(const Duration(seconds: 1));
-      expect(viewModel.currentHeartRate, equals(80));
-
-      // expect(viewModel.currentHeartRate, equals(80));
-      heartRateStreamController.close();
     });
   });
   group('HourlyHeartRate', () {

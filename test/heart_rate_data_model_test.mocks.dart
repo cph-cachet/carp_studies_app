@@ -88,8 +88,8 @@ class _FakeHourlyHeartRate_5 extends _i1.SmartFake
         );
 }
 
-class _FakeDataFormat_6 extends _i1.SmartFake implements _i3.DataFormat {
-  _FakeDataFormat_6(
+class _FakeDateTime_6 extends _i1.SmartFake implements DateTime {
+  _FakeDateTime_6(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -98,8 +98,8 @@ class _FakeDataFormat_6 extends _i1.SmartFake implements _i3.DataFormat {
         );
 }
 
-class _FakeDateTime_7 extends _i1.SmartFake implements DateTime {
-  _FakeDateTime_7(
+class _FakeDataFormat_7 extends _i1.SmartFake implements _i3.DataFormat {
+  _FakeDataFormat_7(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -515,11 +515,10 @@ class MockHeartRateCardViewModel extends _i1.Mock
         ),
       ) as _i4.HourlyHeartRate);
   @override
-  void init(_i2.SmartphoneDeploymentController? controller) =>
-      super.noSuchMethod(
+  void init(_i2.SmartphoneDeploymentController? ctrl) => super.noSuchMethod(
         Invocation.method(
           #init,
-          [controller],
+          [ctrl],
         ),
         returnValueForMissingStub: null,
       );
@@ -541,6 +540,158 @@ class MockHeartRateCardViewModel extends _i1.Mock
         returnValue: _i6.Future<_i4.HourlyHeartRate?>.value(),
         returnValueForMissingStub: _i6.Future<_i4.HourlyHeartRate?>.value(),
       ) as _i6.Future<_i4.HourlyHeartRate?>);
+}
+
+/// A class which mocks [HourlyHeartRate].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockHourlyHeartRate extends _i1.Mock implements _i4.HourlyHeartRate {
+  @override
+  Map<int, _i4.HeartRateMinMaxPrHour> get hourlyHeartRate =>
+      (super.noSuchMethod(
+        Invocation.getter(#hourlyHeartRate),
+        returnValue: <int, _i4.HeartRateMinMaxPrHour>{},
+        returnValueForMissingStub: <int, _i4.HeartRateMinMaxPrHour>{},
+      ) as Map<int, _i4.HeartRateMinMaxPrHour>);
+  @override
+  set hourlyHeartRate(Map<int, _i4.HeartRateMinMaxPrHour>? _hourlyHeartRate) =>
+      super.noSuchMethod(
+        Invocation.setter(
+          #hourlyHeartRate,
+          _hourlyHeartRate,
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  DateTime get lastUpdated => (super.noSuchMethod(
+        Invocation.getter(#lastUpdated),
+        returnValue: _FakeDateTime_6(
+          this,
+          Invocation.getter(#lastUpdated),
+        ),
+        returnValueForMissingStub: _FakeDateTime_6(
+          this,
+          Invocation.getter(#lastUpdated),
+        ),
+      ) as DateTime);
+  @override
+  set lastUpdated(DateTime? _lastUpdated) => super.noSuchMethod(
+        Invocation.setter(
+          #lastUpdated,
+          _lastUpdated,
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  set currentHeartRate(double? _currentHeartRate) => super.noSuchMethod(
+        Invocation.setter(
+          #currentHeartRate,
+          _currentHeartRate,
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  set maxHeartRate(double? _maxHeartRate) => super.noSuchMethod(
+        Invocation.setter(
+          #maxHeartRate,
+          _maxHeartRate,
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  set minHeartRate(double? _minHeartRate) => super.noSuchMethod(
+        Invocation.setter(
+          #minHeartRate,
+          _minHeartRate,
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  _i4.HourlyHeartRate resetDataAtMidnight() => (super.noSuchMethod(
+        Invocation.method(
+          #resetDataAtMidnight,
+          [],
+        ),
+        returnValue: _FakeHourlyHeartRate_5(
+          this,
+          Invocation.method(
+            #resetDataAtMidnight,
+            [],
+          ),
+        ),
+        returnValueForMissingStub: _FakeHourlyHeartRate_5(
+          this,
+          Invocation.method(
+            #resetDataAtMidnight,
+            [],
+          ),
+        ),
+      ) as _i4.HourlyHeartRate);
+  @override
+  _i4.HourlyHeartRate addHeartRate(
+    int? hour,
+    double? heartRate,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #addHeartRate,
+          [
+            hour,
+            heartRate,
+          ],
+        ),
+        returnValue: _FakeHourlyHeartRate_5(
+          this,
+          Invocation.method(
+            #addHeartRate,
+            [
+              hour,
+              heartRate,
+            ],
+          ),
+        ),
+        returnValueForMissingStub: _FakeHourlyHeartRate_5(
+          this,
+          Invocation.method(
+            #addHeartRate,
+            [
+              hour,
+              heartRate,
+            ],
+          ),
+        ),
+      ) as _i4.HourlyHeartRate);
+  @override
+  _i4.HourlyHeartRate fromJson(Map<String, dynamic>? json) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #fromJson,
+          [json],
+        ),
+        returnValue: _FakeHourlyHeartRate_5(
+          this,
+          Invocation.method(
+            #fromJson,
+            [json],
+          ),
+        ),
+        returnValueForMissingStub: _FakeHourlyHeartRate_5(
+          this,
+          Invocation.method(
+            #fromJson,
+            [json],
+          ),
+        ),
+      ) as _i4.HourlyHeartRate);
+  @override
+  Map<String, dynamic> toJson() => (super.noSuchMethod(
+        Invocation.method(
+          #toJson,
+          [],
+        ),
+        returnValue: <String, dynamic>{},
+        returnValueForMissingStub: <String, dynamic>{},
+      ) as Map<String, dynamic>);
 }
 
 /// A class which mocks [PolarHRDatum].
@@ -621,11 +772,11 @@ class MockPolarHRDatum extends _i1.Mock implements _i7.PolarHRDatum {
   @override
   _i3.DataFormat get format => (super.noSuchMethod(
         Invocation.getter(#format),
-        returnValue: _FakeDataFormat_6(
+        returnValue: _FakeDataFormat_7(
           this,
           Invocation.getter(#format),
         ),
-        returnValueForMissingStub: _FakeDataFormat_6(
+        returnValueForMissingStub: _FakeDataFormat_7(
           this,
           Invocation.getter(#format),
         ),
@@ -663,11 +814,11 @@ class MockPolarHRDatum extends _i1.Mock implements _i7.PolarHRDatum {
   @override
   DateTime get timestamp => (super.noSuchMethod(
         Invocation.getter(#timestamp),
-        returnValue: _FakeDateTime_7(
+        returnValue: _FakeDateTime_6(
           this,
           Invocation.getter(#timestamp),
         ),
-        returnValueForMissingStub: _FakeDateTime_7(
+        returnValueForMissingStub: _FakeDateTime_6(
           this,
           Invocation.getter(#timestamp),
         ),
@@ -846,11 +997,11 @@ class MockDataPointHeader extends _i1.Mock implements _i3.DataPointHeader {
   @override
   _i3.DataFormat get dataFormat => (super.noSuchMethod(
         Invocation.getter(#dataFormat),
-        returnValue: _FakeDataFormat_6(
+        returnValue: _FakeDataFormat_7(
           this,
           Invocation.getter(#dataFormat),
         ),
-        returnValueForMissingStub: _FakeDataFormat_6(
+        returnValueForMissingStub: _FakeDataFormat_7(
           this,
           Invocation.getter(#dataFormat),
         ),
@@ -863,126 +1014,6 @@ class MockDataPointHeader extends _i1.Mock implements _i3.DataPointHeader {
         ),
         returnValueForMissingStub: null,
       );
-  @override
-  Map<String, dynamic> toJson() => (super.noSuchMethod(
-        Invocation.method(
-          #toJson,
-          [],
-        ),
-        returnValue: <String, dynamic>{},
-        returnValueForMissingStub: <String, dynamic>{},
-      ) as Map<String, dynamic>);
-}
-
-/// A class which mocks [HourlyHeartRate].
-///
-/// See the documentation for Mockito's code generation for more information.
-class MockHourlyHeartRate extends _i1.Mock implements _i4.HourlyHeartRate {
-  @override
-  Map<int, _i4.HeartRateMinMaxPrHour> get hourlyHeartRate =>
-      (super.noSuchMethod(
-        Invocation.getter(#hourlyHeartRate),
-        returnValue: <int, _i4.HeartRateMinMaxPrHour>{},
-        returnValueForMissingStub: <int, _i4.HeartRateMinMaxPrHour>{},
-      ) as Map<int, _i4.HeartRateMinMaxPrHour>);
-  @override
-  set hourlyHeartRate(Map<int, _i4.HeartRateMinMaxPrHour>? _hourlyHeartRate) =>
-      super.noSuchMethod(
-        Invocation.setter(
-          #hourlyHeartRate,
-          _hourlyHeartRate,
-        ),
-        returnValueForMissingStub: null,
-      );
-  @override
-  DateTime get lastUpdated => (super.noSuchMethod(
-        Invocation.getter(#lastUpdated),
-        returnValue: _FakeDateTime_7(
-          this,
-          Invocation.getter(#lastUpdated),
-        ),
-        returnValueForMissingStub: _FakeDateTime_7(
-          this,
-          Invocation.getter(#lastUpdated),
-        ),
-      ) as DateTime);
-  @override
-  set lastUpdated(DateTime? _lastUpdated) => super.noSuchMethod(
-        Invocation.setter(
-          #lastUpdated,
-          _lastUpdated,
-        ),
-        returnValueForMissingStub: null,
-      );
-  @override
-  set currentHeartRate(double? _currentHeartRate) => super.noSuchMethod(
-        Invocation.setter(
-          #currentHeartRate,
-          _currentHeartRate,
-        ),
-        returnValueForMissingStub: null,
-      );
-  @override
-  set maxHeartRate(double? _maxHeartRate) => super.noSuchMethod(
-        Invocation.setter(
-          #maxHeartRate,
-          _maxHeartRate,
-        ),
-        returnValueForMissingStub: null,
-      );
-  @override
-  set minHeartRate(double? _minHeartRate) => super.noSuchMethod(
-        Invocation.setter(
-          #minHeartRate,
-          _minHeartRate,
-        ),
-        returnValueForMissingStub: null,
-      );
-  @override
-  void resetDataAtMidnight() => super.noSuchMethod(
-        Invocation.method(
-          #resetDataAtMidnight,
-          [],
-        ),
-        returnValueForMissingStub: null,
-      );
-  @override
-  void addHeartRate(
-    int? hour,
-    double? heartRate,
-  ) =>
-      super.noSuchMethod(
-        Invocation.method(
-          #addHeartRate,
-          [
-            hour,
-            heartRate,
-          ],
-        ),
-        returnValueForMissingStub: null,
-      );
-  @override
-  _i4.HourlyHeartRate fromJson(Map<String, dynamic>? json) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #fromJson,
-          [json],
-        ),
-        returnValue: _FakeHourlyHeartRate_5(
-          this,
-          Invocation.method(
-            #fromJson,
-            [json],
-          ),
-        ),
-        returnValueForMissingStub: _FakeHourlyHeartRate_5(
-          this,
-          Invocation.method(
-            #fromJson,
-            [json],
-          ),
-        ),
-      ) as _i4.HourlyHeartRate);
   @override
   Map<String, dynamic> toJson() => (super.noSuchMethod(
         Invocation.method(

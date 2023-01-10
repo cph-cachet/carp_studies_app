@@ -23,8 +23,8 @@ void main() {
 
       verify(model.createModel());
     });
-
-    test('should update the model on an emit of data', () async {
+    test('should update the model on an emit of data',
+        timeout: const Timeout(Duration(seconds: 10)), () async {
       final mockSmartphoneDeploymentController =
           MockSmartphoneDeploymentController();
       final mockPolarHRDatum = MockPolarHRDatum();
@@ -43,12 +43,40 @@ void main() {
 
       viewModel.init(mockSmartphoneDeploymentController);
 
+/*
       heartRateStreamController.sink.add(mockDataPoint);
+      final completer = Completer<DataPoint>();
+      final future = completer.future;
 
-      // await Future.delayed(Duration(seconds: 2));
-      await expectLater(viewModel.heartRateEvents, emits() );
+    // Set up a listener on the stream to complete the Future when the value of viewModel.currentHeartRate is updated
+      viewModel.heartRateEvents?.listen((heartRate) {
+        completer.complete(heartRate);
+      });
 
+
+      // Wait for the Future to complete before running the expect statement
+      await future;
+*/
+      heartRateStreamController.sink.add(mockDataPoint);
+/*
+      final completer = Completer();
+      viewModel.heartRateEvents?.listen((heartRate) {
+        if ((heartRate.data as PolarHRDatum).hr == 80) {
+          completer.complete();
+        }
+      });
+
+      await completer.future;
+      expect(completer.future, completes);
+      // expect((heartRate.data as MockPolarHRDatum).hr, equals(80));
+      // await expectLater(viewModel.heartRateEvents, emits(mockDataPoint));
+      // await expectLater(viewModel.currentHeartRate, equals(80));
+ */
+
+      await Future.delayed(const Duration(seconds: 1));
       expect(viewModel.currentHeartRate, equals(80));
+
+      // expect(viewModel.currentHeartRate, equals(80));
       heartRateStreamController.close();
     });
   });

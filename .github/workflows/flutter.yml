@@ -16,6 +16,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Cache Flutter
+        id: cache-flutter
         uses: actions/cache@v3
         with:
           path: |
@@ -23,9 +24,6 @@ jobs:
             ~/.pub-cache
 
           key: flutter-${{ hashFiles('**/pubspec.lock') }}
-          restore-keys: |
-            flutter-${{ hashFiles('**/pubspec.lock') }}
-            flutter-
 
       - if: ${{ steps.cache-flutter.outputs.cache-hit != 'true' }}
         name: Install Flutter

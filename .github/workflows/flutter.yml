@@ -18,8 +18,13 @@ jobs:
       - name: Cache Flutter
         uses: actions/cache@v3
         with:
-          path: flutter
+          path: |
+            flutter
+            "$HOME/.pub-cache"
+
           key: flutter-${{ hashFiles('**/pubspec.lock') }}
+          restore-keys: |
+            flutter-
 
       - if: ${{ steps.cache-flutter.outputs.cache-hit != 'true' }}
         name: Install Flutter

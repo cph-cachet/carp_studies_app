@@ -27,9 +27,10 @@ jobs:
 
       - if: ${{ steps.cache-flutter.outputs.cache-hit != 'true' }}
         name: Install Flutter
-        run: |
-          git clone https://github.com/flutter/flutter.git --depth 1 -b stable $FOLDER
-          echo "$GITHUB_WORKSPACE/flutter/bin" >> $GITHUB_PATH
+        run: git clone https://github.com/flutter/flutter.git --depth 1 -b stable $FOLDER
+
+      - name: Add Flutter to PATH
+        run: echo "$GITHUB_WORKSPACE/flutter/bin" >> $GITHUB_PATH
 
       - name: Install dependencies
         run: flutter pub get

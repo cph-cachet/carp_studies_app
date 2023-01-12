@@ -8,7 +8,7 @@ name: Flutter
 on: push
 
 env:
-  FLUTTER_FOLDER: flutter
+  FLUTTER_FOLDER: "$HOME/flutter"
 
 jobs:
   build:
@@ -22,7 +22,8 @@ jobs:
         with:
           key: flutter-${{ hashFiles('**/pubspec.lock') }}
           path: |
-            /home/runner/flutter
+            flutter
+            ~/.pub-cache
           restore-keys: |
             flutter-${{ hashFiles('**/pubspec.lock') }}
             flutter-
@@ -30,8 +31,8 @@ jobs:
       - if: ${{ steps.cache-flutter.outputs.cache-hit != 'true' }}
         name: Install Flutter
         run: |
-          git clone https://github.com/flutter/flutter.git --depth 1 -b stable $HOME/$FLUTTER_FOLDER
-          echo "$HOME/$FLUTTER_FOLDER/bin" >> $GITHUB_PATH
+          git clone https://github.com/flutter/flutter.git --depth 1 -b stable $FLUTTER_FOLDER
+          echo "$FLUTTER_FOLDER/bin" >> $GITHUB_PATH
 
       - name: Install dependencies
         run: flutter pub get

@@ -8,13 +8,14 @@ name: Flutter
 on: push
 
 env:
-  FLUTTER_FOLDER: "$HOME/flutter"
+  FLUTTER_FOLDER: '$HOME/flutter'
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      
       - name: Cache Flutter
         id: cache-flutter
         uses: actions/cache@v3
@@ -32,6 +33,7 @@ jobs:
       - name: Add Flutter to PATH
         run: echo "$GITHUB_WORKSPACE/flutter/bin" >> $GITHUB_PATH
 
+      - if: ${{ steps.cache-flutter.outputs.cache-hit != 'true' }}
       - name: Install dependencies
         run: flutter pub get
 

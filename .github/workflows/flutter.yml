@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      
+
       - name: Cache Flutter
         id: cache-flutter
         uses: actions/cache@v3
@@ -34,7 +34,7 @@ jobs:
         run: echo "$GITHUB_WORKSPACE/flutter/bin" >> $GITHUB_PATH
 
       - if: ${{ steps.cache-flutter.outputs.cache-hit != 'true' }}
-      - name: Install dependencies
+        name: Install dependencies
         run: flutter pub get
 
       - name: Verify formatting

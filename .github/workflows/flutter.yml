@@ -20,10 +20,11 @@ jobs:
         with:
           path: |
             flutter
-            /.pub-cache
+            ~/.pub-cache
 
           key: flutter-${{ hashFiles('**/pubspec.lock') }}
           restore-keys: |
+            flutter-${{ hashFiles('**/pubspec.lock') }}
             flutter-
 
       - if: ${{ steps.cache-flutter.outputs.cache-hit != 'true' }}

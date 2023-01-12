@@ -20,7 +20,7 @@ jobs:
         with:
           path: |
             flutter
-            "$HOME/.pub-cache"
+            /.pub-cache
 
           key: flutter-${{ hashFiles('**/pubspec.lock') }}
           restore-keys: |

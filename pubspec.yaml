@@ -12,8 +12,8 @@ dependencies:
     sdk: flutter
 
   carp_serializable: ^1.0.0
-  carp_mobile_sensing: ^0.40.10
-  carp_context_package: ^0.40.0
+  # carp_mobile_sensing: ^0.40.10
+  # carp_context_package: ^0.40.0
   carp_survey_package: ^0.40.1
   carp_audio_package: ^0.40.0
   carp_backend: ^0.40.1
@@ -45,9 +45,11 @@ dependencies:
   fl_chart: ^0.55.2
   google_fonts: ^3.0.1
 
-# dependency_overrides:
-#   carp_mobile_sensing:
-#     path: ../carp/carp.sensing-flutter/carp_mobile_sensing/
+dependency_overrides:
+  carp_mobile_sensing:
+    path: ../carp/carp.sensing-flutter/carp_mobile_sensing/
+  carp_context_package:
+    path: ../carp/carp.sensing-flutter/packages/carp_context_package/
 
 #   carp_core:
 #     git:

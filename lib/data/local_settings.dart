@@ -104,6 +104,7 @@ class LocalSettings {
     await eraseStudyDeployment();
     await Settings().preferences!.remove(_studyIdKey);
     await Settings().preferences!.remove(_informedConsentAcceptedKey);
+    debug('$runtimeType - study erased.');
   }
 
   Future<void> eraseAuthCredentials() async {

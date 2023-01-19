@@ -374,8 +374,8 @@ class StudyAppBLoC {
   ///  * returning the user to select an invitation for another study (if any)
   Future<void> leaveStudy() async {
     _state = StudyAppState.initialized;
-    await Sensing().remove();
     await LocalSettings().eraseStudyIds();
+    await Sensing().remove();
   }
 
   /// Leave the study and also sign out the user.

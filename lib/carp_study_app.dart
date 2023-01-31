@@ -87,11 +87,6 @@ class LoadingPage extends StatefulWidget {
 
 class LoadingPageState extends State<LoadingPage> {
   @override
-  initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     // configure the BLOC if not already done or in progress
     // note that this build method can be called several time, but we only
@@ -111,17 +106,6 @@ class LoadingPageState extends State<LoadingPage> {
             (bloc.shouldInformedConsentBeShown) ? '/ConsentPage' : '/HomePage');
       });
     }
-
-    // // if the user has left the study but is still logged in,
-    // // then redirect to the invitation screen
-    // if (bloc.hasLeftStudy) {
-    //   bloc.hasLeftStudy = false;
-    // }
-
-    // // if the user is logged out, redirect to authentication screen
-    // if (bloc.hasSignedOut) {
-    //   bloc.hasSignedOut = false;
-    // }
 
     return Scaffold(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,

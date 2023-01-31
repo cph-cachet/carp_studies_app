@@ -12,14 +12,15 @@ dependencies:
     sdk: flutter
 
   carp_serializable: ^1.0.0
-  # carp_mobile_sensing: ^0.40.10
-  # carp_context_package: ^0.40.0
+  carp_mobile_sensing: ^0.40.12
+  carp_context_package: ^0.40.1
   carp_survey_package: ^0.40.1
   carp_audio_package: ^0.40.0
-  carp_backend: ^0.40.1
   carp_esense_package: ^0.40.1
-  carp_polar_package: ^0.40.1
+  carp_polar_package: ^0.40.2
   carp_health_package: ^2.4.0
+
+  carp_backend: ^0.40.2
 
   research_package: ^1.2.0
   cognition_package: ^1.3.2
@@ -46,10 +47,18 @@ dependencies:
   google_fonts: ^3.0.1
 
 dependency_overrides:
-  carp_mobile_sensing:
-    path: ../carp/carp.sensing-flutter/carp_mobile_sensing/
-  carp_context_package:
-    path: ../carp/carp.sensing-flutter/packages/carp_context_package/
+  # carp_core:
+  #   path: ../carp/carp.sensing-flutter/carp_core/
+  # carp_mobile_sensing:
+  #   path: ../carp/carp.sensing-flutter/carp_mobile_sensing/
+  # carp_context_package:
+  #   path: ../carp/carp.sensing-flutter/packages/carp_context_package/
+  # carp_webservices:
+  #   path: ../carp/carp.sensing-flutter/backends/carp_webservices/
+  # carp_backend:
+  #   path: ../carp/carp.sensing-flutter/backends/carp_backend/
+  # carp_polar_package:
+  #   path: ../carp/carp.sensing-flutter/packages/carp_polar_package/
 
 #   carp_core:
 #     git:

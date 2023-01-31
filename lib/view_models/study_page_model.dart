@@ -1,28 +1,33 @@
 part of carp_study_app;
 
 class StudyPageViewModel extends ViewModel {
-  String get title => bloc.deployment?.protocolDescription?.title ?? 'Unnamed';
-  String get description => bloc.deployment?.protocolDescription?.description ?? '';
-  String get purpose => bloc.deployment?.protocolDescription?.purpose ?? '';
+  String get title => bloc.deployment?.studyDescription?.title ?? 'Unnamed';
+  String get description =>
+      bloc.deployment?.studyDescription?.description ?? '';
+  String get purpose => bloc.deployment?.studyDescription?.purpose ?? '';
   Image get image => Image.asset('assets/images/study.png');
   String? get userID => bloc.deployment?.userId;
-  String get studyDescriptionUrl => bloc.deployment?.protocolDescription?.studyDescriptionUrl ?? '';
-  String get privacyPolicyUrl => bloc.deployment?.protocolDescription?.privacyPolicyUrl ?? '';
+  String get studyDescriptionUrl =>
+      bloc.deployment?.studyDescription?.studyDescriptionUrl ?? '';
+  String get privacyPolicyUrl =>
+      bloc.deployment?.studyDescription?.privacyPolicyUrl ?? '';
 
   String get piTitle => bloc.deployment?.responsible?.title ?? '';
   String get piName => bloc.deployment?.responsible?.name ?? '';
   String get piAddress => bloc.deployment?.responsible?.address ?? '';
   String get piEmail => bloc.deployment?.responsible?.email ?? '';
   String get piAffiliation =>
-      bloc.deployment?.responsible?.affiliation ?? 'Copenhagen Center for Health Technology';
+      bloc.deployment?.responsible?.affiliation ??
+      'Copenhagen Center for Health Technology';
 
   /// Events on the state of the study executor
-  Stream<ExecutorState> get studyExecutorStateEvents => Sensing().controller!.executor!.stateEvents;
+  Stream<ExecutorState> get studyExecutorStateEvents =>
+      Sensing().controller!.executor!.stateEvents;
 
   /// Current state of the study executor (e.g., resumed, paused, ...)
   ExecutorState get studyState => Sensing().controller!.executor!.state;
 
-  /// Get all sesing events (i.e. all [DataPoint] objects being collected).
+  /// Get all sensing events (i.e. all [DataPoint] objects being collected).
   Stream<DataPoint> get samplingEvents => Sensing().controller!.data;
 
   /// The total sampling size so far since this study was started.

@@ -90,6 +90,10 @@ class LocalSettings {
       ? null
       : await Settings().getDeploymentBasePath(studyDeploymentId!);
 
+  Future<String?> get cacheBasePath async => (studyDeploymentId == null)
+      ? null
+      : await Settings().getCacheBasePath(studyDeploymentId!);
+
   /// Has the informed consent been shown to, and accepted by the user?
   bool get hasInformedConsentBeenAccepted => _hasInformedConsentBeenAccepted ??=
       Settings().preferences!.getBool(_informedConsentAcceptedKey) ?? false;

@@ -24,11 +24,11 @@ class HomePageState extends State<HomePage> {
     _pages.add(const DevicesPage());
   }
 
-  @override
-  void dispose() {
-    bloc.dispose();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   bloc.dispose();
+  //   super.dispose();
+  // }
 
   @override
   void didChangeDependencies() {

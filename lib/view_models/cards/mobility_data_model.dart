@@ -73,14 +73,14 @@ class WeeklyMobility extends DataModel {
   void setMobilityFeatures(MobilityDatum data) {
     DateTime day = data.date ?? DateTime.now();
 
-    if (data.distanceTravelled != null) {
-      weeklyDistanceTraveled[day.weekday] = data.distanceTravelled!;
+    if (data.distanceTraveled != null) {
+      weeklyDistanceTraveled[day.weekday] = data.distanceTraveled!;
     }
     if (data.numberOfPlaces != null) {
       weeklyPlaces[day.weekday] = data.numberOfPlaces!;
     }
 
-    // only set homestay % if larger than zero (can return -1)
+    // only set home stay % if larger than zero (can return -1)
     // also convert to int (1-100) instead of double (0-1)
     if (data.homeStay != null && data.homeStay! > 0) {
       weeklyHomeStay[day.weekday] = (100 * data.homeStay!).toInt();

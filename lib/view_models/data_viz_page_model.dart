@@ -61,4 +61,12 @@ class DataVisualizationPageViewModel extends ViewModel {
     _studyProgressCardDataModel.init(ctrl);
     _heartRateCardDataModel.init(ctrl);
   }
+
+  /// Delete all persistent view models.
+  void delete(SmartphoneDeploymentController ctrl) {
+    _activityCardDataModel.delete();
+    _stepsCardDataModel.delete();
+    _mobilityCardDataModel.delete();
+    _heartRateCardDataModel.delete();
+  }
 }

@@ -35,7 +35,7 @@ class LocalSettings {
           ? OAuthToken.fromJson(jsonDecode(tokenString))
           : null;
     }
-    return _oauthToken!;
+    return _oauthToken;
   }
 
   set oauthToken(OAuthToken? token) {
@@ -90,6 +90,10 @@ class LocalSettings {
       ? null
       : await Settings().getDeploymentBasePath(studyDeploymentId!);
 
+  Future<String?> get cacheBasePath async => (studyDeploymentId == null)
+      ? null
+      : await Settings().getCacheBasePath(studyDeploymentId!);
+
   /// Has the informed consent been shown to, and accepted by the user?
   bool get hasInformedConsentBeenAccepted => _hasInformedConsentBeenAccepted ??=
       Settings().preferences!.getBool(_informedConsentAcceptedKey) ?? false;
@@ -104,6 +108,7 @@ class LocalSettings {
     await eraseStudyDeployment();
     await Settings().preferences!.remove(_studyIdKey);
     await Settings().preferences!.remove(_informedConsentAcceptedKey);
+    debug('$runtimeType - study erased.');
   }
 
   Future<void> eraseAuthCredentials() async {

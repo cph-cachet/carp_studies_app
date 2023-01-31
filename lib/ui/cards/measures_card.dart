@@ -3,7 +3,8 @@ part of carp_study_app;
 class MeasuresCardWidget extends StatefulWidget {
   final MeasuresCardViewModel model;
   final List<Color> colors;
-  const MeasuresCardWidget(this.model, {super.key, this.colors = CACHET.COLOR_LIST});
+  const MeasuresCardWidget(this.model,
+      {super.key, this.colors = CACHET.COLOR_LIST});
   @override
   MeasuresCardWidgetState createState() => MeasuresCardWidgetState();
 }
@@ -24,7 +25,8 @@ class MeasuresCardWidgetState extends State<MeasuresCardWidget> {
         //charts.MaterialPalette.blue.makeShades(min(7, model.samplingTable.length))[index],
         id: 'TotalMeasures',
         data: model.measures.sublist(0, min(6, model.samplingTable.length)),
-        domainFn: (MeasureCount measures, _) => locale.translate(measures.title),
+        domainFn: (MeasureCount measures, _) =>
+            locale.translate(measures.title),
         measureFn: (MeasureCount measures, _) => measures.size,
       )
     ];
@@ -77,23 +79,29 @@ class MeasuresCardWidgetState extends State<MeasuresCardWidget> {
                               height: 160,
                               width: MediaQuery.of(context).size.width,
                               child: charts.PieChart<String>(
-                                _createChartList(context, widget.model, CACHET.COLOR_LIST),
+                                _createChartList(
+                                    context, widget.model, CACHET.COLOR_LIST),
                                 animate: true,
                                 selectionModels: const [],
                                 behaviors: [
                                   charts.ChartTitle(
                                     "",
-                                    behaviorPosition: charts.BehaviorPosition.start,
-                                    maxWidthStrategy: charts.MaxWidthStrategy.ellipsize,
+                                    behaviorPosition:
+                                        charts.BehaviorPosition.start,
+                                    maxWidthStrategy:
+                                        charts.MaxWidthStrategy.ellipsize,
                                     layoutPreferredSize: 10,
                                   ),
                                   charts.DatumLegend(
                                     position: charts.BehaviorPosition.start,
                                     desiredMaxRows: 6,
-                                    cellPadding: const EdgeInsets.only(bottom: 2.0, left: 10),
-                                    outsideJustification: charts.OutsideJustification.middleDrawArea,
+                                    cellPadding: const EdgeInsets.only(
+                                        bottom: 2.0, left: 10),
+                                    outsideJustification: charts
+                                        .OutsideJustification.middleDrawArea,
                                     showMeasures: false,
-                                    legendDefaultMeasure: charts.LegendDefaultMeasure.firstValue,
+                                    legendDefaultMeasure:
+                                        charts.LegendDefaultMeasure.firstValue,
                                     measureFormatter: (num? value) {
                                       return value == null ? '-' : '$value';
                                     },

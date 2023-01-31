@@ -83,7 +83,7 @@ class HourlyHeartRate extends DataModel {
   double? maxHeartRate;
   double? minHeartRate;
 
-  void resetDataAtMidnight() {
+  HourlyHeartRate resetDataAtMidnight() {
     if (lastUpdated.day != DateTime.now().day) {
       for (int i = 0; i < 24; i++) {
         hourlyHeartRate[i] = HeartRateMinMaxPrHour(null, null);
@@ -92,12 +92,17 @@ class HourlyHeartRate extends DataModel {
       minHeartRate = null;
     }
     lastUpdated = DateTime.now();
+    return this;
   }
 
   /// Add a heart rate value for a given hour.
   /// If the hour already exists, the min and max values are updated.
   /// If the hour does not exist, it is added.
-  void addHeartRate(int hour, double heartRate) {
+  HourlyHeartRate addHeartRate(int hour, double heartRate) {
+    if (hour < 0 || hour > 23) {
+      throw AssertionError("hour must be in the range 0 to 23");
+    }
+
     currentHeartRate = heartRate;
     if (hourlyHeartRate.containsKey(hour)) {
       hourlyHeartRate.update(
@@ -109,6 +114,7 @@ class HourlyHeartRate extends DataModel {
     } else {
       hourlyHeartRate[hour] = HeartRateMinMaxPrHour(heartRate, heartRate);
     }
+    return this;
   }
 
   @override
@@ -139,4 +145,15 @@ class HeartRateMinMaxPrHour {
   factory HeartRateMinMaxPrHour.fromJson(Map<String, dynamic> json) =>
       _$HeartRateMinMaxPrHourFromJson(json);
   Map<String, dynamic> toJson() => _$HeartRateMinMaxPrHourToJson(this);
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is HeartRateMinMaxPrHour &&
+          runtimeType == other.runtimeType &&
+          min == other.min &&
+          max == other.max;
+
+  @override
+  int get hashCode => min.hashCode ^ max.hashCode;
 }

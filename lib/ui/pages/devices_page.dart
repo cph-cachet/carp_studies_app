@@ -372,7 +372,8 @@ class DevicesPageState extends State<DevicesPage> {
             return AlertDialog(
               scrollable: true,
               titlePadding: const EdgeInsets.symmetric(vertical: 5),
-              insetPadding: const EdgeInsets.symmetric(vertical: 24, horizontal: 40),
+              insetPadding:
+                  const EdgeInsets.symmetric(vertical: 24, horizontal: 40),
               title: Column(
                 children: [
                   Row(
@@ -385,7 +386,8 @@ class DevicesPageState extends State<DevicesPage> {
                     ],
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(left: 25, right: 25, bottom: 10),
+                    padding:
+                        const EdgeInsets.only(left: 25, right: 25, bottom: 10),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -401,9 +403,7 @@ class DevicesPageState extends State<DevicesPage> {
                     ? Column(
                         children: [
                           Text(
-                            "${locale.translate(
-                                    "pages.devices.connection.step.start.1")} ${locale.translate(device.name!)} ${locale.translate(
-                                    "pages.devices.connection.step.start.2")}",
+                            "${locale.translate("pages.devices.connection.step.start.1")} ${locale.translate(device.name!)} ${locale.translate("pages.devices.connection.step.start.2")}",
                             style: aboutCardContentStyle,
                             textAlign: TextAlign.justify,
                           ),
@@ -443,10 +443,7 @@ class DevicesPageState extends State<DevicesPage> {
                             ),
                           ),
                           Text(
-                            "${locale.translate(
-                                    "pages.devices.connection.step.start.3")} ${locale.translate(device.name!)}  ${locale.translate(
-                                    "pages.devices.connection.step.start.4")} ${locale.translate(device.name!)} ${locale.translate(
-                                    "pages.devices.connection.step.start.5")}",
+                            "${locale.translate("pages.devices.connection.step.start.3")} ${locale.translate(device.name!)}  ${locale.translate("pages.devices.connection.step.start.4")} ${locale.translate(device.name!)} ${locale.translate("pages.devices.connection.step.start.5")}",
                             style: aboutCardContentStyle,
                             textAlign: TextAlign.justify,
                           )

@@ -4,7 +4,8 @@ class CameraPage extends StatefulWidget {
   final VideoUserTask videoUserTask;
   final List<CameraDescription> cameras;
 
-  const CameraPage({super.key, required this.videoUserTask, required this.cameras});
+  const CameraPage(
+      {super.key, required this.videoUserTask, required this.cameras});
 
   @override
   CameraPageState createState() => CameraPageState();
@@ -91,7 +92,8 @@ class CameraPageState extends State<CameraPage> {
                       });
                     }
                   },
-                  icon: const Icon(Icons.flip_camera_android, color: Colors.white),
+                  icon: const Icon(Icons.flip_camera_android,
+                      color: Colors.white),
                 ),
                 GestureDetector(
                   onTap: () async {

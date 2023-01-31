@@ -45,7 +45,7 @@ class ActivityCardViewModel extends SerializableViewModel<WeeklyActivities> {
 /// Weekly activities in minutes organized by type.
 @JsonSerializable(fieldRename: FieldRename.snake, includeIfNull: false)
 class WeeklyActivities extends DataModel {
-  /// A map of activities oganized first by type and then by day of week.
+  /// A map of activities organized first by type and then by day of week.
   ///
   ///   (type,weekday,minutes)
   ///
@@ -60,7 +60,7 @@ class WeeklyActivities extends DataModel {
       .toList();
 
   WeeklyActivities() {
-    // // Initialize every week or if is the first time opening the app
+    // initialize every week or if is the first time opening the app
     for (var type in ActivityType.values) {
       activities[type] = {};
       for (int i = 1; i <= 7; i++) {

@@ -21,8 +21,6 @@ import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:open_settings/open_settings.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-// import 'package:activity_recognition_flutter/activity_recognition_flutter.dart';
 import 'package:flutter_activity_recognition/flutter_activity_recognition.dart';
 
 // the CARP packages
@@ -31,7 +29,7 @@ import 'package:carp_core/carp_core.dart';
 import 'package:carp_mobile_sensing/carp_mobile_sensing.dart';
 import 'package:carp_audio_package/media.dart';
 //import 'package:carp_health_package/health_package.dart';
-//import 'package:carp_connectivity_package/connectivity.dart' as carpcon;
+//import 'package:carp_connectivity_package/connectivity.dart';
 //import 'package:carp_communication_package/communication.dart';
 import 'package:carp_context_package/carp_context_package.dart';
 import 'package:carp_survey_package/survey.dart';
@@ -113,6 +111,7 @@ void main() async {
   // initialize CAMS and Cognition Packages (loading json deserialization functions)
   CarpMobileSensing();
   CognitionPackage();
+  CarpDataManager();
 
   // make sure to have an instance of the WidgetsBinding, which is required
   // to use platform channels to call native code
@@ -130,7 +129,6 @@ void main() async {
 /// Configure the debug level and deployment mode here before running the app
 /// or deploying it.
 final bloc = StudyAppBLoC(
-  debugLevel: DebugLevel.DEBUG,
-  deploymentMode: DeploymentMode.local,
-  forceSignOutAndStudyReload: false,
+  debugLevel: DebugLevel.debug,
+  deploymentMode: DeploymentMode.production,
 );

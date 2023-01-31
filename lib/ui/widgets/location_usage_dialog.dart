@@ -33,11 +33,10 @@ class LocationUsageDialog {
       ),
       actions: [
         ElevatedButton(
-          onPressed: () async {
-            var status = //await LocationManager().requestPermission();
-                await Permission.locationAlways.request();
-            print('>> location status: $status');
-            Navigator.pop(context, true);
+          onPressed: () {
+            Permission.locationAlways
+                .request()
+                .then((value) => Navigator.pop(context, true));
           },
           style: ButtonStyle(
             backgroundColor:

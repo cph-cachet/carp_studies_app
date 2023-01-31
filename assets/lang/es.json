@@ -46,6 +46,7 @@
     "pages.profile.username": "Usuario",
     "pages.profile.name": "Nombre",
     "pages.profile.study_name": "Estudio",
+    "pages.profile.study_deployment_id": "ID Estudio",
     "pages.profile.account_id": "Id Usuario",
     "pages.profile.contact": "Contactar investigador",
     "pages.profile.privacy": "Política de privacidad",

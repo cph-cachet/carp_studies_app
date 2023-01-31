@@ -51,12 +51,12 @@ abstract class SerializableViewModel<D extends DataModel> extends ViewModel {
     restore().then((savedModel) => _model = savedModel ?? _model);
 
     // save the data model on a regular basis.
-    Timer.periodic(const Duration(minutes: 5), (_) => save(model.toJson()));
+    Timer.periodic(const Duration(minutes: 3), (_) => save(model.toJson()));
   }
 
   /// Current path and filename of the data.
   Future<String> get filename async {
-    String path = await LocalSettings().deploymentBasePath ?? '';
+    String path = await LocalSettings().cacheBasePath ?? '';
     return '$path/$runtimeType.json';
   }
 
@@ -70,7 +70,7 @@ abstract class SerializableViewModel<D extends DataModel> extends ViewModel {
       File(name).writeAsStringSync(jsonEncode(json));
     } catch (exception) {
       success = false;
-      warning('Failed to save $runtimeType data - $exception');
+      warning('Failed to save $runtimeType - $exception');
     }
     return success;
   }

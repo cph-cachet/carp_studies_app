@@ -1,0 +1,47 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+name: Flutter
+
+on: push
+
+env:
+  FLUTTER_FOLDER: '$HOME/flutter'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Cache Flutter
+        id: cache-flutter
+        uses: actions/cache@v3
+        with:
+          path: |
+            flutter
+            ~/.pub-cache
+
+          key: flutter-${{ hashFiles('**/pubspec.lock') }}
+
+      - if: ${{ steps.cache-flutter.outputs.cache-hit != 'true' }}
+        name: Install Flutter
+        run: git clone https://github.com/flutter/flutter.git --depth 1 -b stable $FOLDER
+
+      - name: Add Flutter to PATH
+        run: echo "$GITHUB_WORKSPACE/flutter/bin" >> $GITHUB_PATH
+
+      - if: ${{ steps.cache-flutter.outputs.cache-hit != 'true' }}
+        name: Install dependencies
+        run: flutter pub get
+
+      - name: Verify formatting
+        run: flutter format --output=none --set-exit-if-changed lib/** test/**
+
+      - name: Analyze project source
+        run: flutter analyze --no-fatal-infos lib/ test/
+
+      - name: Run tests
+        run: flutter test

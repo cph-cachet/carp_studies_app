@@ -24,14 +24,15 @@ class CarpAppBar extends StatelessWidget {
                   ),
                   const SizedBox(width: 3),
                   IconButton(
-                    icon:
-                        Icon(Icons.account_circle_outlined, color: Theme.of(context).primaryColor, size: 30),
+                    icon: Icon(Icons.account_circle_outlined,
+                        color: Theme.of(context).primaryColor, size: 30),
                     tooltip: 'Profile',
                     onPressed: () {
                       Navigator.push(
                         context,
                         PageRouteBuilder(
-                          pageBuilder: (c, a1, a2) => ProfilePage(bloc.data.profilePageViewModel),
+                          pageBuilder: (c, a1, a2) =>
+                              ProfilePage(bloc.data.profilePageViewModel),
                         ),
                       );
                     },

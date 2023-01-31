@@ -126,9 +126,13 @@ dev_dependencies:
 
   #  auto generate json code (.g files) with:
   #    flutter pub run build_runner build --delete-conflicting-outputs
+  test: any
   json_serializable: any
   build_runner: any
-  test: any
+  flutter_test:
+    sdk: flutter
+  mockito: any
+
   flutter_lints: any
 
 # For information on the generic Dart part of this file, see the

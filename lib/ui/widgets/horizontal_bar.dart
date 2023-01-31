@@ -177,27 +177,27 @@ class MyAssetsBar extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 0),
         childAspectRatio: 8,
         children: assets
-        .asMap()
-        .entries
-        .map(
-          (entry) => Padding(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 3, horizontal: 5),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Icon(Icons.circle, color: entry.value.color, size: 12.0),
-                  Text(' ${entry.value.size}',
-                      style: legendStyle, textAlign: TextAlign.left),
-                  Expanded(
-                      child: Text(' ${entry.value.name!}',
-                          style: legendStyle,
-                          textAlign: TextAlign.left,
-                          overflow: TextOverflow.ellipsis)),
-                ],
-              )),
-        )
-        .toList(),
+            .asMap()
+            .entries
+            .map(
+              (entry) => Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 3, horizontal: 5),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Icon(Icons.circle, color: entry.value.color, size: 12.0),
+                      Text(' ${entry.value.size}',
+                          style: legendStyle, textAlign: TextAlign.left),
+                      Expanded(
+                          child: Text(' ${entry.value.name!}',
+                              style: legendStyle,
+                              textAlign: TextAlign.left,
+                              overflow: TextOverflow.ellipsis)),
+                    ],
+                  )),
+            )
+            .toList(),
       );
     }
   }

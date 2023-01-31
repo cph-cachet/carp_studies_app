@@ -150,7 +150,8 @@ class AudioTaskPageState extends State<AudioTaskPage> {
                         child: IconButton(
                           onPressed: () => audioUserTask!.onRecordStart(),
                           padding: const EdgeInsets.all(0),
-                          icon: const Icon(Icons.mic, color: Colors.white, size: 30),
+                          icon: const Icon(Icons.mic,
+                              color: Colors.white, size: 30),
                         ),
                       ),
                       InkWell(
@@ -254,7 +255,8 @@ class AudioTaskPageState extends State<AudioTaskPage> {
                         child: IconButton(
                           onPressed: () => audioUserTask!.onRecordStop(),
                           padding: const EdgeInsets.all(0),
-                          icon: const Icon(Icons.stop, color: Colors.white, size: 30),
+                          icon: const Icon(Icons.stop,
+                              color: Colors.white, size: 30),
                         ),
                       ),
                     ],
@@ -303,8 +305,8 @@ class AudioTaskPageState extends State<AudioTaskPage> {
                       IconButton(
                         onPressed: () => audioUserTask!.onRecordStart(),
                         padding: const EdgeInsets.all(0),
-                        icon:
-                            const Icon(Icons.replay, size: 25, color: CACHET.GREY_5),
+                        icon: const Icon(Icons.replay,
+                            size: 25, color: CACHET.GREY_5),
                       ),
                       CircleAvatar(
                         radius: 30,

@@ -3,7 +3,8 @@ part of carp_study_app;
 class MediaCardWidget extends StatefulWidget {
   final List<TaskCardViewModel> modelsList;
   final List<Color> colors;
-  const MediaCardWidget(this.modelsList, {super.key, this.colors = CACHET.COLOR_LIST});
+  const MediaCardWidget(this.modelsList,
+      {super.key, this.colors = CACHET.COLOR_LIST});
   @override
   MediaCardWidgetState createState() => MediaCardWidgetState();
 }
@@ -49,8 +50,7 @@ class MediaCardWidgetState extends State<MediaCardWidget> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             const SizedBox(height: 5),
-                            Text('$total MEDIA',
-                                style: dataCardTitleStyle),
+                            Text('$total MEDIA', style: dataCardTitleStyle),
                             Column(
                                 children: widget.modelsList
                                     .asMap()
@@ -61,16 +61,14 @@ class MediaCardWidgetState extends State<MediaCardWidget> {
                                           children: [
                                             const SizedBox(height: 15),
                                             Text(
-                                              '${entry.value.tasksDone} ${locale.translate(
-                                                      'cards.${entry.value.taskType}.title')}',
+                                              '${entry.value.tasksDone} ${locale.translate('cards.${entry.value.taskType}.title')}',
                                               style: dataCardTitleStyle
                                                   .copyWith(fontSize: 14),
                                             ),
                                             HorizontalBar(
                                                 names: entry.value.taskCount
-                                                    .map((task) =>
-                                                        locale.translate(
-                                                            task.title))
+                                                    .map((task) => locale
+                                                        .translate(task.title))
                                                     .toList(),
                                                 values: entry.value.taskCount
                                                     .map((task) => task.size)

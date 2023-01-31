@@ -10,9 +10,9 @@
 
 
 
-   <!-- The following permissions are used for devices management -->  
-	 <uses-permission android:name="android.permission.BLUETOOTH" />  
-	 <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />  
+   <!-- The following permissions are used for devices management -->
+	 <uses-permission android:name="android.permission.BLUETOOTH" />
+	 <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
 
     <!-- The following permissions are used for CARP Mobile Sensing -->
@@ -35,14 +35,6 @@
     <!-- The following permissions are used in the Media Package  -->
     <uses-permission android:name="android.permission.RECORD_AUDIO"/>
     <uses-permission android:name="android.permission.CAMERA"/>
-   
-    <!-- Remove unused permissions 
-         See https://github.com/cph-cachet/carp.sensing-flutter/wiki/5.-Best-Practice#android-manifest-file-merge  
-    -->
-    <uses-permission android:name="android.permission.READ_CALL_LOG" tools:node="remove" />
-    <uses-permission android:name="android.permission.READ_SMS" tools:node="remove"/>
-    <uses-permission android:name="android.permission.SEND_SMS" tools:node="remove"/>
-    <uses-permission android:name="android.permission.RECEIVE_SMS" tools:node="remove"/>    
 
     <!-- io.flutter.app.FlutterApplication is an android.app.Application that
          calls FlutterMain.startInitialization(this); in its onCreate method.
@@ -88,7 +80,7 @@
         </activity>
 
         <!-- service for using the Android activity recognition API -->
-        <service android:name="dk.cachet.activity_recognition_flutter.activity.ActivityRecognizedService" 
+        <service android:name="dk.cachet.activity_recognition_flutter.activity.ActivityRecognizedService"
         android:exported="true"/>
 
         <!-- Services for background location handling -->

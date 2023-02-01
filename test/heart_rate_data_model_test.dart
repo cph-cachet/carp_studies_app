@@ -125,8 +125,8 @@ void main() {
       hr.hourlyHeartRate[13] = HeartRateMinMaxPrHour(75, 85);
       hr.maxHeartRate = 85;
       hr.minHeartRate = 70;
-      hr.lastUpdated = DateTime(
-          2022, 1, 1, 23, 59, 59); // last updated at 11:59:59 PM on Jan 1, 2022
+      hr.lastUpdated =
+          DateTime.now().subtract(const Duration(days: 1)); // yesterday
 
       // call resetDataAtMidnight
       hr.resetDataAtMidnight();

@@ -82,31 +82,6 @@ class Sensing {
     // set up the devices available on this phone
     DeviceController().registerAllAvailableDevices();
 
-    // DeploymentService? deploymentService;
-
-    // if (bloc.deploymentMode == DeploymentMode.local) {
-    //   // use the local, phone-based deployment service
-    //   deploymentService = SmartphoneDeploymentService();
-
-    //   // get the protocol from the local study protocol manager
-    //   // note that the study id is not used
-    //   var protocol = await LocalStudyProtocolManager().getStudyProtocol('');
-    //   assert(protocol != null, 'Need a protocol to run locally.');
-
-    //   // deploy this protocol using the on-phone deployment service
-    //   // re-use the study deployment id - if available
-    //   _status = await deploymentService.createStudyDeployment(
-    //     protocol!,
-    //     bloc.studyDeploymentId,
-    //   );
-
-    //   // save the deployment id on the phone for later use
-    //   bloc.studyDeploymentId = _status!.studyDeploymentId;
-    // } else {
-    //   // use the CARP deployment service that knows how to download a custom protocol
-    //   deploymentService = CustomProtocolDeploymentService();
-    // }
-
     // Create and configure the client manager for this phone
     await SmartPhoneClientManager().configure(
       deploymentService: (bloc.deploymentMode == DeploymentMode.local)

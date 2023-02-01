@@ -12,31 +12,31 @@ ThemeData carpStudyTheme = ThemeData.light().copyWith(
   textTheme: ThemeData.light()
       .textTheme
       .copyWith(
-        caption: ThemeData.light().textTheme.caption!.copyWith(
+        bodySmall: ThemeData.light().textTheme.bodySmall!.copyWith(
               fontWeight: FontWeight.w500,
               fontSize: 14.0,
             ),
-        bodyText1: ThemeData.light().textTheme.bodyText1!.copyWith(
+        bodyLarge: ThemeData.light().textTheme.bodyLarge!.copyWith(
               fontWeight: FontWeight.w500,
               fontSize: 18.0,
             ),
-        bodyText2: ThemeData.light().textTheme.bodyText2!.copyWith(
+        bodyMedium: ThemeData.light().textTheme.bodyMedium!.copyWith(
               fontWeight: FontWeight.w400,
               fontSize: 16.0,
             ),
-        subtitle1: ThemeData.light().textTheme.subtitle1!.copyWith(
+        titleMedium: ThemeData.light().textTheme.titleMedium!.copyWith(
             fontWeight: FontWeight.w600,
             fontSize: 20.0,
             color: const Color(0xFF206FA2)),
-        headline6: ThemeData.light().textTheme.headline6!.copyWith(
+        titleLarge: ThemeData.light().textTheme.titleLarge!.copyWith(
               fontWeight: FontWeight.w500,
               fontSize: 20.0,
             ),
-        headline4: ThemeData.light().textTheme.headline4!.copyWith(
+        headlineMedium: ThemeData.light().textTheme.headlineMedium!.copyWith(
               fontWeight: FontWeight.w700,
               fontSize: 30.0,
             ),
-        button: ThemeData.light().textTheme.button!.copyWith(
+        labelLarge: ThemeData.light().textTheme.labelLarge!.copyWith(
             fontWeight: FontWeight.w500, fontSize: 16.0, color: Colors.white),
       )
       .apply(
@@ -57,32 +57,32 @@ ThemeData carpStudyDarkTheme = ThemeData.dark().copyWith(
   textTheme: ThemeData.dark()
       .textTheme
       .copyWith(
-        caption: ThemeData.dark().textTheme.caption!.copyWith(
+        bodySmall: ThemeData.dark().textTheme.bodySmall!.copyWith(
               fontWeight: FontWeight.w500,
               fontSize: 14.0,
             ),
-        bodyText1: ThemeData.dark().textTheme.bodyText1!.copyWith(
+        bodyLarge: ThemeData.dark().textTheme.bodyLarge!.copyWith(
               fontWeight: FontWeight.w500,
               fontSize: 18.0,
             ),
-        bodyText2: ThemeData.dark().textTheme.bodyText2!.copyWith(
+        bodyMedium: ThemeData.dark().textTheme.bodyMedium!.copyWith(
               fontWeight: FontWeight.w400,
               fontSize: 16.0,
             ),
-        subtitle1: ThemeData.dark().textTheme.subtitle1!.copyWith(
+        titleMedium: ThemeData.dark().textTheme.titleMedium!.copyWith(
               fontWeight: FontWeight.w600,
               fontSize: 20.0,
               color: const Color(0xff81C7F3),
             ),
-        headline6: ThemeData.dark().textTheme.headline6!.copyWith(
+        titleLarge: ThemeData.dark().textTheme.titleLarge!.copyWith(
               fontWeight: FontWeight.w500,
               fontSize: 20.0,
             ),
-        headline4: ThemeData.dark().textTheme.headline4!.copyWith(
+        headlineMedium: ThemeData.dark().textTheme.headlineMedium!.copyWith(
               fontWeight: FontWeight.w700,
               fontSize: 30.0,
             ),
-        button: ThemeData.dark().textTheme.button!.copyWith(
+        labelLarge: ThemeData.dark().textTheme.labelLarge!.copyWith(
             fontWeight: FontWeight.w500,
             fontSize: 16.0,
             color: Colors.grey.shade800),

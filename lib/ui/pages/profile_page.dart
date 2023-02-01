@@ -155,7 +155,7 @@ class ProfilePageState extends State<ProfilePage> {
                     onTap: () async {
                       try {
                         launchUrl(Uri.parse(CarpBackend.carpPrivacyUrl));
-                      } catch (ignored) {}
+                      } finally {}
                     },
                   ),
                   ListTile(
@@ -167,7 +167,7 @@ class ProfilePageState extends State<ProfilePage> {
                     onTap: () async {
                       try {
                         launchUrl(Uri.parse(CarpBackend.carpWebsiteUrl));
-                      } catch (ignored) {}
+                      } finally {}
                     },
                   ),
                   ListTile(
@@ -208,7 +208,7 @@ class ProfilePageState extends State<ProfilePage> {
         .replaceAll("+", "%20");
     try {
       await launchUrl(Uri.parse(url));
-    } catch (ignored) {}
+    } finally {}
   }
 
   Future _showLogoutConfirmationDialog() {

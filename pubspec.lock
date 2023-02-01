@@ -290,7 +290,7 @@ packages:
     source: hosted
     version: "0.40.1"
   carp_core:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: carp_core
       sha256: ef3fed0aceaf4acfc28aae42deba9cd9ebbdd7d4865697bace29c17b56a425e5

@@ -82,7 +82,7 @@ class StudyCard extends StatelessWidget {
                     try {
                       await launchUrl(Uri.parse(locale
                           .translate(studyPageModel.studyDescriptionUrl)));
-                    } catch (ignored) {}
+                    } finally {}
                   },
                   child: Text(locale.translate('pages.about.study.website'),
                       style: aboutCardInfoStyle.copyWith(
@@ -93,7 +93,7 @@ class StudyCard extends StatelessWidget {
                   try {
                     await launchUrl(Uri.parse(
                         locale.translate(studyPageModel.privacyPolicyUrl)));
-                  } catch (ignored) {}
+                  } finally {}
                 },
                 child: Text(locale.translate('pages.about.study.privacy'),
                     style: aboutCardInfoStyle.copyWith(

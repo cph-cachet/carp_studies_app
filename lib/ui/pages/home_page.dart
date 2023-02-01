@@ -46,6 +46,9 @@ class HomePageState extends State<HomePage> {
     RPLocalizations locale = RPLocalizations.of(context)!;
 
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => Navigator.pushNamed(context, '/LoginPage'),
+      ),
       body: _pages[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,

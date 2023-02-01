@@ -24,6 +24,7 @@ class CarpStudyAppState extends State<CarpStudyApp> {
   final HomePage homePage = const HomePage();
   final InformedConsentPage consentPage = const InformedConsentPage();
   final FailedLoginPage failedLoginPage = const FailedLoginPage();
+  final WebViewPage webViewPage = const WebViewPage();
 
   /// Research Package translations, incl. both local language assets plus
   /// translations of informed consent and surveys downloaded from CARP
@@ -68,6 +69,7 @@ class CarpStudyAppState extends State<CarpStudyApp> {
       darkTheme: carpStudyDarkTheme,
       // home: loadingPage,
       routes: {
+        '/LoginPage': (context) => webViewPage,
         '/LoadingPage': (context) => loadingPage,
         '/HomePage': (context) => homePage,
         '/ConsentPage': (context) => consentPage,

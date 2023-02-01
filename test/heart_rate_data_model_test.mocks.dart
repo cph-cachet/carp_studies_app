@@ -393,13 +393,39 @@ class MockSmartphoneDeploymentController extends _i1.Mock
         returnValueForMissingStub: null,
       );
   @override
-  void stop() => super.noSuchMethod(
+  void pause() => super.noSuchMethod(
         Invocation.method(
-          #stop,
+          #pause,
           [],
         ),
         returnValueForMissingStub: null,
       );
+  @override
+  void dispose() => super.noSuchMethod(
+        Invocation.method(
+          #dispose,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  _i6.Future<void> remove() => (super.noSuchMethod(
+        Invocation.method(
+          #remove,
+          [],
+        ),
+        returnValue: _i6.Future<void>.value(),
+        returnValueForMissingStub: _i6.Future<void>.value(),
+      ) as _i6.Future<void>);
+  @override
+  _i6.Future<void> stop() => (super.noSuchMethod(
+        Invocation.method(
+          #stop,
+          [],
+        ),
+        returnValue: _i6.Future<void>.value(),
+        returnValueForMissingStub: _i6.Future<void>.value(),
+      ) as _i6.Future<void>);
   @override
   _i6.Future<void> initialize(
     _i3.Study? study,

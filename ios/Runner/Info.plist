@@ -27,6 +27,25 @@
 	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>FlutterDeepLinkingEnabled</key>
+	<true/>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLIconFile</key>
+			<string>carp_logo</string>
+			<key>CFBundleURLName</key>
+			<string>cans.cachet.dk</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>carp.studies</string>
+				<string>studies</string>
+				<string>carp-studies</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>ITSAppUsesNonExemptEncryption</key>

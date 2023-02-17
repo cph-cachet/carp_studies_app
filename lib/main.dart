@@ -106,7 +106,10 @@ part 'ui/cards/task_card.dart';
 part 'ui/cards/media_card.dart';
 part 'ui/cards/scoreboard_card.dart';
 part 'ui/cards/study_progress_card.dart';
-part 'ui/pages/cans_login_webview.dart';
+part 'ui/pages/loading_page.dart';
+part 'ui/pages/setup_page.dart';
+part 'ui/pages/cans_login_android.dart';
+part 'ui/pages/cans_login_ios.dart';
 
 part 'main.g.dart';
 

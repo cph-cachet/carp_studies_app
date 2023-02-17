@@ -1,13 +1,13 @@
 part of carp_study_app;
 
-class WebViewPage extends StatefulWidget {
-  const WebViewPage({super.key});
+class LoginPageAndroid extends StatefulWidget {
+  const LoginPageAndroid({super.key});
 
   @override
-  State<WebViewPage> createState() => _WebViewPageState();
+  State<LoginPageAndroid> createState() => _LoginPageAndroidState();
 }
 
-class _WebViewPageState extends State<WebViewPage> {
+class _LoginPageAndroidState extends State<LoginPageAndroid> {
   InAppWebViewController? webView;
 
   @override
@@ -38,7 +38,7 @@ class _WebViewPageState extends State<WebViewPage> {
                       await controller.evaluateJavascript(
                           source:
                               "localStorage.getItem('study_portal_dev.sessionToken')");
-                  print(tokenFromJSEvaluation);
+                  info(tokenFromJSEvaluation ?? 'Token is empty');
 
                   if (tokenFromJSEvaluation != null) {
                     // do something with your token

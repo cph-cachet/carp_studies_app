@@ -56,7 +56,7 @@ class HomePageState extends State<HomePage> {
         //unselectedItemColor: Theme.of(context).primaryColor.withOpacity(0.8),
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: const Icon(Icons.playlist_add_check_outlined),
+            icon: const Icon(Icons.playlist_add_check),
             label: locale.translate('app_home.nav_bar_item.tasks'),
             activeIcon: const Icon(Icons.playlist_add_check),
           ),

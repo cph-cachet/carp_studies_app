@@ -24,7 +24,9 @@ class CarpStudyAppState extends State<CarpStudyApp> {
   final HomePage homePage = const HomePage();
   final InformedConsentPage consentPage = const InformedConsentPage();
   final FailedLoginPage failedLoginPage = const FailedLoginPage();
-  final WebViewPage webViewPage = const WebViewPage();
+  final LoginPageAndroid loginPageAndroid = const LoginPageAndroid();
+  final LoginPageiOS loginPageiOS = const LoginPageiOS();
+  final SetupPage setupPage = const SetupPage();
 
   /// Research Package translations, incl. both local language assets plus
   /// translations of informed consent and surveys downloaded from CARP
@@ -67,69 +69,48 @@ class CarpStudyAppState extends State<CarpStudyApp> {
       },
       theme: carpStudyTheme,
       darkTheme: carpStudyDarkTheme,
-      // home: loadingPage,
+      home: const Navigator(
+        pages: [
+          MaterialPage(
+            key: ValueKey('LoadingPage'),
+            child: LoadingPage(),
+          ),
+          MaterialPage(
+            key: ValueKey('LoginPageAndroid'),
+            child: LoginPageAndroid(),
+          ),
+          MaterialPage(
+            key: ValueKey('LoginPageiOS'),
+            child: LoginPageiOS(),
+          ),
+          MaterialPage(
+            key: ValueKey('SetupPage'),
+            child: SetupPage(),
+          ),
+          MaterialPage(
+            key: ValueKey('HomePage'),
+            child: HomePage(),
+          ),
+          MaterialPage(
+            key: ValueKey('ConsentPage'),
+            child: InformedConsentPage(),
+          ),
+          MaterialPage(
+            key: ValueKey('FailedLoginPage'),
+            child: FailedLoginPage(),
+          ),
+        ],
+      ),
       routes: {
-        '/LoginPage': (context) => webViewPage,
+        '/LoginPage': (context) =>
+            Platform.isIOS ? loginPageiOS : loginPageAndroid,
+        '/SetupPage': (context) => setupPage,
         '/LoadingPage': (context) => loadingPage,
         '/HomePage': (context) => homePage,
         '/ConsentPage': (context) => consentPage,
         '/FailedLoginPage': (context) => failedLoginPage,
       },
-      initialRoute: '/LoadingPage',
+      initialRoute: '/LoginPage',
     );
-  }
-}
-
-class LoadingPage extends StatefulWidget {
-  const LoadingPage({super.key});
-
-  @override
-  LoadingPageState createState() => LoadingPageState();
-}
-
-class LoadingPageState extends State<LoadingPage> {
-  @override
-  initState() {
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    // configure the BLOC if not already done or in progress
-    // note that this build() method can be called several time, but we only
-    // want the bloc to be configured once.
-    //
-    // the only reason to call it here - instead of in the initState() method -
-    // is to have a handle to the context object, which is to be used in the
-    // pop-up windows from CARP
-    if (!bloc.isConfiguring) {
-      bloc.configure(context).then((_) {
-        // when the configure is done, the localizations should have been downloaded
-        // and we can ask the app to reload the translations
-        CarpStudyApp.reloadLocale(context);
-
-        // navigate to the right screen
-        Navigator.of(context).pushReplacementNamed(
-            (bloc.shouldInformedConsentBeShown) ? '/ConsentPage' : '/HomePage');
-      });
-    }
-
-    // If the user has left the study it is still logged in and should be redirected to invitation screen
-    if (bloc.hasLeftStudy) {
-      bloc.hasLeftStudy = false;
-    }
-
-    // If the user is loged out, redirect to authentication screen
-    if (bloc.hasSignedOut) {
-      bloc.hasSignedOut = false;
-    }
-
-    return Scaffold(
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        body: Center(
-            child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: const [CircularProgressIndicator()],
-        )));
   }
 }

@@ -40,6 +40,7 @@
 			<string>cans.cachet.dk</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
+				<string>https</string>
 				<string>carp.studies</string>
 				<string>studies</string>
 				<string>carp-studies</string>

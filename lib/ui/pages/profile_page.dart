@@ -230,10 +230,7 @@ class ProfilePageState extends State<ProfilePage> {
                 Navigator.of(context).pop();
 
                 // TODO - not sure this works - test
-                Navigator.of(context).pushReplacementNamed('/LoadingPage');
-                // Navigator.of(context).pushReplacement(
-                //   MaterialPageRoute(builder: (context) => LoadingPage()),
-                // );
+                context.go('/LoadingPage');
               },
             )
           ],
@@ -271,10 +268,7 @@ class ProfilePageState extends State<ProfilePage> {
                 // Exit the Ordered Task
                 Navigator.of(context).pop();
                 // TODO - not sure this works - test
-                Navigator.of(context).pushReplacementNamed('/LoadingPage');
-                // Navigator.of(context).pushReplacement(
-                //   MaterialPageRoute(builder: (context) => LoadingPage()),
-                // );
+                context.go('/LoadingPage');
               },
             )
           ],

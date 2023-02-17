@@ -20,13 +20,36 @@ class CarpStudyAppState extends State<CarpStudyApp> {
     });
   }
 
-  final LoadingPage loadingPage = const LoadingPage();
-  final HomePage homePage = const HomePage();
-  final InformedConsentPage consentPage = const InformedConsentPage();
-  final FailedLoginPage failedLoginPage = const FailedLoginPage();
-  final LoginPageAndroid loginPageAndroid = const LoginPageAndroid();
-  final LoginPageiOS loginPageiOS = const LoginPageiOS();
-  final SetupPage setupPage = const SetupPage();
+  final GoRouter _router = GoRouter(
+    initialLocation: '/LoadingPage',
+    routes: <RouteBase>[
+      GoRoute(
+        path: '/LoadingPage',
+        builder: (context, state) => const LoadingPage(),
+      ),
+      GoRoute(
+        path: '/HomePage',
+        builder: (context, state) => const HomePage(),
+      ),
+      GoRoute(
+        path: '/ConsentPage',
+        builder: (context, state) => const InformedConsentPage(),
+      ),
+      GoRoute(
+        path: '/FailedLoginPage',
+        builder: (context, state) => const FailedLoginPage(),
+      ),
+      GoRoute(
+        path: '/LoginPage',
+        builder: (context, state) =>
+            Platform.isIOS ? const LoginPageiOS() : const LoginPageAndroid(),
+      ),
+      GoRoute(
+        path: '/SetupPage',
+        builder: (context, state) => const SetupPage(),
+      ),
+    ],
+  );
 
   /// Research Package translations, incl. both local language assets plus
   /// translations of informed consent and surveys downloaded from CARP
@@ -38,7 +61,7 @@ class CarpStudyAppState extends State<CarpStudyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       supportedLocales: const [
         Locale('en'),
@@ -69,48 +92,7 @@ class CarpStudyAppState extends State<CarpStudyApp> {
       },
       theme: carpStudyTheme,
       darkTheme: carpStudyDarkTheme,
-      home: const Navigator(
-        pages: [
-          MaterialPage(
-            key: ValueKey('LoadingPage'),
-            child: LoadingPage(),
-          ),
-          MaterialPage(
-            key: ValueKey('LoginPageAndroid'),
-            child: LoginPageAndroid(),
-          ),
-          MaterialPage(
-            key: ValueKey('LoginPageiOS'),
-            child: LoginPageiOS(),
-          ),
-          MaterialPage(
-            key: ValueKey('SetupPage'),
-            child: SetupPage(),
-          ),
-          MaterialPage(
-            key: ValueKey('HomePage'),
-            child: HomePage(),
-          ),
-          MaterialPage(
-            key: ValueKey('ConsentPage'),
-            child: InformedConsentPage(),
-          ),
-          MaterialPage(
-            key: ValueKey('FailedLoginPage'),
-            child: FailedLoginPage(),
-          ),
-        ],
-      ),
-      routes: {
-        '/LoginPage': (context) =>
-            Platform.isIOS ? loginPageiOS : loginPageAndroid,
-        '/SetupPage': (context) => setupPage,
-        '/LoadingPage': (context) => loadingPage,
-        '/HomePage': (context) => homePage,
-        '/ConsentPage': (context) => consentPage,
-        '/FailedLoginPage': (context) => failedLoginPage,
-      },
-      initialRoute: '/LoginPage',
+      routerConfig: _router,
     );
   }
 }

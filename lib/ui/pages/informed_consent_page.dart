@@ -11,7 +11,7 @@ class InformedConsentState extends State<InformedConsentPage> {
 
   void resultCallback(RPTaskResult result) async {
     await bloc.informedConsentHasBeenAccepted(result);
-    Navigator.of(context).pushReplacementNamed('/HomePage');
+    context.go('/HomePage');
   }
 
   void cancelCallback(RPTaskResult? result) async {
@@ -29,7 +29,7 @@ class InformedConsentState extends State<InformedConsentPage> {
             TextButton(
               child: Text(locale.translate("pages.ic.go_to_ic")),
               onPressed: () {
-                Navigator.of(context).pushReplacementNamed('/InformedConsent');
+                context.go('/InformedConsent');
               },
             )
           ],

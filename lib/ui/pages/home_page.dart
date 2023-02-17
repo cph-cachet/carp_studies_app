@@ -47,7 +47,7 @@ class HomePageState extends State<HomePage> {
 
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: () => Navigator.pushNamed(context, '/LoginPage'),
+        onPressed: () => context.go('/LoginPage'),
       ),
       body: _pages[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(

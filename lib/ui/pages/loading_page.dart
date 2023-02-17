@@ -29,7 +29,7 @@ class LoadingPageState extends State<LoadingPage> {
         CarpStudyApp.reloadLocale(context);
 
         // navigate to the right screen
-        Navigator.of(context).pushReplacementNamed(
+        context.go(
             (bloc.shouldInformedConsentBeShown) ? '/ConsentPage' : '/HomePage');
       });
     }

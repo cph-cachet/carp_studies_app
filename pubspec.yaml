@@ -45,6 +45,7 @@ dependencies:
   fl_chart: ^0.60.0
   google_fonts: ^4.0.1
   flutter_inappwebview: ^6.0.0-beta.22
+  go_router: ^6.0.8
 
 dev_dependencies:
   # flutter_test:

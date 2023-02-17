@@ -20,6 +20,7 @@ import 'package:video_player/video_player.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:open_settings/open_settings.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 

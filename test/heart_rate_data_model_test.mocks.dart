@@ -3,14 +3,13 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i6;
+import 'dart:async' as _i5;
 
 import 'package:carp_core/carp_core.dart' as _i3;
 import 'package:carp_mobile_sensing/carp_mobile_sensing.dart' as _i2;
-import 'package:carp_polar_package/carp_polar_package.dart' as _i7;
+import 'package:carp_polar_package/carp_polar_package.dart' as _i6;
 import 'package:carp_study_app/main.dart' as _i4;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:permission_handler/permission_handler.dart' as _i5;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -135,15 +134,6 @@ class _FakeDataModel_9 extends _i1.SmartFake implements _i4.DataModel {
 class MockSmartphoneDeploymentController extends _i1.Mock
     implements _i2.SmartphoneDeploymentController {
   @override
-  set permissions(Map<_i5.Permission, _i5.PermissionStatus>? _permissions) =>
-      super.noSuchMethod(
-        Invocation.setter(
-          #permissions,
-          _permissions,
-        ),
-        returnValueForMissingStub: null,
-      );
-  @override
   _i2.DeviceController get deviceRegistry => (super.noSuchMethod(
         Invocation.getter(#deviceRegistry),
         returnValue: _FakeDeviceController_0(
@@ -174,11 +164,11 @@ class MockSmartphoneDeploymentController extends _i1.Mock
         ),
       ) as _i2.DatumTransformer);
   @override
-  _i6.Stream<_i3.DataPoint> get data => (super.noSuchMethod(
+  _i5.Stream<_i3.DataPoint> get data => (super.noSuchMethod(
         Invocation.getter(#data),
-        returnValue: _i6.Stream<_i3.DataPoint>.empty(),
-        returnValueForMissingStub: _i6.Stream<_i3.DataPoint>.empty(),
-      ) as _i6.Stream<_i3.DataPoint>);
+        returnValue: _i5.Stream<_i3.DataPoint>.empty(),
+        returnValueForMissingStub: _i5.Stream<_i3.DataPoint>.empty(),
+      ) as _i5.Stream<_i3.DataPoint>);
   @override
   int get samplingSize => (super.noSuchMethod(
         Invocation.getter(#samplingSize),
@@ -186,11 +176,11 @@ class MockSmartphoneDeploymentController extends _i1.Mock
         returnValueForMissingStub: 0,
       ) as int);
   @override
-  _i6.Future<String?> get filename => (super.noSuchMethod(
+  _i5.Future<String?> get filename => (super.noSuchMethod(
         Invocation.getter(#filename),
-        returnValue: _i6.Future<String?>.value(),
-        returnValueForMissingStub: _i6.Future<String?>.value(),
-      ) as _i6.Future<String?>);
+        returnValue: _i5.Future<String?>.value(),
+        returnValueForMissingStub: _i5.Future<String?>.value(),
+      ) as _i5.Future<String?>);
   @override
   set deployment(_i3.MasterDeviceDeployment? _deployment) => super.noSuchMethod(
         Invocation.setter(
@@ -259,11 +249,11 @@ class MockSmartphoneDeploymentController extends _i1.Mock
         returnValueForMissingStub: null,
       );
   @override
-  _i6.Stream<_i3.StudyStatus> get statusEvents => (super.noSuchMethod(
+  _i5.Stream<_i3.StudyStatus> get statusEvents => (super.noSuchMethod(
         Invocation.getter(#statusEvents),
-        returnValue: _i6.Stream<_i3.StudyStatus>.empty(),
-        returnValueForMissingStub: _i6.Stream<_i3.StudyStatus>.empty(),
-      ) as _i6.Stream<_i3.StudyStatus>);
+        returnValue: _i5.Stream<_i3.StudyStatus>.empty(),
+        returnValueForMissingStub: _i5.Stream<_i3.StudyStatus>.empty(),
+      ) as _i5.Stream<_i3.StudyStatus>);
   @override
   _i3.StudyStatus get status => (super.noSuchMethod(
         Invocation.getter(#status),
@@ -304,61 +294,59 @@ class MockSmartphoneDeploymentController extends _i1.Mock
         returnValueForMissingStub: <_i3.DeviceDescriptor>[],
       ) as List<_i3.DeviceDescriptor>);
   @override
-  _i6.Stream<_i3.DataPoint> dataByType(String? type) => (super.noSuchMethod(
+  _i5.Stream<_i3.DataPoint> dataByType(String? type) => (super.noSuchMethod(
         Invocation.method(
           #dataByType,
           [type],
         ),
-        returnValue: _i6.Stream<_i3.DataPoint>.empty(),
-        returnValueForMissingStub: _i6.Stream<_i3.DataPoint>.empty(),
-      ) as _i6.Stream<_i3.DataPoint>);
+        returnValue: _i5.Stream<_i3.DataPoint>.empty(),
+        returnValueForMissingStub: _i5.Stream<_i3.DataPoint>.empty(),
+      ) as _i5.Stream<_i3.DataPoint>);
   @override
-  _i6.Future<_i3.StudyStatus> tryDeployment({bool? useCached = true}) =>
+  _i5.Future<_i3.StudyStatus> tryDeployment({bool? useCached = true}) =>
       (super.noSuchMethod(
         Invocation.method(
           #tryDeployment,
           [],
           {#useCached: useCached},
         ),
-        returnValue: _i6.Future<_i3.StudyStatus>.value(
+        returnValue: _i5.Future<_i3.StudyStatus>.value(
             _i3.StudyStatus.DeploymentNotStarted),
-        returnValueForMissingStub: _i6.Future<_i3.StudyStatus>.value(
+        returnValueForMissingStub: _i5.Future<_i3.StudyStatus>.value(
             _i3.StudyStatus.DeploymentNotStarted),
-      ) as _i6.Future<_i3.StudyStatus>);
+      ) as _i5.Future<_i3.StudyStatus>);
   @override
-  _i6.Future<bool> saveDeployment() => (super.noSuchMethod(
+  _i5.Future<bool> saveDeployment() => (super.noSuchMethod(
         Invocation.method(
           #saveDeployment,
           [],
         ),
-        returnValue: _i6.Future<bool>.value(false),
-        returnValueForMissingStub: _i6.Future<bool>.value(false),
-      ) as _i6.Future<bool>);
+        returnValue: _i5.Future<bool>.value(false),
+        returnValueForMissingStub: _i5.Future<bool>.value(false),
+      ) as _i5.Future<bool>);
   @override
-  _i6.Future<bool> restoreDeployment() => (super.noSuchMethod(
+  _i5.Future<bool> restoreDeployment() => (super.noSuchMethod(
         Invocation.method(
           #restoreDeployment,
           [],
         ),
-        returnValue: _i6.Future<bool>.value(false),
-        returnValueForMissingStub: _i6.Future<bool>.value(false),
-      ) as _i6.Future<bool>);
+        returnValue: _i5.Future<bool>.value(false),
+        returnValueForMissingStub: _i5.Future<bool>.value(false),
+      ) as _i5.Future<bool>);
   @override
-  _i6.Future<bool> eraseDeployment() => (super.noSuchMethod(
+  _i5.Future<void> eraseDeployment() => (super.noSuchMethod(
         Invocation.method(
           #eraseDeployment,
           [],
         ),
-        returnValue: _i6.Future<bool>.value(false),
-        returnValueForMissingStub: _i6.Future<bool>.value(false),
-      ) as _i6.Future<bool>);
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
   @override
-  _i6.Future<void> configure({
+  _i5.Future<void> configure({
     _i3.DataEndPoint? dataEndPoint,
     String? privacySchemaName = r'dk.cachet.carp',
     _i2.DatumTransformer? transformer,
-    bool? askForPermissions = true,
-    bool? enableNotifications = true,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -368,22 +356,11 @@ class MockSmartphoneDeploymentController extends _i1.Mock
             #dataEndPoint: dataEndPoint,
             #privacySchemaName: privacySchemaName,
             #transformer: transformer,
-            #askForPermissions: askForPermissions,
-            #enableNotifications: enableNotifications,
           },
         ),
-        returnValue: _i6.Future<void>.value(),
-        returnValueForMissingStub: _i6.Future<void>.value(),
-      ) as _i6.Future<void>);
-  @override
-  _i6.Future<void> askForAllPermissions() => (super.noSuchMethod(
-        Invocation.method(
-          #askForAllPermissions,
-          [],
-        ),
-        returnValue: _i6.Future<void>.value(),
-        returnValueForMissingStub: _i6.Future<void>.value(),
-      ) as _i6.Future<void>);
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
   @override
   void start([bool? resume = true]) => super.noSuchMethod(
         Invocation.method(
@@ -401,6 +378,15 @@ class MockSmartphoneDeploymentController extends _i1.Mock
         returnValueForMissingStub: null,
       );
   @override
+  _i5.Future<void> remove() => (super.noSuchMethod(
+        Invocation.method(
+          #remove,
+          [],
+        ),
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
+  @override
   void dispose() => super.noSuchMethod(
         Invocation.method(
           #dispose,
@@ -409,25 +395,7 @@ class MockSmartphoneDeploymentController extends _i1.Mock
         returnValueForMissingStub: null,
       );
   @override
-  _i6.Future<void> remove() => (super.noSuchMethod(
-        Invocation.method(
-          #remove,
-          [],
-        ),
-        returnValue: _i6.Future<void>.value(),
-        returnValueForMissingStub: _i6.Future<void>.value(),
-      ) as _i6.Future<void>);
-  @override
-  _i6.Future<void> stop() => (super.noSuchMethod(
-        Invocation.method(
-          #stop,
-          [],
-        ),
-        returnValue: _i6.Future<void>.value(),
-        returnValueForMissingStub: _i6.Future<void>.value(),
-      ) as _i6.Future<void>);
-  @override
-  _i6.Future<void> initialize(
+  _i5.Future<void> initialize(
     _i3.Study? study,
     _i3.DeviceRegistration? deviceRegistration,
   ) =>
@@ -439,28 +407,37 @@ class MockSmartphoneDeploymentController extends _i1.Mock
             deviceRegistration,
           ],
         ),
-        returnValue: _i6.Future<void>.value(),
-        returnValueForMissingStub: _i6.Future<void>.value(),
-      ) as _i6.Future<void>);
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
   @override
-  _i6.Future<void> tryRegisterConnectedDevice(_i3.DeviceDescriptor? device) =>
+  _i5.Future<void> tryRegisterConnectedDevice(_i3.DeviceDescriptor? device) =>
       (super.noSuchMethod(
         Invocation.method(
           #tryRegisterConnectedDevice,
           [device],
         ),
-        returnValue: _i6.Future<void>.value(),
-        returnValueForMissingStub: _i6.Future<void>.value(),
-      ) as _i6.Future<void>);
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
   @override
-  _i6.Future<void> tryRegisterConnectedDevices() => (super.noSuchMethod(
+  _i5.Future<void> tryRegisterConnectedDevices() => (super.noSuchMethod(
         Invocation.method(
           #tryRegisterConnectedDevices,
           [],
         ),
-        returnValue: _i6.Future<void>.value(),
-        returnValueForMissingStub: _i6.Future<void>.value(),
-      ) as _i6.Future<void>);
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
+  @override
+  _i5.Future<void> stop() => (super.noSuchMethod(
+        Invocation.method(
+          #stop,
+          [],
+        ),
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
 }
 
 /// A class which mocks [HeartRateCardViewModel].
@@ -514,11 +491,11 @@ class MockHeartRateCardViewModel extends _i1.Mock
         ),
       ) as _i4.HourlyHeartRate);
   @override
-  _i6.Future<String> get filename => (super.noSuchMethod(
+  _i5.Future<String> get filename => (super.noSuchMethod(
         Invocation.getter(#filename),
-        returnValue: _i6.Future<String>.value(''),
-        returnValueForMissingStub: _i6.Future<String>.value(''),
-      ) as _i6.Future<String>);
+        returnValue: _i5.Future<String>.value(''),
+        returnValueForMissingStub: _i5.Future<String>.value(''),
+      ) as _i5.Future<String>);
   @override
   _i4.HourlyHeartRate createModel() => (super.noSuchMethod(
         Invocation.method(
@@ -549,23 +526,32 @@ class MockHeartRateCardViewModel extends _i1.Mock
         returnValueForMissingStub: null,
       );
   @override
-  _i6.Future<bool> save(Map<String, dynamic>? json) => (super.noSuchMethod(
+  _i5.Future<bool> save(Map<String, dynamic>? json) => (super.noSuchMethod(
         Invocation.method(
           #save,
           [json],
         ),
-        returnValue: _i6.Future<bool>.value(false),
-        returnValueForMissingStub: _i6.Future<bool>.value(false),
-      ) as _i6.Future<bool>);
+        returnValue: _i5.Future<bool>.value(false),
+        returnValueForMissingStub: _i5.Future<bool>.value(false),
+      ) as _i5.Future<bool>);
   @override
-  _i6.Future<_i4.HourlyHeartRate?> restore() => (super.noSuchMethod(
+  _i5.Future<bool> delete() => (super.noSuchMethod(
+        Invocation.method(
+          #delete,
+          [],
+        ),
+        returnValue: _i5.Future<bool>.value(false),
+        returnValueForMissingStub: _i5.Future<bool>.value(false),
+      ) as _i5.Future<bool>);
+  @override
+  _i5.Future<_i4.HourlyHeartRate?> restore() => (super.noSuchMethod(
         Invocation.method(
           #restore,
           [],
         ),
-        returnValue: _i6.Future<_i4.HourlyHeartRate?>.value(),
-        returnValueForMissingStub: _i6.Future<_i4.HourlyHeartRate?>.value(),
-      ) as _i6.Future<_i4.HourlyHeartRate?>);
+        returnValue: _i5.Future<_i4.HourlyHeartRate?>.value(),
+        returnValueForMissingStub: _i5.Future<_i4.HourlyHeartRate?>.value(),
+      ) as _i5.Future<_i4.HourlyHeartRate?>);
 }
 
 /// A class which mocks [HourlyHeartRate].
@@ -723,7 +709,7 @@ class MockHourlyHeartRate extends _i1.Mock implements _i4.HourlyHeartRate {
 /// A class which mocks [PolarHRDatum].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockPolarHRDatum extends _i1.Mock implements _i7.PolarHRDatum {
+class MockPolarHRDatum extends _i1.Mock implements _i6.PolarHRDatum {
   @override
   int get hr => (super.noSuchMethod(
         Invocation.getter(#hr),

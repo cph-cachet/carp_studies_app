@@ -75,7 +75,7 @@ class HourlyHeartRate extends DataModel {
   DateTime lastUpdated = DateTime.now();
 
   /// The current heart rate
-  @JsonKey(includeToJson: false, includeFromJson: false)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   double? currentHeartRate;
 
   /// The minimum and maximum heart rate for the day

@@ -25,12 +25,6 @@ class HomePageState extends State<HomePage> {
   }
 
   @override
-  void dispose() {
-    bloc.dispose();
-    super.dispose();
-  }
-
-  @override
   void didChangeDependencies() {
     super.didChangeDependencies();
 

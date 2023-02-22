@@ -277,26 +277,26 @@ packages:
     dependency: "direct main"
     description:
       name: carp_backend
-      sha256: "18cdf829552736679e0c0feee93f055ec1f03b48e3af20ab9a4aed8c0a7d2ee8"
+      sha256: "5139686fb5b3921c684d06fa4502e09ba93c493832763c0cb8baa9a39a5b4962"
       url: "https://pub.dev"
     source: hosted
-    version: "0.40.1"
+    version: "0.40.2"
   carp_context_package:
     dependency: "direct main"
     description:
       name: carp_context_package
-      sha256: a70ceb5b6dee42858e1d535555fa1e3d68a5b8137a782d22059ebb767e4c9ede
+      sha256: "270d3e92ccdb33280964d2f8b20235f27f382170ea5c57df43f5e2fca7a76962"
       url: "https://pub.dev"
     source: hosted
-    version: "0.40.0"
+    version: "0.40.1"
   carp_core:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: carp_core
-      sha256: a982de9fccad519915de920aca502c7d358ec386f2019c7f96b92ba925c38332
+      sha256: "95258b0843cde2956ded62a1cb72e49e454da0256ffdb68a8cb067dbe62e1c66"
       url: "https://pub.dev"
     source: hosted
-    version: "0.40.6"
+    version: "0.40.8"
   carp_esense_package:
     dependency: "direct main"
     description:
@@ -317,18 +317,18 @@ packages:
     dependency: "direct main"
     description:
       name: carp_mobile_sensing
-      sha256: "7cc30648980a11b0388c75104ebe60a0ea83769b5d4a2e36308faebd866b8bec"
+      sha256: "0548ed761b7cf97d3490e8911e39aa3d336963d1c71cb5dea423851c346c1c1a"
       url: "https://pub.dev"
     source: hosted
-    version: "0.40.11"
+    version: "0.40.13"
   carp_polar_package:
     dependency: "direct main"
     description:
       name: carp_polar_package
-      sha256: e68d4e0d9b81c62fd9b042a55304850f437987f18163f5e104adfd7688ace12f
+      sha256: "49c958efff0b5a4c885e223e3fd72cae6ebf16e1f1458d9d439e825e9c9b4010"
       url: "https://pub.dev"
     source: hosted
-    version: "0.40.1"
+    version: "0.40.2"
   carp_serializable:
     dependency: "direct main"
     description:
@@ -349,10 +349,10 @@ packages:
     dependency: transitive
     description:
       name: carp_webservices
-      sha256: "5f0ec2f9d2c8bc80707f98b7f67b11ee01c7101f999c2f1b1856231f58c24865"
+      sha256: a884ac088cba6cf162ff4e24f26a6518e203945f6fc28a744e07a47f1efa6e0d
       url: "https://pub.dev"
     source: hosted
-    version: "0.40.1"
+    version: "0.40.2"
   characters:
     dependency: transitive
     description:
@@ -618,10 +618,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_launcher_icons
-      sha256: a9de6706cd844668beac27c0aed5910fa0534832b3c2cad61a5fd977fce82a5d
+      sha256: ce0e501cfc258907842238e4ca605e74b7fd1cdf04b3b43e86c43f3e40a1592c
       url: "https://pub.dev"
     source: hosted
-    version: "0.10.0"
+    version: "0.11.0"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -720,6 +720,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_timezone:
+    dependency: transitive
+    description:
+      name: flutter_timezone
+      sha256: "8f831a3129141615bb67b4c42a87a776983f76f7d0a672eb245d547cc650d267"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.4"
   flutter_web_plugins:
     dependency: transitive
     description: flutter
@@ -761,18 +769,18 @@ packages:
     dependency: "direct main"
     description:
       name: go_router
-      sha256: "22c1e44fced320c4a7dbdf16545cad71829dd617910fe2604449267f2c6c11ce"
+      sha256: "7a79232827c851f6b9f08c3c7254a1eaff7bc6aa147e103e51f951c5c10b0ccc"
       url: "https://pub.dev"
     source: hosted
-    version: "6.0.8"
+    version: "6.0.9"
   google_fonts:
     dependency: "direct main"
     description:
       name: google_fonts
-      sha256: "148c716f5929371d335d29c2952119b34842b1a8e5607e37bb9f68f96e88068a"
+      sha256: "927573f2e8a8d65c17931e21918ad0ab0666b1b636537de7c4932bdb487b190f"
       url: "https://pub.dev"
     source: hosted
-    version: "4.0.1"
+    version: "4.0.3"
   graphs:
     dependency: transitive
     description:
@@ -1558,10 +1566,10 @@ packages:
     dependency: transitive
     description:
       name: system_info2
-      sha256: "90621f3ba586e1f268e38cc7951b172cd4d997e43dc1fbed12eb334c8a22a886"
+      sha256: e9a8b4286571b8e9836adb3b5be247f6be0f404601c0a611c3c8f6879c6b7704
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.4"
+    version: "3.0.1"
   term_glyph:
     dependency: transitive
     description:

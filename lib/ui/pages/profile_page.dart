@@ -55,6 +55,25 @@ class ProfilePageState extends State<ProfilePage> {
                       children: [
                         Text(
                             locale
+                                .translate('pages.profile.account_id')
+                                .toUpperCase(),
+                            style: profileSectionStyle.copyWith(
+                                color: Theme.of(context).primaryColor)),
+                        Text(
+                          widget.model.userid,
+                          style: profileTitleStyle,
+                          textScaleFactor: 0.75,
+                        ),
+                      ],
+                    ),
+                  ),
+                  ListTile(
+                    title: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                            locale
                                 .translate('pages.profile.username')
                                 .toUpperCase(),
                             style: profileSectionStyle.copyWith(
@@ -70,11 +89,11 @@ class ProfilePageState extends State<ProfilePage> {
                       children: [
                         Text(
                             locale
-                                .translate('pages.profile.account_id')
+                                .translate('pages.profile.name')
                                 .toUpperCase(),
                             style: profileSectionStyle.copyWith(
                                 color: Theme.of(context).primaryColor)),
-                        Text(widget.model.userid, style: profileTitleStyle),
+                        Text(widget.model.name, style: profileTitleStyle),
                       ],
                     ),
                   ),
@@ -85,13 +104,15 @@ class ProfilePageState extends State<ProfilePage> {
                       children: [
                         Text(
                             locale
-                                .translate('pages.profile.name')
+                                .translate('pages.profile.study_deployment_id')
                                 .toUpperCase(),
                             style: profileSectionStyle.copyWith(
                                 color: Theme.of(context).primaryColor)),
                         Text(
-                            '${widget.model.firstname} ${widget.model.lastname}',
-                            style: profileTitleStyle),
+                          widget.model.studyDeploymentId,
+                          style: profileTitleStyle,
+                          textScaleFactor: 0.75,
+                        ),
                       ],
                     ),
                   ),
@@ -106,7 +127,8 @@ class ProfilePageState extends State<ProfilePage> {
                                 .toUpperCase(),
                             style: profileSectionStyle.copyWith(
                                 color: Theme.of(context).primaryColor)),
-                        Text(locale.translate(widget.model.studyTitle),
+                        Text(
+                            locale.translate(widget.model.studyDeploymentTitle),
                             style: profileTitleStyle),
                       ],
                     ),
@@ -117,10 +139,10 @@ class ProfilePageState extends State<ProfilePage> {
                     title: Text(locale.translate('pages.profile.contact'),
                         style: profileActionStyle.copyWith(
                             color: Theme.of(context).primaryColor)),
-                    onTap: () {
-                      _contactResearcher(
+                    onTap: () async {
+                      _sendEmailToContactResearcher(
                         locale.translate(widget.model.responsibleEmail),
-                        'Support for study: ${locale.translate(widget.model.studyTitle)} - User: ${widget.model.username}',
+                        'Support for study: ${locale.translate(widget.model.studyDeploymentTitle)} - User: ${widget.model.username}',
                       );
                     },
                   ),
@@ -131,13 +153,9 @@ class ProfilePageState extends State<ProfilePage> {
                         style: profileActionStyle.copyWith(
                             color: Theme.of(context).primaryColor)),
                     onTap: () async {
-                      if (await canLaunchUrl(Uri.parse(
-                          locale.translate('study.description.privacy')))) {
-                        await launchUrl(Uri.parse(
-                            locale.translate('study.description.privacy')));
-                      } else {
-                        throw 'Could not launch privacy policy URL';
-                      }
+                      try {
+                        launchUrl(Uri.parse(CarpBackend.carpPrivacyUrl));
+                      } finally {}
                     },
                   ),
                   ListTile(
@@ -147,13 +165,18 @@ class ProfilePageState extends State<ProfilePage> {
                         style: profileActionStyle.copyWith(
                             color: Theme.of(context).primaryColor)),
                     onTap: () async {
-                      if (await canLaunchUrl(Uri.parse(
-                          locale.translate('study.description.url')))) {
-                        await launchUrl(Uri.parse(
-                            locale.translate('study.description.url')));
-                      } else {
-                        throw 'Could not launch Study URL';
-                      }
+                      try {
+                        launchUrl(Uri.parse(CarpBackend.carpWebsiteUrl));
+                      } finally {}
+                    },
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.logout, color: CACHET.RED_1),
+                    title: Text(locale.translate('pages.profile.leave_study'),
+                        style:
+                            profileActionStyle.copyWith(color: CACHET.RED_1)),
+                    onTap: () {
+                      _showLeaveStudyConfirmationDialog();
                     },
                   ),
                   ListTile(
@@ -163,18 +186,7 @@ class ProfilePageState extends State<ProfilePage> {
                         style:
                             profileActionStyle.copyWith(color: CACHET.RED_1)),
                     onTap: () {
-                      print("logging out");
                       _showLogoutConfirmationDialog();
-                    },
-                  ),
-                  ListTile(
-                    leading: const Icon(Icons.logout, color: CACHET.RED_1),
-                    title: Text(locale.translate('pages.profile.leave_study'),
-                        style:
-                            profileActionStyle.copyWith(color: CACHET.RED_1)),
-                    onTap: () {
-                      print("leaving study");
-                      _showLeaveStudyConfirmationDialog();
                     },
                   ),
                 ]).toList(),
@@ -186,21 +198,19 @@ class ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  // Sends and email to the researcher with the name of the study + user id
-  void _contactResearcher(String email, String subject) async {
-    final Uri emailLaunchUri = Uri(
-        scheme: 'mailto', path: email, queryParameters: {'subject': subject});
-
-    var url = emailLaunchUri.toString().replaceAll("+", "%20");
-
-    if (await canLaunchUrl(Uri.parse(url))) {
+  /// Sends and email to the researcher with the name of the study + user id
+  void _sendEmailToContactResearcher(String email, String subject) async {
+    final url = Uri(
+            scheme: 'mailto',
+            path: email,
+            queryParameters: {'subject': subject})
+        .toString()
+        .replaceAll("+", "%20");
+    try {
       await launchUrl(Uri.parse(url));
-    } else {
-      throw 'Could not launch $url';
-    }
+    } finally {}
   }
 
-  // TODO: Navigate to log in page
   Future _showLogoutConfirmationDialog() {
     RPLocalizations locale = RPLocalizations.of(context)!;
 
@@ -218,19 +228,10 @@ class ProfilePageState extends State<ProfilePage> {
             TextButton(
               child: Text(locale.translate("YES")),
               onPressed: () {
-                // Calling the onCancel method with which the developer can for e.g. save the result on the device.
-                // Only call it if it's not null
-                //widget.onCancel?.call(_taskResult);
-
-                // Remove the auth credentials
-                bloc.signOut();
-                // Popup dismiss
-                Navigator.of(context).pop();
-                // Exit the Ordered Task
-                Navigator.of(context).pop();
-
-                // TODO - not sure this works - test
-                context.go('/LoadingPage');
+                bloc.leaveStudyAndSignOut().then((_) => Navigator.of(context)
+                  ..pop() // popup dialogue
+                  ..pop() // profile page
+                  ..pushReplacementNamed('/LoadingPage'));
               },
             )
           ],
@@ -239,7 +240,6 @@ class ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  // TODO: Leave study
   Future _showLeaveStudyConfirmationDialog() {
     RPLocalizations locale = RPLocalizations.of(context)!;
 
@@ -257,19 +257,11 @@ class ProfilePageState extends State<ProfilePage> {
             ),
             TextButton(
               child: Text(locale.translate("YES")),
-              onPressed: () {
-                // Calling the onCancel method with which the developer can for e.g. save the result on the device.
-                // Only call it if it's not null
-                //widget.onCancel?.call(_taskResult);
-                bloc.leaveStudy();
-
-                // Popup dismiss
-                Navigator.of(context).pop();
-                // Exit the Ordered Task
-                Navigator.of(context).pop();
-                // TODO - not sure this works - test
-                context.go('/LoadingPage');
-              },
+              onPressed: () =>
+                  bloc.leaveStudy().then((_) => Navigator.of(context)
+                    ..pop() // popup dialogue
+                    ..pop() // profile page
+                    ..pushReplacementNamed('/LoadingPage')),
             )
           ],
         );

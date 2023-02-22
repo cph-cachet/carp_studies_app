@@ -1,32 +1,41 @@
 part of carp_study_app;
 
-// String encode(Object object) =>
-//     const JsonEncoder.withIndent(' ').convert(object);
-
 class CarpBackend {
-  static const String cansURI = "https://cans.cachet.dk";
+  /// The URI of the CARP Web Service (CAWS) host.
+  static const String cawsUri = "https://cans.cachet.dk";
+
+  /// The URL of the CARP Privacy Policy for this app.
+  static const String carpPrivacyUrl =
+      "https://carp.cachet.dk/privacy-policy-app";
+
+  /// The URL of the official CARP Web Site.
+  static const String carpWebsiteUrl = "https://carp.cachet.dk";
 
   static const Map<DeploymentMode, String> uris = {
-    DeploymentMode.carpDev: '/dev',
-    DeploymentMode.carpTest: '/test',
-    DeploymentMode.carpStaging: '/stage',
-    DeploymentMode.carpProduction: '',
+    DeploymentMode.dev: '/dev',
+    DeploymentMode.test: '/test',
+    DeploymentMode.staging: '/stage',
+    DeploymentMode.production: '',
   };
 
   static final CarpBackend _instance = CarpBackend._();
 
+  String get clientId => "carp";
+  String get clientSecret => "carp";
+
   CarpApp? _app;
 
+  /// The CAWS app configuration.
   CarpApp? get app => _app;
 
-  /// The signed in user
+  /// Has the user been authenticated?
+  bool? get isAuthenticated => user != null;
+
+  /// The authenticated user
   CarpUser? get user => CarpService().currentUser;
 
   /// The URI of the CANS server - depending on deployment mode.
-  String get uri => '$cansURI${uris[bloc.deploymentMode]}';
-
-  String get clientID => "carp";
-  String get clientSecret => "carp";
+  String get uri => '$cawsUri${uris[bloc.deploymentMode]}';
 
   OAuthToken? get oauthToken => LocalSettings().oauthToken;
   set oauthToken(OAuthToken? token) => LocalSettings().oauthToken = token;
@@ -58,9 +67,9 @@ class CarpBackend {
 
   Future<void> initialize() async {
     _app = CarpApp(
-      name: "CANS @ DTU",
+      name: "CAWS @ DTU",
       uri: Uri.parse(uri),
-      oauth: OAuthEndPoint(clientID: clientID, clientSecret: clientSecret),
+      oauth: OAuthEndPoint(clientID: clientId, clientSecret: clientSecret),
       studyId: LocalSettings().studyId,
       studyDeploymentId: LocalSettings().studyDeploymentId,
     );
@@ -90,13 +99,13 @@ class CarpBackend {
       info('Authenticating with dialogue - username: $username');
       CarpService().authenticateWithDialog(context, username: username);
       if (CarpService().authenticated) {
-        username = CarpService().currentUser!.username;
+        username = CarpService().currentUser?.username;
       }
     }
 
     info('User authenticated - user: $user');
     // saving token on the phone
-    oauthToken = user!.token!;
+    oauthToken = user?.token!;
 
     // configure the participation service in order to get the invitations
     CarpParticipationService().configureFrom(CarpService());
@@ -136,8 +145,6 @@ class CarpBackend {
 
     return document;
   }
-
-  Future<void> leaveStudy() async => await LocalSettings().eraseStudyIds();
 
   Future<void> signOut() async {
     if (CarpService().authenticated) await CarpService().signOut();

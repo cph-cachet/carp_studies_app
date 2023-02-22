@@ -33,7 +33,7 @@ import 'package:carp_core/carp_core.dart';
 import 'package:carp_mobile_sensing/carp_mobile_sensing.dart';
 import 'package:carp_audio_package/media.dart';
 //import 'package:carp_health_package/health_package.dart';
-//import 'package:carp_connectivity_package/connectivity.dart' as carpcon;
+//import 'package:carp_connectivity_package/connectivity.dart';
 //import 'package:carp_communication_package/communication.dart';
 import 'package:carp_context_package/carp_context_package.dart';
 import 'package:carp_survey_package/survey.dart';
@@ -119,6 +119,7 @@ void main() async {
   // initialize CAMS and Cognition Packages (loading json deserialization functions)
   CarpMobileSensing();
   CognitionPackage();
+  CarpDataManager();
 
   // make sure to have an instance of the WidgetsBinding, which is required
   // to use platform channels to call native code
@@ -136,7 +137,6 @@ void main() async {
 /// Configure the debug level and deployment mode here before running the app
 /// or deploying it.
 final bloc = StudyAppBLoC(
-  debugLevel: DebugLevel.DEBUG,
-  deploymentMode: DeploymentMode.local,
-  forceSignOutAndStudyReload: false,
+  debugLevel: DebugLevel.debug,
+  deploymentMode: DeploymentMode.production,
 );

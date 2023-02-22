@@ -215,7 +215,8 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
                     text:
                         locale.translate('cards.heartrate.range').toUpperCase(),
                     style: TextStyle(
-                      color: Theme.of(context).primaryTextTheme.bodySmall?.color,
+                      color:
+                          Theme.of(context).primaryTextTheme.bodySmall?.color,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -230,14 +231,16 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
                     text: "${locale.translate('cards.heartrate.bpm')}\n",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      color: Theme.of(context).primaryTextTheme.bodySmall?.color,
+                      color:
+                          Theme.of(context).primaryTextTheme.bodySmall?.color,
                       fontSize: 20,
                     ),
                   ),
                   TextSpan(
                     text: "$groupIndex-${groupIndex + 1} ",
                     style: TextStyle(
-                      color: Theme.of(context).primaryTextTheme.bodySmall?.color,
+                      color:
+                          Theme.of(context).primaryTextTheme.bodySmall?.color,
                       fontWeight: FontWeight.bold,
                       fontSize: 20,
                     ),

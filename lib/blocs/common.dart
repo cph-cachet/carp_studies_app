@@ -5,16 +5,16 @@ enum DeploymentMode {
   local,
 
   /// Use the CARP production server to get the study deployment and store data.
-  carpProduction,
+  production,
 
   /// Use the CARP staging server to get the study deployment and store data.
-  carpStaging,
+  staging,
 
   /// Use the CARP testing server to get the study deployment and store data.
-  carpTest,
+  test,
 
   /// Use the CARP development server to get the study deployment and store data.
-  carpDev,
+  dev,
 }
 
 enum LoginStatus {
@@ -27,11 +27,11 @@ enum LoginStatus {
   /// User registered but no current ongoing studies - Navigate to message screen
   noInvitation,
 
-  /// User temproary blocked for introducing the login credentials wrongly 3 times - Navigate to message screen
+  /// User temporary blocked for introducing the login credentials wrongly 3 times - Navigate to message screen
   temporaryBlock,
 
   /// Successful login - Navigate to home page
-  succesful,
+  successful,
 }
 
 enum ProcessStatus {

@@ -19,24 +19,26 @@ class Sensing {
   static final Sensing _instance = Sensing._();
   StudyDeploymentStatus? _status;
   SmartphoneDeploymentController? _controller;
+  Study? _study;
 
-  DeploymentService? deploymentService;
-  SmartPhoneClientManager? client;
-  Study? study;
+  /// The study running on this phone.
+  /// Only available after [addStudy] is called.
+  Study? get study => _study;
 
   /// The deployment running on this phone.
+  /// Only available after [addStudy] is called.
   SmartphoneDeployment? get deployment => _controller?.deployment;
 
-  /// Get the latest status of the study deployment.
+  /// The latest status of the study deployment.
   StudyDeploymentStatus? get status => _status;
 
-  /// The role name of this device in the deployed study
-  String? get deviceRolename => _status?.masterDeviceStatus?.device.roleName;
+  /// The role name of this device in the deployed study.
+  String? get deviceRolename => _study?.deviceRoleName;
 
   /// The study deployment id of the deployment running on this phone.
-  String? get studyDeploymentId => _status?.studyDeploymentId;
+  String? get studyDeploymentId => _study?.studyDeploymentId;
 
-  /// The study runtime controller for this deployment
+  /// The study runtime for this deployment.
   SmartphoneDeploymentController? get controller => _controller;
 
   /// Is sensing running, i.e. has the study executor been resumed?
@@ -44,13 +46,13 @@ class Sensing {
       (controller != null) &&
       controller!.executor!.state == ExecutorState.resumed;
 
-  /// the list of running - i.e. used - probes in this study.
+  /// The list of running - i.e. used - probes in this study.
   List<Probe> get runningProbes =>
       (_controller != null) ? _controller!.executor!.probes : [];
 
   /// The list of connected devices.
   List<DeviceManager>? get runningDevices =>
-      (client != null) ? client!.deviceController.connectedDevices : [];
+      SmartPhoneClientManager().deviceController.connectedDevices;
 
   /// The singleton sensing instance
   factory Sensing() => _instance;
@@ -67,7 +69,7 @@ class Sensing {
     SamplingPackageRegistry().register(PolarSamplingPackage());
 
     // create and register external data managers
-    DataManagerRegistry().register(CarpDataManager());
+    DataManagerRegistry().register(CarpDataManagerFactory());
 
     // register the special-purpose audio user task factory
     AppTaskController().registerUserTaskFactory(AppUserTaskFactory());
@@ -80,59 +82,39 @@ class Sensing {
     // set up the devices available on this phone
     DeviceController().registerAllAvailableDevices();
 
-    switch (bloc.deploymentMode) {
-      case DeploymentMode.local:
-        // use the local, phone-based deployment service
-        deploymentService = SmartphoneDeploymentService();
-
-        // get the protocol from the local study protocol manager
-        // note that the study id is not used
-        SmartphoneStudyProtocol? protocol =
-            await (LocalStudyProtocolManager().getStudyProtocol(''));
-
-        // deploy this protocol using the on-phone deployment service
-        // re-use the study deployment id - if available
-        _status = await SmartphoneDeploymentService().createStudyDeployment(
-          protocol!,
-          bloc.studyDeploymentId,
-        );
-
-        // save the correct deployment id on the phone for later use
-        bloc.studyDeploymentId = _status!.studyDeploymentId;
-
-        break;
-      case DeploymentMode.carpProduction:
-      case DeploymentMode.carpStaging:
-      case DeploymentMode.carpTest:
-      case DeploymentMode.carpDev:
-        assert(CarpService().authenticated,
-            'No user is authenticated. Call CarpService().authenticate() before using any of the CARP services.');
-        assert(bloc.studyDeploymentId != null,
-            'No study deployment ID is provided. Cannot fetch deployment from CARP w/o an id.');
-
-        // use the CARP deployment service that knows how to download a custom protocol
-        deploymentService = CustomProtocolDeploymentService();
-
-        // get the study deployment status
-        _status = await CustomProtocolDeploymentService()
-            .getStudyDeploymentStatus(bloc.studyDeploymentId!);
-
-        break;
-    }
-
-    // Create and configure a client manager for this phone
-    client = SmartPhoneClientManager();
-    await client?.configure(
-      deploymentService: deploymentService,
+    // Create and configure the client manager for this phone
+    await SmartPhoneClientManager().configure(
+      deploymentService: (bloc.deploymentMode == DeploymentMode.local)
+          ? SmartphoneDeploymentService()
+          : CustomProtocolDeploymentService(),
       deviceController: DeviceController(),
+      askForPermissions: false,
     );
+
+    info('$runtimeType initialized');
+  }
+
+  /// Add and deploy the study, and configure the study runtime (sampling).
+  Future<void> addStudy() async {
+    assert(SmartPhoneClientManager().isConfigured,
+        'The client manager is not yet configured. Call SmartPhoneClientManager().configure() before adding a study.');
+    assert(bloc.studyDeploymentId != null,
+        'No study deployment ID is provided. Cannot start deployment w/o an id.');
+
+    _status = await SmartPhoneClientManager()
+        .deploymentService
+        ?.getStudyDeploymentStatus(bloc.studyDeploymentId!);
+
+    assert(_status?.masterDeviceStatus?.device.roleName != null,
+        'The master device in the deployment needs a role name');
 
     // Define the study and add it to the client.
-    study = Study(
+    _study = Study(
       bloc.studyDeploymentId!,
-      deviceRolename!,
+      _status?.masterDeviceStatus?.device.roleName ??
+          Smartphone.DEFAULT_ROLENAME,
     );
-    await client?.addStudy(study!);
+    await SmartPhoneClientManager().addStudy(study!);
 
     // Get the study controller and try to deploy the study.
     //
@@ -141,13 +123,17 @@ class Sensing {
     // be used pr. default.
     // If not deployed before (i.e., cached) the study deployment will be
     // fetched from the deployment service.
-    _controller = client?.getStudyRuntime(study!);
+    _controller = SmartPhoneClientManager().getStudyRuntime(study!);
     await controller?.tryDeployment(useCached: true);
 
     // Configure the controller
-    await controller?.configure(askForPermissions: false);
+    await controller?.configure();
 
-    info('$runtimeType initialized');
+    info('$runtimeType study added: $studyDeploymentId');
+  }
+
+  Future<void> removeStudy() async {
+    if (study != null) await SmartPhoneClientManager().removeStudy(study!);
   }
 
   /// Translate the title and description of all AppTask in the study protocol
@@ -169,5 +155,5 @@ class Sensing {
   }
 
   Future<void> askForPermissions() async =>
-      await _controller!.askForAllPermissions();
+      await SmartPhoneClientManager().askForAllPermissions();
 }

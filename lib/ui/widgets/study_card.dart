@@ -79,13 +79,10 @@ class StudyCard extends StatelessWidget {
               ),
               InkWell(
                   onTap: () async {
-                    if (await canLaunchUrl(Uri.parse(locale
-                        .translate(studyPageModel.studyDescriptionUrl)))) {
+                    try {
                       await launchUrl(Uri.parse(locale
                           .translate(studyPageModel.studyDescriptionUrl)));
-                    } else {
-                      throw 'Could not launch project URL';
-                    }
+                    } finally {}
                   },
                   child: Text(locale.translate('pages.about.study.website'),
                       style: aboutCardInfoStyle.copyWith(
@@ -93,13 +90,10 @@ class StudyCard extends StatelessWidget {
                       textAlign: TextAlign.start)),
               InkWell(
                 onTap: () async {
-                  if (await canLaunchUrl(Uri.parse(
-                      locale.translate(studyPageModel.privacyPolicyUrl)))) {
+                  try {
                     await launchUrl(Uri.parse(
                         locale.translate(studyPageModel.privacyPolicyUrl)));
-                  } else {
-                    throw 'Could not launch privacy policy URL';
-                  }
+                  } finally {}
                 },
                 child: Text(locale.translate('pages.about.study.privacy'),
                     style: aboutCardInfoStyle.copyWith(

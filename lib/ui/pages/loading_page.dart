@@ -9,9 +9,7 @@ class LoadingPage extends StatefulWidget {
 
 class LoadingPageState extends State<LoadingPage> {
   @override
-  initState() {
-    super.initState();
-  }
+  initState() => super.initState();
 
   @override
   Widget build(BuildContext context) {
@@ -29,20 +27,11 @@ class LoadingPageState extends State<LoadingPage> {
         CarpStudyApp.reloadLocale(context);
 
         // navigate to the right screen
-        context.go(
-            (bloc.shouldInformedConsentBeShown) ? '/ConsentPage' : '/HomePage');
+        context.go((bloc.shouldInformedConsentBeShown) ? '/ConsentPage' : '/');
       });
     }
 
     // If the user has left the study it is still logged in and should be redirected to invitation screen
-    if (bloc.hasLeftStudy) {
-      bloc.hasLeftStudy = false;
-    }
-
-    // If the user is loged out, redirect to authentication screen
-    if (bloc.hasSignedOut) {
-      bloc.hasSignedOut = false;
-    }
 
     return Scaffold(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,

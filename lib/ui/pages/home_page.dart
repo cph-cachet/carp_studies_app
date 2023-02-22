@@ -1,29 +1,14 @@
 part of carp_study_app;
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final Widget child;
+
+  const HomePage({super.key, required this.child});
   @override
   HomePageState createState() => HomePageState();
 }
 
 class HomePageState extends State<HomePage> {
-  int _selectedIndex = 0;
-  final _pages = [];
-
-  @override
-  void initState() {
-    super.initState();
-
-    // check for permissions and start sensing - with a small delay
-    bloc.configurePermissions(context).then(
-        (_) => Future.delayed(const Duration(seconds: 10), () => bloc.start()));
-
-    _pages.add(TaskListPage(bloc.data.taskListPageViewModel));
-    _pages.add(StudyPage(bloc.data.studyPageViewModel));
-    _pages.add(DataVisualizationPage(bloc.data.dataVisualizationPageViewModel));
-    _pages.add(const DevicesPage());
-  }
-
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -40,10 +25,7 @@ class HomePageState extends State<HomePage> {
     RPLocalizations locale = RPLocalizations.of(context)!;
 
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => context.go('/LoginPage'),
-      ),
-      body: _pages[_selectedIndex],
+      body: widget.child,
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         selectedItemColor: Theme.of(context).primaryColor,
@@ -67,21 +49,47 @@ class HomePageState extends State<HomePage> {
               label: locale.translate('app_home.nav_bar_item.devices'),
               activeIcon: const Icon(Icons.devices_other)),
         ],
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
+        currentIndex: _calculateSelectedIndex(context),
+        onTap: (int idx) => _onItemTapped(idx, context),
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: _restart,
-      //   tooltip: 'Restart study & probes',
-      //   child: bloc.isRunning ? Icon(Icons.pause) : Icon(Icons.play_arrow),
-      // ),
     );
   }
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+  static int _calculateSelectedIndex(BuildContext context) {
+    final String location = GoRouterState.of(context).location;
+    if (location.startsWith('/tasks')) {
+      return 0;
+    }
+    if (location.startsWith('/about')) {
+      return 1;
+    }
+    if (location.startsWith('/data')) {
+      return 2;
+    }
+    if (location.startsWith('/devices')) {
+      return 2;
+    }
+    return -1;
+  }
+
+  void _onItemTapped(int index, BuildContext context) {
+    switch (index) {
+      case 0:
+        context.go('/tasks');
+        break;
+      case 1:
+        context.go('/about');
+        break;
+      case 2:
+        context.go('/data');
+        break;
+      case 3:
+        context.go('/devices');
+        break;
+      case -1:
+        context.go('/');
+        break;
+    }
   }
 
   // void _restart() {

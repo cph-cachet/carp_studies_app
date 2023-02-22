@@ -1,5 +1,10 @@
 part of carp_study_app;
 
+final GlobalKey<NavigatorState> _rootNavigatorKey =
+    GlobalKey<NavigatorState>(debugLabel: 'root');
+final GlobalKey<NavigatorState> _shellNavigatorKey =
+    GlobalKey<NavigatorState>(debugLabel: 'shell');
+
 class CarpStudyApp extends StatefulWidget {
   const CarpStudyApp({super.key});
 
@@ -21,15 +26,52 @@ class CarpStudyAppState extends State<CarpStudyApp> {
   }
 
   final GoRouter _router = GoRouter(
-    initialLocation: '/LoadingPage',
+    navigatorKey: _rootNavigatorKey,
+    initialLocation: '/SetupPage',
     routes: <RouteBase>[
+      ShellRoute(
+        navigatorKey: _shellNavigatorKey,
+        builder: (BuildContext context, GoRouterState state, Widget child) {
+          return Scaffold(
+            body: child,
+            bottomNavigationBar: HomePage(child: child),
+          );
+        },
+        routes: [
+          GoRoute(
+            path: '/',
+            builder: (context, state) => const LoginPageiOS(),
+            routes: [
+              GoRoute(
+                parentNavigatorKey: _shellNavigatorKey,
+                path: 'tasks',
+                builder: (context, state) =>
+                    TaskListPage(bloc.data.taskListPageViewModel),
+              ),
+              GoRoute(
+                parentNavigatorKey: _shellNavigatorKey,
+                path: 'about',
+                builder: (context, state) =>
+                    StudyPage(bloc.data.studyPageViewModel),
+              ),
+              GoRoute(
+                parentNavigatorKey: _rootNavigatorKey,
+                path: 'data',
+                builder: (context, state) => DataVisualizationPage(
+                    bloc.data.dataVisualizationPageViewModel),
+              ),
+              GoRoute(
+                parentNavigatorKey: _rootNavigatorKey,
+                path: 'devices',
+                builder: (context, state) => const DevicesPage(),
+              ),
+            ],
+          ),
+        ],
+      ),
       GoRoute(
         path: '/LoadingPage',
         builder: (context, state) => const LoadingPage(),
-      ),
-      GoRoute(
-        path: '/HomePage',
-        builder: (context, state) => const HomePage(),
       ),
       GoRoute(
         path: '/ConsentPage',
@@ -48,7 +90,19 @@ class CarpStudyAppState extends State<CarpStudyApp> {
         path: '/SetupPage',
         builder: (context, state) => const SetupPage(),
       ),
+      GoRoute(
+        path: '/message/:messageId',
+        builder: (context, state) =>
+            MessageDetailsPage(messageId: state.params['messageId'] ?? ''),
+      ),
+      GoRoute(
+        path: '/invitation/:invitationId',
+        builder: (context, state) => InvitationPage(
+          invitationId: state.params['invitationId'] ?? '',
+        ),
+      ),
     ],
+    debugLogDiagnostics: true,
   );
 
   /// Research Package translations, incl. both local language assets plus

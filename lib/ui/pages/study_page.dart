@@ -61,13 +61,7 @@ class StudyPageState extends State<StudyPage> {
       margin: const EdgeInsets.all(5),
       child: InkWell(
         onTap: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => MessageDetailsPage(
-                        message: message,
-                        messageImage: messageImage,
-                      )));
+          context.push('/message/${message.id}');
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,

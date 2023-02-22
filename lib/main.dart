@@ -20,11 +20,9 @@ import 'package:video_player/video_player.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:open_settings/open_settings.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:go_router/go_router.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
-
-// import 'package:activity_recognition_flutter/activity_recognition_flutter.dart';
 import 'package:flutter_activity_recognition/flutter_activity_recognition.dart';
 
 // the CARP packages
@@ -86,6 +84,7 @@ part 'ui/pages/audio_task_page.dart';
 part 'ui/pages/failed_login_page.dart';
 part 'ui/pages/study_details_page.dart';
 part 'ui/pages/message_details_page.dart';
+part 'ui/pages/invitation_page.dart';
 part 'ui/pages/process_message_page.dart';
 part 'ui/pages/camera_task_page.dart';
 part 'ui/pages/display_picture_page.dart';

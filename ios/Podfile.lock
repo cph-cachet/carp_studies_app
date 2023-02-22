@@ -44,6 +44,8 @@ PODS:
     - Flutter
     - flutter_sound_core (= 9.2.13)
   - flutter_sound_core (9.2.13)
+  - flutter_timezone (0.0.1):
+    - Flutter
   - FMDB (2.7.5):
     - FMDB/standard (= 2.7.5)
   - FMDB/standard (2.7.5)
@@ -107,6 +109,7 @@ DEPENDENCIES:
   - flutter_local_notifications (from `.symlinks/plugins/flutter_local_notifications/ios`)
   - flutter_native_timezone (from `.symlinks/plugins/flutter_native_timezone/ios`)
   - flutter_sound (from `.symlinks/plugins/flutter_sound/ios`)
+  - flutter_timezone (from `.symlinks/plugins/flutter_timezone/ios`)
   - health (from `.symlinks/plugins/health/ios`)
   - light (from `.symlinks/plugins/light/ios`)
   - location (from `.symlinks/plugins/location/ios`)
@@ -168,6 +171,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_native_timezone/ios"
   flutter_sound:
     :path: ".symlinks/plugins/flutter_sound/ios"
+  flutter_timezone:
+    :path: ".symlinks/plugins/flutter_timezone/ios"
   health:
     :path: ".symlinks/plugins/health/ios"
   light:
@@ -218,6 +223,7 @@ SPEC CHECKSUMS:
   flutter_native_timezone: 5f05b2de06c9776b4cc70e1839f03de178394d22
   flutter_sound: c60effa2a350fb977885f0db2fbc4c1ad5160900
   flutter_sound_core: 26c10e5832e76aaacfae252d8925232281c486ae
+  flutter_timezone: ffb07bdad3c6276af8dada0f11978d8a1f8a20bb
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   health: 5a380c0f6c4f619535845992993964293962e99e
   IosAwnCore: 6494e0e174d49f04f513e8a002187be226889a37

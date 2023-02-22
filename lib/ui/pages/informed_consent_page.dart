@@ -11,7 +11,7 @@ class InformedConsentState extends State<InformedConsentPage> {
 
   void resultCallback(RPTaskResult result) async {
     await bloc.informedConsentHasBeenAccepted(result);
-    context.go('/HomePage');
+    context.go('/');
   }
 
   void cancelCallback(RPTaskResult? result) async {

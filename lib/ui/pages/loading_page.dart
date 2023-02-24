@@ -37,20 +37,24 @@ class LoadingPageState extends State<LoadingPage> {
     }
 
     Future.delayed(const Duration(seconds: 5), () {
-      if (!bloc.isConfigured) {
+      if (!bloc.isConfiguring) {
         // if the bloc is not configured after 5 seconds, we assume that something
         // went wrong and we show an error message
         showDialog(
             context: context,
             builder: (context) => AlertDialog(
                   title: const Text('Error'),
-                  content: const Text('Could not configure a studysp'),
+                  content: const Text('Could not configure a study.'),
                   actions: [
                     TextButton(
                       child: const Text('OK'),
-                      onPressed: () => context.canPop()
-                          ? context.pop()
-                          : context.go('SetupPage'),
+                      onPressed: () {
+                        bloc.leaveStudyAndSignOut();
+
+                        context.canPop()
+                            ? context.pop()
+                            : context.go('SetupPage');
+                      },
                     )
                   ],
                 ));

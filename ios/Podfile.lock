@@ -211,7 +211,7 @@ SPEC CHECKSUMS:
   audioplayers_darwin: 877d9a4d06331c5c374595e46e16453ac7eafa40
   awesome_notifications: d63d9a25f126860f9a600850d99772237895b3ba
   battery_plus: 7851ab482c336dd101ae735dc9363f01e1223c7c
-  camera_avfoundation: 07c77549ea54ad95d8581be86617c094a46280d9
+  camera_avfoundation: 82dc5597033fe2dcdcca6e41f7e464d0855e74ad
   device_info_plus: e5c5da33f982a436e103237c0c85f9031142abed
   ESense: cbe103ad16c435424f2fd6f8b274f2468af84173
   esense_flutter: 8bfadfdefe7b51d6f78366e43b2b64ec9b6144b6
@@ -232,7 +232,7 @@ SPEC CHECKSUMS:
   open_settings: 9628e736cb2738fd1dc84159565755c214478158
   OrderedSet: aaeb196f7fef5a9edf55d89760da9176ad40b93c
   package_info_plus: 6c92f08e1f853dc01228d6f553146438dafcd14e
-  path_provider_foundation: 37748e03f12783f9de2cb2c4eadfaa25fe6d4852
+  path_provider_foundation: c68054786f1b4f3343858c1e1d0caaded73f0be9
   pedometer: 381969883680ade42559782cc41a3bbd453d8234
   permission_handler_apple: 44366e37eaf29454a1e7b1b7d736c2cceaeb17ce
   polar: 1e458b49a90071a63d99d53cc8ef89b1a51ba1a8
@@ -241,11 +241,11 @@ SPEC CHECKSUMS:
   RxSwift: 5710a9e6b17f3c3d6e40d6e559b9fa1e813b2ef8
   screen_state: a7ae251997e97f3f001839df09b57313b0ddef18
   sensors_plus: 5717760720f7e6acd96fdbd75b7428f5ad755ec2
-  shared_preferences_foundation: 297b3ebca31b34ec92be11acd7fb0ba932c822ca
+  shared_preferences_foundation: 986fc17f3d3251412d18b0265f9c64113a8c2472
   sqflite: 6d358c025f5b867b29ed92fc697fd34924e11904
   SwiftProtobuf: b02b5075dcf60c9f5f403000b3b0c202a11b6ae1
-  url_launcher_ios: fb12c43172927bb5cf75aeebd073f883801f1993
-  video_player_avfoundation: e489aac24ef5cf7af82702979ed16f2a5ef84cff
+  url_launcher_ios: 08a3dfac5fb39e8759aeb0abbd5d9480f30fc8b4
+  video_player_avfoundation: 6d971a232d72e6ee25368378d48a079dea01f1cf
 
 PODFILE CHECKSUM: cc1f88378b4bfcf93a6ce00d2c587857c6008d3b
 

@@ -97,7 +97,7 @@ class CarpBackend {
 
     if (user == null) {
       info('Authenticating with dialogue - username: $username');
-      CarpService().authenticateWithDialog(context, username: username);
+      await CarpService().authenticateWithDialog(context, username: username);
       if (CarpService().authenticated) {
         username = CarpService().currentUser?.username;
       }

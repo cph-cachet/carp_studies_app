@@ -137,5 +137,5 @@ void main() async {
 /// or deploying it.
 final bloc = StudyAppBLoC(
   debugLevel: DebugLevel.debug,
-  deploymentMode: DeploymentMode.local,
+  deploymentMode: DeploymentMode.production,
 );

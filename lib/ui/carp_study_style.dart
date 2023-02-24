@@ -43,6 +43,12 @@ ThemeData carpStudyTheme = ThemeData.light().copyWith(
         fontFamily: 'MuseoSans',
         // bodyColor: Color.fromRGBO(112, 112, 112, 1),
       ),
+  pageTransitionsTheme: const PageTransitionsTheme(
+    builders: <TargetPlatform, PageTransitionsBuilder>{
+      TargetPlatform.android: CupertinoPageTransitionsBuilder(),
+      TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+    },
+  ),
 );
 
 ThemeData carpStudyDarkTheme = ThemeData.dark().copyWith(
@@ -91,6 +97,12 @@ ThemeData carpStudyDarkTheme = ThemeData.dark().copyWith(
         fontFamily: 'MuseoSans',
         // bodyColor: Colors.grey.shade50,
       ),
+  pageTransitionsTheme: const PageTransitionsTheme(
+    builders: <TargetPlatform, PageTransitionsBuilder>{
+      TargetPlatform.android: CupertinoPageTransitionsBuilder(),
+      TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+    },
+  ),
 );
 
 // ButtonTheme roundedFilledButtonTheme = ButtonTheme(

@@ -55,7 +55,7 @@ class HomePage extends StatelessWidget {
     if (location.startsWith('/devices')) {
       return 3;
     }
-    return 0;
+    return -1;
   }
 
   void _onItemTapped(int index, BuildContext context) {

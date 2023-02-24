@@ -1,9 +1,15 @@
 part of carp_study_app;
 
-final GlobalKey<NavigatorState> _rootNavigatorKey =
-    GlobalKey<NavigatorState>(debugLabel: 'root');
-final GlobalKey<NavigatorState> _shellNavigatorKey =
-    GlobalKey<NavigatorState>(debugLabel: 'shell');
+FadeTransition bottomNavigationBarAnimation(
+  BuildContext context,
+  Animation<double> animation,
+  Animation<double> secondaryAnimation,
+  Widget child,
+) =>
+    FadeTransition(
+      opacity: animation,
+      child: child,
+    );
 
 class CarpStudyApp extends StatefulWidget {
   const CarpStudyApp({super.key});
@@ -26,46 +32,56 @@ class CarpStudyAppState extends State<CarpStudyApp> {
   }
 
   final GoRouter _router = GoRouter(
-    navigatorKey: _rootNavigatorKey,
-    initialLocation: '/SetupPage',
+    initialLocation: '/',
     routes: <RouteBase>[
       ShellRoute(
-        // navigatorKey: _shellNavigatorKey,
         builder: (BuildContext context, GoRouterState state, Widget child) =>
             HomePage(child: child),
         routes: [
           GoRoute(
-            // parentNavigatorKey: _rootNavigatorKey,
+            path: '/',
+            redirect: (context, state) => '/tasks',
+          ),
+          GoRoute(
             path: '/tasks',
             redirect: (context, state) =>
                 !bloc.isConfigured ? '/LoadingPage/tasks' : null,
-            builder: (context, state) => TaskListPage(
-              bloc.data.taskListPageViewModel,
+            pageBuilder: (context, state) => CustomTransitionPage(
+              child: TaskListPage(
+                bloc.data.taskListPageViewModel,
+              ),
+              transitionsBuilder: bottomNavigationBarAnimation,
             ),
           ),
           GoRoute(
-            // parentNavigatorKey: _rootNavigatorKey,
             path: '/about',
             redirect: (context, state) =>
                 !bloc.isConfigured ? '/LoadingPage/about' : null,
-            builder: (context, state) => StudyPage(
-              bloc.data.studyPageViewModel,
+            pageBuilder: (context, state) => CustomTransitionPage(
+              child: StudyPage(
+                bloc.data.studyPageViewModel,
+              ),
+              transitionsBuilder: bottomNavigationBarAnimation,
             ),
           ),
           GoRoute(
-            // parentNavigatorKey: _rootNavigatorKey,
             path: '/data',
             redirect: (context, state) =>
                 !bloc.isConfigured ? '/LoadingPage/data' : null,
-            builder: (context, state) =>
-                DataVisualizationPage(bloc.data.dataVisualizationPageViewModel),
+            pageBuilder: (context, state) => CustomTransitionPage(
+              child: DataVisualizationPage(
+                  bloc.data.dataVisualizationPageViewModel),
+              transitionsBuilder: bottomNavigationBarAnimation,
+            ),
           ),
           GoRoute(
-            // parentNavigatorKey: _rootNavigatorKey,
             path: '/devices',
             redirect: (context, state) =>
                 !bloc.isConfigured ? '/LoadingPage/devices' : null,
-            builder: (context, state) => const DevicesPage(),
+            pageBuilder: (context, state) => const CustomTransitionPage(
+              child: DevicesPage(),
+              transitionsBuilder: bottomNavigationBarAnimation,
+            ),
           ),
           //   ],
           // ),
@@ -75,6 +91,10 @@ class CarpStudyAppState extends State<CarpStudyApp> {
         path: '/LoadingPage/:redirectionOrigin',
         builder: (context, state) =>
             LoadingPage(redirectionOrigin: state.params['redirectionOrigin']),
+      ),
+      GoRoute(
+        path: '/LoadingPage',
+        builder: (context, state) => const LoadingPage(redirectionOrigin: ''),
       ),
       GoRoute(
         path: '/ConsentPage',

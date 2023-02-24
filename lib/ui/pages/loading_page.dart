@@ -22,17 +22,40 @@ class LoadingPageState extends State<LoadingPage> {
     // the only reason to call it here - instead of in the initState() method -
     // is to have a handle to the context object, which is to be used in the
     // pop-up windows from CARP
+    var redirectTo = widget.redirectionOrigin ?? 'tasks';
     if (!bloc.isConfiguring) {
       bloc.configure(context).then((_) {
         // when the configure is done, the localizations should have been downloaded
         // and we can ask the app to reload the translations
         CarpStudyApp.reloadLocale(context);
 
-        var redirectTo = widget.redirectionOrigin ?? 'tasks';
         // navigate to the right screen
-        context.go((bloc.shouldInformedConsentBeShown) ? '/ConsentPage' : '/$redirectTo');
+        context.go((bloc.shouldInformedConsentBeShown)
+            ? '/ConsentPage'
+            : '/$redirectTo');
       });
     }
+
+    Future.delayed(const Duration(seconds: 5), () {
+      if (!bloc.isConfigured) {
+        // if the bloc is not configured after 5 seconds, we assume that something
+        // went wrong and we show an error message
+        showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+                  title: const Text('Error'),
+                  content: const Text('Could not configure a studysp'),
+                  actions: [
+                    TextButton(
+                      child: const Text('OK'),
+                      onPressed: () => context.canPop()
+                          ? context.pop()
+                          : context.go('SetupPage'),
+                    )
+                  ],
+                ));
+      }
+    });
 
     // If the user has left the study it is still logged in and should be redirected to invitation screen
 

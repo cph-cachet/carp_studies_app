@@ -30,48 +30,51 @@ class CarpStudyAppState extends State<CarpStudyApp> {
     initialLocation: '/SetupPage',
     routes: <RouteBase>[
       ShellRoute(
-        navigatorKey: _shellNavigatorKey,
-        builder: (BuildContext context, GoRouterState state, Widget child) {
-          return Scaffold(
-            body: child,
-            bottomNavigationBar: HomePage(child: child),
-          );
-        },
+        // navigatorKey: _shellNavigatorKey,
+        builder: (BuildContext context, GoRouterState state, Widget child) =>
+            HomePage(child: child),
         routes: [
           GoRoute(
-            path: '/',
-            builder: (context, state) => const LoginPageiOS(),
-            routes: [
-              GoRoute(
-                parentNavigatorKey: _shellNavigatorKey,
-                path: 'tasks',
-                builder: (context, state) =>
-                    TaskListPage(bloc.data.taskListPageViewModel),
-              ),
-              GoRoute(
-                parentNavigatorKey: _shellNavigatorKey,
-                path: 'about',
-                builder: (context, state) =>
-                    StudyPage(bloc.data.studyPageViewModel),
-              ),
-              GoRoute(
-                parentNavigatorKey: _rootNavigatorKey,
-                path: 'data',
-                builder: (context, state) => DataVisualizationPage(
-                    bloc.data.dataVisualizationPageViewModel),
-              ),
-              GoRoute(
-                parentNavigatorKey: _rootNavigatorKey,
-                path: 'devices',
-                builder: (context, state) => const DevicesPage(),
-              ),
-            ],
+            // parentNavigatorKey: _rootNavigatorKey,
+            path: '/tasks',
+            redirect: (context, state) =>
+                !bloc.isConfigured ? '/LoadingPage/tasks' : null,
+            builder: (context, state) => TaskListPage(
+              bloc.data.taskListPageViewModel,
+            ),
           ),
+          GoRoute(
+            // parentNavigatorKey: _rootNavigatorKey,
+            path: '/about',
+            redirect: (context, state) =>
+                !bloc.isConfigured ? '/LoadingPage/about' : null,
+            builder: (context, state) => StudyPage(
+              bloc.data.studyPageViewModel,
+            ),
+          ),
+          GoRoute(
+            // parentNavigatorKey: _rootNavigatorKey,
+            path: '/data',
+            redirect: (context, state) =>
+                !bloc.isConfigured ? '/LoadingPage/data' : null,
+            builder: (context, state) =>
+                DataVisualizationPage(bloc.data.dataVisualizationPageViewModel),
+          ),
+          GoRoute(
+            // parentNavigatorKey: _rootNavigatorKey,
+            path: '/devices',
+            redirect: (context, state) =>
+                !bloc.isConfigured ? '/LoadingPage/devices' : null,
+            builder: (context, state) => const DevicesPage(),
+          ),
+          //   ],
+          // ),
         ],
       ),
       GoRoute(
-        path: '/LoadingPage',
-        builder: (context, state) => const LoadingPage(),
+        path: '/LoadingPage/:redirectionOrigin',
+        builder: (context, state) =>
+            LoadingPage(redirectionOrigin: state.params['redirectionOrigin']),
       ),
       GoRoute(
         path: '/ConsentPage',

@@ -1,31 +1,17 @@
 part of carp_study_app;
 
-class HomePage extends StatefulWidget {
+class HomePage extends StatelessWidget {
+  const HomePage({required this.child, Key? key}) : super(key: key);
+
   final Widget child;
-
-  const HomePage({super.key, required this.child});
-  @override
-  HomePageState createState() => HomePageState();
-}
-
-class HomePageState extends State<HomePage> {
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-
-    // at this point, the study deployment AND the translations are loaded
-    // this means that we can translate the [AppTask]s in the protocol,
-    // if we want the translated title and description to be in the notifications.
-    var locale = RPLocalizations.of(context)!;
-    Sensing().translateStudyProtocol(locale);
-  }
 
   @override
   Widget build(BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;
+    Sensing().translateStudyProtocol(locale);
 
     return Scaffold(
-      body: widget.child,
+      body: child,
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         selectedItemColor: Theme.of(context).primaryColor,
@@ -67,9 +53,9 @@ class HomePageState extends State<HomePage> {
       return 2;
     }
     if (location.startsWith('/devices')) {
-      return 2;
+      return 3;
     }
-    return -1;
+    return 0;
   }
 
   void _onItemTapped(int index, BuildContext context) {

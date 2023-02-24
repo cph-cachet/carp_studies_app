@@ -1,7 +1,9 @@
 part of carp_study_app;
 
 class LoadingPage extends StatefulWidget {
-  const LoadingPage({super.key});
+  final String? redirectionOrigin;
+
+  const LoadingPage({super.key, this.redirectionOrigin});
 
   @override
   LoadingPageState createState() => LoadingPageState();
@@ -26,8 +28,9 @@ class LoadingPageState extends State<LoadingPage> {
         // and we can ask the app to reload the translations
         CarpStudyApp.reloadLocale(context);
 
+        var redirectTo = widget.redirectionOrigin ?? 'tasks';
         // navigate to the right screen
-        context.go((bloc.shouldInformedConsentBeShown) ? '/ConsentPage' : '/');
+        context.go((bloc.shouldInformedConsentBeShown) ? '/ConsentPage' : '/$redirectTo');
       });
     }
 

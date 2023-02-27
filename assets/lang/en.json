@@ -11,6 +11,7 @@
     "pages.data_viz.hello": "Hello",
     "pages.data_viz.thanks": "Thank you for participating in this study. This is a summary of your contribution so far.",
     "pages.data_viz.no_data": "No data to show",
+    "cards.no_data": "No data",
     "cards.scoreboard.days": "Days in study",
     "cards.scoreboard.tasks": "Tasks completed",
     "cards.measures.title": "MEASURES",

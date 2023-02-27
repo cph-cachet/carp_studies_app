@@ -241,7 +241,7 @@ class StudyAppBLoC {
   Future<void> configurePermissions([BuildContext? context]) async {
     if (usingLocationPermissions && context != null) {
       var status = await Permission.locationAlways.status;
-      if (!status.isGranted) {
+      if (!status.isGranted && Platform.isAndroid) {
         await showGeneralDialog(
             context: context,
             barrierDismissible: false,

@@ -101,7 +101,10 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
         Container(
           margin: const EdgeInsets.only(left: 8, right: 2),
           child: Text(
-            '${(widget.model.dayMinMax.min ?? 0).toInt()} - ${(widget.model.dayMinMax.max ?? 0).toInt()}',
+            widget.model.dayMinMax.min == null ||
+                    widget.model.dayMinMax.max == null
+                ? locale.translate('cards.no_data')
+                : '${(widget.model.dayMinMax.min)} - ${(widget.model.dayMinMax.max)}',
             style: hrVisualisationTextStyle(
               fontSize: 40,
             ),
@@ -110,7 +113,10 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
         Padding(
           padding: const EdgeInsets.only(bottom: 4.0),
           child: Text(
-            locale.translate('cards.heartrate.bpm'),
+            widget.model.dayMinMax.min == null ||
+                    widget.model.dayMinMax.max == null
+                ? ''
+                : locale.translate('cards.heartrate.bpm'),
             style: hrVisualisationTextStyle(
               color: Colors.grey.withOpacity(0.8),
               fontSize: 20,

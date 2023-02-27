@@ -32,7 +32,7 @@ class CarpStudyAppState extends State<CarpStudyApp> {
   }
 
   final GoRouter _router = GoRouter(
-    initialLocation: '/',
+    initialLocation: '/LoginPage',
     routes: <RouteBase>[
       ShellRoute(
         builder: (BuildContext context, GoRouterState state, Widget child) =>

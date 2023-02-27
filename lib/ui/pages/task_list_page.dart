@@ -12,15 +12,14 @@ class TaskListPageState extends State<TaskListPage> {
   @override
   Widget build(BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;
+    bloc.configurePermissions(context);
+    bloc.start();
 
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           const CarpAppBar(),
-          // _scoreBoard(),
-          // SizedBox(height: 15),
-
           Expanded(
             flex: 4,
             child: StreamBuilder<UserTask>(
@@ -31,7 +30,6 @@ class TaskListPageState extends State<TaskListPage> {
                 } else {
                   return CustomScrollView(
                     slivers: [
-                      //CarpBanner(),
                       SliverToBoxAdapter(
                           child: ScoreboardCardWidget(widget.model)),
                       SliverToBoxAdapter(
@@ -47,9 +45,6 @@ class TaskListPageState extends State<TaskListPage> {
                           ),
                         ),
                       ),
-                      // SliverToBoxAdapter(
-                      //   child: SizedBox(height: 15),
-                      // ),
                       SliverList(
                         delegate: SliverChildBuilderDelegate(
                             (BuildContext context, int index) {

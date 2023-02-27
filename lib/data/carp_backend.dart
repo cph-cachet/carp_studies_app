@@ -111,6 +111,20 @@ class CarpBackend {
     CarpParticipationService().configureFrom(CarpService());
   }
 
+  /// Authenticate using a [OAuthToken] from the CANS Web Service.
+  Future<void> authenticateWithToken(
+      BuildContext context, OAuthToken token) async {
+    info('Logging in with token...');
+    await CarpService()
+        .authenticateWithToken(username: username!, token: token);
+    if (CarpService().authenticated) {
+      username = CarpService().currentUser?.username;
+    }
+    info('User authenticated - user: $user');
+    // saving token on the phone
+    oauthToken = user?.token!;
+  }
+
   /// Get the study invitation.
   Future<void> getStudyInvitation(BuildContext context) async {
     if (studyDeploymentId == null) {

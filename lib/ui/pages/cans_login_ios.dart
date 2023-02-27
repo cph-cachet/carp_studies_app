@@ -10,19 +10,18 @@ class LoginPageiOS extends StatefulWidget {
 class _LoginPageiOSState extends State<LoginPageiOS> {
   final GlobalKey webViewKey = GlobalKey();
 
-  WebAuthenticationSession? session;
   String? token;
 
   @override
   void initState() {
-    createWebAuthenticationSession();
+    Platform.isIOS ? createWebAuthenticationSession() : null;
 
     super.initState();
   }
 
   @override
   void dispose() {
-    session?.dispose();
+    bloc.session?.dispose();
     super.dispose();
   }
 
@@ -31,6 +30,10 @@ class _LoginPageiOSState extends State<LoginPageiOS> {
     return Scaffold(
         appBar: AppBar(title: const Text('Web Authentication Session example')),
         body: Column(children: <Widget>[
+          ElevatedButton(
+            onPressed: () => startWebAuthenticationSession(),
+            child: const Text("Login"),
+          ),
           Center(
               child: Container(
             padding: const EdgeInsets.all(20.0),
@@ -49,21 +52,21 @@ class _LoginPageiOSState extends State<LoginPageiOS> {
           // session == null
           //     ? Container()
           //     :
-              Center(
-                  child: ElevatedButton(
-                    onPressed: startWebAuthenticationSession,
-                    child: const Text("Start Web Auth Session"),
-                  ),
-                ),
-          session == null
+          Center(
+            child: ElevatedButton(
+              onPressed: startWebAuthenticationSession,
+              child: const Text("Start Web Auth Session"),
+            ),
+          ),
+          bloc.session == null
               ? Container()
               : Center(
                   child: ElevatedButton(
                       onPressed: () async {
-                        await session?.dispose();
+                        await bloc.session?.dispose();
                         setState(() {
                           token = null;
-                          session = null;
+                          bloc.session = null;
                         });
                       },
                       child: const Text("Dispose Web Auth Session")),
@@ -72,12 +75,12 @@ class _LoginPageiOSState extends State<LoginPageiOS> {
   }
 
   void startWebAuthenticationSession() {
-    session ?? createWebAuthenticationSession();
-    session?.canStart().then((canStart) {
+    bloc.session ?? createWebAuthenticationSession();
+    bloc.session?.canStart().then((canStart) {
       if (canStart) {
-        session?.start().then((started) {
+        bloc.session?.start().then((started) {
           if (!started) {
-            session?.dispose();
+            bloc.session?.dispose();
             createWebAuthenticationSession();
           }
         });
@@ -89,8 +92,8 @@ class _LoginPageiOSState extends State<LoginPageiOS> {
 
   void createWebAuthenticationSession() {
     WebAuthenticationSession.isAvailable().then((isAvailable) async {
-      if (session == null && isAvailable) {
-        session = await WebAuthenticationSession.create(
+      if (bloc.session == null && isAvailable) {
+        bloc.session = await WebAuthenticationSession.create(
           url: WebUri("https://cans.cachet.dk/portal/dev/login"),
           callbackURLScheme: "https",
           onComplete: (url, error) async {

@@ -35,7 +35,10 @@ class CarpBackend {
   CarpUser? get user => CarpService().currentUser;
 
   /// The URI of the CANS server - depending on deployment mode.
-  String get uri => '$cawsUri${uris[bloc.deploymentMode]}';
+  Uri get uri => Uri(
+      scheme: 'https',
+      host: 'cans.cachet.dk',
+      path: uris[bloc.deploymentMode]!);
 
   OAuthToken? get oauthToken => LocalSettings().oauthToken;
   set oauthToken(OAuthToken? token) => LocalSettings().oauthToken = token;
@@ -68,7 +71,7 @@ class CarpBackend {
   Future<void> initialize() async {
     _app = CarpApp(
       name: "CAWS @ DTU",
-      uri: Uri.parse(uri),
+      baseUri: uri,
       oauth: OAuthEndPoint(clientID: clientId, clientSecret: clientSecret),
       studyId: LocalSettings().studyId,
       studyDeploymentId: LocalSettings().studyDeploymentId,
@@ -123,6 +126,19 @@ class CarpBackend {
     info('User authenticated - user: $user');
     // saving token on the phone
     oauthToken = user?.token!;
+  }
+
+  Future<CarpUser> getUserFromAccessToken(String accessToken) async {
+    info('Logging in with access token...');
+    var user = await CarpService().getCurrentUserProfile(
+        accessToken:
+            accessToken); //TODO: this when the new version of carp webservice is implemented
+    info('User authenticated - user: $user');
+
+    username = user.username;
+    oauthToken = user.token;
+
+    return user;
   }
 
   /// Get the study invitation.

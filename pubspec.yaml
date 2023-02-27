@@ -48,6 +48,12 @@ dependencies:
   google_fonts: ^4.0.1
   flutter_inappwebview: ^6.0.0-beta.22
   go_router: ^6.0.8
+  flutter_svg: ^1.1.6
+
+
+dependency_overrides:
+    carp_webservices:
+      path: ../carp.sensing-flutter/backends/carp_webservices/
 
 dev_dependencies:
   # flutter_test:

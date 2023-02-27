@@ -19,6 +19,7 @@ class StudyAppBLoC {
   final CarpBackend _backend = CarpBackend();
   final CarpStudyAppViewModel _data = CarpStudyAppViewModel();
   StudyDeploymentStatus? _status;
+  WebAuthenticationSession? session;
 
   List<Message> _messages = [];
   final StreamController<int> _messageStreamController =
@@ -312,7 +313,7 @@ class StudyAppBLoC {
   CarpUser? get user => backend.user;
 
   String get username => (user != null)
-      ? user!.username
+      ? user!.username!
       : Sensing().controller!.deployment!.userId!;
 
   /// The name used for friendly greating - '' if no user logged in.
@@ -404,5 +405,33 @@ class StudyAppBLoC {
   Future<void> leaveStudyAndSignOut() async {
     await leaveStudy();
     await backend.signOut();
+  }
+
+  Future<WebAuthenticationSession?> createWebauthenticationSession(
+    WebAuthenticationSession session,
+    WebUri url,
+    Future<void> Function(WebUri?, WebAuthenticationSessionError?) onComplete,
+  ) async {
+    if (Platform.isIOS && await WebAuthenticationSession.isAvailable()) {
+      session = await WebAuthenticationSession.create(
+          url: url,
+          callbackURLScheme: 'https',
+          onComplete: (url, error) async {
+            if (error != null) {
+              warning('Error: $error');
+              return;
+            } else if (url == null) {
+              warning('No url returned');
+              return;
+            } else if (!url.toString().contains('access_token')) {
+              warning('No access token in url: $url');
+              return;
+            }
+            String accessToken = url.toString().split('=')[1];
+
+            bloc.backend.getUserFromAccessToken(accessToken);
+          });
+    }
+    return null;
   }
 }

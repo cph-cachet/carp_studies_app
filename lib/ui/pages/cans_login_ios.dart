@@ -8,13 +8,19 @@ class LoginPageiOS extends StatefulWidget {
 }
 
 class _LoginPageiOSState extends State<LoginPageiOS> {
+  WebAuthenticationSession? session;
   final GlobalKey webViewKey = GlobalKey();
-
-  String? token;
+  WebUri uri = WebUri(
+      'https://cans.cachet.dk/portal/${bloc.deploymentMode.name}/login?redirect=carp.studies://auth');
 
   @override
   void initState() {
-    Platform.isIOS ? createWebAuthenticationSession() : null;
+    if (Platform.isIOS) {
+      bloc.createWebAuthenticationSession(session, uri).then((value) {
+        session = value;
+      });
+      info("Initially created log in session");
+    }
 
     super.initState();
   }
@@ -31,32 +37,24 @@ class _LoginPageiOSState extends State<LoginPageiOS> {
         appBar: AppBar(title: const Text('Web Authentication Session example')),
         body: Column(children: <Widget>[
           ElevatedButton(
-            onPressed: () => startWebAuthenticationSession(),
+            onPressed: () async {
+              if (session != null && await session!.canStart()) {
+                session = await bloc.startWebAuthenticationSession(session!);
+                info(
+                    "Session is not null, starting session. Session is $session");
+              } else if (session != null && !await session!.canStart()) {
+                info("Session is $session. Recreating.");
+                session = null;
+                session =
+                    await bloc.createWebAuthenticationSession(session, uri);
+                session = await bloc.startWebAuthenticationSession(session!);
+              } else if (session == null) {
+                info("Session is null, creating.");
+                session =
+                    await bloc.createWebAuthenticationSession(session, uri);
+              }
+            },
             child: const Text("Login"),
-          ),
-          Center(
-              child: Container(
-            padding: const EdgeInsets.all(20.0),
-            child: Text("Token: $token"),
-          )),
-          // session != null
-          //     ? Container()
-          //     : Center(
-          //         child: ElevatedButton(
-          //           child: const Text("Create Web Auth Session"),
-          //           onPressed: () async {
-          //             createWebAuthenticationSession();
-          //           },
-          //         ),
-          //       ),
-          // session == null
-          //     ? Container()
-          //     :
-          Center(
-            child: ElevatedButton(
-              onPressed: startWebAuthenticationSession,
-              child: const Text("Start Web Auth Session"),
-            ),
           ),
           bloc.session == null
               ? Container()
@@ -64,52 +62,10 @@ class _LoginPageiOSState extends State<LoginPageiOS> {
                   child: ElevatedButton(
                       onPressed: () async {
                         await bloc.session?.dispose();
-                        setState(() {
-                          token = null;
-                          bloc.session = null;
-                        });
+                        bloc.session = null;
                       },
                       child: const Text("Dispose Web Auth Session")),
                 )
         ]));
-  }
-
-  void startWebAuthenticationSession() {
-    bloc.session ?? createWebAuthenticationSession();
-    bloc.session?.canStart().then((canStart) {
-      if (canStart) {
-        bloc.session?.start().then((started) {
-          if (!started) {
-            bloc.session?.dispose();
-            createWebAuthenticationSession();
-          }
-        });
-      } else {
-        createWebAuthenticationSession();
-      }
-    });
-  }
-
-  void createWebAuthenticationSession() {
-    WebAuthenticationSession.isAvailable().then((isAvailable) async {
-      if (bloc.session == null && isAvailable) {
-        bloc.session = await WebAuthenticationSession.create(
-          url: WebUri("https://cans.cachet.dk/portal/dev/login"),
-          callbackURLScheme: "https",
-          onComplete: (url, error) async {
-            if (url != null) {
-              setState(() {
-                token = url.queryParameters["token"];
-              });
-            }
-          },
-        );
-        setState(() {});
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text('Cannot create Web Authentication Session!'),
-        ));
-      }
-    });
   }
 }

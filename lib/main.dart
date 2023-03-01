@@ -6,6 +6,7 @@ import 'dart:convert';
 import 'dart:ui' as ui;
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart' hide TimeOfDay;
 import 'package:json_annotation/json_annotation.dart';
@@ -138,5 +139,5 @@ void main() async {
 /// or deploying it.
 final bloc = StudyAppBLoC(
   debugLevel: DebugLevel.debug,
-  deploymentMode: DeploymentMode.local,
+  deploymentMode: DeploymentMode.playground,
 );

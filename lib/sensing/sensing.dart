@@ -84,7 +84,7 @@ class Sensing {
 
     // Create and configure the client manager for this phone
     await SmartPhoneClientManager().configure(
-      deploymentService: (bloc.deploymentMode == DeploymentMode.local)
+      deploymentService: (bloc.deploymentMode == DeploymentMode.playground)
           ? SmartphoneDeploymentService()
           : CustomProtocolDeploymentService(),
       deviceController: DeviceController(),

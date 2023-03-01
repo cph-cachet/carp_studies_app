@@ -38,7 +38,7 @@ class CarpBackend {
   Uri get uri => Uri(
       scheme: 'https',
       host: 'cans.cachet.dk',
-      path: uris[bloc.deploymentMode]!);
+      pathSegments: ['dev', uris[bloc.deploymentMode]!]);
 
   OAuthToken? get oauthToken => LocalSettings().oauthToken;
   set oauthToken(OAuthToken? token) => LocalSettings().oauthToken = token;
@@ -71,7 +71,7 @@ class CarpBackend {
   Future<void> initialize() async {
     _app = CarpApp(
       name: "CAWS @ DTU",
-      baseUri: uri,
+      uri: uri,
       oauth: OAuthEndPoint(clientID: clientId, clientSecret: clientSecret),
       studyId: LocalSettings().studyId,
       studyDeploymentId: LocalSettings().studyDeploymentId,

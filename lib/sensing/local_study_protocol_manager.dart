@@ -13,7 +13,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
     var protocol = demoStudy;
 
     // set the data endpoint based on the deployment mode (local or CARP)
-    protocol.dataEndPoint = (bloc.deploymentMode == DeploymentMode.local)
+    protocol.dataEndPoint = (bloc.deploymentMode == DeploymentMode.playground)
         ? SQLiteDataEndPoint()
         : CarpDataEndPoint(
             uploadMethod: CarpUploadMethod.DATA_POINT,

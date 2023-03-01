@@ -47,28 +47,29 @@ class StudyAppBLoC {
   ///  * whether to use the locally stored credentials
   StudyAppBLoC({
     this.debugLevel = DebugLevel.info,
-    this.deploymentMode = DeploymentMode.local,
+    this.deploymentMode = DeploymentMode.playground,
   }) : super();
 
   /// The informed consent to be shown to the user for this study.
   RPOrderedTask? informedConsent;
 
   InformedConsentManager get informedConsentManager =>
-      (deploymentMode == DeploymentMode.local)
+      (deploymentMode == DeploymentMode.playground)
           ? LocalResourceManager()
           : CarpResourceManager() as InformedConsentManager;
 
   LocalizationManager get localizationManager =>
-      (deploymentMode == DeploymentMode.local)
+      (deploymentMode == DeploymentMode.playground)
           ? LocalResourceManager()
           : CarpResourceManager() as LocalizationManager;
 
   LocalizationLoader get localizationLoader =>
       ResourceLocalizationLoader(localizationManager);
 
-  MessageManager get messageManager => (deploymentMode == DeploymentMode.local)
-      ? LocalResourceManager()
-      : CarpResourceManager() as MessageManager;
+  MessageManager get messageManager =>
+      (deploymentMode == DeploymentMode.playground)
+          ? LocalResourceManager()
+          : CarpResourceManager() as MessageManager;
 
   CarpBackend get backend => _backend;
 
@@ -176,7 +177,7 @@ class StudyAppBLoC {
     _state = StudyAppState.configuring;
     info('$runtimeType configuring...');
 
-    if (deploymentMode == DeploymentMode.local) {
+    if (deploymentMode == DeploymentMode.playground) {
       // get the protocol from the local study protocol manager
       // note that the study id is not used
       var protocol = await LocalStudyProtocolManager().getStudyProtocol('');
@@ -275,7 +276,7 @@ class StudyAppBLoC {
   ) async {
     info('Informed consent has been accepted by user.');
     informedConsentAccepted = true;
-    if (bloc.deploymentMode != DeploymentMode.local) {
+    if (bloc.deploymentMode != DeploymentMode.playground) {
       await backend.uploadInformedConsent(informedConsentResult);
     }
   }
@@ -394,7 +395,7 @@ class StudyAppBLoC {
     await LocalSettings().eraseStudyIds();
     await Sensing().removeStudy();
     // a small hack; reuse and reload the same deployment - but only in local mode
-    if (deploymentMode == DeploymentMode.local) studyDeploymentId = id;
+    if (deploymentMode == DeploymentMode.playground) studyDeploymentId = id;
   }
 
   /// Leave the study and also sign out the user.
@@ -407,15 +408,23 @@ class StudyAppBLoC {
     await backend.signOut();
   }
 
-  Future<WebAuthenticationSession?> createWebauthenticationSession(
+  Future<WebAuthenticationSession> startWebAuthenticationSession(
     WebAuthenticationSession session,
-    WebUri url,
-    Future<void> Function(WebUri?, WebAuthenticationSessionError?) onComplete,
   ) async {
-    if (Platform.isIOS && await WebAuthenticationSession.isAvailable()) {
+      await session.start();
+      return session;
+  }
+
+  Future<WebAuthenticationSession?> createWebAuthenticationSession(
+    WebAuthenticationSession? session,
+    WebUri url,
+  ) async {
+    if (session == null &&
+        Platform.isIOS &&
+        await WebAuthenticationSession.isAvailable()) {
       session = await WebAuthenticationSession.create(
           url: url,
-          callbackURLScheme: 'https',
+          callbackURLScheme: 'carp.studies',
           onComplete: (url, error) async {
             if (error != null) {
               warning('Error: $error');
@@ -423,15 +432,16 @@ class StudyAppBLoC {
             } else if (url == null) {
               warning('No url returned');
               return;
-            } else if (!url.toString().contains('access_token')) {
+            } else if (!url.toString().contains('token')) {
               warning('No access token in url: $url');
               return;
             }
-            String accessToken = url.toString().split('=')[1];
-
+            info('Got url: $url');
+            String accessToken = url.queryParameters['token']!;
             bloc.backend.getUserFromAccessToken(accessToken);
           });
+      return session;
     }
-    return null;
+    return session;
   }
 }

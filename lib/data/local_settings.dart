@@ -11,26 +11,47 @@ class LocalSettings {
 
   // Keys for storing in shared preferences
   static const String oauthTokenKey = 'token';
+  static const String accessTokenKey = 'access_token';
   static const String usernameKey = 'username';
   static const String studyIdKey = 'study_id';
   static const informedConsentAcceptedKey = 'informed_consent_accepted';
 
   String get _oauthTokenKey =>
       '${Settings().appName}.$oauthTokenKey'.toLowerCase();
+  String get _accessTokenKey =>
+      '${Settings().appName}.$accessTokenKey'.toLowerCase();
   String get _usernameKey => '${Settings().appName}.$usernameKey'.toLowerCase();
   String get _studyIdKey => '${Settings().appName}.$studyIdKey'.toLowerCase();
   String get _informedConsentAcceptedKey =>
       '$studyDeploymentId.$informedConsentAcceptedKey'.toLowerCase();
 
   OAuthToken? _oauthToken;
-  String? _username;
+  String? _accessToken;
   String? _studyId;
   bool? _hasInformedConsentBeenAccepted;
+  String? _username;
+
+  String? get accessToken {
+    if (_accessToken == null) {
+      String? accessTokenString =
+          Settings().preferences!.getString(_accessTokenKey);
+
+      _accessToken = (accessTokenString != null) ? accessTokenString : null;
+    }
+    return _accessToken!;
+  }
+
+  set accessToken(String? value) {
+    _accessToken = value;
+    Settings().preferences!.setString(_accessTokenKey, value!);
+  }
 
   OAuthToken? get oauthToken {
-    if (_oauthToken == null) {
-      String? tokenString = Settings().preferences!.getString(_oauthTokenKey);
+    _oauthToken ??= OAuthToken.fromJson(
+        jsonDecode(Settings().preferences!.getString(_oauthTokenKey)!));
+    String tokenString = Settings().preferences!.getString(_oauthTokenKey)!;
 
+    if (_oauthToken == null) {
       _oauthToken = (tokenString != null)
           ? OAuthToken.fromJson(jsonDecode(tokenString))
           : null;

@@ -16,6 +16,7 @@ class CarpBackend {
     DeploymentMode.test: '/test',
     DeploymentMode.staging: '/stage',
     DeploymentMode.production: '',
+    DeploymentMode.playground: '/playground',
   };
 
   static final CarpBackend _instance = CarpBackend._();
@@ -36,9 +37,13 @@ class CarpBackend {
 
   /// The URI of the CANS server - depending on deployment mode.
   Uri get uri => Uri(
-      scheme: 'https',
-      host: 'cans.cachet.dk',
-      pathSegments: ['dev', uris[bloc.deploymentMode]!]);
+        scheme: 'https',
+        host: 'cans.cachet.dk',
+        pathSegments: [
+          'dev',
+          // uris[bloc.deploymentMode]!,
+        ],
+      );
 
   OAuthToken? get oauthToken => LocalSettings().oauthToken;
   set oauthToken(OAuthToken? token) => LocalSettings().oauthToken = token;
@@ -130,14 +135,12 @@ class CarpBackend {
 
   Future<CarpUser> getUserFromAccessToken(String accessToken) async {
     info('Logging in with access token...');
-    var user = await CarpService().getCurrentUserProfile(
-        accessToken:
-            accessToken); //TODO: this when the new version of carp webservice is implemented
+    var user = await CarpService().getUserFromAccessToken(
+        accessToken); //TODO: this when the new version of carp webservice is implemented
     info('User authenticated - user: $user');
 
     username = user.username;
-    oauthToken = user.token;
-
+    
     return user;
   }
 

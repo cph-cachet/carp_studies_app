@@ -29,6 +29,8 @@
 	<string>????</string>
 	<key>FlutterDeepLinkingEnabled</key>
 	<true/>
+	<key>FLTEnableImpeller</key>
+  	<true/>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>

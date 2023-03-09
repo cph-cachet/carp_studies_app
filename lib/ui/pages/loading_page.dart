@@ -35,34 +35,6 @@ class LoadingPageState extends State<LoadingPage> {
             : '/$redirectTo');
       });
     }
-
-    Future.delayed(const Duration(seconds: 5), () {
-      if (!bloc.isConfiguring) {
-        // if the bloc is not configured after 5 seconds, we assume that something
-        // went wrong and we show an error message
-        showDialog(
-            context: context,
-            builder: (context) => AlertDialog(
-                  title: const Text('Error'),
-                  content: const Text('Could not configure a study.'),
-                  actions: [
-                    TextButton(
-                      child: const Text('OK'),
-                      onPressed: () {
-                        bloc.leaveStudyAndSignOut();
-
-                        context.canPop()
-                            ? context.pop()
-                            : context.go('SetupPage');
-                      },
-                    )
-                  ],
-                ));
-      }
-    });
-
-    // If the user has left the study it is still logged in and should be redirected to invitation screen
-
     return Scaffold(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         body: Center(

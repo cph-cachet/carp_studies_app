@@ -20,6 +20,10 @@ class StudyAppBLoC {
   final CarpStudyAppViewModel _data = CarpStudyAppViewModel();
   StudyDeploymentStatus? _status;
   WebAuthenticationSession? session;
+  final StreamController<StudiesAppState> _stateStream =
+      StreamController.broadcast();
+
+  get stateStream => _stateStream;
 
   List<Message> _messages = [];
   final StreamController<int> _messageStreamController =
@@ -174,7 +178,7 @@ class StudyAppBLoC {
     // early out if already configuring (e.g. waiting for user authentication)
     if (isConfiguring) return;
 
-    _state = StudyAppState.configuring;
+    stateStream.sink.add(StudiesAppState.configuring);
     info('$runtimeType configuring...');
 
     if (deploymentMode == DeploymentMode.playground) {
@@ -196,6 +200,7 @@ class StudyAppBLoC {
       bloc.studyDeploymentId = _status!.studyDeploymentId;
     } else {
       await backend.initialize();
+      await backend.getUserFromAccessToken(LocalSettings().accessToken ?? "");
       await backend.authenticate(context);
 
       // check if there is a local deployed id
@@ -411,8 +416,10 @@ class StudyAppBLoC {
   Future<WebAuthenticationSession> startWebAuthenticationSession(
     WebAuthenticationSession session,
   ) async {
-      await session.start();
-      return session;
+    await session.start();
+    bloc.stateStream.sink.add(StudiesAppState.authenticating);
+
+    return session;
   }
 
   Future<WebAuthenticationSession?> createWebAuthenticationSession(
@@ -438,10 +445,21 @@ class StudyAppBLoC {
             }
             info('Got url: $url');
             String accessToken = url.queryParameters['token']!;
-            bloc.backend.getUserFromAccessToken(accessToken);
+            LocalSettings().accessToken = accessToken;
+            bloc.stateStream.sink.add(StudiesAppState.accessTokenRetrieved);
           });
       return session;
     }
     return session;
   }
+}
+
+enum StudiesAppState {
+  loginpage,
+  authenticating,
+  accessTokenRetrieved,
+  configuring,
+  loading,
+  loaded,
+  error,
 }

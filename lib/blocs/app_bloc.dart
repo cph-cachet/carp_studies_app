@@ -200,8 +200,7 @@ class StudyAppBLoC {
       bloc.studyDeploymentId = _status!.studyDeploymentId;
     } else {
       await backend.initialize();
-      await backend.getUserFromAccessToken(LocalSettings().accessToken ?? "");
-      await backend.authenticate(context);
+      await backend.authenticate();
 
       // check if there is a local deployed id
       // if not, get a deployment id based on an invitation
@@ -447,8 +446,14 @@ class StudyAppBLoC {
             String accessToken = url.queryParameters['token']!;
             String refreshToken = url.queryParameters['refresh']!;
             String expiresIn = url.queryParameters['expiresIn']!;
-            
-            LocalSettings().accessToken = accessToken;
+
+            backend.oauthToken = OAuthToken(
+              accessToken,
+              refreshToken,
+              "Bearer",
+              int.parse(expiresIn),
+              "read write",
+            );
             bloc.stateStream.sink.add(StudiesAppState.accessTokenRetrieved);
           });
       return session;

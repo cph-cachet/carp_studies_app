@@ -91,7 +91,7 @@ class CarpBackend {
   /// * if so, use this and try to authenticate
   /// * else authenticate using the username / password dialogue
   /// * if successful, save the token locally
-  Future<void> authenticate(BuildContext context) async {
+  Future<void> authenticate() async {
     info('Authenticating user...');
     if (username != null && oauthToken != null) {
       info('Authenticating with saved token - token: $oauthToken');
@@ -105,7 +105,7 @@ class CarpBackend {
 
     if (user == null) {
       info('Authenticating with dialogue - username: $username');
-      await CarpService().authenticateWithDialog(context, username: username);
+      await CarpService().authenticateWithToken(token: oauthToken!);
       if (CarpService().authenticated) {
         username = CarpService().currentUser?.username;
       }
@@ -119,20 +119,6 @@ class CarpBackend {
     CarpParticipationService().configureFrom(CarpService());
   }
 
-  /// Authenticate using a [OAuthToken] from the CANS Web Service.
-  Future<void> authenticateWithToken(
-      BuildContext context, OAuthToken token) async {
-    info('Logging in with token...');
-    await CarpService()
-        .authenticateWithToken(username: username!, token: token);
-    if (CarpService().authenticated) {
-      username = CarpService().currentUser?.username;
-    }
-    info('User authenticated - user: $user');
-    // saving token on the phone
-    oauthToken = user?.token!;
-  }
-
   Future<CarpUser> getUserFromAccessToken(String accessToken) async {
     info('Logging in with access token...');
     var user = await CarpService().getUserFromAccessToken(
@@ -140,7 +126,7 @@ class CarpBackend {
     info('User authenticated - user: $user');
 
     username = user.username;
-    
+
     return user;
   }
 

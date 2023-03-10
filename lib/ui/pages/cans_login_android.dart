@@ -10,6 +10,10 @@ class LoginPageAndroid extends StatefulWidget {
 class _LoginPageAndroidState extends State<LoginPageAndroid> {
   InAppWebViewController? webView;
 
+  WebUri uri = WebUri(
+      'https://cans.cachet.dk/portal/playground/login?redirect=carp.studies://auth');
+  // 'https://cans.cachet.dk/portal/${bloc.deploymentMode.name}/login?redirect=carp.studies://auth');
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,8 +22,7 @@ class _LoginPageAndroidState extends State<LoginPageAndroid> {
         children: <Widget>[
           Expanded(
             child: InAppWebView(
-              initialUrlRequest: URLRequest(
-                  url: WebUri("https://cans.cachet.dk/portal/dev/login")),
+              initialUrlRequest: URLRequest(url: uri),
               initialSettings: InAppWebViewSettings(
                 domStorageEnabled: true,
                 databaseEnabled: true,
@@ -30,24 +33,11 @@ class _LoginPageAndroidState extends State<LoginPageAndroid> {
               onLoadStart: (InAppWebViewController controller, Uri? url) {},
               onUpdateVisitedHistory:
                   (InAppWebViewController controller, Uri? url, ok) async {
-                if (url
-                        ?.toString()
-                        .startsWith("https://cans.cachet.dk/portal/dev/") ??
-                    false) {
-                  String? tokenFromJSEvaluation =
-                      await controller.evaluateJavascript(
-                          source:
-                              "localStorage.getItem('study_portal_dev.sessionToken')");
-                  info(tokenFromJSEvaluation ?? 'Token is empty');
-
-                  if (tokenFromJSEvaluation != null) {
-                    // do something with your token
-                    // ...
-                    // then close the webview
-                    Future.microtask(() {
-                      Navigator.pop(context, tokenFromJSEvaluation);
-                    });
+                if (url?.scheme == 'carp.studies') {
+                  if (context.mounted) {
+                    context.pop();
                   }
+                  await bloc.webAuthOnComplete(url, null);
                 }
               },
             ),

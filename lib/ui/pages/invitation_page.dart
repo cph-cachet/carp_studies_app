@@ -21,41 +21,56 @@ class InvitationDetailsPage extends StatelessWidget {
     ); //TODO:
 
     return Scaffold(
-      body: Container(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const SizedBox(height: 100),
-              Text(
-                locale.translate('invitation.invited_to_study'),
-                style: const TextStyle(
-                  fontSize: 48,
-                  fontWeight: FontWeight.bold,
+      appBar: AppBar(
+        title: Text(locale.translate('invitation.invited_to_study')),
+      ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          SizedBox(
+            height: MediaQuery.of(context).padding.top,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Text(
+              invitation.invitation.name,
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 32.0,
+              ),
+            ),
+          ),
+          Expanded(
+            child: Scrollbar(
+              thumbVisibility: true,
+              radius: const Radius.circular(100),
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.all(16.0),
+                child: Text(
+                  invitation.invitation.description,
+                  style: const TextStyle(fontSize: 16.0),
                 ),
               ),
-              const SizedBox(height: 80),
-              Text(
-                locale.translate(invitation.invitation.name),
-                style: const TextStyle(
-                  fontSize: 36,
-                  fontWeight: FontWeight.bold,
-                ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: ElevatedButton(
+              onPressed: () {},
+              style: ElevatedButton.styleFrom(
+                shape: const StadiumBorder(),
+                padding: const EdgeInsets.symmetric(vertical: 16.0),
               ),
-              const SizedBox(height: 40),
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Text(
-                    locale.translate(invitation.invitation.description),
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
+              child: Text(
+                locale.translate('invitation.accept_invite'),
+                style: const TextStyle(fontSize: 18.0),
               ),
-            ]),
+            ),
+          ),
+          SizedBox(
+            height: MediaQuery.of(context).padding.bottom,
+          ),
+        ],
       ),
     );
   }

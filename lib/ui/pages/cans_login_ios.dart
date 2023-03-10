@@ -1,13 +1,13 @@
 part of carp_study_app;
 
-class LoginPageiOS extends StatefulWidget {
-  const LoginPageiOS({super.key});
+class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
 
   @override
-  State<LoginPageiOS> createState() => _LoginPageiOSState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
-class _LoginPageiOSState extends State<LoginPageiOS> {
+class _LoginPageState extends State<LoginPage> {
   WebAuthenticationSession? session;
   final GlobalKey webViewKey = GlobalKey();
   WebUri uri = WebUri(
@@ -26,7 +26,7 @@ class _LoginPageiOSState extends State<LoginPageiOS> {
 
     bloc.stateStream.stream.listen((event) {
       if (event == StudiesAppState.accessTokenRetrieved && context.mounted) {
-        context.go('/LoadingPage');
+        context.go('/Loading');
       }
     });
 
@@ -42,29 +42,78 @@ class _LoginPageiOSState extends State<LoginPageiOS> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: const Text('Web Authentication Session example')),
-        body: Center(
-          child: ElevatedButton(
-            onPressed: () async {
-              if (session != null && await session!.canStart()) {
-                session = await bloc.startWebAuthenticationSession(session!);
-                info(
-                    "Session is not null, starting session. Session is $session");
-              } else if (session != null) {
-                info("Session is $session. Recreating.");
-                session = null;
-                session =
-                    await bloc.createWebAuthenticationSession(session, uri);
-                session = await bloc.startWebAuthenticationSession(session!);
-              }
-              if (session == null) {
-                info("Session is null, creating.");
-                session =
-                    await bloc.createWebAuthenticationSession(session, uri);
-              }
-            },
-            child: const Text("Login"),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      body: Center(
+        child: Container(
+          width: 291,
+          height: 56,
+          padding: const EdgeInsets.only(
+            left: 0,
+            right: 0,
+            top: 0,
+            bottom: 0,
           ),
-        ));
+          decoration: BoxDecoration(
+            color: const Color(
+              0xff006398,
+            ),
+            borderRadius: BorderRadius.circular(
+              100,
+            ),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            verticalDirection: VerticalDirection.down,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  TextButton(
+                    onPressed: () async {
+                      if (Platform.isIOS) {
+                        await iOSAuthentication();
+                      }
+                      if (Platform.isAndroid && context.mounted) {
+                        context.push('/AndroidLogin');
+                      }
+                    },
+                    child: const Text(
+                      "Log in",
+                      style: TextStyle(
+                        color: Color(
+                          0xffffffff,
+                        ),
+                        fontSize: 22,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Future<void> iOSAuthentication() async {
+    if (session != null && await session!.canStart()) {
+      session = await bloc.startWebAuthenticationSession(session!);
+      info("Session is not null, starting session. Session is $session");
+    } else if (session != null) {
+      info("Session is $session. Recreating.");
+      session = null;
+      session = await bloc.createWebAuthenticationSession(session, uri);
+      session = await bloc.startWebAuthenticationSession(session!);
+    }
+    if (session == null) {
+      info("Session is null, creating.");
+      session = await bloc.createWebAuthenticationSession(session, uri);
+    }
   }
 }

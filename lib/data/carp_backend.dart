@@ -119,6 +119,20 @@ class CarpBackend {
     CarpParticipationService().configureFrom(CarpService());
   }
 
+  Future<OAuthToken?> authenticateWithRefreshToken(String refreshToken) async {
+    try {
+      var token = await CarpService().authenticateByRefreshToken(refreshToken);
+
+      oauthToken = token;
+      bloc.stateStream.sink.add(StudiesAppState.accessTokenRetrieved);
+
+      return token;
+    } catch (e) {
+      warning('Authentication with refresh token unsuccessful - $e');
+    }
+    return null;
+  }
+
   /// Get all study invitations for the current user.
   /// If the user is not authenticated, this will return an empty list.
   /// If the user is authenticated, this will return a list of invitations.

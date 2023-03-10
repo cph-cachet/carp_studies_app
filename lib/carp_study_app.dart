@@ -32,7 +32,8 @@ class CarpStudyAppState extends State<CarpStudyApp> {
   }
 
   final GoRouter _router = GoRouter(
-    initialLocation: '/invitation/asdsa',
+    // initialLocation: '/invitation/asdsa',
+    initialLocation: '/Login',
     routes: <RouteBase>[
       ShellRoute(
         builder: (BuildContext context, GoRouterState state, Widget child) =>
@@ -93,24 +94,27 @@ class CarpStudyAppState extends State<CarpStudyApp> {
             LoadingPage(redirectionOrigin: state.params['redirectionOrigin']),
       ),
       GoRoute(
-        path: '/LoadingPage',
+        path: '/Loading',
         builder: (context, state) => const LoadingPage(redirectionOrigin: ''),
       ),
       GoRoute(
-        path: '/ConsentPage',
+        path: '/Consent',
         builder: (context, state) => const InformedConsentPage(),
       ),
       GoRoute(
-        path: '/FailedLoginPage',
+        path: '/FailedLogin',
         builder: (context, state) => const FailedLoginPage(),
       ),
       GoRoute(
-        path: '/LoginPage',
-        builder: (context, state) =>
-            Platform.isIOS ? const LoginPageiOS() : const LoginPageAndroid(),
+        path: '/Login',
+        builder: (context, state) => const LoginPage(),
       ),
       GoRoute(
-        path: '/SetupPage',
+        path: '/AndroidLogin',
+        builder: (context, state) => const LoginPageAndroid(),
+      ),
+      GoRoute(
+        path: '/Setup',
         builder: (context, state) => const SetupPage(),
       ),
       GoRoute(

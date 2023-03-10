@@ -159,6 +159,8 @@ class StudyAppBLoC {
     await Settings().init();
     await localizationManager.initialize();
 
+    await backend.initialize();
+
     // set up and initialize sensing
     await Sensing().initialize();
 
@@ -185,32 +187,12 @@ class StudyAppBLoC {
     stateStream.sink.add(StudiesAppState.configuring);
     info('$runtimeType configuring...');
 
-    if (deploymentMode == DeploymentMode.playground) {
-      // get the protocol from the local study protocol manager
-      // note that the study id is not used
-      var protocol = await LocalStudyProtocolManager().getStudyProtocol('');
-      assert(protocol != null, 'Need a protocol to run locally.');
+    await backend.authenticate();
 
-      // deploy this protocol using the on-phone deployment service
-      // re-use the study deployment id - if available
-      _status = await SmartPhoneClientManager()
-          .deploymentService!
-          .createStudyDeployment(
-            protocol!,
-            bloc.studyDeploymentId,
-          );
-
-      // save the deployment id on the phone for later use
-      bloc.studyDeploymentId = _status!.studyDeploymentId;
-    } else {
-      await backend.initialize();
-      await backend.authenticate();
-
-      // check if there is a local deployed id
-      // if not, get a deployment id based on an invitation
-      if (bloc.studyDeploymentId == null) {
-        await backend.getInvitations();
-      }
+    // check if there is a local deployed id
+    // if not, get a deployment id based on an invitation
+    if (bloc.studyDeploymentId == null) {
+      await backend.getInvitations();
     }
 
     // find the right informed consent, if needed
@@ -435,46 +417,33 @@ class StudyAppBLoC {
       session = await WebAuthenticationSession.create(
           url: url,
           callbackURLScheme: 'carp.studies',
-          onComplete: (url, error) async {
-            if (error != null) {
-              warning('Error: $error');
-              return;
-            } else if (url == null) {
-              warning('No url returned');
-              return;
-            } else if (!url.toString().contains('token')) {
-              warning('No access token in url: $url');
-              return;
-            }
-            info('Got url: $url');
-            String? accessToken = url.queryParameters['token'];
-            String? refreshToken = url.queryParameters['refresh'];
-            String? expiresIn = url.queryParameters['expiresIn'];
-            String? tokenType = url.queryParameters['tokenType'];
-            String? scope = url.queryParameters['scope'];
-
-            if (accessToken == null ||
-                refreshToken == null ||
-                expiresIn == null ||
-                tokenType == null ||
-                scope == null) {
-              warning('Missing parameters in url: $url');
-              return;
-            }
-
-            backend.oauthToken = OAuthToken(
-              accessToken,
-              refreshToken,
-              tokenType,
-              int.parse(expiresIn),
-              scope,
-            );
-            bloc.stateStream.sink.add(StudiesAppState.accessTokenRetrieved);
-          });
+          onComplete: webAuthOnComplete);
       return session;
     }
     return session;
   }
+
+  Future<void> webAuthOnComplete(url, error) async {
+        if (error != null) {
+          warning('Error: $error');
+          return;
+        } else if (url == null) {
+          warning('No url returned');
+          return;
+        } else if (!url.toString().contains('token')) {
+          warning('No access token in url: $url');
+          return;
+        }
+        info('Got url: $url');
+        String? refreshToken = url.queryParameters['token'];
+
+        if (refreshToken == null) {
+          warning('Missing parameters in url: $url');
+          return;
+        }
+
+        await backend.authenticateWithRefreshToken(refreshToken);
+      }
 }
 
 enum StudiesAppState {

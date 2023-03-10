@@ -445,6 +445,9 @@ class StudyAppBLoC {
             }
             info('Got url: $url');
             String accessToken = url.queryParameters['token']!;
+            String refreshToken = url.queryParameters['refresh']!;
+            String expiresIn = url.queryParameters['expiresIn']!;
+            
             LocalSettings().accessToken = accessToken;
             bloc.stateStream.sink.add(StudiesAppState.accessTokenRetrieved);
           });

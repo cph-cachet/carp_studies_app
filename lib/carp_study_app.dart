@@ -32,7 +32,7 @@ class CarpStudyAppState extends State<CarpStudyApp> {
   }
 
   final GoRouter _router = GoRouter(
-    initialLocation: '/LoginPage',
+    initialLocation: '/invitation/asdsa',
     routes: <RouteBase>[
       ShellRoute(
         builder: (BuildContext context, GoRouterState state, Widget child) =>
@@ -120,7 +120,7 @@ class CarpStudyAppState extends State<CarpStudyApp> {
       ),
       GoRoute(
         path: '/invitation/:invitationId',
-        builder: (context, state) => InvitationPage(
+        builder: (context, state) => InvitationDetailsPage(
           invitationId: state.params['invitationId'] ?? '',
         ),
       ),

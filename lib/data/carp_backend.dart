@@ -119,6 +119,19 @@ class CarpBackend {
     CarpParticipationService().configureFrom(CarpService());
   }
 
+  /// Get all study invitations for the current user.
+  /// If the user is not authenticated, this will return an empty list.
+  /// If the user is authenticated, this will return a list of invitations.
+  /// If the user is authenticated, but has no invitations, this will return an empty list.
+  Future<List<ActiveParticipationInvitation>> getInvitations() async {
+    if (CarpService().authenticated) {
+      List<ActiveParticipationInvitation> invitations =
+          await CarpParticipationService().getActiveParticipationInvitations();
+      bloc.invitations = invitations;
+      return invitations;
+    }
+    return [];
+  }
 
   /// Get the study invitation.
   Future<void> getStudyInvitation(BuildContext context) async {

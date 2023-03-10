@@ -346,12 +346,11 @@ packages:
     source: hosted
     version: "0.40.1"
   carp_webservices:
-    dependency: transitive
+    dependency: "direct overridden"
     description:
-      name: carp_webservices
-      sha256: a884ac088cba6cf162ff4e24f26a6518e203945f6fc28a744e07a47f1efa6e0d
-      url: "https://pub.dev"
-    source: hosted
+      path: "../carp.sensing-flutter/backends/carp_webservices"
+      relative: true
+    source: path
     version: "0.40.2"
   characters:
     dependency: transitive

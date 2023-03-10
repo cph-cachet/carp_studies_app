@@ -30,6 +30,10 @@ class StudyAppBLoC {
       StreamController.broadcast();
   List<Message> get messages => _messages;
 
+  List<ActiveParticipationInvitation> _invitations = [];
+  List<ActiveParticipationInvitation> get invitations => _invitations;
+  set invitations(value) => _invitations = value;
+
   /// A stream of event when the list of [messages] is updated.
   /// The data send on the stream is the number of available messages.
   Stream<int> get messageStream => _messageStreamController.stream;
@@ -171,7 +175,7 @@ class StudyAppBLoC {
   ///  * initialize sensing
   ///
   /// This method is used in the [LoadingPage].
-  Future<void> configure(BuildContext context) async {
+  Future<void> configure() async {
     assert(isInitialized,
         "$runtimeType is not initialized. Call 'initialize()' first.");
 
@@ -205,7 +209,7 @@ class StudyAppBLoC {
       // check if there is a local deployed id
       // if not, get a deployment id based on an invitation
       if (bloc.studyDeploymentId == null) {
-        await backend.getStudyInvitation(context);
+        await backend.getInvitations();
       }
     }
 
@@ -247,7 +251,7 @@ class StudyAppBLoC {
   Future<void> configurePermissions([BuildContext? context]) async {
     if (usingLocationPermissions && context != null) {
       var status = await Permission.locationAlways.status;
-      if (!status.isGranted && Platform.isAndroid) {
+      if (!status.isGranted && Platform.isAndroid && context.mounted) {
         await showGeneralDialog(
             context: context,
             barrierDismissible: false,

@@ -87,6 +87,7 @@ part 'ui/pages/failed_login_page.dart';
 part 'ui/pages/study_details_page.dart';
 part 'ui/pages/message_details_page.dart';
 part 'ui/pages/invitation_page.dart';
+part 'ui/pages/invitation_list_page.dart';
 part 'ui/pages/process_message_page.dart';
 part 'ui/pages/camera_task_page.dart';
 part 'ui/pages/display_picture_page.dart';

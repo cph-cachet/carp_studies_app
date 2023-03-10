@@ -119,16 +119,6 @@ class CarpBackend {
     CarpParticipationService().configureFrom(CarpService());
   }
 
-  Future<CarpUser> getUserFromAccessToken(String accessToken) async {
-    info('Logging in with access token...');
-    var user = await CarpService().getUserFromAccessToken(
-        accessToken); //TODO: this when the new version of carp webservice is implemented
-    info('User authenticated - user: $user');
-
-    username = user.username;
-
-    return user;
-  }
 
   /// Get the study invitation.
   Future<void> getStudyInvitation(BuildContext context) async {

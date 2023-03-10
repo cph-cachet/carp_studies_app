@@ -36,7 +36,7 @@ class LocationUsageDialog {
           onPressed: () {
             Permission.locationAlways
                 .request()
-                .then((value) => Navigator.pop(context, true));
+                .then((value) => context.pop(true));
           },
           style: ButtonStyle(
             backgroundColor:

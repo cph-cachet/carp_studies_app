@@ -443,16 +443,27 @@ class StudyAppBLoC {
               return;
             }
             info('Got url: $url');
-            String accessToken = url.queryParameters['token']!;
-            String refreshToken = url.queryParameters['refresh']!;
-            String expiresIn = url.queryParameters['expiresIn']!;
+            String? accessToken = url.queryParameters['token'];
+            String? refreshToken = url.queryParameters['refresh'];
+            String? expiresIn = url.queryParameters['expiresIn'];
+            String? tokenType = url.queryParameters['tokenType'];
+            String? scope = url.queryParameters['scope'];
+
+            if (accessToken == null ||
+                refreshToken == null ||
+                expiresIn == null ||
+                tokenType == null ||
+                scope == null) {
+              warning('Missing parameters in url: $url');
+              return;
+            }
 
             backend.oauthToken = OAuthToken(
               accessToken,
               refreshToken,
-              "Bearer",
+              tokenType,
               int.parse(expiresIn),
-              "read write",
+              scope,
             );
             bloc.stateStream.sink.add(StudiesAppState.accessTokenRetrieved);
           });

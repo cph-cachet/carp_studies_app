@@ -52,8 +52,11 @@ dependencies:
 
 
 dependency_overrides:
-    carp_webservices:
-      path: ../carp.sensing-flutter/backends/carp_webservices/
+      carp_webservices:
+        git:
+          url: https://github.com/cph-cachet/carp.sensing-flutter.git
+          ref: 9146e2a4a0398a568ca11ef81f1827d77bbc4eb7 # branch LarsRefsgaard/fix-modals latest commit. Adds ability to autheneticate with refresh token
+          path: backends/carp_webservices/
 
 dev_dependencies:
   # flutter_test:

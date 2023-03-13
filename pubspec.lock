@@ -348,9 +348,11 @@ packages:
   carp_webservices:
     dependency: "direct overridden"
     description:
-      path: "../carp.sensing-flutter/backends/carp_webservices"
-      relative: true
-    source: path
+      path: "backends/carp_webservices"
+      ref: "9146e2a4a0398a568ca11ef81f1827d77bbc4eb7"
+      resolved-ref: "9146e2a4a0398a568ca11ef81f1827d77bbc4eb7"
+      url: "https://github.com/cph-cachet/carp.sensing-flutter.git"
+    source: git
     version: "0.40.2"
   characters:
     dependency: transitive

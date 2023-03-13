@@ -424,26 +424,26 @@ class StudyAppBLoC {
   }
 
   Future<void> webAuthOnComplete(url, error) async {
-        if (error != null) {
-          warning('Error: $error');
-          return;
-        } else if (url == null) {
-          warning('No url returned');
-          return;
-        } else if (!url.toString().contains('token')) {
-          warning('No access token in url: $url');
-          return;
-        }
-        info('Got url: $url');
-        String? refreshToken = url.queryParameters['token'];
+    if (error != null) {
+      warning('Error: $error');
+      return;
+    } else if (url == null) {
+      warning('No url returned');
+      return;
+    } else if (!url.toString().contains('token')) {
+      warning('No access token in url: $url');
+      return;
+    }
+    info('Got url: $url');
+    String? refreshToken = url.queryParameters['token'];
 
-        if (refreshToken == null) {
-          warning('Missing parameters in url: $url');
-          return;
-        }
+    if (refreshToken == null) {
+      warning('Missing parameters in url: $url');
+      return;
+    }
 
-        await backend.authenticateWithRefreshToken(refreshToken);
-      }
+    await backend.authenticateWithRefreshToken(refreshToken);
+  }
 }
 
 enum StudiesAppState {

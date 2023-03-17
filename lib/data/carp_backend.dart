@@ -128,6 +128,7 @@ class CarpBackend {
 
       return token;
     } catch (e) {
+      bloc.scaffoldMessengerState.showSnackBar(SnackBar(content: Text('$e')));
       warning('Authentication with refresh token unsuccessful - $e');
     }
     return null;

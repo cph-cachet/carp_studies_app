@@ -29,12 +29,13 @@ class _LoginPageAndroidState extends State<LoginPageAndroid> {
               },
               onLoadStart: (InAppWebViewController controller, Uri? url) {},
               onUpdateVisitedHistory:
-                  (InAppWebViewController controller, Uri? url, ok) async {
+                  (InAppWebViewController controller, Uri? url, ok) {},
+              onLoadStop: (controller, url) async {
                 if (url?.scheme == 'carp.studies') {
-                  if (context.mounted) {
-                    context.pop();
-                  }
                   await bloc.webAuthOnComplete(url, null);
+                  if (context.mounted) {
+                    context.pop(); // TODO: go to tasks page or whatever
+                  }
                 }
               },
             ),

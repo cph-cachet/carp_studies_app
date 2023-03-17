@@ -49,6 +49,11 @@ class StudyAppBLoC {
   /// What kind of deployment are we running - LOCAL or CAWS?
   final DeploymentMode deploymentMode;
 
+  // ScaffoldMessenger for showing snackbars
+  final _scaffoldKey = GlobalKey<ScaffoldMessengerState>();
+  get scaffoldKey => _scaffoldKey;
+  get scaffoldMessengerState => scaffoldKey.currentState;
+
   /// Create the BLoC for the app specifying:
   ///  * debug level
   ///  * deployment mode (LOCAL or CAWS)

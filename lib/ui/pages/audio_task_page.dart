@@ -22,7 +22,6 @@ class AudioTaskPageState extends State<AudioTaskPage> {
 
   List<int> steps = [0, 1, 2];
 
-
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -145,7 +144,8 @@ class AudioTaskPageState extends State<AudioTaskPage> {
                         radius: 30,
                         backgroundColor: CACHET.RED_1,
                         child: IconButton(
-                          onPressed: () => widget.audioUserTask!.onRecordStart(),
+                          onPressed: () =>
+                              widget.audioUserTask!.onRecordStart(),
                           padding: const EdgeInsets.all(0),
                           icon: const Icon(Icons.mic,
                               color: Colors.white, size: 30),
@@ -218,7 +218,8 @@ class AudioTaskPageState extends State<AudioTaskPage> {
                     scrollDirection: Axis.vertical, //.horizontal
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Text(locale.translate(widget.audioUserTask!.instructions),
+                      child: Text(
+                          locale.translate(widget.audioUserTask!.instructions),
                           style: audioInstructionStyle),
                     ),
                   ),

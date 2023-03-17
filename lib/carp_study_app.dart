@@ -125,6 +125,10 @@ class CarpStudyAppState extends State<CarpStudyApp> {
         ),
       ),
       GoRoute(
+        path: '/auth',
+        builder: (context, state) => const FailedLoginPage(),
+      ),
+      GoRoute(
         path: '/Invitations',
         builder: (context, state) => InvitationListPage(
           invitations: bloc.invitations,
@@ -145,7 +149,7 @@ class CarpStudyAppState extends State<CarpStudyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      debugShowCheckedModeBanner: false,
+      scaffoldMessengerKey: bloc.scaffoldKey,
       supportedLocales: const [
         Locale('en'),
         Locale('da'),

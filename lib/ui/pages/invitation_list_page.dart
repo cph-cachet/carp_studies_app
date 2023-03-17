@@ -94,11 +94,6 @@ class InvitationCard extends StatelessWidget {
     required this.invitation,
   });
 
-  // String shortStudyDescription(String studyDescription) =>
-  //     (studyDescription.length < 110)
-  //         ? studyDescription
-  //         : '${studyDescription.substring(0, 100)}...';
-
   @override
   Widget build(BuildContext context) => Card(
         child: InkWell(

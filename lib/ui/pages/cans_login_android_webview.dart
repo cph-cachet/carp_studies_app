@@ -1,18 +1,15 @@
 part of carp_study_app;
 
 class LoginPageAndroid extends StatefulWidget {
-  const LoginPageAndroid({super.key});
+  final WebUri uri;
 
+  const LoginPageAndroid({super.key, required this.uri});
   @override
   State<LoginPageAndroid> createState() => _LoginPageAndroidState();
 }
 
 class _LoginPageAndroidState extends State<LoginPageAndroid> {
   InAppWebViewController? webView;
-
-  WebUri uri = WebUri(
-      'https://cans.cachet.dk/portal/playground/login?redirect=carp.studies://auth');
-  // 'https://cans.cachet.dk/portal/${bloc.deploymentMode.name}/login?redirect=carp.studies://auth');
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +19,7 @@ class _LoginPageAndroidState extends State<LoginPageAndroid> {
         children: <Widget>[
           Expanded(
             child: InAppWebView(
-              initialUrlRequest: URLRequest(url: uri),
+              initialUrlRequest: URLRequest(url: widget.uri),
               initialSettings: InAppWebViewSettings(
                 domStorageEnabled: true,
                 databaseEnabled: true,

@@ -32,8 +32,8 @@ class CarpStudyAppState extends State<CarpStudyApp> {
   }
 
   final GoRouter _router = GoRouter(
-    initialLocation: '/invitations',
-    // initialLocation: '/Login',
+    // initialLocation: '/Invitations',
+    initialLocation: '/Login',
     routes: <RouteBase>[
       ShellRoute(
         builder: (BuildContext context, GoRouterState state, Widget child) =>
@@ -110,26 +110,22 @@ class CarpStudyAppState extends State<CarpStudyApp> {
         builder: (context, state) => const LoginPage(),
       ),
       GoRoute(
-        path: '/AndroidLogin',
-        builder: (context, state) => const LoginPageAndroid(),
-      ),
-      GoRoute(
         path: '/Setup',
         builder: (context, state) => const SetupPage(),
       ),
       GoRoute(
-        path: '/message/:messageId',
+        path: '/Message/:messageId',
         builder: (context, state) =>
             MessageDetailsPage(messageId: state.params['messageId'] ?? ''),
       ),
       GoRoute(
-        path: '/invitation/:invitationId',
+        path: '/Invitation/:invitationId',
         builder: (context, state) => InvitationDetailsPage(
           invitationId: state.params['invitationId'] ?? '',
         ),
       ),
       GoRoute(
-        path: '/invitations',
+        path: '/Invitations',
         builder: (context, state) => InvitationListPage(
           invitations: bloc.invitations,
         ),

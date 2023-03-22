@@ -16,7 +16,7 @@ class CarpAppBar extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                    margin: const EdgeInsets.only(left: 15.0),
+                    margin: const EdgeInsets.only(left: 16.0),
                     child: Image.asset(
                       'assets/carp_logo.png',
                       height: 30,
@@ -28,8 +28,7 @@ class CarpAppBar extends StatelessWidget {
                         color: Theme.of(context).primaryColor, size: 30),
                     tooltip: 'Profile',
                     onPressed: () {
-                      Navigator.push(
-                        context,
+                      Navigator.of(context).push(
                         PageRouteBuilder(
                           pageBuilder: (c, a1, a2) =>
                               ProfilePage(bloc.data.profilePageViewModel),
@@ -40,7 +39,7 @@ class CarpAppBar extends StatelessWidget {
                 ],
               ),
             ],
-          ),
+          )
         ],
       ),
     );

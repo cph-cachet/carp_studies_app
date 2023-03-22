@@ -9,6 +9,7 @@ class FailedLoginPage extends StatefulWidget {
 class FailedLoginPageState extends State<FailedLoginPage> {
   @override
   Widget build(BuildContext context) {
+    RPLocalizations locale = RPLocalizations.of(context)!;
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -26,20 +27,12 @@ class FailedLoginPageState extends State<FailedLoginPage> {
               color: Colors.white,
             ),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const SizedBox(
-                height: 10,
-              ),
-              Text(
-                'It seems like you are not invited to any ongoing study',
-                style: aboutCardSubtitleStyle,
-                textAlign: TextAlign.center,
-              ),
-            ],
+          const SizedBox(height: 20),
+          Text(
+            locale.translate('login.failed_login'),
+            style: aboutCardSubtitleStyle,
+            textAlign: TextAlign.center,
           ),
-          const Text('Back')
         ],
       ),
     );

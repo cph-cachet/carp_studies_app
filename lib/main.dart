@@ -25,7 +25,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
-import 'package:flutter_activity_recognition/flutter_activity_recognition.dart';
+// import 'package:flutter_activity_recognition/flutter_activity_recognition.dart';
 
 // the CARP packages
 import 'package:carp_serializable/carp_serializable.dart';
@@ -67,7 +67,7 @@ part 'view_models/cards/activity_data_model.dart';
 part 'view_models/cards/mobility_data_model.dart';
 part 'view_models/cards/steps_data_model.dart';
 part 'view_models/cards/heart_rate_data_model.dart';
-part 'view_models/cards/measures_data_model.dart';
+part 'view_models/cards/measurements_data_model.dart';
 part 'view_models/cards/task_data_model.dart';
 part 'view_models/cards/study_progress_data_model.dart';
 part 'view_models/user_tasks.dart';
@@ -104,7 +104,7 @@ part 'ui/cards/steps_card.dart';
 part 'ui/cards/heart_rate_card.dart';
 part 'ui/cards/activity_card.dart';
 part 'ui/cards/mobility_card.dart';
-part 'ui/cards/measures_card.dart';
+part 'ui/cards/measurements_card.dart';
 part 'ui/cards/task_card.dart';
 part 'ui/cards/media_card.dart';
 part 'ui/cards/scoreboard_card.dart';

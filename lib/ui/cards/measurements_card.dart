@@ -1,12 +1,12 @@
 part of carp_study_app;
 
-class MeasuresCardWidget extends StatefulWidget {
-  final MeasuresCardViewModel model;
+class MeasurementsCardWidget extends StatefulWidget {
+  final MeasurementsCardViewModel model;
   final List<Color> colors;
-  const MeasuresCardWidget(this.model,
+  const MeasurementsCardWidget(this.model,
       {super.key, this.colors = CACHET.COLOR_LIST});
   @override
-  MeasuresCardWidgetState createState() => MeasuresCardWidgetState();
+  MeasurementsCardWidgetState createState() => MeasurementsCardWidgetState();
 }
 
 extension StringExtension on String {
@@ -14,9 +14,11 @@ extension StringExtension on String {
       (length <= maxLength) ? this : '${substring(0, maxLength)}...';
 }
 
-class MeasuresCardWidgetState extends State<MeasuresCardWidget> {
+class MeasurementsCardWidgetState extends State<MeasurementsCardWidget> {
   static List<charts.Series<MeasureCount, String>> _createChartList(
-      BuildContext context, MeasuresCardViewModel model, List<Color> colors) {
+      BuildContext context,
+      MeasurementsCardViewModel model,
+      List<Color> colors) {
     RPLocalizations locale = RPLocalizations.of(context)!;
 
     return [
@@ -47,7 +49,7 @@ class MeasuresCardWidgetState extends State<MeasuresCardWidget> {
             children: [
               StreamBuilder(
                 stream: widget.model.quietMeasureEvents,
-                builder: (context, AsyncSnapshot<DataPoint> snapshot) {
+                builder: (context, AsyncSnapshot<Measurement> snapshot) {
                   return Column(
                     children: [
                       Container(

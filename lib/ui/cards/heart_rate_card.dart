@@ -62,7 +62,7 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
             children: <Widget>[
               StreamBuilder(
                 stream: widget.model.heartRateEvents,
-                builder: (context, AsyncSnapshot<DataPoint> snapshot) {
+                builder: (context, AsyncSnapshot<Measurement> snapshot) {
                   return Column(
                     children: [
                       ChartsLegend(

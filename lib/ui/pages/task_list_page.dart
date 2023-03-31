@@ -133,9 +133,9 @@ class TaskListPageState extends State<TaskListPage> {
   Icon _taskTypeIcon(UserTask userTask) =>
       (taskTypeIcons[userTask.type] != null)
           ? taskTypeIcons[userTask.type] as Icon
-          : (userTask.task.measures.isNotEmpty &&
-                  measureTypeIcons[userTask.task.measures[0].type] != null)
-              ? measureTypeIcons[userTask.task.measures[0].type] as Icon
+          : (userTask.task.measures!.isNotEmpty &&
+                  measureTypeIcons[userTask.task.measures![0].type] != null)
+              ? measureTypeIcons[userTask.task.measures![0].type] as Icon
               : const Icon(
                   Icons.description_outlined,
                   color: CACHET.ORANGE,
@@ -273,31 +273,31 @@ class TaskListPageState extends State<TaskListPage> {
   };
 
   static Map<String, Icon> measureTypeIcons = {
-    DeviceSamplingPackage.MEMORY: const Icon(
+    DeviceSamplingPackage.FREE_MEMORY: const Icon(
       Icons.memory,
       color: CACHET.GREY_4,
     ),
-    DeviceSamplingPackage.DEVICE: const Icon(
+    DeviceSamplingPackage.DEVICE_INFORMATION: const Icon(
       Icons.phone_android,
       color: CACHET.GREY_4,
     ),
-    DeviceSamplingPackage.BATTERY: const Icon(
+    DeviceSamplingPackage.BATTERY_STATE: const Icon(
       Icons.battery_charging_full,
       color: CACHET.GREEN,
     ),
-    SensorSamplingPackage.PEDOMETER: const Icon(
+    SensorSamplingPackage.STEP_COUNT: const Icon(
       Icons.directions_walk,
       color: CACHET.LIGHT_PURPLE,
     ),
-    SensorSamplingPackage.ACCELEROMETER: const Icon(
+    SensorSamplingPackage.ACCELERATION: const Icon(
       Icons.adb,
       color: CACHET.GREY_4,
     ),
-    SensorSamplingPackage.GYROSCOPE: const Icon(
+    SensorSamplingPackage.ROTATION: const Icon(
       Icons.adb,
       color: CACHET.GREY_4,
     ),
-    SensorSamplingPackage.LIGHT: const Icon(
+    SensorSamplingPackage.AMBIENT_LIGHT: const Icon(
       Icons.highlight,
       color: CACHET.YELLOW,
     ),
@@ -329,7 +329,7 @@ class TaskListPageState extends State<TaskListPage> {
     // CommunicationSamplingPackage.TEXT_MESSAGE_LOG: Icon(Icons.textsms, size: 50, color: CACHET.LIGHT_PURPLE),
     // CommunicationSamplingPackage.PHONE_LOG: Icon(Icons.phone_in_talk, size: 50, color: CACHET.ORANGE),
     // CommunicationSamplingPackage.CALENDAR: Icon(Icons.event, size: 50, color: CACHET.CYAN),
-    DeviceSamplingPackage.SCREEN: const Icon(
+    DeviceSamplingPackage.SCREEN_EVENT: const Icon(
       Icons.screen_lock_portrait,
       color: CACHET.LIGHT_PURPLE,
     ),
@@ -337,10 +337,10 @@ class TaskListPageState extends State<TaskListPage> {
       Icons.location_searching,
       color: CACHET.CYAN,
     ),
-    ContextSamplingPackage.GEOLOCATION: const Icon(
-      Icons.my_location,
-      color: CACHET.YELLOW,
-    ),
+    // ContextSamplingPackage.LOCATION: const Icon(
+    //   Icons.my_location,
+    //   color: CACHET.YELLOW,
+    // ),
     ContextSamplingPackage.ACTIVITY: const Icon(
       Icons.directions_bike,
       color: CACHET.ORANGE,

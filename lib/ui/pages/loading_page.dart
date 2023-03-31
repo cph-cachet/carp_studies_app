@@ -24,7 +24,7 @@ class LoadingPageState extends State<LoadingPage> {
     // pop-up windows from CARP
     var redirectTo = widget.redirectionOrigin ?? 'tasks';
     if (!bloc.isConfiguring) {
-      bloc.configure().then((_) {
+      bloc.configure(context).then((_) {
         // when the configure is done, the localizations should have been downloaded
         // and we can ask the app to reload the translations
         CarpStudyApp.reloadLocale(context);

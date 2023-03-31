@@ -12,8 +12,8 @@ class MobilityCardViewModel extends SerializableViewModel<WeeklyMobility> {
   List<DailyMobility> get distance => model.distance;
 
   /// Stream of mobility [DataPoint] measures.
-  Stream<DataPoint>? get mobilityEvents =>
-      controller?.data.where((dataPoint) => dataPoint.data is MobilityDatum);
+  Stream<Measurement>? get mobilityEvents => controller?.measurements
+      .where((measurement) => measurement.data is Mobility);
 
   MobilityCardViewModel();
   @override
@@ -21,8 +21,8 @@ class MobilityCardViewModel extends SerializableViewModel<WeeklyMobility> {
     super.init(ctrl);
 
     // listen for mobility events and update the features
-    mobilityEvents?.listen((mobilityDataPoint) {
-      MobilityDatum mobility = mobilityDataPoint.data as MobilityDatum;
+    mobilityEvents?.listen((measurement) {
+      Mobility mobility = measurement.data as Mobility;
       model.setMobilityFeatures(mobility);
     });
   }
@@ -70,7 +70,7 @@ class WeeklyMobility extends DataModel {
   }
 
   /// Update the mobility feature with [data].
-  void setMobilityFeatures(MobilityDatum data) {
+  void setMobilityFeatures(Mobility data) {
     DateTime day = data.date ?? DateTime.now();
 
     if (data.distanceTraveled != null) {

@@ -13,11 +13,10 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
     var protocol = demoStudy;
 
     // set the data endpoint based on the deployment mode (local or CARP)
-    protocol.dataEndPoint = (bloc.deploymentMode == DeploymentMode.playground)
+    protocol.dataEndPoint = (bloc.deploymentMode == DeploymentMode.local)
         ? SQLiteDataEndPoint()
         : CarpDataEndPoint(
-            uploadMethod: CarpUploadMethod.DATA_POINT,
-            name: 'CARP Server',
+            uploadMethod: CarpUploadMethod.datapoint,
           );
 
     return protocol;
@@ -31,7 +30,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
 
   SmartphoneStudyProtocol get demoStudy {
     var protocol = SmartphoneStudyProtocol(
-      name: 'CARP Demo Protocol',
+      name: 'CARP Study App Demo Protocol',
       ownerId: 'john_doe',
     );
 
@@ -51,13 +50,8 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           name: 'study.responsible.name',
         ));
 
-    // add CARP as the data endpoint
-    //  * w/o authentication info - we expect to be authenticated
-    //  * upload each data point as it is collected
-    protocol.dataEndPoint = CarpDataEndPoint(
-      uploadMethod: CarpUploadMethod.DATA_POINT,
-      name: 'CARP Service',
-    );
+    // always add a participant role to the protocol
+    protocol.participantRoles?.add(ParticipantRole('Participant', false));
 
     // Define which devices are used for data collection.
     Smartphone phone = Smartphone();
@@ -66,50 +60,50 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
 
     var polar = PolarDevice();
 
-    protocol.addMasterDevice(phone);
-    protocol.addConnectedDevice(eSense);
-    protocol.addConnectedDevice(polar);
+    protocol.addPrimaryDevice(phone);
+    protocol.addConnectedDevice(eSense, phone);
+    protocol.addConnectedDevice(polar, phone);
 
     // ONLINE SERVICES
 
     // Define online services and add them as connected 'devices'
     LocationService locationService = LocationService();
-    protocol.addConnectedDevice(locationService);
+    protocol.addConnectedDevice(locationService, phone);
 
     WeatherService weatherService =
         WeatherService(apiKey: '12b6e28582eb9298577c734a31ba9f4f');
-    protocol.addConnectedDevice(weatherService);
+    protocol.addConnectedDevice(weatherService, phone);
 
     AirQualityService airQualityService =
         AirQualityService(apiKey: '9e538456b2b85c92647d8b65090e29f957638c77');
-    protocol.addConnectedDevice(airQualityService);
+    protocol.addConnectedDevice(airQualityService, phone);
 
     // BACKGROUND SENSING
 
-    protocol.addTriggeredTask(
+    protocol.addTaskControl(
         ImmediateTrigger(),
         BackgroundTask(measures: [
-          Measure(type: SensorSamplingPackage.LIGHT),
-          Measure(type: SensorSamplingPackage.PEDOMETER),
-          Measure(type: DeviceSamplingPackage.MEMORY),
-          Measure(type: DeviceSamplingPackage.DEVICE),
-          Measure(type: DeviceSamplingPackage.BATTERY),
-          Measure(type: DeviceSamplingPackage.SCREEN),
+          Measure(type: SensorSamplingPackage.AMBIENT_LIGHT),
+          Measure(type: SensorSamplingPackage.STEP_COUNT),
+          Measure(type: DeviceSamplingPackage.FREE_MEMORY),
+          Measure(type: DeviceSamplingPackage.DEVICE_INFORMATION),
+          Measure(type: DeviceSamplingPackage.BATTERY_STATE),
+          Measure(type: DeviceSamplingPackage.SCREEN_EVENT),
           Measure(type: ContextSamplingPackage.ACTIVITY),
         ]),
         phone);
 
     // a background task that collects location on a regular basis
     // using the location service
-    protocol.addTriggeredTask(
-        IntervalTrigger(period: const Duration(minutes: 5)),
+    protocol.addTaskControl(
+        PeriodicTrigger(period: const Duration(minutes: 5)),
         BackgroundTask(
             measures: [Measure(type: ContextSamplingPackage.LOCATION)]),
         locationService);
 
     // a background task that continuously collects geo location and mobility
     // using the location service
-    protocol.addTriggeredTask(
+    protocol.addTaskControl(
         ImmediateTrigger(),
         BackgroundTask(measures: [
           //Measure(type: ContextSamplingPackage.GEOLOCATION),
@@ -119,16 +113,16 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
 
     // a background task that collects weather every 30 minutes.
     // using the weather service
-    protocol.addTriggeredTask(
-        IntervalTrigger(period: const Duration(minutes: 30)),
+    protocol.addTaskControl(
+        PeriodicTrigger(period: const Duration(minutes: 30)),
         BackgroundTask()
           ..addMeasure(Measure(type: ContextSamplingPackage.WEATHER)),
         weatherService);
 
     // a background task that air quality every 30 minutes.
     // using the air quality service
-    protocol.addTriggeredTask(
-        IntervalTrigger(period: const Duration(minutes: 30)),
+    protocol.addTaskControl(
+        PeriodicTrigger(period: const Duration(minutes: 30)),
         BackgroundTask()
           ..addMeasure(Measure(type: ContextSamplingPackage.AIR_QUALITY)),
         airQualityService);
@@ -136,7 +130,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
     // WEARABLE DEVICES
 
     // eSense
-    protocol.addTriggeredTask(
+    protocol.addTaskControl(
         ImmediateTrigger(),
         BackgroundTask(measures: [
           Measure(type: ESenseSamplingPackage.ESENSE_BUTTON),
@@ -145,11 +139,11 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
         eSense);
 
     // Polar
-    protocol.addTriggeredTask(
+    protocol.addTaskControl(
         ImmediateTrigger(),
         BackgroundTask(measures: [
-          Measure(type: PolarSamplingPackage.POLAR_HR),
-          Measure(type: PolarSamplingPackage.POLAR_ECG)
+          Measure(type: PolarSamplingPackage.HR),
+          Measure(type: PolarSamplingPackage.ECG)
         ]),
         polar);
 
@@ -233,8 +227,8 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           ],
         ),
         measures: [
-          Measure(type: SensorSamplingPackage.ACCELEROMETER),
-          Measure(type: SensorSamplingPackage.GYROSCOPE),
+          Measure(type: SensorSamplingPackage.ACCELERATION),
+          Measure(type: SensorSamplingPackage.ROTATION),
         ]);
 
     var parkinsonsSurvey = RPAppTask(
@@ -249,60 +243,68 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
 
     // Second, add all the tasks to the protocol to trigger once.
 
-    protocol.addTriggeredTask(OneTimeTrigger(), environmentTask, phone);
-    protocol.addTriggeredTask(OneTimeTrigger(), demographicsTask, phone);
-    protocol.addTriggeredTask(OneTimeTrigger(), symptomsTask, phone);
-    protocol.addTriggeredTask(OneTimeTrigger(), readingTask, phone);
-    protocol.addTriggeredTask(OneTimeTrigger(), imageTask, phone);
-    protocol.addTriggeredTask(OneTimeTrigger(), parkinsonsTask, phone);
+    protocol.addTaskControl(OneTimeTrigger(), environmentTask, phone);
+    protocol.addTaskControl(OneTimeTrigger(), demographicsTask, phone);
+    protocol.addTaskControl(OneTimeTrigger(), symptomsTask, phone);
+    protocol.addTaskControl(OneTimeTrigger(), readingTask, phone);
+    protocol.addTaskControl(OneTimeTrigger(), imageTask, phone);
+    protocol.addTaskControl(OneTimeTrigger(), parkinsonsTask, phone);
 
     // Third, add a set of user task triggers to make sure that the
     // task are added to the queue again when done
 
-    protocol.addTriggeredTask(
+    protocol.addTaskControl(
         UserTaskTrigger(
             taskName: environmentTask.name,
-            resumeCondition: UserTaskState.done),
+            triggerCondition: UserTaskState.done),
         environmentTask,
         phone);
 
-    protocol.addTriggeredTask(
+    protocol.addTaskControl(
         UserTaskTrigger(
             taskName: demographicsTask.name,
-            resumeCondition: UserTaskState.done),
+            triggerCondition: UserTaskState.done),
         demographicsTask,
         phone);
 
-    protocol.addTriggeredTask(
+    protocol.addTaskControl(
         UserTaskTrigger(
-            taskName: symptomsTask.name, resumeCondition: UserTaskState.done),
+          taskName: symptomsTask.name,
+          triggerCondition: UserTaskState.done,
+        ),
         symptomsTask,
         phone);
 
-    protocol.addTriggeredTask(
+    protocol.addTaskControl(
         UserTaskTrigger(
-            taskName: readingTask.name, resumeCondition: UserTaskState.done),
+          taskName: readingTask.name,
+          triggerCondition: UserTaskState.done,
+        ),
         readingTask,
         phone);
 
-    protocol.addTriggeredTask(
+    protocol.addTaskControl(
         UserTaskTrigger(
           taskName: imageTask.name,
-          resumeCondition: UserTaskState.done,
+          triggerCondition: UserTaskState.done,
         ),
         imageTask,
         phone);
 
-    protocol.addTriggeredTask(
+    protocol.addTaskControl(
         UserTaskTrigger(
-            taskName: parkinsonsTask.name, resumeCondition: UserTaskState.done),
+          taskName: parkinsonsTask.name,
+          triggerCondition: UserTaskState.done,
+        ),
         parkinsonsTask,
         phone);
 
     // Fourth, also trigger the Parkinson's survey, when the task is done
-    protocol.addTriggeredTask(
+    protocol.addTaskControl(
         UserTaskTrigger(
-            taskName: parkinsonsTask.name, resumeCondition: UserTaskState.done),
+          taskName: parkinsonsTask.name,
+          triggerCondition: UserTaskState.done,
+        ),
         parkinsonsSurvey,
         phone);
 

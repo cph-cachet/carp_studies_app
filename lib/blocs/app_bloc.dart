@@ -55,31 +55,36 @@ class StudyAppBLoC {
   ///  * whether to use the locally stored credentials
   StudyAppBLoC({
     this.debugLevel = DebugLevel.info,
-    this.deploymentMode = DeploymentMode.playground,
+    this.deploymentMode = DeploymentMode.local,
   }) : super();
 
   /// The informed consent to be shown to the user for this study.
   RPOrderedTask? informedConsent;
 
   InformedConsentManager get informedConsentManager =>
-      (deploymentMode == DeploymentMode.playground)
+      (deploymentMode == DeploymentMode.local)
           ? LocalResourceManager()
           : CarpResourceManager() as InformedConsentManager;
 
   LocalizationManager get localizationManager =>
-      (deploymentMode == DeploymentMode.playground)
+      (deploymentMode == DeploymentMode.local)
           ? LocalResourceManager()
           : CarpResourceManager() as LocalizationManager;
 
   LocalizationLoader get localizationLoader =>
       ResourceLocalizationLoader(localizationManager);
 
-  MessageManager get messageManager =>
-      (deploymentMode == DeploymentMode.playground)
-          ? LocalResourceManager()
-          : CarpResourceManager() as MessageManager;
+  MessageManager get messageManager => (deploymentMode == DeploymentMode.local)
+      ? LocalResourceManager()
+      : CarpResourceManager() as MessageManager;
 
   CarpBackend get backend => _backend;
+
+  /// The id of the currently running study.
+  /// Typical set based on an invitation.
+  /// `null` if no deployment have been specified.
+  String? get studyId => LocalSettings().studyId;
+  set studyId(String? id) => LocalSettings().studyId = id;
 
   /// The id of the currently running study deployment.
   /// Typical set based on an invitation.
@@ -87,7 +92,11 @@ class StudyAppBLoC {
   String? get studyDeploymentId => LocalSettings().studyDeploymentId;
   set studyDeploymentId(String? id) => LocalSettings().studyDeploymentId = id;
 
-  // String? get studyDeploymentId => deployment?.studyDeploymentId;
+  /// The role name of the device in the currently running study deployment.
+  /// Typical set based on an invitation.
+  /// `null` if no deployment have been specified.
+  String? get deviceRolename => LocalSettings().deviceRolename;
+  set deviceRolename(String? name) => LocalSettings().deviceRolename = name;
 
   /// The deployment running on this phone.
   SmartphoneDeployment? get deployment => Sensing().controller?.deployment;
@@ -177,7 +186,7 @@ class StudyAppBLoC {
   ///  * initialize sensing
   ///
   /// This method is used in the [LoadingPage].
-  Future<void> configure() async {
+  Future<void> configure(BuildContext context) async {
     assert(isInitialized,
         "$runtimeType is not initialized. Call 'initialize()' first.");
 
@@ -187,7 +196,7 @@ class StudyAppBLoC {
     stateStream.sink.add(StudiesAppState.configuring);
     info('$runtimeType configuring...');
 
-    await backend.authenticate();
+    await backend.authenticate(context);
 
     // check if there is a local deployed id
     // if not, get a deployment id based on an invitation
@@ -266,7 +275,7 @@ class StudyAppBLoC {
   ) async {
     info('Informed consent has been accepted by user.');
     informedConsentAccepted = true;
-    if (bloc.deploymentMode != DeploymentMode.playground) {
+    if (bloc.deploymentMode != DeploymentMode.local) {
       await backend.uploadInformedConsent(informedConsentResult);
     }
   }
@@ -307,7 +316,7 @@ class StudyAppBLoC {
       ? user!.username!
       : Sensing().controller!.deployment!.userId!;
 
-  /// The name used for friendly greating - '' if no user logged in.
+  /// The name used for friendly greeting - '' if no user logged in.
   String? get friendlyUsername => (user != null) ? user!.firstName : '';
 
   /// Is sensing running, i.e. has the study executor been resumed?
@@ -344,23 +353,17 @@ class StudyAppBLoC {
         'No Study Controller - the study has not been deployed.');
 
     Sensing().controller?.start();
-
-    // listening on the data stream and print them as json to the debug console
-    Sensing().controller!.data.listen((data) => debug(toJsonString(data)));
   }
 
-  // Pause sensing.
-  void pause() => Sensing().controller?.executor?.pause();
-
-  /// Resume sensing.
-  void resume() => Sensing().controller?.executor?.resume();
+  // Stop sensing.
+  void stop() => Sensing().controller?.executor?.stop();
 
   // Dispose the entire sensing.
   void dispose() => Sensing().controller?.dispose();
 
-  /// Add a [Datum] object to the stream of events.
-  void addDatum(Datum datum) =>
-      Sensing().controller!.executor!.addDataPoint(DataPoint.fromData(datum));
+  /// Add a [Measurement] object to the stream of events.
+  void addMeasurement(Measurement measurement) =>
+      Sensing().controller!.executor!.addMeasurement(measurement);
 
   /// Add a error to the stream of events.
   void addError(Object error, [StackTrace? stacktrace]) =>
@@ -385,7 +388,7 @@ class StudyAppBLoC {
     await LocalSettings().eraseStudyIds();
     await Sensing().removeStudy();
     // a small hack; reuse and reload the same deployment - but only in local mode
-    if (deploymentMode == DeploymentMode.playground) studyDeploymentId = id;
+    if (deploymentMode == DeploymentMode.local) studyDeploymentId = id;
   }
 
   /// Leave the study and also sign out the user.
@@ -424,26 +427,26 @@ class StudyAppBLoC {
   }
 
   Future<void> webAuthOnComplete(url, error) async {
-        if (error != null) {
-          warning('Error: $error');
-          return;
-        } else if (url == null) {
-          warning('No url returned');
-          return;
-        } else if (!url.toString().contains('token')) {
-          warning('No access token in url: $url');
-          return;
-        }
-        info('Got url: $url');
-        String? refreshToken = url.queryParameters['token'];
+    if (error != null) {
+      warning('Error: $error');
+      return;
+    } else if (url == null) {
+      warning('No url returned');
+      return;
+    } else if (!url.toString().contains('token')) {
+      warning('No access token in url: $url');
+      return;
+    }
+    info('Got url: $url');
+    String? refreshToken = url.queryParameters['token'];
 
-        if (refreshToken == null) {
-          warning('Missing parameters in url: $url');
-          return;
-        }
+    if (refreshToken == null) {
+      warning('Missing parameters in url: $url');
+      return;
+    }
 
-        await backend.authenticateWithRefreshToken(refreshToken);
-      }
+    await backend.authenticateWithRefreshToken(refreshToken);
+  }
 }
 
 enum StudiesAppState {

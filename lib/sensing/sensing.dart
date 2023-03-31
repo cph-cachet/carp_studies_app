@@ -44,7 +44,7 @@ class Sensing {
   /// Is sensing running, i.e. has the study executor been resumed?
   bool get isRunning =>
       (controller != null) &&
-      controller!.executor!.state == ExecutorState.resumed;
+      controller!.executor!.state == ExecutorState.started;
 
   /// The list of running - i.e. used - probes in this study.
   List<Probe> get runningProbes =>
@@ -84,9 +84,9 @@ class Sensing {
 
     // Create and configure the client manager for this phone
     await SmartPhoneClientManager().configure(
-      deploymentService: (bloc.deploymentMode == DeploymentMode.playground)
+      deploymentService: (bloc.deploymentMode == DeploymentMode.local)
           ? SmartphoneDeploymentService()
-          : CustomProtocolDeploymentService(),
+          : CarpDeploymentService(),
       deviceController: DeviceController(),
       askForPermissions: false,
     );
@@ -101,20 +101,23 @@ class Sensing {
     assert(bloc.studyDeploymentId != null,
         'No study deployment ID is provided. Cannot start deployment w/o an id.');
 
-    _status = await SmartPhoneClientManager()
-        .deploymentService
-        ?.getStudyDeploymentStatus(bloc.studyDeploymentId!);
+    // _status = await SmartPhoneClientManager()
+    //     .deploymentService
+    //     ?.getStudyDeploymentStatus(bloc.studyDeploymentId!);
 
-    assert(_status?.masterDeviceStatus?.device.roleName != null,
-        'The master device in the deployment needs a role name');
+    // assert(_status?.primaryDeviceStatus?.device.roleName != null,
+    //     'The master device in the deployment needs a role name');
 
     // Define the study and add it to the client.
     _study = Study(
       bloc.studyDeploymentId!,
-      _status?.masterDeviceStatus?.device.roleName ??
+      _status?.primaryDeviceStatus?.device.roleName ??
           Smartphone.DEFAULT_ROLENAME,
     );
-    await SmartPhoneClientManager().addStudy(study!);
+    _study = await SmartPhoneClientManager().addStudy(
+      bloc.studyDeploymentId!,
+      bloc.deviceRolename!,
+    );
 
     // Get the study controller and try to deploy the study.
     //
@@ -128,6 +131,10 @@ class Sensing {
 
     // Configure the controller
     await controller?.configure();
+
+    // Listening on the data stream and print them as json to the debug console
+    controller?.measurements
+        .listen((measurement) => print(toJsonString(measurement)));
 
     info('$runtimeType study added: $studyDeploymentId');
   }

@@ -19,8 +19,8 @@ class HeartRateCardViewModel extends SerializableViewModel<HourlyHeartRate> {
       HeartRateMinMaxPrHour(model.minHeartRate, model.maxHeartRate);
 
   /// Stream of heart rate [PolarHRDatum] measures.
-  Stream<DataPoint>? get heartRateEvents =>
-      controller?.data.where((dataPoint) => dataPoint.data is PolarHRDatum);
+  Stream<Measurement>? get heartRateEvents => controller?.measurements
+      .where((measurement) => measurement.data is PolarHR);
 
   @override
   void init(SmartphoneDeploymentController ctrl) {
@@ -28,7 +28,7 @@ class HeartRateCardViewModel extends SerializableViewModel<HourlyHeartRate> {
 
     heartRateEvents?.listen(
       (heartRateDataPoint) {
-        PolarHRDatum? heartRate = heartRateDataPoint.data as PolarHRDatum;
+        PolarHR? heartRate = heartRateDataPoint.data as PolarHR;
 
         double hr = heartRate.hr.toDouble();
         if (!(hr > 0)) {

@@ -16,7 +16,7 @@ class CarpBackend {
     DeploymentMode.test: '/test',
     DeploymentMode.staging: '/stage',
     DeploymentMode.production: '',
-    DeploymentMode.playground: '/playground',
+    DeploymentMode.local: '/playground',
   };
 
   static final CarpBackend _instance = CarpBackend._();
@@ -91,7 +91,7 @@ class CarpBackend {
   /// * if so, use this and try to authenticate
   /// * else authenticate using the username / password dialogue
   /// * if successful, save the token locally
-  Future<void> authenticate() async {
+  Future<void> authenticate(BuildContext context) async {
     info('Authenticating user...');
     if (username != null && oauthToken != null) {
       info('Authenticating with saved token - token: $oauthToken');
@@ -105,7 +105,9 @@ class CarpBackend {
 
     if (user == null) {
       info('Authenticating with dialogue - username: $username');
-      await CarpService().authenticateWithToken(token: oauthToken!);
+      await CarpService().authenticateWithDialog(
+        context,
+      );
       if (CarpService().authenticated) {
         username = CarpService().currentUser?.username;
       }

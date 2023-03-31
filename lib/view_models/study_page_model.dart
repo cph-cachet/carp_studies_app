@@ -28,7 +28,7 @@ class StudyPageViewModel extends ViewModel {
   ExecutorState get studyState => Sensing().controller!.executor!.state;
 
   /// Get all sensing events (i.e. all [DataPoint] objects being collected).
-  Stream<DataPoint> get samplingEvents => Sensing().controller!.data;
+  Stream<Measurement> get samplingEvents => Sensing().controller!.measurements;
 
   /// The total sampling size so far since this study was started.
   int get samplingSize => Sensing().controller!.samplingSize;

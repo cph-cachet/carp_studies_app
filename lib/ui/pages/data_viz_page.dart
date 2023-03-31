@@ -69,7 +69,7 @@ class DataVisualizationPage extends StatelessWidget {
     //if (bloc.hasMeasures()) widgets.add(MeasuresCardWidget(model.measuresCardDataModel));
 
     // check to show heart rate stats, if there is a POLAR device in the study
-    if (bloc.hasMeasure(PolarSamplingPackage.POLAR_HR)) {
+    if (bloc.hasMeasure(PolarSamplingPackage.HR)) {
       widgets.add(HeartRateOuterStatefulWidget(model.heartRateCardDataModel));
     }
 
@@ -102,7 +102,7 @@ class DataVisualizationPage extends StatelessWidget {
       //TODO ADD DEVICES VIZ
     }
 
-    if (bloc.hasMeasure(SensorSamplingPackage.PEDOMETER)) {
+    if (bloc.hasMeasure(SensorSamplingPackage.STEP_COUNT)) {
       widgets.add(StepsOuterStatefulWidget(model.stepsCardDataModel));
     }
     if (bloc.hasMeasure(ContextSamplingPackage.MOBILITY)) {

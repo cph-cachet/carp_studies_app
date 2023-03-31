@@ -64,7 +64,7 @@ class AudioUserTask extends UserTask {
   void onRecordStart() {
     ongoingRecordingDuration = recordingDuration;
     state = UserTaskState.started;
-    executor.resume();
+    executor.start();
 
     _timer = Timer.periodic(const Duration(seconds: 1), (_) {
       _countDownController.add(--ongoingRecordingDuration);
@@ -73,7 +73,7 @@ class AudioUserTask extends UserTask {
         _timer?.cancel();
         _countDownController.close();
 
-        executor.pause();
+        executor.stop();
         super.onDone(_context);
       }
     });
@@ -84,7 +84,7 @@ class AudioUserTask extends UserTask {
     _timer?.cancel();
     _countDownController.close();
 
-    executor.pause();
+    executor.stop();
     super.onDone(_context);
   }
 }
@@ -127,14 +127,14 @@ class VideoUserTask extends UserTask {
     _startRecordingTime = DateTime.now();
     _endRecordingTime = DateTime.now();
 
-    executor.resume();
+    executor.start();
   }
 
   /// Callback when video recording is started.
   void onRecordStart() {
     debug('$runtimeType - onRecordStart()');
     _startRecordingTime = DateTime.now();
-    executor.resume();
+    executor.start();
   }
 
   /// Callback when video recording is stopped.
@@ -150,8 +150,8 @@ class VideoUserTask extends UserTask {
   void onSave() {
     debug('$runtimeType - onSave(), file: ${_file?.path}');
     if (_file != null) {
-      // create the datum directly here...
-      MediaDatum datum = MediaDatum(
+      // create the media measurement directly here...
+      Media media = Media(
           filename: _file!.path,
           startRecordingTime: _startRecordingTime!,
           endRecordingTime: _endRecordingTime,
@@ -160,9 +160,9 @@ class VideoUserTask extends UserTask {
         ..path = _file!.path;
 
       // ... and add it to the sensing controller
-      bloc.addDatum(datum);
+      bloc.addMeasurement(Measurement.fromData(media));
     }
-    executor.pause();
+    executor.stop();
     super.onDone(_context);
   }
 }

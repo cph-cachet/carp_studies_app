@@ -357,11 +357,9 @@ packages:
   carp_webservices:
     dependency: "direct overridden"
     description:
-      path: "backends/carp_webservices"
-      ref: "develop-1.1.0"
-      resolved-ref: "24a27680483c1bea7df8f7e3f7cf2ca529d187ab"
-      url: "https://github.com/cph-cachet/carp.sensing-flutter.git"
-    source: git
+      path: "../carp/carp.sensing-flutter/backends/carp_webservices"
+      relative: true
+    source: path
     version: "1.1.0"
   characters:
     dependency: transitive
@@ -795,10 +793,10 @@ packages:
     dependency: "direct main"
     description:
       name: go_router
-      sha256: "6af43e0948b9f64a812afbb9ac3f76e2c8f5abe4efaba4188702a56af46b98c2"
+      sha256: dc9be8270090afe04464e8827df849a8f1041bc2c10cf854f01389bad19616d5
       url: "https://pub.dev"
     source: hosted
-    version: "6.5.2"
+    version: "6.5.3"
   google_fonts:
     dependency: "direct main"
     description:

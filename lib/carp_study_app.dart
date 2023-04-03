@@ -33,7 +33,9 @@ class CarpStudyAppState extends State<CarpStudyApp> {
 
   final GoRouter _router = GoRouter(
     // initialLocation: '/invitation/asdsa',
-    initialLocation: '/Login',
+    initialLocation: (bloc.deploymentMode == DeploymentMode.local)
+        ? '/LoadingPage'
+        : '/Login',
     routes: <RouteBase>[
       ShellRoute(
         builder: (BuildContext context, GoRouterState state, Widget child) =>

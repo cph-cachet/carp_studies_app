@@ -19,6 +19,7 @@ class Sensing {
   static final Sensing _instance = Sensing._();
   StudyDeploymentStatus? _status;
   SmartphoneDeploymentController? _controller;
+  DeploymentService? deploymentService;
   Study? _study;
 
   /// The study running on this phone.
@@ -82,11 +83,39 @@ class Sensing {
     // set up the devices available on this phone
     DeviceController().registerAllAvailableDevices();
 
-    // Create and configure the client manager for this phone
+    if (bloc.deploymentMode == DeploymentMode.local) {
+      // Use the local, phone-based deployment service.
+      deploymentService = SmartphoneDeploymentService();
+
+      // Get the protocol from the local study protocol manager.
+      // Note that the study id is not used.
+      var protocol = await LocalStudyProtocolManager().getStudyProtocol('');
+
+      // Deploy this protocol using the on-phone deployment service.
+      // Reuse the study deployment id, if this is stored on the phone.
+      _status = await SmartphoneDeploymentService().createStudyDeployment(
+        protocol!,
+        [],
+        bloc.studyDeploymentId,
+      );
+
+      // Save the correct deployment id on the phone for later use.
+      bloc.studyDeploymentId = _status?.studyDeploymentId;
+      bloc.deviceRolename = _status?.primaryDeviceStatus?.device.roleName;
+    } else {
+      // Use the CARP deployment service which can download a protocol from CAWS
+      CarpDeploymentService().configureFrom(CarpService());
+      deploymentService = CarpDeploymentService();
+    }
+
+    // Register the CARP data manager for uploading data back to CARP.
+    // This is needed in both LOCAL and CARP deployments, since a local study
+    // protocol may still upload to CARP
+    DataManagerRegistry().register(CarpDataManagerFactory());
+
+    // Create and configure a client manager for this phone
     await SmartPhoneClientManager().configure(
-      deploymentService: (bloc.deploymentMode == DeploymentMode.local)
-          ? SmartphoneDeploymentService()
-          : CarpDeploymentService(),
+      deploymentService: deploymentService,
       deviceController: DeviceController(),
       askForPermissions: false,
     );
@@ -101,19 +130,7 @@ class Sensing {
     assert(bloc.studyDeploymentId != null,
         'No study deployment ID is provided. Cannot start deployment w/o an id.');
 
-    // _status = await SmartPhoneClientManager()
-    //     .deploymentService
-    //     ?.getStudyDeploymentStatus(bloc.studyDeploymentId!);
-
-    // assert(_status?.primaryDeviceStatus?.device.roleName != null,
-    //     'The master device in the deployment needs a role name');
-
     // Define the study and add it to the client.
-    _study = Study(
-      bloc.studyDeploymentId!,
-      _status?.primaryDeviceStatus?.device.roleName ??
-          Smartphone.DEFAULT_ROLENAME,
-    );
     _study = await SmartPhoneClientManager().addStudy(
       bloc.studyDeploymentId!,
       bloc.deviceRolename!,

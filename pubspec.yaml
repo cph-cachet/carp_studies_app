@@ -95,12 +95,17 @@ dependency_overrides:
       url: https://github.com/cph-cachet/carp.sensing-flutter.git
       ref: develop-1.1.0
       path: backends/carp_backend/
+
+  # carp_webservices:
+  #   git:
+  #     url: https://github.com/cph-cachet/carp.sensing-flutter.git
+  #     ref: develop-1.1.0
+  #     path: backends/carp_webservices/
+
   carp_webservices:
-    git:
-      url: https://github.com/cph-cachet/carp.sensing-flutter.git
-      ref: develop-1.1.0
-      path: backends/carp_webservices/
-      
+    path: ../carp/carp.sensing-flutter/backends/carp_webservices/
+
+
   # carp_webservices:
   #   git:
   #     url: https://github.com/cph-cachet/carp.sensing-flutter.git

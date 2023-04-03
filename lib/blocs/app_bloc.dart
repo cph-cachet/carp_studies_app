@@ -196,12 +196,13 @@ class StudyAppBLoC {
     stateStream.sink.add(StudiesAppState.configuring);
     info('$runtimeType configuring...');
 
-    await backend.authenticate(context);
+    // await backend.authenticate(context);
 
     // check if there is a local deployed id
     // if not, get a deployment id based on an invitation
     if (bloc.studyDeploymentId == null) {
-      await backend.getInvitations();
+      // await backend.getInvitations();
+      await backend.getStudyInvitation(context);
     }
 
     // find the right informed consent, if needed

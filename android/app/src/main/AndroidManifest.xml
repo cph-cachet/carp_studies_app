@@ -83,17 +83,17 @@
               android:resource="@drawable/launch_background"
               />
               <meta-data
-    android:name="flutterEmbedding"
-    android:value="2" />
+                android:name="flutterEmbedding"
+                android:value="2" />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
 
-        <!-- service for using the Android activity recognition API -->
+        <!-- service for using the Android activity recognition API 
         <service android:name="dk.cachet.activity_recognition_flutter.activity.ActivityRecognizedService"
-        android:exported="true"/>
+        android:exported="true"/> -->
 
         <!-- Services for background location handling -->
         <receiver

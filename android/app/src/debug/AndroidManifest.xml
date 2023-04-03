@@ -8,16 +8,5 @@
     android:name="${applicationName}"
     android:label="CARP Studies"
     android:icon="@mipmap/ic_launcher">
-        <!-- Deep linking -->
-        <meta-data android:name="flutter_deeplinking_enabled" android:value="true" />
-        <intent-filter android:autoVerify="true">
-            <action android:name="android.intent.action.VIEW" />
-            <category android:name="android.intent.category.DEFAULT" />
-            <category android:name="android.intent.category.BROWSABLE" />
-            <data android:scheme="http" android:host="cans.cachet.dk" />
-            <data android:scheme="carp.studies" />
-            <data android:scheme="studies" />
-            <data android:scheme="carp-studies" />
-        </intent-filter>
-
+    </application>
 </manifest>

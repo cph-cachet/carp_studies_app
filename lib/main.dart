@@ -6,7 +6,7 @@ import 'dart:convert';
 import 'dart:ui' as ui;
 import 'dart:io';
 
-import 'package:flutter/foundation.dart';
+//import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart' hide TimeOfDay;
 import 'package:json_annotation/json_annotation.dart';
@@ -119,8 +119,8 @@ part 'main.g.dart';
 late CarpStudyApp app;
 void main() async {
   // initialize CAMS and Cognition Packages (loading json deserialization functions)
-  CarpMobileSensing();
-  CognitionPackage();
+  CarpMobileSensing.ensureInitialized();
+  CognitionPackage.ensureInitialized();
   CarpDataManager();
 
   // make sure to have an instance of the WidgetsBinding, which is required

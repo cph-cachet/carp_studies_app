@@ -313,7 +313,7 @@ class StudyAppBLoC {
   CarpUser? get user => backend.user;
 
   String get username => (user != null)
-      ? user!.username!
+      ? user!.username
       : Sensing().controller!.deployment!.userId!;
 
   /// The name used for friendly greeting - '' if no user logged in.

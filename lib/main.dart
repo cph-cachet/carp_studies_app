@@ -6,7 +6,6 @@ import 'dart:convert';
 import 'dart:ui' as ui;
 import 'dart:io';
 
-//import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart' hide TimeOfDay;
 import 'package:json_annotation/json_annotation.dart';
@@ -22,7 +21,6 @@ import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:open_settings/open_settings.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 // import 'package:flutter_activity_recognition/flutter_activity_recognition.dart';
@@ -110,9 +108,8 @@ part 'ui/cards/media_card.dart';
 part 'ui/cards/scoreboard_card.dart';
 part 'ui/cards/study_progress_card.dart';
 part 'ui/pages/loading_page.dart';
-part 'ui/pages/setup_page.dart';
-part 'ui/pages/cans_login_android.dart';
-part 'ui/pages/cans_login_ios.dart';
+part 'ui/pages/cans_login_android_webview.dart';
+part 'ui/pages/cans_login.dart';
 
 part 'main.g.dart';
 

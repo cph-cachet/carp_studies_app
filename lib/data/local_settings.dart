@@ -44,11 +44,7 @@ class LocalSettings {
         jsonDecode(Settings().preferences!.getString(oauthTokenKey)!));
     String tokenString = Settings().preferences!.getString(oauthTokenKey)!;
 
-    if (_oauthToken == null) {
-      _oauthToken = (tokenString != null)
-          ? OAuthToken.fromJson(jsonDecode(tokenString))
-          : null;
-    }
+    _oauthToken ??= OAuthToken.fromJson(jsonDecode(tokenString));
     return _oauthToken;
   }
 

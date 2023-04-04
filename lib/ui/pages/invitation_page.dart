@@ -21,22 +21,28 @@ class InvitationDetailsPage extends StatelessWidget {
     ); //TODO:
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(locale.translate('invitation.invited_to_study')),
-      ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          SizedBox(
-            height: MediaQuery.of(context).padding.top,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Text(
-              invitation.invitation.name,
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 32.0,
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.only(right: 24.0, left: 24.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(
+                locale.translate('invitation.invited_to_study'),
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 40.0,
+                ),
+              ),
+              const SizedBox(
+                height: 48.0,
+              ),
+              Text(
+                invitation.invitation.name,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 24.0,
+                ),
               ),
             ),
           ),

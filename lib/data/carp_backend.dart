@@ -155,22 +155,36 @@ class CarpBackend {
     return [];
   }
 
-  /// Get the study invitation.
-  Future<void> getStudyInvitation(BuildContext context) async {
-    if (studyDeploymentId == null) {
-      ActiveParticipationInvitation? invitation =
-          await CarpParticipationService().getStudyInvitation(context);
+  // /// Get the study invitation.
+  // Future<void> getStudyInvitation(BuildContext context) async {
+  //   if (studyDeploymentId == null) {
+  //     ActiveParticipationInvitation? invitation =
+  //         await CarpParticipationService().getStudyInvitation(context);
 
-      debug('CAWS Study Invitation: $invitation');
+  //     debug('CAWS Study Invitation: $invitation');
 
-      bloc.studyId = invitation?.studyId;
-      bloc.studyDeploymentId = invitation?.studyDeploymentId;
-      bloc.deviceRolename = invitation?.assignedDevices?.first.device.roleName;
-      info('Invitation received - '
-          'study id: ${bloc.studyId}, '
-          'deployment id: ${bloc.studyDeploymentId}, '
-          'role name: ${bloc.deviceRolename}');
-    }
+  //     bloc.studyId = invitation?.studyId;
+  //     bloc.studyDeploymentId = invitation?.studyDeploymentId;
+  //     bloc.deviceRolename = invitation?.assignedDevices?.first.device.roleName;
+
+  //     info('Invitation received - '
+  //         'study id: ${bloc.studyId}, '
+  //         'deployment id: ${bloc.studyDeploymentId}, '
+  //         'role name: ${bloc.deviceRolename}');
+  //   }
+  // }
+
+  /// Set the selected study invitation.
+  Future<void> setStudyInvitation(
+      ActiveParticipationInvitation invitation) async {
+    bloc.studyId = invitation.studyId;
+    bloc.studyDeploymentId = invitation.studyDeploymentId;
+    bloc.deviceRolename = invitation.assignedDevices?.first.device.roleName;
+
+    info('Invitation received - '
+        'study id: ${bloc.studyId}, '
+        'deployment id: ${bloc.studyDeploymentId}, '
+        'role name: ${bloc.deviceRolename}');
   }
 
   Future<ConsentDocument?> uploadInformedConsent(

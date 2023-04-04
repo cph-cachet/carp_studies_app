@@ -13,39 +13,30 @@ class InvitationListPage extends StatelessWidget {
     RPLocalizations locale = RPLocalizations.of(context)!;
 
     var invitations = [
-      ActiveParticipationInvitation(Participation('', 'asdjhkajskd'),
-          StudyInvitation('This is not a valid study invitation id.', 'a')),
       ActiveParticipationInvitation(
-          Participation('', 'dsfadsfadsf'),
+          Participation('', 'dsfadsfadsf', AssignedTo.all()),
           StudyInvitation('This is not a valid study invitation id.',
               'bsaidugoiadsgoiuagdsuoiasdgiouadsgoiuadsguioasdguioadsgiouadsgiouasdiogu oisduiogu asdoiug iosadugio usadoig uoisdau goisduaoi guasdioug oisdauoi gusdaioug siodaugoi udsaoiug oisdug iusaiodu giosduagio usaoidug oiasu goiusda iogusoiad ugiosadu giosdu giousaoid uiaosdgu iousadiogu soaiu goisauoig usoiadug iosuda giousdao igusaodiu ')),
-      ActiveParticipationInvitation(Participation('', 'dsfadsfadsf'),
+      ActiveParticipationInvitation(
+          Participation('', 'dsfadsfadsf', AssignedTo.all()),
           StudyInvitation('This is not a valid study invitation id.', 'b')),
-      ActiveParticipationInvitation(Participation('', 'dsfadsfadsf'),
+      ActiveParticipationInvitation(
+          Participation('', 'dsfadsfadsf', AssignedTo.all()),
           StudyInvitation('This is not a valid study invitation id.', 'b')),
-      ActiveParticipationInvitation(Participation('', 'dsfadsfadsf'),
+      ActiveParticipationInvitation(
+          Participation('', 'dsfadsfadsf', AssignedTo.all()),
           StudyInvitation('This is not a valid study invitation id.', 'b')),
-      ActiveParticipationInvitation(Participation('', 'dsfadsfadsf'),
+      ActiveParticipationInvitation(
+          Participation('', 'dsfadsfadsf', AssignedTo.all()),
           StudyInvitation('This is not a valid study invitation id.', 'b')),
-      ActiveParticipationInvitation(Participation('', 'dsfadsfadsf'),
+      ActiveParticipationInvitation(
+          Participation('', 'dsfadsfadsf', AssignedTo.all()),
           StudyInvitation('This is not a valid study invitation id.', 'b')),
-      ActiveParticipationInvitation(Participation('', 'dsfadsfadsf'),
+      ActiveParticipationInvitation(
+          Participation('', 'dsfadsfadsf', AssignedTo.all()),
           StudyInvitation('This is not a valid study invitation id.', 'b')),
-      ActiveParticipationInvitation(Participation('', 'dsfadsfadsf'),
-          StudyInvitation('This is not a valid study invitation id.', 'b')),
-      ActiveParticipationInvitation(Participation('', 'dsfadsfadsf'),
-          StudyInvitation('This is not a valid study invitation id.', 'b')),
-      ActiveParticipationInvitation(Participation('', 'dsfadsfadsf'),
-          StudyInvitation('This is not a valid study invitation id.', 'b')),
-      ActiveParticipationInvitation(Participation('', 'dsfadsfadsf'),
-          StudyInvitation('This is not a valid study invitation id.', 'b')),
-      ActiveParticipationInvitation(Participation('', 'dsfadsfadsf'),
-          StudyInvitation('This is not a valid study invitation id.', 'b')),
-      ActiveParticipationInvitation(Participation('', 'dsfadsfadsf'),
-          StudyInvitation('This is not a valid study invitation id.', 'b')),
-      ActiveParticipationInvitation(Participation('', 'dsfadsfadsf'),
-          StudyInvitation('This is not a valid study invitation id.', 'b')),
-      ActiveParticipationInvitation(Participation('', 'dsfadsfadsf'),
+      ActiveParticipationInvitation(
+          Participation('', 'dsfadsfadsf', AssignedTo.all()),
           StudyInvitation('This is not a valid study invitation id.', 'b')),
     ];
     return Scaffold(
@@ -98,7 +89,7 @@ class InvitationCard extends StatelessWidget {
   Widget build(BuildContext context) => Card(
         child: InkWell(
           onTap: () {
-            context.go('/invitation/${invitation.participation.id}');
+            context.go('/invitation/${invitation.participation.participantId}');
           },
           child: Padding(
             padding: const EdgeInsets.all(16.0),
@@ -116,7 +107,7 @@ class InvitationCard extends StatelessWidget {
                   height: 24.0,
                 ),
                 Text(
-                  (invitation.invitation.description),
+                  (invitation.invitation.description ?? ''),
                   style: const TextStyle(fontSize: 16.0),
                   maxLines: 3,
                   overflow: TextOverflow.ellipsis,

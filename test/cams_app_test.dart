@@ -51,7 +51,7 @@ void main() {
     setUp(() async {});
 
     test('CAMSStudyProtocol -> JSON', () async {
-      print(toJsonString(protocol));
+      expect(toJsonString(protocol), isNotEmpty);
     });
 
     test('StudyProtocol -> JSON -> StudyProtocol :: deep assert', () async {
@@ -85,7 +85,7 @@ void main() {
     test('protocol -> JSON', () async {
       StudyProtocol? protocol =
           await LocalStudyProtocolManager().getStudyProtocol('1234');
-      print(toJsonString(protocol));
+      expect(toJsonString(protocol), isNotEmpty);
     });
   });
 }

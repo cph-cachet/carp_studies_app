@@ -151,7 +151,7 @@ class Sensing {
 
     // Listening on the data stream and print them as json to the debug console
     controller?.measurements
-        .listen((measurement) => print(toJsonString(measurement)));
+        .listen((measurement) => debug(toJsonString(measurement)));
 
     info('$runtimeType study added: $studyDeploymentId');
   }

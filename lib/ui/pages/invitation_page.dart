@@ -44,39 +44,39 @@ class InvitationDetailsPage extends StatelessWidget {
                   fontSize: 24.0,
                 ),
               ),
-            ),
-          ),
-          Expanded(
-            child: Scrollbar(
-              thumbVisibility: true,
-              radius: const Radius.circular(100),
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.all(16.0),
-                child: Text(
-                  invitation.invitation.description ?? '',
-                  style: const TextStyle(fontSize: 16.0),
+              Expanded(
+                child: Scrollbar(
+                  thumbVisibility: true,
+                  radius: const Radius.circular(100),
+                  child: SingleChildScrollView(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Text(
+                      invitation.invitation.description ?? '',
+                      style: const TextStyle(fontSize: 16.0),
+                    ),
+                  ),
                 ),
               ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: ElevatedButton(
-              onPressed: () {},
-              style: ElevatedButton.styleFrom(
-                shape: const StadiumBorder(),
-                padding: const EdgeInsets.symmetric(vertical: 16.0),
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: ElevatedButton(
+                  onPressed: () {},
+                  style: ElevatedButton.styleFrom(
+                    shape: const StadiumBorder(),
+                    padding: const EdgeInsets.symmetric(vertical: 16.0),
+                  ),
+                  child: Text(
+                    locale.translate('invitation.accept_invite'),
+                    style: const TextStyle(fontSize: 18.0),
+                  ),
+                ),
               ),
-              child: Text(
-                locale.translate('invitation.accept_invite'),
-                style: const TextStyle(fontSize: 18.0),
+              SizedBox(
+                height: MediaQuery.of(context).padding.bottom,
               ),
-            ),
+            ],
           ),
-          SizedBox(
-            height: MediaQuery.of(context).padding.bottom,
-          ),
-        ],
+        ),
       ),
     );
   }

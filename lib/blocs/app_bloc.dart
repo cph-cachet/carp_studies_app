@@ -191,7 +191,7 @@ class StudyAppBLoC {
   ///  * initialize sensing
   ///
   /// This method is used in the [LoadingPage].
-  Future<void> configure(BuildContext context) async {
+  Future<void> configure() async {
     assert(isInitialized,
         "$runtimeType is not initialized. Call 'initialize()' first.");
 
@@ -201,14 +201,6 @@ class StudyAppBLoC {
     stateStream.sink.add(StudiesAppState.configuring);
     info('$runtimeType configuring...');
 
-    // await backend.authenticate(context);
-
-    // check if there is a local deployed id
-    // if not, get a deployment id based on an invitation
-    if (bloc.studyDeploymentId == null) {
-      // await backend.getInvitations();
-      await backend.getStudyInvitation(context);
-    }
 
     // find the right informed consent, if needed
     bloc.informedConsent = (!hasInformedConsentBeenAccepted)

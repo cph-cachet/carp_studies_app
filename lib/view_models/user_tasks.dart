@@ -107,12 +107,14 @@ class VideoUserTask extends UserTask {
     super.onStart(context);
 
     final cameras = await availableCameras();
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-          builder: (context) =>
-              CameraTaskPage(mediaUserTask: this, cameras: cameras)),
-    );
+    if (context.mounted) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) =>
+                CameraTaskPage(mediaUserTask: this, cameras: cameras)),
+      );
+    }
   }
 
   DateTime? _startRecordingTime, _endRecordingTime;

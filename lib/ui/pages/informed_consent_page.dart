@@ -11,7 +11,9 @@ class InformedConsentState extends State<InformedConsentPage> {
 
   void resultCallback(RPTaskResult result) async {
     await bloc.informedConsentHasBeenAccepted(result);
-    context.go('/');
+    if (context.mounted) {
+      context.go('/');
+    }
   }
 
   void cancelCallback(RPTaskResult? result) async {

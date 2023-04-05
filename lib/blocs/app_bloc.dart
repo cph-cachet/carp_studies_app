@@ -25,14 +25,14 @@ class StudyAppBLoC {
 
   get stateStream => _stateStream;
 
+  List<ActiveParticipationInvitation> _invitations = [];
+  set invitations(value) => _invitations = value;
+  get invitations => _invitations;
+
   List<Message> _messages = [];
   final StreamController<int> _messageStreamController =
       StreamController.broadcast();
   List<Message> get messages => _messages;
-
-  List<ActiveParticipationInvitation> _invitations = [];
-  List<ActiveParticipationInvitation> get invitations => _invitations;
-  set invitations(value) => _invitations = value;
 
   /// A stream of event when the list of [messages] is updated.
   /// The data send on the stream is the number of available messages.
@@ -67,21 +67,15 @@ class StudyAppBLoC {
   RPOrderedTask? informedConsent;
 
   InformedConsentManager get informedConsentManager =>
-      (deploymentMode == DeploymentMode.local)
-          ? LocalResourceManager()
-          : CarpResourceManager() as InformedConsentManager;
+      CarpResourceManager() as InformedConsentManager;
 
   LocalizationManager get localizationManager =>
-      (deploymentMode == DeploymentMode.local)
-          ? LocalResourceManager()
-          : CarpResourceManager() as LocalizationManager;
+      CarpResourceManager() as LocalizationManager;
 
   LocalizationLoader get localizationLoader =>
       ResourceLocalizationLoader(localizationManager);
 
-  MessageManager get messageManager => (deploymentMode == DeploymentMode.local)
-      ? LocalResourceManager()
-      : CarpResourceManager() as MessageManager;
+  MessageManager get messageManager => CarpResourceManager() as MessageManager;
 
   CarpBackend get backend => _backend;
 
@@ -178,7 +172,7 @@ class StudyAppBLoC {
     // set up and initialize sensing
     await Sensing().initialize();
 
-    _state = StudyAppState.initialized;
+    stateStream.sink.add(StudiesAppState.initialized);
     info(
         '$runtimeType initialized - deployment mode: ${deploymentMode.toString().split('.').last}');
   }
@@ -200,7 +194,6 @@ class StudyAppBLoC {
 
     stateStream.sink.add(StudiesAppState.configuring);
     info('$runtimeType configuring...');
-
 
     // find the right informed consent, if needed
     bloc.informedConsent = (!hasInformedConsentBeenAccepted)
@@ -262,6 +255,19 @@ class StudyAppBLoC {
     }
     // info('$runtimeType - asking for permissions');
     // await Sensing().askForPermissions();
+  }
+
+  /// Set the selected study invitation.
+  void setStudyInvitation(
+      ActiveParticipationInvitation invitation) {
+    bloc.studyId = invitation.studyId;
+    bloc.studyDeploymentId = invitation.studyDeploymentId;
+    bloc.deviceRolename = invitation.assignedDevices?.first.device.roleName;
+
+    info('Invitation received - '
+        'study id: ${bloc.studyId}, '
+        'deployment id: ${bloc.studyDeploymentId}, '
+        'role name: ${bloc.deviceRolename}');
   }
 
   /// Called when the informed consent has been accepted by the user.
@@ -448,6 +454,7 @@ class StudyAppBLoC {
 }
 
 enum StudiesAppState {
+  initialized,
   loginpage,
   authenticating,
   accessTokenRetrieved,

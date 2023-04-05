@@ -86,44 +86,7 @@ class CarpBackend {
     info('$runtimeType initialized - app: $_app');
   }
 
-  // /// Authenticate the user like this:
-  // /// * check if a local username and token is saved on the phone
-  // /// * if so, use this and try to authenticate
-  // /// * else authenticate using the username / password dialogue
-  // /// * if successful, save the token locally
-  // Future<void> authenticate(BuildContext context) async {
-  //   info('Authenticating user...');
-  //   if (username != null && oauthToken != null) {
-  //     info('Authenticating with saved token - token: $oauthToken');
-  //     try {
-  //       await CarpService()
-  //           .authenticateWithToken(username: username!, token: oauthToken!);
-  //     } catch (error) {
-  //       warning('Authentication with saved token unsuccessful - $error');
-  //     }
-  //   }
-
-  //   if (user == null) {
-  //     info('Authenticating with dialogue - username: $username');
-  //     await CarpService().authenticateWithDialog(
-  //       context,
-  //     );
-  //     await CarpService().authenticateWithToken(token: oauthToken!);
-  //     if (CarpService().authenticated) {
-  //       username = CarpService().currentUser?.username;
-  //     }
-  //   }
-
-  //   info('User authenticated - user: $user');
-  //   // saving token on the phone
-  //   oauthToken = user?.token!;
-
-  //   // configure the participation service in order to get the invitations
-  //   CarpParticipationService().configureFrom(CarpService());
-  // }
-
   Future<void> authenticateWithRefreshToken(String refreshToken) async {
-    // try {
     var user = await CarpService().authenticateWithRefreshToken(refreshToken);
 
     info('User authenticated - user: $user');
@@ -136,55 +99,6 @@ class CarpBackend {
     // configure the participation service in order to get the invitations
     CarpParticipationService().configureFrom(CarpService());
 
-    // } catch (error) {
-    //   warning('Authentication with refresh token unsuccessful - $error');
-    // }
-  }
-
-  /// Get all study invitations for the current user.
-  /// If the user is not authenticated, this will return an empty list.
-  /// If the user is authenticated, this will return a list of invitations.
-  /// If the user is authenticated, but has no invitations, this will return an empty list.
-  Future<List<ActiveParticipationInvitation>> getInvitations() async {
-    if (CarpService().authenticated) {
-      List<ActiveParticipationInvitation> invitations =
-          await CarpParticipationService().getActiveParticipationInvitations();
-      bloc.invitations = invitations;
-      return invitations;
-    }
-    return [];
-  }
-
-  // /// Get the study invitation.
-  // Future<void> getStudyInvitation(BuildContext context) async {
-  //   if (studyDeploymentId == null) {
-  //     ActiveParticipationInvitation? invitation =
-  //         await CarpParticipationService().getStudyInvitation(context);
-
-  //     debug('CAWS Study Invitation: $invitation');
-
-  //     bloc.studyId = invitation?.studyId;
-  //     bloc.studyDeploymentId = invitation?.studyDeploymentId;
-  //     bloc.deviceRolename = invitation?.assignedDevices?.first.device.roleName;
-
-  //     info('Invitation received - '
-  //         'study id: ${bloc.studyId}, '
-  //         'deployment id: ${bloc.studyDeploymentId}, '
-  //         'role name: ${bloc.deviceRolename}');
-  //   }
-  // }
-
-  /// Set the selected study invitation.
-  Future<void> setStudyInvitation(
-      ActiveParticipationInvitation invitation) async {
-    bloc.studyId = invitation.studyId;
-    bloc.studyDeploymentId = invitation.studyDeploymentId;
-    bloc.deviceRolename = invitation.assignedDevices?.first.device.roleName;
-
-    info('Invitation received - '
-        'study id: ${bloc.studyId}, '
-        'deployment id: ${bloc.studyDeploymentId}, '
-        'role name: ${bloc.deviceRolename}');
   }
 
   Future<ConsentDocument?> uploadInformedConsent(

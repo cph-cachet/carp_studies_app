@@ -34,7 +34,7 @@ class _LoginPageState extends State<LoginPage> {
 
     bloc.stateStream.stream.listen((event) {
       if (event == StudiesAppState.accessTokenRetrieved && context.mounted) {
-        context.go('/Loading');
+        context.go('/Invitations');
       }
     });
 

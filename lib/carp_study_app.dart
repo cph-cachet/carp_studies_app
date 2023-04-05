@@ -128,9 +128,8 @@ class CarpStudyAppState extends State<CarpStudyApp> {
       ),
       GoRoute(
         path: '/Invitations',
-        builder: (context, state) => InvitationListPage(
-          invitations: bloc.invitations,
-        ),
+        builder: (context, state) =>
+            InvitationListPage(bloc.data.invitationsListViewModel),
       ),
       GoRoute(
         path: '/test',

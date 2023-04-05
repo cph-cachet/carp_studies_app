@@ -56,6 +56,8 @@ class InvitationDetailsPage extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: () {
                     bloc.setStudyInvitation(invitation);
+                    bloc.configure();
+                    context.go('/Consent');
                   },
                   style: ElevatedButton.styleFrom(
                     shape: const StadiumBorder(),

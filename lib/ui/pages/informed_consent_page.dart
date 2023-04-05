@@ -1,7 +1,10 @@
 part of carp_study_app;
 
 class InformedConsentPage extends StatefulWidget {
-  const InformedConsentPage({super.key});
+  final InformedConsentViewModel model;
+
+  const InformedConsentPage(this.model, {super.key});
+
   @override
   InformedConsentState createState() => InformedConsentState();
 }
@@ -44,10 +47,11 @@ class InformedConsentState extends State<InformedConsentPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      body: Builder(
-        builder: (context) {
+      body: FutureBuilder<RPOrderedTask>(
+        future: widget.model.informedConsent,
+        builder: (context, snapshot) {
           return RPUITask(
-            task: bloc.informedConsent!,
+            task: snapshot.data!,
             onSubmit: resultCallback,
             onCancel: cancelCallback,
           );

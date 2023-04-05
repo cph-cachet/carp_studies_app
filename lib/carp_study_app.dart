@@ -101,7 +101,9 @@ class CarpStudyAppState extends State<CarpStudyApp> {
       ),
       GoRoute(
         path: '/Consent',
-        builder: (context, state) => const InformedConsentPage(),
+        builder: (context, state) => const InformedConsentPage(
+          bloc.data.informedConsentPageViewModelz
+        ),
       ),
       GoRoute(
         path: '/FailedLogin',

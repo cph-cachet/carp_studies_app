@@ -19,7 +19,6 @@ class StudyAppBLoC {
   final CarpBackend _backend = CarpBackend();
   final CarpStudyAppViewModel _data = CarpStudyAppViewModel();
   StudyDeploymentStatus? _status;
-  WebAuthenticationSession? session;
   final StreamController<StudiesAppState> _stateStream =
       StreamController.broadcast();
 
@@ -60,7 +59,7 @@ class StudyAppBLoC {
   ///  * whether to use the locally stored credentials
   StudyAppBLoC({
     this.debugLevel = DebugLevel.info,
-    this.deploymentMode = DeploymentMode.local,
+    this.deploymentMode = DeploymentMode.playground,
   }) : super();
 
   /// The informed consent to be shown to the user for this study.
@@ -193,6 +192,7 @@ class StudyAppBLoC {
     if (isConfiguring) return;
 
     stateStream.sink.add(StudiesAppState.configuring);
+
     info('$runtimeType configuring...');
 
     // find the right informed consent, if needed
@@ -258,8 +258,7 @@ class StudyAppBLoC {
   }
 
   /// Set the selected study invitation.
-  void setStudyInvitation(
-      ActiveParticipationInvitation invitation) {
+  void setStudyInvitation(ActiveParticipationInvitation invitation) {
     bloc.studyId = invitation.studyId;
     bloc.studyDeploymentId = invitation.studyDeploymentId;
     bloc.deviceRolename = invitation.assignedDevices?.first.device.roleName;
@@ -279,7 +278,7 @@ class StudyAppBLoC {
   ) async {
     info('Informed consent has been accepted by user.');
     informedConsentAccepted = true;
-    if (bloc.deploymentMode != DeploymentMode.local) {
+    if (bloc.deploymentMode != DeploymentMode.playground) {
       await backend.uploadInformedConsent(informedConsentResult);
     }
   }
@@ -392,7 +391,7 @@ class StudyAppBLoC {
     await LocalSettings().eraseStudyIds();
     await Sensing().removeStudy();
     // a small hack; reuse and reload the same deployment - but only in local mode
-    if (deploymentMode == DeploymentMode.local) studyDeploymentId = id;
+    if (deploymentMode == DeploymentMode.playground) studyDeploymentId = id;
   }
 
   /// Leave the study and also sign out the user.
@@ -405,61 +404,7 @@ class StudyAppBLoC {
     await backend.signOut();
   }
 
-  Future<WebAuthenticationSession> startWebAuthenticationSession(
-    WebAuthenticationSession session,
-  ) async {
-    await session.start();
-    bloc.stateStream.sink.add(StudiesAppState.authenticating);
-
-    return session;
+  Future<void> authenticateWithRefreshToken(String refreshToken) async {
+    return await backend.authenticateWithRefreshToken(refreshToken);
   }
-
-  Future<WebAuthenticationSession?> createWebAuthenticationSession(
-    WebAuthenticationSession? session,
-    WebUri url,
-  ) async {
-    if (session == null &&
-        Platform.isIOS &&
-        await WebAuthenticationSession.isAvailable()) {
-      session = await WebAuthenticationSession.create(
-          url: url,
-          callbackURLScheme: 'carp.studies',
-          onComplete: webAuthOnComplete);
-      return session;
-    }
-    return session;
-  }
-
-  Future<void> webAuthOnComplete(url, error) async {
-    if (error != null) {
-      warning('Error: $error');
-      return;
-    } else if (url == null) {
-      warning('No url returned');
-      return;
-    } else if (!url.toString().contains('token')) {
-      warning('No access token in url: $url');
-      return;
-    }
-    info('Got url: $url');
-    String? refreshToken = url.queryParameters['token'];
-
-    if (refreshToken == null) {
-      warning('Missing parameters in url: $url');
-      return;
-    }
-
-    await backend.authenticateWithRefreshToken(refreshToken);
-  }
-}
-
-enum StudiesAppState {
-  initialized,
-  loginpage,
-  authenticating,
-  accessTokenRetrieved,
-  configuring,
-  loading,
-  loaded,
-  error,
 }

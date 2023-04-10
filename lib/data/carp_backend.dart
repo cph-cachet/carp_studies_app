@@ -16,7 +16,7 @@ class CarpBackend {
     DeploymentMode.test: '/test',
     DeploymentMode.staging: '/stage',
     DeploymentMode.production: '',
-    DeploymentMode.local: '/playground',
+    DeploymentMode.playground: '/playground',
   };
 
   static final CarpBackend _instance = CarpBackend._();
@@ -98,7 +98,6 @@ class CarpBackend {
 
     // configure the participation service in order to get the invitations
     CarpParticipationService().configureFrom(CarpService());
-
   }
 
   Future<ConsentDocument?> uploadInformedConsent(

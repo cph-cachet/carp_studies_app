@@ -10,46 +10,48 @@ class DataVisualizationPage extends StatelessWidget {
     RPLocalizations locale = RPLocalizations.of(context)!;
 
     return Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          const CarpAppBar(),
-          Container(
-            color: Theme.of(context).colorScheme.secondary,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      '${locale.translate('pages.data_viz.hello')} ${bloc.friendlyUsername}'
-                          .toUpperCase(),
-                      style: dataCardTitleStyle.copyWith(
-                          color: Theme.of(context).primaryColor),
-                    ),
-                    Text(locale.translate('pages.data_viz.thanks'),
-                        style: aboutCardSubtitleStyle),
-                    const SizedBox(height: 15),
-                  ],
+      body: SafeArea(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            const CarpAppBar(),
+            Container(
+              color: Theme.of(context).colorScheme.secondary,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '${locale.translate('pages.data_viz.hello')} ${bloc.friendlyUsername}'
+                            .toUpperCase(),
+                        style: dataCardTitleStyle.copyWith(
+                            color: Theme.of(context).primaryColor),
+                      ),
+                      Text(locale.translate('pages.data_viz.thanks'),
+                          style: aboutCardSubtitleStyle),
+                      const SizedBox(height: 15),
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-          Expanded(
-            flex: 4,
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: _dataVizCards,
+            Expanded(
+              flex: 4,
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: _dataVizCards,
+                ),
               ),
-            ),
-          )
-        ],
+            )
+          ],
+        ),
       ),
     );
   }

@@ -47,9 +47,34 @@ class InformedConsentState extends State<InformedConsentPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      body: FutureBuilder<RPOrderedTask>(
+      body: FutureBuilder<RPOrderedTask?>(
         future: widget.model.informedConsent,
         builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          if (snapshot.hasData == false) {
+            return Scaffold(
+              body: SafeArea(
+                child: Center(
+                  child: Column(
+                    children: [
+                      const Text("No informed consent found"),
+                      ElevatedButton(
+                        onPressed: () {
+                          context.go('/');
+                        },
+                        child: const Text("Okay"),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          }
+
           return RPUITask(
             task: snapshot.data!,
             onSubmit: resultCallback,

@@ -11,7 +11,6 @@ class CarpAppBar extends StatelessWidget {
         children: [
           Column(
             children: [
-              const SizedBox(height: 35),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [

@@ -1,9 +1,10 @@
 part of carp_study_app;
 
 class LoginPageAndroid extends StatefulWidget {
-  final WebUri uri;
 
-  const LoginPageAndroid({super.key, required this.uri});
+  final LoginPageViewModel model;
+
+  const LoginPageAndroid(this.model, {super.key});
   @override
   State<LoginPageAndroid> createState() => _LoginPageAndroidState();
 }
@@ -19,7 +20,7 @@ class _LoginPageAndroidState extends State<LoginPageAndroid> {
         children: <Widget>[
           Expanded(
             child: InAppWebView(
-              initialUrlRequest: URLRequest(url: widget.uri),
+              initialUrlRequest: URLRequest(url: widget.model.getLoginUri),
               initialSettings: InAppWebViewSettings(
                 domStorageEnabled: true,
                 databaseEnabled: true,
@@ -32,7 +33,7 @@ class _LoginPageAndroidState extends State<LoginPageAndroid> {
                   (InAppWebViewController controller, Uri? url, ok) {},
               onLoadStop: (controller, url) async {
                 if (url?.scheme == 'carp.studies') {
-                  await bloc.webAuthOnComplete(url, null);
+                  await widget.model.webAuthOnComplete(url, null);
                   if (context.mounted) {
                     context.pop(); // TODO: go to tasks page or whatever
                   }

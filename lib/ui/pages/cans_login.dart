@@ -1,33 +1,31 @@
 part of carp_study_app;
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+  final LoginPageViewModel model;
+  const LoginPage(this.model, {super.key});
 
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
-  WebAuthenticationSession? loginSession;
-  WebAuthenticationSession? registerSession;
   final GlobalKey webViewKey = GlobalKey();
-  WebUri loginUri = WebUri(
-      'https://cans.cachet.dk/portal/playground/login?redirect=carp.studies://auth');
-  // 'https://cans.cachet.dk/portal/${bloc.deploymentMode.name}/login?redirect=carp.studies://auth');
-  WebUri registerUri = WebUri(
-      'https://cans.cachet.dk/portal/playground/register?redirect=carp.studies://auth');
 
   @override
   void initState() {
     bloc.stateStream.sink.add(StudiesAppState.loginpage);
     if (Platform.isIOS) {
-      bloc.createWebAuthenticationSession(loginSession, loginUri).then((value) {
-        loginSession = value;
-      });
-      bloc
-          .createWebAuthenticationSession(registerSession, registerUri)
+      widget.model
+          .createWebAuthenticationSession(
+              widget.model.loginSession, widget.model.getLoginUri)
           .then((value) {
-        registerSession = value;
+        widget.model.loginSession = value;
+      });
+      widget.model
+          .createWebAuthenticationSession(
+              widget.model.registerSession, widget.model.getRegisterUri)
+          .then((value) {
+        widget.model.registerSession = value;
       });
       info("Initially created log in session");
     }
@@ -43,7 +41,8 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   void dispose() {
-    bloc.session?.dispose();
+    widget.model.loginSession?.dispose();
+    widget.model.registerSession?.dispose();
     super.dispose();
   }
 
@@ -84,12 +83,13 @@ class _LoginPageState extends State<LoginPage> {
                 child: TextButton(
                   onPressed: () async {
                     if (Platform.isIOS) {
-                      await iOSAuthentication(loginSession);
+                      await widget.model
+                          .iOSAuthentication(widget.model.loginSession);
                     }
                     if (Platform.isAndroid && context.mounted) {
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) =>
-                              LoginPageAndroid(uri: loginUri)));
+                              LoginPageAndroid(widget.model)));
                     }
                   },
                   child: const Text(
@@ -111,12 +111,13 @@ class _LoginPageState extends State<LoginPage> {
                 child: TextButton(
                   onPressed: () async {
                     if (Platform.isIOS) {
-                      await iOSAuthentication(registerSession);
+                      await widget.model
+                          .iOSAuthentication(widget.model.registerSession);
                     }
                     if (Platform.isAndroid && context.mounted) {
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) =>
-                              LoginPageAndroid(uri: registerUri)));
+                              LoginPageAndroid(widget.model)));
                     }
                   },
                   child: const Text(
@@ -133,21 +134,5 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
-  }
-
-  Future<void> iOSAuthentication(WebAuthenticationSession? session) async {
-    if (session != null && await session.canStart()) {
-      session = await bloc.startWebAuthenticationSession(session);
-      info("Session is not null, starting session. Session is $session");
-    } else if (session != null) {
-      info("Session is $session. Recreating.");
-      session = null;
-      session = await bloc.createWebAuthenticationSession(session, loginUri);
-      session = await bloc.startWebAuthenticationSession(session!);
-    }
-    if (session == null) {
-      info("Session is null, creating.");
-      session = await bloc.createWebAuthenticationSession(session, loginUri);
-    }
   }
 }

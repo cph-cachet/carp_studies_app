@@ -32,10 +32,7 @@ class CarpStudyAppState extends State<CarpStudyApp> {
   }
 
   final GoRouter _router = GoRouter(
-    // initialLocation: '/invitation/asdsa',
-    initialLocation: (bloc.deploymentMode == DeploymentMode.local)
-        ? '/LoadingPage'
-        : '/Login',
+    initialLocation: '/Login',
     routes: <RouteBase>[
       ShellRoute(
         builder: (BuildContext context, GoRouterState state, Widget child) =>
@@ -47,8 +44,8 @@ class CarpStudyAppState extends State<CarpStudyApp> {
           ),
           GoRoute(
             path: '/tasks',
-            redirect: (context, state) =>
-                !bloc.isConfigured ? '/Loading/tasks' : null,
+            // redirect: (context, state) =>
+            //     !bloc.isConfigured ? '/Loading/tasks' : null,
             pageBuilder: (context, state) => CustomTransitionPage(
               child: TaskListPage(
                 bloc.data.taskListPageViewModel,
@@ -58,8 +55,8 @@ class CarpStudyAppState extends State<CarpStudyApp> {
           ),
           GoRoute(
             path: '/about',
-            redirect: (context, state) =>
-                !bloc.isConfigured ? '/Loading/about' : null,
+            // redirect: (context, state) =>
+            //     !bloc.isConfigured ? '/Loading/about' : null,
             pageBuilder: (context, state) => CustomTransitionPage(
               child: StudyPage(
                 bloc.data.studyPageViewModel,
@@ -69,8 +66,8 @@ class CarpStudyAppState extends State<CarpStudyApp> {
           ),
           GoRoute(
             path: '/data',
-            redirect: (context, state) =>
-                !bloc.isConfigured ? '/Loading/data' : null,
+            // redirect: (context, state) =>
+            //     !bloc.isConfigured ? '/Loading/data' : null,
             pageBuilder: (context, state) => CustomTransitionPage(
               child: DataVisualizationPage(
                   bloc.data.dataVisualizationPageViewModel),
@@ -79,8 +76,8 @@ class CarpStudyAppState extends State<CarpStudyApp> {
           ),
           GoRoute(
             path: '/devices',
-            redirect: (context, state) =>
-                !bloc.isConfigured ? '/Loading/devices' : null,
+            // redirect: (context, state) =>
+            //     !bloc.isConfigured ? '/Loading/devices' : null,
             pageBuilder: (context, state) => const CustomTransitionPage(
               child: DevicesPage(),
               transitionsBuilder: bottomNavigationBarAnimation,
@@ -101,8 +98,8 @@ class CarpStudyAppState extends State<CarpStudyApp> {
       ),
       GoRoute(
         path: '/Consent',
-        builder: (context, state) => const InformedConsentPage(
-          bloc.data.informedConsentPageViewModelz
+        builder: (context, state) => InformedConsentPage(
+          bloc.data.informedConsentViewModel,
         ),
       ),
       GoRoute(
@@ -111,7 +108,9 @@ class CarpStudyAppState extends State<CarpStudyApp> {
       ),
       GoRoute(
         path: '/Login',
-        builder: (context, state) => const LoginPage(),
+        builder: (context, state) => LoginPage(
+          bloc.data.loginPageViewModel,
+        ),
       ),
       GoRoute(
         path: '/Message/:messageId',

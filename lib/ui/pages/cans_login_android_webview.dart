@@ -1,7 +1,6 @@
 part of carp_study_app;
 
 class LoginPageAndroid extends StatefulWidget {
-
   final LoginPageViewModel model;
 
   const LoginPageAndroid(this.model, {super.key});

@@ -72,7 +72,8 @@ class InvitationCard extends StatelessWidget {
   Widget build(BuildContext context) => Card(
         child: InkWell(
           onTap: () {
-            context.push('/invitation/${invitation.participation.participantId}');
+            context
+                .push('/invitation/${invitation.participation.participantId}');
           },
           child: Padding(
             padding: const EdgeInsets.all(16.0),

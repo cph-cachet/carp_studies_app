@@ -29,8 +29,9 @@ class StudyPageState extends State<StudyPage> {
                             isCarpBanner: true),
                         SliverList(
                           delegate: SliverChildBuilderDelegate(
-                            (BuildContext context, int index) => _aboutStudyCard(
-                                context, widget.model.messages[index]),
+                            (BuildContext context, int index) =>
+                                _aboutStudyCard(
+                                    context, widget.model.messages[index]),
                             childCount: widget.model.messages.length,
                           ),
                         ),

@@ -39,6 +39,7 @@ enum ProcessStatus {
   error,
   other,
 }
+
 enum StudiesAppState {
   initialized,
   loginpage,

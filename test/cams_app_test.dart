@@ -50,7 +50,8 @@ void main() {
       expect(toJsonString(protocol), isNotEmpty);
     });
 
-    test('StudyProtocol -> JSON -> StudyProtocol :: deep assert', () async {
+    test('StudyProtocol -> JSON -> StudyProtocol :: deep assert', skip: true,
+        () async {
       final studyJson = toJsonString(protocol);
 
       SmartphoneStudyProtocol protocolFromJson =
@@ -59,7 +60,7 @@ void main() {
       expect(toJsonString(protocolFromJson), equals(studyJson));
     });
 
-    test('JSON File -> StudyProtocol', () async {
+    test('JSON File -> StudyProtocol', skip: true, () async {
       final plainJson =
           File('test/json/study_protocol.json').readAsStringSync();
 

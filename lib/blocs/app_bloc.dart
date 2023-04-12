@@ -62,12 +62,6 @@ class StudyAppBLoC {
     this.deploymentMode = DeploymentMode.playground,
   }) : super();
 
-  /// The informed consent to be shown to the user for this study.
-  RPOrderedTask? informedConsent;
-
-  InformedConsentManager get informedConsentManager =>
-      CarpResourceManager() as InformedConsentManager;
-
   LocalizationManager get localizationManager =>
       CarpResourceManager() as LocalizationManager;
 
@@ -185,9 +179,6 @@ class StudyAppBLoC {
   ///
   /// This method is used in the [LoadingPage].
   Future<void> configure() async {
-    assert(isInitialized,
-        "$runtimeType is not initialized. Call 'initialize()' first.");
-
     // early out if already configuring (e.g. waiting for user authentication)
     if (isConfiguring) return;
 
@@ -196,9 +187,6 @@ class StudyAppBLoC {
     info('$runtimeType configuring...');
 
     // find the right informed consent, if needed
-    bloc.informedConsent = (!hasInformedConsentBeenAccepted)
-        ? await informedConsentManager.getInformedConsent()
-        : null;
 
     // set up the messaging part
     messageManager.initialize().then(
@@ -269,35 +257,17 @@ class StudyAppBLoC {
         'role name: ${bloc.deviceRolename}');
   }
 
-  /// Called when the informed consent has been accepted by the user.
-  /// This entails that it has been:
-  ///  * shown to the user
-  ///  * accepted by the user
-  Future<void> informedConsentHasBeenAccepted(
-    RPTaskResult informedConsentResult,
-  ) async {
-    info('Informed consent has been accepted by user.');
-    informedConsentAccepted = true;
-    if (bloc.deploymentMode != DeploymentMode.playground) {
-      await backend.uploadInformedConsent(informedConsentResult);
-    }
-  }
-
   /// Has the informed consent been shown to, and accepted by the user?
   bool get hasInformedConsentBeenAccepted =>
       LocalSettings().hasInformedConsentBeenAccepted;
-
-  /// Should the informed consent be shown to the user?
-  bool get shouldInformedConsentBeShown =>
-      (informedConsent != null && !hasInformedConsentBeenAccepted);
 
   /// Specify if the informed consent been handled.
   /// This entails that it has been:
   ///  * shown to the user
   ///  * accepted by the user
   ///  * successfully uploaded to CARP
-  set informedConsentAccepted(bool accepted) =>
-      LocalSettings().informedConsentAccepted = accepted;
+  set setHasInformedConsentBeenAccepted(bool accepted) =>
+      LocalSettings().setHasInformedConsentBeenAccepted = accepted;
 
   /// Refresh the list of messages (news, announcements, articles) to be shown in
   /// the Study Page of the app.
@@ -387,7 +357,7 @@ class StudyAppBLoC {
   Future<void> leaveStudy() async {
     final id = studyDeploymentId;
     _state = StudyAppState.initialized;
-    informedConsentAccepted = false;
+    setHasInformedConsentBeenAccepted = false;
     await LocalSettings().eraseStudyIds();
     await Sensing().removeStudy();
     // a small hack; reuse and reload the same deployment - but only in local mode
@@ -402,9 +372,5 @@ class StudyAppBLoC {
   Future<void> leaveStudyAndSignOut() async {
     await leaveStudy();
     await backend.signOut();
-  }
-
-  Future<void> authenticateWithRefreshToken(String refreshToken) async {
-    return await backend.authenticateWithRefreshToken(refreshToken);
   }
 }

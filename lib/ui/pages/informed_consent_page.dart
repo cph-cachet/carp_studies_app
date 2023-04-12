@@ -13,7 +13,7 @@ class InformedConsentState extends State<InformedConsentPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   void resultCallback(RPTaskResult result) async {
-    await bloc.informedConsentHasBeenAccepted(result);
+    await widget.model.informedConsentHasBeenAccepted(result);
     if (context.mounted) {
       context.go('/');
     }
@@ -62,12 +62,6 @@ class InformedConsentState extends State<InformedConsentPage> {
                   child: Column(
                     children: [
                       const Text("No informed consent found"),
-                      ElevatedButton(
-                        onPressed: () {
-                          context.go('/');
-                        },
-                        child: const Text("Okay"),
-                      ),
                     ],
                   ),
                 ),

@@ -5,7 +5,7 @@ class LoginPageViewModel extends ViewModel {
   WebAuthenticationSession? registerSession;
 
   final WebUri _loginUri = WebUri(
-      'https://cans.cachet.dk/portal/playground/login?redirect=carp.studies://auth');
+      'https://cans.cachet.dk/portal/playground/?redirect=carp.studies://auth');
   get getLoginUri => _loginUri;
 
   final WebUri _registerUri = WebUri(
@@ -73,7 +73,7 @@ class LoginPageViewModel extends ViewModel {
       return;
     }
 
-    await bloc.authenticateWithRefreshToken(refreshToken);
+    await bloc.backend.authenticateWithRefreshToken(refreshToken);
   }
 
   LoginPageViewModel();

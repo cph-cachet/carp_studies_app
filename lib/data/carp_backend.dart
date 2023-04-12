@@ -24,10 +24,8 @@ class CarpBackend {
   String get clientId => "carp";
   String get clientSecret => "carp";
 
-  CarpApp? _app;
-
   /// The CAWS app configuration.
-  CarpApp? get app => _app;
+  CarpApp? app;
 
   /// Has the user been authenticated?
   bool? get isAuthenticated => user != null;
@@ -74,7 +72,7 @@ class CarpBackend {
   factory CarpBackend() => _instance;
 
   Future<void> initialize() async {
-    _app = CarpApp(
+    app = CarpApp(
       name: "CAWS @ DTU",
       uri: uri,
       oauth: OAuthEndPoint(clientID: clientId, clientSecret: clientSecret),
@@ -83,21 +81,33 @@ class CarpBackend {
     );
 
     CarpService().configure(app!);
-    info('$runtimeType initialized - app: $_app');
+
+    final OAuthToken? oauthToken = this.oauthToken;
+    if (oauthToken != null) {
+      // if we have a token, we can authenticate the user
+      debug((await authenticateWithRefreshToken(oauthToken.refreshToken)).toString());
+    }
+    info('$runtimeType initialized - app: $app');
   }
 
-  Future<void> authenticateWithRefreshToken(String refreshToken) async {
-    var user = await CarpService().authenticateWithRefreshToken(refreshToken);
+  Future<CarpUser?> authenticateWithRefreshToken(String refreshToken) async {
+    try {
+      CarpUser user =
+          await CarpService().authenticateWithRefreshToken(refreshToken);
 
-    info('User authenticated - user: $user');
+      info('User authenticated - user: $user');
 
-    // saving username & token on the phone
-    username = user.username;
-    oauthToken = user.token;
-    bloc.stateStream.sink.add(StudiesAppState.accessTokenRetrieved);
+      // saving username & token on the phone
+      username = user.username;
+      oauthToken = user.token;
+      bloc.stateStream.sink.add(StudiesAppState.accessTokenRetrieved);
 
-    // configure the participation service in order to get the invitations
-    CarpParticipationService().configureFrom(CarpService());
+      // configure the participation service in order to get the invitations
+      CarpParticipationService().configureFrom(CarpService());
+      return user;
+    } on Exception catch (_) {
+      return null;
+    }
   }
 
   Future<ConsentDocument?> uploadInformedConsent(
@@ -112,9 +122,9 @@ class CarpBackend {
       document = await CarpService().createConsentDocument(informedConsent);
       info(
           'Informed consent document uploaded successfully - id: ${document.id}');
-      bloc.informedConsentAccepted = true;
+      bloc.setHasInformedConsentBeenAccepted = true;
     } on Exception {
-      bloc.informedConsentAccepted = false;
+      bloc.setHasInformedConsentBeenAccepted = false;
       warning('Informed consent upload failed for username: $username');
     }
 

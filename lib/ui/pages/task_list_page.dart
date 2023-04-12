@@ -13,7 +13,7 @@ class TaskListPageState extends State<TaskListPage> {
   Widget build(BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;
     bloc.configurePermissions(context);
-    bloc.start();
+    bloc.configure().then((_) => bloc.start());
 
     return Scaffold(
       body: SafeArea(

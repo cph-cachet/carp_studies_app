@@ -32,7 +32,7 @@ class CarpStudyAppState extends State<CarpStudyApp> {
   }
 
   final GoRouter _router = GoRouter(
-    initialLocation: '/Login',
+    initialLocation: '/',
     routes: <RouteBase>[
       ShellRoute(
         builder: (BuildContext context, GoRouterState state, Widget child) =>
@@ -40,12 +40,11 @@ class CarpStudyAppState extends State<CarpStudyApp> {
         routes: [
           GoRoute(
             path: '/',
-            redirect: (context, state) => '/tasks',
+            redirect: (context, state) =>
+                bloc.hasInformedConsentBeenAccepted ? '/tasks' : '/Consent',
           ),
           GoRoute(
             path: '/tasks',
-            // redirect: (context, state) =>
-            //     !bloc.isConfigured ? '/Loading/tasks' : null,
             pageBuilder: (context, state) => CustomTransitionPage(
               child: TaskListPage(
                 bloc.data.taskListPageViewModel,
@@ -55,8 +54,6 @@ class CarpStudyAppState extends State<CarpStudyApp> {
           ),
           GoRoute(
             path: '/about',
-            // redirect: (context, state) =>
-            //     !bloc.isConfigured ? '/Loading/about' : null,
             pageBuilder: (context, state) => CustomTransitionPage(
               child: StudyPage(
                 bloc.data.studyPageViewModel,
@@ -66,8 +63,6 @@ class CarpStudyAppState extends State<CarpStudyApp> {
           ),
           GoRoute(
             path: '/data',
-            // redirect: (context, state) =>
-            //     !bloc.isConfigured ? '/Loading/data' : null,
             pageBuilder: (context, state) => CustomTransitionPage(
               child: DataVisualizationPage(
                   bloc.data.dataVisualizationPageViewModel),
@@ -76,28 +71,17 @@ class CarpStudyAppState extends State<CarpStudyApp> {
           ),
           GoRoute(
             path: '/devices',
-            // redirect: (context, state) =>
-            //     !bloc.isConfigured ? '/Loading/devices' : null,
             pageBuilder: (context, state) => const CustomTransitionPage(
               child: DevicesPage(),
               transitionsBuilder: bottomNavigationBarAnimation,
             ),
           ),
-          //   ],
-          // ),
         ],
       ),
       GoRoute(
-        path: '/Loading/:redirectionOrigin',
-        builder: (context, state) =>
-            LoadingPage(redirectionOrigin: state.params['redirectionOrigin']),
-      ),
-      GoRoute(
-        path: '/Loading',
-        builder: (context, state) => const LoadingPage(redirectionOrigin: ''),
-      ),
-      GoRoute(
         path: '/Consent',
+        redirect: (context, state) =>
+            bloc.studyId == null ? '/Invitations' : null,
         builder: (context, state) => InformedConsentPage(
           bloc.data.informedConsentViewModel,
         ),
@@ -129,6 +113,7 @@ class CarpStudyAppState extends State<CarpStudyApp> {
       ),
       GoRoute(
         path: '/Invitations',
+        redirect: (context, state) => bloc.user == null ? '/Login' : null,
         builder: (context, state) =>
             InvitationListPage(bloc.data.invitationsListViewModel),
       ),

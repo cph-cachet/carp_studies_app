@@ -19,20 +19,19 @@ class StudyAppBLoC {
   final CarpBackend _backend = CarpBackend();
   final CarpStudyAppViewModel _data = CarpStudyAppViewModel();
   StudyDeploymentStatus? _status;
-  WebAuthenticationSession? session;
   final StreamController<StudiesAppState> _stateStream =
       StreamController.broadcast();
 
   get stateStream => _stateStream;
 
+  List<ActiveParticipationInvitation> _invitations = [];
+  set invitations(value) => _invitations = value;
+  get invitations => _invitations;
+
   List<Message> _messages = [];
   final StreamController<int> _messageStreamController =
       StreamController.broadcast();
   List<Message> get messages => _messages;
-
-  List<ActiveParticipationInvitation> _invitations = [];
-  List<ActiveParticipationInvitation> get invitations => _invitations;
-  set invitations(value) => _invitations = value;
 
   /// A stream of event when the list of [messages] is updated.
   /// The data send on the stream is the number of available messages.
@@ -49,34 +48,27 @@ class StudyAppBLoC {
   /// What kind of deployment are we running - LOCAL or CAWS?
   final DeploymentMode deploymentMode;
 
+  // ScaffoldMessenger for showing snackbars
+  final _scaffoldKey = GlobalKey<ScaffoldMessengerState>();
+  get scaffoldKey => _scaffoldKey;
+  get scaffoldMessengerState => scaffoldKey.currentState;
+
   /// Create the BLoC for the app specifying:
   ///  * debug level
   ///  * deployment mode (LOCAL or CAWS)
   ///  * whether to use the locally stored credentials
   StudyAppBLoC({
     this.debugLevel = DebugLevel.info,
-    this.deploymentMode = DeploymentMode.local,
+    this.deploymentMode = DeploymentMode.playground,
   }) : super();
 
-  /// The informed consent to be shown to the user for this study.
-  RPOrderedTask? informedConsent;
-
-  InformedConsentManager get informedConsentManager =>
-      (deploymentMode == DeploymentMode.local)
-          ? LocalResourceManager()
-          : CarpResourceManager() as InformedConsentManager;
-
   LocalizationManager get localizationManager =>
-      (deploymentMode == DeploymentMode.local)
-          ? LocalResourceManager()
-          : CarpResourceManager() as LocalizationManager;
+      CarpResourceManager() as LocalizationManager;
 
   LocalizationLoader get localizationLoader =>
       ResourceLocalizationLoader(localizationManager);
 
-  MessageManager get messageManager => (deploymentMode == DeploymentMode.local)
-      ? LocalResourceManager()
-      : CarpResourceManager() as MessageManager;
+  MessageManager get messageManager => CarpResourceManager() as MessageManager;
 
   CarpBackend get backend => _backend;
 
@@ -173,7 +165,7 @@ class StudyAppBLoC {
     // set up and initialize sensing
     await Sensing().initialize();
 
-    _state = StudyAppState.initialized;
+    stateStream.sink.add(StudiesAppState.initialized);
     info(
         '$runtimeType initialized - deployment mode: ${deploymentMode.toString().split('.').last}');
   }
@@ -187,19 +179,14 @@ class StudyAppBLoC {
   ///
   /// This method is used in the [LoadingPage].
   Future<void> configure() async {
-    assert(isInitialized,
-        "$runtimeType is not initialized. Call 'initialize()' first.");
-
     // early out if already configuring (e.g. waiting for user authentication)
     if (isConfiguring) return;
 
     stateStream.sink.add(StudiesAppState.configuring);
+
     info('$runtimeType configuring...');
 
     // find the right informed consent, if needed
-    bloc.informedConsent = (!hasInformedConsentBeenAccepted)
-        ? await informedConsentManager.getInformedConsent()
-        : null;
 
     // set up the messaging part
     messageManager.initialize().then(
@@ -258,35 +245,29 @@ class StudyAppBLoC {
     // await Sensing().askForPermissions();
   }
 
-  /// Called when the informed consent has been accepted by the user.
-  /// This entails that it has been:
-  ///  * shown to the user
-  ///  * accepted by the user
-  Future<void> informedConsentHasBeenAccepted(
-    RPTaskResult informedConsentResult,
-  ) async {
-    info('Informed consent has been accepted by user.');
-    informedConsentAccepted = true;
-    if (bloc.deploymentMode != DeploymentMode.local) {
-      await backend.uploadInformedConsent(informedConsentResult);
-    }
+  /// Set the selected study invitation.
+  void setStudyInvitation(ActiveParticipationInvitation invitation) {
+    bloc.studyId = invitation.studyId;
+    bloc.studyDeploymentId = invitation.studyDeploymentId;
+    bloc.deviceRolename = invitation.assignedDevices?.first.device.roleName;
+
+    info('Invitation received - '
+        'study id: ${bloc.studyId}, '
+        'deployment id: ${bloc.studyDeploymentId}, '
+        'role name: ${bloc.deviceRolename}');
   }
 
   /// Has the informed consent been shown to, and accepted by the user?
   bool get hasInformedConsentBeenAccepted =>
       LocalSettings().hasInformedConsentBeenAccepted;
 
-  /// Should the informed consent be shown to the user?
-  bool get shouldInformedConsentBeShown =>
-      (informedConsent != null && !hasInformedConsentBeenAccepted);
-
   /// Specify if the informed consent been handled.
   /// This entails that it has been:
   ///  * shown to the user
   ///  * accepted by the user
   ///  * successfully uploaded to CARP
-  set informedConsentAccepted(bool accepted) =>
-      LocalSettings().informedConsentAccepted = accepted;
+  set setHasInformedConsentBeenAccepted(bool accepted) =>
+      LocalSettings().setHasInformedConsentBeenAccepted = accepted;
 
   /// Refresh the list of messages (news, announcements, articles) to be shown in
   /// the Study Page of the app.
@@ -376,11 +357,11 @@ class StudyAppBLoC {
   Future<void> leaveStudy() async {
     final id = studyDeploymentId;
     _state = StudyAppState.initialized;
-    informedConsentAccepted = false;
+    setHasInformedConsentBeenAccepted = false;
     await LocalSettings().eraseStudyIds();
     await Sensing().removeStudy();
     // a small hack; reuse and reload the same deployment - but only in local mode
-    if (deploymentMode == DeploymentMode.local) studyDeploymentId = id;
+    if (deploymentMode == DeploymentMode.playground) studyDeploymentId = id;
   }
 
   /// Leave the study and also sign out the user.
@@ -392,61 +373,4 @@ class StudyAppBLoC {
     await leaveStudy();
     await backend.signOut();
   }
-
-  Future<WebAuthenticationSession> startWebAuthenticationSession(
-    WebAuthenticationSession session,
-  ) async {
-    await session.start();
-    bloc.stateStream.sink.add(StudiesAppState.authenticating);
-
-    return session;
-  }
-
-  Future<WebAuthenticationSession?> createWebAuthenticationSession(
-    WebAuthenticationSession? session,
-    WebUri url,
-  ) async {
-    if (session == null &&
-        Platform.isIOS &&
-        await WebAuthenticationSession.isAvailable()) {
-      session = await WebAuthenticationSession.create(
-          url: url,
-          callbackURLScheme: 'carp.studies',
-          onComplete: webAuthOnComplete);
-      return session;
-    }
-    return session;
-  }
-
-  Future<void> webAuthOnComplete(url, error) async {
-    if (error != null) {
-      warning('Error: $error');
-      return;
-    } else if (url == null) {
-      warning('No url returned');
-      return;
-    } else if (!url.toString().contains('token')) {
-      warning('No access token in url: $url');
-      return;
-    }
-    info('Got url: $url');
-    String? refreshToken = url.queryParameters['token'];
-
-    if (refreshToken == null) {
-      warning('Missing parameters in url: $url');
-      return;
-    }
-
-    await backend.authenticateWithRefreshToken(refreshToken);
-  }
-}
-
-enum StudiesAppState {
-  loginpage,
-  authenticating,
-  accessTokenRetrieved,
-  configuring,
-  loading,
-  loaded,
-  error,
 }

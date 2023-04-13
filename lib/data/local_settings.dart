@@ -44,11 +44,7 @@ class LocalSettings {
         jsonDecode(Settings().preferences!.getString(oauthTokenKey)!));
     String tokenString = Settings().preferences!.getString(oauthTokenKey)!;
 
-    if (_oauthToken == null) {
-      _oauthToken = (tokenString != null)
-          ? OAuthToken.fromJson(jsonDecode(tokenString))
-          : null;
-    }
+    _oauthToken ??= OAuthToken.fromJson(jsonDecode(tokenString));
     return _oauthToken;
   }
 
@@ -129,7 +125,7 @@ class LocalSettings {
       Settings().preferences!.getBool(informedConsentAcceptedKey) ?? false;
 
   /// Specify if the informed consent has been handled.
-  set informedConsentAccepted(bool accepted) =>
+  set setHasInformedConsentBeenAccepted(bool accepted) =>
       Settings().preferences!.setBool(informedConsentAcceptedKey, accepted);
 
   Future<void> eraseStudyIds() async {

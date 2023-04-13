@@ -2,7 +2,7 @@ part of carp_study_app;
 
 enum DeploymentMode {
   /// Use a local study protocol & deployment and store data locally in a file.
-  local,
+  playground,
 
   /// Use the CARP production server to get the study deployment and store data.
   production,
@@ -38,4 +38,15 @@ enum ProcessStatus {
   done,
   error,
   other,
+}
+
+enum StudiesAppState {
+  initialized,
+  loginpage,
+  authenticating,
+  accessTokenRetrieved,
+  configuring,
+  loading,
+  loaded,
+  error,
 }

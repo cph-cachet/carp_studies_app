@@ -32,10 +32,7 @@ class CarpStudyAppState extends State<CarpStudyApp> {
   }
 
   final GoRouter _router = GoRouter(
-    // initialLocation: '/invitation/asdsa',
-    initialLocation: (bloc.deploymentMode == DeploymentMode.local)
-        ? '/LoadingPage'
-        : '/Login',
+    initialLocation: '/',
     routes: <RouteBase>[
       ShellRoute(
         builder: (BuildContext context, GoRouterState state, Widget child) =>
@@ -43,12 +40,11 @@ class CarpStudyAppState extends State<CarpStudyApp> {
         routes: [
           GoRoute(
             path: '/',
-            redirect: (context, state) => '/tasks',
+            redirect: (context, state) =>
+                bloc.hasInformedConsentBeenAccepted ? '/tasks' : '/Consent',
           ),
           GoRoute(
             path: '/tasks',
-            redirect: (context, state) =>
-                !bloc.isConfigured ? '/LoadingPage/tasks' : null,
             pageBuilder: (context, state) => CustomTransitionPage(
               child: TaskListPage(
                 bloc.data.taskListPageViewModel,
@@ -58,8 +54,6 @@ class CarpStudyAppState extends State<CarpStudyApp> {
           ),
           GoRoute(
             path: '/about',
-            redirect: (context, state) =>
-                !bloc.isConfigured ? '/LoadingPage/about' : null,
             pageBuilder: (context, state) => CustomTransitionPage(
               child: StudyPage(
                 bloc.data.studyPageViewModel,
@@ -69,8 +63,6 @@ class CarpStudyAppState extends State<CarpStudyApp> {
           ),
           GoRoute(
             path: '/data',
-            redirect: (context, state) =>
-                !bloc.isConfigured ? '/LoadingPage/data' : null,
             pageBuilder: (context, state) => CustomTransitionPage(
               child: DataVisualizationPage(
                   bloc.data.dataVisualizationPageViewModel),
@@ -79,29 +71,20 @@ class CarpStudyAppState extends State<CarpStudyApp> {
           ),
           GoRoute(
             path: '/devices',
-            redirect: (context, state) =>
-                !bloc.isConfigured ? '/LoadingPage/devices' : null,
             pageBuilder: (context, state) => const CustomTransitionPage(
               child: DevicesPage(),
               transitionsBuilder: bottomNavigationBarAnimation,
             ),
           ),
-          //   ],
-          // ),
         ],
       ),
       GoRoute(
-        path: '/LoadingPage/:redirectionOrigin',
-        builder: (context, state) =>
-            LoadingPage(redirectionOrigin: state.params['redirectionOrigin']),
-      ),
-      GoRoute(
-        path: '/Loading',
-        builder: (context, state) => const LoadingPage(redirectionOrigin: ''),
-      ),
-      GoRoute(
         path: '/Consent',
-        builder: (context, state) => const InformedConsentPage(),
+        redirect: (context, state) =>
+            bloc.studyId == null ? '/Invitations' : null,
+        builder: (context, state) => InformedConsentPage(
+          bloc.data.informedConsentViewModel,
+        ),
       ),
       GoRoute(
         path: '/FailedLogin',
@@ -109,25 +92,35 @@ class CarpStudyAppState extends State<CarpStudyApp> {
       ),
       GoRoute(
         path: '/Login',
-        builder: (context, state) => const LoginPage(),
+        builder: (context, state) => LoginPage(
+          bloc.data.loginPageViewModel,
+        ),
       ),
       GoRoute(
-        path: '/AndroidLogin',
-        builder: (context, state) => const LoginPageAndroid(),
-      ),
-      GoRoute(
-        path: '/Setup',
-        builder: (context, state) => const SetupPage(),
-      ),
-      GoRoute(
-        path: '/message/:messageId',
+        path: '/Message/:messageId',
         builder: (context, state) =>
             MessageDetailsPage(messageId: state.params['messageId'] ?? ''),
       ),
       GoRoute(
-        path: '/invitation/:invitationId',
+        path: '/Invitation/:invitationId',
         builder: (context, state) => InvitationDetailsPage(
           invitationId: state.params['invitationId'] ?? '',
+        ),
+      ),
+      GoRoute(
+        path: '/auth',
+        builder: (context, state) => const FailedLoginPage(),
+      ),
+      GoRoute(
+        path: '/Invitations',
+        redirect: (context, state) => bloc.user == null ? '/Login' : null,
+        builder: (context, state) =>
+            InvitationListPage(bloc.data.invitationsListViewModel),
+      ),
+      GoRoute(
+        path: '/test',
+        builder: (context, state) => TaskListPage(
+          bloc.data.taskListPageViewModel,
         ),
       ),
     ],
@@ -145,7 +138,7 @@ class CarpStudyAppState extends State<CarpStudyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      debugShowCheckedModeBanner: false,
+      scaffoldMessengerKey: bloc.scaffoldKey,
       supportedLocales: const [
         Locale('en'),
         Locale('da'),

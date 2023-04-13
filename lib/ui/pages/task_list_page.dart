@@ -13,81 +13,83 @@ class TaskListPageState extends State<TaskListPage> {
   Widget build(BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;
     bloc.configurePermissions(context);
-    bloc.start();
+    bloc.configure().then((_) => bloc.start());
 
     return Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          const CarpAppBar(),
-          Expanded(
-            flex: 4,
-            child: StreamBuilder<UserTask>(
-              stream: widget.model.userTaskEvents,
-              builder: (context, snapshot) {
-                if (widget.model.tasks.isEmpty) {
-                  return _noTasks(context);
-                } else {
-                  return CustomScrollView(
-                    slivers: [
-                      SliverToBoxAdapter(
-                          child: ScoreboardCardWidget(widget.model)),
-                      SliverToBoxAdapter(
-                        child: Padding(
-                          padding: const EdgeInsets.all(15),
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              locale.translate('pages.task_list.title'),
-                              style: dataCardTitleStyle.copyWith(
-                                  color: Theme.of(context).primaryColor),
+      body: SafeArea(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            const CarpAppBar(),
+            Expanded(
+              flex: 4,
+              child: StreamBuilder<UserTask>(
+                stream: widget.model.userTaskEvents,
+                builder: (context, snapshot) {
+                  if (widget.model.tasks.isEmpty) {
+                    return _noTasks(context);
+                  } else {
+                    return CustomScrollView(
+                      slivers: [
+                        SliverToBoxAdapter(
+                            child: ScoreboardCardWidget(widget.model)),
+                        SliverToBoxAdapter(
+                          child: Padding(
+                            padding: const EdgeInsets.all(15),
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                locale.translate('pages.task_list.title'),
+                                style: dataCardTitleStyle.copyWith(
+                                    color: Theme.of(context).primaryColor),
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      SliverList(
-                        delegate: SliverChildBuilderDelegate(
-                            (BuildContext context, int index) {
-                          if (widget.model.tasks[index].state !=
-                              UserTaskState.done) {
-                            return _buildTaskCard(
-                                context, widget.model.tasks[index]);
-                          } else {
-                            return const SizedBox.shrink();
-                          }
-                        }, childCount: widget.model.tasks.length),
-                      ),
-                      SliverList(
-                        delegate: SliverChildBuilderDelegate(
-                            (BuildContext context, int index) {
-                          if (widget.model.tasks[index].state ==
-                              UserTaskState.done) {
-                            return _buildDoneTaskCard(
-                                context, widget.model.tasks[index]);
-                          } else {
-                            return const SizedBox.shrink();
-                          }
-                        }, childCount: widget.model.tasks.length),
-                      ),
-                      SliverList(
-                        delegate: SliverChildBuilderDelegate(
-                            (BuildContext context, int index) {
-                          if (widget.model.tasks[index].state ==
-                              UserTaskState.expired) {
-                            return _buildExpiredTaskCard(
-                                context, widget.model.tasks[index]);
-                          } else {
-                            return const SizedBox.shrink();
-                          }
-                        }, childCount: widget.model.tasks.length),
-                      ),
-                    ],
-                  );
-                }
-              },
+                        SliverList(
+                          delegate: SliverChildBuilderDelegate(
+                              (BuildContext context, int index) {
+                            if (widget.model.tasks[index].state !=
+                                UserTaskState.done) {
+                              return _buildTaskCard(
+                                  context, widget.model.tasks[index]);
+                            } else {
+                              return const SizedBox.shrink();
+                            }
+                          }, childCount: widget.model.tasks.length),
+                        ),
+                        SliverList(
+                          delegate: SliverChildBuilderDelegate(
+                              (BuildContext context, int index) {
+                            if (widget.model.tasks[index].state ==
+                                UserTaskState.done) {
+                              return _buildDoneTaskCard(
+                                  context, widget.model.tasks[index]);
+                            } else {
+                              return const SizedBox.shrink();
+                            }
+                          }, childCount: widget.model.tasks.length),
+                        ),
+                        SliverList(
+                          delegate: SliverChildBuilderDelegate(
+                              (BuildContext context, int index) {
+                            if (widget.model.tasks[index].state ==
+                                UserTaskState.expired) {
+                              return _buildExpiredTaskCard(
+                                  context, widget.model.tasks[index]);
+                            } else {
+                              return const SizedBox.shrink();
+                            }
+                          }, childCount: widget.model.tasks.length),
+                        ),
+                      ],
+                    );
+                  }
+                },
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

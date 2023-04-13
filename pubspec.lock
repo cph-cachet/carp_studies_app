@@ -270,7 +270,7 @@ packages:
     description:
       path: "packages/carp_audio_package"
       ref: "develop-1.1.0"
-      resolved-ref: "24a27680483c1bea7df8f7e3f7cf2ca529d187ab"
+      resolved-ref: "07bc2fec8ef2dd918510bbba8e1164cba13765f6"
       url: "https://github.com/cph-cachet/carp.sensing-flutter.git"
     source: git
     version: "1.1.0"
@@ -279,7 +279,7 @@ packages:
     description:
       path: "backends/carp_backend"
       ref: "develop-1.1.0"
-      resolved-ref: "24a27680483c1bea7df8f7e3f7cf2ca529d187ab"
+      resolved-ref: "07bc2fec8ef2dd918510bbba8e1164cba13765f6"
       url: "https://github.com/cph-cachet/carp.sensing-flutter.git"
     source: git
     version: "1.1.0"
@@ -288,7 +288,7 @@ packages:
     description:
       path: "packages/carp_connectivity_package"
       ref: "develop-1.1.0"
-      resolved-ref: "24a27680483c1bea7df8f7e3f7cf2ca529d187ab"
+      resolved-ref: "07bc2fec8ef2dd918510bbba8e1164cba13765f6"
       url: "https://github.com/cph-cachet/carp.sensing-flutter.git"
     source: git
     version: "1.1.0"
@@ -297,7 +297,7 @@ packages:
     description:
       path: "packages/carp_context_package"
       ref: "develop-1.1.0"
-      resolved-ref: "24a27680483c1bea7df8f7e3f7cf2ca529d187ab"
+      resolved-ref: "07bc2fec8ef2dd918510bbba8e1164cba13765f6"
       url: "https://github.com/cph-cachet/carp.sensing-flutter.git"
     source: git
     version: "1.1.0"
@@ -306,7 +306,7 @@ packages:
     description:
       path: carp_core
       ref: "develop-1.1.0"
-      resolved-ref: "24a27680483c1bea7df8f7e3f7cf2ca529d187ab"
+      resolved-ref: "07bc2fec8ef2dd918510bbba8e1164cba13765f6"
       url: "https://github.com/cph-cachet/carp.sensing-flutter.git"
     source: git
     version: "1.1.0"
@@ -315,7 +315,7 @@ packages:
     description:
       path: "packages/carp_esense_package"
       ref: "develop-1.1.0"
-      resolved-ref: "24a27680483c1bea7df8f7e3f7cf2ca529d187ab"
+      resolved-ref: "07bc2fec8ef2dd918510bbba8e1164cba13765f6"
       url: "https://github.com/cph-cachet/carp.sensing-flutter.git"
     source: git
     version: "1.1.0"
@@ -324,7 +324,7 @@ packages:
     description:
       path: carp_mobile_sensing
       ref: "develop-1.1.0"
-      resolved-ref: "24a27680483c1bea7df8f7e3f7cf2ca529d187ab"
+      resolved-ref: "07bc2fec8ef2dd918510bbba8e1164cba13765f6"
       url: "https://github.com/cph-cachet/carp.sensing-flutter.git"
     source: git
     version: "1.1.0"
@@ -333,7 +333,7 @@ packages:
     description:
       path: "packages/carp_polar_package"
       ref: "develop-1.1.0"
-      resolved-ref: "24a27680483c1bea7df8f7e3f7cf2ca529d187ab"
+      resolved-ref: "07bc2fec8ef2dd918510bbba8e1164cba13765f6"
       url: "https://github.com/cph-cachet/carp.sensing-flutter.git"
     source: git
     version: "1.1.0"
@@ -350,16 +350,18 @@ packages:
     description:
       path: "packages/carp_survey_package"
       ref: "develop-1.1.0"
-      resolved-ref: "24a27680483c1bea7df8f7e3f7cf2ca529d187ab"
+      resolved-ref: "07bc2fec8ef2dd918510bbba8e1164cba13765f6"
       url: "https://github.com/cph-cachet/carp.sensing-flutter.git"
     source: git
     version: "1.1.0"
   carp_webservices:
     dependency: "direct overridden"
     description:
-      path: "../carp/carp.sensing-flutter/backends/carp_webservices"
-      relative: true
-    source: path
+      path: "backends/carp_webservices"
+      ref: "develop-1.1.0"
+      resolved-ref: "07bc2fec8ef2dd918510bbba8e1164cba13765f6"
+      url: "https://github.com/cph-cachet/carp.sensing-flutter.git"
+    source: git
     version: "1.1.0"
   characters:
     dependency: transitive
@@ -1790,26 +1792,26 @@ packages:
     dependency: "direct main"
     description:
       name: video_player
-      sha256: "868a139229acb5018d22aded3eb9cb4767ff43a8216573c086b6c535a4957481"
+      sha256: de95f0e9405f29b5582573d4166132e71f83b3158aac14e8ee5767a54f4f1fbd
       url: "https://pub.dev"
     source: hosted
-    version: "2.6.0"
+    version: "2.6.1"
   video_player_android:
     dependency: transitive
     description:
       name: video_player_android
-      sha256: e7de6fabe5d96048cd8f4d710f25c3df84bb3cab8b22da6c082bd8f39e316984
+      sha256: a592048a711d5739d9cea2255d425779f138d41095b9149bda60ce4bc1af8871
       url: "https://pub.dev"
     source: hosted
-    version: "2.4.3"
+    version: "2.4.4"
   video_player_avfoundation:
     dependency: transitive
     description:
       name: video_player_avfoundation
-      sha256: "90468226c8687adf7b567d9bb42c25588783c4d30509af1fbd663b2dd049f700"
+      sha256: af308d08c672d5ff718c60127665249617c37a709cb8f0a18dd28a0360299b7c
       url: "https://pub.dev"
     source: hosted
-    version: "2.4.2"
+    version: "2.4.3"
   video_player_platform_interface:
     dependency: transitive
     description:
@@ -1822,10 +1824,10 @@ packages:
     dependency: transitive
     description:
       name: video_player_web
-      sha256: fb3bbeaf0302cb0c31340ebd6075487939aa1fe3b379d1a8784ef852b679940e
+      sha256: "44ce41424d104dfb7cf6982cc6b84af2b007a24d126406025bf40de5d481c74c"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.15"
+    version: "2.0.16"
   vm_service:
     dependency: transitive
     description:

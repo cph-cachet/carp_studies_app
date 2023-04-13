@@ -1,18 +1,15 @@
 part of carp_study_app;
 
 class LoginPageAndroid extends StatefulWidget {
-  const LoginPageAndroid({super.key});
+  final LoginPageViewModel model;
 
+  const LoginPageAndroid(this.model, {super.key});
   @override
   State<LoginPageAndroid> createState() => _LoginPageAndroidState();
 }
 
 class _LoginPageAndroidState extends State<LoginPageAndroid> {
   InAppWebViewController? webView;
-
-  WebUri uri = WebUri(
-      'https://cans.cachet.dk/portal/playground/login?redirect=carp.studies://auth');
-  // 'https://cans.cachet.dk/portal/${bloc.deploymentMode.name}/login?redirect=carp.studies://auth');
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +19,7 @@ class _LoginPageAndroidState extends State<LoginPageAndroid> {
         children: <Widget>[
           Expanded(
             child: InAppWebView(
-              initialUrlRequest: URLRequest(url: uri),
+              initialUrlRequest: URLRequest(url: widget.model.getLoginUri),
               initialSettings: InAppWebViewSettings(
                 domStorageEnabled: true,
                 databaseEnabled: true,
@@ -32,12 +29,13 @@ class _LoginPageAndroidState extends State<LoginPageAndroid> {
               },
               onLoadStart: (InAppWebViewController controller, Uri? url) {},
               onUpdateVisitedHistory:
-                  (InAppWebViewController controller, Uri? url, ok) async {
+                  (InAppWebViewController controller, Uri? url, ok) {},
+              onLoadStop: (controller, url) async {
                 if (url?.scheme == 'carp.studies') {
+                  await widget.model.webAuthOnComplete(url, null);
                   if (context.mounted) {
-                    context.pop();
+                    context.pop(); // TODO: go to tasks page or whatever
                   }
-                  await bloc.webAuthOnComplete(url, null);
                 }
               },
             ),

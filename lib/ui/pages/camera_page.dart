@@ -100,14 +100,13 @@ class CameraPageState extends State<CameraPage> {
                     await _initializeControllerFuture;
                     var picture = await _cameraController!.takePicture();
                     widget.videoUserTask.onPictureCapture(picture);
-                    await Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => DisplayPicturePage(
-                          file: picture,
-                          videoUserTask: widget.videoUserTask,
-                        ),
-                      ),
-                    );
+                    if (context.mounted) {
+                      await Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => DisplayPicturePage(
+                                file: picture,
+                                videoUserTask: widget.videoUserTask,
+                              )));
+                    }
 
                     setState(() {
                       capturedImages = File(picture.path);
@@ -132,13 +131,15 @@ class CameraPageState extends State<CameraPage> {
                       var video = await _cameraController!.stopVideoRecording();
 
                       widget.videoUserTask.onRecordStop(video);
-                      await Navigator.of(context).push(
-                        MaterialPageRoute(
-                            builder: (context) => DisplayPicturePage(
-                                file: video,
-                                isVideo: true,
-                                videoUserTask: widget.videoUserTask)),
-                      );
+                      if (context.mounted) {
+                        await Navigator.of(context).push(
+                          MaterialPageRoute(
+                              builder: (context) => DisplayPicturePage(
+                                  file: video,
+                                  isVideo: true,
+                                  videoUserTask: widget.videoUserTask)),
+                        );
+                      }
                       setState(() {
                         capturedImages = File(video.path);
                         isRecording = false;

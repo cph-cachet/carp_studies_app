@@ -16,7 +16,7 @@ class CarpBackend {
     DeploymentMode.test: '/test',
     DeploymentMode.staging: '/stage',
     DeploymentMode.production: '',
-    DeploymentMode.local: '/playground',
+    DeploymentMode.playground: '/playground',
   };
 
   static final CarpBackend _instance = CarpBackend._();
@@ -24,10 +24,8 @@ class CarpBackend {
   String get clientId => "carp";
   String get clientSecret => "carp";
 
-  CarpApp? _app;
-
   /// The CAWS app configuration.
-  CarpApp? get app => _app;
+  CarpApp? app;
 
   /// Has the user been authenticated?
   bool? get isAuthenticated => user != null;
@@ -74,7 +72,7 @@ class CarpBackend {
   factory CarpBackend() => _instance;
 
   Future<void> initialize() async {
-    _app = CarpApp(
+    app = CarpApp(
       name: "CAWS @ DTU",
       uri: uri,
       oauth: OAuthEndPoint(clientID: clientId, clientSecret: clientSecret),
@@ -83,108 +81,34 @@ class CarpBackend {
     );
 
     CarpService().configure(app!);
-    info('$runtimeType initialized - app: $_app');
-  }
 
-  // /// Authenticate the user like this:
-  // /// * check if a local username and token is saved on the phone
-  // /// * if so, use this and try to authenticate
-  // /// * else authenticate using the username / password dialogue
-  // /// * if successful, save the token locally
-  // Future<void> authenticate(BuildContext context) async {
-  //   info('Authenticating user...');
-  //   if (username != null && oauthToken != null) {
-  //     info('Authenticating with saved token - token: $oauthToken');
-  //     try {
-  //       await CarpService()
-  //           .authenticateWithToken(username: username!, token: oauthToken!);
-  //     } catch (error) {
-  //       warning('Authentication with saved token unsuccessful - $error');
-  //     }
-  //   }
-
-  //   if (user == null) {
-  //     info('Authenticating with dialogue - username: $username');
-  //     await CarpService().authenticateWithDialog(
-  //       context,
-  //     );
-  //     await CarpService().authenticateWithToken(token: oauthToken!);
-  //     if (CarpService().authenticated) {
-  //       username = CarpService().currentUser?.username;
-  //     }
-  //   }
-
-  //   info('User authenticated - user: $user');
-  //   // saving token on the phone
-  //   oauthToken = user?.token!;
-
-  //   // configure the participation service in order to get the invitations
-  //   CarpParticipationService().configureFrom(CarpService());
-  // }
-
-  Future<void> authenticateWithRefreshToken(String refreshToken) async {
-    // try {
-    var user = await CarpService().authenticateWithRefreshToken(refreshToken);
-
-    info('User authenticated - user: $user');
-
-    // saving username & token on the phone
-    username = user.username;
-    oauthToken = user.token;
-    bloc.stateStream.sink.add(StudiesAppState.accessTokenRetrieved);
-
-    // configure the participation service in order to get the invitations
-    CarpParticipationService().configureFrom(CarpService());
-
-    // } catch (error) {
-    //   warning('Authentication with refresh token unsuccessful - $error');
-    // }
-  }
-
-  /// Get all study invitations for the current user.
-  /// If the user is not authenticated, this will return an empty list.
-  /// If the user is authenticated, this will return a list of invitations.
-  /// If the user is authenticated, but has no invitations, this will return an empty list.
-  Future<List<ActiveParticipationInvitation>> getInvitations() async {
-    if (CarpService().authenticated) {
-      List<ActiveParticipationInvitation> invitations =
-          await CarpParticipationService().getActiveParticipationInvitations();
-      bloc.invitations = invitations;
-      return invitations;
+    final OAuthToken? oauthToken = this.oauthToken;
+    if (oauthToken != null) {
+      // if we have a token, we can authenticate the user
+      debug((await authenticateWithRefreshToken(oauthToken.refreshToken))
+          .toString());
     }
-    return [];
+    info('$runtimeType initialized - app: $app');
   }
 
-  // /// Get the study invitation.
-  // Future<void> getStudyInvitation(BuildContext context) async {
-  //   if (studyDeploymentId == null) {
-  //     ActiveParticipationInvitation? invitation =
-  //         await CarpParticipationService().getStudyInvitation(context);
+  Future<CarpUser?> authenticateWithRefreshToken(String refreshToken) async {
+    try {
+      CarpUser user =
+          await CarpService().authenticateWithRefreshToken(refreshToken);
 
-  //     debug('CAWS Study Invitation: $invitation');
+      info('User authenticated - user: $user');
 
-  //     bloc.studyId = invitation?.studyId;
-  //     bloc.studyDeploymentId = invitation?.studyDeploymentId;
-  //     bloc.deviceRolename = invitation?.assignedDevices?.first.device.roleName;
+      // saving username & token on the phone
+      username = user.username;
+      oauthToken = user.token;
+      bloc.stateStream.sink.add(StudiesAppState.accessTokenRetrieved);
 
-  //     info('Invitation received - '
-  //         'study id: ${bloc.studyId}, '
-  //         'deployment id: ${bloc.studyDeploymentId}, '
-  //         'role name: ${bloc.deviceRolename}');
-  //   }
-  // }
-
-  /// Set the selected study invitation.
-  Future<void> setStudyInvitation(
-      ActiveParticipationInvitation invitation) async {
-    bloc.studyId = invitation.studyId;
-    bloc.studyDeploymentId = invitation.studyDeploymentId;
-    bloc.deviceRolename = invitation.assignedDevices?.first.device.roleName;
-
-    info('Invitation received - '
-        'study id: ${bloc.studyId}, '
-        'deployment id: ${bloc.studyDeploymentId}, '
-        'role name: ${bloc.deviceRolename}');
+      // configure the participation service in order to get the invitations
+      CarpParticipationService().configureFrom(CarpService());
+      return user;
+    } on Exception catch (_) {
+      return null;
+    }
   }
 
   Future<ConsentDocument?> uploadInformedConsent(
@@ -199,9 +123,9 @@ class CarpBackend {
       document = await CarpService().createConsentDocument(informedConsent);
       info(
           'Informed consent document uploaded successfully - id: ${document.id}');
-      bloc.informedConsentAccepted = true;
+      bloc.setHasInformedConsentBeenAccepted = true;
     } on Exception {
-      bloc.informedConsentAccepted = false;
+      bloc.setHasInformedConsentBeenAccepted = false;
       warning('Informed consent upload failed for username: $username');
     }
 

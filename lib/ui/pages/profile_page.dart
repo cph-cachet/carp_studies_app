@@ -37,7 +37,7 @@ class ProfilePageState extends State<ProfilePage> {
                         color: Theme.of(context).primaryColor, size: 30),
                     tooltip: locale.translate('Back'),
                     onPressed: () {
-                      Navigator.of(context).pop();
+                      context.pop();
                     }),
               ],
             ),
@@ -223,15 +223,13 @@ class ProfilePageState extends State<ProfilePage> {
           actions: <Widget>[
             TextButton(
               child: Text(locale.translate("NO")),
-              onPressed: () => Navigator.of(context).pop(),
+              onPressed: () => context.pop(),
             ),
             TextButton(
               child: Text(locale.translate("YES")),
               onPressed: () {
-                bloc.leaveStudyAndSignOut().then((_) => Navigator.of(context)
-                  ..pop() // popup dialogue
-                  ..pop() // profile page
-                  ..pushReplacementNamed('/LoadingPage'));
+                bloc.leaveStudyAndSignOut().then((_) =>
+                    context.go('/Loading')); //TODO: really go to loading page?
               },
             )
           ],
@@ -257,11 +255,8 @@ class ProfilePageState extends State<ProfilePage> {
             ),
             TextButton(
               child: Text(locale.translate("YES")),
-              onPressed: () =>
-                  bloc.leaveStudy().then((_) => Navigator.of(context)
-                    ..pop() // popup dialogue
-                    ..pop() // profile page
-                    ..pushReplacementNamed('/LoadingPage')),
+              onPressed: () => bloc.leaveStudy().then((_) =>
+                  context.go('/Loading')), //TODO: really go to loading page?
             )
           ],
         );

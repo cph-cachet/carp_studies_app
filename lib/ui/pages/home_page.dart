@@ -77,13 +77,4 @@ class HomePage extends StatelessWidget {
         break;
     }
   }
-
-  // void _restart() {
-  //   setState(() {
-  //     if (bloc.isRunning)
-  //       bloc.pause();
-  //     else
-  //       bloc.resume();
-  //   });
-  // }
 }

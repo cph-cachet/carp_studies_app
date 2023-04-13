@@ -13,6 +13,8 @@ class LoginPageViewModel extends ViewModel {
   // 'https://cans.cachet.dk/portal/${bloc.deploymentMode.name}/register?redirect=carp.studies://auth');
   get getRegisterUri => _registerUri;
 
+  LoginPageViewModel();
+
   Future<void> iOSAuthentication(WebAuthenticationSession? session) async {
     if (session != null && await session.canStart()) {
       session = await startWebAuthenticationSession(session);
@@ -75,6 +77,4 @@ class LoginPageViewModel extends ViewModel {
 
     await bloc.backend.authenticateWithRefreshToken(refreshToken);
   }
-
-  LoginPageViewModel();
 }

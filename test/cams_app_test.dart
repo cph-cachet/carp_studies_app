@@ -79,10 +79,18 @@ void main() {
     setUp(() async {});
 
     /// Generates and prints the local study protocol as json
-    test('protocol -> JSON', () async {
-      StudyProtocol? protocol =
+    test('Study Protocol -> JSON', () async {
+      final protocol =
           await LocalStudyProtocolManager().getStudyProtocol('1234');
       expect(toJsonString(protocol), isNotEmpty);
+      print(toJsonString(protocol));
+    });
+
+    test('Informed Consent -> JSON', () async {
+      final consent = await LocalResourceManager().getInformedConsent();
+
+      expect(toJsonString(consent), isNotEmpty);
+      print(toJsonString(consent));
     });
   });
 }

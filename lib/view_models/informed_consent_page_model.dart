@@ -17,9 +17,7 @@ class InformedConsentViewModel extends ViewModel {
   ) async {
     info('Informed consent has been accepted by user.');
     bloc.setHasInformedConsentBeenAccepted = true;
-    if (bloc.deploymentMode != DeploymentMode.playground) {
-      await bloc.backend.uploadInformedConsent(informedConsentResult);
-    }
+    await bloc.backend.uploadInformedConsent(informedConsentResult);
   }
 
   InformedConsentViewModel();

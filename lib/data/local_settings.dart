@@ -31,7 +31,7 @@ class LocalSettings {
 
       _accessToken = (accessTokenString != null) ? accessTokenString : null;
     }
-    return _accessToken!;
+    return _accessToken;
   }
 
   set accessToken(String? value) {
@@ -40,11 +40,14 @@ class LocalSettings {
   }
 
   OAuthToken? get oauthToken {
-    _oauthToken ??= OAuthToken.fromJson(
-        jsonDecode(Settings().preferences!.getString(oauthTokenKey)!));
-    String tokenString = Settings().preferences!.getString(oauthTokenKey)!;
+    if (_oauthToken == null) {
+      String? ouathTokenString =
+          Settings().preferences!.getString(oauthTokenKey);
 
-    _oauthToken ??= OAuthToken.fromJson(jsonDecode(tokenString));
+      _oauthToken = (ouathTokenString != null)
+          ? OAuthToken.fromJson(jsonDecode(ouathTokenString))
+          : null;
+    }
     return _oauthToken;
   }
 

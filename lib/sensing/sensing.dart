@@ -9,12 +9,15 @@ part of carp_study_app;
 
 /// This class implements the sensing layer.
 ///
-/// Call [initialize] to setup a deployment, either locally or using a CARP
-/// deployment. Once initialized, the runtime [controller] can be used to
-/// control the study execution (e.g., resume, pause, stop).
+/// Call [initialize] to setup a deployment using a CARP deployment.
+/// Once initialized, use the [addStudy] method to add the study to this runtime.
+/// The runtime [controller] can be used to control the study execution
+/// (i.e., start or stop).
 ///
-/// Note that this class is a singleton. Only one sensing layer is used.
-/// But, CAMS supports that several studies are added to the [client].
+/// Note that this class is a singleton and only one sensing layer is used.
+/// Hence, the current assumption at the moment is that this Study App only
+/// runs one study at a time, even though CAMS supports that several studies
+/// added to the [client].
 class Sensing {
   static final Sensing _instance = Sensing._();
   StudyDeploymentStatus? _status;
@@ -42,7 +45,7 @@ class Sensing {
   /// The study runtime for this deployment.
   SmartphoneDeploymentController? get controller => _controller;
 
-  /// Is sensing running, i.e. has the study executor been resumed?
+  /// Is sensing running, i.e. has the study executor been started?
   bool get isRunning =>
       (controller != null) &&
       controller!.executor!.state == ExecutorState.started;
@@ -78,7 +81,7 @@ class Sensing {
 
   /// Initialize and set up sensing.
   Future<void> initialize() async {
-    info('Initializing $runtimeType - mode: ${bloc.deploymentMode}');
+    info('Initializing $runtimeType}');
 
     // set up the devices available on this phone
     DeviceController().registerAllAvailableDevices();

@@ -15,7 +15,7 @@ class InformedConsentState extends State<InformedConsentPage> {
   void resultCallback(RPTaskResult result) async {
     await widget.model.informedConsentHasBeenAccepted(result);
     if (context.mounted) {
-      context.go('/');
+      context.go('/tasks');
     }
   }
 
@@ -62,6 +62,10 @@ class InformedConsentState extends State<InformedConsentPage> {
                   child: Column(
                     children: [
                       const Text("No informed consent found"),
+                      ElevatedButton(
+                        child: const Text('Okay'),
+                        onPressed: () => context.go('/tasks'),
+                      )
                     ],
                   ),
                 ),

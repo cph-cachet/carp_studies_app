@@ -1,9 +1,12 @@
 part of carp_study_app;
 
+// TODO - Remove later.
+
 /// The local [StudyProtocolManager].
 ///
 /// This is used for loading the [StudyProtocol] from a local in-memory
-/// Dart definition.
+/// Dart definition. Mainly used to generate a test protocol to be uploaded to
+/// CAWS.
 class LocalStudyProtocolManager implements StudyProtocolManager {
   @override
   Future initialize() async {}
@@ -12,12 +15,8 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
   Future<SmartphoneStudyProtocol?> getStudyProtocol(String studyId) async {
     var protocol = demoStudy;
 
-    // set the data endpoint based on the deployment mode (local or CARP)
-    protocol.dataEndPoint = (bloc.deploymentMode == DeploymentMode.playground)
-        ? SQLiteDataEndPoint()
-        : CarpDataEndPoint(
-            uploadMethod: CarpUploadMethod.datapoint,
-          );
+    protocol.dataEndPoint =
+        CarpDataEndPoint(uploadMethod: CarpUploadMethod.datapoint);
 
     return protocol;
   }

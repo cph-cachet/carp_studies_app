@@ -10,10 +10,16 @@ class TaskListPage extends StatefulWidget {
 
 class TaskListPageState extends State<TaskListPage> {
   @override
+  void initState() {
+    super.initState();
+    bloc.configureStudy().then((_) => bloc.start());
+  }
+
+  @override
   Widget build(BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;
     bloc.configurePermissions(context);
-    bloc.configure().then((_) => bloc.start());
+    // bloc.configureStudy().then((_) => bloc.start());
 
     return Scaffold(
       body: SafeArea(

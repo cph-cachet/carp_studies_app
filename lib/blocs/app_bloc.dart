@@ -48,27 +48,25 @@ class StudyAppBLoC {
   /// What kind of deployment are we running - LOCAL or CAWS?
   final DeploymentMode deploymentMode;
 
-  // ScaffoldMessenger for showing snackbars
+  // ScaffoldMessenger for showing snack bars
   final _scaffoldKey = GlobalKey<ScaffoldMessengerState>();
   get scaffoldKey => _scaffoldKey;
   get scaffoldMessengerState => scaffoldKey.currentState;
 
   /// Create the BLoC for the app specifying:
   ///  * debug level
-  ///  * deployment mode (LOCAL or CAWS)
-  ///  * whether to use the locally stored credentials
+  ///  * deployment mode (production, test, dev)
   StudyAppBLoC({
     this.debugLevel = DebugLevel.info,
-    this.deploymentMode = DeploymentMode.playground,
+    this.deploymentMode = DeploymentMode.dev,
   }) : super();
 
-  LocalizationManager get localizationManager =>
-      CarpResourceManager() as LocalizationManager;
+  LocalizationManager get localizationManager => CarpResourceManager();
 
   LocalizationLoader get localizationLoader =>
       ResourceLocalizationLoader(localizationManager);
 
-  MessageManager get messageManager => CarpResourceManager() as MessageManager;
+  MessageManager get messageManager => CarpResourceManager();
 
   CarpBackend get backend => _backend;
 
@@ -76,13 +74,19 @@ class StudyAppBLoC {
   /// Typical set based on an invitation.
   /// `null` if no deployment have been specified.
   String? get studyId => LocalSettings().studyId;
-  set studyId(String? id) => LocalSettings().studyId = id;
+  set studyId(String? id) {
+    LocalSettings().studyId = id;
+    backend.studyId = id;
+  }
 
   /// The id of the currently running study deployment.
   /// Typical set based on an invitation.
   /// `null` if no deployment have been specified.
   String? get studyDeploymentId => LocalSettings().studyDeploymentId;
-  set studyDeploymentId(String? id) => LocalSettings().studyDeploymentId = id;
+  set studyDeploymentId(String? id) {
+    LocalSettings().studyDeploymentId = id;
+    backend.studyDeploymentId = id;
+  }
 
   /// The role name of the device in the currently running study deployment.
   /// Typical set based on an invitation.
@@ -102,56 +106,6 @@ class StudyAppBLoC {
   /// The overall data model for this app
   CarpStudyAppViewModel get data => _data;
 
-  /// Does this [deployment] have the measure of [type].
-  bool hasMeasure(String type) {
-    if (deployment == null) return false;
-
-    try {
-      deployment!.measures.firstWhere((measure) => measure.type == type);
-    } catch (error) {
-      return false;
-    }
-
-    return true;
-  }
-
-  bool hasMeasures() {
-    if (deployment == null) return false;
-    try {
-      if (deployment!.measures.any((measure) =>
-          (measure.type != VideoUserTask.imageType &&
-              measure.type != VideoUserTask.videoType &&
-              measure.type != AudioUserTask.audioType &&
-              measure.type != SurveyUserTask.SURVEY_TYPE))) {
-        return true;
-      } else {
-        return false;
-      }
-    } catch (error) {
-      return false;
-    }
-  }
-
-  bool hasSurveys() {
-    if (deployment == null) return false;
-    try {
-      deployment!.tasks.isNotEmpty;
-      return true;
-    } catch (error) {
-      return false;
-    }
-  }
-
-  bool hasDevices() {
-    if (deployment == null) return false;
-    try {
-      deployment!.connectedDevices.isNotEmpty;
-      return true;
-    } catch (error) {
-      return false;
-    }
-  }
-
   /// Initialize this BLOC. Called before being used for anything.
   Future<void> initialize() async {
     if (isInitialized) return;
@@ -162,31 +116,24 @@ class StudyAppBLoC {
 
     await backend.initialize();
 
-    // set up and initialize sensing
-    await Sensing().initialize();
-
     stateStream.sink.add(StudiesAppState.initialized);
-    info(
-        '$runtimeType initialized - deployment mode: ${deploymentMode.toString().split('.').last}');
+    info('$runtimeType initialized.');
   }
 
-  /// This methods is used to configure a new study, including:
-  ///  * authenticate the user
-  ///  * get the invitation
-  ///  * get the informed consent
-  ///  * get the study
+  /// This methods is used to configure a study, including:
+  ///  * setting up messaging
   ///  * initialize sensing
-  ///
-  /// This method is used in the [LoadingPage].
-  Future<void> configure() async {
+  ///  * adding the CAMS study
+  ///  * initializing the data visualization pages
+  Future<void> configureStudy() async {
     // early out if already configuring (e.g. waiting for user authentication)
     if (isConfiguring) return;
 
     stateStream.sink.add(StudiesAppState.configuring);
-
     info('$runtimeType configuring...');
 
-    // find the right informed consent, if needed
+    // set up and initialize sensing
+    await Sensing().initialize();
 
     // set up the messaging part
     messageManager.initialize().then(
@@ -292,6 +239,37 @@ class StudyAppBLoC {
   /// The name used for friendly greeting - '' if no user logged in.
   String? get friendlyUsername => (user != null) ? user!.firstName : '';
 
+  /// Does this [deployment] have any measures?
+  bool hasMeasures() => (deployment == null)
+      ? false
+      : (deployment!.measures.any((measure) =>
+          (measure.type != VideoUserTask.imageType &&
+              measure.type != VideoUserTask.videoType &&
+              measure.type != AudioUserTask.audioType &&
+              measure.type != SurveyUserTask.SURVEY_TYPE)));
+
+  /// Does this [deployment] have the measure of [type]?
+  bool hasMeasure(String type) {
+    if (deployment == null) return false;
+
+    try {
+      deployment!.measures.firstWhere((measure) => measure.type == type);
+    } catch (_) {
+      return false;
+    }
+
+    return true;
+  }
+
+  /// Does this [deployment] have any user tasks?
+  bool hasSurveys() => (deployment == null)
+      ? false
+      : deployment!.tasks.whereType<AppTask>().isNotEmpty;
+
+  /// Does this [deployment] have any connected devices?
+  bool hasDevices() =>
+      (deployment == null) ? false : deployment!.connectedDevices.isNotEmpty;
+
   /// Is sensing running, i.e. has the study executor been resumed?
   bool get isRunning => Sensing().isRunning;
 
@@ -317,15 +295,11 @@ class StudyAppBLoC {
     device.connect();
   }
 
-  /// Start sensing. Should only be called once.
-  /// Use [resume] and [pause] if pausing/resuming sensing.
-  ///
-  /// Ensures that permissions are requested.
+  /// Start sensing.
   Future<void> start() async {
     assert(Sensing().controller != null,
         'No Study Controller - the study has not been deployed.');
-
-    Sensing().controller?.start();
+    if (!Sensing().isRunning) Sensing().controller?.start();
   }
 
   // Stop sensing.
@@ -360,8 +334,6 @@ class StudyAppBLoC {
     setHasInformedConsentBeenAccepted = false;
     await LocalSettings().eraseStudyIds();
     await Sensing().removeStudy();
-    // a small hack; reuse and reload the same deployment - but only in local mode
-    if (deploymentMode == DeploymentMode.playground) studyDeploymentId = id;
   }
 
   /// Leave the study and also sign out the user.

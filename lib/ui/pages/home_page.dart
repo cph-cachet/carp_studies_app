@@ -1,9 +1,22 @@
 part of carp_study_app;
 
-class HomePage extends StatelessWidget {
-  const HomePage({required this.child, Key? key}) : super(key: key);
+class HomePage extends StatefulWidget {
+  // final HomePageState model;
+  const HomePage({required this.child, super.key});
 
   final Widget child;
+
+  @override
+  HomePageState createState() => HomePageState();
+}
+
+class HomePageState extends State<HomePage> {
+  @override
+  void initState() {
+    super.initState();
+    bloc.configurePermissions(context);
+    bloc.configureStudy().then((_) => bloc.start());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +24,7 @@ class HomePage extends StatelessWidget {
     Sensing().translateStudyProtocol(locale);
 
     return Scaffold(
-      body: child,
+      body: widget.child,
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         selectedItemColor: Theme.of(context).primaryColor,

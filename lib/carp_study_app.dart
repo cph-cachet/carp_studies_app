@@ -41,7 +41,7 @@ class CarpStudyAppState extends State<CarpStudyApp> {
           GoRoute(
             path: '/',
             redirect: (context, state) =>
-                bloc.hasInformedConsentBeenAccepted ? '/tasks' : '/Consent',
+                bloc.hasInformedConsentBeenAccepted ? '/about' : '/Consent',
           ),
           GoRoute(
             path: '/tasks',

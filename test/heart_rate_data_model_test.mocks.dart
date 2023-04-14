@@ -208,12 +208,6 @@ class MockSmartphoneDeploymentController extends _i1.Mock
         returnValueForMissingStub: _i5.Stream<_i3.StudyStatus>.empty(),
       ) as _i5.Stream<_i3.StudyStatus>);
   @override
-  _i3.StudyStatus get status => (super.noSuchMethod(
-        Invocation.getter(#status),
-        returnValue: _i3.StudyStatus.DeploymentNotStarted,
-        returnValueForMissingStub: _i3.StudyStatus.DeploymentNotStarted,
-      ) as _i3.StudyStatus);
-  @override
   set status(_i3.StudyStatus? newStatus) => super.noSuchMethod(
         Invocation.setter(
           #status,
@@ -221,6 +215,12 @@ class MockSmartphoneDeploymentController extends _i1.Mock
         ),
         returnValueForMissingStub: null,
       );
+  @override
+  bool get isInitialized => (super.noSuchMethod(
+        Invocation.getter(#isInitialized),
+        returnValue: false,
+        returnValueForMissingStub: false,
+      ) as bool);
   @override
   bool get isDeployed => (super.noSuchMethod(
         Invocation.getter(#isDeployed),
@@ -238,8 +238,8 @@ class MockSmartphoneDeploymentController extends _i1.Mock
       get remainingDevicesToRegister => (super.noSuchMethod(
             Invocation.getter(#remainingDevicesToRegister),
             returnValue: <_i3.DeviceConfiguration<_i3.DeviceRegistration>>[],
-            returnValueForMissingStub: <
-                _i3.DeviceConfiguration<_i3.DeviceRegistration>>[],
+            returnValueForMissingStub: <_i3
+                .DeviceConfiguration<_i3.DeviceRegistration>>[],
           ) as List<_i3.DeviceConfiguration<_i3.DeviceRegistration>>);
   @override
   _i5.Stream<_i3.Measurement> measurementsByType(String? type) =>

@@ -22,12 +22,14 @@ class LoginPageViewModel extends ViewModel {
     } else if (session != null) {
       info("Session is $session. Recreating.");
       session = null;
-      session = await createWebAuthenticationSession(session, _loginUri);
+      session =
+          await createWebAuthenticationSession(session, bloc.backend.loginUri);
       session = await startWebAuthenticationSession(session!);
     }
     if (session == null) {
       info("Session is null, creating.");
-      session = await createWebAuthenticationSession(session, _loginUri);
+      session =
+          await createWebAuthenticationSession(session, bloc.backend.loginUri);
     }
   }
 

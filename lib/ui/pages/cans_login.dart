@@ -17,13 +17,13 @@ class _LoginPageState extends State<LoginPage> {
     if (Platform.isIOS) {
       widget.model
           .createWebAuthenticationSession(
-              widget.model.loginSession, widget.model.getLoginUri)
+              widget.model.loginSession, bloc.backend.loginUri)
           .then((value) {
         widget.model.loginSession = value;
       });
       widget.model
           .createWebAuthenticationSession(
-              widget.model.registerSession, widget.model.getRegisterUri)
+              widget.model.registerSession, bloc.backend.registerUri)
           .then((value) {
         widget.model.registerSession = value;
       });

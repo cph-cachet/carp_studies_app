@@ -12,9 +12,9 @@ class CarpBackend {
   static const String carpWebsiteUrl = "https://carp.cachet.dk";
 
   static const Map<DeploymentMode, String> uris = {
-    DeploymentMode.dev: '/dev',
-    DeploymentMode.test: '/test',
-    DeploymentMode.staging: '/stage',
+    DeploymentMode.dev: 'dev',
+    DeploymentMode.test: 'test',
+    DeploymentMode.staging: 'stage',
     DeploymentMode.production: '',
   };
 

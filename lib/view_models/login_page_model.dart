@@ -6,6 +6,7 @@ class LoginPageViewModel extends ViewModel {
 
   final WebUri _loginUri = WebUri(
       'https://cans.cachet.dk/portal/playground/?redirect=carp.studies://auth');
+      // 'https://cans.cachet.dk/portal/playground/login?redirect=carp.studies://auth');
   get getLoginUri => _loginUri;
 
   final WebUri _registerUri = WebUri(

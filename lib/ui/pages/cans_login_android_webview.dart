@@ -19,7 +19,7 @@ class _LoginPageAndroidState extends State<LoginPageAndroid> {
         children: <Widget>[
           Expanded(
             child: InAppWebView(
-              initialUrlRequest: URLRequest(url: widget.model.getLoginUri),
+              initialUrlRequest: URLRequest(url: bloc.backend.loginUri),
               initialSettings: InAppWebViewSettings(
                 domStorageEnabled: true,
                 databaseEnabled: true,

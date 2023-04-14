@@ -11,6 +11,18 @@ class CarpBackend {
   /// The URL of the official CARP Web Site.
   static const String carpWebsiteUrl = "https://carp.cachet.dk";
 
+  // TODO - take into account deployment mode
+
+  /// The URI for the web-based authentication.
+  WebUri get loginUri => WebUri(
+      'https://cans.cachet.dk/portal/playground/?redirect=carp.studies://auth');
+  // 'https://cans.cachet.dk/portal/playground/login?redirect=carp.studies://auth');
+
+  /// The URI for the web-based registration of users.
+  WebUri get registerUri => WebUri(
+      'https://cans.cachet.dk/portal/playground/register?redirect=carp.studies://auth');
+  // 'https://cans.cachet.dk/portal/${bloc.deploymentMode.name}/register?redirect=carp.studies://auth');
+
   static const Map<DeploymentMode, String> uris = {
     DeploymentMode.dev: 'dev',
     DeploymentMode.test: 'test',

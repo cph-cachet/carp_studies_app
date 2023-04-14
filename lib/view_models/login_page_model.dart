@@ -4,16 +4,6 @@ class LoginPageViewModel extends ViewModel {
   WebAuthenticationSession? loginSession;
   WebAuthenticationSession? registerSession;
 
-  final WebUri _loginUri = WebUri(
-      'https://cans.cachet.dk/portal/playground/?redirect=carp.studies://auth');
-      // 'https://cans.cachet.dk/portal/playground/login?redirect=carp.studies://auth');
-  get getLoginUri => _loginUri;
-
-  final WebUri _registerUri = WebUri(
-      'https://cans.cachet.dk/portal/playground/register?redirect=carp.studies://auth');
-  // 'https://cans.cachet.dk/portal/${bloc.deploymentMode.name}/register?redirect=carp.studies://auth');
-  get getRegisterUri => _registerUri;
-
   LoginPageViewModel();
 
   Future<void> iOSAuthentication(WebAuthenticationSession? session) async {
@@ -23,12 +13,14 @@ class LoginPageViewModel extends ViewModel {
     } else if (session != null) {
       info("Session is $session. Recreating.");
       session = null;
-      session = await createWebAuthenticationSession(session, _loginUri);
+      session =
+          await createWebAuthenticationSession(session, bloc.backend.loginUri);
       session = await startWebAuthenticationSession(session!);
     }
     if (session == null) {
       info("Session is null, creating.");
-      session = await createWebAuthenticationSession(session, _loginUri);
+      session =
+          await createWebAuthenticationSession(session, bloc.backend.loginUri);
     }
   }
 

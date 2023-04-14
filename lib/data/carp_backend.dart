@@ -88,8 +88,6 @@ class CarpBackend {
 
     CarpService().configure(app!);
 
-    print('>> oauthToken: $oauthToken');
-
     if (oauthToken != null) {
       // if we have a token, we can authenticate the user
       await authenticateWithRefreshToken(oauthToken!.refreshToken);
@@ -98,25 +96,25 @@ class CarpBackend {
   }
 
   Future<CarpUser?> authenticateWithRefreshToken(String refreshToken) async {
-    // try {
-    CarpUser user =
-        await CarpService().authenticateWithRefreshToken(refreshToken);
+    try {
+      CarpUser user =
+          await CarpService().authenticateWithRefreshToken(refreshToken);
 
-    info('User authenticated - user: $user');
+      info('User authenticated - user: $user');
 
-    // saving username & token on the phone
-    username = user.username;
-    oauthToken = user.token;
-    bloc.stateStream.sink.add(StudiesAppState.accessTokenRetrieved);
+      // saving username & token on the phone
+      username = user.username;
+      oauthToken = user.token;
+      bloc.stateStream.sink.add(StudiesAppState.accessTokenRetrieved);
 
-    // configure the participation service in order to get the invitations
-    CarpParticipationService().configureFrom(CarpService());
-    return user;
-    // } on Exception catch (error) {
-    //   warning(
-    //       '$runtimeType - error authenticating based on refresh token - $error');
-    //   return null;
-    // }
+      // configure the participation service in order to get the invitations
+      CarpParticipationService().configureFrom(CarpService());
+      return user;
+    } on Exception catch (error) {
+      warning(
+          '$runtimeType - error authenticating based on refresh token - $error');
+      return null;
+    }
   }
 
   Future<ConsentDocument?> uploadInformedConsent(

@@ -1,16 +1,5 @@
 part of carp_study_app;
 
-FadeTransition bottomNavigationBarAnimation(
-  BuildContext context,
-  Animation<double> animation,
-  Animation<double> secondaryAnimation,
-  Widget child,
-) =>
-    FadeTransition(
-      opacity: animation,
-      child: child,
-    );
-
 class CarpStudyApp extends StatefulWidget {
   const CarpStudyApp({super.key});
 
@@ -26,9 +15,9 @@ class CarpStudyApp extends StatefulWidget {
 
 class CarpStudyAppState extends State<CarpStudyApp> {
   reloadLocale() {
-    setState(() {
-      rpLocalizationsDelegate.reload();
-    });
+    // setState(() {
+    rpLocalizationsDelegate.reload();
+    // });
   }
 
   final GoRouter _router = GoRouter(
@@ -172,3 +161,14 @@ class CarpStudyAppState extends State<CarpStudyApp> {
     );
   }
 }
+
+FadeTransition bottomNavigationBarAnimation(
+  BuildContext context,
+  Animation<double> animation,
+  Animation<double> secondaryAnimation,
+  Widget child,
+) =>
+    FadeTransition(
+      opacity: animation,
+      child: child,
+    );

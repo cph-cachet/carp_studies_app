@@ -126,7 +126,7 @@ class StudyAppBLoC {
   ///  * adding the CAMS study
   ///  * initializing the data visualization pages
   Future<void> configureStudy() async {
-    // early out if already configuring (e.g. waiting for user authentication)
+    // early out if already configured
     if (isConfiguring) return;
 
     stateStream.sink.add(StudiesAppState.configuring);

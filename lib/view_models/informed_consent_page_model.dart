@@ -1,12 +1,14 @@
 part of carp_study_app;
 
 class InformedConsentViewModel extends ViewModel {
-  InformedConsentManager get informedConsentManager =>
-      CarpResourceManager() as InformedConsentManager;
+  RPOrderedTask? _informedConsent;
 
-  Future<RPOrderedTask?> get informedConsent async {
-    return await informedConsentManager.getInformedConsent();
-  }
+  InformedConsentManager get informedConsentManager => CarpResourceManager();
+
+  InformedConsentViewModel();
+
+  Future<RPOrderedTask?> get informedConsent async =>
+      _informedConsent ??= await informedConsentManager.getInformedConsent();
 
   /// Called when the informed consent has been accepted by the user.
   /// This entails that it has been:
@@ -19,6 +21,4 @@ class InformedConsentViewModel extends ViewModel {
     bloc.setHasInformedConsentBeenAccepted = true;
     await bloc.backend.uploadInformedConsent(informedConsentResult);
   }
-
-  InformedConsentViewModel();
 }

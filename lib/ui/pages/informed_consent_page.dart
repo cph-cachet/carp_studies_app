@@ -44,7 +44,16 @@ class InformedConsentState extends State<InformedConsentPage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    // when the informed consent is to be shown, the localizations should have
+    // been downloaded and we can ask the app to reload the translations
+    CarpStudyApp.reloadLocale(context);
+
     return Scaffold(
       key: _scaffoldKey,
       body: FutureBuilder<RPOrderedTask?>(

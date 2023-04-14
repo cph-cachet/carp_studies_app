@@ -1,7 +1,6 @@
 part of carp_study_app;
 
 class HomePage extends StatefulWidget {
-  // final HomePageState model;
   const HomePage({required this.child, super.key});
 
   final Widget child;

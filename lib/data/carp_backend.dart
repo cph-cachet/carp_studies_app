@@ -16,7 +16,7 @@ class CarpBackend {
   /// The URI for the web-based authentication.
   WebUri get loginUri => WebUri(
       'https://cans.cachet.dk/portal/playground/?redirect=carp.studies://auth');
-  // 'https://cans.cachet.dk/portal/playground/login?redirect=carp.studies://auth');
+  // 'https://cans.cachet.dk/portal/${bloc.deploymentMode.name}/login?redirect=carp.studies://auth');
 
   /// The URI for the web-based registration of users.
   WebUri get registerUri => WebUri(
@@ -24,9 +24,9 @@ class CarpBackend {
   // 'https://cans.cachet.dk/portal/${bloc.deploymentMode.name}/register?redirect=carp.studies://auth');
 
   static const Map<DeploymentMode, String> uris = {
-    DeploymentMode.dev: '/dev',
-    DeploymentMode.test: '/test',
-    DeploymentMode.staging: '/stage',
+    DeploymentMode.dev: 'dev',
+    DeploymentMode.test: 'test',
+    DeploymentMode.staging: 'stage',
     DeploymentMode.production: '',
   };
 

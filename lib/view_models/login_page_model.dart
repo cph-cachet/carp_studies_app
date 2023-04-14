@@ -4,15 +4,6 @@ class LoginPageViewModel extends ViewModel {
   WebAuthenticationSession? loginSession;
   WebAuthenticationSession? registerSession;
 
-  final WebUri _loginUri = WebUri(
-      'https://cans.cachet.dk/portal/playground/?redirect=carp.studies://auth');
-  get getLoginUri => _loginUri;
-
-  final WebUri _registerUri = WebUri(
-      'https://cans.cachet.dk/portal/playground/register?redirect=carp.studies://auth');
-  // 'https://cans.cachet.dk/portal/${bloc.deploymentMode.name}/register?redirect=carp.studies://auth');
-  get getRegisterUri => _registerUri;
-
   LoginPageViewModel();
 
   Future<void> iOSAuthentication(WebAuthenticationSession? session) async {

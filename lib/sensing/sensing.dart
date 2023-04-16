@@ -157,7 +157,7 @@ class Sensing {
       }
     }
 
-    info("Study protocol translated to local '${localization.locale}'");
+    info("Study protocol translated to locale '${localization.locale}'");
   }
 
   Future<void> askForPermissions() async =>

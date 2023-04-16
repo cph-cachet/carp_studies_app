@@ -15,9 +15,9 @@ class CarpStudyApp extends StatefulWidget {
 
 class CarpStudyAppState extends State<CarpStudyApp> {
   reloadLocale() {
-    // setState(() {
-    rpLocalizationsDelegate.reload();
-    // });
+    setState(() {
+      rpLocalizationsDelegate.reload();
+    });
   }
 
   final GoRouter _router = GoRouter(
@@ -119,10 +119,12 @@ class CarpStudyAppState extends State<CarpStudyApp> {
   /// Research Package translations, incl. both local language assets plus
   /// translations of informed consent and surveys downloaded from CARP
   final RPLocalizationsDelegate rpLocalizationsDelegate =
-      RPLocalizationsDelegate(loaders: [
-    const AssetLocalizationLoader(),
-    bloc.localizationLoader,
-  ]);
+      RPLocalizationsDelegate(
+    loaders: [
+      const AssetLocalizationLoader(),
+      bloc.localizationLoader,
+    ],
+  );
 
   @override
   Widget build(BuildContext context) {

@@ -120,6 +120,26 @@ class StudyAppBLoC {
     info('$runtimeType initialized.');
   }
 
+  /// Set the active study in the app based on an [invitation].
+  ///
+  /// If the [context] is provided, the translation for this study is re-loaded
+  /// and applied in the app.
+  void setStudyInvitation(
+    ActiveParticipationInvitation invitation, [
+    BuildContext? context,
+  ]) {
+    bloc.studyId = invitation.studyId;
+    bloc.studyDeploymentId = invitation.studyDeploymentId;
+    bloc.deviceRolename = invitation.assignedDevices?.first.device.roleName;
+
+    info('Invitation received - '
+        'study id: ${bloc.studyId}, '
+        'deployment id: ${bloc.studyDeploymentId}, '
+        'role name: ${bloc.deviceRolename}');
+
+    if (context != null) CarpStudyApp.reloadLocale(context);
+  }
+
   /// This methods is used to configure a study, including:
   ///  * setting up messaging
   ///  * initialize sensing
@@ -192,18 +212,6 @@ class StudyAppBLoC {
     // await Sensing().askForPermissions();
   }
 
-  /// Set the selected study invitation.
-  void setStudyInvitation(ActiveParticipationInvitation invitation) {
-    bloc.studyId = invitation.studyId;
-    bloc.studyDeploymentId = invitation.studyDeploymentId;
-    bloc.deviceRolename = invitation.assignedDevices?.first.device.roleName;
-
-    info('Invitation received - '
-        'study id: ${bloc.studyId}, '
-        'deployment id: ${bloc.studyDeploymentId}, '
-        'role name: ${bloc.deviceRolename}');
-  }
-
   /// Has the informed consent been shown to, and accepted by the user?
   bool get hasInformedConsentBeenAccepted =>
       LocalSettings().hasInformedConsentBeenAccepted;
@@ -248,12 +256,12 @@ class StudyAppBLoC {
               measure.type != AudioUserTask.audioType &&
               measure.type != SurveyUserTask.SURVEY_TYPE)));
 
-  /// Does this [deployment] have the measure of [type]?
+  /// Does this [deployment] have the measure of type [type]?
   bool hasMeasure(String type) {
     if (deployment == null) return false;
 
     try {
-      deployment!.measures.firstWhere((measure) => measure.type == type);
+      deployment?.measures.firstWhere((measure) => measure.type == type);
     } catch (_) {
       return false;
     }

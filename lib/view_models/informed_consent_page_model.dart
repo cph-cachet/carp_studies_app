@@ -7,8 +7,19 @@ class InformedConsentViewModel extends ViewModel {
 
   InformedConsentViewModel();
 
-  Future<RPOrderedTask?> get informedConsent async =>
-      _informedConsent ??= await informedConsentManager.getInformedConsent();
+  /// Get the informed consent for this study as translated to the
+  /// local [locale].
+  Future<RPOrderedTask?> getInformedConsent(Locale locale) async {
+    await bloc.localizationLoader.load(locale);
+    _informedConsent ??= await informedConsentManager.getInformedConsent();
+    return _informedConsent;
+  }
+  // Future<RPOrderedTask?> getInformedConsent(Locale locale) async =>
+  //     bloc.localizationLoader.load(locale).then((value) async =>
+  //         _informedConsent ??=
+  //             await informedConsentManager.getInformedConsent());
+  // return _informedConsent ??=
+  //     await informedConsentManager.getInformedConsent();
 
   /// Called when the informed consent has been accepted by the user.
   /// This entails that it has been:

@@ -46,24 +46,30 @@ class InformedConsentState extends State<InformedConsentPage> {
   @override
   void initState() {
     super.initState();
+    // RPLocalizations localization = RPLocalizations.of(context)!;
+    // widget.model.getInformedConsent(localization.locale);
+    // CarpStudyApp.reloadLocale(context);
   }
 
   @override
   Widget build(BuildContext context) {
     // when the informed consent is to be shown, the localizations should have
     // been downloaded and we can ask the app to reload the translations
-    CarpStudyApp.reloadLocale(context);
+    RPLocalizations localization = RPLocalizations.of(context)!;
+    // bloc.localizationLoader.load(localization.locale);
+    // CarpStudyApp.reloadLocale(context);
 
     return Scaffold(
       key: _scaffoldKey,
       body: FutureBuilder<RPOrderedTask?>(
-        future: widget.model.informedConsent,
+        future: widget.model.getInformedConsent(localization.locale),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
               child: CircularProgressIndicator(),
             );
           }
+
           if (snapshot.hasData == false) {
             return Scaffold(
               body: SafeArea(

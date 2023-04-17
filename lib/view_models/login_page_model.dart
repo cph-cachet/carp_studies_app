@@ -7,10 +7,7 @@ class LoginPageViewModel extends ViewModel {
   LoginPageViewModel();
 
   Future<void> iOSAuthentication(WebAuthenticationSession? session) async {
-    if (session != null && await session.canStart()) {
-      session = await startWebAuthenticationSession(session);
-      info("Session is not null, starting session. Session is $session");
-    } else if (session != null) {
+    if (session != null) {
       info("Session is $session. Recreating.");
       session = null;
       session =

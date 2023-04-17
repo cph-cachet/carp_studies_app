@@ -229,7 +229,7 @@ class ProfilePageState extends State<ProfilePage> {
               child: Text(locale.translate("YES")),
               onPressed: () {
                 bloc.leaveStudyAndSignOut().then((_) =>
-                    context.go('/Loading')); //TODO: really go to loading page?
+                    context.go('/')); //TODO: really go to loading page?
               },
             )
           ],
@@ -256,7 +256,7 @@ class ProfilePageState extends State<ProfilePage> {
             TextButton(
               child: Text(locale.translate("YES")),
               onPressed: () => bloc.leaveStudy().then((_) =>
-                  context.go('/Loading')), //TODO: really go to loading page?
+                  context.go('/Invitations')), //TODO: really go to loading page?
             )
           ],
         );

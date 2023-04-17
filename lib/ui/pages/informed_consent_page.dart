@@ -50,7 +50,8 @@ class InformedConsentState extends State<InformedConsentPage> {
     return Scaffold(
       key: _scaffoldKey,
       body: FutureBuilder<RPOrderedTask?>(
-        future: widget.model.getInformedConsent(localization.locale).then((value) {
+        future:
+            widget.model.getInformedConsent(localization.locale).then((value) {
           if (value == null) {
             context.go('/tasks');
           }
@@ -58,11 +59,13 @@ class InformedConsentState extends State<InformedConsentPage> {
         }),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            return RPUITask(
-              task: snapshot.data!,
-              onSubmit: resultCallback,
-              onCancel: cancelCallback,
-            );
+            if (snapshot.hasData) {
+              return RPUITask(
+                task: snapshot.data!,
+                onSubmit: resultCallback,
+                onCancel: cancelCallback,
+              );
+            }
           }
 
           return const Center(

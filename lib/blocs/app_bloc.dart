@@ -339,7 +339,7 @@ class StudyAppBLoC {
   Future<void> leaveStudy() async {
     final id = studyDeploymentId;
     _state = StudyAppState.initialized;
-    setHasInformedConsentBeenAccepted = false;
+    setHasInformedConsentBeenAccepted = false;  
     await LocalSettings().eraseStudyIds();
     await Sensing().removeStudy();
   }

@@ -65,6 +65,13 @@ class CarpStudyAppState extends State<CarpStudyApp> {
               transitionsBuilder: bottomNavigationBarAnimation,
             ),
           ),
+          GoRoute(
+            path: '/profile',
+            pageBuilder: (context, state) => CustomTransitionPage(
+              child: ProfilePage(bloc.data.profilePageViewModel),
+              transitionsBuilder: bottomNavigationBarAnimation,
+            ),
+          ),
         ],
       ),
       GoRoute(

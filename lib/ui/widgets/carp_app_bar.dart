@@ -16,13 +16,16 @@ class CarpAppBar extends StatelessWidget {
                   margin: const EdgeInsets.only(left: 16.0),
                   child: Image.asset(
                     'assets/carp_logo.png',
-                    height: 30,
+                    fit: BoxFit.contain,
+                    height: 24,
                   ),
                 ),
-                const SizedBox(width: 3),
                 IconButton(
-                  icon: Icon(Icons.account_circle_outlined,
-                      color: Theme.of(context).primaryColor, size: 30),
+                  icon: Icon(
+                    Icons.account_circle_outlined,
+                    color: Theme.of(context).primaryColor,
+                    size: 30,
+                  ),
                   tooltip: 'Profile',
                   onPressed: () {
                     context.push('/profile');

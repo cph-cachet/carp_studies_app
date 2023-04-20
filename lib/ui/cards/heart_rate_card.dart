@@ -30,8 +30,8 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
       duration: Duration(
           milliseconds:
               1000 ~/ (((widget.model.currentHeartRate ?? 0) + 1) / 60)),
-      lowerBound: 0.7,
-      upperBound: 1.0,
+      lowerBound: 0.4,
+      upperBound: 1,
     )..repeat(
         reverse: true,
       );

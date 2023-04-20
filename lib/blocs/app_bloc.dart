@@ -283,7 +283,7 @@ class StudyAppBLoC {
 
   /// the list of running - i.e. used - probes in this study.
   List<Probe> get runningProbes => (Sensing().controller != null)
-      ? Sensing().controller!.executor!.probes
+      ? Sensing().controller!.executor.probes
       : [];
 
   /// Get a list of running devices
@@ -311,18 +311,18 @@ class StudyAppBLoC {
   }
 
   // Stop sensing.
-  void stop() => Sensing().controller?.executor?.stop();
+  void stop() => Sensing().controller?.executor.stop();
 
   // Dispose the entire sensing.
   void dispose() => Sensing().controller?.dispose();
 
   /// Add a [Measurement] object to the stream of events.
   void addMeasurement(Measurement measurement) =>
-      Sensing().controller!.executor!.addMeasurement(measurement);
+      Sensing().controller!.executor.addMeasurement(measurement);
 
   /// Add a error to the stream of events.
   void addError(Object error, [StackTrace? stacktrace]) =>
-      Sensing().controller!.executor!.addError(error, stacktrace);
+      Sensing().controller!.executor.addError(error, stacktrace);
 
   /// Leave the study deployed on this phone.
   ///

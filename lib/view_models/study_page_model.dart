@@ -22,10 +22,10 @@ class StudyPageViewModel extends ViewModel {
 
   /// Events on the state of the study executor
   Stream<ExecutorState> get studyExecutorStateEvents =>
-      Sensing().controller!.executor!.stateEvents;
+      Sensing().controller!.executor.stateEvents;
 
   /// Current state of the study executor (e.g., resumed, paused, ...)
-  ExecutorState get studyState => Sensing().controller!.executor!.state;
+  ExecutorState get studyState => Sensing().controller!.executor.state;
 
   /// Get all sensing events (i.e. all [DataPoint] objects being collected).
   Stream<Measurement> get samplingEvents => Sensing().controller!.measurements;

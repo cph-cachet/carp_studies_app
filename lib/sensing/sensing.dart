@@ -48,11 +48,11 @@ class Sensing {
   /// Is sensing running, i.e. has the study executor been started?
   bool get isRunning =>
       (controller != null) &&
-      controller!.executor!.state == ExecutorState.started;
+      controller!.executor.state == ExecutorState.started;
 
   /// The list of running - i.e. used - probes in this study.
   List<Probe> get runningProbes =>
-      (_controller != null) ? _controller!.executor!.probes : [];
+      (_controller != null) ? _controller!.executor.probes : [];
 
   /// The list of connected devices.
   List<DeviceManager>? get runningDevices =>

@@ -3,8 +3,7 @@ part of carp_study_app;
 class TaskListPageViewModel extends ViewModel {
   TaskListPageViewModel();
 
-  /// The list of available app tasks for the user to address.
-  List<UserTask> get tasks => AppTaskController().userTaskQueue;
+  List<UserTask> get tasks => bloc.tasks;
 
   /// A stream of [UserTask]s as they are generated.
   Stream<UserTask> get userTaskEvents => AppTaskController().userTaskEvents;

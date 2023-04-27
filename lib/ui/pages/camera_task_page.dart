@@ -136,8 +136,7 @@ class CameraTaskPageState extends State<CameraTaskPage> {
           actions: <Widget>[
             TextButton(
               child: Text(locale.translate("NO")),
-              onPressed: () =>
-                  Navigator.of(context).pop(), // Dismissing the pop-up
+              onPressed: () => context.pop(), // Dismissing the pop-up
             ),
             TextButton(
               child: Text(locale.translate("YES")),
@@ -146,9 +145,9 @@ class CameraTaskPageState extends State<CameraTaskPage> {
                 // Only call it if it's not null
                 //widget.onCancel?.call(_taskResult);
                 // Popup dismiss
-                Navigator.of(context).pop();
+                context.pop();
                 // Exit the Ordered Task
-                Navigator.of(context).pop();
+                context.pop();
               },
             )
           ],

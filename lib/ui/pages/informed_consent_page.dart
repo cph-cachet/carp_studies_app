@@ -50,13 +50,14 @@ class InformedConsentState extends State<InformedConsentPage> {
     return Scaffold(
       key: _scaffoldKey,
       body: FutureBuilder<RPOrderedTask?>(
-        future:
-            widget.model.getInformedConsent(localization.locale).then((value) {
-          if (value == null) {
-            context.go('/tasks');
-          }
-          return value;
-        }),
+        future: widget.model.getInformedConsent(localization.locale).then(
+          (value) {
+            if (value == null) {
+              context.go('/tasks');
+            }
+            return value;
+          },
+        ),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             if (snapshot.hasData) {

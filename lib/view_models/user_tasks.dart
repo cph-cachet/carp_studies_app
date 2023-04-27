@@ -46,6 +46,10 @@ class AudioUserTask extends UserTask {
         : 60;
   }
 
+  start() {
+    ;
+  }
+
   @override
   void onStart(BuildContext context) {
     // saving the build context for later use

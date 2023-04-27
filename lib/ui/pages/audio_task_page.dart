@@ -343,7 +343,7 @@ class AudioTaskPageState extends State<AudioTaskPage> {
             TextButton(
               child: Text(locale.translate("NO")),
               onPressed: () =>
-                  Navigator.of(context).pop(), // Dismissing the pop-up
+                  context.pop(), // Dismissing the pop-up
             ),
             TextButton(
               child: Text(locale.translate("YES")),
@@ -352,9 +352,9 @@ class AudioTaskPageState extends State<AudioTaskPage> {
                 // Only call it if it's not null
                 //widget.onCancel?.call(_taskResult);
                 // Popup dismiss
-                Navigator.of(context).pop();
+                context.pop();
                 // Exit the Ordered Task
-                Navigator.of(context).pop();
+                context.pop();
               },
             )
           ],

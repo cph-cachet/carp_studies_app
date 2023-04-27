@@ -10,6 +10,7 @@ class DataVisualizationPage extends StatelessWidget {
     RPLocalizations locale = RPLocalizations.of(context)!;
 
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.secondary,
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,

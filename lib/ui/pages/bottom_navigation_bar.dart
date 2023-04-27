@@ -23,7 +23,9 @@ class HomePageState extends State<HomePage> {
     Sensing().translateStudyProtocol(locale);
 
     return Scaffold(
-      body: widget.child,
+      body: SafeArea(
+        child: widget.child,
+      ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         selectedItemColor: Theme.of(context).primaryColor,

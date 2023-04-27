@@ -30,8 +30,7 @@ class DetailsBanner extends StatelessWidget {
         title: InkWell(
           onTap: () {
             if (isCarpBanner) {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => StudyDetailsPage()));
+              context.push('/studyDetails');
             }
           },
           child: Padding(

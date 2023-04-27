@@ -21,6 +21,7 @@ class TaskListPageState extends State<TaskListPage> {
     bloc.configurePermissions(context);
 
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.secondary,
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,

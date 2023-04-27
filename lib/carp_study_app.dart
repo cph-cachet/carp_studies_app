@@ -1,5 +1,8 @@
 part of carp_study_app;
 
+final _rootNavigatorKey = GlobalKey<NavigatorState>();
+final _shellNavigatorKey = GlobalKey<NavigatorState>();
+
 class CarpStudyApp extends StatefulWidget {
   const CarpStudyApp({super.key});
 
@@ -22,18 +25,22 @@ class CarpStudyAppState extends State<CarpStudyApp> {
 
   final GoRouter _router = GoRouter(
     initialLocation: '/',
+    navigatorKey: _rootNavigatorKey,
     routes: <RouteBase>[
       ShellRoute(
+        navigatorKey: _shellNavigatorKey,
         builder: (BuildContext context, GoRouterState state, Widget child) =>
             HomePage(child: child),
         routes: [
           GoRoute(
             path: '/',
+            parentNavigatorKey: _shellNavigatorKey,
             redirect: (context, state) =>
-                bloc.hasInformedConsentBeenAccepted ? '/about' : '/Consent',
+                bloc.hasInformedConsentBeenAccepted ? '/tasks' : '/consent',
           ),
           GoRoute(
             path: '/tasks',
+            parentNavigatorKey: _shellNavigatorKey,
             pageBuilder: (context, state) => CustomTransitionPage(
               child: TaskListPage(
                 bloc.data.taskListPageViewModel,
@@ -43,6 +50,7 @@ class CarpStudyAppState extends State<CarpStudyApp> {
           ),
           GoRoute(
             path: '/about',
+            parentNavigatorKey: _shellNavigatorKey,
             pageBuilder: (context, state) => CustomTransitionPage(
               child: StudyPage(
                 bloc.data.studyPageViewModel,
@@ -52,6 +60,7 @@ class CarpStudyAppState extends State<CarpStudyApp> {
           ),
           GoRoute(
             path: '/data',
+            parentNavigatorKey: _shellNavigatorKey,
             pageBuilder: (context, state) => CustomTransitionPage(
               child: DataVisualizationPage(
                   bloc.data.dataVisualizationPageViewModel),
@@ -60,6 +69,7 @@ class CarpStudyAppState extends State<CarpStudyApp> {
           ),
           GoRoute(
             path: '/devices',
+            parentNavigatorKey: _shellNavigatorKey,
             pageBuilder: (context, state) => const CustomTransitionPage(
               child: DevicesPage(),
               transitionsBuilder: bottomNavigationBarAnimation,
@@ -67,6 +77,7 @@ class CarpStudyAppState extends State<CarpStudyApp> {
           ),
           GoRoute(
             path: '/profile',
+            parentNavigatorKey: _shellNavigatorKey,
             pageBuilder: (context, state) => CustomTransitionPage(
               child: ProfilePage(bloc.data.profilePageViewModel),
               transitionsBuilder: bottomNavigationBarAnimation,
@@ -75,41 +86,54 @@ class CarpStudyAppState extends State<CarpStudyApp> {
         ],
       ),
       GoRoute(
-        path: '/Consent',
+        path: '/studyDetails',
+        parentNavigatorKey: _rootNavigatorKey,
+        builder: (context, state) => StudyDetailsPage(),
+      ),
+      GoRoute(path: '/task/:taskId', builder: (context, state) {
+        String taskId = state.params['taskId'] ?? '';
+        return RPOrderedTask(
+          bloc.tasks.firstWhere((task) => task.id == taskId),
+          taskId: taskId,
+        );
+      }),
+      GoRoute(
+        path: '/consent',
+        parentNavigatorKey: _rootNavigatorKey,
         redirect: (context, state) =>
-            bloc.studyId == null ? '/Invitations' : null,
+            bloc.studyId == null ? '/invitations' : null,
         builder: (context, state) => InformedConsentPage(
           bloc.data.informedConsentViewModel,
         ),
       ),
       GoRoute(
-        path: '/FailedLogin',
+        path: '/failedLogin',
         builder: (context, state) => const FailedLoginPage(),
       ),
       GoRoute(
-        path: '/Login',
+        path: '/login',
+        parentNavigatorKey: _rootNavigatorKey,
         builder: (context, state) => LoginPage(
           bloc.data.loginPageViewModel,
         ),
       ),
       GoRoute(
-        path: '/Message/:messageId',
+        path: '/message/:messageId',
+        parentNavigatorKey: _rootNavigatorKey,
         builder: (context, state) =>
             MessageDetailsPage(messageId: state.params['messageId'] ?? ''),
       ),
       GoRoute(
-        path: '/Invitation/:invitationId',
+        path: '/invitation/:invitationId',
+        parentNavigatorKey: _rootNavigatorKey,
         builder: (context, state) => InvitationDetailsPage(
           invitationId: state.params['invitationId'] ?? '',
         ),
       ),
       GoRoute(
-        path: '/auth',
-        builder: (context, state) => const FailedLoginPage(),
-      ),
-      GoRoute(
-        path: '/Invitations',
-        redirect: (context, state) => bloc.user == null ? '/Login' : null,
+        path: '/invitations',
+        parentNavigatorKey: _rootNavigatorKey,
+        redirect: (context, state) => bloc.user == null ? '/login' : null,
         builder: (context, state) =>
             InvitationListPage(bloc.data.invitationsListViewModel),
       ),

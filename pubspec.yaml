@@ -55,11 +55,16 @@ dependency_overrides:
       url: https://github.com/cph-cachet/carp.sensing-flutter.git
       ref: develop-1.1.0
       path: carp_core
+
   carp_mobile_sensing:
     git:
       url: https://github.com/cph-cachet/carp.sensing-flutter.git
       ref: develop-1.1.0
       path: carp_mobile_sensing
+
+  # carp_mobile_sensing:
+  #   path: ../carp/carp.sensing-flutter/carp_mobile_sensing/
+
   carp_context_package:
     git:
       url: https://github.com/cph-cachet/carp.sensing-flutter.git

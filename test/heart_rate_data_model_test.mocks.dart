@@ -33,8 +33,9 @@ class _FakeDeviceController_0 extends _i1.SmartFake
         );
 }
 
-class _FakeData_1 extends _i1.SmartFake implements _i3.Data {
-  _FakeData_1(
+class _FakeSmartphoneDeploymentExecutor_1 extends _i1.SmartFake
+    implements _i2.SmartphoneDeploymentExecutor {
+  _FakeSmartphoneDeploymentExecutor_1(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -43,9 +44,19 @@ class _FakeData_1 extends _i1.SmartFake implements _i3.Data {
         );
 }
 
-class _FakeDeploymentService_2 extends _i1.SmartFake
+class _FakeData_2 extends _i1.SmartFake implements _i3.Data {
+  _FakeData_2(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeDeploymentService_3 extends _i1.SmartFake
     implements _i3.DeploymentService {
-  _FakeDeploymentService_2(
+  _FakeDeploymentService_3(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -54,9 +65,9 @@ class _FakeDeploymentService_2 extends _i1.SmartFake
         );
 }
 
-class _FakeHeartRateMinMaxPrHour_3 extends _i1.SmartFake
+class _FakeHeartRateMinMaxPrHour_4 extends _i1.SmartFake
     implements _i4.HeartRateMinMaxPrHour {
-  _FakeHeartRateMinMaxPrHour_3(
+  _FakeHeartRateMinMaxPrHour_4(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -65,9 +76,9 @@ class _FakeHeartRateMinMaxPrHour_3 extends _i1.SmartFake
         );
 }
 
-class _FakeHourlyHeartRate_4 extends _i1.SmartFake
+class _FakeHourlyHeartRate_5 extends _i1.SmartFake
     implements _i4.HourlyHeartRate {
-  _FakeHourlyHeartRate_4(
+  _FakeHourlyHeartRate_5(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -76,8 +87,8 @@ class _FakeHourlyHeartRate_4 extends _i1.SmartFake
         );
 }
 
-class _FakeDateTime_5 extends _i1.SmartFake implements DateTime {
-  _FakeDateTime_5(
+class _FakeDateTime_6 extends _i1.SmartFake implements DateTime {
+  _FakeDateTime_6(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -86,8 +97,8 @@ class _FakeDateTime_5 extends _i1.SmartFake implements DateTime {
         );
 }
 
-class _FakeDataType_6 extends _i1.SmartFake implements _i3.DataType {
-  _FakeDataType_6(
+class _FakeDataType_7 extends _i1.SmartFake implements _i3.DataType {
+  _FakeDataType_7(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -96,8 +107,8 @@ class _FakeDataType_6 extends _i1.SmartFake implements _i3.DataType {
         );
 }
 
-class _FakeDataModel_7 extends _i1.SmartFake implements _i4.DataModel {
-  _FakeDataModel_7(
+class _FakeDataModel_8 extends _i1.SmartFake implements _i4.DataModel {
+  _FakeDataModel_8(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -124,6 +135,18 @@ class MockSmartphoneDeploymentController extends _i1.Mock
         ),
       ) as _i2.DeviceController);
   @override
+  _i2.SmartphoneDeploymentExecutor get executor => (super.noSuchMethod(
+        Invocation.getter(#executor),
+        returnValue: _FakeSmartphoneDeploymentExecutor_1(
+          this,
+          Invocation.getter(#executor),
+        ),
+        returnValueForMissingStub: _FakeSmartphoneDeploymentExecutor_1(
+          this,
+          Invocation.getter(#executor),
+        ),
+      ) as _i2.SmartphoneDeploymentExecutor);
+  @override
   String get privacySchemaName => (super.noSuchMethod(
         Invocation.getter(#privacySchemaName),
         returnValue: '',
@@ -132,11 +155,11 @@ class MockSmartphoneDeploymentController extends _i1.Mock
   @override
   _i2.DataTransformer get transformer => (super.noSuchMethod(
         Invocation.getter(#transformer),
-        returnValue: (_i3.Data __p0) => _FakeData_1(
+        returnValue: (_i3.Data __p0) => _FakeData_2(
           this,
           Invocation.getter(#transformer),
         ),
-        returnValueForMissingStub: (_i3.Data __p0) => _FakeData_1(
+        returnValueForMissingStub: (_i3.Data __p0) => _FakeData_2(
           this,
           Invocation.getter(#transformer),
         ),
@@ -174,11 +197,11 @@ class MockSmartphoneDeploymentController extends _i1.Mock
   @override
   _i3.DeploymentService get deploymentService => (super.noSuchMethod(
         Invocation.getter(#deploymentService),
-        returnValue: _FakeDeploymentService_2(
+        returnValue: _FakeDeploymentService_3(
           this,
           Invocation.getter(#deploymentService),
         ),
-        returnValueForMissingStub: _FakeDeploymentService_2(
+        returnValueForMissingStub: _FakeDeploymentService_3(
           this,
           Invocation.getter(#deploymentService),
         ),
@@ -207,6 +230,12 @@ class MockSmartphoneDeploymentController extends _i1.Mock
         returnValue: _i5.Stream<_i3.StudyStatus>.empty(),
         returnValueForMissingStub: _i5.Stream<_i3.StudyStatus>.empty(),
       ) as _i5.Stream<_i3.StudyStatus>);
+  @override
+  _i3.StudyStatus get status => (super.noSuchMethod(
+        Invocation.getter(#status),
+        returnValue: _i3.StudyStatus.DeploymentNotStarted,
+        returnValueForMissingStub: _i3.StudyStatus.DeploymentNotStarted,
+      ) as _i3.StudyStatus);
   @override
   set status(_i3.StudyStatus? newStatus) => super.noSuchMethod(
         Invocation.setter(
@@ -238,8 +267,8 @@ class MockSmartphoneDeploymentController extends _i1.Mock
       get remainingDevicesToRegister => (super.noSuchMethod(
             Invocation.getter(#remainingDevicesToRegister),
             returnValue: <_i3.DeviceConfiguration<_i3.DeviceRegistration>>[],
-            returnValueForMissingStub: <
-                _i3.DeviceConfiguration<_i3.DeviceRegistration>>[],
+            returnValueForMissingStub: <_i3
+                .DeviceConfiguration<_i3.DeviceRegistration>>[],
           ) as List<_i3.DeviceConfiguration<_i3.DeviceRegistration>>);
   @override
   _i5.Stream<_i3.Measurement> measurementsByType(String? type) =>
@@ -425,11 +454,11 @@ class MockHeartRateCardViewModel extends _i1.Mock
   @override
   _i4.HeartRateMinMaxPrHour get dayMinMax => (super.noSuchMethod(
         Invocation.getter(#dayMinMax),
-        returnValue: _FakeHeartRateMinMaxPrHour_3(
+        returnValue: _FakeHeartRateMinMaxPrHour_4(
           this,
           Invocation.getter(#dayMinMax),
         ),
-        returnValueForMissingStub: _FakeHeartRateMinMaxPrHour_3(
+        returnValueForMissingStub: _FakeHeartRateMinMaxPrHour_4(
           this,
           Invocation.getter(#dayMinMax),
         ),
@@ -437,11 +466,11 @@ class MockHeartRateCardViewModel extends _i1.Mock
   @override
   _i4.HourlyHeartRate get model => (super.noSuchMethod(
         Invocation.getter(#model),
-        returnValue: _FakeHourlyHeartRate_4(
+        returnValue: _FakeHourlyHeartRate_5(
           this,
           Invocation.getter(#model),
         ),
-        returnValueForMissingStub: _FakeHourlyHeartRate_4(
+        returnValueForMissingStub: _FakeHourlyHeartRate_5(
           this,
           Invocation.getter(#model),
         ),
@@ -458,14 +487,14 @@ class MockHeartRateCardViewModel extends _i1.Mock
           #createModel,
           [],
         ),
-        returnValue: _FakeHourlyHeartRate_4(
+        returnValue: _FakeHourlyHeartRate_5(
           this,
           Invocation.method(
             #createModel,
             [],
           ),
         ),
-        returnValueForMissingStub: _FakeHourlyHeartRate_4(
+        returnValueForMissingStub: _FakeHourlyHeartRate_5(
           this,
           Invocation.method(
             #createModel,
@@ -533,11 +562,11 @@ class MockHourlyHeartRate extends _i1.Mock implements _i4.HourlyHeartRate {
   @override
   DateTime get lastUpdated => (super.noSuchMethod(
         Invocation.getter(#lastUpdated),
-        returnValue: _FakeDateTime_5(
+        returnValue: _FakeDateTime_6(
           this,
           Invocation.getter(#lastUpdated),
         ),
-        returnValueForMissingStub: _FakeDateTime_5(
+        returnValueForMissingStub: _FakeDateTime_6(
           this,
           Invocation.getter(#lastUpdated),
         ),
@@ -580,14 +609,14 @@ class MockHourlyHeartRate extends _i1.Mock implements _i4.HourlyHeartRate {
           #resetDataAtMidnight,
           [],
         ),
-        returnValue: _FakeHourlyHeartRate_4(
+        returnValue: _FakeHourlyHeartRate_5(
           this,
           Invocation.method(
             #resetDataAtMidnight,
             [],
           ),
         ),
-        returnValueForMissingStub: _FakeHourlyHeartRate_4(
+        returnValueForMissingStub: _FakeHourlyHeartRate_5(
           this,
           Invocation.method(
             #resetDataAtMidnight,
@@ -608,7 +637,7 @@ class MockHourlyHeartRate extends _i1.Mock implements _i4.HourlyHeartRate {
             heartRate,
           ],
         ),
-        returnValue: _FakeHourlyHeartRate_4(
+        returnValue: _FakeHourlyHeartRate_5(
           this,
           Invocation.method(
             #addHeartRate,
@@ -618,7 +647,7 @@ class MockHourlyHeartRate extends _i1.Mock implements _i4.HourlyHeartRate {
             ],
           ),
         ),
-        returnValueForMissingStub: _FakeHourlyHeartRate_4(
+        returnValueForMissingStub: _FakeHourlyHeartRate_5(
           this,
           Invocation.method(
             #addHeartRate,
@@ -636,14 +665,14 @@ class MockHourlyHeartRate extends _i1.Mock implements _i4.HourlyHeartRate {
           #fromJson,
           [json],
         ),
-        returnValue: _FakeHourlyHeartRate_4(
+        returnValue: _FakeHourlyHeartRate_5(
           this,
           Invocation.method(
             #fromJson,
             [json],
           ),
         ),
-        returnValueForMissingStub: _FakeHourlyHeartRate_4(
+        returnValueForMissingStub: _FakeHourlyHeartRate_5(
           this,
           Invocation.method(
             #fromJson,
@@ -782,11 +811,11 @@ class MockPolarHR extends _i1.Mock implements _i6.PolarHR {
   @override
   _i3.DataType get format => (super.noSuchMethod(
         Invocation.getter(#format),
-        returnValue: _FakeDataType_6(
+        returnValue: _FakeDataType_7(
           this,
           Invocation.getter(#format),
         ),
-        returnValueForMissingStub: _FakeDataType_6(
+        returnValueForMissingStub: _FakeDataType_7(
           this,
           Invocation.getter(#format),
         ),
@@ -856,11 +885,11 @@ class MockMeasurement extends _i1.Mock implements _i3.Measurement {
   @override
   _i3.Data get data => (super.noSuchMethod(
         Invocation.getter(#data),
-        returnValue: _FakeData_1(
+        returnValue: _FakeData_2(
           this,
           Invocation.getter(#data),
         ),
-        returnValueForMissingStub: _FakeData_1(
+        returnValueForMissingStub: _FakeData_2(
           this,
           Invocation.getter(#data),
         ),
@@ -876,11 +905,11 @@ class MockMeasurement extends _i1.Mock implements _i3.Measurement {
   @override
   _i3.DataType get dataType => (super.noSuchMethod(
         Invocation.getter(#dataType),
-        returnValue: _FakeDataType_6(
+        returnValue: _FakeDataType_7(
           this,
           Invocation.getter(#dataType),
         ),
-        returnValueForMissingStub: _FakeDataType_6(
+        returnValueForMissingStub: _FakeDataType_7(
           this,
           Invocation.getter(#dataType),
         ),
@@ -906,14 +935,14 @@ class MockDataModel extends _i1.Mock implements _i4.DataModel {
           #fromJson,
           [json],
         ),
-        returnValue: _FakeDataModel_7(
+        returnValue: _FakeDataModel_8(
           this,
           Invocation.method(
             #fromJson,
             [json],
           ),
         ),
-        returnValueForMissingStub: _FakeDataModel_7(
+        returnValueForMissingStub: _FakeDataModel_8(
           this,
           Invocation.method(
             #fromJson,

@@ -46,20 +46,11 @@ class AudioUserTask extends UserTask {
         : 60;
   }
 
-  start() {
-    ;
-  }
-
   @override
   void onStart(BuildContext context) {
     // saving the build context for later use
     _context = context;
     super.onStart(context);
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-          builder: (context) => AudioTaskPage(audioUserTask: this)),
-    );
   }
 
   Timer? _timer;
@@ -98,6 +89,7 @@ class AudioUserTask extends UserTask {
 class VideoUserTask extends UserTask {
   static const String videoType = 'video';
   static const String imageType = 'image';
+    List<CameraDescription> cameras = [];
 
   late BuildContext _context;
 
@@ -107,18 +99,8 @@ class VideoUserTask extends UserTask {
   void onStart(BuildContext context) async {
     // saving the build context for later use
     _context = context;
-
     super.onStart(context);
-
-    final cameras = await availableCameras();
-    if (context.mounted) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) =>
-                CameraTaskPage(mediaUserTask: this, cameras: cameras)),
-      );
-    }
+    cameras = await availableCameras();
   }
 
   DateTime? _startRecordingTime, _endRecordingTime;

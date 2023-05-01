@@ -90,13 +90,23 @@ class CarpStudyAppState extends State<CarpStudyApp> {
         parentNavigatorKey: _rootNavigatorKey,
         builder: (context, state) => StudyDetailsPage(),
       ),
-      GoRoute(path: '/task/:taskId', builder: (context, state) {
-        String taskId = state.params['taskId'] ?? '';
-        return RPOrderedTask(
-          bloc.tasks.firstWhere((task) => task.id == taskId),
-          taskId: taskId,
-        );
-      }),
+      GoRoute(
+        path: '/task/:taskId',
+        builder: (context, state) {
+          String taskId = state.params['taskId'] ?? '';
+          var task = bloc.tasks.firstWhere((task) => task.id == taskId);
+          var type = task.runtimeType;
+          if (type == AudioUserTask) {
+            return AudioTaskPage(
+              audioUserTask: task as AudioUserTask,
+            );
+          } else if (type == VideoUserTask) {
+              return CameraTaskPage(
+                  mediaUserTask: task as VideoUserTask);
+          } 
+          return Scaffold(body: Container());
+        },
+      ),
       GoRoute(
         path: '/consent',
         parentNavigatorKey: _rootNavigatorKey,

@@ -24,13 +24,17 @@ class AudioTaskPageState extends State<AudioTaskPage> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: (() async =>
-          _showCancelConfirmationDialog() as FutureOr<bool>),
-      child: Scaffold(
-        body: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 15),
-          child: _stepSelector(),
+    return Scaffold(
+      body: SafeArea(
+        child: WillPopScope(
+          onWillPop: (() async =>
+              _showCancelConfirmationDialog() as FutureOr<bool>),
+          child: Scaffold(
+            body: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 15),
+              child: _stepSelector(),
+            ),
+          ),
         ),
       ),
     );

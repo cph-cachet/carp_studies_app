@@ -2,12 +2,10 @@ part of carp_study_app;
 
 class CameraTaskPage extends StatefulWidget {
   final VideoUserTask mediaUserTask;
-  final List<CameraDescription> cameras;
 
   const CameraTaskPage({
     super.key,
     required this.mediaUserTask,
-    required this.cameras,
   });
 
   @override
@@ -91,7 +89,7 @@ class CameraTaskPageState extends State<CameraTaskPage> {
                             MaterialPageRoute(
                               builder: (context) => CameraPage(
                                   videoUserTask: widget.mediaUserTask,
-                                  cameras: widget.cameras),
+                                  cameras: widget.mediaUserTask.cameras),
                             ),
                           ),
                           padding: const EdgeInsets.all(0),
@@ -108,7 +106,7 @@ class CameraTaskPageState extends State<CameraTaskPage> {
                         onTap: () {
                           widget.mediaUserTask.onDone(context);
                           //audioUserTask!.onCancel(context);
-                          Navigator.of(context).pop();
+                          context.pop();
                         },
                       ),
                       const SizedBox(width: 30),
@@ -147,7 +145,7 @@ class CameraTaskPageState extends State<CameraTaskPage> {
                 // Popup dismiss
                 context.pop();
                 // Exit the Ordered Task
-                context.pop();
+                context.canPop() ? context.pop() : null;
               },
             )
           ],

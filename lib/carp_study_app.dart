@@ -101,9 +101,8 @@ class CarpStudyAppState extends State<CarpStudyApp> {
               audioUserTask: task as AudioUserTask,
             );
           } else if (type == VideoUserTask) {
-              return CameraTaskPage(
-                  mediaUserTask: task as VideoUserTask);
-          } 
+            return CameraTaskPage(mediaUserTask: task as VideoUserTask);
+          }
           return Scaffold(body: Container());
         },
       ),

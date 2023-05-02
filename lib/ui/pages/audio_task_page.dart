@@ -346,8 +346,7 @@ class AudioTaskPageState extends State<AudioTaskPage> {
           actions: <Widget>[
             TextButton(
               child: Text(locale.translate("NO")),
-              onPressed: () =>
-                  context.pop(), // Dismissing the pop-up
+              onPressed: () => context.pop(), // Dismissing the pop-up
             ),
             TextButton(
               child: Text(locale.translate("YES")),

@@ -267,8 +267,8 @@ class MockSmartphoneDeploymentController extends _i1.Mock
       get remainingDevicesToRegister => (super.noSuchMethod(
             Invocation.getter(#remainingDevicesToRegister),
             returnValue: <_i3.DeviceConfiguration<_i3.DeviceRegistration>>[],
-            returnValueForMissingStub: <_i3
-                .DeviceConfiguration<_i3.DeviceRegistration>>[],
+            returnValueForMissingStub: <
+                _i3.DeviceConfiguration<_i3.DeviceRegistration>>[],
           ) as List<_i3.DeviceConfiguration<_i3.DeviceRegistration>>);
   @override
   _i5.Stream<_i3.Measurement> measurementsByType(String? type) =>

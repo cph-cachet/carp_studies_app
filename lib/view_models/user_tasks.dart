@@ -89,7 +89,7 @@ class AudioUserTask extends UserTask {
 class VideoUserTask extends UserTask {
   static const String videoType = 'video';
   static const String imageType = 'image';
-    List<CameraDescription> cameras = [];
+  List<CameraDescription> cameras = [];
 
   late BuildContext _context;
 

@@ -271,7 +271,6 @@ class StudyAppBLoC {
 
   List<UserTask> get tasks => AppTaskController().userTaskQueue;
 
-
   /// Does this [deployment] have any user tasks?
   bool hasSurveys() => (deployment == null)
       ? false

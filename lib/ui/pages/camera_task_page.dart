@@ -31,7 +31,6 @@ class CameraTaskPageState extends State<CameraTaskPage> {
         switch (snapshot.data) {
           case UserTaskState.enqueued:
             return _stepOne();
-
           default:
             return const SizedBox.shrink();
         }
@@ -88,8 +87,9 @@ class CameraTaskPageState extends State<CameraTaskPage> {
                             context,
                             MaterialPageRoute(
                               builder: (context) => CameraPage(
-                                  videoUserTask: widget.mediaUserTask,
-                                  cameras: widget.mediaUserTask.cameras),
+                                videoUserTask: widget.mediaUserTask,
+                                // cameras: widget.mediaUserTask.cameras,
+                              ),
                             ),
                           ),
                           padding: const EdgeInsets.all(0),
@@ -104,8 +104,7 @@ class CameraTaskPageState extends State<CameraTaskPage> {
                               color: Theme.of(context).primaryColor),
                         ),
                         onTap: () {
-                          widget.mediaUserTask.onDone(context);
-                          //audioUserTask!.onCancel(context);
+                          widget.mediaUserTask.onDone();
                           context.pop();
                         },
                       ),

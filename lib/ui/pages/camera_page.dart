@@ -2,18 +2,14 @@ part of carp_study_app;
 
 class CameraPage extends StatefulWidget {
   final VideoUserTask videoUserTask;
-  final List<CameraDescription> cameras;
-
-  const CameraPage(
-      {super.key, required this.videoUserTask, required this.cameras});
-
+  const CameraPage({super.key, required this.videoUserTask});
   @override
   CameraPageState createState() => CameraPageState();
 }
 
 class CameraPageState extends State<CameraPage> {
+  List<CameraDescription>? cameras;
   CameraController? _cameraController;
-  Future<void>? _initializeControllerFuture;
 
   int selectedCamera = 0; // 0 = external camera
   IconData flashIcon = Icons.flash_off;
@@ -27,12 +23,19 @@ class CameraPageState extends State<CameraPage> {
     super.initState();
   }
 
-  void initializeCamera(int cameraIndex) {
-    _cameraController = CameraController(
-        widget.cameras[cameraIndex], ResolutionPreset.max,
-        imageFormatGroup: ImageFormatGroup.yuv420, enableAudio: true);
+  Future<void> initializeCamera(int cameraIndex) async {
+    try {
+      cameras ??= await availableCameras();
+    } catch (error) {
+      warning('$runtimeType - error getting cameras, error: $error');
+    }
+    if (cameras != null && cameras!.isNotEmpty) {
+      _cameraController = CameraController(
+          cameras![cameraIndex], ResolutionPreset.max,
+          imageFormatGroup: ImageFormatGroup.yuv420, enableAudio: true);
 
-    _initializeControllerFuture = _cameraController?.initialize();
+      await _cameraController?.initialize();
+    }
   }
 
   @override
@@ -60,7 +63,7 @@ class CameraPageState extends State<CameraPage> {
           ),
           const SizedBox(height: 35),
           FutureBuilder<void>(
-            future: _initializeControllerFuture,
+            future: initializeCamera(selectedCamera),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
                 return Padding(
@@ -68,7 +71,7 @@ class CameraPageState extends State<CameraPage> {
                   child: ClipRRect(
                       borderRadius: const BorderRadius.all(Radius.circular(20)),
                       child: SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.7,
+                          height: MediaQuery.of(context).size.height * 0.6,
                           width: MediaQuery.of(context).size.width * 0.9,
                           child: CameraPreview(_cameraController!))),
                 );
@@ -85,7 +88,7 @@ class CameraPageState extends State<CameraPage> {
               children: [
                 IconButton(
                   onPressed: () {
-                    if (widget.cameras.length > 1) {
+                    if (cameras!.length > 1) {
                       setState(() {
                         selectedCamera = selectedCamera == 0 ? 1 : 0;
                         initializeCamera(selectedCamera);
@@ -97,7 +100,7 @@ class CameraPageState extends State<CameraPage> {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await _initializeControllerFuture;
+                    await initializeCamera(selectedCamera);
                     var picture = await _cameraController!.takePicture();
                     widget.videoUserTask.onPictureCapture(picture);
                     if (context.mounted) {
@@ -113,7 +116,7 @@ class CameraPageState extends State<CameraPage> {
                     });
                   },
                   onLongPress: () async {
-                    await _initializeControllerFuture;
+                    await initializeCamera(selectedCamera);
 
                     try {
                       await _cameraController!.startVideoRecording();

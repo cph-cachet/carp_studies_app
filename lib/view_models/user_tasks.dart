@@ -46,12 +46,12 @@ class AudioUserTask extends UserTask {
         : 60;
   }
 
-  @override
-  void onStart(BuildContext context) {
-    // saving the build context for later use
-    _context = context;
-    super.onStart(context);
-  }
+  // @override
+  // void onStart(BuildContext context) {
+  //   // saving the build context for later use
+  //   _context = context;
+  //   super.onStart(context);
+  // }
 
   Timer? _timer;
 
@@ -69,7 +69,7 @@ class AudioUserTask extends UserTask {
         _countDownController.close();
 
         executor.stop();
-        super.onDone(_context);
+        super.onDone();
       }
     });
   }
@@ -80,27 +80,30 @@ class AudioUserTask extends UserTask {
     _countDownController.close();
 
     executor.stop();
-    super.onDone(_context);
+    super.onDone();
   }
 }
 
 /// A user task handling video and image recordings.
-/// When started, creates a [CameraTaskPage] and shows it to the user.
+/// When started, creates a [CameraTaskPage].
 class VideoUserTask extends UserTask {
   static const String videoType = 'video';
   static const String imageType = 'image';
-  List<CameraDescription> cameras = [];
+  // List<CameraDescription> cameras = [];
 
-  late BuildContext _context;
+  // late BuildContext _context;
 
   VideoUserTask(AppTaskExecutor executor) : super(executor);
 
   @override
-  void onStart(BuildContext context) async {
-    // saving the build context for later use
-    _context = context;
-    super.onStart(context);
-    cameras = await availableCameras();
+  Widget? onStart() {
+    // // saving the build context for later use
+    // _context = context;
+    // super.onStart(context);
+    // cameras = await availableCameras();
+    // cameras = availableCameras();
+
+    return CameraTaskPage(mediaUserTask: this);
   }
 
   DateTime? _startRecordingTime, _endRecordingTime;
@@ -151,6 +154,6 @@ class VideoUserTask extends UserTask {
       bloc.addMeasurement(Measurement.fromData(media));
     }
     executor.stop();
-    super.onDone(_context);
+    super.onDone();
   }
 }

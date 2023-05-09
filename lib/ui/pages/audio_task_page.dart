@@ -162,7 +162,7 @@ class AudioTaskPageState extends State<AudioTaskPage> {
                               color: Theme.of(context).primaryColor),
                         ),
                         onTap: () {
-                          widget.audioUserTask!.onDone(context);
+                          widget.audioUserTask!.onDone();
                           //widget.audioUserTask!.onCancel(context);
                           Navigator.of(context).pop();
                         },

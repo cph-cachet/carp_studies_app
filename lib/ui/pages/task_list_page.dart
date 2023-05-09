@@ -55,8 +55,7 @@ class TaskListPageState extends State<TaskListPage> {
                         SliverList(
                           delegate: SliverChildBuilderDelegate(
                               (BuildContext context, int index) {
-                            if (widget.model.tasks[index].state !=
-                                UserTaskState.done) {
+                            if (widget.model.tasks[index].availableForUser) {
                               return _buildTaskCard(
                                   context, widget.model.tasks[index]);
                             } else {
@@ -128,7 +127,13 @@ class TaskListPageState extends State<TaskListPage> {
             ],
           ),
           onTap: () {
-            userTask.onStart(context);
+            var ui = userTask.onStart();
+            if (ui != null) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ui),
+              );
+            }
           },
         ),
       ),
@@ -157,7 +162,7 @@ class TaskListPageState extends State<TaskListPage> {
 
     if (userTask.expiresIn != null) {
       if (userTask.expiresIn!.isNegative) {
-        userTask.onExpired(context);
+        userTask.onExpired();
       }
       str +=
           ' - ${userTask.expiresIn!.inDays + 1} ${locale.translate('pages.task_list.task.days_remaining')}';

@@ -270,7 +270,7 @@ packages:
     description:
       path: "packages/carp_audio_package"
       ref: "develop-1.1.0"
-      resolved-ref: "06c58653dea0316ca9ea7a2cc03b604578a8178f"
+      resolved-ref: b2d925752d0b17870fa7109ac5697ea51392f7fb
       url: "https://github.com/cph-cachet/carp.sensing-flutter.git"
     source: git
     version: "1.1.0"
@@ -279,7 +279,7 @@ packages:
     description:
       path: "backends/carp_backend"
       ref: "develop-1.1.0"
-      resolved-ref: "06c58653dea0316ca9ea7a2cc03b604578a8178f"
+      resolved-ref: b2d925752d0b17870fa7109ac5697ea51392f7fb
       url: "https://github.com/cph-cachet/carp.sensing-flutter.git"
     source: git
     version: "1.1.0"
@@ -288,7 +288,7 @@ packages:
     description:
       path: "packages/carp_connectivity_package"
       ref: "develop-1.1.0"
-      resolved-ref: "06c58653dea0316ca9ea7a2cc03b604578a8178f"
+      resolved-ref: b2d925752d0b17870fa7109ac5697ea51392f7fb
       url: "https://github.com/cph-cachet/carp.sensing-flutter.git"
     source: git
     version: "1.1.0"
@@ -297,7 +297,7 @@ packages:
     description:
       path: "packages/carp_context_package"
       ref: "develop-1.1.0"
-      resolved-ref: "06c58653dea0316ca9ea7a2cc03b604578a8178f"
+      resolved-ref: b2d925752d0b17870fa7109ac5697ea51392f7fb
       url: "https://github.com/cph-cachet/carp.sensing-flutter.git"
     source: git
     version: "1.1.0"
@@ -306,7 +306,7 @@ packages:
     description:
       path: carp_core
       ref: "develop-1.1.0"
-      resolved-ref: "06c58653dea0316ca9ea7a2cc03b604578a8178f"
+      resolved-ref: b2d925752d0b17870fa7109ac5697ea51392f7fb
       url: "https://github.com/cph-cachet/carp.sensing-flutter.git"
     source: git
     version: "1.1.0"
@@ -315,7 +315,7 @@ packages:
     description:
       path: "packages/carp_esense_package"
       ref: "develop-1.1.0"
-      resolved-ref: "06c58653dea0316ca9ea7a2cc03b604578a8178f"
+      resolved-ref: b2d925752d0b17870fa7109ac5697ea51392f7fb
       url: "https://github.com/cph-cachet/carp.sensing-flutter.git"
     source: git
     version: "1.1.0"
@@ -324,7 +324,7 @@ packages:
     description:
       path: carp_mobile_sensing
       ref: "develop-1.1.0"
-      resolved-ref: "06c58653dea0316ca9ea7a2cc03b604578a8178f"
+      resolved-ref: b2d925752d0b17870fa7109ac5697ea51392f7fb
       url: "https://github.com/cph-cachet/carp.sensing-flutter.git"
     source: git
     version: "1.1.0"
@@ -333,7 +333,7 @@ packages:
     description:
       path: "packages/carp_polar_package"
       ref: "develop-1.1.0"
-      resolved-ref: "06c58653dea0316ca9ea7a2cc03b604578a8178f"
+      resolved-ref: b2d925752d0b17870fa7109ac5697ea51392f7fb
       url: "https://github.com/cph-cachet/carp.sensing-flutter.git"
     source: git
     version: "1.1.0"
@@ -350,7 +350,7 @@ packages:
     description:
       path: "packages/carp_survey_package"
       ref: "develop-1.1.0"
-      resolved-ref: "06c58653dea0316ca9ea7a2cc03b604578a8178f"
+      resolved-ref: b2d925752d0b17870fa7109ac5697ea51392f7fb
       url: "https://github.com/cph-cachet/carp.sensing-flutter.git"
     source: git
     version: "1.1.0"
@@ -359,7 +359,7 @@ packages:
     description:
       path: "backends/carp_webservices"
       ref: "develop-1.1.0"
-      resolved-ref: "06c58653dea0316ca9ea7a2cc03b604578a8178f"
+      resolved-ref: b2d925752d0b17870fa7109ac5697ea51392f7fb
       url: "https://github.com/cph-cachet/carp.sensing-flutter.git"
     source: git
     version: "1.1.0"

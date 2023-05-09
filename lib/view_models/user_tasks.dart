@@ -89,22 +89,14 @@ class AudioUserTask extends UserTask {
 class VideoUserTask extends UserTask {
   static const String videoType = 'video';
   static const String imageType = 'image';
-  // List<CameraDescription> cameras = [];
-
-  // late BuildContext _context;
 
   VideoUserTask(AppTaskExecutor executor) : super(executor);
 
   @override
-  Widget? onStart() {
-    // // saving the build context for later use
-    // _context = context;
-    // super.onStart(context);
-    // cameras = await availableCameras();
-    // cameras = availableCameras();
+  bool get hasWidget => true;
 
-    return CameraTaskPage(mediaUserTask: this);
-  }
+  @override
+  Widget? get widget => CameraTaskPage(mediaUserTask: this);
 
   DateTime? _startRecordingTime, _endRecordingTime;
   XFile? _file;

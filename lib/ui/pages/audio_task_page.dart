@@ -346,18 +346,12 @@ class AudioTaskPageState extends State<AudioTaskPage> {
           actions: <Widget>[
             TextButton(
               child: Text(locale.translate("NO")),
-              onPressed: () => context.pop(), // Dismissing the pop-up
+              onPressed: () {}, // Dismissing the pop-up
             ),
             TextButton(
               child: Text(locale.translate("YES")),
               onPressed: () {
-                // Calling the onCancel method with which the developer can for e.g. save the result on the device.
-                // Only call it if it's not null
-                //widget.onCancel?.call(_taskResult);
-                // Popup dismiss
-                context.pop();
-                // Exit the Ordered Task
-                context.pop();
+                context.pushReplacement('/tasks');
               },
             )
           ],

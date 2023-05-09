@@ -94,17 +94,9 @@ class CarpStudyAppState extends State<CarpStudyApp> {
       GoRoute(
         path: '/task/:taskId',
         builder: (context, state) {
-          String taskId = state.params['taskId'] ?? '';
-          var task = bloc.tasks.firstWhere((task) => task.id == taskId);
-          var type = task.runtimeType;
-          if (type == AudioUserTask) {
-            return AudioTaskPage(
-              audioUserTask: task as AudioUserTask,
-            );
-          } else if (type == VideoUserTask) {
-            return CameraTaskPage(mediaUserTask: task as VideoUserTask);
-          }
-          return Scaffold(body: Container());
+          final taskId = state.params['taskId'] ?? '';
+          final task = AppTaskController().getUserTask(taskId);
+          return task?.widget ?? const ErrorPage();
         },
       ),
       GoRoute(

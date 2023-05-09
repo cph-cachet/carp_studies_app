@@ -127,12 +127,10 @@ class TaskListPageState extends State<TaskListPage> {
             ],
           ),
           onTap: () {
-            userTask.onStart();
             if (userTask.hasWidget) {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => userTask.widget!),
-              );
+              context.push('/task/${userTask.id}');
+            } else {
+              userTask.onStart();
             }
           },
         ),

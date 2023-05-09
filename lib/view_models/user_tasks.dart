@@ -29,7 +29,6 @@ class AppUserTaskFactory implements UserTaskFactory {
 class AudioUserTask extends UserTask {
   static const String audioType = 'audio';
 
-  late BuildContext _context;
   final StreamController<int> _countDownController =
       StreamController.broadcast();
   Stream<int>? get countDownEvents => _countDownController.stream;
@@ -45,13 +44,6 @@ class AudioUserTask extends UserTask {
         ? executor.task.minutesToComplete! * 60
         : 60;
   }
-
-  // @override
-  // void onStart(BuildContext context) {
-  //   // saving the build context for later use
-  //   _context = context;
-  //   super.onStart(context);
-  // }
 
   Timer? _timer;
 

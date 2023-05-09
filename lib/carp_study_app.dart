@@ -26,6 +26,7 @@ class CarpStudyAppState extends State<CarpStudyApp> {
   final GoRouter _router = GoRouter(
     initialLocation: '/',
     navigatorKey: _rootNavigatorKey,
+    errorBuilder: (context, state) => const ErrorPage(),
     routes: <RouteBase>[
       ShellRoute(
         navigatorKey: _shellNavigatorKey,

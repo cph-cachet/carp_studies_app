@@ -70,7 +70,7 @@ class ActivityCardWidgetState extends State<ActivityCardWidget> {
     RPLocalizations locale = RPLocalizations.of(context)!;
 
     return Padding(
-      padding: const EdgeInsets.all(5.0),
+      padding: const EdgeInsets.all(.0),
       child: Card(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         elevation: 4,

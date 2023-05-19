@@ -211,7 +211,7 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
 
     return BarChart(
       BarChartData(
-        alignment: BarChartAlignment.center,
+        alignment: BarChartAlignment.spaceEvenly,
         barTouchData: BarTouchData(
           enabled: true,
           touchTooltipData: BarTouchTooltipData(

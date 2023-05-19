@@ -105,7 +105,6 @@ part 'ui/widgets/details_banner.dart';
 
 part 'ui/cards/steps_card.dart';
 part 'ui/cards/heart_rate_card.dart';
-part 'ui/cards/activity_card.dart';
 part 'ui/cards/mobility_card.dart';
 part 'ui/cards/measurements_card.dart';
 part 'ui/cards/task_card.dart';
@@ -114,6 +113,8 @@ part 'ui/cards/scoreboard_card.dart';
 part 'ui/cards/study_progress_card.dart';
 part 'ui/pages/cans_login_android_webview.dart';
 part 'ui/pages/cans_login.dart';
+part 'ui/cards/activity_card.dart';
+part 'ui/cards/activities.dart'; // replace above with this
 
 part 'main.g.dart';
 

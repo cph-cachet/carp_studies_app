@@ -132,20 +132,19 @@ class ActivitiesWidgetState extends State<ActivitiesWidget> {
         growable: false);
 
     data.forEach((activityType, innerMap) {
-        int idx;
-        if (activityType == ActivityType.WALKING) {
-          idx = 1;
-        } else if (activityType == ActivityType.RUNNING) {
-          idx = 2;
-        } else if (activityType == ActivityType.ON_BICYCLE) {
-          idx = 3;
-        } else {
-          return;
-        }
+      int idx;
+      if (activityType == ActivityType.WALKING) {
+        idx = 1;
+      } else if (activityType == ActivityType.RUNNING) {
+        idx = 2;
+      } else if (activityType == ActivityType.ON_BICYCLE) {
+        idx = 3;
+      } else {
+        return;
+      }
       innerMap.forEach((weekday, time) {
         resultList[weekday - 1][0] = weekday; // Assign weekday at index 0
         resultList[weekday - 1][idx] = time;
-
       });
     });
 

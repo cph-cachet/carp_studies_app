@@ -8,7 +8,6 @@ class TaskListPageViewModel extends ViewModel {
   /// A stream of [UserTask]s as they are generated.
   Stream<UserTask> get userTaskEvents => AppTaskController().userTaskEvents;
 
-
   /// The number of days the user has been part of this study.
   int get daysInStudy => (bloc.studyStartTimestamp != null)
       ? DateTime.now().difference(bloc.studyStartTimestamp!).inDays + 1

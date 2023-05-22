@@ -179,7 +179,6 @@ class ActivityCardWidgetState extends State<ActivityCardWidget> {
     return BarChartGroupData(
       x: x,
       groupVertically: true,
-      showingTooltipIndicators: isTouched ? [0, 1, 2] : [],
       barRods: [
         BarChartRodData(
             fromY: 0,

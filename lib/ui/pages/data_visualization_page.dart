@@ -107,6 +107,7 @@ class DataVisualizationPage extends StatelessWidget {
 
     if (bloc.hasMeasure(SensorSamplingPackage.STEP_COUNT)) {
       widgets.add(StepsOuterStatefulWidget(model.stepsCardDataModel));
+      widgets.add(StepsCardWidgetNew(model.stepsCardDataModel));
     }
     if (bloc.hasMeasure(ContextSamplingPackage.MOBILITY)) {
       widgets.add(MobilityOuterStatefulWidget(model.mobilityCardDataModel));

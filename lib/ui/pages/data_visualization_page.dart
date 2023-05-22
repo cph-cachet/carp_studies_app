@@ -112,8 +112,7 @@ class DataVisualizationPage extends StatelessWidget {
       widgets.add(MobilityOuterStatefulWidget(model.mobilityCardDataModel));
     }
     if (bloc.hasMeasure(ContextSamplingPackage.ACTIVITY)) {
-      widgets.add(ActivitiesWidget(model.activityCardDataModel));
-      widgets.add(ActivityOuterStatefulWidget(model.activityCardDataModel));
+      widgets.add(ActivityCardWidget(model.activityCardDataModel));
     }
 
     return widgets.toSet().toList();

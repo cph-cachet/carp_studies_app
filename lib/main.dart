@@ -114,7 +114,6 @@ part 'ui/cards/study_progress_card.dart';
 part 'ui/pages/cans_login_android_webview.dart';
 part 'ui/pages/cans_login.dart';
 part 'ui/cards/activity_card.dart';
-part 'ui/cards/activities.dart'; // replace above with this
 
 part 'main.g.dart';
 

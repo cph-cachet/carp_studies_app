@@ -58,7 +58,6 @@ class DataVisualizationPage extends StatelessWidget {
   }
 
   // The list of cards, depending on what measures are defined in the study.
-  // TODO - this needs to adjusted when more measures can be visualized
   List<Widget> get _dataVizCards {
     final List<Widget> widgets = [];
 
@@ -102,12 +101,11 @@ class DataVisualizationPage extends StatelessWidget {
 
     // check to show device data visualizations
     if (bloc.hasDevices()) {
-      //TODO ADD DEVICES VIZ
+      //TODO ADD DEVICES VIZ?
     }
 
     if (bloc.hasMeasure(SensorSamplingPackage.STEP_COUNT)) {
-      widgets.add(StepsOuterStatefulWidget(model.stepsCardDataModel));
-      widgets.add(StepsCardWidgetNew(model.stepsCardDataModel));
+      widgets.add(StepsCardWidget(model.stepsCardDataModel));
     }
     if (bloc.hasMeasure(ContextSamplingPackage.MOBILITY)) {
       widgets.add(MobilityOuterStatefulWidget(model.mobilityCardDataModel));

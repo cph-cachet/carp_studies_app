@@ -45,7 +45,7 @@ dependencies:
     sdk: flutter
   fl_chart: ^0.61.0
   google_fonts: ^4.0.1
-  flutter_inappwebview: ^6.0.0-beta.22
+  flutter_inappwebview: ^6.0.0-beta.23
   go_router: ^6.0.8
   flutter_svg: ^2.0.4
 

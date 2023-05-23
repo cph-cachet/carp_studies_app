@@ -18,7 +18,7 @@ class ActivityCardWidgetState extends State<ActivityCardWidget> {
   num? _cycle = 0;
 
   num maxValue = 0;
-  int touchedIndex = DateTime.now().weekday - 1;
+  int touchedIndex = DateTime.now().weekday;
 
   final betweenSpace = 2.4;
 
@@ -29,15 +29,14 @@ class ActivityCardWidgetState extends State<ActivityCardWidget> {
   @override
   void initState() {
     widget.model.activityEvents?.listen((event) {
-      setState(() {
-        _walk = widget
-            .model.activities[ActivityType.WALKING]![DateTime.now().weekday];
-        _run = widget
-            .model.activities[ActivityType.RUNNING]![DateTime.now().weekday];
-        _cycle = widget
-            .model.activities[ActivityType.ON_BICYCLE]![DateTime.now().weekday];
-      });
+      setState(() {});
     });
+    _walk =
+        widget.model.activities[ActivityType.WALKING]![DateTime.now().weekday];
+    _run =
+        widget.model.activities[ActivityType.RUNNING]![DateTime.now().weekday];
+    _cycle = widget
+        .model.activities[ActivityType.ON_BICYCLE]![DateTime.now().weekday];
 
     /// Doing some conversions to make the data readable by the chart
     /// The data is organized in a list of lists, where each list represents a day
@@ -101,7 +100,6 @@ class ActivityCardWidgetState extends State<ActivityCardWidget> {
   }
 
   BarChart get barCharts {
-
     return BarChart(
       BarChartData(
         alignment: BarChartAlignment.spaceAround,
@@ -124,18 +122,12 @@ class ActivityCardWidgetState extends State<ActivityCardWidget> {
           topTitles: AxisTitles(),
         ),
         barTouchData: BarTouchData(
-          enabled: true,
-          touchTooltipData: BarTouchTooltipData(
-            getTooltipItem: ((group, groupIndex, rod, rodIndex) {
-              _walk = activitiesList[groupIndex][1];
-              _run = activitiesList[groupIndex][2];
-              _cycle = activitiesList[groupIndex][3];
-              return null;
-            }),
-          ),
+          enabled: false,
           touchCallback: (p0, p1) {
             setState(() {
-              touchedIndex = (p1?.spot?.touchedBarGroupIndex ?? DateTime.now().weekday - 1) + 1;
+              touchedIndex = (p1?.spot?.touchedBarGroupIndex ??
+                      DateTime.now().weekday - 1) +
+                  1;
             });
           },
         ),
@@ -175,6 +167,11 @@ class ActivityCardWidgetState extends State<ActivityCardWidget> {
     double roundness = 2;
     bool isTouched = touchedIndex == x;
     maxValue = max(maxValue, walking + running + cycling);
+    if (isTouched) {
+      _walk = walking;
+      _run = running;
+      _cycle = cycling;
+    }
 
     return BarChartGroupData(
       x: x,

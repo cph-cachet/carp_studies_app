@@ -1,18 +1,18 @@
 part of carp_study_app;
 
-class ActivityCardWidget extends StatefulWidget {
+class ActivityCard extends StatefulWidget {
   final ActivityCardViewModel model;
   final List<Color> colors;
-  const ActivityCardWidget(this.model,
+  const ActivityCard(this.model,
       {Key? key,
       this.colors = const [CACHET.BLUE_1, CACHET.BLUE_2, CACHET.BLUE_3]})
       : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => ActivityCardWidgetState();
+  State<StatefulWidget> createState() => ActivityCardState();
 }
 
-class ActivityCardWidgetState extends State<ActivityCardWidget> {
+class ActivityCardState extends State<ActivityCard> {
   num? _walk = 0;
   num? _run = 0;
   num? _cycle = 0;

@@ -61,13 +61,6 @@ class DataVisualizationPage extends StatelessWidget {
   List<Widget> get _dataVizCards {
     final List<Widget> widgets = [];
 
-    // always show scoreboard
-    //widgets.add(ScoreboardCardWidget(model));
-    if (bloc.hasMeasure(ContextSamplingPackage.MOBILITY)) {
-      widgets.add(MobilityCard(model.mobilityCardDataModel));
-      widgets.add(DistanceCard(model.mobilityCardDataModel));
-    }
-
     // always show tasks progress
     widgets.add(StudyProgressCardWidget(model.studyProgressCardDataModel));
 
@@ -112,7 +105,11 @@ class DataVisualizationPage extends StatelessWidget {
       widgets.add(StepsCardWidget(model.stepsCardDataModel));
     }
     if (bloc.hasMeasure(ContextSamplingPackage.ACTIVITY)) {
-      widgets.add(ActivityCardWidget(model.activityCardDataModel));
+      widgets.add(ActivityCard(model.activityCardDataModel));
+    }
+    if (bloc.hasMeasure(ContextSamplingPackage.MOBILITY)) {
+      widgets.add(MobilityCard(model.mobilityCardDataModel));
+      widgets.add(DistanceCard(model.mobilityCardDataModel));
     }
 
     return widgets.toSet().toList();

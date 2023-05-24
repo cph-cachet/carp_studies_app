@@ -105,53 +105,8 @@ ThemeData carpStudyDarkTheme = ThemeData.dark().copyWith(
   ),
 );
 
-// ButtonTheme roundedFilledButtonTheme = ButtonTheme(
-//   height: 40,
-//   minWidth: 100,
-//   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-//   buttonColor: carpStudyTheme.primaryColor,
-// );
 
-// ButtonTheme flatButtonTheme = ButtonTheme(
-//   height: 40,
-//   minWidth: 100,
-//   buttonColor: carpStudyTheme.primaryColor,
-// );
 
-class AxisTheme {
-  static charts.RenderSpec<num> axisThemeNum() {
-    return charts.GridlineRendererSpec(
-      labelStyle: charts.TextStyleSpec(
-        color: charts.MaterialPalette.gray.shade500,
-      ),
-      lineStyle: charts.LineStyleSpec(
-        color: charts.MaterialPalette.gray.shade500,
-      ),
-    );
-  }
-
-  static charts.RenderSpec<String> axisThemeOrdinal() {
-    return charts.GridlineRendererSpec(
-      labelStyle: charts.TextStyleSpec(
-        color: charts.MaterialPalette.gray.shade500,
-      ),
-      lineStyle: const charts.LineStyleSpec(
-        color: charts.MaterialPalette.transparent,
-      ),
-    );
-  }
-
-  static charts.RenderSpec<DateTime> axisThemeDateTime() {
-    return charts.GridlineRendererSpec(
-      labelStyle: charts.TextStyleSpec(
-        color: charts.MaterialPalette.gray.shade500,
-      ),
-      lineStyle: const charts.LineStyleSpec(
-        color: charts.MaterialPalette.transparent,
-      ),
-    );
-  }
-}
 
 TextStyle studyTitleStyle = const TextStyle(
     fontSize: 24,

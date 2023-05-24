@@ -29,22 +29,24 @@ class ChartsLegend extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(title.toUpperCase(), style: dataCardTitleStyle),
-                const SizedBox(height: 10),
-                Row(
-                  children: values
-                      .asMap()
-                      .entries
-                      .map(
-                        (entry) => Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Icon(Icons.circle,
-                                color: colors[entry.key], size: 12.0),
-                            Text(' ${entry.value} ', style: legendStyle),
-                          ],
-                        ),
-                      )
-                      .toList(),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: Row(
+                    children: values
+                        .asMap()
+                        .entries
+                        .map(
+                          (entry) => Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Icon(Icons.circle,
+                                  color: colors[entry.key], size: 12.0),
+                              Text(' ${entry.value} ', style: legendStyle),
+                            ],
+                          ),
+                        )
+                        .toList(),
+                  ),
                 ),
               ],
             ),

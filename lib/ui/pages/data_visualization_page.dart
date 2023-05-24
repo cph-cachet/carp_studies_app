@@ -63,6 +63,10 @@ class DataVisualizationPage extends StatelessWidget {
 
     // always show scoreboard
     //widgets.add(ScoreboardCardWidget(model));
+    if (bloc.hasMeasure(ContextSamplingPackage.MOBILITY)) {
+      widgets.add(MobilityCard(model.mobilityCardDataModel));
+      widgets.add(DistanceCard(model.mobilityCardDataModel));
+    }
 
     // always show tasks progress
     widgets.add(StudyProgressCardWidget(model.studyProgressCardDataModel));
@@ -106,9 +110,6 @@ class DataVisualizationPage extends StatelessWidget {
 
     if (bloc.hasMeasure(SensorSamplingPackage.STEP_COUNT)) {
       widgets.add(StepsCardWidget(model.stepsCardDataModel));
-    }
-    if (bloc.hasMeasure(ContextSamplingPackage.MOBILITY)) {
-      widgets.add(MobilityOuterStatefulWidget(model.mobilityCardDataModel));
     }
     if (bloc.hasMeasure(ContextSamplingPackage.ACTIVITY)) {
       widgets.add(ActivityCardWidget(model.activityCardDataModel));

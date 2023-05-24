@@ -106,6 +106,7 @@ part 'ui/widgets/details_banner.dart';
 part 'ui/cards/steps_card.dart';
 part 'ui/cards/heart_rate_card.dart';
 part 'ui/cards/mobility_card.dart';
+part 'ui/cards/distance_card.dart';
 part 'ui/cards/measurements_card.dart';
 part 'ui/cards/task_card.dart';
 part 'ui/cards/media_card.dart';

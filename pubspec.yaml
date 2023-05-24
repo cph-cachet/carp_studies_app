@@ -171,7 +171,6 @@ flutter:
     - assets/icons/
     - assets/lang/
     - assets/images/messages/
-    - assets/lang_local/
     - assets/carp_logo.png
     - assets/logo.png
 

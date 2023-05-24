@@ -81,7 +81,11 @@ class _DistanceCardState extends State<DistanceCard> {
                           child: Text(
                             _distance,
                             style: TextStyle(
-                              color: Colors.black.withOpacity(0.8),
+                              color: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge
+                                      ?.color ??
+                                  Colors.black,
                               fontSize: 18,
                             ),
                           ),

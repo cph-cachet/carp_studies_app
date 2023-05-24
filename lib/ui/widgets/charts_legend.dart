@@ -5,7 +5,6 @@ class ChartsLegend extends StatelessWidget {
   final String title;
   final List<String> values;
   final String? heroTag;
-  final String? routeName;
   final List<Color> colors;
 
   const ChartsLegend(
@@ -13,8 +12,7 @@ class ChartsLegend extends StatelessWidget {
       this.heroTag,
       this.iconAssetName,
       required this.title,
-      required this.values,
-      this.routeName,
+      this.values = const [],
       required this.colors});
 
   @override

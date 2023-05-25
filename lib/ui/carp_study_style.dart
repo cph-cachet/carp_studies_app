@@ -105,9 +105,6 @@ ThemeData carpStudyDarkTheme = ThemeData.dark().copyWith(
   ),
 );
 
-
-
-
 TextStyle studyTitleStyle = const TextStyle(
     fontSize: 24,
     fontWeight: FontWeight.w600,

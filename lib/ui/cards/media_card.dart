@@ -10,7 +10,6 @@ class MediaCardWidget extends StatefulWidget {
 }
 
 class MediaCardWidgetState extends State<MediaCardWidget> {
-
   @override
   Widget build(BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;

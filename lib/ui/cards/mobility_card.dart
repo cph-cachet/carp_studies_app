@@ -76,12 +76,12 @@ class _MobilityCardState extends State<MobilityCard> {
           ),
         ),
         leftTitles: AxisTitles(
-          // sideTitles: SideTitles(
-          //   showTitles: true,
-          //   getTitlesWidget: leftTitles,
-          //   reservedSize: 40,
-          // ),
-        ),
+            // sideTitles: SideTitles(
+            //   showTitles: true,
+            //   getTitlesWidget: leftTitles,
+            //   reservedSize: 40,
+            // ),
+            ),
         rightTitles: AxisTitles(
           sideTitles: SideTitles(
             showTitles: true,

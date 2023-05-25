@@ -13,6 +13,12 @@ class StudyPageState extends State<StudyPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.secondary,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          bloc.refreshMessages();
+        },
+        child: const Icon(Icons.refresh),
+      ),
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,

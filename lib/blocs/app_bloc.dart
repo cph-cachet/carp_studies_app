@@ -337,7 +337,6 @@ class StudyAppBLoC {
   /// re-deployed on the phone, data from the previous deployment will be
   /// available.
   Future<void> leaveStudy() async {
-    final id = studyDeploymentId;
     _state = StudyAppState.initialized;
     setHasInformedConsentBeenAccepted = false;
     await LocalSettings().eraseStudyIds();

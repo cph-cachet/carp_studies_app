@@ -3,7 +3,8 @@ part of carp_study_app;
 class DataVisualizationPageViewModel extends ViewModel {
   final ActivityCardViewModel _activityCardDataModel = ActivityCardViewModel();
   final StepsCardViewModel _stepsCardDataModel = StepsCardViewModel();
-  final MeasuresCardViewModel _measuresCardDataModel = MeasuresCardViewModel();
+  final MeasurementsCardViewModel _measuresCardDataModel =
+      MeasurementsCardViewModel();
   final MobilityCardViewModel _mobilityCardDataModel = MobilityCardViewModel();
   final TaskCardViewModel _surveysCardDataModel =
       TaskCardViewModel(SurveyUserTask.SURVEY_TYPE);
@@ -20,7 +21,7 @@ class DataVisualizationPageViewModel extends ViewModel {
 
   ActivityCardViewModel get activityCardDataModel => _activityCardDataModel;
   StepsCardViewModel get stepsCardDataModel => _stepsCardDataModel;
-  MeasuresCardViewModel get measuresCardDataModel => _measuresCardDataModel;
+  MeasurementsCardViewModel get measuresCardDataModel => _measuresCardDataModel;
   MobilityCardViewModel get mobilityCardDataModel => _mobilityCardDataModel;
   TaskCardViewModel get surveysCardDataModel => _surveysCardDataModel;
   TaskCardViewModel get audioCardDataModel => _audioCardDataModel;

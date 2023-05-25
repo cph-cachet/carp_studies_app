@@ -14,6 +14,7 @@ class ProfilePageState extends State<ProfilePage> {
     RPLocalizations locale = RPLocalizations.of(context)!;
 
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.secondary,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -33,12 +34,13 @@ class ProfilePageState extends State<ProfilePage> {
                           color: Theme.of(context).primaryColor)),
                 ),
                 IconButton(
-                    icon: Icon(Icons.close,
-                        color: Theme.of(context).primaryColor, size: 30),
-                    tooltip: locale.translate('Back'),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    }),
+                  icon: Icon(Icons.close,
+                      color: Theme.of(context).primaryColor, size: 30),
+                  tooltip: locale.translate('Back'),
+                  onPressed: () {
+                    context.pop();
+                  },
+                ),
               ],
             ),
           ),
@@ -223,15 +225,12 @@ class ProfilePageState extends State<ProfilePage> {
           actions: <Widget>[
             TextButton(
               child: Text(locale.translate("NO")),
-              onPressed: () => Navigator.of(context).pop(),
+              onPressed: () => context.pop(),
             ),
             TextButton(
               child: Text(locale.translate("YES")),
               onPressed: () {
-                bloc.leaveStudyAndSignOut().then((_) => Navigator.of(context)
-                  ..pop() // popup dialogue
-                  ..pop() // profile page
-                  ..pushReplacementNamed('/LoadingPage'));
+                bloc.leaveStudyAndSignOut().then((_) => context.go('/'));
               },
             )
           ],
@@ -258,10 +257,7 @@ class ProfilePageState extends State<ProfilePage> {
             TextButton(
               child: Text(locale.translate("YES")),
               onPressed: () =>
-                  bloc.leaveStudy().then((_) => Navigator.of(context)
-                    ..pop() // popup dialogue
-                    ..pop() // profile page
-                    ..pushReplacementNamed('/LoadingPage')),
+                  bloc.leaveStudy().then((_) => context.go('/invitations')),
             )
           ],
         );

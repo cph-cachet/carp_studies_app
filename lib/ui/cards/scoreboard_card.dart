@@ -12,18 +12,7 @@ class ScoreboardCardWidgetState extends State<ScoreboardCardWidget> {
   Widget build(BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;
 
-    return
-        // Padding(
-        //   padding: const EdgeInsets.all(5.0),
-        //   // child:
-        //   // Card(
-        //   //   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        //   //   elevation: 4,
-        //   //   child:
-        //   // Padding(
-        //   //padding: const EdgeInsets.all(8.0),
-        //   child:
-        Container(
+    return Container(
       color: Theme.of(context).colorScheme.secondary,
       height: 110,
       child: StreamBuilder<UserTask>(
@@ -33,7 +22,6 @@ class ScoreboardCardWidgetState extends State<ScoreboardCardWidget> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              //SizedBox(height: 15),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -66,14 +54,10 @@ class ScoreboardCardWidgetState extends State<ScoreboardCardWidget> {
                   )
                 ],
               ),
-              //SizedBox(height: 15),
             ],
           );
         },
       ),
-      //),
-      //),
-      //),
     );
   }
 }

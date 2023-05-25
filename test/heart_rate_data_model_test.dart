@@ -4,9 +4,9 @@ import 'exports.dart';
   MockSpec<SmartphoneDeploymentController>(),
   MockSpec<HeartRateCardViewModel>(),
   MockSpec<HourlyHeartRate>(),
-  MockSpec<PolarHRDatum>(),
-  MockSpec<DataPoint>(),
-  MockSpec<DataPointHeader>(),
+  MockSpec<PolarHR>(),
+  MockSpec<Measurement>(),
+  // MockSpec<DataPointHeader>(),
   MockSpec<DataModel>(),
 ])
 void main() {
@@ -27,14 +27,14 @@ void main() {
       group('should listen to heart rate events', () {
         final mockSmartphoneDeploymentController =
             MockSmartphoneDeploymentController();
-        final mockPolarHRDatum = MockPolarHRDatum();
-        final mockDataPoint = MockDataPoint();
+        final mockPolarHRDatum = MockPolarHR();
+        final mockMeasurement = MockMeasurement();
         final viewModel = HeartRateCardViewModel();
         final heartRateStreamController =
-            StreamController<MockDataPoint>.broadcast();
+            StreamController<MockMeasurement>.broadcast();
 
         setUp(() {
-          when(mockSmartphoneDeploymentController.data)
+          when(mockSmartphoneDeploymentController.measurements)
               .thenAnswer((_) => heartRateStreamController.stream);
         });
         tearDownAll(() {
@@ -45,9 +45,9 @@ void main() {
             viewModel.init(mockSmartphoneDeploymentController);
             // Add a heart rate data point to the stream
             when(mockPolarHRDatum.hr).thenReturn(80);
-            when(mockDataPoint.data).thenReturn(mockPolarHRDatum);
+            when(mockMeasurement.data).thenReturn(mockPolarHRDatum);
 
-            heartRateStreamController.sink.add(mockDataPoint);
+            heartRateStreamController.sink.add(mockMeasurement);
 
             await Future.delayed(const Duration(seconds: 1));
             expect(viewModel.currentHeartRate, equals(80.0));
@@ -61,15 +61,15 @@ void main() {
             viewModel.init(mockSmartphoneDeploymentController);
             // Add a heart rate data point to the stream
             when(mockPolarHRDatum.hr).thenReturn(90);
-            when(mockDataPoint.data).thenReturn(mockPolarHRDatum);
+            when(mockMeasurement.data).thenReturn(mockPolarHRDatum);
 
-            heartRateStreamController.sink.add(mockDataPoint);
+            heartRateStreamController.sink.add(mockMeasurement);
 
             await Future.delayed(const Duration(seconds: 1));
             when(mockPolarHRDatum.hr).thenReturn(60);
-            when(mockDataPoint.data).thenReturn(mockPolarHRDatum);
+            when(mockMeasurement.data).thenReturn(mockPolarHRDatum);
 
-            heartRateStreamController.sink.add(mockDataPoint);
+            heartRateStreamController.sink.add(mockMeasurement);
 
             await Future.delayed(const Duration(seconds: 1));
             expect(viewModel.currentHeartRate, equals(60));
@@ -85,9 +85,9 @@ void main() {
             viewModel.init(mockSmartphoneDeploymentController);
             // Add a heart rate data point to the stream
             when(mockPolarHRDatum.hr).thenReturn(0);
-            when(mockDataPoint.data).thenReturn(mockPolarHRDatum);
+            when(mockMeasurement.data).thenReturn(mockPolarHRDatum);
 
-            heartRateStreamController.sink.add(mockDataPoint);
+            heartRateStreamController.sink.add(mockMeasurement);
 
             await Future.delayed(const Duration(seconds: 1));
             expect(viewModel.currentHeartRate, equals(null));
@@ -103,9 +103,9 @@ void main() {
             when(mockPolarHRDatum.hr).thenReturn(1);
             when(mockPolarHRDatum.contactStatusSupported).thenReturn(true);
             when(mockPolarHRDatum.contactStatus).thenReturn(true);
-            when(mockDataPoint.data).thenReturn(mockPolarHRDatum);
+            when(mockMeasurement.data).thenReturn(mockPolarHRDatum);
 
-            heartRateStreamController.sink.add(mockDataPoint);
+            heartRateStreamController.sink.add(mockMeasurement);
 
             await Future.delayed(const Duration(seconds: 1));
             expect(viewModel.currentHeartRate, equals(anything));

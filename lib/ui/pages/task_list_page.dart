@@ -9,90 +9,92 @@ class TaskListPage extends StatefulWidget {
 }
 
 class TaskListPageState extends State<TaskListPage> {
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   bloc.configureStudy().then((_) => bloc.start());
+  // }
+
   @override
   Widget build(BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;
+    bloc.configurePermissions(context);
 
     return Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          const CarpAppBar(),
-          // _scoreBoard(),
-          // SizedBox(height: 15),
-
-          Expanded(
-            flex: 4,
-            child: StreamBuilder<UserTask>(
-              stream: widget.model.userTaskEvents,
-              builder: (context, snapshot) {
-                if (widget.model.tasks.isEmpty) {
-                  return _noTasks(context);
-                } else {
-                  return CustomScrollView(
-                    slivers: [
-                      //CarpBanner(),
-                      SliverToBoxAdapter(
-                          child: ScoreboardCardWidget(widget.model)),
-                      SliverToBoxAdapter(
-                        child: Padding(
-                          padding: const EdgeInsets.all(15),
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              locale.translate('pages.task_list.title'),
-                              style: dataCardTitleStyle.copyWith(
-                                  color: Theme.of(context).primaryColor),
+      backgroundColor: Theme.of(context).colorScheme.secondary,
+      body: SafeArea(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            const CarpAppBar(),
+            Expanded(
+              flex: 4,
+              child: StreamBuilder<UserTask>(
+                stream: widget.model.userTaskEvents,
+                builder: (context, snapshot) {
+                  if (widget.model.tasks.isEmpty) {
+                    return _noTasks(context);
+                  } else {
+                    return CustomScrollView(
+                      slivers: [
+                        SliverToBoxAdapter(
+                            child: ScoreboardCardWidget(widget.model)),
+                        SliverToBoxAdapter(
+                          child: Padding(
+                            padding: const EdgeInsets.all(15),
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                locale.translate('pages.task_list.title'),
+                                style: dataCardTitleStyle.copyWith(
+                                    color: Theme.of(context).primaryColor),
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      // SliverToBoxAdapter(
-                      //   child: SizedBox(height: 15),
-                      // ),
-                      SliverList(
-                        delegate: SliverChildBuilderDelegate(
-                            (BuildContext context, int index) {
-                          if (widget.model.tasks[index].state !=
-                              UserTaskState.done) {
-                            return _buildTaskCard(
-                                context, widget.model.tasks[index]);
-                          } else {
-                            return const SizedBox.shrink();
-                          }
-                        }, childCount: widget.model.tasks.length),
-                      ),
-                      SliverList(
-                        delegate: SliverChildBuilderDelegate(
-                            (BuildContext context, int index) {
-                          if (widget.model.tasks[index].state ==
-                              UserTaskState.done) {
-                            return _buildDoneTaskCard(
-                                context, widget.model.tasks[index]);
-                          } else {
-                            return const SizedBox.shrink();
-                          }
-                        }, childCount: widget.model.tasks.length),
-                      ),
-                      SliverList(
-                        delegate: SliverChildBuilderDelegate(
-                            (BuildContext context, int index) {
-                          if (widget.model.tasks[index].state ==
-                              UserTaskState.expired) {
-                            return _buildExpiredTaskCard(
-                                context, widget.model.tasks[index]);
-                          } else {
-                            return const SizedBox.shrink();
-                          }
-                        }, childCount: widget.model.tasks.length),
-                      ),
-                    ],
-                  );
-                }
-              },
+                        SliverList(
+                          delegate: SliverChildBuilderDelegate(
+                              (BuildContext context, int index) {
+                            if (widget.model.tasks[index].availableForUser) {
+                              return _buildTaskCard(
+                                  context, widget.model.tasks[index]);
+                            } else {
+                              return const SizedBox.shrink();
+                            }
+                          }, childCount: widget.model.tasks.length),
+                        ),
+                        SliverList(
+                          delegate: SliverChildBuilderDelegate(
+                              (BuildContext context, int index) {
+                            if (widget.model.tasks[index].state ==
+                                UserTaskState.done) {
+                              return _buildDoneTaskCard(
+                                  context, widget.model.tasks[index]);
+                            } else {
+                              return const SizedBox.shrink();
+                            }
+                          }, childCount: widget.model.tasks.length),
+                        ),
+                        SliverList(
+                          delegate: SliverChildBuilderDelegate(
+                              (BuildContext context, int index) {
+                            if (widget.model.tasks[index].state ==
+                                UserTaskState.expired) {
+                              return _buildExpiredTaskCard(
+                                  context, widget.model.tasks[index]);
+                            } else {
+                              return const SizedBox.shrink();
+                            }
+                          }, childCount: widget.model.tasks.length),
+                        ),
+                      ],
+                    );
+                  }
+                },
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -125,7 +127,11 @@ class TaskListPageState extends State<TaskListPage> {
             ],
           ),
           onTap: () {
-            userTask.onStart(context);
+            if (userTask.hasWidget) {
+              context.push('/task/${userTask.id}');
+            } else {
+              userTask.onStart();
+            }
           },
         ),
       ),
@@ -138,9 +144,9 @@ class TaskListPageState extends State<TaskListPage> {
   Icon _taskTypeIcon(UserTask userTask) =>
       (taskTypeIcons[userTask.type] != null)
           ? taskTypeIcons[userTask.type] as Icon
-          : (userTask.task.measures.isNotEmpty &&
-                  measureTypeIcons[userTask.task.measures[0].type] != null)
-              ? measureTypeIcons[userTask.task.measures[0].type] as Icon
+          : (userTask.task.measures!.isNotEmpty &&
+                  measureTypeIcons[userTask.task.measures![0].type] != null)
+              ? measureTypeIcons[userTask.task.measures![0].type] as Icon
               : const Icon(
                   Icons.description_outlined,
                   color: CACHET.ORANGE,
@@ -154,7 +160,7 @@ class TaskListPageState extends State<TaskListPage> {
 
     if (userTask.expiresIn != null) {
       if (userTask.expiresIn!.isNegative) {
-        userTask.onExpired(context);
+        userTask.onExpired();
       }
       str +=
           ' - ${userTask.expiresIn!.inDays + 1} ${locale.translate('pages.task_list.task.days_remaining')}';
@@ -278,31 +284,31 @@ class TaskListPageState extends State<TaskListPage> {
   };
 
   static Map<String, Icon> measureTypeIcons = {
-    DeviceSamplingPackage.MEMORY: const Icon(
+    DeviceSamplingPackage.FREE_MEMORY: const Icon(
       Icons.memory,
       color: CACHET.GREY_4,
     ),
-    DeviceSamplingPackage.DEVICE: const Icon(
+    DeviceSamplingPackage.DEVICE_INFORMATION: const Icon(
       Icons.phone_android,
       color: CACHET.GREY_4,
     ),
-    DeviceSamplingPackage.BATTERY: const Icon(
+    DeviceSamplingPackage.BATTERY_STATE: const Icon(
       Icons.battery_charging_full,
       color: CACHET.GREEN,
     ),
-    SensorSamplingPackage.PEDOMETER: const Icon(
+    SensorSamplingPackage.STEP_COUNT: const Icon(
       Icons.directions_walk,
       color: CACHET.LIGHT_PURPLE,
     ),
-    SensorSamplingPackage.ACCELEROMETER: const Icon(
+    SensorSamplingPackage.ACCELERATION: const Icon(
       Icons.adb,
       color: CACHET.GREY_4,
     ),
-    SensorSamplingPackage.GYROSCOPE: const Icon(
+    SensorSamplingPackage.ROTATION: const Icon(
       Icons.adb,
       color: CACHET.GREY_4,
     ),
-    SensorSamplingPackage.LIGHT: const Icon(
+    SensorSamplingPackage.AMBIENT_LIGHT: const Icon(
       Icons.highlight,
       color: CACHET.YELLOW,
     ),
@@ -334,7 +340,7 @@ class TaskListPageState extends State<TaskListPage> {
     // CommunicationSamplingPackage.TEXT_MESSAGE_LOG: Icon(Icons.textsms, size: 50, color: CACHET.LIGHT_PURPLE),
     // CommunicationSamplingPackage.PHONE_LOG: Icon(Icons.phone_in_talk, size: 50, color: CACHET.ORANGE),
     // CommunicationSamplingPackage.CALENDAR: Icon(Icons.event, size: 50, color: CACHET.CYAN),
-    DeviceSamplingPackage.SCREEN: const Icon(
+    DeviceSamplingPackage.SCREEN_EVENT: const Icon(
       Icons.screen_lock_portrait,
       color: CACHET.LIGHT_PURPLE,
     ),
@@ -342,10 +348,10 @@ class TaskListPageState extends State<TaskListPage> {
       Icons.location_searching,
       color: CACHET.CYAN,
     ),
-    ContextSamplingPackage.GEOLOCATION: const Icon(
-      Icons.my_location,
-      color: CACHET.YELLOW,
-    ),
+    // ContextSamplingPackage.LOCATION: const Icon(
+    //   Icons.my_location,
+    //   color: CACHET.YELLOW,
+    // ),
     ContextSamplingPackage.ACTIVITY: const Icon(
       Icons.directions_bike,
       color: CACHET.ORANGE,

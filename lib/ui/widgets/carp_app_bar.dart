@@ -11,36 +11,38 @@ class CarpAppBar extends StatelessWidget {
         children: [
           Column(
             children: [
-              const SizedBox(height: 35),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                    margin: const EdgeInsets.only(left: 15.0),
+                    margin: const EdgeInsets.only(left: 16.0),
                     child: Image.asset(
                       'assets/carp_logo.png',
-                      height: 30,
+                      fit: BoxFit.contain,
+                      height: 16,
                     ),
                   ),
-                  const SizedBox(width: 3),
                   IconButton(
-                    icon: Icon(Icons.account_circle_outlined,
-                        color: Theme.of(context).primaryColor, size: 30),
+                    icon: Icon(
+                      Icons.account_circle_outlined,
+                      color: Theme.of(context).primaryColor,
+                      size: 30,
+                    ),
                     tooltip: 'Profile',
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        PageRouteBuilder(
-                          pageBuilder: (c, a1, a2) =>
-                              ProfilePage(bloc.data.profilePageViewModel),
-                        ),
-                      );
+                      context.push('/profile');
+                      // Navigator.of(context).push(
+                      //   PageRouteBuilder(
+                      //     pageBuilder: (c, a1, a2) =>
+                      //         ProfilePage(bloc.data.profilePageViewModel),
+                      //   ),
+                      // );
                     },
                   ),
                 ],
               ),
             ],
-          ),
+          )
         ],
       ),
     );

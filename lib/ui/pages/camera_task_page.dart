@@ -2,12 +2,10 @@ part of carp_study_app;
 
 class CameraTaskPage extends StatefulWidget {
   final VideoUserTask mediaUserTask;
-  final List<CameraDescription> cameras;
 
   const CameraTaskPage({
     super.key,
     required this.mediaUserTask,
-    required this.cameras,
   });
 
   @override
@@ -33,7 +31,6 @@ class CameraTaskPageState extends State<CameraTaskPage> {
         switch (snapshot.data) {
           case UserTaskState.enqueued:
             return _stepOne();
-
           default:
             return const SizedBox.shrink();
         }
@@ -90,8 +87,9 @@ class CameraTaskPageState extends State<CameraTaskPage> {
                             context,
                             MaterialPageRoute(
                               builder: (context) => CameraPage(
-                                  videoUserTask: widget.mediaUserTask,
-                                  cameras: widget.cameras),
+                                videoUserTask: widget.mediaUserTask,
+                                // cameras: widget.mediaUserTask.cameras,
+                              ),
                             ),
                           ),
                           padding: const EdgeInsets.all(0),
@@ -106,9 +104,8 @@ class CameraTaskPageState extends State<CameraTaskPage> {
                               color: Theme.of(context).primaryColor),
                         ),
                         onTap: () {
-                          widget.mediaUserTask.onDone(context);
-                          //audioUserTask!.onCancel(context);
-                          Navigator.of(context).pop();
+                          widget.mediaUserTask.onDone();
+                          context.pop();
                         },
                       ),
                       const SizedBox(width: 30),
@@ -136,8 +133,7 @@ class CameraTaskPageState extends State<CameraTaskPage> {
           actions: <Widget>[
             TextButton(
               child: Text(locale.translate("NO")),
-              onPressed: () =>
-                  Navigator.of(context).pop(), // Dismissing the pop-up
+              onPressed: () => context.pop(), // Dismissing the pop-up
             ),
             TextButton(
               child: Text(locale.translate("YES")),
@@ -146,9 +142,9 @@ class CameraTaskPageState extends State<CameraTaskPage> {
                 // Only call it if it's not null
                 //widget.onCancel?.call(_taskResult);
                 // Popup dismiss
-                Navigator.of(context).pop();
+                context.pop();
                 // Exit the Ordered Task
-                Navigator.of(context).pop();
+                context.canPop() ? context.pop() : null;
               },
             )
           ],

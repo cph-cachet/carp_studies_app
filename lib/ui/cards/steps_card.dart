@@ -1,49 +1,29 @@
 part of carp_study_app;
 
 class StepsCardWidget extends StatefulWidget {
-  final StepsCardViewModel model;
   final List<Color> colors;
-  final List<charts.Series<DailySteps, String>> seriesList;
 
-  const StepsCardWidget(
-    this.seriesList,
-    this.model, {
-    super.key,
-    this.colors = const [CACHET.BLUE_1],
-  });
-
-  factory StepsCardWidget.withSampleData(StepsCardViewModel model) =>
-      StepsCardWidget(_createChartList(model, [CACHET.BLUE_1]), model);
-
-  static List<charts.Series<DailySteps, String>> _createChartList(
-    StepsCardViewModel model,
-    List<Color> colors,
-  ) =>
-      [
-        charts.Series<DailySteps, String>(
-          colorFn: (d, i) => charts.ColorUtil.fromDartColor(colors[0]),
-          id: 'DailyStepsList',
-          data: model.steps,
-          domainFn: (DailySteps steps, _) => steps.toString(),
-          measureFn: (DailySteps steps, _) => steps.steps,
-        )
-      ];
+  final StepsCardViewModel model;
+  const StepsCardWidget(this.model,
+      {super.key,
+      this.colors = const [CACHET.BLUE_1, CACHET.BLUE_2, CACHET.BLUE_3]});
 
   @override
   StepsCardWidgetState createState() => StepsCardWidgetState();
 }
 
 class StepsCardWidgetState extends State<StepsCardWidget> {
-  // Axis render settings
-  charts.RenderSpec<num> renderSpecNum = AxisTheme.axisThemeNum();
-  charts.RenderSpec<String> renderSpecString = AxisTheme.axisThemeOrdinal();
+  num _step = 0;
+  num maxValue = 0;
 
-  int? _selectedSteps = 0;
+  int touchedIndex = DateTime.now().weekday;
 
   @override
   void initState() {
-    // Get current day steps
-    _selectedSteps = widget.model.weeklySteps[DateTime.now().weekday];
+    widget.model.pedometerEvents?.listen((event) {
+      setState(() {});
+    });
+    _step = widget.model.steps[DateTime.now().weekday - 1].steps;
     super.initState();
   }
 
@@ -52,59 +32,28 @@ class StepsCardWidgetState extends State<StepsCardWidget> {
     RPLocalizations locale = RPLocalizations.of(context)!;
 
     return Padding(
-      padding: const EdgeInsets.all(5.0),
+      padding: const EdgeInsets.all(8.0),
       child: Card(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         elevation: 4,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
-            children: <Widget>[
-              StreamBuilder(
-                stream: widget.model.pedometerEvents,
-                builder: (context, AsyncSnapshot<DataPoint> snapshot) {
-                  return Column(
-                    children: [
-                      ChartsLegend(
-                        title: locale.translate('cards.steps.title'),
-                        iconAssetName: Icon(Icons.directions_walk,
-                            color: Theme.of(context).primaryColor),
-                        heroTag: 'steps-card',
-                        values: [
-                          '$_selectedSteps ${locale.translate('cards.steps.steps')}'
-                        ],
-                        colors: widget.colors,
-                      ),
-                      SizedBox(
-                        height: 160,
-                        child: charts.BarChart(
-                          widget.seriesList,
-                          animate: true,
-                          defaultRenderer: charts.BarRendererConfig<String>(
-                            cornerStrategy: const charts.ConstCornerStrategy(2),
-                          ),
-                          domainAxis: charts.OrdinalAxisSpec(
-                            renderSpec: renderSpecString,
-                          ),
-                          primaryMeasureAxis:
-                              charts.NumericAxisSpec(renderSpec: renderSpecNum),
-                          defaultInteractions: false,
-                          selectionModels: [
-                            charts.SelectionModelConfig(
-                                type: charts.SelectionModelType.info,
-                                changedListener: _infoSelectionModelChanged)
-                          ],
-                          behaviors: [
-                            charts.SelectNearest(
-                                eventTrigger:
-                                    charts.SelectionTrigger.tapAndDrag),
-                            charts.DomainHighlighter(),
-                          ],
-                        ),
-                      ),
-                    ],
-                  );
-                },
+            children: [
+              ChartsLegend(
+                title: locale.translate('cards.steps.title'),
+                iconAssetName: Icon(Icons.directions_walk,
+                    color: Theme.of(context).primaryColor),
+                heroTag: 'steps-card',
+                values: [
+                  '$_step ${locale.translate('cards.steps.steps')}',
+                ],
+                colors: widget.colors,
+              ),
+              SizedBox(
+                height: 160,
+                width: MediaQuery.of(context).size.width * 0.9,
+                child: barCharts,
               ),
             ],
           ),
@@ -113,28 +62,150 @@ class StepsCardWidgetState extends State<StepsCardWidget> {
     );
   }
 
-  void _infoSelectionModelChanged(charts.SelectionModel model) {
-    if (model.hasDatumSelection) {
-      setState(() {
-        _selectedSteps = model.selectedSeries[0]
-            .measureFn(model.selectedDatum[0].index) as int?;
-      });
-    }
+  BarChart get barCharts {
+    return BarChart(BarChartData(
+      alignment: BarChartAlignment.spaceAround,
+      titlesData: FlTitlesData(
+        bottomTitles: AxisTitles(
+          sideTitles: SideTitles(
+            showTitles: true,
+            getTitlesWidget: bottomTitles,
+            reservedSize: 20,
+          ),
+        ),
+        leftTitles: AxisTitles(),
+        rightTitles: AxisTitles(
+          sideTitles: SideTitles(
+            showTitles: true,
+            getTitlesWidget: rightTitles,
+            reservedSize: 48,
+          ),
+        ),
+        topTitles: AxisTitles(),
+      ),
+      barTouchData: BarTouchData(
+        enabled: false,
+        touchCallback: (p0, p1) {
+          setState(() {
+            touchedIndex =
+                (p1?.spot?.touchedBarGroupIndex ?? DateTime.now().weekday - 1) +
+                    1;
+          });
+        },
+      ),
+      groupsSpace: 4,
+      barGroups: barChartsGroups,
+      maxY: (maxValue) * 1.2,
+      gridData: FlGridData(
+        show: true,
+        drawVerticalLine: false,
+        drawHorizontalLine: true,
+        getDrawingHorizontalLine: (value) {
+          return FlLine(
+            color: Colors.grey.withOpacity(0.3),
+            strokeWidth: 1,
+          );
+        },
+      ),
+      borderData: FlBorderData(
+        show: true,
+        border: Border.all(
+          width: 1,
+          color: Colors.grey.withOpacity(0.2),
+        ),
+      ),
+    ));
   }
-}
 
-class StepsOuterStatefulWidget extends StatefulWidget {
-  final StepsCardViewModel model;
-  const StepsOuterStatefulWidget(this.model, {super.key});
+  List<BarChartGroupData> get barChartsGroups {
+    return widget.model.weeklySteps.entries
+        .map((e) => generateGroupData(e.key, e.value))
+        .toList();
+  }
 
-  @override
-  StepsOuterStatefulWidgetState createState() =>
-      StepsOuterStatefulWidgetState();
-}
+  BarChartGroupData generateGroupData(int x, int step) {
+    bool isTouched = touchedIndex == x;
+    maxValue = max(maxValue, step);
+    if (isTouched) {
+      _step = step;
+    }
 
-class StepsOuterStatefulWidgetState extends State<StepsOuterStatefulWidget> {
-  @override
-  Widget build(BuildContext context) {
-    return StepsCardWidget.withSampleData(widget.model);
+    return BarChartGroupData(
+      x: x,
+      barRods: [
+        BarChartRodData(
+          toY: step.toDouble(),
+          color: widget.colors[1].withOpacity(isTouched ? 0.8 : 1),
+          width: 32,
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(8),
+            topRight: Radius.circular(8),
+          ),
+        ),
+      ],
+    );
+  }
+
+  TextStyle activityVisualisationTextStyle(
+      {double? fontSize, Color? color, List<ui.FontFeature>? fontFeatures}) {
+    return GoogleFonts.barlow(
+      fontSize: fontSize,
+      fontWeight: FontWeight.w600,
+      color: color,
+      fontFeatures: fontFeatures,
+    );
+  }
+
+  Widget rightTitles(double value, TitleMeta meta) {
+    final text = value.toInt() % meta.appliedInterval == 0
+        ? value.toInt().toString()
+        : '';
+
+    final style = activityVisualisationTextStyle(
+      color: Colors.grey.withOpacity(0.6),
+      fontSize: 14,
+    );
+    return SideTitleWidget(
+      axisSide: AxisSide.right,
+      space: 16,
+      child: Text(
+        text,
+        style: style,
+      ),
+    );
+  }
+
+  Widget bottomTitles(double value, TitleMeta meta) {
+    const style = TextStyle(fontSize: 10);
+    String text;
+    switch (value.toInt()) {
+      case 1:
+        text = 'Mon';
+        break;
+      case 2:
+        text = 'Tue';
+        break;
+      case 3:
+        text = 'Wed';
+        break;
+      case 4:
+        text = 'Thu';
+        break;
+      case 5:
+        text = 'Fri';
+        break;
+      case 6:
+        text = 'Sat';
+        break;
+      case 7:
+        text = 'Sun';
+        break;
+      default:
+        text = '';
+    }
+    return SideTitleWidget(
+      axisSide: meta.axisSide,
+      child: Text(text, style: style),
+    );
   }
 }

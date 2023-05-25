@@ -10,19 +10,6 @@ class MediaCardWidget extends StatefulWidget {
 }
 
 class MediaCardWidgetState extends State<MediaCardWidget> {
-  // static List<charts.Series<TaskCount, String>> _createChartList(
-  //         BuildContext context, TaskCardDataModel model, List<Color> colors) =>
-  //     [
-  //       charts.Series<TaskCount, String>(
-  //         colorFn: (_, index) => charts.ColorUtil.fromDartColor(colors[index!]),
-  //         // charts.MaterialPalette.blue.makeShades(min(7, model.samplingTable.length))[index],
-  //         id: 'TotalTasks',
-  //         data: model.taskCount.sublist(0, min(7, model.tasksTable.length)),
-  //         domainFn: (TaskCount taskCount, _) => taskCount.title,
-  //         measureFn: (TaskCount taskCount, _) => taskCount.size,
-  //       )
-  //     ];
-
   @override
   Widget build(BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;

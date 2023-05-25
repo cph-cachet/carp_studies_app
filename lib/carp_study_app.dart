@@ -1,5 +1,8 @@
 part of carp_study_app;
 
+final _rootNavigatorKey = GlobalKey<NavigatorState>();
+final _shellNavigatorKey = GlobalKey<NavigatorState>();
+
 class CarpStudyApp extends StatefulWidget {
   const CarpStudyApp({super.key});
 
@@ -20,23 +23,146 @@ class CarpStudyAppState extends State<CarpStudyApp> {
     });
   }
 
-  final LoadingPage loadingPage = const LoadingPage();
-  final HomePage homePage = const HomePage();
-  final InformedConsentPage consentPage = const InformedConsentPage();
-  final FailedLoginPage failedLoginPage = const FailedLoginPage();
+  final GoRouter _router = GoRouter(
+    initialLocation: '/',
+    navigatorKey: _rootNavigatorKey,
+    errorBuilder: (context, state) => const ErrorPage(),
+    routes: <RouteBase>[
+      ShellRoute(
+        navigatorKey: _shellNavigatorKey,
+        builder: (BuildContext context, GoRouterState state, Widget child) =>
+            HomePage(child: child),
+        routes: [
+          GoRoute(
+            path: '/',
+            parentNavigatorKey: _shellNavigatorKey,
+            redirect: (context, state) =>
+                bloc.hasInformedConsentBeenAccepted ? '/tasks' : '/consent',
+          ),
+          GoRoute(
+            path: '/tasks',
+            parentNavigatorKey: _shellNavigatorKey,
+            pageBuilder: (context, state) => CustomTransitionPage(
+              child: TaskListPage(
+                bloc.data.taskListPageViewModel,
+              ),
+              transitionsBuilder: bottomNavigationBarAnimation,
+            ),
+          ),
+          GoRoute(
+            path: '/about',
+            parentNavigatorKey: _shellNavigatorKey,
+            pageBuilder: (context, state) => CustomTransitionPage(
+              child: StudyPage(
+                bloc.data.studyPageViewModel,
+              ),
+              transitionsBuilder: bottomNavigationBarAnimation,
+            ),
+          ),
+          GoRoute(
+            path: '/data',
+            parentNavigatorKey: _shellNavigatorKey,
+            pageBuilder: (context, state) => CustomTransitionPage(
+              child: DataVisualizationPage(
+                  bloc.data.dataVisualizationPageViewModel),
+              transitionsBuilder: bottomNavigationBarAnimation,
+            ),
+          ),
+          GoRoute(
+            path: '/devices',
+            parentNavigatorKey: _shellNavigatorKey,
+            pageBuilder: (context, state) => const CustomTransitionPage(
+              child: DevicesPage(),
+              transitionsBuilder: bottomNavigationBarAnimation,
+            ),
+          ),
+          GoRoute(
+            path: '/profile',
+            parentNavigatorKey: _shellNavigatorKey,
+            pageBuilder: (context, state) => CustomTransitionPage(
+              child: ProfilePage(bloc.data.profilePageViewModel),
+              transitionsBuilder: bottomNavigationBarAnimation,
+            ),
+          ),
+        ],
+      ),
+      GoRoute(
+        path: '/studyDetails',
+        parentNavigatorKey: _rootNavigatorKey,
+        builder: (context, state) => StudyDetailsPage(),
+      ),
+      GoRoute(
+        path: '/task/:taskId',
+        builder: (context, state) {
+          final taskId = state.params['taskId'] ?? '';
+          final task = AppTaskController().getUserTask(taskId);
+          return task?.widget ?? const ErrorPage();
+        },
+      ),
+      GoRoute(
+        path: '/consent',
+        parentNavigatorKey: _rootNavigatorKey,
+        redirect: (context, state) =>
+            bloc.studyId == null ? '/invitations' : null,
+        builder: (context, state) => InformedConsentPage(
+          bloc.data.informedConsentViewModel,
+        ),
+      ),
+      GoRoute(
+        path: '/failedLogin',
+        builder: (context, state) => const FailedLoginPage(),
+      ),
+      GoRoute(
+        path: '/login',
+        parentNavigatorKey: _rootNavigatorKey,
+        builder: (context, state) => LoginPage(
+          bloc.data.loginPageViewModel,
+        ),
+      ),
+      GoRoute(
+        path: '/message/:messageId',
+        parentNavigatorKey: _rootNavigatorKey,
+        builder: (context, state) =>
+            MessageDetailsPage(messageId: state.params['messageId'] ?? ''),
+      ),
+      GoRoute(
+        path: '/invitation/:invitationId',
+        parentNavigatorKey: _rootNavigatorKey,
+        builder: (context, state) => InvitationDetailsPage(
+          invitationId: state.params['invitationId'] ?? '',
+        ),
+      ),
+      GoRoute(
+        path: '/invitations',
+        parentNavigatorKey: _rootNavigatorKey,
+        redirect: (context, state) => bloc.user == null ? '/login' : null,
+        builder: (context, state) =>
+            InvitationListPage(bloc.data.invitationsListViewModel),
+      ),
+      GoRoute(
+        path: '/test',
+        builder: (context, state) => TaskListPage(
+          bloc.data.taskListPageViewModel,
+        ),
+      ),
+    ],
+    debugLogDiagnostics: true,
+  );
 
   /// Research Package translations, incl. both local language assets plus
   /// translations of informed consent and surveys downloaded from CARP
   final RPLocalizationsDelegate rpLocalizationsDelegate =
-      RPLocalizationsDelegate(loaders: [
-    const AssetLocalizationLoader(),
-    bloc.localizationLoader,
-  ]);
+      RPLocalizationsDelegate(
+    loaders: [
+      const AssetLocalizationLoader(),
+      bloc.localizationLoader,
+    ],
+  );
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
+    return MaterialApp.router(
+      scaffoldMessengerKey: bloc.scaffoldKey,
       supportedLocales: const [
         Locale('en'),
         Locale('da'),
@@ -66,53 +192,18 @@ class CarpStudyAppState extends State<CarpStudyApp> {
       },
       theme: carpStudyTheme,
       darkTheme: carpStudyDarkTheme,
-      // home: loadingPage,
-      routes: {
-        '/LoadingPage': (context) => loadingPage,
-        '/HomePage': (context) => homePage,
-        '/ConsentPage': (context) => consentPage,
-        '/FailedLoginPage': (context) => failedLoginPage,
-      },
-      initialRoute: '/LoadingPage',
+      routerConfig: _router,
     );
   }
 }
 
-class LoadingPage extends StatefulWidget {
-  const LoadingPage({super.key});
-
-  @override
-  LoadingPageState createState() => LoadingPageState();
-}
-
-class LoadingPageState extends State<LoadingPage> {
-  @override
-  Widget build(BuildContext context) {
-    // configure the BLOC if not already done or in progress
-    // note that this build method can be called several time, but we only
-    // want the bloc to be configured once.
-    //
-    // the only reason to call it here - instead of in the initState() method -
-    // is to have a handle to the context object, which is to be used in the
-    // pop-up windows from CAWS
-    if (!bloc.isConfiguring) {
-      bloc.configure(context).then((_) {
-        // when the configure is done, the localizations should have been downloaded
-        // and we can ask the app to reload the translations
-        CarpStudyApp.reloadLocale(context);
-
-        // navigate to the right screen
-        Navigator.of(context).pushReplacementNamed(
-            (bloc.shouldInformedConsentBeShown) ? '/ConsentPage' : '/HomePage');
-      });
-    }
-
-    return Scaffold(
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        body: Center(
-            child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: const [CircularProgressIndicator()],
-        )));
-  }
-}
+FadeTransition bottomNavigationBarAnimation(
+  BuildContext context,
+  Animation<double> animation,
+  Animation<double> secondaryAnimation,
+  Widget child,
+) =>
+    FadeTransition(
+      opacity: animation,
+      child: child,
+    );

@@ -1,7 +1,7 @@
 part of carp_study_app;
 
 class StepsCardViewModel extends SerializableViewModel<WeeklySteps> {
-  PedometerDatum? _lastStep;
+  StepCount? _lastStep;
 
   @override
   WeeklySteps createModel() => WeeklySteps();
@@ -13,8 +13,8 @@ class StepsCardViewModel extends SerializableViewModel<WeeklySteps> {
   List<DailySteps> get steps => model.steps;
 
   /// Stream of pedometer (step) [DataPoint] measures.
-  Stream<DataPoint>? get pedometerEvents =>
-      controller?.data.where((dataPoint) => dataPoint.data is PedometerDatum);
+  Stream<Measurement>? get pedometerEvents => controller?.measurements
+      .where((dataPoint) => dataPoint.data is StepCount);
 
   @override
   void init(SmartphoneDeploymentController ctrl) {
@@ -22,10 +22,10 @@ class StepsCardViewModel extends SerializableViewModel<WeeklySteps> {
 
     // listen for pedometer events and count them
     pedometerEvents?.listen((pedometerDataPoint) {
-      PedometerDatum? step = pedometerDataPoint.data as PedometerDatum?;
+      StepCount? step = pedometerDataPoint.data as StepCount?;
       if (_lastStep != null) {
-        model.increateStepCount(
-            DateTime.now().weekday, step!.stepCount! - _lastStep!.stepCount!);
+        model.increaseStepCount(
+            DateTime.now().weekday, step!.steps - _lastStep!.steps);
       }
 
       _lastStep = step;
@@ -56,7 +56,7 @@ class WeeklySteps extends DataModel {
       .map((entry) => DailySteps(entry.key, entry.value))
       .toList();
 
-  void increateStepCount(int weekday, int steps) =>
+  void increaseStepCount(int weekday, int steps) =>
       weeklySteps[weekday] = (weeklySteps[weekday] ?? 0) + steps;
 
   @override

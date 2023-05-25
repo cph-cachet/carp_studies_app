@@ -211,10 +211,11 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
 
     return BarChart(
       BarChartData(
-        alignment: BarChartAlignment.center,
+        alignment: BarChartAlignment.spaceEvenly,
         barTouchData: BarTouchData(
           enabled: true,
           touchTooltipData: BarTouchTooltipData(
+            fitInsideHorizontally: true,
             tooltipBgColor: Theme.of(context).primaryColorLight,
             getTooltipItem: (group, groupIndex, rod, rodIndex) {
               return BarTooltipItem(
@@ -277,8 +278,6 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
               showTitles: true,
               reservedSize: 40,
               getTitlesWidget: rightTitles,
-              //interval should be infinity, so that only the min and max shows
-              interval: 100,
             ),
           ),
           topTitles: AxisTitles(
@@ -354,7 +353,9 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
   }
 
   Widget rightTitles(double value, TitleMeta meta) {
-    final text = value.toInt().toString();
+    final text = value.toInt() % meta.appliedInterval == 0
+        ? value.toInt().toString()
+        : '';
     final style = hrVisualisationTextStyle(
       color: Colors.grey.withOpacity(0.6),
       fontSize: 14,

@@ -58,12 +58,8 @@ class DataVisualizationPage extends StatelessWidget {
   }
 
   // The list of cards, depending on what measures are defined in the study.
-  // TODO - this needs to adjusted when more measures can be visualized
   List<Widget> get _dataVizCards {
     final List<Widget> widgets = [];
-
-    // always show scoreboard
-    //widgets.add(ScoreboardCardWidget(model));
 
     // always show tasks progress
     widgets.add(StudyProgressCardWidget(model.studyProgressCardDataModel));
@@ -78,10 +74,7 @@ class DataVisualizationPage extends StatelessWidget {
 
     // check to show surveys stats
     if (bloc.hasSurveys()) {
-      widgets.add(TaskCardWidget(
-        model.surveysCardDataModel,
-        chartType: TaskCardChartType.pie,
-      ));
+      widgets.add(SurveyCard(model.surveysCardDataModel));
     }
 
     List<TaskCardViewModel> mediaModelsList = [];
@@ -102,17 +95,18 @@ class DataVisualizationPage extends StatelessWidget {
 
     // check to show device data visualizations
     if (bloc.hasDevices()) {
-      //TODO ADD DEVICES VIZ
+      //TODO ADD DEVICES VIZ?
     }
 
     if (bloc.hasMeasure(SensorSamplingPackage.STEP_COUNT)) {
-      widgets.add(StepsOuterStatefulWidget(model.stepsCardDataModel));
-    }
-    if (bloc.hasMeasure(ContextSamplingPackage.MOBILITY)) {
-      widgets.add(MobilityOuterStatefulWidget(model.mobilityCardDataModel));
+      widgets.add(StepsCardWidget(model.stepsCardDataModel));
     }
     if (bloc.hasMeasure(ContextSamplingPackage.ACTIVITY)) {
-      widgets.add(ActivityOuterStatefulWidget(model.activityCardDataModel));
+      widgets.add(ActivityCard(model.activityCardDataModel));
+    }
+    if (bloc.hasMeasure(ContextSamplingPackage.MOBILITY)) {
+      widgets.add(MobilityCard(model.mobilityCardDataModel));
+      widgets.add(DistanceCard(model.mobilityCardDataModel));
     }
 
     return widgets.toSet().toList();

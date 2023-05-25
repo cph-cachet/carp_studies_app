@@ -1,18 +1,18 @@
 part of carp_study_app;
 
 class HorizontalBar extends StatelessWidget {
-  final List<String>? names;
-  final List<int>? values;
-  final List<Color>? colors;
+  final List<String> names;
+  final List<int> values;
+  final List<Color> colors;
   final OrderType? order;
-  final double? height;
+  final double height;
   final LabelOrientation? labelOrientation;
 
   const HorizontalBar({
     super.key,
-    this.names,
-    this.values,
-    this.colors,
+    required this.names,
+    required this.values,
+    required this.colors,
     this.order = OrderType.descending,
     this.height = 25,
     this.labelOrientation = LabelOrientation.vertical,
@@ -20,15 +20,11 @@ class HorizontalBar extends StatelessWidget {
 
   List<MyAsset> assetList() {
     List<MyAsset> assetList = [];
-    for (int i = 0; i < names!.length; i++) {
-      // print('assets');
-      // print(values!.elementAt(i));
-      // print(colors!.elementAt(i));
-      // print(names!.elementAt(i));
+    for (int i = 0; i < names.length; i++) {
       assetList.add(MyAsset(
-          size: values!.elementAt(i),
-          color: colors!.elementAt(i),
-          name: names!.elementAt(i)));
+          size: values.elementAt(i),
+          color: colors.elementAt(i),
+          name: names.elementAt(i)));
     }
     return assetList;
   }
@@ -36,12 +32,12 @@ class HorizontalBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    if (names!.isEmpty) {
+    if (names.isEmpty) {
       return Center(
         child: Padding(
           padding: const EdgeInsets.all(3),
           child: ClipRRect(
-            borderRadius: BorderRadius.all(Radius.circular(height! / 2)),
+            borderRadius: BorderRadius.all(Radius.circular(height / 2)),
             child: Container(
               decoration:
                   BoxDecoration(color: Theme.of(context).colorScheme.tertiary),

@@ -9,7 +9,6 @@ import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart' hide TimeOfDay;
 import 'package:json_annotation/json_annotation.dart';
-import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -105,15 +104,15 @@ part 'ui/widgets/details_banner.dart';
 
 part 'ui/cards/steps_card.dart';
 part 'ui/cards/heart_rate_card.dart';
-part 'ui/cards/activity_card.dart';
 part 'ui/cards/mobility_card.dart';
-part 'ui/cards/measurements_card.dart';
-part 'ui/cards/task_card.dart';
+part 'ui/cards/distance_card.dart';
+part 'ui/cards/survey_card.dart';
 part 'ui/cards/media_card.dart';
 part 'ui/cards/scoreboard_card.dart';
 part 'ui/cards/study_progress_card.dart';
 part 'ui/pages/cans_login_android_webview.dart';
 part 'ui/pages/cans_login.dart';
+part 'ui/cards/activity_card.dart';
 
 part 'main.g.dart';
 

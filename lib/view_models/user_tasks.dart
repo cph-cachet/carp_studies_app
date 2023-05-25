@@ -29,7 +29,6 @@ class AppUserTaskFactory implements UserTaskFactory {
 class AudioUserTask extends UserTask {
   static const String audioType = 'audio';
 
-  late BuildContext _context;
   final StreamController<int> _countDownController =
       StreamController.broadcast();
   Stream<int>? get countDownEvents => _countDownController.stream;
@@ -46,25 +45,13 @@ class AudioUserTask extends UserTask {
         : 60;
   }
 
-  @override
-  void onStart(BuildContext context) {
-    // saving the build context for later use
-    _context = context;
-    super.onStart(context);
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-          builder: (context) => AudioTaskPage(audioUserTask: this)),
-    );
-  }
-
   Timer? _timer;
 
   /// Callback when recording is to start.
   void onRecordStart() {
     ongoingRecordingDuration = recordingDuration;
     state = UserTaskState.started;
-    executor.resume();
+    executor.start();
 
     _timer = Timer.periodic(const Duration(seconds: 1), (_) {
       _countDownController.add(--ongoingRecordingDuration);
@@ -73,8 +60,8 @@ class AudioUserTask extends UserTask {
         _timer?.cancel();
         _countDownController.close();
 
-        executor.pause();
-        super.onDone(_context);
+        executor.stop();
+        super.onDone();
       }
     });
   }
@@ -84,36 +71,24 @@ class AudioUserTask extends UserTask {
     _timer?.cancel();
     _countDownController.close();
 
-    executor.pause();
-    super.onDone(_context);
+    executor.stop();
+    super.onDone();
   }
 }
 
 /// A user task handling video and image recordings.
-/// When started, creates a [CameraTaskPage] and shows it to the user.
+/// When started, creates a [CameraTaskPage].
 class VideoUserTask extends UserTask {
   static const String videoType = 'video';
   static const String imageType = 'image';
 
-  late BuildContext _context;
-
   VideoUserTask(AppTaskExecutor executor) : super(executor);
 
   @override
-  void onStart(BuildContext context) async {
-    // saving the build context for later use
-    _context = context;
+  bool get hasWidget => true;
 
-    super.onStart(context);
-
-    final cameras = await availableCameras();
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-          builder: (context) =>
-              CameraTaskPage(mediaUserTask: this, cameras: cameras)),
-    );
-  }
+  @override
+  Widget? get widget => CameraTaskPage(mediaUserTask: this);
 
   DateTime? _startRecordingTime, _endRecordingTime;
   XFile? _file;
@@ -127,14 +102,14 @@ class VideoUserTask extends UserTask {
     _startRecordingTime = DateTime.now();
     _endRecordingTime = DateTime.now();
 
-    executor.resume();
+    executor.start();
   }
 
   /// Callback when video recording is started.
   void onRecordStart() {
     debug('$runtimeType - onRecordStart()');
     _startRecordingTime = DateTime.now();
-    executor.resume();
+    executor.start();
   }
 
   /// Callback when video recording is stopped.
@@ -150,8 +125,8 @@ class VideoUserTask extends UserTask {
   void onSave() {
     debug('$runtimeType - onSave(), file: ${_file?.path}');
     if (_file != null) {
-      // create the datum directly here...
-      MediaDatum datum = MediaDatum(
+      // create the media measurement directly here...
+      Media media = Media(
           filename: _file!.path,
           startRecordingTime: _startRecordingTime!,
           endRecordingTime: _endRecordingTime,
@@ -160,67 +135,9 @@ class VideoUserTask extends UserTask {
         ..path = _file!.path;
 
       // ... and add it to the sensing controller
-      bloc.addDatum(datum);
+      bloc.addMeasurement(Measurement.fromData(media));
     }
-    executor.pause();
-    super.onDone(_context);
+    executor.stop();
+    super.onDone();
   }
 }
-
-// class ImageUserTask extends UserTask {
-//   static const String IMAGE_TYPE = 'image';
-
-//   ImageUserTask(AppTaskExecutor executor) : super(executor);
-
-//   void onStart(BuildContext context) async {
-//     final cameras = await availableCameras();
-//     Navigator.push(
-//       context,
-//       MaterialPageRoute(builder: (context) => CameraTaskPage(mediaUserTask: this, cameras: cameras)),
-//     );
-//   }
-
-//   DateTime? _startRecordingTime, _endRecordingTime;
-//   XFile? file;
-//   MediaType _mediaType = MediaType.image;
-
-//   /// Callback when a picture is captured.
-//   void onPictureCapture(XFile image) {
-//     onRecordStart();
-
-//     // now wait for 2 secs to finish up any other sensing in the task
-//     Timer(const Duration(seconds: 2), () => onRecordStop(image, mediaType: MediaType.image));
-//   }
-
-//   /// Callback when video recording is started.
-//   void onRecordStart() {
-//     _startRecordingTime = DateTime.now();
-//     state = UserTaskState.started;
-//     executor.resume();
-//   }
-
-//   /// Callback when video recording is stopped.
-//   void onRecordStop(XFile video, {MediaType mediaType = MediaType.video}) {
-//     executor.pause();
-//     file = video;
-//     _mediaType = mediaType;
-//     state = UserTaskState.done;
-//   }
-
-//   /// Callback when the recorded image/video is to be "saved", i.e. committed to
-//   /// data stream.
-//   void onSave() {
-//     if (file != null) {
-//       // create the datum directly here...
-//       MediaDatum datum = MediaDatum(
-//           filename: file!.path,
-//           startRecordingTime: _startRecordingTime!,
-//           endRecordingTime: _endRecordingTime,
-//           mediaType: _mediaType)
-//         ..filename = file!.path.split("/").last;
-
-//       // ... and add it to the sensing controller
-//       bloc.addDatum(datum);
-//     }
-//   }
-// }

@@ -9,16 +9,20 @@ part of carp_study_app;
 
 /// This class implements the sensing layer.
 ///
-/// Call [initialize] to setup a deployment, either locally or using a CARP
-/// deployment. Once initialized, the runtime [controller] can be used to
-/// control the study execution (e.g., resume, pause, stop).
+/// Call [initialize] to setup a deployment using a CARP deployment.
+/// Once initialized, use the [addStudy] method to add the study to this runtime.
+/// The runtime [controller] can be used to control the study execution
+/// (i.e., start or stop).
 ///
-/// Note that this class is a singleton. Only one sensing layer is used.
-/// But, CAMS supports that several studies are added to the [client].
+/// Note that this class is a singleton and only one sensing layer is used.
+/// Hence, the current assumption at the moment is that this Study App only
+/// runs one study at a time, even though CAMS supports that several studies
+/// added to the [client].
 class Sensing {
   static final Sensing _instance = Sensing._();
   StudyDeploymentStatus? _status;
   SmartphoneDeploymentController? _controller;
+  DeploymentService? deploymentService;
   Study? _study;
 
   /// The study running on this phone.
@@ -41,14 +45,14 @@ class Sensing {
   /// The study runtime for this deployment.
   SmartphoneDeploymentController? get controller => _controller;
 
-  /// Is sensing running, i.e. has the study executor been resumed?
+  /// Is sensing running, i.e. has the study executor been started?
   bool get isRunning =>
       (controller != null) &&
-      controller!.executor!.state == ExecutorState.resumed;
+      controller!.executor.state == ExecutorState.started;
 
   /// The list of running - i.e. used - probes in this study.
   List<Probe> get runningProbes =>
-      (_controller != null) ? _controller!.executor!.probes : [];
+      (_controller != null) ? _controller!.executor.probes : [];
 
   /// The list of connected devices.
   List<DeviceManager>? get runningDevices =>
@@ -77,16 +81,23 @@ class Sensing {
 
   /// Initialize and set up sensing.
   Future<void> initialize() async {
-    info('Initializing $runtimeType - mode: ${bloc.deploymentMode}');
+    info('Initializing $runtimeType}');
 
     // set up the devices available on this phone
     DeviceController().registerAllAvailableDevices();
 
-    // Create and configure the client manager for this phone
+    // Use the CARP deployment service which can download a protocol from CAWS
+    CarpDeploymentService().configureFrom(CarpService());
+    deploymentService = CarpDeploymentService();
+
+    // Register the CARP data manager for uploading data back to CARP.
+    // This is needed in both LOCAL and CARP deployments, since a local study
+    // protocol may still upload to CARP
+    DataManagerRegistry().register(CarpDataManagerFactory());
+
+    // Create and configure a client manager for this phone
     await SmartPhoneClientManager().configure(
-      deploymentService: (bloc.deploymentMode == DeploymentMode.local)
-          ? SmartphoneDeploymentService()
-          : CustomProtocolDeploymentService(),
+      deploymentService: deploymentService,
       deviceController: DeviceController(),
       askForPermissions: false,
     );
@@ -101,20 +112,11 @@ class Sensing {
     assert(bloc.studyDeploymentId != null,
         'No study deployment ID is provided. Cannot start deployment w/o an id.');
 
-    _status = await SmartPhoneClientManager()
-        .deploymentService
-        ?.getStudyDeploymentStatus(bloc.studyDeploymentId!);
-
-    assert(_status?.masterDeviceStatus?.device.roleName != null,
-        'The master device in the deployment needs a role name');
-
     // Define the study and add it to the client.
-    _study = Study(
+    _study = await SmartPhoneClientManager().addStudy(
       bloc.studyDeploymentId!,
-      _status?.masterDeviceStatus?.device.roleName ??
-          Smartphone.DEFAULT_ROLENAME,
+      bloc.deviceRolename!,
     );
-    await SmartPhoneClientManager().addStudy(study!);
 
     // Get the study controller and try to deploy the study.
     //
@@ -128,6 +130,10 @@ class Sensing {
 
     // Configure the controller
     await controller?.configure();
+
+    // Listening on the data stream and print them as json to the debug console
+    controller?.measurements
+        .listen((measurement) => debug(toJsonString(measurement)));
 
     info('$runtimeType study added: $studyDeploymentId');
   }
@@ -151,7 +157,7 @@ class Sensing {
       }
     }
 
-    info("Study protocol translated to local '${localization.locale}'");
+    info("Study protocol translated to locale '${localization.locale}'");
   }
 
   Future<void> askForPermissions() async =>

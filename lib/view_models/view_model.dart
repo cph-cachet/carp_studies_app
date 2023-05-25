@@ -140,6 +140,11 @@ class CarpStudyAppViewModel extends ViewModel {
   final TaskListPageViewModel _taskListPageViewModel = TaskListPageViewModel();
   final ProfilePageViewModel _profilePageViewModel = ProfilePageViewModel();
   final DevicesPageViewModel _devicesPageViewModel = DevicesPageViewModel();
+  final LoginPageViewModel _loginPageViewModel = LoginPageViewModel();
+  final InvitationsListViewModel _invitationsListViewModel =
+      InvitationsListViewModel();
+  final InformedConsentViewModel _informedConsentViewModel =
+      InformedConsentViewModel();
 
   CarpStudyAppViewModel() : super();
 
@@ -149,6 +154,11 @@ class CarpStudyAppViewModel extends ViewModel {
   TaskListPageViewModel get taskListPageViewModel => _taskListPageViewModel;
   ProfilePageViewModel get profilePageViewModel => _profilePageViewModel;
   DevicesPageViewModel get devicesPageViewModel => _devicesPageViewModel;
+  LoginPageViewModel get loginPageViewModel => _loginPageViewModel;
+  InvitationsListViewModel get invitationsListViewModel =>
+      _invitationsListViewModel;
+  InformedConsentViewModel get informedConsentViewModel =>
+      _informedConsentViewModel;
 
   @override
   void init(SmartphoneDeploymentController ctrl) {
@@ -158,5 +168,8 @@ class CarpStudyAppViewModel extends ViewModel {
     _taskListPageViewModel.init(ctrl);
     _profilePageViewModel.init(ctrl);
     _devicesPageViewModel.init(ctrl);
+    _loginPageViewModel.init(ctrl);
+    _invitationsListViewModel.init(ctrl);
+    _informedConsentViewModel.init(ctrl);
   }
 }

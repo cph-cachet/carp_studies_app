@@ -1,18 +1,28 @@
 part of carp_study_app;
 
 class MessageDetailsPage extends StatelessWidget {
-  final Message message;
-  final Image messageImage;
+  final String messageId;
 
   const MessageDetailsPage({
     super.key,
-    required this.message,
-    required this.messageImage,
+    required this.messageId,
   });
 
   @override
   Widget build(BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;
+
+    Message message = bloc.messages
+        .firstWhere((element) => element.id == messageId, orElse: () {
+      return Message(
+          id: '0',
+          title: 'Unknown message',
+          subTitle: 'Unknown message',
+          type: MessageType.announcement,
+          timestamp: DateTime.now(),
+          imagePath: './assets/images/kids.png');
+    });
+
     return Scaffold(
       body: Container(
         color: Theme.of(context).colorScheme.secondary,
@@ -23,9 +33,13 @@ class MessageDetailsPage extends StatelessWidget {
               Row(mainAxisAlignment: MainAxisAlignment.end, children: [
                 IconButton(
                     onPressed: () {
-                      Navigator.pop(context);
+                      if (context.canPop()) {
+                        context.pop();
+                      } else {
+                        context.go('/');
+                      }
                     },
-                    icon: const Icon(Icons.close))
+                    icon: const Icon(Icons.close_rounded))
               ]),
               Flexible(
                 child: CustomScrollView(

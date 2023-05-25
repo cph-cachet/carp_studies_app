@@ -46,105 +46,110 @@ class DevicesPageState extends State<DevicesPage> {
         .toList();
 
     return Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const CarpAppBar(),
-          Container(
-            color: Theme.of(context).colorScheme.secondary,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(locale.translate("pages.devices.message"),
-                        style: aboutCardSubtitleStyle),
-                    const SizedBox(height: 15),
-                  ],
+      backgroundColor: Theme.of(context).colorScheme.secondary,
+      body: SafeArea(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const CarpAppBar(),
+            Container(
+              color: Theme.of(context).colorScheme.secondary,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(locale.translate("pages.devices.message"),
+                          style: aboutCardSubtitleStyle),
+                      const SizedBox(height: 15),
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-          Expanded(
-            flex: 4,
-            child: StreamBuilder<UserTask>(
-                stream: AppTaskController().userTaskEvents,
-                builder: (context, AsyncSnapshot<UserTask> snapshot) {
-                  return CustomScrollView(
-                    slivers: [
-                      SliverToBoxAdapter(
-                          child: Padding(
-                        padding:
-                            const EdgeInsets.only(left: 15, right: 15, top: 10),
-                        child: Text(
-                            locale
-                                .translate("pages.devices.phone.title")
-                                .toUpperCase(),
-                            style: dataCardTitleStyle.copyWith(
-                                color: Theme.of(context).primaryColor)),
-                      )),
-                      SliverList(
-                        delegate: SliverChildBuilderDelegate(
-                            (BuildContext context, int index) {
-                          return buildSmartphoneDeviceCard(
-                              context, smartphoneDevice[index]);
-                        }, childCount: smartphoneDevice.length),
-                      ),
-                      physicalDevices.isEmpty
-                          ? const SliverToBoxAdapter(child: SizedBox.shrink())
-                          : SliverToBoxAdapter(
-                              child: Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 15, right: 15, top: 10),
-                              child: Text(
-                                  locale
-                                      .translate("pages.devices.devices.title")
-                                      .toUpperCase(),
-                                  style: dataCardTitleStyle.copyWith(
-                                      color: Theme.of(context).primaryColor)),
-                            )),
-                      SliverList(
-                        delegate: SliverChildBuilderDelegate(
-                            (BuildContext context, int index) {
-                          return buildPhysicalDeviceCard(
-                              context,
-                              physicalDevices[index],
-                              setState,
-                              selected,
-                              selectedDevice);
-                        }, childCount: physicalDevices.length),
-                      ),
-                      onlineServices.isEmpty
-                          ? const SliverToBoxAdapter(child: SizedBox.shrink())
-                          : SliverToBoxAdapter(
-                              child: Padding(
+            Expanded(
+              flex: 4,
+              child: StreamBuilder<UserTask>(
+                  stream: AppTaskController().userTaskEvents,
+                  builder: (context, AsyncSnapshot<UserTask> snapshot) {
+                    return CustomScrollView(
+                      slivers: [
+                        SliverToBoxAdapter(
+                            child: Padding(
+                          padding: const EdgeInsets.only(
+                              left: 15, right: 15, top: 10),
+                          child: Text(
+                              locale
+                                  .translate("pages.devices.phone.title")
+                                  .toUpperCase(),
+                              style: dataCardTitleStyle.copyWith(
+                                  color: Theme.of(context).primaryColor)),
+                        )),
+                        SliverList(
+                          delegate: SliverChildBuilderDelegate(
+                              (BuildContext context, int index) {
+                            return buildSmartphoneDeviceCard(
+                                context, smartphoneDevice[index]);
+                          }, childCount: smartphoneDevice.length),
+                        ),
+                        physicalDevices.isEmpty
+                            ? const SliverToBoxAdapter(child: SizedBox.shrink())
+                            : SliverToBoxAdapter(
+                                child: Padding(
                                 padding: const EdgeInsets.only(
                                     left: 15, right: 15, top: 10),
                                 child: Text(
                                     locale
                                         .translate(
-                                            "pages.devices.services.title")
+                                            "pages.devices.devices.title")
                                         .toUpperCase(),
                                     style: dataCardTitleStyle.copyWith(
                                         color: Theme.of(context).primaryColor)),
+                              )),
+                        SliverList(
+                          delegate: SliverChildBuilderDelegate(
+                              (BuildContext context, int index) {
+                            return buildPhysicalDeviceCard(
+                                context,
+                                physicalDevices[index],
+                                setState,
+                                selected,
+                                selectedDevice);
+                          }, childCount: physicalDevices.length),
+                        ),
+                        onlineServices.isEmpty
+                            ? const SliverToBoxAdapter(child: SizedBox.shrink())
+                            : SliverToBoxAdapter(
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 15, right: 15, top: 10),
+                                  child: Text(
+                                      locale
+                                          .translate(
+                                              "pages.devices.services.title")
+                                          .toUpperCase(),
+                                      style: dataCardTitleStyle.copyWith(
+                                          color:
+                                              Theme.of(context).primaryColor)),
+                                ),
                               ),
-                            ),
-                      SliverList(
-                        delegate: SliverChildBuilderDelegate(
-                            (BuildContext context, int index) {
-                          return buildOnlineServiceCard(
-                              context, onlineServices[index]);
-                        }, childCount: onlineServices.length),
-                      ),
-                    ],
-                  );
-                }),
-          ),
-        ],
+                        SliverList(
+                          delegate: SliverChildBuilderDelegate(
+                              (BuildContext context, int index) {
+                            return buildOnlineServiceCard(
+                                context, onlineServices[index]);
+                          }, childCount: onlineServices.length),
+                        ),
+                      ],
+                    );
+                  }),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -1,14 +1,14 @@
 part of carp_study_app;
 
-class MeasuresCardViewModel extends ViewModel {
+class MeasurementsCardViewModel extends ViewModel {
   final Map<String, int> _samplingTable = {};
 
-  /// Stream of [DataPoint] measures.
-  Stream<DataPoint>? get measureEvents => controller?.data;
+  /// Stream of [Measurement] measures.
+  Stream<Measurement>? get measureEvents => controller?.measurements;
 
   /// Stream of more quiet [DataPoint] measures.
-  Stream<DataPoint>? get quietMeasureEvents => controller?.data
-      .where((dataPoint) => dataPoint.carpHeader.dataFormat.name != 'sensor');
+  Stream<Measurement>? get quietMeasureEvents => controller?.measurements
+      .where((measurement) => measurement.dataType.name != 'sensor');
 
   /// The total sampling size
   int get samplingSize =>
@@ -17,8 +17,8 @@ class MeasuresCardViewModel extends ViewModel {
 
   /// A table with sampling size of each measure type
   Map<String, int> get samplingTable {
-    quietMeasureEvents?.listen((dataPoint) {
-      String key = dataPoint.carpHeader.dataFormat.name;
+    quietMeasureEvents?.listen((measurement) {
+      String key = measurement.dataType.name;
       if (!_samplingTable.containsKey(key)) _samplingTable[key] = 0;
       _samplingTable[key] = _samplingTable[key]! + 1;
     });
@@ -40,7 +40,7 @@ class MeasuresCardViewModel extends ViewModel {
     return tasksList;
   }
 
-  MeasuresCardViewModel() : super();
+  MeasurementsCardViewModel() : super();
 
   // void init(SmartphoneDeploymentController controller) {
   //   super.init(controller);

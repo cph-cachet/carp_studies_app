@@ -1,72 +1,30 @@
 part of carp_study_app;
 
-class MobilityCardWidget extends StatefulWidget {
+class MobilityCard extends StatefulWidget {
   final List<Color> colors;
-  final List<charts.Series<DailyMobility, String>> seriesList;
+
   final MobilityCardViewModel model;
-  const MobilityCardWidget(this.seriesList, this.model,
+  const MobilityCard(this.model,
       {super.key,
-      this.colors = const [CACHET.BLUE_2, CACHET.BLUE_1, CACHET.RED_1]});
-
-  factory MobilityCardWidget.withSampleData(MobilityCardViewModel model) {
-    return MobilityCardWidget(
-        _createChartList(model, [CACHET.BLUE_2, CACHET.BLUE_1, CACHET.RED_1]),
-        model);
-  }
-
-  static const secondaryMeasureAxisId = 'secondaryMeasureAxisId';
-
-  static List<charts.Series<DailyMobility, String>> _createChartList(
-          MobilityCardViewModel model, List<Color> colors) =>
-      [
-        charts.Series<DailyMobility, String>(
-          colorFn: (d, i) => charts.ColorUtil.fromDartColor(colors[0]),
-          id: 'weeklyDistanceTraveled',
-          data: model.distance,
-          domainFn: (DailyMobility datum, _) => datum.toString(),
-          measureFn: (DailyMobility datum, _) => datum.distance,
-        )..setAttribute(charts.rendererIdKey, 'customLine'),
-        charts.Series<DailyMobility, String>(
-          colorFn: (d, i) => charts.ColorUtil.fromDartColor(colors[1]),
-          id: 'weeklyHomeStay',
-          data: model.homeStay,
-          domainFn: (DailyMobility datum, _) => datum.toString(),
-          measureFn: (DailyMobility datum, _) => datum.homeStay,
-        )..setAttribute(charts.measureAxisIdKey, secondaryMeasureAxisId),
-        charts.Series<DailyMobility, String>(
-          colorFn: (d, i) => charts.ColorUtil.fromDartColor(colors[2]),
-          id: 'weeklyPlaces',
-          data: model.places,
-          domainFn: (DailyMobility datum, _) => datum.toString(),
-          measureFn: (DailyMobility datum, _) => datum.places,
-        ),
-      ];
+      this.colors = const [CACHET.BLUE_1, CACHET.BLUE_2, CACHET.BLUE_3]});
 
   @override
-  MobilityCardWidgetState createState() => MobilityCardWidgetState();
+  State<MobilityCard> createState() => _MobilityCardState();
 }
 
-class MobilityCardWidgetState extends State<MobilityCardWidget> {
-  // Axis rendering settings
-  charts.RenderSpec<num> renderSpecNum = AxisTheme.axisThemeNum();
-  charts.RenderSpec<DateTime> renderSpecTime = AxisTheme.axisThemeDateTime();
-  charts.RenderSpec<String> renderSpecString = AxisTheme.axisThemeOrdinal();
+class _MobilityCardState extends State<MobilityCard> {
+  int touchedIndex = DateTime.now().weekday;
 
-  final _measures = <String?, List<num?>>{
-    'weeklyDistanceTraveled': [0, 0, 0],
-    'weeklyHomeStay': [0, 0, 0],
-    'weeklyPlaces': [0, 0, 0],
-  };
+  num _homestay = 0;
+  num _places = 0;
 
   @override
   void initState() {
-    _measures['weeklyHomeStay']![1] =
-        widget.model.weeklyHomeStay[DateTime.now().weekday];
-    _measures['weeklyDistanceTraveled']![0] =
-        widget.model.weeklyDistanceTraveled[DateTime.now().weekday];
-    _measures['weeklyPlaces']![2] =
-        widget.model.weeklyPlaces[DateTime.now().weekday];
-
+    widget.model.mobilityEvents?.listen((event) {
+      setState(() {});
+    });
+    _homestay = widget.model.weekData[DateTime.now().weekday]!.homeStay;
+    _places = widget.model.weekData[DateTime.now().weekday]!.places;
     super.initState();
   }
 
@@ -75,74 +33,29 @@ class MobilityCardWidgetState extends State<MobilityCardWidget> {
     RPLocalizations locale = RPLocalizations.of(context)!;
 
     return Padding(
-      padding: const EdgeInsets.all(5.0),
+      padding: const EdgeInsets.all(8.0),
       child: Card(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         elevation: 4,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
-            children: <Widget>[
+            children: [
               ChartsLegend(
                 title: locale.translate('cards.mobility.title'),
                 iconAssetName: Icon(Icons.emoji_transportation,
                     color: Theme.of(context).primaryColor),
                 heroTag: 'mobility-card',
                 values: [
-                  '${_measures['weeklyDistanceTraveled']![0]} ${locale.translate('cards.mobility.distance')}',
-                  '${_measures['weeklyHomeStay']![1]} ${locale.translate('cards.mobility.homestay')}',
-                  '${_measures['weeklyPlaces']![2]} ${locale.translate('cards.mobility.places')}',
+                  '$_homestay ${locale.translate('cards.mobility.homestay')}',
+                  '$_places ${locale.translate('cards.mobility.places')}',
                 ],
                 colors: widget.colors,
               ),
               SizedBox(
                 height: 160,
-                child: charts.OrdinalComboChart(
-                  widget.seriesList,
-                  animate: true,
-                  domainAxis: charts.OrdinalAxisSpec(
-                    renderSpec: renderSpecString,
-                  ),
-                  primaryMeasureAxis: charts.NumericAxisSpec(
-                      renderSpec: renderSpecNum,
-                      tickProviderSpec:
-                          const charts.BasicNumericTickProviderSpec(
-                              desiredTickCount: 3)),
-                  secondaryMeasureAxis: charts.NumericAxisSpec(
-                      renderSpec: renderSpecNum,
-                      tickProviderSpec:
-                          const charts.BasicNumericTickProviderSpec(
-                              desiredTickCount: 3)),
-                  customSeriesRenderers: [
-                    charts.LineRendererConfig(
-                      customRendererId: 'customLine',
-                      includeArea: true,
-                      areaOpacity: 0.3,
-                      layoutPaintOrder: 0,
-                    ),
-                  ],
-                  defaultInteractions: true,
-                  selectionModels: [
-                    charts.SelectionModelConfig(
-                        type: charts.SelectionModelType.info,
-                        changedListener: _infoSelectionModelChanged),
-                  ],
-                  behaviors: [
-                    charts.LinePointHighlighter(
-                      defaultRadiusPx: 0,
-                      showHorizontalFollowLine:
-                          charts.LinePointHighlighterFollowLineType.none,
-                      showVerticalFollowLine:
-                          charts.LinePointHighlighterFollowLineType.all,
-                    ),
-                    charts.SelectNearest(
-                      selectAcrossAllDrawAreaComponents: true,
-                      selectionModelType: charts.SelectionModelType.info,
-                      eventTrigger: charts.SelectionTrigger.tap,
-                    ),
-                    charts.DomainHighlighter(),
-                  ],
-                ),
+                width: MediaQuery.of(context).size.width * 0.9,
+                child: barCharts,
               ),
             ],
           ),
@@ -151,35 +64,184 @@ class MobilityCardWidgetState extends State<MobilityCardWidget> {
     );
   }
 
-  void _infoSelectionModelChanged(charts.SelectionModel model) {
-    final selectedDatum = model.selectedDatum;
-    if (selectedDatum.isNotEmpty) {
-      setState(() {
-        for (var datumPair in selectedDatum) {
-          _measures[datumPair.series.displayName] = [
-            datumPair.datum.distance,
-            datumPair.datum.homeStay,
-            datumPair.datum.places
-          ];
-        }
-      });
-    }
+  BarChart get barCharts {
+    return BarChart(BarChartData(
+      alignment: BarChartAlignment.spaceAround,
+      titlesData: FlTitlesData(
+        bottomTitles: AxisTitles(
+          sideTitles: SideTitles(
+            showTitles: true,
+            getTitlesWidget: bottomTitles,
+            reservedSize: 20,
+          ),
+        ),
+        leftTitles: AxisTitles(
+            // sideTitles: SideTitles(
+            //   showTitles: true,
+            //   getTitlesWidget: leftTitles,
+            //   reservedSize: 40,
+            // ),
+            ),
+        rightTitles: AxisTitles(
+          sideTitles: SideTitles(
+            showTitles: true,
+            getTitlesWidget: rightTitles,
+            reservedSize: 48,
+          ),
+        ),
+        topTitles: AxisTitles(),
+      ),
+      barTouchData: BarTouchData(
+        enabled: false,
+        touchCallback: (p0, p1) {
+          setState(() {
+            touchedIndex =
+                (p1?.spot?.touchedBarGroupIndex ?? DateTime.now().weekday - 1) +
+                    1;
+          });
+        },
+      ),
+      groupsSpace: 4,
+      barGroups: barChartsGroups,
+      maxY: 100,
+      gridData: FlGridData(
+        show: true,
+        drawVerticalLine: false,
+        drawHorizontalLine: true,
+        getDrawingHorizontalLine: (value) {
+          return FlLine(
+            color: Colors.grey.withOpacity(0.3),
+            strokeWidth: 1,
+          );
+        },
+      ),
+      borderData: FlBorderData(
+        show: true,
+        border: Border.all(
+          width: 1,
+          color: Colors.grey.withOpacity(0.2),
+        ),
+      ),
+    ));
   }
-}
 
-class MobilityOuterStatefulWidget extends StatefulWidget {
-  final MobilityCardViewModel model;
-  const MobilityOuterStatefulWidget(this.model, {super.key});
+  List<BarChartGroupData> get barChartsGroups {
+    return widget.model.weekData.entries
+        .map((e) => generateGroupData(e.key, e.value.homeStay, e.value.places))
+        .toList();
+  }
 
-  @override
-  MobilityOuterStatefulWidgetState createState() =>
-      MobilityOuterStatefulWidgetState();
-}
+  BarChartGroupData generateGroupData(int x, int homestay, int places) {
+    bool isTouched = touchedIndex == x;
+    if (isTouched) {
+      _homestay = homestay;
+      _places = places;
+    }
 
-class MobilityOuterStatefulWidgetState
-    extends State<MobilityOuterStatefulWidget> {
-  @override
-  Widget build(BuildContext context) {
-    return MobilityCardWidget.withSampleData(widget.model);
+    return BarChartGroupData(
+      x: x,
+      barRods: [
+        BarChartRodData(
+          toY: places.toDouble(),
+          color: widget.colors[1].withOpacity(isTouched ? 0.8 : 1),
+          width: 16,
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(8),
+            topRight: Radius.circular(8),
+          ),
+        ),
+        BarChartRodData(
+          toY: homestay.toDouble(),
+          color: widget.colors[0].withOpacity(isTouched ? 0.8 : 1),
+          width: 16,
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(8),
+            topRight: Radius.circular(8),
+          ),
+        ),
+      ],
+    );
+  }
+
+  TextStyle activityVisualisationTextStyle(
+      {double? fontSize, Color? color, List<ui.FontFeature>? fontFeatures}) {
+    return GoogleFonts.barlow(
+      fontSize: fontSize,
+      fontWeight: FontWeight.w600,
+      color: color,
+      fontFeatures: fontFeatures,
+    );
+  }
+
+  Widget rightTitles(double value, TitleMeta meta) {
+    final text = value.toInt() % meta.appliedInterval == 0
+        ? value.toInt().toString()
+        : '';
+
+    final style = activityVisualisationTextStyle(
+      color: Colors.grey.withOpacity(0.6),
+      fontSize: 14,
+    );
+    return SideTitleWidget(
+      axisSide: AxisSide.right,
+      space: 16,
+      child: Text(
+        text,
+        style: style,
+      ),
+    );
+  }
+
+  Widget leftTitles(double value, TitleMeta meta) {
+    final text = value.toInt() % meta.appliedInterval == 0
+        ? value.toInt().toString()
+        : '';
+
+    final style = activityVisualisationTextStyle(
+      color: Colors.grey.withOpacity(0.6),
+      fontSize: 14,
+    );
+    return SideTitleWidget(
+      axisSide: AxisSide.right,
+      space: 16,
+      child: Text(
+        text,
+        style: style,
+      ),
+    );
+  }
+
+  Widget bottomTitles(double value, TitleMeta meta) {
+    const style = TextStyle(fontSize: 10);
+    String text;
+    switch (value.toInt()) {
+      case 1:
+        text = 'Mon';
+        break;
+      case 2:
+        text = 'Tue';
+        break;
+      case 3:
+        text = 'Wed';
+        break;
+      case 4:
+        text = 'Thu';
+        break;
+      case 5:
+        text = 'Fri';
+        break;
+      case 6:
+        text = 'Sat';
+        break;
+      case 7:
+        text = 'Sun';
+        break;
+      default:
+        text = '';
+    }
+    return SideTitleWidget(
+      axisSide: meta.axisSide,
+      child: Text(text, style: style),
+    );
   }
 }

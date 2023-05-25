@@ -1,8 +1,8 @@
 part of carp_study_app;
 
 class ActivityCardViewModel extends SerializableViewModel<WeeklyActivities> {
-  DataPoint _lastActivity =
-      DataPoint.fromData(ActivityDatum(ActivityType.STILL, 100));
+  Measurement _lastActivity =
+      Measurement.fromData(Activity(type: ActivityType.STILL, confidence: 100));
 
   @override
   WeeklyActivities createModel() => WeeklyActivities();
@@ -12,31 +12,33 @@ class ActivityCardViewModel extends SerializableViewModel<WeeklyActivities> {
 
   ActivityCardViewModel() : super();
 
-  /// Stream of activity [DataPoint] measures.
-  Stream<DataPoint>? get activityEvents =>
-      controller?.data.where((dataPoint) => dataPoint.data is ActivityDatum);
+  /// Stream of activity measurements.
+  Stream<Measurement>? get activityEvents => controller?.measurements
+      .where((measurement) => measurement.data is Activity);
 
   @override
   void init(SmartphoneDeploymentController ctrl) {
     super.init(ctrl);
 
     // listen for activity events and count the minutes
-    activityEvents?.listen((activityDataPoint) {
-      ActivityDatum lastActivityDatum = _lastActivity.data as ActivityDatum;
-      ActivityDatum activityDatum = activityDataPoint.data as ActivityDatum;
+    activityEvents?.listen((measurement) {
+      var lastActivity = _lastActivity;
 
-      if (activityDatum.type != lastActivityDatum.type) {
+      if ((measurement.data as Activity).type !=
+          (lastActivity.data as Activity).type) {
         // if we have a new type of activity
         // add the minutes to the last known activity type
-        DateTime start = lastActivityDatum.timestamp;
-        DateTime end = activityDatum.timestamp;
+        DateTime start =
+            DateTime.fromMicrosecondsSinceEpoch(lastActivity.sensorStartTime);
+        DateTime end =
+            DateTime.fromMicrosecondsSinceEpoch(measurement.sensorStartTime);
         model.increaseActivityDuration(
-          lastActivityDatum.type,
+          (lastActivity.data as Activity).type,
           start.weekday,
           end.difference(start).inMinutes,
         );
         // and then save the new activity
-        _lastActivity = activityDataPoint;
+        _lastActivity = measurement;
       }
     });
   }

@@ -9,7 +9,6 @@ import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart' hide TimeOfDay;
 import 'package:json_annotation/json_annotation.dart';
-import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -21,7 +20,9 @@ import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:open_settings/open_settings.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:flutter_activity_recognition/flutter_activity_recognition.dart';
+import 'package:go_router/go_router.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+// import 'package:flutter_activity_recognition/flutter_activity_recognition.dart';
 
 // the CARP packages
 import 'package:carp_serializable/carp_serializable.dart';
@@ -58,23 +59,26 @@ part 'view_models/tasklist_page_model.dart';
 part 'view_models/study_page_model.dart';
 part 'view_models/profile_page_model.dart';
 part 'view_models/devices_page_model.dart';
-part 'view_models/data_viz_page_model.dart';
+part 'view_models/data_visualization_page_model.dart';
+part 'view_models/login_page_model.dart';
+part 'view_models/invitations_list_model.dart';
+part 'view_models/informed_consent_page_model.dart';
 part 'view_models/cards/activity_data_model.dart';
 part 'view_models/cards/mobility_data_model.dart';
 part 'view_models/cards/steps_data_model.dart';
 part 'view_models/cards/heart_rate_data_model.dart';
-part 'view_models/cards/measures_data_model.dart';
+part 'view_models/cards/measurements_data_model.dart';
 part 'view_models/cards/task_data_model.dart';
 part 'view_models/cards/study_progress_data_model.dart';
 part 'view_models/user_tasks.dart';
 
 part 'carp_study_app.dart';
 part 'ui/pages/informed_consent_page.dart';
-part 'ui/pages/home_page.dart';
+part 'ui/pages/bottom_navigation_bar.dart';
 part 'ui/widgets/carp_app_bar.dart';
 part 'ui/carp_study_style.dart';
 part 'ui/colors.dart';
-part 'ui/pages/data_viz_page.dart';
+part 'ui/pages/data_visualization_page.dart';
 part 'ui/pages/study_page.dart';
 part 'ui/pages/task_list_page.dart';
 part 'ui/pages/profile_page.dart';
@@ -82,11 +86,15 @@ part 'ui/pages/audio_task_page.dart';
 part 'ui/pages/failed_login_page.dart';
 part 'ui/pages/study_details_page.dart';
 part 'ui/pages/message_details_page.dart';
+part 'ui/pages/invitation_page.dart';
+part 'ui/pages/invitation_list_page.dart';
 part 'ui/pages/process_message_page.dart';
 part 'ui/pages/camera_task_page.dart';
 part 'ui/pages/display_picture_page.dart';
 part 'ui/pages/camera_page.dart';
 part 'ui/pages/devices_page.dart';
+part 'ui/pages/loading_page.dart';
+part 'ui/pages/error_page.dart';
 
 part 'ui/widgets/study_card.dart';
 part 'ui/widgets/horizontal_bar.dart';
@@ -96,21 +104,23 @@ part 'ui/widgets/details_banner.dart';
 
 part 'ui/cards/steps_card.dart';
 part 'ui/cards/heart_rate_card.dart';
-part 'ui/cards/activity_card.dart';
 part 'ui/cards/mobility_card.dart';
-part 'ui/cards/measures_card.dart';
-part 'ui/cards/task_card.dart';
+part 'ui/cards/distance_card.dart';
+part 'ui/cards/survey_card.dart';
 part 'ui/cards/media_card.dart';
 part 'ui/cards/scoreboard_card.dart';
 part 'ui/cards/study_progress_card.dart';
+part 'ui/pages/cans_login_android_webview.dart';
+part 'ui/pages/cans_login.dart';
+part 'ui/cards/activity_card.dart';
 
 part 'main.g.dart';
 
 late CarpStudyApp app;
 void main() async {
   // initialize CAMS and Cognition Packages (loading json deserialization functions)
-  CarpMobileSensing();
-  CognitionPackage();
+  CarpMobileSensing.ensureInitialized();
+  CognitionPackage.ensureInitialized();
   CarpDataManager();
 
   // make sure to have an instance of the WidgetsBinding, which is required
@@ -130,5 +140,5 @@ void main() async {
 /// or deploying it.
 final bloc = StudyAppBLoC(
   debugLevel: DebugLevel.debug,
-  deploymentMode: DeploymentMode.production,
+  deploymentMode: DeploymentMode.dev,
 );

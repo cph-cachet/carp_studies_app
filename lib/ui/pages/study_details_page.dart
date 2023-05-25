@@ -29,7 +29,9 @@ class StudyDetailsPage extends StatelessWidget {
             children: [
               Row(mainAxisAlignment: MainAxisAlignment.end, children: [
                 IconButton(
-                    onPressed: () => Navigator.pop(context),
+                    onPressed: () => context.canPop()
+                        ? context.pop()
+                        : context.replace('/tasks'),
                     icon: const Icon(Icons.close))
               ]),
               Flexible(

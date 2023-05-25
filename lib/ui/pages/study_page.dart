@@ -12,32 +12,42 @@ class StudyPageState extends State<StudyPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const CarpAppBar(),
-          Flexible(
-            child: StreamBuilder<int>(
-                stream: widget.model.messageStream,
-                builder: (context, AsyncSnapshot<int> snapshot) {
-                  return CustomScrollView(
-                    slivers: [
-                      DetailsBanner(
-                          widget.model.title, './assets/images/kids.png',
-                          isCarpBanner: true),
-                      SliverList(
-                        delegate: SliverChildBuilderDelegate(
-                          (BuildContext context, int index) => _aboutStudyCard(
-                              context, widget.model.messages[index]),
-                          childCount: widget.model.messages.length,
+      backgroundColor: Theme.of(context).colorScheme.secondary,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          bloc.refreshMessages();
+        },
+        child: const Icon(Icons.refresh),
+      ),
+      body: SafeArea(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const CarpAppBar(),
+            Flexible(
+              child: StreamBuilder<int>(
+                  stream: widget.model.messageStream,
+                  builder: (context, AsyncSnapshot<int> snapshot) {
+                    return CustomScrollView(
+                      slivers: [
+                        DetailsBanner(
+                            widget.model.title, './assets/images/kids.png',
+                            isCarpBanner: true),
+                        SliverList(
+                          delegate: SliverChildBuilderDelegate(
+                            (BuildContext context, int index) =>
+                                _aboutStudyCard(
+                                    context, widget.model.messages[index]),
+                            childCount: widget.model.messages.length,
+                          ),
                         ),
-                      ),
-                    ],
-                  );
-                }),
-          ),
-        ],
+                      ],
+                    );
+                  }),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -61,13 +71,7 @@ class StudyPageState extends State<StudyPage> {
       margin: const EdgeInsets.all(5),
       child: InkWell(
         onTap: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => MessageDetailsPage(
-                        message: message,
-                        messageImage: messageImage,
-                      )));
+          context.push('/message/${message.id}');
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,

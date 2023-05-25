@@ -1,10 +1,10 @@
 part of carp_study_app;
 
 class DetailsBanner extends StatelessWidget {
-  const DetailsBanner(this.title, this.image,
+  const DetailsBanner(this.title, this.imagePath,
       {super.key, this.isCarpBanner = false});
   final String title;
-  final String? image;
+  final String? imagePath;
   final bool isCarpBanner;
 
   @override
@@ -20,18 +20,17 @@ class DetailsBanner extends StatelessWidget {
       flexibleSpace: FlexibleSpaceBar(
         centerTitle: true,
         titlePadding: const EdgeInsets.only(top: 15),
-        background: image != null
+        background: imagePath != null
             ? ClipRRect(
                 child: ImageFiltered(
                     imageFilter: ui.ImageFilter.blur(sigmaX: 1, sigmaY: 1),
-                    child: Image.asset(image!, fit: BoxFit.fitHeight)),
+                    child: Image.asset(imagePath!, fit: BoxFit.fitHeight)),
               )
             : const SizedBox.shrink(),
         title: InkWell(
           onTap: () {
             if (isCarpBanner) {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => StudyDetailsPage()));
+              context.push('/studyDetails');
             }
           },
           child: Padding(

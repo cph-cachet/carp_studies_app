@@ -185,7 +185,7 @@ class StudyAppBLoC {
   ///
   /// If a [context] is provided, this method also opens the [LocationUsageDialog]
   /// if location permissions are needed and not yet granted.
-  Future<void> configurePermissions([BuildContext? context]) async {
+  Future<void> configurePermissions(BuildContext? context) async {
     if (usingLocationPermissions && context != null) {
       var status = await Permission.locationAlways.status;
       if (!status.isGranted && Platform.isAndroid && context.mounted) {
@@ -208,8 +208,6 @@ class StudyAppBLoC {
         await LocationManager().requestPermission();
       }
     }
-    // info('$runtimeType - asking for permissions');
-    // await Sensing().askForPermissions();
   }
 
   /// Has the informed consent been shown to, and accepted by the user?

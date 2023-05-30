@@ -9,11 +9,11 @@ class TaskListPage extends StatefulWidget {
 }
 
 class TaskListPageState extends State<TaskListPage> {
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   bloc.configureStudy().then((_) => bloc.start());
-  // }
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(const Duration(seconds: 1), () => setState(() {}));
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -31,7 +31,7 @@ PODS:
     - flutter_blue_plus/Protos (= 0.0.1)
   - flutter_blue_plus/Protos (0.0.1):
     - Flutter
-    - Protobuf (~> 3.11)
+    - Protobuf (~> 3.21)
   - flutter_inappwebview (0.0.1):
     - Flutter
     - flutter_inappwebview/Core (= 0.0.1)
@@ -87,7 +87,7 @@ PODS:
   - shared_preferences_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
-  - sqflite (0.0.2):
+  - sqflite (0.0.3):
     - Flutter
     - FMDB (>= 2.7.5)
   - SwiftProtobuf (1.20.3)
@@ -218,7 +218,7 @@ SPEC CHECKSUMS:
   audiofileplayer: 4aaff759a721ec3a850a682e0d9ec554e5f9e86f
   audioplayers_darwin: 877d9a4d06331c5c374595e46e16453ac7eafa40
   awesome_notifications: d63d9a25f126860f9a600850d99772237895b3ba
-  battery_plus: 7851ab482c336dd101ae735dc9363f01e1223c7c
+  battery_plus: 9bff772a7e5e4d5381ca3ca92a97373a3d8b2738
   camera_avfoundation: 3125e8cd1a4387f6f31c6c63abb8a55892a9eeeb
   connectivity_plus: 413a8857dd5d9f1c399a39130850d02fe0feaf7e
   device_info_plus: e5c5da33f982a436e103237c0c85f9031142abed
@@ -226,7 +226,7 @@ SPEC CHECKSUMS:
   esense_flutter: 8bfadfdefe7b51d6f78366e43b2b64ec9b6144b6
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   flutter_activity_recognition: 5c3b026997742b01e82424ef257db9640822ad77
-  flutter_blue_plus: 6787777145d615de01828f3a9fa423c3c702f0b3
+  flutter_blue_plus: 316ac8d1179789616d2c148e8a03c37720e63933
   flutter_inappwebview: 4fe74e5e65809c3d363febfd9e2b21aa79bb0f1c
   flutter_local_notifications: 0c0b1ae97e741e1521e4c1629a459d04b9aec743
   flutter_native_timezone: 5f05b2de06c9776b4cc70e1839f03de178394d22
@@ -240,7 +240,7 @@ SPEC CHECKSUMS:
   network_info_plus: b78876159360f5580608c2cea620d6ceffabd0ad
   open_settings: 9628e736cb2738fd1dc84159565755c214478158
   OrderedSet: aaeb196f7fef5a9edf55d89760da9176ad40b93c
-  package_info_plus: 6c92f08e1f853dc01228d6f553146438dafcd14e
+  package_info_plus: fd030dabf36271f146f1f3beacd48f564b0f17f7
   path_provider_foundation: eaf5b3e458fc0e5fbb9940fb09980e853fe058b8
   pedometer: 381969883680ade42559782cc41a3bbd453d8234
   permission_handler_apple: 44366e37eaf29454a1e7b1b7d736c2cceaeb17ce
@@ -250,9 +250,9 @@ SPEC CHECKSUMS:
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   RxSwift: 5710a9e6b17f3c3d6e40d6e559b9fa1e813b2ef8
   screen_state: a7ae251997e97f3f001839df09b57313b0ddef18
-  sensors_plus: 5717760720f7e6acd96fdbd75b7428f5ad755ec2
+  sensors_plus: bda64198ccc7d3ccbb49e6ae17d92f67687bee20
   shared_preferences_foundation: e2dae3258e06f44cc55f49d42024fd8dd03c590c
-  sqflite: 6d358c025f5b867b29ed92fc697fd34924e11904
+  sqflite: 31f7eba61e3074736dff8807a9b41581e4f7f15a
   SwiftProtobuf: b02b5075dcf60c9f5f403000b3b0c202a11b6ae1
   url_launcher_ios: 08a3dfac5fb39e8759aeb0abbd5d9480f30fc8b4
   video_player_avfoundation: 81e49bb3d9fb63dccf9fa0f6d877dc3ddbeac126

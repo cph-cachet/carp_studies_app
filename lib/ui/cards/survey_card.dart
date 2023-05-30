@@ -28,7 +28,7 @@ class _SurveyCardState extends State<SurveyCard> {
               Padding(
                 padding: const EdgeInsets.only(left: 10.0),
                 child: Text(
-                    locale.translate('cards.distance.title').toUpperCase(),
+                    locale.translate('cards.survey.title').toUpperCase(),
                     style: dataCardTitleStyle),
               ),
               SizedBox(

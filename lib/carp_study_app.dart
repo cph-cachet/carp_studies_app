@@ -93,6 +93,7 @@ class CarpStudyAppState extends State<CarpStudyApp> {
       ),
       GoRoute(
         path: '/task/:taskId',
+        parentNavigatorKey: _rootNavigatorKey,
         builder: (context, state) {
           final taskId = state.params['taskId'] ?? '';
           final task = AppTaskController().getUserTask(taskId);

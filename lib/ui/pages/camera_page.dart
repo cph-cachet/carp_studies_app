@@ -59,7 +59,8 @@ class CameraPageState extends State<CameraPage> {
                     onPressed: () {
                       _showCancelConfirmationDialog();
                     },
-                    icon: const Icon(Icons.close, color: Colors.white, size: 30))
+                    icon:
+                        const Icon(Icons.close, color: Colors.white, size: 30))
               ],
             ),
             const SizedBox(height: 35),
@@ -70,7 +71,8 @@ class CameraPageState extends State<CameraPage> {
                   return Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: ClipRRect(
-                        borderRadius: const BorderRadius.all(Radius.circular(20)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(20)),
                         child: SizedBox(
                             height: MediaQuery.of(context).size.height * 0.6,
                             width: MediaQuery.of(context).size.width * 0.9,
@@ -111,14 +113,14 @@ class CameraPageState extends State<CameraPage> {
                                   videoUserTask: widget.videoUserTask,
                                 )));
                       }
-      
+
                       setState(() {
                         capturedImages = File(picture.path);
                       });
                     },
                     onLongPress: () async {
                       await initializeCamera(selectedCamera);
-      
+
                       try {
                         await _cameraController!.startVideoRecording();
                         widget.videoUserTask.onRecordStart();
@@ -132,8 +134,9 @@ class CameraPageState extends State<CameraPage> {
                     },
                     onLongPressEnd: (details) async {
                       try {
-                        var video = await _cameraController!.stopVideoRecording();
-      
+                        var video =
+                            await _cameraController!.stopVideoRecording();
+
                         widget.videoUserTask.onRecordStop(video);
                         if (context.mounted) {
                           await Navigator.of(context).push(
@@ -170,7 +173,8 @@ class CameraPageState extends State<CameraPage> {
                                 height: 60,
                                 width: 60,
                                 decoration: const BoxDecoration(
-                                    shape: BoxShape.circle, color: Colors.white),
+                                    shape: BoxShape.circle,
+                                    color: Colors.white),
                               ),
                             ],
                           )

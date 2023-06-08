@@ -14,6 +14,9 @@ class _SurveyCardState extends State<SurveyCard> {
   @override
   Widget build(BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;
+    if (widget.model.tasksTable.isEmpty) {
+      return const SizedBox();
+    }
 
     return Padding(
       padding: const EdgeInsets.all(8.0),

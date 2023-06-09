@@ -3,58 +3,60 @@ part of carp_study_app;
 final surveys = _Surveys();
 
 class _Surveys {
-  Survey _who5 = _WHO5Survey();
+  final Survey _who5 = _WHO5Survey();
   Survey get who5 => _who5;
 
-  Survey _demographics = _DemographicSurvey();
+  final Survey _demographics = _DemographicSurvey();
   Survey get demographics => _demographics;
 
-  Survey _symptoms = _SymptomsSurvey();
+  final Survey _symptoms = _SymptomsSurvey();
   Survey get symptoms => _symptoms;
 
-  Survey _parkinsons = _ParkinsonsSurvey();
+  final Survey _parkinsons = _ParkinsonsSurvey();
   Survey get parkinsons => _parkinsons;
 
-  Survey _parnas = _PARNASSurvey();
+  final Survey _parnas = _PARNASSurvey();
   Survey get parnas => _parnas;
 
-  Survey _exposure = _ExposureSurvey();
+  final Survey _exposure = _ExposureSurvey();
   Survey get exposure => _exposure;
 
-  Survey _control = _ControlSurvey();
+  final Survey _control = _ControlSurvey();
   Survey get control => _control;
 
-  Survey _controlParents = _ControlParentsSurvey();
+  final Survey _controlParents = _ControlParentsSurvey();
   Survey get controlParents => _controlParents;
 
-  Survey _patient = _PatientSurvey();
+  final Survey _patient = _PatientSurvey();
   Survey get patient => _patient;
 
-  Survey _patientParents = _PatientParentsSurvey();
+  final Survey _patientParents = _PatientParentsSurvey();
   Survey get patientParents => _patientParents;
 
-  Survey _ecological = _EcologicalSurvey();
+  final Survey _ecological = _EcologicalSurvey();
   Survey get ecological => _ecological;
 
-  Survey _ecologicalParents = _EcologicalParentsSurvey();
+  final Survey _ecologicalParents = _EcologicalParentsSurvey();
   Survey get ecologicalParents => _ecologicalParents;
 
-  Survey _appUX = _AppUXSurvey();
+  final Survey _appUX = _AppUXSurvey();
   Survey get appUX => _appUX;
 
-  Survey _informedConsent = _InformedConsentSurvey();
+  final Survey _informedConsent = _InformedConsentSurvey();
   Survey get informedConsent => _informedConsent;
 
-  Survey _trustScale = _TrustScaleSurvey();
+  final Survey _trustScale = _TrustScaleSurvey();
   Survey get trustScale => _trustScale;
 
-  Survey _timedExposure = _TimedExposureSurvey();
+  final Survey _timedExposure = _TimedExposureSurvey();
   Survey get timedExposure => _timedExposure;
 
-  Survey _symptomHierarchyObsessions = _SymptomHierarchySurveyObsessions();
+  final Survey _symptomHierarchyObsessions =
+      _SymptomHierarchySurveyObsessions();
   Survey get symptomHierarchyObsessions => _symptomHierarchyObsessions;
 
-  Survey _symptomHierarchyCompulsions = _SymptomHierarchySurveyCompulsions();
+  final Survey _symptomHierarchyCompulsions =
+      _SymptomHierarchySurveyCompulsions();
   Survey get symptomHierarchyCoumpulsions => _symptomHierarchyCompulsions;
 }
 
@@ -76,13 +78,18 @@ abstract class Survey {
 }
 
 class _SymptomHierarchySurveyObsessions implements Survey {
+  @override
   String get title => "survey.symptoms.obsessions.title";
 
+  @override
   String get description => "survey.symptoms.obsessions.description";
+  @override
   Duration get expire => const Duration(days: 7);
 
+  @override
   int get minutesToComplete => 5;
 
+  @override
   RPTask get survey =>
       RPOrderedTask(identifier: "survey.symptoms.obsessions.title", steps: [
         RPInstructionStep(
@@ -166,13 +173,18 @@ class _SymptomHierarchySurveyObsessions implements Survey {
 }
 
 class _SymptomHierarchySurveyCompulsions implements Survey {
+  @override
   String get title => "survey.symptoms.compulsions.title";
 
+  @override
   String get description => "survey.symptoms.compulsions.description";
+  @override
   Duration get expire => const Duration(days: 7);
 
+  @override
   int get minutesToComplete => 5;
 
+  @override
   RPTask get survey =>
       RPOrderedTask(identifier: "survey.symptoms.compulsions.title", steps: [
         RPInstructionStep(
@@ -257,15 +269,19 @@ class _SymptomHierarchySurveyCompulsions implements Survey {
 }
 
 class _TimedExposureSurvey implements Survey {
+  @override
   String get title => "survey.symptoms.exposure.title";
 
+  @override
   String get description => "survey.symptoms.exposure.description";
 
+  @override
   Duration get expire => const Duration(days: 7);
 
+  @override
   int get minutesToComplete => 10;
 
-  RPImageChoiceAnswerFormat _imageChoiceAnswerFormat =
+  final RPImageChoiceAnswerFormat _imageChoiceAnswerFormat =
       RPImageChoiceAnswerFormat(choices: [
     RPImageChoice(
         imageUrl: 'assets/icons/very-sad.png',
@@ -289,6 +305,7 @@ class _TimedExposureSurvey implements Survey {
         description: "survey.answerFormat.discomfort.calm"),
   ]);
 
+  @override
   RPTask get survey =>
       RPOrderedTask(identifier: "survey.symptoms.exposure.title", steps: [
         RPQuestionStep(
@@ -300,12 +317,16 @@ class _TimedExposureSurvey implements Survey {
 }
 
 class _TrustScaleSurvey implements Survey {
+  @override
   String get title => "survey.trustscale.title";
 
+  @override
   String get description => "survey.trustscale.description";
 
+  @override
   Duration get expire => const Duration(days: 7);
 
+  @override
   int get minutesToComplete => 2;
 
   RPChoiceAnswerFormat choiceAnswerFormat1 = RPChoiceAnswerFormat(
@@ -319,6 +340,7 @@ class _TrustScaleSurvey implements Survey {
             text: "survey.answerFormat.agreement.strongly.agree", value: 3),
       ]);
 
+  @override
   RPTask get survey =>
       RPOrderedTask(identifier: "survey.trustscale.title", steps: [
         RPInstructionStep(
@@ -400,12 +422,16 @@ class _TrustScaleSurvey implements Survey {
 }
 
 class _InformedConsentSurvey implements Survey {
+  @override
   String get title => "survey.informedconsent.title";
 
+  @override
   String get description => "survey.informedconsent.description";
 
+  @override
   Duration get expire => const Duration(days: 7);
 
+  @override
   int get minutesToComplete => 4;
 
   RPChoiceAnswerFormat choiceAnswerFormat1 = RPChoiceAnswerFormat(
@@ -540,6 +566,7 @@ class _InformedConsentSurvey implements Survey {
             text: "survey.answerFormat.organization.extremely.cluttered",
             value: 3),
       ]);
+  @override
   RPTask get survey =>
       RPOrderedTask(identifier: "survey.informedconsent.title", steps: [
         RPInstructionStep(
@@ -615,12 +642,16 @@ class _InformedConsentSurvey implements Survey {
 }
 
 class _AppUXSurvey implements Survey {
+  @override
   String get title => "survey.appux.title";
 
+  @override
   String get description => "survey.appux.description";
 
+  @override
   Duration get expire => const Duration(days: 7);
 
+  @override
   int get minutesToComplete => 2;
 
   RPChoiceAnswerFormat choiceAnswerFormat1 = RPChoiceAnswerFormat(
@@ -720,6 +751,7 @@ class _AppUXSurvey implements Survey {
             text: "survey.answerFormat.innovation.extremely.leading", value: 3),
       ]);
 
+  @override
   RPTask get survey => RPOrderedTask(identifier: "survey.appux.title", steps: [
         RPInstructionStep(
             identifier: "survey.appux.instruction.id",
@@ -774,12 +806,16 @@ class _AppUXSurvey implements Survey {
 }
 
 class _EcologicalParentsSurvey implements Survey {
+  @override
   String get title => "survey.ecological.parents.title";
 
+  @override
   String get description => "survey.ecological.parents.description";
 
+  @override
   Duration get expire => const Duration(days: 1);
 
+  @override
   int get minutesToComplete => 10;
 
   RPChoiceAnswerFormat choiceAnswerFormat1 = RPChoiceAnswerFormat(
@@ -809,6 +845,7 @@ class _EcologicalParentsSurvey implements Survey {
         RPChoice(text: "survey.answerFormat.company.others", value: 5)
       ]);
 
+  @override
   RPTask get survey => RPOrderedTask(
         identifier: "survey.ecological.parents.title",
         steps: [
@@ -881,12 +918,16 @@ class _EcologicalParentsSurvey implements Survey {
 }
 
 class _EcologicalSurvey implements Survey {
+  @override
   String get title => "survey.ecological.child.title";
 
+  @override
   String get description => "survey.ecological.child.description";
 
+  @override
   Duration get expire => const Duration(days: 1);
 
+  @override
   int get minutesToComplete => 10;
 
   RPChoiceAnswerFormat choiceAnswerFormat1 = RPChoiceAnswerFormat(
@@ -915,6 +956,7 @@ class _EcologicalSurvey implements Survey {
         RPChoice(text: "survey.answerFormat.company.others", value: 5)
       ]);
 
+  @override
   RPTask get survey => RPOrderedTask(
         identifier: "survey.ecological.child.title",
         steps: [
@@ -988,11 +1030,15 @@ class _EcologicalSurvey implements Survey {
 }
 
 class _PatientParentsSurvey implements Survey {
+  @override
   String get title => "survey.biosensor.patient.parent.title";
 
+  @override
   String get description => "survey.biosensor.patient.parent.description";
+  @override
   Duration get expire => const Duration(days: 7);
 
+  @override
   int get minutesToComplete => 5;
 
   RPChoiceAnswerFormat choiceAnswerFormat1 = RPChoiceAnswerFormat(
@@ -1006,6 +1052,7 @@ class _PatientParentsSurvey implements Survey {
             text: "survey.answerFormat.agreement.strongly.agree", value: 3),
       ]);
 
+  @override
   RPTask get survey => RPOrderedTask(
         identifier: "survey.biosensor.patient.parent.title",
         steps: [
@@ -1095,11 +1142,15 @@ class _PatientParentsSurvey implements Survey {
 }
 
 class _PatientSurvey implements Survey {
+  @override
   String get title => "survey.biosensor.patient.title";
 
+  @override
   String get description => "survey.biosensor.patient.description";
+  @override
   Duration get expire => const Duration(days: 7);
 
+  @override
   int get minutesToComplete => 5;
 
   RPChoiceAnswerFormat choiceAnswerFormat1 = RPChoiceAnswerFormat(
@@ -1113,6 +1164,7 @@ class _PatientSurvey implements Survey {
             text: "survey.answerFormat.agreement.strongly.agree", value: 3),
       ]);
 
+  @override
   RPTask get survey => RPOrderedTask(
         identifier: "survey.biosensor.patient.title",
         steps: [
@@ -1202,11 +1254,15 @@ class _PatientSurvey implements Survey {
 }
 
 class _ControlParentsSurvey implements Survey {
+  @override
   String get title => "survey.biosensor.control.parent.title";
 
+  @override
   String get description => "survey.biosensor.control.parent.description";
+  @override
   Duration get expire => const Duration(days: 7);
 
+  @override
   int get minutesToComplete => 5;
 
   RPChoiceAnswerFormat choiceAnswerFormat1 = RPChoiceAnswerFormat(
@@ -1220,6 +1276,7 @@ class _ControlParentsSurvey implements Survey {
             text: "survey.answerFormat.agreement.strongly.agree", value: 3),
       ]);
 
+  @override
   RPTask get survey => RPOrderedTask(
         identifier: "survey.biosensor.control.parent.title",
         steps: [
@@ -1309,11 +1366,15 @@ class _ControlParentsSurvey implements Survey {
 }
 
 class _ControlSurvey implements Survey {
+  @override
   String get title => "survey.biosensor.control.patient.title";
 
+  @override
   String get description => "survey.biosensor.control.patient.description";
+  @override
   Duration get expire => const Duration(days: 7);
 
+  @override
   int get minutesToComplete => 5;
 
   RPChoiceAnswerFormat choiceAnswerFormat1 = RPChoiceAnswerFormat(
@@ -1327,6 +1388,7 @@ class _ControlSurvey implements Survey {
             text: "survey.answerFormat.agreement.strongly.agree", value: 3),
       ]);
 
+  @override
   RPTask get survey => RPOrderedTask(
         identifier: "survey.biosensor.control.patient.title",
         steps: [
@@ -1416,13 +1478,17 @@ class _ControlSurvey implements Survey {
 }
 
 class _ExposureSurvey implements Survey {
+  @override
   String get title => "survey.exposure.title";
 
+  @override
   String get description => "survey.exposure.description";
 
+  @override
   Duration get expire => const Duration(days: 1);
 
-  int get minutesToComplete => 10; // TODO: review time
+  @override
+  int get minutesToComplete => 10;
 
   RPChoiceAnswerFormat choiceAnswerFormat1 = RPChoiceAnswerFormat(
       answerStyle: RPChoiceAnswerStyle.SingleChoice,
@@ -1487,6 +1553,7 @@ class _ExposureSurvey implements Survey {
         RPChoice(text: "survey.answerFormat.discomfort.less", value: 3),
       ]);
 
+  @override
   RPTask get survey =>
       RPOrderedTask(identifier: "survey.exposure.title", steps: [
         RPInstructionStep(
@@ -1515,7 +1582,6 @@ class _ExposureSurvey implements Survey {
           answerFormat: choiceAnswerFormat3,
         ),
 
-        // TODO: if previous question is no skip
         RPQuestionStep(
           identifier: "survey.exposure.question.4.id",
           title: "survey.exposure.question.4.text",
@@ -1536,7 +1602,6 @@ class _ExposureSurvey implements Survey {
           answerFormat: choiceAnswerFormat3,
         ),
 
-        // TODO: if previous question is no skip
         RPQuestionStep(
           identifier: "survey.exposure.question.7.id",
           title: "survey.exposure.question.7.text",
@@ -1563,7 +1628,6 @@ class _ExposureSurvey implements Survey {
             imagePath: 'assets/images/timer_task.png',
             text: "survey.exposure.instruction.3.text"),
 
-        // TODO: TIMER STEP IN BETWEEN ALL OF THE FOLLOWING QUESTIONS
         RPQuestionStep(
           identifier: "survey.exposure.question.10.id",
           title: "survey.exposure.question.10.text",
@@ -1619,228 +1683,17 @@ class _ExposureSurvey implements Survey {
       ]);
 }
 
-class _ExposureOldSurvey implements Survey {
-  String get title => 'Tvangstanker & -handlinger';
-
-  String get description =>
-      'Skriv tvangstanken og/eller tvangshandlingen som du arbejder på';
-
-  Duration get expire => const Duration(days: 2);
-
-  int get minutesToComplete => 10;
-
-  RPImageChoiceAnswerFormat _imageChoiceAnswerFormat =
-      RPImageChoiceAnswerFormat(choices: [
-    RPImageChoice(
-        imageUrl: 'assets/icons/very-sad.png',
-        value: 0,
-        description: 'Uudholdelig'),
-    RPImageChoice(
-        imageUrl: 'assets/icons/sad.png',
-        value: 1,
-        description: 'Meget stor ubehag'),
-    RPImageChoice(
-        imageUrl: 'assets/icons/ok.png',
-        value: 2,
-        description: 'Ret stor ubehag'),
-    RPImageChoice(
-        imageUrl: 'assets/icons/happy.png',
-        value: 3,
-        description: 'En vis ubehag'),
-    RPImageChoice(
-        imageUrl: 'assets/icons/very-happy.png',
-        value: 4,
-        description: 'Rolig'),
-  ]);
-
-  RPChoiceAnswerFormat choiceAnswerFormat1 = RPChoiceAnswerFormat(
-      answerStyle: RPChoiceAnswerStyle.SingleChoice,
-      choices: [
-        RPChoice(text: "Nej", value: 0),
-        RPChoice(text: "Ja", value: 1),
-      ]);
-
-  RPChoiceAnswerFormat choiceAnswerFormat2 = RPChoiceAnswerFormat(
-      answerStyle: RPChoiceAnswerStyle.MultipleChoice,
-      choices: [
-        RPChoice(
-            text: "Denne eksponeringsopgave handler ikke om en tvangstanke",
-            value: 0), // TODO: if 0 is selected, no other option is available
-        RPChoice(
-            text: "Forurening/kontaminering (snavs, bakterier, sygdomme)",
-            value: 1),
-        RPChoice(
-            text:
-                "At skade dig selv eller andre (fysisk eller følelsesmæssigt)",
-            value: 2),
-        RPChoice(text: "At gøre noget du ikke vil (fx stjæle noget)", value: 3),
-        RPChoice(text: "Voldsomme eller uhyggelige billeder", value: 4),
-        RPChoice(text: "Sex, graviditet, eller seksualitet", value: 5),
-        RPChoice(text: "At samle ting eller miste noget", value: 6),
-        RPChoice(
-            text:
-                "Magiske/overtroiske tanker eller handlinger (fx lykketal/uheldstal, at blive forvandlet)",
-            value: 7),
-        RPChoice(
-            text:
-                "Bekymring for at have en sygdom eller at en kropsdel eller udseende er mærkeligt eller grimt ud",
-            value: 8),
-        RPChoice(
-            text:
-                "Frygt for at fornærme religiøse objekter eller optaget af, hvad der er rigtigt/forkert og moral",
-            value: 9),
-        RPChoice(text: "Symmetri og orden", value: 10),
-        RPChoice(text: "Behov for at vide eller huske", value: 11),
-        RPChoice(text: "Frygt for at sige visse ord", value: 12),
-        RPChoice(text: "Frygt for ikke præcist at sige det rigtige", value: 13),
-        RPChoice(
-            text:
-                "Påtrængende billeder, forestillinger, lyde, ord, musik eller tal",
-            value: 14),
-        RPChoice(
-            text:
-                "Ubehagelig fornemmelse af, at det ikke føles rigtigt, føles ufuldstændigt eller tomhedsfornemmelse, når ritualer ikke udføres på en bestemt måde",
-            value: 15),
-        RPChoice(text: "Andet", value: 16), // TODO: textbox to describe
-      ]);
-
-  RPChoiceAnswerFormat choiceAnswerFormat3 = RPChoiceAnswerFormat(
-      answerStyle: RPChoiceAnswerStyle.MultipleChoice,
-      choices: [
-        RPChoice(
-            text: "Denne eksponeringsopgave handler ikke om en tvangstanke",
-            value: 0), // TODO: if 0 is selected, no other option is available
-        RPChoice(text: "Renlighed eller rengøring", value: 1),
-        RPChoice(text: "Kontrollere eller tjekke", value: 2),
-        RPChoice(text: "Gentage", value: 3),
-        RPChoice(text: "Tælle ting", value: 4),
-        RPChoice(text: "Ordne ting eller søge at få ting ens", value: 5),
-        RPChoice(
-            text: "Samle ting eller svært ved at smide ting væk", value: 6),
-        RPChoice(text: "Magisk/overtroisk adfærd", value: 7),
-        RPChoice(
-            text:
-                "Behov for at involvere andre i et ritual, beroligende forsikringer eller få dine forældrene til at medvirke i eller udføre dine kontroltvang",
-            value: 8),
-        RPChoice(
-            text:
-                "Mentale ritualer (fremsige fraser eller remser eller gennemgå noget, som man har gjort, sagt eller tænkt igen og igen i tankerne)",
-            value: 9),
-        RPChoice(text: "Berette, spørge, bekende", value: 10),
-        RPChoice(text: "Ritualiseret spisemønster", value: 11),
-        RPChoice(text: "Skrive lister", value: 12),
-        RPChoice(text: "Føle, banke, gnide", value: 13),
-        RPChoice(text: "Gøre ting, indtil det føles rigtigt", value: 14),
-        RPChoice(
-            text: "Ritualer, der involverer blinken eller stirren", value: 15),
-        RPChoice(text: "Trække hår ud", value: 16),
-        RPChoice(
-            text: "Anden selvskadende eller selvdestruktiv adfærd", value: 17),
-        RPChoice(text: "Andet", value: 18), // TODO: textbox to describe
-      ]);
-
-  RPChoiceAnswerFormat choiceAnswerFormat6 = RPChoiceAnswerFormat(
-      answerStyle: RPChoiceAnswerStyle.SingleChoice,
-      choices: [
-        RPChoice(text: "Ja, jeg udført en tvangshandling", value: 0),
-        RPChoice(text: "Ja, udført en anden slags sikkerhedsadfærd", value: 1),
-        RPChoice(text: "Nej", value: 2),
-      ]);
-
-  RPTask get survey => RPOrderedTask(identifier: "demo_survey", steps: [
-        RPQuestionStep(
-          identifier: "questionStep1ID",
-          title:
-              "Min behandler har givet mig eksponering og respons præventions øvelser for til hjemmearbejde.",
-          answerFormat: choiceAnswerFormat1,
-        ),
-        RPQuestionStep(
-          identifier: "questionStep2ID",
-          title: "Tvangstanken jeg vil arbejde med nu, handler om:",
-          answerFormat: choiceAnswerFormat2,
-        ),
-        RPQuestionStep(
-          identifier: "questionStep3ID",
-          title: "Tvangshandlingen jeg vil arbejde med nu, handler om:",
-          answerFormat: choiceAnswerFormat3,
-        ),
-        RPQuestionStep(
-          identifier: "questionStep4ID",
-          title:
-              "Beskriv eksponeringsøvelsen (hvordan du vil arbejde på tvangstanken og/eller tvangshandlingen):",
-          answerFormat: RPTextAnswerFormat(),
-        ),
-        RPQuestionStep(
-          identifier: "questionStep5ID",
-          title: "Skriv tiden når du starter med eksponeringsøvelsen:",
-          answerFormat: RPDateTimeAnswerFormat(
-              dateTimeAnswerStyle: RPDateTimeAnswerStyle.TimeOfDay),
-        ),
-        RPInstructionStep(
-            identifier: "",
-            title: "Tvangstanker og -handlinger",
-            text:
-                "Skriv hvor meget ubehag eller angst du oplever lige inden øvelsen og efter 5, 10, og 15 minutter ved hjælp af en skala fra 0–10 på (0 = rolig, ingen angst, 10 = Maksimal angst/ uro). Dine forældre eller terapeut kan hjælp dig med at hold styr på tiden og med at skrive ned."),
-        RPQuestionStep(
-          identifier: "exposure_1",
-          title: "Hvor megen ubehag eller angst oplever du lige nu?",
-          answerFormat: _imageChoiceAnswerFormat,
-        ),
-        RPQuestionStep(
-          identifier: "exposure_2",
-          title: "Hvor megen ubehag eller angst oplever du efter 5 minutter?",
-          answerFormat: _imageChoiceAnswerFormat,
-        ),
-        RPQuestionStep(
-          identifier: "exposure_3",
-          title: "Hvor megen ubehag eller angst oplever du efter 10 minutter?",
-          answerFormat: _imageChoiceAnswerFormat,
-        ),
-        RPQuestionStep(
-          identifier: "exposure_4",
-          title: "Hvor megen ubehag eller angst oplever du efter 15 minutter?",
-          answerFormat: _imageChoiceAnswerFormat,
-        ),
-        RPQuestionStep(
-          identifier: "questionStep6ID",
-          title: "Jeg har brugt sikkerhedsadfærd under øvelsen:",
-          answerFormat: choiceAnswerFormat6,
-        ),
-        RPCompletionStep(
-          identifier: "completion",
-          title: "Godt gået!",
-          text: "Du har arbejdet på at forstyrre på OCD’en.",
-        )
-
-        /* RPInstructionStep(title: "Tvangstanker og -handlinger")
-          ..text = "I denne øvelse skal du først notere en tvangstanke eller -handling som du arbejder på. "
-              "Derefter skal du beskrive hvordan du vil arbejde på tvangstanken og/eller tvangshandlingen.\n\n"
-              "Når du så starter med at arbejde med øvelsen, så skal du notere hvor meget "
-              "ubehag eller angst du oplever undervejs.\n\n"
-              "Dine forældre eller terapeut kan hjælp dig med at hold styr på tiden og med at skrive ned.",
-        RPQuestionStep(
-            "thought",
-            "Skriv tvangstanken og/eller tvangshandlingen som du arbejder på",
-            RPIntegerAnswerFormat(text: 0, 200)),
-        RPQuestionStep(
-            "exercise",
-            "Beskriv eksponeringsøvelsen, dvs. hvordan du vil arbejde på tvangstanken og/eller tvangshandlingen",
-            RPIntegerAnswerFormat(text: 0, 200)),
-        RPInstructionStep(title: "Tvangstanker og -handlinger")
-          ..text = "Nu skal du begynde at arbejde med øvelsen. "
-              "Mens du gør det, så skal du skrive hvor meget "
-              "ubehag eller angst du oplever lige nu og efter 5, 10, og 15 minutter.\n\n"
-              "Dine forældre eller terapeut kan hjælp dig med at hold styr på tiden og med at skrive ned.", */
-      ]);
-}
-
 class _PARNASSurvey implements Survey {
+  @override
   String get title => 'Positive & Negative Affect';
 
+  @override
   String get description => 'A short survey on you current fealings';
 
+  @override
   Duration get expire => const Duration(days: 2);
 
+  @override
   int get minutesToComplete => 4;
 
   final RPChoiceAnswerFormat _locationChoices = RPChoiceAnswerFormat(
@@ -1866,6 +1719,7 @@ class _PARNASSurvey implements Survey {
         RPChoice(text: "Not at all", value: 1),
       ]);
 
+  @override
   RPTask get survey => RPOrderedTask(identifier: "demo_survey", steps: [
         RPInstructionStep(
             identifier: "parnas_instrux",
@@ -1936,12 +1790,16 @@ class _PARNASSurvey implements Survey {
 }
 
 class _WHO5Survey implements Survey {
+  @override
   String get title => "WHO5 Well-Being";
+  @override
   String get description => "A short 5-item survey on your well-being.";
+  @override
   int get minutesToComplete => 1;
+  @override
   Duration get expire => const Duration(days: 5);
 
-  static List<RPChoice> _choices = [
+  static final List<RPChoice> _choices = [
     RPChoice(text: "All of the time", value: 5),
     RPChoice(text: "Most of the time", value: 4),
     RPChoice(text: "More than half of the time", value: 3),
@@ -1953,6 +1811,7 @@ class _WHO5Survey implements Survey {
   final RPChoiceAnswerFormat _choiceAnswerFormat = RPChoiceAnswerFormat(
       answerStyle: RPChoiceAnswerStyle.SingleChoice, choices: _choices);
 
+  @override
   RPTask get survey => RPOrderedTask(identifier: "who5_survey", steps: [
         RPInstructionStep(
             identifier: "who_5_instrux",
@@ -1996,9 +1855,13 @@ class _WHO5Survey implements Survey {
 }
 
 class _DemographicSurvey implements Survey {
+  @override
   String get title => "Demographics";
+  @override
   String get description => "A short 4-item survey on your background.";
+  @override
   int get minutesToComplete => 2;
+  @override
   Duration get expire => const Duration(days: 5);
 
   final RPChoiceAnswerFormat _sexChoices = RPChoiceAnswerFormat(
@@ -2061,6 +1924,7 @@ class _DemographicSurvey implements Survey {
         RPChoice(text: "Prefer not to say", value: 7),
       ]);
 
+  @override
   RPTask get survey => RPOrderedTask(identifier: "demographic_survey", steps: [
         RPQuestionStep(
           identifier: "demographic_1",
@@ -2086,12 +1950,16 @@ class _DemographicSurvey implements Survey {
 }
 
 class _SymptomsSurvey implements Survey {
+  @override
   String get title => "Symptoms";
+  @override
   String get description => "A short 1-item survey on your daily symptoms.";
+  @override
   int get minutesToComplete => 1;
+  @override
   Duration get expire => const Duration(days: 1);
 
-  RPChoiceAnswerFormat _symptomsChoices = RPChoiceAnswerFormat(
+  final RPChoiceAnswerFormat _symptomsChoices = RPChoiceAnswerFormat(
       answerStyle: RPChoiceAnswerStyle.MultipleChoice,
       choices: [
         RPChoice(text: "None", value: 1),
@@ -2110,6 +1978,7 @@ class _SymptomsSurvey implements Survey {
         RPChoice(text: "Prefer not to say", value: 13),
       ]);
 
+  @override
   RPTask get survey => RPOrderedTask(identifier: "symptoms_survey", steps: [
         RPQuestionStep(
           identifier: "symptoms_1",
@@ -2122,13 +1991,17 @@ class _SymptomsSurvey implements Survey {
 // NOTE that normally we would spell Parkinson's with an "'", but this makes a conclict
 // when writing it to the SQLite database.
 class _ParkinsonsSurvey implements Survey {
+  @override
   String get title => "The Parkinsons Disease Activities of Daily Living Scale";
+  @override
   String get description =>
       "A new simple and brief subjective measure of disability in Parkinsons disease";
+  @override
   int get minutesToComplete => 1;
+  @override
   Duration get expire => const Duration(days: 1);
 
-  RPChoiceAnswerFormat _symptomsChoices = RPChoiceAnswerFormat(
+  final RPChoiceAnswerFormat _symptomsChoices = RPChoiceAnswerFormat(
       answerStyle: RPChoiceAnswerStyle.SingleChoice,
       choices: [
         RPChoice(
@@ -2173,6 +2046,7 @@ class _ParkinsonsSurvey implements Survey {
             value: 5),
       ]);
 
+  @override
   RPTask get survey => RPOrderedTask(identifier: "parkinsons_survey", steps: [
         RPQuestionStep(
           identifier: "parkinsons_1",

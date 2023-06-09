@@ -17,8 +17,16 @@ enum StudyAppState {
 class StudyAppBLoC {
   StudyAppState _state = StudyAppState.created;
   final CarpBackend _backend = CarpBackend();
-  final CarpStydyAppViewModel _data = CarpStydyAppViewModel();
+  final CarpStudyAppViewModel _data = CarpStudyAppViewModel();
   StudyDeploymentStatus? _status;
+  final StreamController<StudiesAppState> _stateStream =
+      StreamController.broadcast();
+
+  get stateStream => _stateStream;
+
+  List<ActiveParticipationInvitation> _invitations = [];
+  set invitations(value) => _invitations = value;
+  get invitations => _invitations;
 
   List<Message> _messages = [];
   final StreamController<int> _messageStreamController =
@@ -34,57 +42,57 @@ class StudyAppBLoC {
   bool get isConfiguring => _state.index >= 2;
   bool get isConfigured => _state.index >= 3;
 
-  bool hasSignedOut = false;
-  bool hasLeftStudy = false;
-
-  /// Debug level for this app (and CAMS).
+  /// Debug level for the app and CAMS.
   DebugLevel debugLevel;
 
-  /// What kind of deployment are we running - LOCAL or CARP?
+  /// What kind of deployment are we running - LOCAL or CAWS?
   final DeploymentMode deploymentMode;
 
-  /// Force the app to refresh the user credentials and study information?
-  final bool forceSignOutAndStudyReload;
+  // ScaffoldMessenger for showing snack bars
+  final _scaffoldKey = GlobalKey<ScaffoldMessengerState>();
+  get scaffoldKey => _scaffoldKey;
+  get scaffoldMessengerState => scaffoldKey.currentState;
 
   /// Create the BLoC for the app specifying:
   ///  * debug level
-  ///  * deployment mode (LOCAL or CARP)
-  ///  * whether to use the locally stored credentials
+  ///  * deployment mode (production, test, dev)
   StudyAppBLoC({
-    this.debugLevel = DebugLevel.INFO,
-    this.deploymentMode = DeploymentMode.LOCAL,
-    this.forceSignOutAndStudyReload = false,
+    this.debugLevel = DebugLevel.info,
+    this.deploymentMode = DeploymentMode.dev,
   }) : super();
 
-  /// The informed consent to be shown to the user for this study.
-  RPOrderedTask? informedConsent;
-
-  InformedConsentManager get informedConsentManager =>
-      (deploymentMode == DeploymentMode.LOCAL)
-          ? LocalResourceManager()
-          : CarpResourceManager() as InformedConsentManager;
-
-  LocalizationManager get localizationManager =>
-      (deploymentMode == DeploymentMode.LOCAL)
-          ? LocalResourceManager()
-          : CarpResourceManager() as LocalizationManager;
+  LocalizationManager get localizationManager => CarpResourceManager();
 
   LocalizationLoader get localizationLoader =>
       ResourceLocalizationLoader(localizationManager);
 
-  MessageManager get messageManager => (deploymentMode == DeploymentMode.LOCAL)
-      ? LocalResourceManager()
-      : CarpResourceManager() as MessageManager;
+  MessageManager get messageManager => CarpResourceManager();
 
   CarpBackend get backend => _backend;
+
+  /// The id of the currently running study.
+  /// Typical set based on an invitation.
+  /// `null` if no deployment have been specified.
+  String? get studyId => LocalSettings().studyId;
+  set studyId(String? id) {
+    LocalSettings().studyId = id;
+    backend.studyId = id;
+  }
 
   /// The id of the currently running study deployment.
   /// Typical set based on an invitation.
   /// `null` if no deployment have been specified.
   String? get studyDeploymentId => LocalSettings().studyDeploymentId;
-  set studyDeploymentId(String? id) => LocalSettings().studyDeploymentId = id;
+  set studyDeploymentId(String? id) {
+    LocalSettings().studyDeploymentId = id;
+    backend.studyDeploymentId = id;
+  }
 
-  // String? get studyDeploymentId => deployment?.studyDeploymentId;
+  /// The role name of the device in the currently running study deployment.
+  /// Typical set based on an invitation.
+  /// `null` if no deployment have been specified.
+  String? get deviceRolename => LocalSettings().deviceRolename;
+  set deviceRolename(String? name) => LocalSettings().deviceRolename = name;
 
   /// The deployment running on this phone.
   SmartphoneDeployment? get deployment => Sensing().controller?.deployment;
@@ -96,56 +104,7 @@ class StudyAppBLoC {
   DateTime? get studyStartTimestamp => deployment?.deployed;
 
   /// The overall data model for this app
-  CarpStydyAppViewModel get data => _data;
-
-  /// Does this [deployment] have the measure of [type].
-  bool hasMeasure(String type) {
-    if (deployment == null) return false;
-
-    try {
-      deployment!.measures.firstWhere((measure) => measure.type == type);
-    } catch (error) {
-      return false;
-    }
-
-    return true;
-  }
-
-  bool hasMeasures() {
-    if (deployment == null) return false;
-    try {
-      if (deployment!.measures.any((measure) =>
-          (measure.type != VideoUserTask.IMAGE_TYPE &&
-              measure.type != VideoUserTask.VIDEO_TYPE &&
-              measure.type != AudioUserTask.AUDIO_TYPE &&
-              measure.type != SurveyUserTask.SURVEY_TYPE))) {
-        return true;
-      } else
-        return false;
-    } catch (error) {
-      return false;
-    }
-  }
-
-  bool hasSurveys() {
-    if (deployment == null) return false;
-    try {
-      deployment!.tasks.isNotEmpty;
-      return true;
-    } catch (error) {
-      return false;
-    }
-  }
-
-  bool hasDevices() {
-    if (deployment == null) return false;
-    try {
-      deployment!.connectedDevices.isNotEmpty;
-      return true;
-    } catch (error) {
-      return false;
-    }
-  }
+  CarpStudyAppViewModel get data => _data;
 
   /// Initialize this BLOC. Called before being used for anything.
   Future<void> initialize() async {
@@ -153,51 +112,48 @@ class StudyAppBLoC {
 
     Settings().debugLevel = debugLevel;
     await Settings().init();
-
     await localizationManager.initialize();
 
-    _state = StudyAppState.initialized;
-    info(
-        '$runtimeType initialized - deployment mode: ${deploymentMode.toString().split('.').last}');
+    await backend.initialize();
+
+    stateStream.sink.add(StudiesAppState.initialized);
+    info('$runtimeType initialized.');
   }
 
-  /// This methods is used to configure the entire app, including:
-  ///  * initialize the bloc
-  ///  * authenticate the user
-  ///  * get the invitation
-  ///  * get the informed consent
-  ///  * get the study
-  ///  * initialize sensing
+  /// Set the active study in the app based on an [invitation].
   ///
-  /// This method is used in the [LoadingPage].
-  Future<void> configure(BuildContext context) async {
-    assert(isInitialized,
-        "$runtimeType is not initialized. Call 'initialize()' first.");
+  /// If the [context] is provided, the translation for this study is re-loaded
+  /// and applied in the app.
+  void setStudyInvitation(
+    ActiveParticipationInvitation invitation, [
+    BuildContext? context,
+  ]) {
+    bloc.studyId = invitation.studyId;
+    bloc.studyDeploymentId = invitation.studyDeploymentId;
+    bloc.deviceRolename = invitation.assignedDevices?.first.device.roleName;
 
-    // early out if already configuring (e.g. waiting for user authentication)
+    info('Invitation received - '
+        'study id: ${bloc.studyId}, '
+        'deployment id: ${bloc.studyDeploymentId}, '
+        'role name: ${bloc.deviceRolename}');
+
+    if (context != null) CarpStudyApp.reloadLocale(context);
+  }
+
+  /// This methods is used to configure a study, including:
+  ///  * setting up messaging
+  ///  * initialize sensing
+  ///  * adding the CAMS study
+  ///  * initializing the data visualization pages
+  Future<void> configureStudy() async {
+    // early out if already configured
     if (isConfiguring) return;
 
-    _state = StudyAppState.configuring;
+    stateStream.sink.add(StudiesAppState.configuring);
     info('$runtimeType configuring...');
 
-    // force the app to refresh the user credentials and study information?
-    if (forceSignOutAndStudyReload) await leaveStudyAndSignOut();
-
-    //  initialize the CARP backend, if needed
-    if (deploymentMode != DeploymentMode.LOCAL) {
-      await backend.initialize();
-      await backend.authenticate(context);
-
-      // check if there is a local deploymed id
-      // if not, get a deployment id based on an invitation
-      if (bloc.studyDeploymentId == null)
-        await backend.getStudyInvitation(context);
-    }
-
-    // find the right informed consent, if needed
-    bloc.informedConsent = (!hasInformedConsentBeenAccepted)
-        ? await informedConsentManager.getInformedConsent()
-        : null;
+    // set up and initialize sensing
+    await Sensing().initialize();
 
     // set up the messaging part
     messageManager.initialize().then(
@@ -208,8 +164,8 @@ class StudyAppBLoC {
       },
     );
 
-    // set up and initialize sensing
-    await Sensing().initialize();
+    // add the study and configure sensing
+    await Sensing().addStudy();
 
     // initialize the UI data models
     data.init(Sensing().controller!);
@@ -229,10 +185,10 @@ class StudyAppBLoC {
   ///
   /// If a [context] is provided, this method also opens the [LocationUsageDialog]
   /// if location permissions are needed and not yet granted.
-  Future<void> configurePermissions([BuildContext? context]) async {
+  Future<void> configurePermissions(BuildContext? context) async {
     if (usingLocationPermissions && context != null) {
       var status = await Permission.locationAlways.status;
-      if (!status.isGranted) {
+      if (!status.isGranted && Platform.isAndroid && context.mounted) {
         await showGeneralDialog(
             context: context,
             barrierDismissible: false,
@@ -241,51 +197,32 @@ class StudyAppBLoC {
                   filter: ui.ImageFilter.blur(
                       sigmaX: 4 * anim1.value, sigmaY: 4 * anim1.value),
                   child: FadeTransition(
-                    child: child,
                     opacity: anim1,
+                    child: child,
                   ),
                 ),
             pageBuilder: (context, anim1, anim2) => LocationUsageDialog().build(
                   context,
                   "ic.location.content",
                 ));
-        // await LocationManager().requestPermission();
+        await LocationManager().requestPermission();
       }
     }
-    info('$runtimeType - asking for permisions');
-    await Sensing().askForPermissions();
-  }
-
-  /// Called when the informed consent has been accepted by the user.
-  /// This entails that it has been:
-  ///  * shown to the user
-  ///  * accepted by the user
-  Future<void> informedConsentHasBeenAccepted(
-    RPTaskResult informedConsentResult,
-  ) async {
-    info('Informed consent has been accepted by user.');
-    informedConsentAccepted = true;
-    if (bloc.deploymentMode != DeploymentMode.LOCAL)
-      await backend.uploadInformedConsent(informedConsentResult);
   }
 
   /// Has the informed consent been shown to, and accepted by the user?
   bool get hasInformedConsentBeenAccepted =>
       LocalSettings().hasInformedConsentBeenAccepted;
 
-  /// Should the informed consent be shown to the user?
-  bool get shouldInformedConsentBeShown =>
-      (informedConsent != null && !hasInformedConsentBeenAccepted);
-
   /// Specify if the informed consent been handled.
   /// This entails that it has been:
   ///  * shown to the user
   ///  * accepted by the user
   ///  * successfully uploaded to CARP
-  set informedConsentAccepted(bool accepted) =>
-      LocalSettings().informedConsentAccepted = accepted;
+  set setHasInformedConsentBeenAccepted(bool accepted) =>
+      LocalSettings().setHasInformedConsentBeenAccepted = accepted;
 
-  /// Refresh the list of messages (news, announcments, articles) to be shown in
+  /// Refresh the list of messages (news, announcements, articles) to be shown in
   /// the Study Page of the app.
   Future<void> refreshMessages() async {
     try {
@@ -305,15 +242,46 @@ class StudyAppBLoC {
       ? user!.username
       : Sensing().controller!.deployment!.userId!;
 
-  /// The name used for friendly greating - '' if no user logged in.
+  /// The name used for friendly greeting - '' if no user logged in.
   String? get friendlyUsername => (user != null) ? user!.firstName : '';
+
+  /// Does this [deployment] have any measures?
+  bool hasMeasures() => (deployment == null)
+      ? false
+      : (deployment!.measures.any((measure) =>
+          (measure.type != VideoUserTask.imageType &&
+              measure.type != VideoUserTask.videoType &&
+              measure.type != AudioUserTask.audioType &&
+              measure.type != SurveyUserTask.SURVEY_TYPE)));
+
+  /// Does this [deployment] have the measure of type [type]?
+  bool hasMeasure(String type) {
+    if (deployment == null) return false;
+
+    try {
+      deployment?.measures.firstWhere((measure) => measure.type == type);
+    } catch (_) {
+      return false;
+    }
+
+    return true;
+  }
+
+  /// Does this [deployment] have any user tasks?
+  bool hasSurveys() => (deployment == null)
+      ? false
+      : deployment!.tasks.whereType<AppTask>().isNotEmpty;
+
+  /// Does this [deployment] have any connected devices?
+  bool hasDevices() =>
+      (deployment == null) ? false : deployment!.connectedDevices.isNotEmpty;
 
   /// Is sensing running, i.e. has the study executor been resumed?
   bool get isRunning => Sensing().isRunning;
 
   /// the list of running - i.e. used - probes in this study.
   List<Probe> get runningProbes => (Sensing().controller != null)
-      ? Sensing().controller!.executor!.probes
+      ? Sensing().controller!.executor.probes
       : [];
 
   /// Get a list of running devices
@@ -333,58 +301,53 @@ class StudyAppBLoC {
     device.connect();
   }
 
-  /// Start sensing. Should only be called once.
-  /// Use [resume] and [pause] if pausing/resuming sensing.
-  ///
-  /// Ensures that permissions are requested.
-  ///
-  /// If a [context] is provided, this method also translate the study protocol.
+  /// Start sensing.
   Future<void> start() async {
     assert(Sensing().controller != null,
         'No Study Controller - the study has not been deployed.');
-
-    Sensing().controller?.start();
-
-    // listening on the data stream and print them as json to the debug console
-    Sensing().controller!.data.listen((data) => print(toJsonString(data)));
+    if (!Sensing().isRunning) Sensing().controller?.start();
   }
 
-  // Pause sensing.
-  void pause() => Sensing().controller?.executor?.pause();
-
-  /// Resume sensing.
-  void resume() => Sensing().controller?.executor?.resume();
-
-  /// Stop sensing.
-  /// Once sensing is stopped, it cannot be (re)started.
-  void stop() => Sensing().controller!.stop();
+  // Stop sensing.
+  void stop() => Sensing().controller?.executor.stop();
 
   // Dispose the entire sensing.
-  void dispose() => stop();
+  void dispose() => Sensing().controller?.dispose();
 
-  /// Add a [Datum] object to the stream of events.
-  void addDatum(Datum datum) =>
-      Sensing().controller!.executor!.addDataPoint(DataPoint.fromData(datum));
+  /// Add a [Measurement] object to the stream of events.
+  void addMeasurement(Measurement measurement) =>
+      Sensing().controller!.executor.addMeasurement(measurement);
 
   /// Add a error to the stream of events.
   void addError(Object error, [StackTrace? stacktrace]) =>
-      Sensing().controller!.executor!.addError(error, stacktrace);
+      Sensing().controller!.executor.addError(error, stacktrace);
 
+  /// Leave the study deployed on this phone.
+  ///
+  /// This entails
+  ///  * stopping sensing
+  ///  * removing the study info from the phone
+  ///  * resetting the informed consent flow
+  ///  * returning the user to select an invitation for another study
+  ///
+  /// Note that study deployment information and data is not removed from the
+  /// phone. This is stored for later access. Or if the same deployment is
+  /// re-deployed on the phone, data from the previous deployment will be
+  /// available.
   Future<void> leaveStudy() async {
-    hasSignedOut = true;
-    if (Sensing().isRunning) Sensing().controller!.stop();
-    informedConsentAccepted = false;
     _state = StudyAppState.initialized;
-    await backend.leaveStudy();
+    setHasInformedConsentBeenAccepted = false;
+    await LocalSettings().eraseStudyIds();
+    await Sensing().removeStudy();
   }
 
+  /// Leave the study and also sign out the user.
+  ///
+  /// This entails everything from the [leaveStudy] method plus permanently
+  /// deleting all user authentication information from this phone, including
+  /// the authentication and refresh tokens.
   Future<void> leaveStudyAndSignOut() async {
     await leaveStudy();
-    await backend.signOut();
-  }
-
-  Future<void> signOut() async {
-    bloc.hasSignedOut = true;
     await backend.signOut();
   }
 }

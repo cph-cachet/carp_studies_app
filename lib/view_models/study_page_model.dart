@@ -1,29 +1,34 @@
 part of carp_study_app;
 
 class StudyPageViewModel extends ViewModel {
-  String get title => bloc.deployment?.protocolDescription?.title ?? 'Unnamed';
-  String get description => bloc.deployment?.protocolDescription?.description ?? '';
-  String get purpose => bloc.deployment?.protocolDescription?.purpose ?? '';
+  String get title => bloc.deployment?.studyDescription?.title ?? 'Unnamed';
+  String get description =>
+      bloc.deployment?.studyDescription?.description ?? '';
+  String get purpose => bloc.deployment?.studyDescription?.purpose ?? '';
   Image get image => Image.asset('assets/images/study.png');
   String? get userID => bloc.deployment?.userId;
-  String get studyDescriptionUrl => bloc.deployment?.protocolDescription?.studyDescriptionUrl ?? '';
-  String get privacyPolicyUrl => bloc.deployment?.protocolDescription?.privacyPolicyUrl ?? '';
+  String get studyDescriptionUrl =>
+      bloc.deployment?.studyDescription?.studyDescriptionUrl ?? '';
+  String get privacyPolicyUrl =>
+      bloc.deployment?.studyDescription?.privacyPolicyUrl ?? '';
 
   String get piTitle => bloc.deployment?.responsible?.title ?? '';
   String get piName => bloc.deployment?.responsible?.name ?? '';
   String get piAddress => bloc.deployment?.responsible?.address ?? '';
   String get piEmail => bloc.deployment?.responsible?.email ?? '';
   String get piAffiliation =>
-      bloc.deployment?.responsible?.affiliation ?? 'Copenhagen Center for Health Technology';
+      bloc.deployment?.responsible?.affiliation ??
+      'Copenhagen Center for Health Technology';
 
   /// Events on the state of the study executor
-  Stream<ExecutorState> get studyExecutorStateEvents => Sensing().controller!.executor!.stateEvents;
+  Stream<ExecutorState> get studyExecutorStateEvents =>
+      Sensing().controller!.executor.stateEvents;
 
   /// Current state of the study executor (e.g., resumed, paused, ...)
-  ExecutorState get studyState => Sensing().controller!.executor!.state;
+  ExecutorState get studyState => Sensing().controller!.executor.state;
 
-  /// Get all sesing events (i.e. all [DataPoint] objects being collected).
-  Stream<DataPoint> get samplingEvents => Sensing().controller!.data;
+  /// Get all sensing events (i.e. all [DataPoint] objects being collected).
+  Stream<Measurement> get samplingEvents => Sensing().controller!.measurements;
 
   /// The total sampling size so far since this study was started.
   int get samplingSize => Sensing().controller!.samplingSize;
@@ -38,13 +43,13 @@ class StudyPageViewModel extends ViewModel {
   Icon getMessageTypeIcon(MessageType type) {
     switch (type) {
       case MessageType.announcement:
-        return Icon(Icons.new_releases);
+        return const Icon(Icons.new_releases);
       case MessageType.article:
-        return Icon(Icons.description);
+        return const Icon(Icons.description);
       case MessageType.news:
-        return Icon(Icons.create_new_folder);
+        return const Icon(Icons.create_new_folder);
       default:
-        return Icon(Icons.new_releases);
+        return const Icon(Icons.new_releases);
     }
   }
 
@@ -54,8 +59,7 @@ class StudyPageViewModel extends ViewModel {
   /// If [imagePath] is null, a random image is returned.
   Image getMessageImage(String? imagePath) {
     Image image;
-    if (imagePath == null)
-      imagePath = 'assets/images/messages/img_' + (Random(10).nextInt(5) + 1).toString() + '.png';
+    imagePath ??= 'assets/images/messages/img_${Random(10).nextInt(5) + 1}.png';
 
     if (imagePath.startsWith('http')) {
       image = Image.network(imagePath, fit: BoxFit.fitHeight);
@@ -66,8 +70,4 @@ class StudyPageViewModel extends ViewModel {
   }
 
   StudyPageViewModel();
-
-  void init(SmartphoneDeploymentController controller) {
-    super.init(controller);
-  }
 }

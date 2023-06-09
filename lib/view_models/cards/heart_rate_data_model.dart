@@ -19,33 +19,34 @@ class HeartRateCardViewModel extends SerializableViewModel<HourlyHeartRate> {
       HeartRateMinMaxPrHour(model.minHeartRate, model.maxHeartRate);
 
   /// Stream of heart rate [PolarHRDatum] measures.
-  Stream<DataPoint>? get heartRateEvents =>
-      controller?.data.where((dataPoint) => dataPoint.data is PolarHRDatum);
+  Stream<Measurement>? get heartRateEvents => controller?.measurements
+      .where((measurement) => measurement.data is PolarHR);
 
-  void init(SmartphoneDeploymentController controller) {
-    super.init(controller);
+  @override
+  void init(SmartphoneDeploymentController ctrl) {
+    super.init(ctrl);
 
     heartRateEvents?.listen(
       (heartRateDataPoint) {
-        PolarHRDatum? _heartRate = heartRateDataPoint.data as PolarHRDatum;
+        PolarHR? heartRate = heartRateDataPoint.data as PolarHR;
 
-        double _hr = _heartRate.hr.toDouble();
-        if (!(_hr > 0)) {
+        double hr = heartRate.hr.toDouble();
+        if (!(hr > 0)) {
           contactStatus = false;
           model.currentHeartRate = null;
           return;
         }
-        model.addHeartRate(DateTime.now().hour, _hr);
+        model.addHeartRate(DateTime.now().hour, hr);
 
-        if (_hr > (model.maxHeartRate ?? 0)) {
-          model.maxHeartRate = _hr;
+        if (hr > (model.maxHeartRate ?? 0)) {
+          model.maxHeartRate = hr;
         }
-        if (_hr < (model.minHeartRate ?? 100000)) {
-          model.minHeartRate = _hr;
+        if (hr < (model.minHeartRate ?? 100000)) {
+          model.minHeartRate = hr;
         }
 
         contactStatus =
-            _heartRate.contactStatusSupported ? _heartRate.contactStatus : true;
+            heartRate.contactStatusSupported ? heartRate.contactStatus : true;
 
         model.resetDataAtMidnight();
       },
@@ -74,7 +75,7 @@ class HourlyHeartRate extends DataModel {
   DateTime lastUpdated = DateTime.now();
 
   /// The current heart rate
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   double? currentHeartRate;
 
   /// The minimum and maximum heart rate for the day
@@ -82,7 +83,7 @@ class HourlyHeartRate extends DataModel {
   double? maxHeartRate;
   double? minHeartRate;
 
-  void resetDataAtMidnight() {
+  HourlyHeartRate resetDataAtMidnight() {
     if (lastUpdated.day != DateTime.now().day) {
       for (int i = 0; i < 24; i++) {
         hourlyHeartRate[i] = HeartRateMinMaxPrHour(null, null);
@@ -91,12 +92,17 @@ class HourlyHeartRate extends DataModel {
       minHeartRate = null;
     }
     lastUpdated = DateTime.now();
+    return this;
   }
 
   /// Add a heart rate value for a given hour.
   /// If the hour already exists, the min and max values are updated.
   /// If the hour does not exist, it is added.
-  void addHeartRate(int hour, double heartRate) {
+  HourlyHeartRate addHeartRate(int hour, double heartRate) {
+    if (hour < 0 || hour > 23) {
+      throw AssertionError("hour must be in the range 0 to 23");
+    }
+
     currentHeartRate = heartRate;
     if (hourlyHeartRate.containsKey(hour)) {
       hourlyHeartRate.update(
@@ -108,13 +114,15 @@ class HourlyHeartRate extends DataModel {
     } else {
       hourlyHeartRate[hour] = HeartRateMinMaxPrHour(heartRate, heartRate);
     }
+    return this;
   }
 
+  @override
   String toString() {
-    String _str = 'time | heart rate\n';
+    String str = 'time | heart rate\n';
     hourlyHeartRate
-        .forEach((time, heartRate) => _str += '$time  | $heartRate\n');
-    return _str;
+        .forEach((time, heartRate) => str += '$time  | $heartRate\n');
+    return str;
   }
 
   @override
@@ -137,4 +145,15 @@ class HeartRateMinMaxPrHour {
   factory HeartRateMinMaxPrHour.fromJson(Map<String, dynamic> json) =>
       _$HeartRateMinMaxPrHourFromJson(json);
   Map<String, dynamic> toJson() => _$HeartRateMinMaxPrHourToJson(this);
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is HeartRateMinMaxPrHour &&
+          runtimeType == other.runtimeType &&
+          min == other.min &&
+          max == other.max;
+
+  @override
+  int get hashCode => min.hashCode ^ max.hashCode;
 }

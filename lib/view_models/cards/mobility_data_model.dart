@@ -4,25 +4,21 @@ class MobilityCardViewModel extends SerializableViewModel<WeeklyMobility> {
   @override
   WeeklyMobility createModel() => WeeklyMobility();
 
-  Map<int, int> get weeklyHomeStay => model.weeklyHomeStay;
-  List<DailyMobility> get homeStay => model.homeStay;
-  Map<int, int> get weeklyPlaces => model.weeklyPlaces;
-  List<DailyMobility> get places => model.places;
-  Map<int, double> get weeklyDistanceTraveled => model.weeklyDistanceTraveled;
-  List<DailyMobility> get distance => model.distance;
+  Map<int, DailyMobility> get weekData => model.weekMobility;
 
   /// Stream of mobility [DataPoint] measures.
-  Stream<DataPoint>? get mobilityEvents =>
-      controller?.data.where((dataPoint) => dataPoint.data is MobilityDatum);
+  Stream<Measurement>? get mobilityEvents => controller?.measurements
+      .where((measurement) => measurement.data is Mobility);
 
   MobilityCardViewModel();
-  void init(SmartphoneDeploymentController controller) {
-    super.init(controller);
+  @override
+  void init(SmartphoneDeploymentController ctrl) {
+    super.init(ctrl);
 
     // listen for mobility events and update the features
-    mobilityEvents?.listen((mobilityDataPoint) {
-      MobilityDatum _mobility = mobilityDataPoint.data as MobilityDatum;
-      model.setMobilityFeatures(_mobility);
+    mobilityEvents?.listen((measurement) {
+      Mobility mobility = measurement.data as Mobility;
+      model.setMobilityFeatures(mobility);
     });
   }
 }
@@ -36,59 +32,37 @@ class MobilityCardViewModel extends SerializableViewModel<WeeklyMobility> {
 /// starts with Monday, which has the value 1.
 @JsonSerializable(fieldRename: FieldRename.snake, includeIfNull: false)
 class WeeklyMobility extends DataModel {
-  /// A map of weekly home stays (%) organized by the day of the week.
-  Map<int, int> weeklyHomeStay = {};
-
-  /// A map of weekly places organized by the day of the week.
-  Map<int, int> weeklyPlaces = {};
-
-  /// A map of distance traveled organized by the day of the week.
-  Map<int, double> weeklyDistanceTraveled = {};
-
-  /// The list of [DailyMobility] object representing home stay.
-  List<DailyMobility> get homeStay => weeklyHomeStay.entries
-      .map((entry) => DailyMobility(entry.key, 0, entry.value, 0))
-      .toList();
-
-  /// The list of [DailyMobility] object representing the places visited.
-  List<DailyMobility> get places => weeklyPlaces.entries
-      .map((entry) => DailyMobility(entry.key, entry.value, 0, 0))
-      .toList();
-
-  /// The list of [DailyMobility] object representing distance traveled.
-  List<DailyMobility> get distance => weeklyDistanceTraveled.entries
-      .map((entry) => DailyMobility(entry.key, 0, 0, entry.value))
-      .toList();
+  /// A map of weekly data organized by the day of the week.
+  Map<int, DailyMobility> weekMobility = {};
 
   WeeklyMobility() {
     for (int i = 1; i <= 7; i++) {
-      weeklyDistanceTraveled[i] = 0;
-      weeklyHomeStay[i] = 0;
-      weeklyPlaces[i] = 0;
+      weekMobility[i] = DailyMobility(i, 0, 0, 0);
     }
   }
 
   /// Update the mobility feature with [data].
-  void setMobilityFeatures(MobilityDatum data) {
+  void setMobilityFeatures(Mobility data) {
     DateTime day = data.date ?? DateTime.now();
 
-    if (data.distanceTravelled != null)
-      weeklyDistanceTraveled[day.weekday] = data.distanceTravelled!;
-    if (data.numberOfPlaces != null)
-      weeklyPlaces[day.weekday] = data.numberOfPlaces!;
-
-    // only set homestay % if larger than zero (can return -1)
-    // also convert to int (1-100) instead of double (0-1)
-    if (data.homeStay != null && data.homeStay! > 0)
-      weeklyHomeStay[day.weekday] = (100 * data.homeStay!).toInt();
+    weekMobility[day.weekday] = DailyMobility(
+        day.weekday,
+        data.numberOfPlaces ?? 0,
+        data.homeStay != null && data.homeStay! > 0
+            ? (100 * (data.homeStay!)).toInt()
+            : 0,
+        data.distanceTraveled ?? 0);
   }
 
+  @override
   WeeklyMobility fromJson(Map<String, dynamic> json) =>
       _$WeeklyMobilityFromJson(json);
+  @override
   Map<String, dynamic> toJson() => _$WeeklyMobilityToJson(this);
 }
 
 /// Mobility features for a weekday.
+@JsonSerializable(fieldRename: FieldRename.snake, includeIfNull: false)
 class DailyMobility extends DailyMeasure {
   final int places;
   final int homeStay;
@@ -96,4 +70,8 @@ class DailyMobility extends DailyMeasure {
 
   DailyMobility(int weekday, this.places, this.homeStay, this.distance)
       : super(weekday);
+
+  Map<String, dynamic> toJson() => _$DailyMobilityToJson(this);
+  static DailyMobility fromJson(Map<String, dynamic> json) =>
+      _$DailyMobilityFromJson(json);
 }

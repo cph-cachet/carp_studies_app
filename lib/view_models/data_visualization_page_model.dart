@@ -3,16 +3,17 @@ part of carp_study_app;
 class DataVisualizationPageViewModel extends ViewModel {
   final ActivityCardViewModel _activityCardDataModel = ActivityCardViewModel();
   final StepsCardViewModel _stepsCardDataModel = StepsCardViewModel();
-  final MeasuresCardViewModel _measuresCardDataModel = MeasuresCardViewModel();
+  final MeasurementsCardViewModel _measuresCardDataModel =
+      MeasurementsCardViewModel();
   final MobilityCardViewModel _mobilityCardDataModel = MobilityCardViewModel();
   final TaskCardViewModel _surveysCardDataModel =
       TaskCardViewModel(SurveyUserTask.SURVEY_TYPE);
   final TaskCardViewModel _audioCardDataModel =
-      TaskCardViewModel(AudioUserTask.AUDIO_TYPE);
+      TaskCardViewModel(AudioUserTask.audioType);
   final TaskCardViewModel _videoCardDataModel =
-      TaskCardViewModel(VideoUserTask.VIDEO_TYPE);
+      TaskCardViewModel(VideoUserTask.videoType);
   final TaskCardViewModel _imageCardDataModel =
-      TaskCardViewModel(VideoUserTask.IMAGE_TYPE);
+      TaskCardViewModel(VideoUserTask.imageType);
   final StudyProgressCardViewModel _studyProgressCardDataModel =
       StudyProgressCardViewModel();
   final HeartRateCardViewModel _heartRateCardDataModel =
@@ -20,7 +21,7 @@ class DataVisualizationPageViewModel extends ViewModel {
 
   ActivityCardViewModel get activityCardDataModel => _activityCardDataModel;
   StepsCardViewModel get stepsCardDataModel => _stepsCardDataModel;
-  MeasuresCardViewModel get measuresCardDataModel => _measuresCardDataModel;
+  MeasurementsCardViewModel get measuresCardDataModel => _measuresCardDataModel;
   MobilityCardViewModel get mobilityCardDataModel => _mobilityCardDataModel;
   TaskCardViewModel get surveysCardDataModel => _surveysCardDataModel;
   TaskCardViewModel get audioCardDataModel => _audioCardDataModel;
@@ -47,17 +48,26 @@ class DataVisualizationPageViewModel extends ViewModel {
 
   DataVisualizationPageViewModel();
 
-  void init(SmartphoneDeploymentController controller) {
-    super.init(controller);
-    _activityCardDataModel.init(controller);
-    _stepsCardDataModel.init(controller);
-    _measuresCardDataModel.init(controller);
-    _mobilityCardDataModel.init(controller);
-    _surveysCardDataModel.init(controller);
-    _audioCardDataModel.init(controller);
-    _videoCardDataModel.init(controller);
-    _imageCardDataModel.init(controller);
-    _studyProgressCardDataModel.init(controller);
-    _heartRateCardDataModel.init(controller);
+  @override
+  void init(SmartphoneDeploymentController ctrl) {
+    super.init(ctrl);
+    _activityCardDataModel.init(ctrl);
+    _stepsCardDataModel.init(ctrl);
+    _measuresCardDataModel.init(ctrl);
+    _mobilityCardDataModel.init(ctrl);
+    _surveysCardDataModel.init(ctrl);
+    _audioCardDataModel.init(ctrl);
+    _videoCardDataModel.init(ctrl);
+    _imageCardDataModel.init(ctrl);
+    _studyProgressCardDataModel.init(ctrl);
+    _heartRateCardDataModel.init(ctrl);
+  }
+
+  /// Delete all persistent view models.
+  void delete(SmartphoneDeploymentController ctrl) {
+    _activityCardDataModel.delete();
+    _stepsCardDataModel.delete();
+    _mobilityCardDataModel.delete();
+    _heartRateCardDataModel.delete();
   }
 }

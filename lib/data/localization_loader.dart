@@ -9,7 +9,7 @@ class ResourceLocalizationLoader implements LocalizationLoader {
   @override
   Future<Map<String, String>> load(Locale locale) async {
     Map<String, String> translations = {};
-    // if using the CARP resource mananger, the initial call to load will
+    // if using the CARP resource manager, the initial call to load will
     // fail since the user is not authenticated - but will be available on re-load
     try {
       translations = await localizationManager.getLocalizations(locale) ?? {};

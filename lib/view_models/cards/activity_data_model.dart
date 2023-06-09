@@ -1,39 +1,44 @@
 part of carp_study_app;
 
 class ActivityCardViewModel extends SerializableViewModel<WeeklyActivities> {
-  DataPoint _lastActivity = DataPoint.fromData(ActivityDatum(ActivityType.STILL, 100));
+  Measurement _lastActivity =
+      Measurement.fromData(Activity(type: ActivityType.STILL, confidence: 100));
 
   @override
   WeeklyActivities createModel() => WeeklyActivities();
   Map<ActivityType, Map<int, int>> get activities => model.activities;
-  List<DailyActivity> activitiesByType(ActivityType type) => model.activitiesByType(type);
+  List<DailyActivity> activitiesByType(ActivityType type) =>
+      model.activitiesByType(type);
 
   ActivityCardViewModel() : super();
 
-  /// Stream of activity [DataPoint] measures.
-  Stream<DataPoint>? get activityEvents =>
-      controller?.data.where((dataPoint) => dataPoint.data is ActivityDatum);
+  /// Stream of activity measurements.
+  Stream<Measurement>? get activityEvents => controller?.measurements
+      .where((measurement) => measurement.data is Activity);
 
-  void init(SmartphoneDeploymentController controller) {
-    super.init(controller);
+  @override
+  void init(SmartphoneDeploymentController ctrl) {
+    super.init(ctrl);
 
     // listen for activity events and count the minutes
-    activityEvents?.listen((_activityDataPoint) {
-      ActivityDatum lastActivityDatum = _lastActivity.data as ActivityDatum;
-      ActivityDatum activityDatum = _activityDataPoint.data as ActivityDatum;
+    activityEvents?.listen((measurement) {
+      var lastActivity = _lastActivity;
 
-      if (activityDatum.type != lastActivityDatum.type) {
+      if ((measurement.data as Activity).type !=
+          (lastActivity.data as Activity).type) {
         // if we have a new type of activity
         // add the minutes to the last known activity type
-        DateTime start = lastActivityDatum.timestamp;
-        DateTime end = activityDatum.timestamp;
+        DateTime start =
+            DateTime.fromMicrosecondsSinceEpoch(lastActivity.sensorStartTime);
+        DateTime end =
+            DateTime.fromMicrosecondsSinceEpoch(measurement.sensorStartTime);
         model.increaseActivityDuration(
-          lastActivityDatum.type,
+          (lastActivity.data as Activity).type,
           start.weekday,
           end.difference(start).inMinutes,
         );
         // and then save the new activity
-        _lastActivity = _activityDataPoint;
+        _lastActivity = measurement;
       }
     });
   }
@@ -42,7 +47,7 @@ class ActivityCardViewModel extends SerializableViewModel<WeeklyActivities> {
 /// Weekly activities in minutes organized by type.
 @JsonSerializable(fieldRename: FieldRename.snake, includeIfNull: false)
 class WeeklyActivities extends DataModel {
-  /// A map of activities oganized first by type and then by day of week.
+  /// A map of activities organized first by type and then by day of week.
   ///
   ///   (type,weekday,minutes)
   ///
@@ -51,17 +56,19 @@ class WeeklyActivities extends DataModel {
   Map<ActivityType, Map<int, int>> activities = {};
 
   /// A list of activities of a specific [type].
-  List<DailyActivity> activitiesByType(ActivityType type) =>
-      activities[type]!.entries.map((entry) => DailyActivity(entry.key, entry.value)).toList();
+  List<DailyActivity> activitiesByType(ActivityType type) => activities[type]!
+      .entries
+      .map((entry) => DailyActivity(entry.key, entry.value))
+      .toList();
 
   WeeklyActivities() {
-    // // Initialize every week or if is the first time opening the app
-    ActivityType.values.forEach(
-      (type) {
-        activities[type] = {};
-        for (int i = 1; i <= 7; i++) activities[type]![i] = 0;
-      },
-    );
+    // initialize every week or if is the first time opening the app
+    for (var type in ActivityType.values) {
+      activities[type] = {};
+      for (int i = 1; i <= 7; i++) {
+        activities[type]![i] = 0;
+      }
+    }
   }
 
   /// Increase the number of minutes of doing [activityType] on [weekday] with [minutes].
@@ -70,17 +77,22 @@ class WeeklyActivities extends DataModel {
     int weekday,
     int minutes,
   ) {
-    activities[activityType]![weekday] = (activities[activityType]![weekday] ?? 0) + minutes;
+    activities[activityType]![weekday] =
+        (activities[activityType]![weekday] ?? 0) + minutes;
   }
 
-  WeeklyActivities fromJson(Map<String, dynamic> json) => _$WeeklyActivitiesFromJson(json);
+  @override
+  WeeklyActivities fromJson(Map<String, dynamic> json) =>
+      _$WeeklyActivitiesFromJson(json);
+  @override
   Map<String, dynamic> toJson() => _$WeeklyActivitiesToJson(this);
 
+  @override
   String toString() {
-    String _str = '  TYPE\t| day | min.\n';
-    activities.forEach((type, data) =>
-        data.forEach((day, minutes) => _str += '${type.toString().split(".").last}\t|  $day  |  $minutes\n'));
-    return _str;
+    String str = '  TYPE\t| day | min.\n';
+    activities.forEach((type, data) => data.forEach((day, minutes) =>
+        str += '${type.toString().split(".").last}\t|  $day  |  $minutes\n'));
+    return str;
   }
 }
 

@@ -1,35 +1,57 @@
 part of carp_study_app;
 
-// String encode(Object object) =>
-//     const JsonEncoder.withIndent(' ').convert(object);
-
 class CarpBackend {
-  static const String CANS_URI = "https://cans.cachet.dk";
+  /// The URI of the CARP Web Service (CAWS) host.
+  static const String cawsUri = "https://cans.cachet.dk";
 
-  static const Map<DeploymentMode, String> URIs = {
-    DeploymentMode.CARP_DEV: '/dev',
-    DeploymentMode.CARP_TEST: '/test',
-    DeploymentMode.CARP_STAGING: '/stage',
-    DeploymentMode.CARP_PRODUCTION: '',
+  /// The URL of the CARP Privacy Policy for this app.
+  static const String carpPrivacyUrl =
+      "https://carp.cachet.dk/privacy-policy-app";
+
+  /// The URL of the official CARP Web Site.
+  static const String carpWebsiteUrl = "https://carp.cachet.dk";
+
+  // TODO - take into account deployment mode
+
+  /// The URI for the web-based authentication.
+  WebUri get loginUri => WebUri(
+      'https://cans.cachet.dk/portal/playground/?redirect=carp.studies://auth');
+  // 'https://cans.cachet.dk/portal/${bloc.deploymentMode.name}/login?redirect=carp.studies://auth');
+
+  /// The URI for the web-based registration of users.
+  WebUri get registerUri => WebUri(
+      'https://cans.cachet.dk/portal/playground/register?redirect=carp.studies://auth');
+  // 'https://cans.cachet.dk/portal/${bloc.deploymentMode.name}/register?redirect=carp.studies://auth');
+
+  static const Map<DeploymentMode, String> uris = {
+    DeploymentMode.dev: 'dev',
+    DeploymentMode.test: 'test',
+    DeploymentMode.staging: 'stage',
+    DeploymentMode.production: '',
   };
 
-  static const String CLIENT_ID = "carp";
-  static const String CLIENT_SECRET = "carp";
+  static final CarpBackend _instance = CarpBackend._();
 
-  static CarpBackend _instance = CarpBackend._();
+  String get clientId => "carp";
+  String get clientSecret => "carp";
 
-  CarpApp? _app;
+  /// The CAWS app configuration.
+  CarpApp? app;
 
-  CarpApp? get app => _app;
+  /// Has the user been authenticated?
+  bool? get isAuthenticated => user != null;
 
-  /// The signed in user
+  /// The authenticated user
   CarpUser? get user => CarpService().currentUser;
 
   /// The URI of the CANS server - depending on deployment mode.
-  String get uri => '$CANS_URI${URIs[bloc.deploymentMode]}';
-
-  String get clientID => CLIENT_ID;
-  String get clientSecret => CLIENT_SECRET;
+  Uri get uri => Uri(
+        scheme: 'https',
+        host: 'cans.cachet.dk',
+        pathSegments: [
+          uris[bloc.deploymentMode]!,
+        ],
+      );
 
   OAuthToken? get oauthToken => LocalSettings().oauthToken;
   set oauthToken(OAuthToken? token) => LocalSettings().oauthToken = token;
@@ -37,86 +59,62 @@ class CarpBackend {
   String? get username => LocalSettings().username;
   set username(String? username) => LocalSettings().username = username;
 
-  String? get studyId => LocalSettings().studyId;
-
+  String? get studyId => bloc.studyId;
   set studyId(String? id) {
     if (CarpService().isConfigured) CarpService().app!.studyId = id;
-    LocalSettings().studyId = id!;
   }
 
-  String? get studyDeploymentId => LocalSettings().studyDeploymentId;
-
+  String? get studyDeploymentId => bloc.studyDeploymentId;
   set studyDeploymentId(String? id) {
     if (CarpService().isConfigured) CarpService().app!.studyDeploymentId = id;
-    LocalSettings().studyDeploymentId = id;
   }
 
   CarpBackend._() : super() {
     // make sure that the json functions are loaded
-    CarpMobileSensing();
-    CognitionPackage();
+    CarpMobileSensing.ensureInitialized();
+    CognitionPackage.ensureInitialized();
   }
 
   factory CarpBackend() => _instance;
 
   Future<void> initialize() async {
-    _app = CarpApp(
-      name: "CANS @ DTU",
-      uri: Uri.parse(uri),
-      oauth: OAuthEndPoint(clientID: CLIENT_ID, clientSecret: CLIENT_SECRET),
-      studyId: LocalSettings().studyId,
-      studyDeploymentId: LocalSettings().studyDeploymentId,
+    app = CarpApp(
+      name: "CAWS @ DTU",
+      uri: uri,
+      oauth: OAuthEndPoint(clientID: clientId, clientSecret: clientSecret),
+      studyId: studyId,
+      studyDeploymentId: studyDeploymentId,
     );
 
     CarpService().configure(app!);
-    info('$runtimeType initialized - app: $_app');
+
+    if (oauthToken != null) {
+      // if we have a token, we can authenticate the user
+      await authenticateWithRefreshToken(oauthToken!.refreshToken);
+    }
+    info('$runtimeType initialized - app: $app');
   }
 
-  /// Authenticate the user like this:
-  /// * check if a local username and token is saved on the phone
-  /// * if so, use this and try to authenticate
-  /// * else authenticate using the username / password dialogue
-  /// * if successful, save the token locally
-  Future<void> authenticate(BuildContext context) async {
-    info('Authenticating user...');
-    if (username != null && oauthToken != null) {
-      info('Authenticating with saved token - token: $oauthToken');
-      try {
-        await CarpService()
-            .authenticateWithToken(username: username!, token: oauthToken!);
-      } catch (error) {
-        warning('Authentication with saved token unsuccessful - $error');
-      }
+  Future<CarpUser?> authenticateWithRefreshToken(String refreshToken) async {
+    try {
+      CarpUser user =
+          await CarpService().authenticateWithRefreshToken(refreshToken);
+
+      info('User authenticated - user: $user');
+
+      // saving username & token on the phone
+      username = user.username;
+      oauthToken = user.token;
+      bloc.stateStream.sink.add(StudiesAppState.accessTokenRetrieved);
+
+      // configure the participation service in order to get the invitations
+      CarpParticipationService().configureFrom(CarpService());
+      return user;
+    } on Exception catch (error) {
+      warning(
+          '$runtimeType - error authenticating based on refresh token - $error');
+      return null;
     }
-
-    if (user == null) {
-      info('Authenticating with dialogue - username: $username');
-      await CarpService().authenticateWithDialog(context, username: username);
-      if (CarpService().authenticated) {
-        username = CarpService().currentUser!.username;
-      }
-    }
-
-    info('User authenticated - user: $user');
-    // saving token on the phone
-    oauthToken = user!.token!;
-
-    // configure the participation service in order to get the invitations
-    CarpParticipationService().configureFrom(CarpService());
-  }
-
-  /// Get the study invitation.
-  Future<void> getStudyInvitation(BuildContext context) async {
-    if (studyDeploymentId == null) {
-      ActiveParticipationInvitation? _invitation =
-          await CarpParticipationService().getStudyInvitation(context);
-      debug('CARP Study Invitation: $_invitation');
-
-      studyId = _invitation?.studyId! as String;
-      studyDeploymentId = _invitation?.studyDeploymentId! as String;
-    }
-    info('Study ID: $studyId');
-    info('Deployment ID: $studyDeploymentId');
   }
 
   Future<ConsentDocument?> uploadInformedConsent(
@@ -131,16 +129,14 @@ class CarpBackend {
       document = await CarpService().createConsentDocument(informedConsent);
       info(
           'Informed consent document uploaded successfully - id: ${document.id}');
-      bloc.informedConsentAccepted = true;
+      bloc.setHasInformedConsentBeenAccepted = true;
     } on Exception {
-      bloc.informedConsentAccepted = false;
+      bloc.setHasInformedConsentBeenAccepted = false;
       warning('Informed consent upload failed for username: $username');
     }
 
     return document;
   }
-
-  Future<void> leaveStudy() async => await LocalSettings().eraseStudyIds();
 
   Future<void> signOut() async {
     if (CarpService().authenticated) await CarpService().signOut();

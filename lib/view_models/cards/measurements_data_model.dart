@@ -1,23 +1,24 @@
 part of carp_study_app;
 
-class MeasuresCardViewModel extends ViewModel {
-  Map<String, int> _samplingTable = {};
+class MeasurementsCardViewModel extends ViewModel {
+  final Map<String, int> _samplingTable = {};
 
-  /// Stream of [DataPoint] measures.
-  Stream<DataPoint>? get measureEvents => controller?.data;
+  /// Stream of [Measurement] measures.
+  Stream<Measurement>? get measureEvents => controller?.measurements;
 
   /// Stream of more quiet [DataPoint] measures.
-  Stream<DataPoint>? get quietMeasureEvents =>
-      controller?.data.where((dataPoint) => dataPoint.carpHeader.dataFormat.name != 'sensor');
+  Stream<Measurement>? get quietMeasureEvents => controller?.measurements
+      .where((measurement) => measurement.dataType.name != 'sensor');
 
   /// The total sampling size
-  int get samplingSize => controller?.samplingSize == null ? 0 : controller!.samplingSize;
+  int get samplingSize =>
+      controller?.samplingSize == null ? 0 : controller!.samplingSize;
   // samplingTable.values.fold(0, (prev, element) => prev + element);
 
   /// A table with sampling size of each measure type
   Map<String, int> get samplingTable {
-    this.quietMeasureEvents?.listen((dataPoint) {
-      String key = dataPoint.carpHeader.dataFormat.name;
+    quietMeasureEvents?.listen((measurement) {
+      String key = measurement.dataType.name;
       if (!_samplingTable.containsKey(key)) _samplingTable[key] = 0;
       _samplingTable[key] = _samplingTable[key]! + 1;
     });
@@ -27,17 +28,19 @@ class MeasuresCardViewModel extends ViewModel {
   /// The list of measures
   List<MeasureCount> get measures {
     // sort them first
-    var mapEntries = _samplingTable.entries.toList()..sort((b, a) => a.value.compareTo(b.value));
+    var mapEntries = _samplingTable.entries.toList()
+      ..sort((b, a) => a.value.compareTo(b.value));
     Map<String, int> sortedTasksTable = {}..addEntries(mapEntries);
 
     // and map to the [TaskCount] model
-    List<MeasureCount> tasksList =
-        sortedTasksTable.entries.map((entry) => MeasureCount(entry.key, entry.value)).toList();
+    List<MeasureCount> tasksList = sortedTasksTable.entries
+        .map((entry) => MeasureCount(entry.key, entry.value))
+        .toList();
 
     return tasksList;
   }
 
-  MeasuresCardViewModel() : super();
+  MeasurementsCardViewModel() : super();
 
   // void init(SmartphoneDeploymentController controller) {
   //   super.init(controller);
@@ -51,10 +54,11 @@ class MeasuresCardViewModel extends ViewModel {
   //   });
   // }
 
+  @override
   String toString() {
-    String _str = 'MEASURE\t| #\n';
-    samplingTable.forEach((type, no) => _str += '$type\t| $no\n');
-    return _str;
+    String str = 'MEASURE\t| #\n';
+    samplingTable.forEach((type, no) => str += '$type\t| $no\n');
+    return str;
   }
 
   // /// Order the measures based on the amount of entries

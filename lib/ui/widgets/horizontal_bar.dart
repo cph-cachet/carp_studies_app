@@ -1,17 +1,18 @@
 part of carp_study_app;
 
 class HorizontalBar extends StatelessWidget {
-  final List<String>? names;
-  final List<int>? values;
-  final List<Color>? colors;
+  final List<String> names;
+  final List<int> values;
+  final List<Color> colors;
   final OrderType? order;
-  final double? height;
+  final double height;
   final LabelOrientation? labelOrientation;
 
-  HorizontalBar({
-    this.names,
-    this.values,
-    this.colors,
+  const HorizontalBar({
+    super.key,
+    required this.names,
+    required this.values,
+    required this.colors,
     this.order = OrderType.descending,
     this.height = 25,
     this.labelOrientation = LabelOrientation.vertical,
@@ -19,48 +20,46 @@ class HorizontalBar extends StatelessWidget {
 
   List<MyAsset> assetList() {
     List<MyAsset> assetList = [];
-    for (int i = 0; i < this.names!.length; i++) {
-      // print('assets');
-      // print(values!.elementAt(i));
-      // print(colors!.elementAt(i));
-      // print(names!.elementAt(i));
+    for (int i = 0; i < names.length; i++) {
       assetList.add(MyAsset(
-          size: values!.elementAt(i),
-          color: colors!.elementAt(i),
-          name: names!.elementAt(i)));
+          size: values.elementAt(i),
+          color: colors.elementAt(i),
+          name: names.elementAt(i)));
     }
     return assetList;
   }
 
+  @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    if (names!.isEmpty)
+    if (names.isEmpty) {
       return Center(
         child: Padding(
           padding: const EdgeInsets.all(3),
           child: ClipRRect(
-            borderRadius: BorderRadius.all(Radius.circular(height! / 2)),
+            borderRadius: BorderRadius.all(Radius.circular(height / 2)),
             child: Container(
               decoration:
                   BoxDecoration(color: Theme.of(context).colorScheme.tertiary),
               width: width,
               height: height,
-              child: SizedBox.shrink(),
+              child: const SizedBox.shrink(),
             ),
           ),
         ),
       );
-    else
+    } else {
       return Center(
         child: MyAssetsBar(
           width: width * .9,
-          background: Color(0xCFD8DC),
-          order: this.order,
+          background: const Color(0x00cfd8dc),
+          order: order,
           assets: assetList(),
-          height: this.height,
-          labelOrientation: this.labelOrientation,
+          height: height,
+          labelOrientation: labelOrientation,
         ),
       );
+    }
   }
 }
 
@@ -77,7 +76,7 @@ class MyAsset {
 }
 
 class MyAssetsBar extends StatelessWidget {
-  MyAssetsBar({
+  const MyAssetsBar({
     super.key,
     required this.width,
     required this.height,
@@ -98,7 +97,9 @@ class MyAssetsBar extends StatelessWidget {
 
   double _getValuesSum() {
     double sum = 0;
-    assets.forEach((single) => sum += single.size!);
+    for (var single in assets) {
+      sum += single.size!;
+    }
     return sum;
   }
 
@@ -139,7 +140,7 @@ class MyAssetsBar extends StatelessWidget {
   }
 
   Widget _labelOrientation() {
-    if (this.labelOrientation == LabelOrientation.horizontal)
+    if (labelOrientation == LabelOrientation.horizontal) {
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: assets
@@ -147,49 +148,45 @@ class MyAssetsBar extends StatelessWidget {
             .entries
             .map(
               (entry) => Padding(
-                  padding: EdgeInsets.symmetric(vertical: 3, horizontal: 10),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 3, horizontal: 10),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Icon(Icons.circle, color: entry.value.color, size: 12.0),
-                      Text(
-                          ' ' +
-                              entry.value.name! +
-                              ' ' +
-                              entry.value.size.toString(),
-                          style: legendStyle,
-                          textAlign: TextAlign.right),
+                      Text(' ${entry.value.name!} ${entry.value.size}',
+                          style: legendStyle, textAlign: TextAlign.right),
                     ],
                   )),
             )
             .toList(),
       );
-    else {
-      return Container(
-          child: GridView.count(
+    } else {
+      return GridView.count(
         shrinkWrap: true,
         primary: true,
-        physics: ClampingScrollPhysics(),
+        physics: const ClampingScrollPhysics(),
         scrollDirection: Axis.vertical,
         crossAxisCount: 2,
         crossAxisSpacing: 5,
         mainAxisSpacing: 1,
-        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 0),
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 0),
         childAspectRatio: 8,
         children: assets
             .asMap()
             .entries
             .map(
               (entry) => Padding(
-                  padding: EdgeInsets.symmetric(vertical: 3, horizontal: 5),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 3, horizontal: 5),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Icon(Icons.circle, color: entry.value.color, size: 12.0),
-                      Text(' ' + entry.value.size.toString(),
+                      Text(' ${entry.value.size}',
                           style: legendStyle, textAlign: TextAlign.left),
                       Expanded(
-                          child: Text(' ' + entry.value.name!,
+                          child: Text(' ${entry.value.name!}',
                               style: legendStyle,
                               textAlign: TextAlign.left,
                               overflow: TextOverflow.ellipsis)),
@@ -197,7 +194,7 @@ class MyAssetsBar extends StatelessWidget {
                   )),
             )
             .toList(),
-      ));
+      );
     }
   }
 
@@ -212,7 +209,7 @@ class MyAssetsBar extends StatelessWidget {
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        SizedBox(height: 15),
+        const SizedBox(height: 15),
         ClipRRect(
           borderRadius: BorderRadius.all(Radius.circular(rad)),
           child: Container(
@@ -225,7 +222,7 @@ class MyAssetsBar extends StatelessWidget {
                     .toList()),
           ),
         ),
-        SizedBox(height: 2),
+        const SizedBox(height: 2),
         _labelOrientation(),
       ],
     );

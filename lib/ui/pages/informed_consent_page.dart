@@ -1,17 +1,22 @@
 part of carp_study_app;
 
 class InformedConsentPage extends StatefulWidget {
-  final InformedConsentState state = InformedConsentState();
-  InformedConsentPage({super.key});
-  InformedConsentState createState() => state;
+  final InformedConsentViewModel model;
+
+  const InformedConsentPage(this.model, {super.key});
+
+  @override
+  InformedConsentState createState() => InformedConsentState();
 }
 
 class InformedConsentState extends State<InformedConsentPage> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   void resultCallback(RPTaskResult result) async {
-    await bloc.informedConsentHasBeenAccepted(result);
-    Navigator.of(context).pushReplacementNamed('/HomePage');
+    await widget.model.informedConsentHasBeenAccepted(result);
+    if (context.mounted) {
+      context.go('/tasks');
+    }
   }
 
   void cancelCallback(RPTaskResult? result) async {
@@ -29,7 +34,7 @@ class InformedConsentState extends State<InformedConsentPage> {
             TextButton(
               child: Text(locale.translate("pages.ic.go_to_ic")),
               onPressed: () {
-                Navigator.of(context).pushReplacementNamed('/InformedConsent');
+                context.go('/consent');
               },
             )
           ],
@@ -40,14 +45,32 @@ class InformedConsentState extends State<InformedConsentPage> {
 
   @override
   Widget build(BuildContext context) {
+    RPLocalizations localization = RPLocalizations.of(context)!;
+
     return Scaffold(
       key: _scaffoldKey,
-      body: Builder(
-        builder: (context) {
-          return RPUITask(
-            task: bloc.informedConsent!,
-            onSubmit: resultCallback,
-            onCancel: cancelCallback,
+      body: FutureBuilder<RPOrderedTask?>(
+        future: widget.model.getInformedConsent(localization.locale).then(
+          (value) {
+            if (value == null) {
+              context.go('/tasks');
+            }
+            return value;
+          },
+        ),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            if (snapshot.hasData) {
+              return RPUITask(
+                task: snapshot.data!,
+                onSubmit: resultCallback,
+                onCancel: cancelCallback,
+              );
+            }
+          }
+
+          return const Center(
+            child: CircularProgressIndicator(),
           );
         },
       ),

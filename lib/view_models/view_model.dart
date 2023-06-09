@@ -9,7 +9,7 @@ abstract class ViewModel {
   /// Initialize this view model before use.
   @mustCallSuper
   void init(SmartphoneDeploymentController ctrl) {
-    this._controller = ctrl;
+    _controller = ctrl;
   }
 }
 
@@ -41,24 +41,27 @@ abstract class SerializableViewModel<D extends DataModel> extends ViewModel {
   @protected
   D createModel();
 
+  @override
   @mustCallSuper
-  void init(SmartphoneDeploymentController controller) {
-    super.init(controller);
+  void init(SmartphoneDeploymentController ctrl) {
+    super.init(ctrl);
     _model = createModel();
 
     // restore the data model (if any saved)
     restore().then((savedModel) => _model = savedModel ?? _model);
 
     // save the data model on a regular basis.
-    Timer.periodic(const Duration(minutes: 5), (_) => save(model.toJson()));
+    Timer.periodic(const Duration(minutes: 3), (_) => save(model.toJson()));
   }
 
   /// Current path and filename of the data.
   Future<String> get filename async {
-    String path = await LocalSettings().deploymentBasePath ?? '';
+    String path = await LocalSettings().cacheBasePath ?? '';
     return '$path/$runtimeType.json';
   }
 
+  /// Persistently save the [model].
+  /// Returns true if successful, false otherwise.
   Future<bool> save(Map<String, dynamic> json) async {
     bool success = true;
     try {
@@ -67,23 +70,25 @@ abstract class SerializableViewModel<D extends DataModel> extends ViewModel {
       File(name).writeAsStringSync(jsonEncode(json));
     } catch (exception) {
       success = false;
-      warning('Failed to save $runtimeType data - $exception');
+      warning('Failed to save $runtimeType - $exception');
     }
     return success;
   }
 
-  // Future<Map<String, dynamic>> restore() async {
-  //   Map<String, dynamic> result = {};
-  //   try {
-  //     String name = (await filename);
-  //     info("Restoring $runtimeType data from file '$name'.");
-  //     String jsonString = File(name).readAsStringSync();
-  //     result = json.decode(jsonString) as Map<String, dynamic>;
-  //   } catch (exception) {
-  //     warning('Failed to load $runtimeType - $exception');
-  //   }
-  //   return result;
-  // }
+  /// Permanently delete the [model].
+  /// Returns true if successful, false otherwise.
+  Future<bool> delete() async {
+    bool success = true;
+    try {
+      String name = (await filename);
+      info("Deleting $runtimeType data to file '$name'.");
+      File(name).deleteSync();
+    } catch (exception) {
+      success = false;
+      warning('Failed to delete $runtimeType data - $exception');
+    }
+    return success;
+  }
 
   Future<D?> restore() async {
     D? result;
@@ -108,7 +113,8 @@ class DailyMeasure {
 
   DailyMeasure(this.weekday);
 
-  /// Get the localilzed name of the [weekday].
+  /// Get the localized name of the [weekday].
+  @override
   String toString() => DateFormat('EEEE')
       .format(DateTime(2021, 2, 7).add(Duration(days: weekday)))
       .substring(0, 3);
@@ -122,19 +128,25 @@ class HourlyMeasure {
 
   HourlyMeasure(this.hour, this.minute);
 
+  @override
   String toString() => '$hour:$minute';
 }
 
 /// The view model for the entire app.
-class CarpStydyAppViewModel extends ViewModel {
+class CarpStudyAppViewModel extends ViewModel {
   final DataVisualizationPageViewModel _dataVisualizationPageViewModel =
       DataVisualizationPageViewModel();
   final StudyPageViewModel _studyPageViewModel = StudyPageViewModel();
   final TaskListPageViewModel _taskListPageViewModel = TaskListPageViewModel();
   final ProfilePageViewModel _profilePageViewModel = ProfilePageViewModel();
   final DevicesPageViewModel _devicesPageViewModel = DevicesPageViewModel();
+  final LoginPageViewModel _loginPageViewModel = LoginPageViewModel();
+  final InvitationsListViewModel _invitationsListViewModel =
+      InvitationsListViewModel();
+  final InformedConsentViewModel _informedConsentViewModel =
+      InformedConsentViewModel();
 
-  CarpStydyAppViewModel() : super();
+  CarpStudyAppViewModel() : super();
 
   DataVisualizationPageViewModel get dataVisualizationPageViewModel =>
       _dataVisualizationPageViewModel;
@@ -142,13 +154,22 @@ class CarpStydyAppViewModel extends ViewModel {
   TaskListPageViewModel get taskListPageViewModel => _taskListPageViewModel;
   ProfilePageViewModel get profilePageViewModel => _profilePageViewModel;
   DevicesPageViewModel get devicesPageViewModel => _devicesPageViewModel;
+  LoginPageViewModel get loginPageViewModel => _loginPageViewModel;
+  InvitationsListViewModel get invitationsListViewModel =>
+      _invitationsListViewModel;
+  InformedConsentViewModel get informedConsentViewModel =>
+      _informedConsentViewModel;
 
-  void init(SmartphoneDeploymentController controller) {
-    super.init(controller);
-    _dataVisualizationPageViewModel.init(controller);
-    _studyPageViewModel.init(controller);
-    _taskListPageViewModel.init(controller);
-    _profilePageViewModel.init(controller);
-    _devicesPageViewModel.init(controller);
+  @override
+  void init(SmartphoneDeploymentController ctrl) {
+    super.init(ctrl);
+    _dataVisualizationPageViewModel.init(ctrl);
+    _studyPageViewModel.init(ctrl);
+    _taskListPageViewModel.init(ctrl);
+    _profilePageViewModel.init(ctrl);
+    _devicesPageViewModel.init(ctrl);
+    _loginPageViewModel.init(ctrl);
+    _invitationsListViewModel.init(ctrl);
+    _informedConsentViewModel.init(ctrl);
   }
 }

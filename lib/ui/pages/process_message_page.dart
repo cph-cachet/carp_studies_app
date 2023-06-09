@@ -19,8 +19,9 @@ class ProcessMessagePage extends StatelessWidget {
   // Display cancel button. If true the button is displayed.
   final bool canCancel;
 
-  ProcessMessagePage(
-      {required this.statusType,
+  const ProcessMessagePage(
+      {super.key,
+      required this.statusType,
       required this.title,
       required this.description,
       required this.actionFunction,
@@ -31,21 +32,21 @@ class ProcessMessagePage extends StatelessWidget {
   Widget build(BuildContext context) {
     Image messageImage() {
       final Image image;
-      switch (this.statusType) {
-        case ProcessStatus.DONE:
+      switch (statusType) {
+        case ProcessStatus.done:
           image = Image(
-              image: AssetImage('assets/icons/done.png'),
+              image: const AssetImage('assets/icons/done.png'),
               height: MediaQuery.of(context).size.height * 0.35);
           break;
-        case ProcessStatus.ERROR:
+        case ProcessStatus.error:
           image = Image(
-              image: AssetImage('assets/icons/error.png'),
+              image: const AssetImage('assets/icons/error.png'),
               height: MediaQuery.of(context).size.height * 0.35);
           break;
-        case ProcessStatus.OTHER:
+        case ProcessStatus.other:
         default:
           image = Image(
-              image: AssetImage('assets/icons/info.png'),
+              image: const AssetImage('assets/icons/info.png'),
               height: MediaQuery.of(context).size.height * 0.35);
           break;
       }
@@ -61,15 +62,14 @@ class ProcessMessagePage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                SizedBox(height: 40),
+                const SizedBox(height: 40),
                 messageImage(),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Center(
-                    child: Text(locale.translate(this.title),
-                        style: audioTitleStyle)),
-                SizedBox(height: 10),
-                Text(locale.translate(this.description),
-                    style: audioContentStyle),
+                    child:
+                        Text(locale.translate(title), style: audioTitleStyle)),
+                const SizedBox(height: 10),
+                Text(locale.translate(description), style: audioContentStyle),
               ]),
         ),
         bottomSheet: Row(
@@ -79,7 +79,7 @@ class ProcessMessagePage extends StatelessWidget {
                 ? Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      SizedBox(width: 15),
+                      const SizedBox(width: 15),
                       OutlinedButton(
                           onPressed: () {
                             Navigator.of(context).pop();
@@ -87,10 +87,10 @@ class ProcessMessagePage extends StatelessWidget {
                           child: Text(locale.translate('cancel').toUpperCase(),
                               style: TextStyle(
                                   color: Theme.of(context).primaryColor))),
-                      SizedBox(width: 10),
+                      const SizedBox(width: 10),
                     ],
                   )
-                : SizedBox.shrink(),
+                : const SizedBox.shrink(),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -98,11 +98,11 @@ class ProcessMessagePage extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                       backgroundColor: Theme.of(context).primaryColor),
                   onPressed: () {
-                    this.actionFunction();
+                    actionFunction();
                   },
-                  child: Text(locale.translate(this.actionText).toUpperCase()),
+                  child: Text(locale.translate(actionText).toUpperCase()),
                 ),
-                SizedBox(width: 15),
+                const SizedBox(width: 15),
               ],
             ),
           ],

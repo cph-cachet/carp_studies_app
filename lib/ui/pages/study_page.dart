@@ -78,7 +78,7 @@ class StudyPageState extends State<StudyPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Row(children: [
-              message.type == MessageType.article
+              message.imagePath != null
                   ? Expanded(
                       child: Container(
                       height: 150.0,

@@ -15,22 +15,22 @@ class InvitationDetailsPage extends StatelessWidget {
         (element) => element.participation.participantId == invitationId);
 
     return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          locale.translate('invitation.invited_to_study'),
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 28.0,
+          ),
+        ),
+        elevation: 0.0,
+      ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.only(right: 24.0, left: 24.0),
+          padding: const EdgeInsets.only(right: 24.0, left: 24.0, top: 24.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Text(
-                locale.translate('invitation.invited_to_study'),
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 40.0,
-                ),
-              ),
-              const SizedBox(
-                height: 48.0,
-              ),
               Text(
                 invitation.invitation.name,
                 style: const TextStyle(
@@ -56,7 +56,7 @@ class InvitationDetailsPage extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: () {
                     bloc.setStudyInvitation(invitation, context);
-                    context.go('/consent');
+                    context.push('/consent');
                   },
                   style: ElevatedButton.styleFrom(
                     shape: const StadiumBorder(),

@@ -57,6 +57,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.11.0"
+  audio_session:
+    dependency: transitive
+    description:
+      name: audio_session
+      sha256: "8a2bc5e30520e18f3fb0e366793d78057fb64cd5287862c76af0c8771f2a52ad"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.16"
   audio_streamer:
     dependency: transitive
     description:
@@ -73,62 +81,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.1"
-  audioplayers:
-    dependency: transitive
-    description:
-      name: audioplayers
-      sha256: "16451eab798b23ad9307aef6f9ca62bb8fb06542af8810eead0d236d3fd40a42"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.1"
-  audioplayers_android:
-    dependency: transitive
-    description:
-      name: audioplayers_android
-      sha256: b2c833e6f718b6b030454e329931229afafe9327fdb002874dd544dc8bf2484d
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.0"
-  audioplayers_darwin:
-    dependency: transitive
-    description:
-      name: audioplayers_darwin
-      sha256: e7a3c8759bf11ecfe4b20df338bf9f3d37c7719a5761c46a3833aba0ceeaacff
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.1"
-  audioplayers_linux:
-    dependency: transitive
-    description:
-      name: audioplayers_linux
-      sha256: e95b65e1f4d4764601dac5e65f8d8186fc29401043ab020f1dacec483d708707
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.4"
-  audioplayers_platform_interface:
-    dependency: transitive
-    description:
-      name: audioplayers_platform_interface
-      sha256: "178581a44cb685fd798d2108111d2e98cca3400e30b9c3a05546f124fb37f600"
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.0.0"
-  audioplayers_web:
-    dependency: transitive
-    description:
-      name: audioplayers_web
-      sha256: "859ba09be2a57e57a787273f18c8cf0d9b61383870c5ee4b5632fe9adbc37edf"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.2.0"
-  audioplayers_windows:
-    dependency: transitive
-    description:
-      name: audioplayers_windows
-      sha256: "622e01c4c357c2aaf1b956c3a0f89d97c3cb40315c03f16e3b6c2a31ff9c38bc"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.1.3"
   awesome_notifications:
     dependency: "direct main"
     description:
@@ -407,10 +359,10 @@ packages:
     dependency: "direct main"
     description:
       name: cognition_package
-      sha256: cb26bf0cfa4357f778730ebc04c1ecafc21ad79781f634595d420fee3b1d0f83
+      sha256: "57d930aa1eaaccf5a33e2bb2bd1aa2e97ed1638ecbd27f9d056b0d54256cf4a0"
       url: "https://pub.dev"
     source: hosted
-    version: "1.4.1"
+    version: "1.5.0"
   collection:
     dependency: transitive
     description:
@@ -604,10 +556,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_inappwebview
-      sha256: "48d916e60b17649e338ac94f5d85fd28af8673a4a03d303d178dc61aa2a1f1c8"
+      sha256: fad1f2740ff4b5b7da378a639f54beeb9d787b6339c89a9de00494d92372c0bb
       url: "https://pub.dev"
     source: hosted
-    version: "6.0.0-beta.23"
+    version: "6.0.0-beta.24+1"
   flutter_inappwebview_internal_annotations:
     dependency: transitive
     description:
@@ -713,10 +665,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_svg
-      sha256: "6ff8c902c8056af9736de2689f63f81c42e2d642b9f4c79dbf8790ae48b63012"
+      sha256: "8c5d68a82add3ca76d792f058b186a0599414f279f00ece4830b9b231b570338"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.6"
+    version: "2.0.7"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -887,6 +839,30 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.7.0"
+  just_audio:
+    dependency: transitive
+    description:
+      name: just_audio
+      sha256: "890cd0fc41a1a4530c171e375a2a3fb6a09d84e9d508c5195f40bcff54330327"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.9.34"
+  just_audio_platform_interface:
+    dependency: transitive
+    description:
+      name: just_audio_platform_interface
+      sha256: d8409da198bbc59426cd45d4c92fca522a2ec269b576ce29459d6d6fcaeb44df
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.2.1"
+  just_audio_web:
+    dependency: transitive
+    description:
+      name: just_audio_web
+      sha256: ff62f733f437b25a0ff590f0e295fa5441dcb465f1edbdb33b3dea264705bc13
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.4.8"
   light:
     dependency: transitive
     description:
@@ -995,10 +971,10 @@ packages:
     dependency: "direct dev"
     description:
       name: mockito
-      sha256: "8b46d7eb40abdda92d62edd01546051f0c27365e65608c284de336dccfef88cc"
+      sha256: "7d5b53bcd556c1bc7ffbe4e4d5a19c3e112b7e925e9e172dd7c6ad0630812616"
       url: "https://pub.dev"
     source: hosted
-    version: "5.4.1"
+    version: "5.4.2"
   nested:
     dependency: transitive
     description:
@@ -1315,10 +1291,10 @@ packages:
     dependency: "direct main"
     description:
       name: research_package
-      sha256: "6a0964b668fb95a51823c09934ec2b6f2941a1f6b0516d9346542bccdff9a35e"
+      sha256: "481dbd2c6ec75ee4882a82f5d7e8c7ecadc1beb5d17d007fcd29ba1225fbdd6f"
       url: "https://pub.dev"
     source: hosted
-    version: "1.3.1"
+    version: "1.3.2"
   retry:
     dependency: transitive
     description:
@@ -1528,10 +1504,10 @@ packages:
     dependency: transitive
     description:
       name: sqflite_common
-      sha256: e77abf6ff961d69dfef41daccbb66b51e9983cdd5cb35bf30733598057401555
+      sha256: "8f7603f3f8f126740bc55c4ca2d1027aab4b74a1267a3e31ce51fe40e3b65b8f"
       url: "https://pub.dev"
     source: hosted
-    version: "2.4.5"
+    version: "2.4.5+1"
   stack_trace:
     dependency: transitive
     description:
@@ -1736,26 +1712,26 @@ packages:
     dependency: transitive
     description:
       name: vector_graphics
-      sha256: b96f10cbdfcbd03a65758633a43e7d04574438f059b1043104b5d61b23d38a4f
+      sha256: "670f6e07aca990b4a2bcdc08a784193c4ccdd1932620244c3a86bb72a0eac67f"
       url: "https://pub.dev"
     source: hosted
-    version: "1.1.6"
+    version: "1.1.7"
   vector_graphics_codec:
     dependency: transitive
     description:
       name: vector_graphics_codec
-      sha256: "57a8e6e24662a3bdfe3b3d61257db91768700c0b8f844e235877b56480f31c69"
+      sha256: "7451721781d967db9933b63f5733b1c4533022c0ba373a01bdd79d1a5457f69f"
       url: "https://pub.dev"
     source: hosted
-    version: "1.1.6"
+    version: "1.1.7"
   vector_graphics_compiler:
     dependency: transitive
     description:
       name: vector_graphics_compiler
-      sha256: "7430f5d834d0db4560d7b19863362cd892f1e52b43838553a3c5cdfc9ab28e5b"
+      sha256: "80a13c613c8bde758b1464a1755a7b3a8f2b6cec61fbf0f5a53c94c30f03ba2e"
       url: "https://pub.dev"
     source: hosted
-    version: "1.1.6"
+    version: "1.1.7"
   vector_math:
     dependency: transitive
     description:
@@ -1808,10 +1784,10 @@ packages:
     dependency: transitive
     description:
       name: vm_service
-      sha256: f3743ca475e0c9ef71df4ba15eb2d7684eecd5c8ba20a462462e4e8b561b2e11
+      sha256: c620a6f783fa22436da68e42db7ebbf18b8c44b9a46ab911f666ff09ffd9153f
       url: "https://pub.dev"
     source: hosted
-    version: "11.6.0"
+    version: "11.7.1"
   watcher:
     dependency: transitive
     description:

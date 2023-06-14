@@ -9,53 +9,55 @@ class InvitationListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;
     return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.only(right: 24.0, left: 24.0),
-          child: FutureBuilder<List<ActiveParticipationInvitation>>(
-              future: model.invitations,
-              builder: (context, snapshot) {
-                Widget child;
+      body: FutureBuilder<List<ActiveParticipationInvitation>>(
+          future: model.invitations,
+          builder: (context, snapshot) {
+            Widget child;
 
-                child = snapshot.hasData
-                    ? child = SliverList(
-                        delegate: SliverChildBuilderDelegate(
-                          (context, index) {
-                            return Container(
-                              margin: const EdgeInsets.only(top: 16.0),
-                              child: InvitationCard(
-                                invitation: snapshot.data![index],
-                              ),
-                            );
-                          },
-                          childCount: snapshot.data!.length,
-                        ),
-                      )
-                    : const SliverToBoxAdapter(
-                        child: Center(
-                          child: CircularProgressIndicator(),
-                        ),
-                      );
-
-                return CustomScrollView(
-                  physics: const BouncingScrollPhysics(
-                      parent: AlwaysScrollableScrollPhysics()),
-                  slivers: [
-                    SliverToBoxAdapter(
-                      child: Text(
-                        locale.translate('invitation.invitations'),
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 40.0,
-                        ),
-                      ),
+            child = snapshot.hasData
+                ? child = SliverFixedExtentList(
+                  itemExtent: 150,
+                    delegate: SliverChildBuilderDelegate(
+                      (context, index) {
+                        return Container(
+                          margin: const EdgeInsets.only(top: 16.0),
+                          child: InvitationCard(
+                            invitation: snapshot.data![index],
+                          ),
+                        );
+                      },
+                      childCount: snapshot.data!.length,
                     ),
-                    child,
-                  ],
-                );
-              }),
-        ),
-      ),
+                  )
+                : const SliverToBoxAdapter(
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  );
+
+            return CustomScrollView(
+              physics: const BouncingScrollPhysics(
+                  parent: AlwaysScrollableScrollPhysics()),
+              slivers: [
+                SliverAppBar(
+                  title: Text(
+                    locale.translate('invitation.invitations'),
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 28.0,
+                    ),
+                  ),
+                  pinned: true,
+                  stretch: true,
+                  stretchTriggerOffset: 20,
+                  onStretchTrigger: () async {
+                    await model.invitations;
+                  },
+                ),
+                child,
+              ],
+            );
+          }),
     );
   }
 }

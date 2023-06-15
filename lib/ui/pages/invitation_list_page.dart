@@ -16,7 +16,7 @@ class InvitationListPage extends StatelessWidget {
 
             child = snapshot.hasData
                 ? child = SliverFixedExtentList(
-                  itemExtent: 150,
+                    itemExtent: 150,
                     delegate: SliverChildBuilderDelegate(
                       (context, index) {
                         return Container(

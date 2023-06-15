@@ -11,11 +11,13 @@ on:
         options:
           - beta
           - promote_to_production
-          - production
-  push:
-    tags:
-      - '*'
-
+  workflow_call:
+    inputs:
+      lane:
+        description: "Fastlane lane"
+        required: true
+        default: "beta"
+        type: string
 
 # Declare default permissions as read only.
 permissions: read-all
@@ -69,9 +71,10 @@ jobs:
           KEYSTORE_STORE_PASSWORD: ${{ secrets.KEYSTORE_STORE_PASSWORD }}
         working-directory: android
 
-      # Build and deploy with Fastlane (by default, to beta track) 🚀.
-      # Naturally, promote_to_production only deploys.
-      - run: bundle exec fastlane ${{ github.event.inputs.lane || 'beta' }}
+      # Build and deploy with Fastlane to Beta track on pushses to branches
+      # and to Production track on tags.
+      - name: Deploy to Play Store
+        run: bundle exec fastlane ${{ inputs.lane || 'beta' }}
         env:
           PLAY_STORE_CONFIG_JSON: ${{ secrets.PLAY_STORE_CONFIG_JSON }}
         working-directory: android

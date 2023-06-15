@@ -1,0 +1,77 @@
+name: Deploy to Play Store
+on:
+  # Enable manual run
+  workflow_dispatch:
+    inputs:
+      lane:
+        description: "Fastlane lane"
+        required: true
+        default: "beta"
+        type: choice
+        options:
+          - beta
+          - promote_to_production
+          - production
+  push:
+    tags:
+      - '*'
+
+
+# Declare default permissions as read only.
+permissions: read-all
+
+jobs:
+  fastlane-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      # Set up Flutter.
+      - uses: actions/checkout@v3
+
+      - name: Cache Flutter
+        id: cache-flutter
+        uses: actions/cache@v3
+        with:
+          path: |
+            flutter
+            ~/.pub-cache
+          key: flutter-${{ hashFiles('**/pubspec.lock') }}
+
+      - if: ${{ steps.cache-flutter.outputs.cache-hit != 'true' }}
+        name: Install Flutter
+        run: git clone https://github.com/flutter/flutter.git --depth 1 -b stable $FOLDER
+
+      - name: Add Flutter to PATH
+        run: echo "$GITHUB_WORKSPACE/flutter/bin" >> $GITHUB_PATH
+
+      - if: ${{ steps.cache-flutter.outputs.cache-hit != 'true' }}
+        name: Install dependencies
+        run: flutter pub get
+
+      # Setup Ruby, Bundler, and Gemfile dependencies
+      - name: Setup Fastlane
+        uses: ruby/setup-ruby@8a45918450651f5e4784b6031db26f4b9f76b251 # v1.150.0
+        with:
+          ruby-version: "2.6"
+          bundler-cache: true
+          working-directory: android
+
+      - name: Configure Keystore
+        run: |
+          echo "$PLAY_STORE_UPLOAD_KEY" | base64 --decode > app/upload-keystore.jks
+          echo "storeFile=upload-keystore.jks" >> key.properties
+          echo "keyAlias=$KEYSTORE_KEY_ALIAS" >> key.properties
+          echo "storePassword=$KEYSTORE_STORE_PASSWORD" >> key.properties
+          echo "keyPassword=$KEYSTORE_KEY_PASSWORD" >> key.properties
+        env:
+          PLAY_STORE_UPLOAD_KEY: ${{ secrets.PLAY_STORE_UPLOAD_KEY }}
+          KEYSTORE_KEY_ALIAS: ${{ secrets.KEYSTORE_KEY_ALIAS }}
+          KEYSTORE_KEY_PASSWORD: ${{ secrets.KEYSTORE_KEY_PASSWORD }}
+          KEYSTORE_STORE_PASSWORD: ${{ secrets.KEYSTORE_STORE_PASSWORD }}
+        working-directory: android
+
+      # Build and deploy with Fastlane (by default, to beta track) 🚀.
+      # Naturally, promote_to_production only deploys.
+      - run: bundle exec fastlane ${{ github.event.inputs.lane || 'beta' }}
+        env:
+          PLAY_STORE_CONFIG_JSON: ${{ secrets.PLAY_STORE_CONFIG_JSON }}
+        working-directory: android

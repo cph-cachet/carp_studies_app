@@ -2,8 +2,8 @@ name: Deploy to Play Store production
 on:
   # Enable manual run
   push:
-    tags:
-      - '*'
+    branches:
+      - 'master'
 
 
 # Declare default permissions as read only.

@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - 'master'
+      - 'LarsRefsgaard/issue163'
 
 
 # Declare default permissions as read only.

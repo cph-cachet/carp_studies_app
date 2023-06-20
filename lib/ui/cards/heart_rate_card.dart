@@ -64,7 +64,6 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
                   animationController.duration = Duration(
                       milliseconds: 1000 ~/
                           (((widget.model.currentHeartRate ?? 0) + 1) / 60));
-                  print(snapshot);
 
                   return Column(
                     children: [

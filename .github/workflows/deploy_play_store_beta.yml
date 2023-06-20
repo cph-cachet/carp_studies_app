@@ -1,4 +1,4 @@
-name: Deploy to Play Store production
+name: Deploy to Play Store beta
 on:
   # Enable manual run
   push:

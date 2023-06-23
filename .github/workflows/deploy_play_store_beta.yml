@@ -12,6 +12,6 @@ permissions: read-all
 
 jobs:
   workflow_run:
-    uses: cph-cachet/carp-studies-app/.github/workflows/deploy_play_store.yml@master
+    uses: cph-cachet/carp-studies-app/.github/workflows/deploy_play_store.yml@LarsRefsgaard/issue163
     with:
       lane: 'beta'

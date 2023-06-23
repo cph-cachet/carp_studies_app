@@ -73,10 +73,7 @@ jobs:
 
       # debugging
       - name: Print env
-        run: |
-          echo "PLAY_STORE_UPLOAD_KEY=$PLAY_STORE_UPLOAD_KEY"
-          echo "KEYSTORE_KEY_ALIAS=$KEYSTORE_KEY_ALIAS"
-          echo "KEYSTORE_STORE_PASSWORD=$KEYSTORE_STORE_PASSWORD"
+        run: ls -la
         env:
           PLAY_STORE_UPLOAD_KEY: ${{ secrets.PLAY_STORE_UPLOAD_KEY }}
           KEYSTORE_KEY_ALIAS: ${{ secrets.KEYSTORE_KEY_ALIAS }}

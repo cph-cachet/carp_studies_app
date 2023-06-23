@@ -71,6 +71,13 @@ jobs:
           KEYSTORE_STORE_PASSWORD: ${{ secrets.KEYSTORE_STORE_PASSWORD }}
         working-directory: android
 
+      # debugging
+      - name: Print env
+        run: |
+          echo "PLAY_STORE_UPLOAD_KEY=$PLAY_STORE_UPLOAD_KEY"
+          echo "KEYSTORE_KEY_ALIAS=$KEYSTORE_KEY_ALIAS"
+          echo "KEYSTORE_STORE_PASSWORD=$KEYSTORE_STORE_PASSWORD"
+          
       # Build and deploy with Fastlane to Beta track on pushses to branches
       # and to Production track on tags.
       - name: Deploy to Play Store

@@ -29,15 +29,15 @@ Runs all the tests
 [bundle exec] fastlane android beta
 ```
 
-Submit a new Beta Build to Crashlytics Beta
+Submit a new beta build to Google Play
 
-### android deploy
+### android promote_to_production
 
 ```sh
-[bundle exec] fastlane android deploy
+[bundle exec] fastlane android promote_to_production
 ```
 
-Deploy a new version to the Google Play
+Promote beta track to prod
 
 ----
 

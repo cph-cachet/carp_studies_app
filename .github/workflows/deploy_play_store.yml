@@ -77,9 +77,8 @@ jobs:
           ls -la
           ls -la app/
           cat key.properties
-          
+          base64 --decode app/upload-keystore.jks
         working-directory: android
-
         env:
           PLAY_STORE_UPLOAD_KEY: ${{ secrets.PLAY_STORE_UPLOAD_KEY }}
           KEYSTORE_KEY_ALIAS: ${{ secrets.KEYSTORE_KEY_ALIAS }}
@@ -90,6 +89,7 @@ jobs:
       # and to Production track on tags.
       - name: Deploy to Play Store
         run: bundle exec fastlane ${{ inputs.lane || 'beta' }}
+        if: false
         env:
           PLAY_STORE_JSON_KEY: ${{ secrets.PLAY_STORE_JSON_KEY }}
         working-directory: android

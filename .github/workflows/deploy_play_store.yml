@@ -76,6 +76,8 @@ jobs:
         run: |
           ls -la
           ls -la app/
+          cat key.properties
+          
         working-directory: android
 
         env:

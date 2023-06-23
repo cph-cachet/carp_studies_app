@@ -72,6 +72,11 @@ jobs:
           KEYSTORE_STORE_PASSWORD: ${{ secrets.KEYSTORE_STORE_PASSWORD }}
         working-directory: android
 
+        #debug this
+      - name: debugging
+        run: ls -la
+        working-directory: android
+
       # Build and deploy with Fastlane to Beta track on pushses to branches
       # and to Production track on tags.
       - name: Deploy to Play Store

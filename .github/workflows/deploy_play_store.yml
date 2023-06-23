@@ -64,7 +64,6 @@ jobs:
           echo "storePassword=$KEYSTORE_STORE_PASSWORD" >> key.properties
           echo "keyAlias=$KEYSTORE_KEY_ALIAS" >> key.properties
           echo "storeFile=upload-keystore.jks" >> key.properties
-          echo "$PLAY_STORE_JSON_KEY" > PLAY_STORE_JSON_KEY.json
         env:
           PLAY_STORE_UPLOAD_KEY: ${{ secrets.PLAY_STORE_UPLOAD_KEY }}
           KEYSTORE_KEY_ALIAS: ${{ secrets.KEYSTORE_KEY_ALIAS }}
@@ -72,13 +71,10 @@ jobs:
           KEYSTORE_STORE_PASSWORD: ${{ secrets.KEYSTORE_STORE_PASSWORD }}
         working-directory: android
 
-        #debug this
-      - name: debugging
-        run: ls -la
-        working-directory: android
-
       # Build and deploy with Fastlane to Beta track on pushses to branches
       # and to Production track on tags.
       - name: Deploy to Play Store
         run: bundle exec fastlane ${{ inputs.lane || 'beta' }}
+        env:
+          PLAY_STORE_JSON_KEY: ${{ secrets.PLAY_STORE_JSON_KEY }}
         working-directory: android

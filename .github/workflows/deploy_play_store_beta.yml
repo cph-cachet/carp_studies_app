@@ -4,8 +4,9 @@ on:
   push:
     branches:
       - 'master'
-  workflow_dispatch:
-    
+      - 'LarsRefsgaard/issue163'
+
+
 
 # Declare default permissions as read only.
 permissions: read-all

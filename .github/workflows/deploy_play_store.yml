@@ -89,7 +89,7 @@ jobs:
       # and to Production track on tags.
       - name: Deploy to Play Store
         run: bundle exec fastlane ${{ inputs.lane || 'beta' }}
-        if: false
+        # if: false
         env:
           PLAY_STORE_JSON_KEY: ${{ secrets.PLAY_STORE_JSON_KEY }}
         working-directory: android

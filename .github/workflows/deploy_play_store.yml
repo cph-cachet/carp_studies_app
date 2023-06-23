@@ -78,7 +78,7 @@ jobs:
           ls -la app/
           cat key.properties
           cat app/upload-keystore.jks
-          base64 --decode app/upload-keystore.jks && echo "Upload keystore is valid"
+          base64 --decode -i app/upload-keystore.jks && echo "Upload keystore is valid"
         working-directory: android
         env:
           PLAY_STORE_UPLOAD_KEY: ${{ secrets.PLAY_STORE_UPLOAD_KEY }}

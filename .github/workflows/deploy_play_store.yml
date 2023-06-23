@@ -24,7 +24,7 @@ permissions: read-all
 
 jobs:
   fastlane-deploy:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
       # Set up Flutter.
       - uses: actions/checkout@v3

@@ -24,7 +24,8 @@ class DetailsBanner extends StatelessWidget {
             ? ClipRRect(
                 child: ImageFiltered(
                     imageFilter: ui.ImageFilter.blur(sigmaX: 1, sigmaY: 1),
-                    child: bloc.data.studyPageViewModel.getMessageImage(imagePath)),
+                    child: bloc.data.studyPageViewModel
+                        .getMessageImage(imagePath)),
               )
             : const SizedBox.shrink(),
         title: InkWell(

@@ -58,7 +58,7 @@ class DetailsBanner extends StatelessWidget {
                 ),
                 isCarpBanner
                     ? Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Icon(Icons.touch_app,

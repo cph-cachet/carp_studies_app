@@ -60,12 +60,12 @@ class MessageDetailsPage extends StatelessWidget {
                                     style: aboutCardContentStyle.copyWith(
                                         color: Theme.of(context).primaryColor))
                                 : const SizedBox.shrink(),
-                            if(message.message != null)
-                                Text(
-                                    locale.translate(message.message!),
-                                    style: aboutCardContentStyle,
-                                    textAlign: TextAlign.justify,
-                                  )
+                            if (message.message != null)
+                              Text(
+                                locale.translate(message.message!),
+                                style: aboutCardContentStyle,
+                                textAlign: TextAlign.justify,
+                              )
                           ],
                         ),
                       ),
@@ -73,35 +73,33 @@ class MessageDetailsPage extends StatelessWidget {
                   ],
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 30),
-                child: message.url != null
-                    ? Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: InkWell(
-                          onTap: () async {
-                            try {
-                              await launchUrl(Uri.parse(message.url!));
-                            } catch (error) {
-                              warning(
-                                  "Could not launch message URL - '${message.url!}'");
-                            }
-                          },
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(Icons.public_outlined,
-                                  color: Theme.of(context).primaryColor),
-                              Text(
-                                  locale.translate('pages.about.study.website'),
-                                  style: aboutCardSubtitleStyle.copyWith(
-                                      color: Theme.of(context).primaryColor)),
-                            ],
-                          ),
-                        ),
-                      )
-                    : const SizedBox.shrink(),
-              ),
+              if (message.url != null && message.url!.isNotEmpty)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 30),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: InkWell(
+                      onTap: () async {
+                        try {
+                          await launchUrl(Uri.parse(message.url!));
+                        } catch (error) {
+                          warning(
+                              "Could not launch message URL - '${message.url!}'");
+                        }
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.public_outlined,
+                              color: Theme.of(context).primaryColor),
+                          Text(locale.translate('pages.about.study.website'),
+                              style: aboutCardSubtitleStyle.copyWith(
+                                  color: Theme.of(context).primaryColor)),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
             ],
           ),
         ),

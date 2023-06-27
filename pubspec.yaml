@@ -51,6 +51,7 @@ dependencies:
 
 dependency_overrides:
   intl: 0.18.0
+  device_info_plus: 9.0.0
 
   carp_core:
     git:

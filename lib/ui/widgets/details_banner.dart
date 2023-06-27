@@ -20,11 +20,11 @@ class DetailsBanner extends StatelessWidget {
       flexibleSpace: FlexibleSpaceBar(
         centerTitle: true,
         titlePadding: const EdgeInsets.only(top: 15),
-        background: imagePath != null
+        background: imagePath != null && imagePath!.isNotEmpty
             ? ClipRRect(
                 child: ImageFiltered(
                     imageFilter: ui.ImageFilter.blur(sigmaX: 1, sigmaY: 1),
-                    child: Image.asset(imagePath!, fit: BoxFit.fitHeight)),
+                    child: bloc.data.studyPageViewModel.getMessageImage(imagePath)),
               )
             : const SizedBox.shrink(),
         title: InkWell(

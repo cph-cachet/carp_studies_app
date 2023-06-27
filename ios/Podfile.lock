@@ -41,8 +41,6 @@ PODS:
     - OrderedSet (~> 5.0)
   - flutter_local_notifications (0.0.1):
     - Flutter
-  - flutter_native_timezone (0.0.1):
-    - Flutter
   - flutter_sound (9.2.13):
     - Flutter
     - flutter_sound_core (= 9.2.13)
@@ -114,7 +112,6 @@ DEPENDENCIES:
   - flutter_blue_plus (from `.symlinks/plugins/flutter_blue_plus/ios`)
   - flutter_inappwebview (from `.symlinks/plugins/flutter_inappwebview/ios`)
   - flutter_local_notifications (from `.symlinks/plugins/flutter_local_notifications/ios`)
-  - flutter_native_timezone (from `.symlinks/plugins/flutter_native_timezone/ios`)
   - flutter_sound (from `.symlinks/plugins/flutter_sound/ios`)
   - flutter_timezone (from `.symlinks/plugins/flutter_timezone/ios`)
   - just_audio (from `.symlinks/plugins/just_audio/ios`)
@@ -178,8 +175,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_inappwebview/ios"
   flutter_local_notifications:
     :path: ".symlinks/plugins/flutter_local_notifications/ios"
-  flutter_native_timezone:
-    :path: ".symlinks/plugins/flutter_native_timezone/ios"
   flutter_sound:
     :path: ".symlinks/plugins/flutter_sound/ios"
   flutter_timezone:
@@ -226,7 +221,7 @@ SPEC CHECKSUMS:
   battery_plus: 9bff772a7e5e4d5381ca3ca92a97373a3d8b2738
   camera_avfoundation: 3125e8cd1a4387f6f31c6c63abb8a55892a9eeeb
   connectivity_plus: 413a8857dd5d9f1c399a39130850d02fe0feaf7e
-  device_info_plus: e5c5da33f982a436e103237c0c85f9031142abed
+  device_info_plus: 7545d84d8d1b896cb16a4ff98c19f07ec4b298ea
   ESense: cbe103ad16c435424f2fd6f8b274f2468af84173
   esense_flutter: 8bfadfdefe7b51d6f78366e43b2b64ec9b6144b6
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
@@ -234,7 +229,6 @@ SPEC CHECKSUMS:
   flutter_blue_plus: 316ac8d1179789616d2c148e8a03c37720e63933
   flutter_inappwebview: 50b55a88f5dddadc9e741a7caf72f378116e2156
   flutter_local_notifications: 0c0b1ae97e741e1521e4c1629a459d04b9aec743
-  flutter_native_timezone: 5f05b2de06c9776b4cc70e1839f03de178394d22
   flutter_sound: c60effa2a350fb977885f0db2fbc4c1ad5160900
   flutter_sound_core: 26c10e5832e76aaacfae252d8925232281c486ae
   flutter_timezone: ffb07bdad3c6276af8dada0f11978d8a1f8a20bb

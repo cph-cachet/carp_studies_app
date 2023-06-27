@@ -59,8 +59,6 @@ class StudyPageState extends State<StudyPage> {
     timeago.setLocaleMessages('da', timeago.DaMessages());
     timeago.setLocaleMessages('es', timeago.EsMessages());
 
-    Image messageImage = widget.model.getMessageImage(message.imagePath);
-
     return Card(
       semanticContainer: true,
       clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -73,85 +71,62 @@ class StudyPageState extends State<StudyPage> {
         onTap: () {
           context.push('/message/${message.id}');
         },
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Row(children: [
-              message.imagePath != null
-                  ? Expanded(
-                      child: Container(
-                      height: 150.0,
-                      color: Theme.of(context)
-                          .colorScheme
-                          .secondary, //Color(0xFFF1F9FF),
-                      child: messageImage,
-                    ))
-                  : const SizedBox.shrink()
-            ]),
-            const SizedBox(height: 10),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.baseline,
-              textBaseline: TextBaseline.ideographic,
-              children: [
-                const SizedBox(width: 15),
-                Expanded(
-                    child: Text(locale.translate(message.title!),
-                        style: aboutCardTitleStyle.copyWith(
-                            color: Theme.of(context).primaryColor))),
-              ],
-            ),
-            const SizedBox(height: 5),
-            Row(children: [
-              const SizedBox(width: 15),
-              Text(
-                  // locale.translate(message.type.toString().split('.')[1][0].toUpperCase() +
-                  //         message.type.toString().split('.')[1].substring(1)) +
-                  '${locale.translate(message.type.toString().split('.').last.toLowerCase())} - ${timeago.format(
-                    DateTime.now().copyWithAdditional(
-                        years: -DateTime.now().year + message.timestamp.year,
-                        months: -DateTime.now().month + message.timestamp.month,
-                        days: -DateTime.now().day + message.timestamp.day,
-                        hours: -DateTime.now().hour + message.timestamp.hour,
-                        minutes:
-                            -DateTime.now().minute + message.timestamp.minute),
-                    locale: Localizations.localeOf(context).languageCode,
-                  )}',
-                  style: aboutCardSubtitleStyle.copyWith(
-                      color: Theme.of(context).primaryColor)),
-            ]),
-            const SizedBox(height: 5),
-            Row(children: [
-              const SizedBox(width: 15),
-              if (message.subTitle!.isNotEmpty)
-                Expanded(
-                    child: Text(locale.translate(message.subTitle!),
-                        style: aboutCardContentStyle.copyWith(
-                            color: Theme.of(context).primaryColor))),
-            ]),
-            const SizedBox(height: 5),
-            Row(children: [
-              const SizedBox(width: 15),
-              if (message.message != null && message.message!.isNotEmpty)
-                Expanded(
-                    child: Text(
-                  "${locale.translate(message.message!).substring(0, (message.message!.length > 150) ? 150 : null)}...",
-                  style: aboutCardContentStyle,
-                  textAlign: TextAlign.justify,
-                )),
-              const SizedBox(width: 15),
-            ]),
-            const SizedBox(height: 5),
-            // Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-            //   Icon(Icons.touch_app, color: Theme.of(context).primaryColor, size: 18),
-            //   // Text(locale.translate("pages.about.message.read_more"),
-            //   //     style: aboutCardContentStyle.copyWith(
-            //   //         color: Theme.of(context).primaryColor, fontStyle: FontStyle.italic),
-            //   //     textAlign: TextAlign.right),
-            //   SizedBox(width: 15),
-            // ]),
-            const SizedBox(height: 10),
-          ],
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              if (message.image != null && message.image != '')
+                Center(
+                  child: Container(
+                    height: 150.0,
+                    color: Theme.of(context)
+                        .colorScheme
+                        .secondary, //Color(0xFFF1F9FF),
+                    child: widget.model.getMessageImage(message.image),
+                  ),
+                ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: Text(locale.translate(message.title!),
+                    style: aboutCardTitleStyle.copyWith(
+                        color: Theme.of(context).primaryColor)),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: Text(
+                    '${locale.translate(message.type.toString().split('.').last.toLowerCase())} - ${timeago.format(
+                      DateTime.now().copyWithAdditional(
+                          years: -DateTime.now().year + message.timestamp.year,
+                          months: -DateTime.now().month + message.timestamp.month,
+                          days: -DateTime.now().day + message.timestamp.day,
+                          hours: -DateTime.now().hour + message.timestamp.hour,
+                          minutes:
+                              -DateTime.now().minute + message.timestamp.minute),
+                      locale: Localizations.localeOf(context).languageCode,
+                    )}',
+                    style: aboutCardSubtitleStyle.copyWith(
+                        color: Theme.of(context).primaryColor)),
+              ),
+              Row(children: [
+                if (message.subTitle!.isNotEmpty)
+                  Expanded(
+                      child: Text(locale.translate(message.subTitle!),
+                          style: aboutCardContentStyle.copyWith(
+                              color: Theme.of(context).primaryColor))),
+              ]),
+              Row(children: [
+                if (message.message != null && message.message!.isNotEmpty)
+                  Expanded(
+                      child: Text(
+                    "${locale.translate(message.message!).substring(0, (message.message!.length > 150) ? 150 : null)}...",
+                    style: aboutCardContentStyle,
+                    textAlign: TextAlign.justify,
+                  )),
+              ]),
+            ],
+          ),
         ),
       ),
     );

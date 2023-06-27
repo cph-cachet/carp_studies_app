@@ -20,7 +20,7 @@ class MessageDetailsPage extends StatelessWidget {
           subTitle: 'Unknown message',
           type: MessageType.announcement,
           timestamp: DateTime.now(),
-          imagePath: './assets/images/kids.png');
+          image: './assets/images/kids.png');
     });
 
     return Scaffold(
@@ -44,7 +44,7 @@ class MessageDetailsPage extends StatelessWidget {
               Flexible(
                 child: CustomScrollView(
                   slivers: [
-                    DetailsBanner(message.title!, message.imagePath),
+                    DetailsBanner(message.title!, message.image),
                     SliverToBoxAdapter(
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -55,20 +55,17 @@ class MessageDetailsPage extends StatelessWidget {
                                 '${locale.translate(message.type.toString().split('.').last.toLowerCase())} - ${timeago.format(DateTime.now().copyWithAdditional(years: -DateTime.now().year + message.timestamp.year, months: -DateTime.now().month + message.timestamp.month, days: -DateTime.now().day + message.timestamp.day, hours: -DateTime.now().hour + message.timestamp.hour, minutes: -DateTime.now().minute + message.timestamp.minute), locale: Localizations.localeOf(context).languageCode)}',
                                 style: aboutCardSubtitleStyle.copyWith(
                                     color: Theme.of(context).primaryColor)),
-                            const SizedBox(height: 5),
                             message.subTitle != null
                                 ? Text(locale.translate(message.subTitle!),
                                     style: aboutCardContentStyle.copyWith(
                                         color: Theme.of(context).primaryColor))
                                 : const SizedBox.shrink(),
-                            const SizedBox(height: 5),
-                            message.message != null
-                                ? Text(
+                            if(message.message != null)
+                                Text(
                                     locale.translate(message.message!),
                                     style: aboutCardContentStyle,
                                     textAlign: TextAlign.justify,
                                   )
-                                : const SizedBox.shrink(),
                           ],
                         ),
                       ),

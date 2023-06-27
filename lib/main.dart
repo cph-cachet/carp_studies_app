@@ -1,6 +1,7 @@
 library carp_study_app;
 
 import 'dart:async';
+import 'dart:isolate';
 import 'dart:math';
 import 'dart:convert';
 import 'dart:ui' as ui;

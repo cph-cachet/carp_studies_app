@@ -17,7 +17,7 @@ class StepsCardViewModel extends SerializableViewModel<WeeklySteps> {
       .where((dataPoint) => dataPoint.data is StepCount);
 
   @override
-  Future<void> init(SmartphoneDeploymentController ctrl)async {
+  Future<void> init(SmartphoneDeploymentController ctrl) async {
     await super.init(ctrl);
 
     // listen for pedometer events and count them

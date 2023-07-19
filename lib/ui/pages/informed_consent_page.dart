@@ -19,30 +19,6 @@ class InformedConsentState extends State<InformedConsentPage> {
     }
   }
 
-  void cancelCallback(RPTaskResult? result) async {
-    info("$runtimeType - Informed Consent canceled");
-
-    await showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        RPLocalizations locale = RPLocalizations.of(context)!;
-
-        return AlertDialog(
-          title: Text(locale.translate("pages.ic.need_accept")),
-          actions: <Widget>[
-            TextButton(
-              child: Text(locale.translate("pages.ic.go_to_ic")),
-              onPressed: () {
-                context.go('/consent');
-              },
-            )
-          ],
-        );
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     RPLocalizations localization = RPLocalizations.of(context)!;
@@ -64,7 +40,6 @@ class InformedConsentState extends State<InformedConsentPage> {
               return RPUITask(
                 task: snapshot.data!,
                 onSubmit: resultCallback,
-                onCancel: cancelCallback,
               );
             }
           }

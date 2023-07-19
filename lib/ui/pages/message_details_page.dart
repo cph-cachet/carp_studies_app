@@ -20,7 +20,7 @@ class MessageDetailsPage extends StatelessWidget {
           subTitle: 'Unknown message',
           type: MessageType.announcement,
           timestamp: DateTime.now(),
-          imagePath: './assets/images/kids.png');
+          image: './assets/images/kids.png');
     });
 
     return Scaffold(
@@ -44,7 +44,7 @@ class MessageDetailsPage extends StatelessWidget {
               Flexible(
                 child: CustomScrollView(
                   slivers: [
-                    DetailsBanner(message.title!, message.imagePath),
+                    DetailsBanner(message.title!, message.image),
                     SliverToBoxAdapter(
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 30),

@@ -28,7 +28,7 @@ class HeartRateCardViewModel extends SerializableViewModel<HourlyHeartRate> {
 
     heartRateEvents?.listen(
       (heartRateDataPoint) {
-        PolarHR? heartRate = heartRateDataPoint.data as PolarHR;
+        PolarHRSample? heartRate = heartRateDataPoint.data as PolarHRSample;
 
         double hr = heartRate.hr.toDouble();
         if (!(hr > 0)) {

@@ -36,20 +36,21 @@ void main() {
         setUp(() {
           when(mockSmartphoneDeploymentController.measurements)
               .thenAnswer((_) => heartRateStreamController.stream);
+
+          viewModel.init(mockSmartphoneDeploymentController);
         });
         tearDownAll(() {
           heartRateStreamController.close();
         });
         group('and update model variables', () {
           test('with one event', () async {
-            viewModel.init(mockSmartphoneDeploymentController);
             // Add a heart rate data point to the stream
             when(mockPolarHRDatum.hr).thenReturn(80);
             when(mockMeasurement.data).thenReturn(mockPolarHRDatum);
 
             heartRateStreamController.sink.add(mockMeasurement);
 
-            await Future.delayed(const Duration(seconds: 1));
+            await Future.delayed(const Duration(milliseconds: 100));
             expect(viewModel.currentHeartRate, equals(80.0));
             expect(viewModel.dayMinMax, equals(HeartRateMinMaxPrHour(80, 80)));
             expect(
@@ -58,20 +59,19 @@ void main() {
                     .hourlyHeartRate));
           });
           test('with multiple events', () async {
-            viewModel.init(mockSmartphoneDeploymentController);
             // Add a heart rate data point to the stream
             when(mockPolarHRDatum.hr).thenReturn(90);
             when(mockMeasurement.data).thenReturn(mockPolarHRDatum);
 
             heartRateStreamController.sink.add(mockMeasurement);
 
-            await Future.delayed(const Duration(seconds: 1));
+            await Future.delayed(const Duration(milliseconds: 100));
             when(mockPolarHRDatum.hr).thenReturn(60);
             when(mockMeasurement.data).thenReturn(mockPolarHRDatum);
 
             heartRateStreamController.sink.add(mockMeasurement);
 
-            await Future.delayed(const Duration(seconds: 1));
+            await Future.delayed(const Duration(milliseconds: 100));
             expect(viewModel.currentHeartRate, equals(60));
             expect(viewModel.dayMinMax, equals(HeartRateMinMaxPrHour(60, 90)));
             expect(
@@ -82,14 +82,13 @@ void main() {
                     .hourlyHeartRate));
           });
           test('with events with data that is 0', () async {
-            viewModel.init(mockSmartphoneDeploymentController);
             // Add a heart rate data point to the stream
             when(mockPolarHRDatum.hr).thenReturn(0);
             when(mockMeasurement.data).thenReturn(mockPolarHRDatum);
 
             heartRateStreamController.sink.add(mockMeasurement);
 
-            await Future.delayed(const Duration(seconds: 1));
+            await Future.delayed(const Duration(milliseconds: 100));
             expect(viewModel.currentHeartRate, equals(null));
             expect(
                 viewModel.dayMinMax, equals(HeartRateMinMaxPrHour(null, null)));
@@ -98,7 +97,6 @@ void main() {
             expect(viewModel.contactStatus, equals(false));
           });
           test('with contactStatus being true', () async {
-            viewModel.init(mockSmartphoneDeploymentController);
             // Add a heart rate data point to the stream
             when(mockPolarHRDatum.hr).thenReturn(1);
             when(mockPolarHRDatum.contactStatusSupported).thenReturn(true);
@@ -107,7 +105,7 @@ void main() {
 
             heartRateStreamController.sink.add(mockMeasurement);
 
-            await Future.delayed(const Duration(seconds: 1));
+            await Future.delayed(const Duration(milliseconds: 100));
             expect(viewModel.currentHeartRate, equals(anything));
             expect(viewModel.dayMinMax, equals(anything));
             expect(viewModel.hourlyHeartRate, equals(anything));

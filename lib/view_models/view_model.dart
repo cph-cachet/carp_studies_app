@@ -43,12 +43,12 @@ abstract class SerializableViewModel<D extends DataModel> extends ViewModel {
 
   @override
   @mustCallSuper
-  void init(SmartphoneDeploymentController ctrl) {
+  Future<void> init(SmartphoneDeploymentController ctrl) async {
     super.init(ctrl);
     _model = createModel();
 
     // restore the data model (if any saved)
-    restore().then((savedModel) => _model = savedModel ?? _model);
+    await restore().then((savedModel) => _model = savedModel ?? _model);
 
     // save the data model on a regular basis.
     Timer.periodic(const Duration(minutes: 3), (_) => save(model.toJson()));
@@ -161,9 +161,8 @@ class CarpStudyAppViewModel extends ViewModel {
       _informedConsentViewModel;
 
   @override
-  void init(SmartphoneDeploymentController ctrl) {
+  void init(SmartphoneDeploymentController ctrl) async {
     super.init(ctrl);
-    _dataVisualizationPageViewModel.init(ctrl);
     _studyPageViewModel.init(ctrl);
     _taskListPageViewModel.init(ctrl);
     _profilePageViewModel.init(ctrl);

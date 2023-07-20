@@ -59,7 +59,7 @@ class StudyPageState extends State<StudyPage> {
     timeago.setLocaleMessages('da', timeago.DaMessages());
     timeago.setLocaleMessages('es', timeago.EsMessages());
 
-    Image messageImage = widget.model.getMessageImage(message.image);
+    Image messageImage = widget.model.getMessageImage(message.imagePath);
 
     return Card(
       semanticContainer: true,
@@ -78,7 +78,7 @@ class StudyPageState extends State<StudyPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Row(children: [
-              message.image != null
+              message.imagePath != null
                   ? Expanded(
                       child: Container(
                       height: 150.0,

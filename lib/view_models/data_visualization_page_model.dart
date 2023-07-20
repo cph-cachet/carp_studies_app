@@ -49,18 +49,19 @@ class DataVisualizationPageViewModel extends ViewModel {
   DataVisualizationPageViewModel();
 
   @override
-  void init(SmartphoneDeploymentController ctrl) {
+  Future<int> init(SmartphoneDeploymentController ctrl) async {
     super.init(ctrl);
-    _activityCardDataModel.init(ctrl);
-    _stepsCardDataModel.init(ctrl);
+    await _activityCardDataModel.init(ctrl);
+    await _stepsCardDataModel.init(ctrl);
     _measuresCardDataModel.init(ctrl);
-    _mobilityCardDataModel.init(ctrl);
+    await _mobilityCardDataModel.init(ctrl);
     _surveysCardDataModel.init(ctrl);
     _audioCardDataModel.init(ctrl);
     _videoCardDataModel.init(ctrl);
     _imageCardDataModel.init(ctrl);
     _studyProgressCardDataModel.init(ctrl);
-    _heartRateCardDataModel.init(ctrl);
+    await _heartRateCardDataModel.init(ctrl);
+    return 1;
   }
 
   /// Delete all persistent view models.

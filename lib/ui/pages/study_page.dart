@@ -11,6 +11,15 @@ class StudyPage extends StatefulWidget {
 class StudyPageState extends State<StudyPage> {
   @override
   Widget build(BuildContext context) {
+    final Message studyDescription = Message(
+      id: '00000000-0000-0000-0000-000000000000',
+      title: widget.model.title,
+      message: widget.model.description,
+      type: MessageType.announcement,
+      timestamp: DateTime.now(),
+      image: 'assets/images/kids.png',
+    );
+
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.secondary,
       floatingActionButton: FloatingActionButton(
@@ -31,9 +40,12 @@ class StudyPageState extends State<StudyPage> {
                   builder: (context, AsyncSnapshot<int> snapshot) {
                     return CustomScrollView(
                       slivers: [
-                        DetailsBanner(
-                            widget.model.title, './assets/images/kids.png',
-                            isCarpBanner: true),
+                        SliverToBoxAdapter(
+                          child: _aboutStudyCard(context, studyDescription,
+                              onTap: () {
+                            context.push('/studyDetails');
+                          }),
+                        ),
                         SliverList(
                           delegate: SliverChildBuilderDelegate(
                             (BuildContext context, int index) =>
@@ -52,7 +64,8 @@ class StudyPageState extends State<StudyPage> {
     );
   }
 
-  Widget _aboutStudyCard(BuildContext context, Message message) {
+  Widget _aboutStudyCard(BuildContext context, Message message,
+      {Function? onTap}) {
     RPLocalizations locale = RPLocalizations.of(context)!;
 
     // Initialization the language of the tiemago package
@@ -69,7 +82,11 @@ class StudyPageState extends State<StudyPage> {
       margin: const EdgeInsets.all(5),
       child: InkWell(
         onTap: () {
-          context.push('/message/${message.id}');
+          if (onTap != null) {
+            onTap();
+          } else {
+            context.push('/message/${message.id}');
+          }
         },
         child: Padding(
           padding: const EdgeInsets.all(8.0),

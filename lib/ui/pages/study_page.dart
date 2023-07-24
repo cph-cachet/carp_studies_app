@@ -22,12 +22,6 @@ class StudyPageState extends State<StudyPage> {
 
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.secondary,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          bloc.refreshMessages();
-        },
-        child: const Icon(Icons.refresh),
-      ),
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -38,23 +32,28 @@ class StudyPageState extends State<StudyPage> {
               child: StreamBuilder<int>(
                   stream: widget.model.messageStream,
                   builder: (context, AsyncSnapshot<int> snapshot) {
-                    return CustomScrollView(
-                      slivers: [
-                        SliverToBoxAdapter(
-                          child: _aboutStudyCard(context, studyDescription,
-                              onTap: () {
-                            context.push('/studyDetails');
-                          }),
-                        ),
-                        SliverList(
-                          delegate: SliverChildBuilderDelegate(
-                            (BuildContext context, int index) =>
-                                _aboutStudyCard(
-                                    context, widget.model.messages[index]),
-                            childCount: widget.model.messages.length,
+                    return RefreshIndicator(
+                      onRefresh: () async {
+                        await bloc.refreshMessages();
+                      },
+                      child: CustomScrollView(
+                        slivers: [
+                          SliverToBoxAdapter(
+                            child: _aboutStudyCard(context, studyDescription,
+                                onTap: () {
+                              context.push('/studyDetails');
+                            }),
                           ),
-                        ),
-                      ],
+                          SliverList(
+                            delegate: SliverChildBuilderDelegate(
+                              (BuildContext context, int index) =>
+                                  _aboutStudyCard(
+                                      context, widget.model.messages[index]),
+                              childCount: widget.model.messages.length,
+                            ),
+                          ),
+                        ],
+                      ),
                     );
                   }),
             ),
@@ -127,22 +126,24 @@ class StudyPageState extends State<StudyPage> {
                     style: aboutCardSubtitleStyle.copyWith(
                         color: Theme.of(context).primaryColor)),
               ),
-              Row(children: [
-                if (message.subTitle!.isNotEmpty)
+              if (message.subTitle != null && message.subTitle!.isNotEmpty)
+                Row(children: [
                   Expanded(
                       child: Text(locale.translate(message.subTitle!),
                           style: aboutCardContentStyle.copyWith(
                               color: Theme.of(context).primaryColor))),
-              ]),
-              Row(children: [
-                if (message.message != null && message.message!.isNotEmpty)
+                ]),
+              if (message.message != null &&
+                  message.message != null &&
+                  message.message!.isNotEmpty)
+                Row(children: [
                   Expanded(
                       child: Text(
                     "${locale.translate(message.message!).substring(0, (message.message!.length > 150) ? 150 : null)}...",
                     style: aboutCardContentStyle,
                     textAlign: TextAlign.justify,
                   )),
-              ]),
+                ]),
             ],
           ),
         ),

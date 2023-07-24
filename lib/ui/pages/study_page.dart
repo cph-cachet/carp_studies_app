@@ -30,7 +30,7 @@ class StudyPageState extends State<StudyPage> {
             const CarpAppBar(),
             Flexible(
               child: StreamBuilder<int>(
-                   stream: widget.model.messageStream,
+                  stream: widget.model.messageStream,
                   builder: (context, AsyncSnapshot<int> snapshot) {
                     return RefreshIndicator(
                       onRefresh: () async {

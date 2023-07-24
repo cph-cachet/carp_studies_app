@@ -118,6 +118,11 @@ TextStyle scoreNumberStyle = const TextStyle(
     fontWeight: FontWeight.w800,
     color: Color.fromRGBO(32, 111, 162, 1));
 
+TextStyle scoreNumberStyleSmall = const TextStyle(
+    fontSize: 20,
+    fontWeight: FontWeight.w800,
+    color: Color.fromRGBO(32, 111, 162, 1));
+
 TextStyle scoreTextStyle = const TextStyle(
     fontSize: 12, fontWeight: FontWeight.w700, color: Color(0xff77A8C8));
 

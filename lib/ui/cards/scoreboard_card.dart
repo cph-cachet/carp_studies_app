@@ -51,6 +51,48 @@ class ScoreboardPersistentHeaderDelegate
       BuildContext context, double shrinkOffset, bool overlapsContent) {
     double height = 110;
 
+    double offsetForShrink = 60;
+
+    List<Widget> childrenTasks = [
+      Text(model.taskCompleted.toString(),
+          style: scoreNumberStyle.copyWith(
+              fontSize: calculateSize(shrinkOffset,
+                  scoreNumberStyleSmall.fontSize!, scoreNumberStyle.fontSize!),
+              color: Theme.of(context).primaryColor)),
+      if (shrinkOffset < offsetForShrink)
+        Text(locale.translate('cards.scoreboard.tasks'),
+            style:
+                scoreTextStyle.copyWith(color: Theme.of(context).primaryColor)),
+      if (shrinkOffset > offsetForShrink)
+        Expanded(
+          flex: 0,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 8.0),
+            child: Text(locale.translate('cards.scoreboard.tasks-short'),
+                style: scoreTextStyle.copyWith(
+                    color: Theme.of(context).primaryColor)),
+          ),
+        )
+    ];
+    List<Widget> childrenDays = [
+      Text(model.daysInStudy.toString(),
+          style: scoreNumberStyle.copyWith(
+              fontSize: calculateSize(shrinkOffset,
+                  scoreNumberStyleSmall.fontSize!, scoreNumberStyle.fontSize!),
+              color: Theme.of(context).primaryColor)),
+      if (shrinkOffset < offsetForShrink)
+        Text(locale.translate('cards.scoreboard.days'),
+            style:
+                scoreTextStyle.copyWith(color: Theme.of(context).primaryColor)),
+      if (shrinkOffset > offsetForShrink)
+        Padding(
+          padding: const EdgeInsets.only(left: 8.0),
+          child: Text(locale.translate('cards.scoreboard.days-short'),
+              style:
+                  scoreTextStyle.copyWith(color: Theme.of(context).primaryColor)),
+        )
+    ];
+
     return Container(
       color: Theme.of(context).colorScheme.secondary,
       height: height,
@@ -62,24 +104,17 @@ class ScoreboardPersistentHeaderDelegate
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(model.daysInStudy.toString(),
-                        style: scoreNumberStyle.copyWith(
-                            fontSize: calculateSize(
-                                shrinkOffset,
-                                scoreNumberStyleSmall.fontSize!,
-                                scoreNumberStyle.fontSize!),
-                            color: Theme.of(context).primaryColor)),
-                    if (shrinkOffset < 60)
-                      Text(locale.translate('cards.scoreboard.days'),
-                          style: scoreTextStyle.copyWith(
-                              color: Theme.of(context).primaryColor)),
-                  ],
-                ),
+                child: shrinkOffset < offsetForShrink
+                    ? Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: childrenDays,
+                      )
+                    : Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: childrenDays,
+                      ),
               ),
-              // a vertical divider line with rounded corners that spans from 10% to 90% of the height
+              // A vertical divider line with rounded corners that spans from 10% to 90% of the height
               Expanded(
                 flex: 0,
                 child: Container(
@@ -93,23 +128,15 @@ class ScoreboardPersistentHeaderDelegate
                 ),
               ),
               Expanded(
-                flex: 1,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(model.taskCompleted.toString(),
-                        style: scoreNumberStyle.copyWith(
-                            fontSize: calculateSize(
-                                shrinkOffset,
-                                scoreNumberStyleSmall.fontSize!,
-                                scoreNumberStyle.fontSize!),
-                            color: Theme.of(context).primaryColor)),
-                    if (shrinkOffset < 60)
-                      Text(locale.translate('cards.scoreboard.tasks'),
-                          style: scoreTextStyle.copyWith(
-                              color: Theme.of(context).primaryColor)),
-                  ],
-                ),
+                child: shrinkOffset < offsetForShrink
+                    ? Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: childrenTasks,
+                      )
+                    : Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: childrenTasks,
+                      ),
               )
             ],
           );
@@ -132,7 +159,7 @@ class ScoreboardPersistentHeaderDelegate
 
   @override
   bool shouldRebuild(ScoreboardPersistentHeaderDelegate oldDelegate) {
-    return false;
+    return true;
   }
 
   @override

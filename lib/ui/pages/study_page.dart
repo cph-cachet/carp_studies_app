@@ -30,29 +30,28 @@ class StudyPageState extends State<StudyPage> {
             const CarpAppBar(),
             Flexible(
               child: StreamBuilder<int>(
-                  stream: widget.model.messageStream,
+                   stream: widget.model.messageStream,
                   builder: (context, AsyncSnapshot<int> snapshot) {
                     return RefreshIndicator(
                       onRefresh: () async {
                         await bloc.refreshMessages();
                       },
-                      child: CustomScrollView(
-                        slivers: [
-                          SliverToBoxAdapter(
-                            child: _aboutStudyCard(context, studyDescription,
-                                onTap: () {
-                              context.push('/studyDetails');
-                            }),
-                          ),
-                          SliverList(
-                            delegate: SliverChildBuilderDelegate(
-                              (BuildContext context, int index) =>
-                                  _aboutStudyCard(
-                                      context, widget.model.messages[index]),
-                              childCount: widget.model.messages.length,
-                            ),
-                          ),
-                        ],
+                      child: ListView.builder(
+                        itemCount: bloc.messages.length + 1,
+                        itemBuilder: (context, index) {
+                          if (index == 0) {
+                            return _aboutStudyCard(
+                              context,
+                              studyDescription,
+                              onTap: () {
+                                context.push('/studyDetails');
+                              },
+                            );
+                          }
+
+                          return _aboutStudyCard(
+                              context, bloc.messages[index - 1]);
+                        },
                       ),
                     );
                   }),

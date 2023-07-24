@@ -35,28 +35,23 @@ class StudyDetailsPage extends StatelessWidget {
                     icon: const Icon(Icons.close))
               ]),
               Flexible(
-                child: CustomScrollView(
-                  slivers: [
-                    //CarpBanner(),
+                child: ListView(
+                  children: [
                     DetailsBanner(
                         studyPageModel.title, './assets/images/kids.png'),
-                    SliverToBoxAdapter(
-                      child: Padding(
-                        padding: const EdgeInsets.all(30),
-                        child: Column(
-                          children: [
-                            Text(locale.translate(studyPageModel.piAffiliation),
-                                style: aboutCardSubtitleStyle.copyWith(
-                                    color: Theme.of(context).primaryColor)),
-                            const SizedBox(height: 5),
-                            Text(
-                              studyDescription(),
-                              style: aboutCardContentStyle,
-                              textAlign: TextAlign.justify,
-                            ),
-                            const SizedBox(height: 50),
-                          ],
-                        ),
+                    Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: Column(
+                        children: [
+                          Text(locale.translate(studyPageModel.piAffiliation),
+                              style: aboutCardSubtitleStyle.copyWith(
+                                  color: Theme.of(context).primaryColor)),
+                          Text(
+                            studyDescription(),
+                            style: aboutCardContentStyle,
+                            textAlign: TextAlign.justify,
+                          ),
+                        ],
                       ),
                     ),
                   ],

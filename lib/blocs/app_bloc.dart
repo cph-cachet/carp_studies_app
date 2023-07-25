@@ -155,6 +155,12 @@ class StudyAppBLoC {
     // set up and initialize sensing
     await Sensing().initialize();
 
+    // add the study and configure sensing
+    await Sensing().addStudy();
+
+    // initialize the UI data models
+    data.init(Sensing().controller!);
+
     // set up the messaging part
     messageManager.initialize().then(
       (value) {
@@ -163,12 +169,6 @@ class StudyAppBLoC {
         Timer.periodic(const Duration(minutes: 30), (_) => refreshMessages());
       },
     );
-
-    // add the study and configure sensing
-    await Sensing().addStudy();
-
-    // initialize the UI data models
-    data.init(Sensing().controller!);
 
     debug('$runtimeType configuration done.');
     _state = StudyAppState.configured;

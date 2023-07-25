@@ -61,9 +61,9 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
               StreamBuilder(
                 stream: widget.model.heartRateEvents,
                 builder: (context, AsyncSnapshot<Measurement> snapshot) {
-                  animationController.duration = Duration(
-                      milliseconds: 1000 ~/
-                          (((widget.model.currentHeartRate ?? 0) + 1) / 60));
+                  // animationController.duration = Duration(
+                  //     milliseconds: 1000 ~/
+                  //         (((widget.model.currentHeartRate ?? 0) + 1) / 60));
 
                   return Column(
                     children: [
@@ -177,12 +177,12 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
                     RepaintBoundary(
                       child: ScaleTransition(
                         // scale should be _animation if the isOnWrist is true otherwise it should be no scale
-                        scale: !widget.model.contactStatus
+                        scale: widget.model.contactStatus
                             ? Tween<double>(begin: 1, end: 1)
                                 .animate(animationController)
                             : animation,
                         child: Icon(
-                          !widget.model.contactStatus
+                          widget.model.contactStatus
                               ? Icons.favorite_outline_rounded
                               : Icons.favorite_rounded,
                           color: HeartRateCardWidget.colors[0],

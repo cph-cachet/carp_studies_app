@@ -23,8 +23,8 @@ class HeartRateCardViewModel extends SerializableViewModel<HourlyHeartRate> {
       .where((measurement) => measurement.data is PolarHR);
 
   @override
-  void init(SmartphoneDeploymentController ctrl) {
-    super.init(ctrl);
+  Future<void> init(SmartphoneDeploymentController ctrl) async {
+    await super.init(ctrl);
 
     heartRateEvents?.listen(
       (heartRateDataPoint) {
@@ -105,12 +105,18 @@ class HourlyHeartRate extends DataModel {
 
     currentHeartRate = heartRate;
     if (hourlyHeartRate.containsKey(hour)) {
-      hourlyHeartRate.update(
-        hour,
-        (value) => value
-          ..min = value.min != null ? min(value.min!, heartRate) : heartRate
-          ..max = value.max != null ? max(value.max!, heartRate) : heartRate,
-      );
+      hourlyHeartRate.update(hour, (value) {
+        double? minVal = value.min, maxVal = value.max;
+        if (minVal != null && maxVal != null) {
+          return value
+            ..min = min(minVal, heartRate)
+            ..max = max(maxVal, heartRate);
+        } else {
+          return value
+            ..min = heartRate
+            ..max = heartRate;
+        }
+      });
     } else {
       hourlyHeartRate[hour] = HeartRateMinMaxPrHour(heartRate, heartRate);
     }

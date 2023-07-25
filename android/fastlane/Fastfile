@@ -28,7 +28,6 @@ platform :android do
     upload_to_play_store(
       track: 'beta',
       aab: '../build/app/outputs/bundle/release/app-release.aab',
-      json_key_data: ENV['PLAY_STORE_JSON_KEY'],
       )
   end
 
@@ -38,7 +37,6 @@ platform :android do
       track: 'beta',
       track_promote_to: 'production',
       skip_upload_changelogs: true,
-      json_key_data: ENV['PLAY_STORE_JSON_KEY'],
       )
   end
 end

@@ -20,6 +20,9 @@ class StudyPageState extends State<StudyPage> {
       image: 'assets/images/kids.png',
     );
 
+    // reverse the ordering of the messages
+    widget.model.messages.sort((a, b) => b.timestamp.compareTo(a.timestamp));
+
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.secondary,
       body: SafeArea(
@@ -50,7 +53,7 @@ class StudyPageState extends State<StudyPage> {
                           }
 
                           return _aboutStudyCard(
-                              context, bloc.messages[index - 1]);
+                              context, widget.model.messages[index - 1]);
                         },
                       ),
                     );

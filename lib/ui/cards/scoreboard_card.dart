@@ -88,8 +88,8 @@ class ScoreboardPersistentHeaderDelegate
         Padding(
           padding: const EdgeInsets.only(left: 8.0),
           child: Text(locale.translate('cards.scoreboard.days-short'),
-              style:
-                  scoreTextStyle.copyWith(color: Theme.of(context).primaryColor)),
+              style: scoreTextStyle.copyWith(
+                  color: Theme.of(context).primaryColor)),
         )
     ];
 

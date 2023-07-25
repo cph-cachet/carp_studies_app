@@ -1,9 +1,9 @@
 name: Deploy to Play Store beta
 on:
-  # Enable manual run
   push:
-    branches:
-      - 'master'
+    tags:
+      - '*'
+  workflow_dispatch:
 
 
 

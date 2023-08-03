@@ -123,8 +123,7 @@ class StudyPageState extends State<StudyPage> {
                           style: aboutCardContentStyle.copyWith(
                               color: Theme.of(context).primaryColor))),
                 ]),
-              if (message.message != null &&
-                  message.message!.isNotEmpty)
+              if (message.message != null && message.message!.isNotEmpty)
                 Row(children: [
                   Expanded(
                       child: Text(

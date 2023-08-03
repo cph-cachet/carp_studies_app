@@ -69,5 +69,15 @@ class StudyPageViewModel extends ViewModel {
     return image;
   }
 
+  static const dummyID = '00000000-0000-0000-0000-000000000000';
+  Message get studyDescriptionMessage => Message(
+        id: dummyID,
+        title: title,
+        message: description,
+        type: MessageType.announcement,
+        timestamp: DateTime.now(),
+        image: 'assets/images/kids.png',
+      );
+
   StudyPageViewModel();
 }

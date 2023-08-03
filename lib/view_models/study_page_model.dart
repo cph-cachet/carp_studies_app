@@ -37,7 +37,7 @@ class StudyPageViewModel extends ViewModel {
   Stream<int> get messageStream => bloc.messageStream;
 
   /// The list of messages to be displayed.
-  List<Message> get messages => bloc.messages;
+  List<Message> get messages => bloc.messages.reversed.toList();
 
   /// The icon for a type of message
   Icon getMessageTypeIcon(MessageType type) {
@@ -68,6 +68,16 @@ class StudyPageViewModel extends ViewModel {
     }
     return image;
   }
+
+  static const dummyID = '00000000-0000-0000-0000-000000000000';
+  Message get studyDescriptionMessage => Message(
+        id: dummyID,
+        title: title,
+        message: description,
+        type: MessageType.announcement,
+        timestamp: DateTime.now(),
+        image: 'assets/images/kids.png',
+      );
 
   StudyPageViewModel();
 }

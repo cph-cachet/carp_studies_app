@@ -177,4 +177,4 @@ TextStyle timerStyle =
     const TextStyle(fontSize: 36, fontWeight: FontWeight.w600);
 
 TextStyle studyNameStyle =
-    const TextStyle(fontSize: 16.0, fontWeight: FontWeight.w800);
+    const TextStyle(fontSize: 30.0, fontWeight: FontWeight.w800);

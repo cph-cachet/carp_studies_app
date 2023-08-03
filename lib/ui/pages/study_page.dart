@@ -124,7 +124,6 @@ class StudyPageState extends State<StudyPage> {
                               color: Theme.of(context).primaryColor))),
                 ]),
               if (message.message != null &&
-                  message.message != null &&
                   message.message!.isNotEmpty)
                 Row(children: [
                   Expanded(

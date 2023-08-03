@@ -147,7 +147,8 @@ class ScoreboardPersistentHeaderDelegate
 
   // A simple function that returns the font size from the scoreNumberStyle, but increasingly smaller when scrolling down.
   // Also used for the size of the divider in the middle
-  double calculateScrollAwareSizing(double shrinkOffset, double minSize, double maxSize) {
+  double calculateScrollAwareSizing(
+      double shrinkOffset, double minSize, double maxSize) {
     // Calculate the normalized shrinkOffset value in the range [0, 1]
     double normalizedShrinkOffset = shrinkOffset / maxExtent;
 

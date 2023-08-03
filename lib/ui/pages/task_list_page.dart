@@ -37,11 +37,10 @@ class TaskListPageState extends State<TaskListPage> {
                   } else {
                     return CustomScrollView(
                       slivers: [
-                        SliverToBoxAdapter(
-                            child: ScoreboardCardWidget(widget.model)),
+                        ScoreboardCard(widget.model),
                         SliverToBoxAdapter(
                           child: Padding(
-                            padding: const EdgeInsets.all(15),
+                            padding: const EdgeInsets.all(16),
                             child: Align(
                               alignment: Alignment.centerLeft,
                               child: Text(

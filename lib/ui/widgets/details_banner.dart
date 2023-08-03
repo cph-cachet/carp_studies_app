@@ -11,7 +11,6 @@ class DetailsBanner extends StatelessWidget {
   ) {
     RPLocalizations locale = RPLocalizations.of(context)!;
     return Column(
-      // crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         // only show this widget if there is an image = imagePath is not null and not empty

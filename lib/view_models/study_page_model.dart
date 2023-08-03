@@ -37,7 +37,7 @@ class StudyPageViewModel extends ViewModel {
   Stream<int> get messageStream => bloc.messageStream;
 
   /// The list of messages to be displayed.
-  List<Message> get messages => bloc.messages;
+  List<Message> get messages => bloc.messages.reversed.toList();
 
   /// The icon for a type of message
   Icon getMessageTypeIcon(MessageType type) {

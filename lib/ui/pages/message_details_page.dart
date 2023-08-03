@@ -24,10 +24,9 @@ class MessageDetailsPage extends StatelessWidget {
     });
 
     return Scaffold(
-      body: Container(
-        color: Theme.of(context).colorScheme.secondary,
-        child: Padding(
-          padding: const EdgeInsets.only(top: 35),
+      body: SafeArea(
+        child: Container(
+          color: Theme.of(context).colorScheme.secondary,
           child: Column(
             children: [
               Row(mainAxisAlignment: MainAxisAlignment.end, children: [
@@ -42,32 +41,30 @@ class MessageDetailsPage extends StatelessWidget {
                     icon: const Icon(Icons.close_rounded))
               ]),
               Flexible(
-                child: CustomScrollView(
-                  slivers: [
-                    DetailsBanner(message.title!, message.image),
-                    SliverToBoxAdapter(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 30),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
+                child: ListView(
+                  children: [
+                    DetailsBanner(message.title ?? '', message.image),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                              '${locale.translate(message.type.toString().split('.').last.toLowerCase())} - ${timeago.format(DateTime.now().copyWithAdditional(years: -DateTime.now().year + message.timestamp.year, months: -DateTime.now().month + message.timestamp.month, days: -DateTime.now().day + message.timestamp.day, hours: -DateTime.now().hour + message.timestamp.hour, minutes: -DateTime.now().minute + message.timestamp.minute), locale: Localizations.localeOf(context).languageCode)}',
+                              style: aboutCardSubtitleStyle.copyWith(
+                                  color: Theme.of(context).primaryColor)),
+                          message.subTitle != null
+                              ? Text(locale.translate(message.subTitle!),
+                                  style: aboutCardContentStyle.copyWith(
+                                      color: Theme.of(context).primaryColor))
+                              : const SizedBox.shrink(),
+                          if (message.message != null)
                             Text(
-                                '${locale.translate(message.type.toString().split('.').last.toLowerCase())} - ${timeago.format(DateTime.now().copyWithAdditional(years: -DateTime.now().year + message.timestamp.year, months: -DateTime.now().month + message.timestamp.month, days: -DateTime.now().day + message.timestamp.day, hours: -DateTime.now().hour + message.timestamp.hour, minutes: -DateTime.now().minute + message.timestamp.minute), locale: Localizations.localeOf(context).languageCode)}',
-                                style: aboutCardSubtitleStyle.copyWith(
-                                    color: Theme.of(context).primaryColor)),
-                            message.subTitle != null
-                                ? Text(locale.translate(message.subTitle!),
-                                    style: aboutCardContentStyle.copyWith(
-                                        color: Theme.of(context).primaryColor))
-                                : const SizedBox.shrink(),
-                            if (message.message != null)
-                              Text(
-                                locale.translate(message.message!),
-                                style: aboutCardContentStyle,
-                                textAlign: TextAlign.justify,
-                              )
-                          ],
-                        ),
+                              locale.translate(message.message!),
+                              style: aboutCardContentStyle,
+                              textAlign: TextAlign.justify,
+                            )
+                        ],
                       ),
                     ),
                   ],

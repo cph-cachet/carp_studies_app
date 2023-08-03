@@ -11,14 +11,17 @@ class StudyPage extends StatefulWidget {
 class StudyPageState extends State<StudyPage> {
   @override
   Widget build(BuildContext context) {
+    final Message studyDescription = Message(
+      id: '00000000-0000-0000-0000-000000000000',
+      title: widget.model.title,
+      message: widget.model.description,
+      type: MessageType.announcement,
+      timestamp: DateTime.now(),
+      image: 'assets/images/kids.png',
+    );
+
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.secondary,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          bloc.refreshMessages();
-        },
-        child: const Icon(Icons.refresh),
-      ),
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -29,20 +32,27 @@ class StudyPageState extends State<StudyPage> {
               child: StreamBuilder<int>(
                   stream: widget.model.messageStream,
                   builder: (context, AsyncSnapshot<int> snapshot) {
-                    return CustomScrollView(
-                      slivers: [
-                        DetailsBanner(
-                            widget.model.title, './assets/images/kids.png',
-                            isCarpBanner: true),
-                        SliverList(
-                          delegate: SliverChildBuilderDelegate(
-                            (BuildContext context, int index) =>
-                                _aboutStudyCard(
-                                    context, widget.model.messages[index]),
-                            childCount: widget.model.messages.length,
-                          ),
-                        ),
-                      ],
+                    return RefreshIndicator(
+                      onRefresh: () async {
+                        await bloc.refreshMessages();
+                      },
+                      child: ListView.builder(
+                        itemCount: bloc.messages.length + 1,
+                        itemBuilder: (context, index) {
+                          if (index == 0) {
+                            return _aboutStudyCard(
+                              context,
+                              studyDescription,
+                              onTap: () {
+                                context.push('/studyDetails');
+                              },
+                            );
+                          }
+
+                          return _aboutStudyCard(
+                              context, widget.model.messages[index - 1]);
+                        },
+                      ),
                     );
                   }),
             ),
@@ -52,7 +62,8 @@ class StudyPageState extends State<StudyPage> {
     );
   }
 
-  Widget _aboutStudyCard(BuildContext context, Message message) {
+  Widget _aboutStudyCard(BuildContext context, Message message,
+      {Function? onTap}) {
     RPLocalizations locale = RPLocalizations.of(context)!;
 
     // Initialization the language of the tiemago package
@@ -69,7 +80,11 @@ class StudyPageState extends State<StudyPage> {
       margin: const EdgeInsets.all(5),
       child: InkWell(
         onTap: () {
-          context.push('/message/${message.id}');
+          if (onTap != null) {
+            onTap();
+          } else {
+            context.push('/message/${message.id}');
+          }
         },
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -110,22 +125,24 @@ class StudyPageState extends State<StudyPage> {
                     style: aboutCardSubtitleStyle.copyWith(
                         color: Theme.of(context).primaryColor)),
               ),
-              Row(children: [
-                if (message.subTitle!.isNotEmpty)
+              if (message.subTitle != null && message.subTitle!.isNotEmpty)
+                Row(children: [
                   Expanded(
                       child: Text(locale.translate(message.subTitle!),
                           style: aboutCardContentStyle.copyWith(
                               color: Theme.of(context).primaryColor))),
-              ]),
-              Row(children: [
-                if (message.message != null && message.message!.isNotEmpty)
+                ]),
+              if (message.message != null &&
+                  message.message != null &&
+                  message.message!.isNotEmpty)
+                Row(children: [
                   Expanded(
                       child: Text(
                     "${locale.translate(message.message!).substring(0, (message.message!.length > 150) ? 150 : null)}...",
                     style: aboutCardContentStyle,
                     textAlign: TextAlign.justify,
                   )),
-              ]),
+                ]),
             ],
           ),
         ),

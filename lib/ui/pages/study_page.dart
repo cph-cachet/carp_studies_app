@@ -11,15 +11,6 @@ class StudyPage extends StatefulWidget {
 class StudyPageState extends State<StudyPage> {
   @override
   Widget build(BuildContext context) {
-    final Message studyDescription = Message(
-      id: '00000000-0000-0000-0000-000000000000',
-      title: widget.model.title,
-      message: widget.model.description,
-      type: MessageType.announcement,
-      timestamp: DateTime.now(),
-      image: 'assets/images/kids.png',
-    );
-
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.secondary,
       body: SafeArea(
@@ -42,7 +33,7 @@ class StudyPageState extends State<StudyPage> {
                           if (index == 0) {
                             return _aboutStudyCard(
                               context,
-                              studyDescription,
+                              widget.model.studyDescriptionMessage,
                               onTap: () {
                                 context.push('/studyDetails');
                               },

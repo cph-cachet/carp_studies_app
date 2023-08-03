@@ -13,7 +13,6 @@ class DevicesPage extends StatefulWidget {
 class DevicesPageState extends State<DevicesPage> {
   int selected = 40;
   BluetoothDevice? selectedDevice;
-  FlutterBluePlus flutterBlue = FlutterBluePlus.instance;
 
   StreamSubscription? isScanningStream;
   StreamSubscription? scanResultStream;
@@ -21,7 +20,7 @@ class DevicesPageState extends State<DevicesPage> {
 
   @override
   void dispose() {
-    flutterBlue.stopScan();
+    FlutterBluePlus.stopScan();
     isScanningStream?.cancel();
     scanResultStream?.cancel();
     bluetoothStateStream?.cancel();
@@ -285,29 +284,46 @@ class DevicesPageState extends State<DevicesPage> {
                   ),
                   onTap: () async {
                     if (device.status != DeviceStatus.connected) {
+                      // check adapter availability
+                      if (await FlutterBluePlus.isAvailable == false) {
+                        print("Bluetooth not supported by this device");
+                        return;
+                      }
+
+// turn on bluetooth ourself if we can
+                      if (Platform.isAndroid) {
+                        await FlutterBluePlus.turnOn();
+                      }
+
+// wait bluetooth to be on
+                      await FlutterBluePlus.adapterState
+                          .where((s) => s == BluetoothAdapterState.on)
+                          .first;
+
                       // start scanning for BTLE devices
                       bool isScanning = false;
 
-                      isScanningStream = flutterBlue.isScanning.listen(
+                      isScanningStream = FlutterBluePlus.isScanning.listen(
                         (scanBool) {
                           isScanning = scanBool;
                         },
                       );
-                      bluetoothStateStream = flutterBlue.state.listen((state) {
-                        if (state == BluetoothState.on && !isScanning) {
-                          flutterBlue.startScan();
+                      bluetoothStateStream =
+                          FlutterBluePlus.adapterState.listen((state) {
+                        if (state == BluetoothAdapterState.on && !isScanning) {
+                          FlutterBluePlus.startScan();
                           isScanning = true;
                         } else {
                           // instantly start and stop a scan to turn on the BT adapter
-                          flutterBlue.startScan();
-                          flutterBlue.stopScan();
+                          FlutterBluePlus.startScan();
+                          FlutterBluePlus.stopScan();
                         }
                       });
 
                       await showConnectionDialog(context, CurrentStep.scan,
                           device, setState, selected, selectedDevice);
 
-                      flutterBlue.stopScan();
+                      FlutterBluePlus.stopScan();
                     }
                   }),
             ],
@@ -414,14 +430,14 @@ class DevicesPageState extends State<DevicesPage> {
                           ),
                           Expanded(
                             child: StreamBuilder<List<ScanResult>>(
-                              stream: flutterBlue.scanResults,
+                              stream: FlutterBluePlus.scanResults,
                               initialData: const [],
                               builder: (context, snapshot) =>
                                   SingleChildScrollView(
                                 child: Column(
                                   children: snapshot.data!
                                       .where((element) =>
-                                          element.device.name.isNotEmpty)
+                                          element.device.localName.isNotEmpty)
                                       .toList()
                                       .asMap()
                                       .entries
@@ -430,7 +446,7 @@ class DevicesPageState extends State<DevicesPage> {
                                           selected:
                                               bluetoothDevice.key == selected,
                                           title: Text(bluetoothDevice
-                                              .value.device.name),
+                                              .value.device.localName),
                                           selectedTileColor: Theme.of(context)
                                               .primaryColor
                                               .withOpacity(0.2),
@@ -516,7 +532,7 @@ class DevicesPageState extends State<DevicesPage> {
                                 .translate("pages.devices.connection.done")
                                 .toUpperCase()),
                             onPressed: () {
-                              flutterBlue.stopScan();
+                              FlutterBluePlus.stopScan();
                               if (selectedDevice != null) {
                                 bloc.connectToDevice(
                                   selectedDevice!,
@@ -585,7 +601,7 @@ class DevicesPageState extends State<DevicesPage> {
             width: MediaQuery.of(context).size.height * 0.2,
             height: MediaQuery.of(context).size.height * 0.2),
         Text(
-          ("${locale.translate("pages.devices.connection.step.confirm.1")} '${device?.name}' ${locale.translate("pages.devices.connection.step.confirm.2")}")
+          ("${locale.translate("pages.devices.connection.step.confirm.1")} '${device?.localName}' ${locale.translate("pages.devices.connection.step.confirm.2")}")
               .trim(),
           style: aboutCardContentStyle,
           textAlign: TextAlign.justify,

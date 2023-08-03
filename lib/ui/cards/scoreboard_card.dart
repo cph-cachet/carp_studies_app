@@ -56,7 +56,7 @@ class ScoreboardPersistentHeaderDelegate
     List<Widget> childrenTasks = [
       Text(model.taskCompleted.toString(),
           style: scoreNumberStyle.copyWith(
-              fontSize: calculateSize(shrinkOffset,
+              fontSize: calculateScrollAwareSizing(shrinkOffset,
                   scoreNumberStyleSmall.fontSize!, scoreNumberStyle.fontSize!),
               color: Theme.of(context).primaryColor)),
       if (shrinkOffset < offsetForShrink)
@@ -77,7 +77,7 @@ class ScoreboardPersistentHeaderDelegate
     List<Widget> childrenDays = [
       Text(model.daysInStudy.toString(),
           style: scoreNumberStyle.copyWith(
-              fontSize: calculateSize(shrinkOffset,
+              fontSize: calculateScrollAwareSizing(shrinkOffset,
                   scoreNumberStyleSmall.fontSize!, scoreNumberStyle.fontSize!),
               color: Theme.of(context).primaryColor)),
       if (shrinkOffset < offsetForShrink)
@@ -118,7 +118,7 @@ class ScoreboardPersistentHeaderDelegate
               Expanded(
                 flex: 0,
                 child: Container(
-                  height: calculateSize(
+                  height: calculateScrollAwareSizing(
                       shrinkOffset, minExtent * 0.6, maxExtent * 0.6),
                   width: 2,
                   decoration: BoxDecoration(
@@ -146,7 +146,8 @@ class ScoreboardPersistentHeaderDelegate
   }
 
   // A simple function that returns the font size from the scoreNumberStyle, but increasingly smaller when scrolling down.
-  double calculateSize(double shrinkOffset, double minSize, double maxSize) {
+  // Also used for the size of the divider in the middle
+  double calculateScrollAwareSizing(double shrinkOffset, double minSize, double maxSize) {
     // Calculate the normalized shrinkOffset value in the range [0, 1]
     double normalizedShrinkOffset = shrinkOffset / maxExtent;
 

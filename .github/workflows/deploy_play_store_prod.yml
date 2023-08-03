@@ -1,9 +1,9 @@
 name: Deploy to Play Store production
 on:
-  # Enable manual run
-  push:
-    tags:
-      - '*'
+  release:
+    types:
+      - released
+  workflow_dispatch:
 
 
 # Declare default permissions as read only.
@@ -12,5 +12,6 @@ permissions: read-all
 jobs:
   workflow_run:
     uses: cph-cachet/carp-studies-app/.github/workflows/deploy_play_store.yml@master
+    secrets: inherit
     with:
       lane: 'promote_to_production'

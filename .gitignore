@@ -116,3 +116,4 @@ app.*.map.json
 lib/blocs/credentials.dart
 carp/carpspec.yaml
 android/key.properties
+android/fastlane/report.xml

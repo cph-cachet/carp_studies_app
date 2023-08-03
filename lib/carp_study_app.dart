@@ -36,8 +36,9 @@ class CarpStudyAppState extends State<CarpStudyApp> {
           GoRoute(
             path: '/',
             parentNavigatorKey: _shellNavigatorKey,
-            redirect: (context, state) =>
-                bloc.hasInformedConsentBeenAccepted ? '/tasks' : '/consent',
+            redirect: (context, state) => !CarpService().authenticated
+                ? '/login'
+                : (bloc.hasInformedConsentBeenAccepted ? '/tasks' : '/consent'),
           ),
           GoRoute(
             path: '/tasks',
@@ -103,8 +104,9 @@ class CarpStudyAppState extends State<CarpStudyApp> {
       GoRoute(
         path: '/consent',
         parentNavigatorKey: _rootNavigatorKey,
-        redirect: (context, state) =>
-            bloc.studyId == null ? '/invitations' : null,
+        redirect: (context, state) => bloc.hasInformedConsentBeenAccepted
+            ? '/tasks'
+            : (bloc.studyId == null ? '/invitations' : null),
         builder: (context, state) => InformedConsentPage(
           bloc.data.informedConsentViewModel,
         ),
@@ -116,6 +118,7 @@ class CarpStudyAppState extends State<CarpStudyApp> {
       GoRoute(
         path: '/login',
         parentNavigatorKey: _rootNavigatorKey,
+        redirect: (context, state) => CarpService().authenticated ? '/' : null,
         builder: (context, state) => LoginPage(
           bloc.data.loginPageViewModel,
         ),
@@ -136,7 +139,9 @@ class CarpStudyAppState extends State<CarpStudyApp> {
       GoRoute(
         path: '/invitations',
         parentNavigatorKey: _rootNavigatorKey,
-        redirect: (context, state) => bloc.user == null ? '/login' : null,
+        redirect: (context, state) => bloc.studyId != null
+            ? '/consent'
+            : (bloc.user == null ? '/login' : null),
         builder: (context, state) =>
             InvitationListPage(bloc.data.invitationsListViewModel),
       ),

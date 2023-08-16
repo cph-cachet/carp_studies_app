@@ -49,46 +49,41 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
   Widget build(BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;
 
-    return Padding(
-      padding: const EdgeInsets.all(5.0),
-      child: Card(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        elevation: 4,
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: <Widget>[
-              StreamBuilder(
-                stream: widget.model.heartRateEvents,
-                builder: (context, AsyncSnapshot<Measurement> snapshot) {
-                  // animationController.duration = Duration(
-                  //     milliseconds: 1000 ~/
-                  //         (((widget.model.currentHeartRate ?? 0) + 1) / 60));
+    return StudiesCard(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: <Widget>[
+            StreamBuilder(
+              stream: widget.model.heartRateEvents,
+              builder: (context, AsyncSnapshot<Measurement> snapshot) {
+                // animationController.duration = Duration(
+                //     milliseconds: 1000 ~/
+                //         (((widget.model.currentHeartRate ?? 0) + 1) / 60));
 
-                  return Column(
-                    children: [
-                      ChartsLegend(
-                          title: locale.translate('cards.heartrate.title'),
-                          iconAssetName: Icon(Icons.monitor_heart,
-                              color: Theme.of(context).primaryColor),
-                          heroTag: 'HeartRate-card',
-                          values: const [],
-                          colors: HeartRateCardWidget.colors),
-                      getDailyRange,
-                      SizedBox(
-                        height: 240,
-                        child: barCharts,
-                      ),
-                      SizedBox(
-                        height: 80,
-                        child: currentHeartRateWidget,
-                      )
-                    ],
-                  );
-                },
-              ),
-            ],
-          ),
+                return Column(
+                  children: [
+                    ChartsLegend(
+                        title: locale.translate('cards.heartrate.title'),
+                        iconAssetName: Icon(Icons.monitor_heart,
+                            color: Theme.of(context).primaryColor),
+                        heroTag: 'HeartRate-card',
+                        values: const [],
+                        colors: HeartRateCardWidget.colors),
+                    getDailyRange,
+                    SizedBox(
+                      height: 240,
+                      child: barCharts,
+                    ),
+                    SizedBox(
+                      height: 80,
+                      child: currentHeartRateWidget,
+                    )
+                  ],
+                );
+              },
+            ),
+          ],
         ),
       ),
     );

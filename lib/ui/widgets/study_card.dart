@@ -19,14 +19,8 @@ class StudyCard extends StatelessWidget {
         '${locale.translate(studyPageModel.piAddress)}\n'
         '${locale.translate(studyPageModel.piEmail)}\n';
 
-    return Card(
-      semanticContainer: true,
+    return StudiesCard(
       clipBehavior: Clip.antiAliasWithSaveLayer,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
-      ),
-      elevation: 5,
-      margin: const EdgeInsets.all(5),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,

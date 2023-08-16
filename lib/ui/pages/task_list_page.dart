@@ -102,10 +102,7 @@ class TaskListPageState extends State<TaskListPage> {
     RPLocalizations locale = RPLocalizations.of(context)!;
 
     return Center(
-      child: Card(
-        margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        elevation: 5,
+      child: StudiesCard(
         child: ListTile(
           leading: CircleAvatar(
             backgroundColor: Theme.of(context).hoverColor,
@@ -177,11 +174,7 @@ class TaskListPageState extends State<TaskListPage> {
     return Center(
       child: Opacity(
         opacity: 0.6,
-        child: Card(
-          margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-          elevation: 3,
+        child: StudiesCard(
           child: ListTile(
             leading: const CircleAvatar(
               backgroundColor: CACHET.LIGHT_GREEN_1,
@@ -202,11 +195,7 @@ class TaskListPageState extends State<TaskListPage> {
     return Center(
       child: Opacity(
         opacity: 0.6,
-        child: Card(
-          margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-          elevation: 3,
+        child: StudiesCard(
           child: ListTile(
             leading: const CircleAvatar(
               backgroundColor: CACHET.LIGHT_GREY_1,

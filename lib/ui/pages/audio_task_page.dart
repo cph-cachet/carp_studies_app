@@ -212,11 +212,7 @@ class AudioTaskPageState extends State<AudioTaskPage> {
             //     ?
             Expanded(
               flex: 3,
-              child: Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-                elevation: 4,
+              child: StudiesCard(
                 child: Scrollbar(
                   child: SingleChildScrollView(
                     scrollDirection: Axis.vertical, //.horizontal

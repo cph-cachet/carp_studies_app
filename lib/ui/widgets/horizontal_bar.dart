@@ -7,12 +7,14 @@ class HorizontalBar extends StatelessWidget {
   final OrderType? order;
   final double height;
   final LabelOrientation? labelOrientation;
+  final double? parentWidth;
 
   const HorizontalBar({
     super.key,
     required this.names,
     required this.values,
     required this.colors,
+    this.parentWidth,
     this.order = OrderType.descending,
     this.height = 25,
     this.labelOrientation = LabelOrientation.vertical,
@@ -31,11 +33,12 @@ class HorizontalBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
+    double width = parentWidth ?? MediaQuery.of(context).size.width;
+
     if (names.isEmpty) {
       return Center(
         child: Padding(
-          padding: const EdgeInsets.all(3),
+          padding: const EdgeInsets.all(4),
           child: ClipRRect(
             borderRadius: BorderRadius.all(Radius.circular(height / 2)),
             child: Container(
@@ -51,7 +54,7 @@ class HorizontalBar extends StatelessWidget {
     } else {
       return Center(
         child: MyAssetsBar(
-          width: width * .9,
+          width: width,
           background: const Color(0x00cfd8dc),
           order: order,
           assets: assetList(),
@@ -88,7 +91,7 @@ class MyAssetsBar extends StatelessWidget {
   });
 
   final double width;
-  final double? height;
+  final double height;
   final double? radius;
   final List<MyAsset> assets;
   final OrderType? order;
@@ -149,7 +152,7 @@ class MyAssetsBar extends StatelessWidget {
             .map(
               (entry) => Padding(
                   padding:
-                      const EdgeInsets.symmetric(vertical: 3, horizontal: 10),
+                      const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -203,13 +206,11 @@ class MyAssetsBar extends StatelessWidget {
     // order assetsList
     orderMyAssetsList();
 
-    final double rad = radius ?? (height! / 2);
+    final double rad = radius ?? (height / 2);
 
     return Column(
-      mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const SizedBox(height: 15),
         ClipRRect(
           borderRadius: BorderRadius.all(Radius.circular(rad)),
           child: Container(
@@ -222,7 +223,6 @@ class MyAssetsBar extends StatelessWidget {
                     .toList()),
           ),
         ),
-        const SizedBox(height: 2),
         _labelOrientation(),
       ],
     );

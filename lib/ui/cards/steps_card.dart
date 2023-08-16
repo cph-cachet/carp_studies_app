@@ -31,32 +31,27 @@ class StepsCardWidgetState extends State<StepsCardWidget> {
   Widget build(BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;
 
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Card(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        elevation: 4,
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              ChartsLegend(
-                title: locale.translate('cards.steps.title'),
-                iconAssetName: Icon(Icons.directions_walk,
-                    color: Theme.of(context).primaryColor),
-                heroTag: 'steps-card',
-                values: [
-                  '$_step ${locale.translate('cards.steps.steps')}',
-                ],
-                colors: widget.colors,
-              ),
-              SizedBox(
-                height: 160,
-                width: MediaQuery.of(context).size.width * 0.9,
-                child: barCharts,
-              ),
-            ],
-          ),
+    return StudiesCard(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            ChartsLegend(
+              title: locale.translate('cards.steps.title'),
+              iconAssetName: Icon(Icons.directions_walk,
+                  color: Theme.of(context).primaryColor),
+              heroTag: 'steps-card',
+              values: [
+                '$_step ${locale.translate('cards.steps.steps')}',
+              ],
+              colors: widget.colors,
+            ),
+            SizedBox(
+              height: 160,
+              width: MediaQuery.of(context).size.width * 0.9,
+              child: barCharts,
+            ),
+          ],
         ),
       ),
     );

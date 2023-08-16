@@ -18,6 +18,19 @@ class DevicesPageState extends State<DevicesPage> {
   StreamSubscription? scanResultStream;
   StreamSubscription? bluetoothStateStream;
 
+  List<DeviceModel> physicalDevices = bloc.runningDevices
+      .where((element) =>
+          element.deviceManager is HardwareDeviceManager &&
+          element.deviceManager is! SmartphoneDeviceManager)
+      .toList();
+  List<DeviceModel> onlineServices = bloc.runningDevices
+      .where((element) => element.deviceManager is OnlineServiceManager)
+      .toList();
+
+  List<DeviceModel> smartphoneDevice = bloc.runningDevices
+      .where((element) => element.deviceManager is SmartphoneDeviceManager)
+      .toList();
+
   @override
   void dispose() {
     FlutterBluePlus.stopScan();
@@ -30,20 +43,6 @@ class DevicesPageState extends State<DevicesPage> {
   @override
   Widget build(BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;
-
-    List<DeviceModel> physicalDevices = bloc.runningDevices
-        .where((element) =>
-            element.deviceManager is HardwareDeviceManager &&
-            element.deviceManager is! SmartphoneDeviceManager)
-        .toList();
-    List<DeviceModel> onlineServices = bloc.runningDevices
-        .where((element) => element.deviceManager is OnlineServiceManager)
-        .toList();
-
-    List<DeviceModel> smartphoneDevice = bloc.runningDevices
-        .where((element) => element.deviceManager is SmartphoneDeviceManager)
-        .toList();
-
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.secondary,
       body: SafeArea(
@@ -77,78 +76,166 @@ class DevicesPageState extends State<DevicesPage> {
                   builder: (context, AsyncSnapshot<UserTask> snapshot) {
                     return CustomScrollView(
                       slivers: [
-                        SliverToBoxAdapter(
-                            child: Padding(
-                          padding: const EdgeInsets.only(
-                              left: 15, right: 15, top: 10),
-                          child: Text(
-                              locale
-                                  .translate("pages.devices.phone.title")
-                                  .toUpperCase(),
-                              style: dataCardTitleStyle.copyWith(
-                                  color: Theme.of(context).primaryColor)),
-                        )),
-                        SliverList(
-                          delegate: SliverChildBuilderDelegate(
-                              (BuildContext context, int index) {
-                            return buildSmartphoneDeviceCard(
-                                context, smartphoneDevice[index]);
-                          }, childCount: smartphoneDevice.length),
-                        ),
-                        physicalDevices.isEmpty
-                            ? const SliverToBoxAdapter(child: SizedBox.shrink())
-                            : SliverToBoxAdapter(
-                                child: Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 15, right: 15, top: 10),
-                                child: Text(
-                                    locale
-                                        .translate(
-                                            "pages.devices.devices.title")
-                                        .toUpperCase(),
-                                    style: dataCardTitleStyle.copyWith(
-                                        color: Theme.of(context).primaryColor)),
-                              )),
-                        SliverList(
-                          delegate: SliverChildBuilderDelegate(
-                              (BuildContext context, int index) {
-                            return buildPhysicalDeviceCard(
-                                context,
-                                physicalDevices[index],
-                                setState,
-                                selected,
-                                selectedDevice);
-                          }, childCount: physicalDevices.length),
-                        ),
-                        onlineServices.isEmpty
-                            ? const SliverToBoxAdapter(child: SizedBox.shrink())
-                            : SliverToBoxAdapter(
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 15, right: 15, top: 10),
-                                  child: Text(
-                                      locale
-                                          .translate(
-                                              "pages.devices.services.title")
-                                          .toUpperCase(),
-                                      style: dataCardTitleStyle.copyWith(
-                                          color:
-                                              Theme.of(context).primaryColor)),
-                                ),
-                              ),
-                        SliverList(
-                          delegate: SliverChildBuilderDelegate(
-                              (BuildContext context, int index) {
-                            return buildOnlineServiceCard(
-                                context, onlineServices[index]);
-                          }, childCount: onlineServices.length),
-                        ),
+                        smartphoneDeviceTitleWidget(locale, context),
+                        smartphoneDeviceListWidget(),
+                        if (physicalDevices.isNotEmpty)
+                          physicalDevicesTitleWidget(locale, context),
+                        physicalDevicesListWidget(),
+                        if (onlineServices.isNotEmpty)
+                          onlineServicesTitleWidget(locale, context),
+                        onlineServicesListWidget(),
                       ],
                     );
                   }),
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  SliverList smartphoneDeviceListWidget() {
+    return SliverList(
+      delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
+        return buildSmartphoneDeviceCard(context, smartphoneDevice[index]);
+      }, childCount: smartphoneDevice.length),
+    );
+  }
+
+  SliverToBoxAdapter smartphoneDeviceTitleWidget(
+      RPLocalizations locale, BuildContext context) {
+    return SliverToBoxAdapter(
+        child: Padding(
+      padding: const EdgeInsets.only(left: 15, right: 15, top: 10),
+      child: Text(locale.translate("pages.devices.phone.title").toUpperCase(),
+          style: dataCardTitleStyle.copyWith(
+              color: Theme.of(context).primaryColor)),
+    ));
+  }
+
+  SliverToBoxAdapter physicalDevicesTitleWidget(
+      RPLocalizations locale, BuildContext context) {
+    return SliverToBoxAdapter(
+        child: Padding(
+      padding: const EdgeInsets.only(left: 15, right: 15, top: 10),
+      child: Text(locale.translate("pages.devices.devices.title").toUpperCase(),
+          style: dataCardTitleStyle.copyWith(
+              color: Theme.of(context).primaryColor)),
+    ));
+  }
+
+  SliverList physicalDevicesListWidget() {
+    return SliverList(
+      delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
+        RPLocalizations locale = RPLocalizations.of(context)!;
+        var device = physicalDevices[index];
+        var children2 = [
+          ListTile(
+            leading: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [physicalDevices[index].icon!],
+            ),
+            title: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text(locale.translate(device.name!)),
+                ]),
+            subtitle: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(device.id),
+                const SizedBox(height: 1),
+                _showBatteryPercentage(context, device.batteryLevel ?? 0,
+                    scale: 0.9),
+              ],
+            ),
+            isThreeLine: true,
+            trailing: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                device.statusIcon is String
+                    ? Text(locale.translate(device.statusIcon).toUpperCase(),
+                        style: aboutCardTitleStyle.copyWith(
+                            color: Theme.of(context).primaryColor))
+                    : device.statusIcon
+              ],
+            ),
+            onTap: () => physicalDeviceClicked(device),
+          )
+        ];
+        return devicesPageCardStream(
+            device.deviceEvents, children2, DeviceStatus.unknown);
+      }, childCount: physicalDevices.length),
+    );
+  }
+
+  Widget devicesPageCardStream<T>(
+      Stream<T> stream, List<Widget> children, T? initialData) {
+    return Center(
+      child: StudiesCard(
+        child: StreamBuilder<T>(
+          stream: stream,
+          initialData: initialData,
+          builder: (context, AsyncSnapshot<T> snapshot) => Column(
+            children: children,
+          ),
+        ),
+      ),
+    );
+  }
+
+  SliverList onlineServicesListWidget() {
+    return SliverList(
+      delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
+        RPLocalizations locale = RPLocalizations.of(context)!;
+
+        var children2 = [
+          ListTile(
+            leading: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [onlineServices[index].icon!],
+            ),
+            title: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text(locale.translate(onlineServices[index].name!)),
+                ]),
+            trailing: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                onlineServices[index].statusIcon is String
+                    ? Text(
+                        locale
+                            .translate(onlineServices[index].statusIcon)
+                            .toUpperCase(),
+                        style: aboutCardTitleStyle.copyWith(
+                            color: Theme.of(context).primaryColor))
+                    : onlineServices[index].statusIcon
+              ],
+            ),
+          ),
+        ];
+
+        return devicesPageCardStream<DeviceStatus>(
+            onlineServices[index].deviceEvents,
+            children2,
+            DeviceStatus.unknown);
+      }, childCount: onlineServices.length),
+    );
+  }
+
+  SliverToBoxAdapter onlineServicesTitleWidget(
+      RPLocalizations locale, BuildContext context) {
+    return SliverToBoxAdapter(
+      child: Padding(
+        padding: const EdgeInsets.only(left: 15, right: 15, top: 10),
+        child: Text(
+            locale.translate("pages.devices.services.title").toUpperCase(),
+            style: dataCardTitleStyle.copyWith(
+                color: Theme.of(context).primaryColor)),
       ),
     );
   }
@@ -194,10 +281,7 @@ class DevicesPageState extends State<DevicesPage> {
 
   Widget buildSmartphoneDeviceCard(BuildContext context, DeviceModel device) {
     return Center(
-      child: Card(
-        margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        elevation: 2,
+      child: StudiesCard(
         child: Column(
           children: [
             ListTile(
@@ -231,115 +315,10 @@ class DevicesPageState extends State<DevicesPage> {
     );
   }
 
-  Widget buildPhysicalDeviceCard(
-    BuildContext context,
-    DeviceModel device,
-    setState,
-    selected,
-    BluetoothDevice? selectedDevice,
-  ) {
-    RPLocalizations locale = RPLocalizations.of(context)!;
-    return Center(
-      child: Card(
-        margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        elevation: 5,
-        child: StreamBuilder<DeviceStatus>(
-          stream: device.deviceEvents,
-          initialData: DeviceStatus.unknown,
-          builder: (context, AsyncSnapshot<DeviceStatus> snapshot) => Column(
-            children: [
-              ListTile(
-                  leading: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [device.icon!],
-                  ),
-                  title: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(locale.translate(device.name!)),
-                      ]),
-                  subtitle: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(device.id),
-                      const SizedBox(height: 1),
-                      _showBatteryPercentage(context, device.batteryLevel ?? 0,
-                          scale: 0.9),
-                    ],
-                  ),
-                  isThreeLine: true,
-                  trailing: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      device.statusIcon is String
-                          ? Text(
-                              locale.translate(device.statusIcon).toUpperCase(),
-                              style: aboutCardTitleStyle.copyWith(
-                                  color: Theme.of(context).primaryColor))
-                          : device.statusIcon
-                    ],
-                  ),
-                  onTap: () async {
-                    if (device.status != DeviceStatus.connected) {
-                      // check adapter availability
-                      if (await FlutterBluePlus.isAvailable == false) {
-                        print("Bluetooth not supported by this device");
-                        return;
-                      }
-
-// turn on bluetooth ourself if we can
-                      if (Platform.isAndroid) {
-                        await FlutterBluePlus.turnOn();
-                      }
-
-// wait bluetooth to be on
-                      await FlutterBluePlus.adapterState
-                          .where((s) => s == BluetoothAdapterState.on)
-                          .first;
-
-                      // start scanning for BTLE devices
-                      bool isScanning = false;
-
-                      isScanningStream = FlutterBluePlus.isScanning.listen(
-                        (scanBool) {
-                          isScanning = scanBool;
-                        },
-                      );
-                      bluetoothStateStream =
-                          FlutterBluePlus.adapterState.listen((state) {
-                        if (state == BluetoothAdapterState.on && !isScanning) {
-                          FlutterBluePlus.startScan();
-                          isScanning = true;
-                        } else {
-                          // instantly start and stop a scan to turn on the BT adapter
-                          FlutterBluePlus.startScan();
-                          FlutterBluePlus.stopScan();
-                        }
-                      });
-
-                      await showConnectionDialog(context, CurrentStep.scan,
-                          device, setState, selected, selectedDevice);
-
-                      FlutterBluePlus.stopScan();
-                    }
-                  }),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
   Widget buildOnlineServiceCard(BuildContext context, DeviceModel device) {
     RPLocalizations locale = RPLocalizations.of(context)!;
     return Center(
-      child: Card(
-        margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        elevation: 5,
+      child: StudiesCard(
         child: StreamBuilder<DeviceStatus>(
           stream: device.deviceEvents,
           initialData: DeviceStatus.unknown,
@@ -382,7 +361,7 @@ class DevicesPageState extends State<DevicesPage> {
     setState,
     selected,
     BluetoothDevice? selectedDevice,
-  ) async {
+  ) {
     RPLocalizations locale = RPLocalizations.of(context)!;
     return showDialog(
       context: context,
@@ -608,6 +587,48 @@ class DevicesPageState extends State<DevicesPage> {
         ),
       ],
     );
+  }
+
+  void physicalDeviceClicked(DeviceModel device) async {
+    if (await FlutterBluePlus.isAvailable == false) {
+      warning("Bluetooth not supported by this device");
+      return;
+    }
+    if (device.status == DeviceStatus.connected ||
+        device.status == DeviceStatus.connecting) {
+      return;
+    }
+
+    // turn on bluetooth ourself if we can
+    if (Platform.isAndroid) {
+      await FlutterBluePlus.turnOn();
+    }
+
+    // wait bluetooth to be on
+    await FlutterBluePlus.adapterState
+        .where((s) => s == BluetoothAdapterState.on)
+        .first;
+
+    // start scanning for BTLE devices
+    bool isScanning = false;
+
+    FlutterBluePlus.isScanning.listen((scanBool) => isScanning = scanBool);
+
+    bluetoothStateStream = FlutterBluePlus.adapterState.listen((state) {
+      if (state == BluetoothAdapterState.on && !isScanning) {
+        FlutterBluePlus.startScan();
+        isScanning = true;
+      } else {
+        // instantly start and stop a scan to turn on the BT adapter
+        FlutterBluePlus.startScan();
+        FlutterBluePlus.stopScan();
+      }
+    });
+
+    await showConnectionDialog(
+        context, CurrentStep.scan, device, setState, selected, selectedDevice);
+
+    FlutterBluePlus.stopScan();
   }
 
   Widget connectionInstructions(DeviceModel device, BuildContext context) {

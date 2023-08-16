@@ -28,10 +28,6 @@ PODS:
     - Flutter
   - flutter_blue_plus (0.0.1):
     - Flutter
-    - flutter_blue_plus/Protos (= 0.0.1)
-  - flutter_blue_plus/Protos (0.0.1):
-    - Flutter
-    - Protobuf (~> 3.21)
   - flutter_inappwebview (0.0.1):
     - Flutter
     - flutter_inappwebview/Core (= 0.0.1)
@@ -77,7 +73,6 @@ PODS:
   - PolarBleSdk (3.3.6):
     - RxSwift (~> 6.5.0)
     - SwiftProtobuf (~> 1.0)
-  - Protobuf (3.21.10)
   - ReachabilitySwift (5.0.0)
   - RxSwift (6.5.0)
   - screen_state (0.0.1):
@@ -139,7 +134,6 @@ SPEC REPOS:
     - IosAwnCore
     - OrderedSet
     - PolarBleSdk
-    - Protobuf
     - ReachabilitySwift
     - RxSwift
     - SwiftProtobuf
@@ -226,7 +220,7 @@ SPEC CHECKSUMS:
   esense_flutter: 8bfadfdefe7b51d6f78366e43b2b64ec9b6144b6
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   flutter_activity_recognition: 5c3b026997742b01e82424ef257db9640822ad77
-  flutter_blue_plus: 316ac8d1179789616d2c148e8a03c37720e63933
+  flutter_blue_plus: 5cb46a0d66c6cacebf7551e0e5a6bfa345ccc224
   flutter_inappwebview: 50b55a88f5dddadc9e741a7caf72f378116e2156
   flutter_local_notifications: 0c0b1ae97e741e1521e4c1629a459d04b9aec743
   flutter_sound: c60effa2a350fb977885f0db2fbc4c1ad5160900
@@ -246,7 +240,6 @@ SPEC CHECKSUMS:
   permission_handler_apple: 8f116445eff3c0e7c65ad60f5fef5490aa94b4e4
   polar: 1e458b49a90071a63d99d53cc8ef89b1a51ba1a8
   PolarBleSdk: 9a7ff25ce80d2fae014e013977a14424df20c4bd
-  Protobuf: ced4c17d029d7566cbfc51cfb44193e4aaafae27
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   RxSwift: 5710a9e6b17f3c3d6e40d6e559b9fa1e813b2ef8
   screen_state: a7ae251997e97f3f001839df09b57313b0ddef18

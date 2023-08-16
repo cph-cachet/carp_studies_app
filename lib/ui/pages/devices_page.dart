@@ -76,14 +76,11 @@ class DevicesPageState extends State<DevicesPage> {
                   builder: (context, AsyncSnapshot<UserTask> snapshot) {
                     return CustomScrollView(
                       slivers: [
-                        smartphoneDeviceTitleWidget(locale, context),
-                        smartphoneDeviceListWidget(),
+                        ...smartphoneDeviceListWidget(),
                         if (physicalDevices.isNotEmpty)
-                          physicalDevicesTitleWidget(locale, context),
-                        physicalDevicesListWidget(),
+                          ...physicalDevicesListWidget(),
                         if (onlineServices.isNotEmpty)
-                          onlineServicesTitleWidget(locale, context),
-                        onlineServicesListWidget(),
+                          ...onlineServicesListWidget(),
                       ],
                     );
                   }),
@@ -94,150 +91,109 @@ class DevicesPageState extends State<DevicesPage> {
     );
   }
 
-  SliverList smartphoneDeviceListWidget() {
-    return SliverList(
-      delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
-        return buildSmartphoneDeviceCard(context, smartphoneDevice[index]);
-      }, childCount: smartphoneDevice.length),
-    );
-  }
-
-  SliverToBoxAdapter smartphoneDeviceTitleWidget(
-      RPLocalizations locale, BuildContext context) {
-    return SliverToBoxAdapter(
+  List<Widget> smartphoneDeviceListWidget() {
+    RPLocalizations locale = RPLocalizations.of(context)!;
+    return [
+      SliverToBoxAdapter(
         child: Padding(
-      padding: const EdgeInsets.only(left: 15, right: 15, top: 10),
-      child: Text(locale.translate("pages.devices.phone.title").toUpperCase(),
-          style: dataCardTitleStyle.copyWith(
-              color: Theme.of(context).primaryColor)),
-    ));
-  }
-
-  SliverToBoxAdapter physicalDevicesTitleWidget(
-      RPLocalizations locale, BuildContext context) {
-    return SliverToBoxAdapter(
-        child: Padding(
-      padding: const EdgeInsets.only(left: 15, right: 15, top: 10),
-      child: Text(locale.translate("pages.devices.devices.title").toUpperCase(),
-          style: dataCardTitleStyle.copyWith(
-              color: Theme.of(context).primaryColor)),
-    ));
-  }
-
-  SliverList physicalDevicesListWidget() {
-    return SliverList(
-      delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
-        RPLocalizations locale = RPLocalizations.of(context)!;
-        var device = physicalDevices[index];
-        var children2 = [
-          ListTile(
-            leading: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [physicalDevices[index].icon!],
-            ),
-            title: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(locale.translate(device.name!)),
-                ]),
-            subtitle: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(device.id),
-                const SizedBox(height: 1),
-                _showBatteryPercentage(context, device.batteryLevel ?? 0,
-                    scale: 0.9),
-              ],
-            ),
-            isThreeLine: true,
-            trailing: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                device.statusIcon is String
-                    ? Text(locale.translate(device.statusIcon).toUpperCase(),
-                        style: aboutCardTitleStyle.copyWith(
-                            color: Theme.of(context).primaryColor))
-                    : device.statusIcon
-              ],
-            ),
-            onTap: () => physicalDeviceClicked(device),
-          )
-        ];
-        return devicesPageCardStream(
-            device.deviceEvents, children2, DeviceStatus.unknown);
-      }, childCount: physicalDevices.length),
-    );
-  }
-
-  Widget devicesPageCardStream<T>(
-      Stream<T> stream, List<Widget> children, T? initialData) {
-    return Center(
-      child: StudiesCard(
-        child: StreamBuilder<T>(
-          stream: stream,
-          initialData: initialData,
-          builder: (context, AsyncSnapshot<T> snapshot) => Column(
-            children: children,
-          ),
+          padding: const EdgeInsets.only(left: 15, right: 15, top: 10),
+          child: Text(
+              locale.translate("pages.devices.phone.title").toUpperCase(),
+              style: dataCardTitleStyle.copyWith(
+                  color: Theme.of(context).primaryColor)),
         ),
-      ),
-    );
+      ), // Title Widget
+      SliverList(
+        delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
+          return Center(
+            child: StudiesCard(
+              child: Column(
+                children: cardListBuilder(
+                  smartphoneDevice[index].icon!,
+                  smartphoneDevice[index].phoneInfo['name']!,
+                  (
+                    "${smartphoneDevice[index].phoneInfo["model"]!} - ${smartphoneDevice[index].phoneInfo["version"]!}",
+                    smartphoneDevice[index].batteryLevel ?? 0,
+                  ),
+                ),
+              ),
+            ),
+          );
+        }, childCount: smartphoneDevice.length),
+      ), // List of smartphone(s)
+    ];
   }
 
-  SliverList onlineServicesListWidget() {
-    return SliverList(
-      delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
-        RPLocalizations locale = RPLocalizations.of(context)!;
+  List<Widget> physicalDevicesListWidget() {
+    RPLocalizations locale = RPLocalizations.of(context)!;
 
-        var children2 = [
-          ListTile(
-            leading: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [onlineServices[index].icon!],
-            ),
-            title: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(locale.translate(onlineServices[index].name!)),
-                ]),
-            trailing: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                onlineServices[index].statusIcon is String
-                    ? Text(
-                        locale
-                            .translate(onlineServices[index].statusIcon)
-                            .toUpperCase(),
-                        style: aboutCardTitleStyle.copyWith(
-                            color: Theme.of(context).primaryColor))
-                    : onlineServices[index].statusIcon
-              ],
-            ),
-          ),
-        ];
-
-        return devicesPageCardStream<DeviceStatus>(
-            onlineServices[index].deviceEvents,
-            children2,
-            DeviceStatus.unknown);
-      }, childCount: onlineServices.length),
-    );
-  }
-
-  SliverToBoxAdapter onlineServicesTitleWidget(
-      RPLocalizations locale, BuildContext context) {
-    return SliverToBoxAdapter(
-      child: Padding(
+    return [
+      SliverToBoxAdapter(
+          child: Padding(
         padding: const EdgeInsets.only(left: 15, right: 15, top: 10),
         child: Text(
-            locale.translate("pages.devices.services.title").toUpperCase(),
+            locale.translate("pages.devices.devices.title").toUpperCase(),
             style: dataCardTitleStyle.copyWith(
                 color: Theme.of(context).primaryColor)),
+      )),
+      SliverList(
+        delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
+          RPLocalizations locale = RPLocalizations.of(context)!;
+          DeviceModel device = physicalDevices[index];
+          var children = cardListBuilder(
+              device.icon!,
+              locale.translate(device.name!),
+              (device.id, device.batteryLevel ?? 0),
+              enableFeedback: true,
+              onTap: () => physicalDeviceClicked(device),
+              trailing: device.statusIcon is String
+                  ? Text(locale.translate(device.statusIcon).toUpperCase(),
+                      style: aboutCardTitleStyle.copyWith(
+                          color: Theme.of(context).primaryColor))
+                  : device.statusIcon);
+
+          return devicesPageCardStream(
+              device.deviceEvents, children, DeviceStatus.unknown);
+        }, childCount: physicalDevices.length),
+      )
+    ];
+  }
+
+  List<Widget> onlineServicesListWidget() {
+    RPLocalizations locale = RPLocalizations.of(context)!;
+
+    return [
+      SliverToBoxAdapter(
+        child: Padding(
+          padding: const EdgeInsets.only(left: 15, right: 15, top: 10),
+          child: Text(
+              locale.translate("pages.devices.services.title").toUpperCase(),
+              style: dataCardTitleStyle.copyWith(
+                  color: Theme.of(context).primaryColor)),
+        ),
       ),
-    );
+      SliverList(
+        delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
+          RPLocalizations locale = RPLocalizations.of(context)!;
+
+          var service = onlineServices[index];
+          var ch = cardListBuilder(
+            service.icon!,
+            locale.translate(service.name!),
+            null,
+            trailing: service.statusIcon is String
+                ? Text(locale.translate(service.statusIcon).toUpperCase(),
+                    style: aboutCardTitleStyle.copyWith(
+                        color: Theme.of(context).primaryColor))
+                : service.statusIcon,
+            isThreeLine: false,
+          );
+
+          return devicesPageCardStream<DeviceStatus>(
+              onlineServices[index].deviceEvents, ch, DeviceStatus.unknown);
+        }, childCount: onlineServices.length),
+      )
+    ];
   }
 
   Widget _showBatteryPercentage(BuildContext context, int bateryLevel,
@@ -279,75 +235,60 @@ class DevicesPageState extends State<DevicesPage> {
     ]);
   }
 
-  Widget buildSmartphoneDeviceCard(BuildContext context, DeviceModel device) {
-    return Center(
-      child: StudiesCard(
-        child: Column(
+  List<Widget> cardListBuilder(
+    Icon leading,
+    String title,
+    (String, int)? subtitle, {
+    Widget? trailing,
+    void Function()? onTap,
+    enableFeedback = false,
+    isThreeLine = true,
+  }) {
+    return [
+      ListTile(
+        enableFeedback: enableFeedback,
+        isThreeLine: isThreeLine,
+        leading: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [leading],
+        ),
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            ListTile(
-              enableFeedback: false,
-              leading: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [device.icon!],
-              ),
-              title: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text(device.phoneInfo["name"]!),
-                  ]),
-              subtitle: Column(
+            Text(title),
+          ],
+        ),
+        subtitle: subtitle != null
+            ? Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                      "${device.phoneInfo["model"]!} - ${device.phoneInfo["version"]!}"),
-                  const SizedBox(height: 1),
-                  _showBatteryPercentage(context, device.batteryLevel!,
-                      scale: 0.9),
+                  Text(subtitle.$1),
+                  _showBatteryPercentage(context, subtitle.$2, scale: 0.9),
                 ],
-              ),
-              isThreeLine: true,
-            ),
+              )
+            : null,
+        trailing: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            if (trailing != null) trailing,
           ],
         ),
-      ),
-    );
+        onTap: onTap,
+      )
+    ];
   }
 
-  Widget buildOnlineServiceCard(BuildContext context, DeviceModel device) {
-    RPLocalizations locale = RPLocalizations.of(context)!;
+  Widget devicesPageCardStream<T>(
+      Stream<T> stream, List<Widget> children, T? initialData) {
     return Center(
       child: StudiesCard(
-        child: StreamBuilder<DeviceStatus>(
-          stream: device.deviceEvents,
-          initialData: DeviceStatus.unknown,
-          builder: (context, AsyncSnapshot<DeviceStatus> snapshot) => Column(
-            children: [
-              ListTile(
-                leading: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [device.icon!],
-                ),
-                title: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(locale.translate(device.name!)),
-                    ]),
-                trailing: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    device.statusIcon is String
-                        ? Text(
-                            locale.translate(device.statusIcon).toUpperCase(),
-                            style: aboutCardTitleStyle.copyWith(
-                                color: Theme.of(context).primaryColor))
-                        : device.statusIcon
-                  ],
-                ),
-              ),
-            ],
+        child: StreamBuilder<T>(
+          stream: stream,
+          initialData: initialData,
+          builder: (context, AsyncSnapshot<T> snapshot) => Column(
+            children: children,
           ),
         ),
       ),

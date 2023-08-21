@@ -77,11 +77,9 @@ class _DistanceCardState extends State<DistanceCard> {
                         child: Text(
                           _distance,
                           style: TextStyle(
-                            color: Theme.of(context)
-                                    .textTheme
-                                    .bodyLarge
-                                    ?.color ??
-                                Colors.black,
+                            color:
+                                Theme.of(context).textTheme.bodyLarge?.color ??
+                                    Colors.black,
                             fontSize: 18,
                           ),
                         ),

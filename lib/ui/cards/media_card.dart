@@ -45,8 +45,8 @@ class MediaCardWidgetState extends State<MediaCardWidget> {
                                           const SizedBox(height: 15),
                                           Text(
                                             '${entry.value.tasksDone} ${locale.translate('cards.${entry.value.taskType}.title')}',
-                                            style: dataCardTitleStyle
-                                                .copyWith(fontSize: 14),
+                                            style: dataCardTitleStyle.copyWith(
+                                                fontSize: 14),
                                           ),
                                           HorizontalBar(
                                               names: entry.value.taskCount

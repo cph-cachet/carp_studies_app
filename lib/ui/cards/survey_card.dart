@@ -26,8 +26,7 @@ class _SurveyCardState extends State<SurveyCard> {
           children: [
             Padding(
               padding: const EdgeInsets.only(left: 10.0),
-              child: Text(
-                  locale.translate('cards.survey.title').toUpperCase(),
+              child: Text(locale.translate('cards.survey.title').toUpperCase(),
                   style: dataCardTitleStyle),
             ),
             SizedBox(
@@ -42,14 +41,12 @@ class _SurveyCardState extends State<SurveyCard> {
                         horizontal: 10.0, vertical: 8),
                     child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children:
-                            widget.model.tasksTable.entries.map((entry) {
+                        children: widget.model.tasksTable.entries.map((entry) {
                           Widget dot = Container(
                             width: 10,
                             height: 10,
                             decoration: BoxDecoration(
-                              color: widget.colors[widget
-                                  .model.tasksTable.keys
+                              color: widget.colors[widget.model.tasksTable.keys
                                   .toList()
                                   .indexOf(entry.key)],
                               shape: BoxShape.circle,

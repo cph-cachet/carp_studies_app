@@ -45,8 +45,7 @@ class StudyProgressCardWidgetState extends State<StudyProgressCardWidget> {
                       return HorizontalBar(
                         parentWidth: constraints.maxWidth,
                         names: widget.model.progress
-                            .map((progress) =>
-                                locale.translate(progress.state))
+                            .map((progress) => locale.translate(progress.state))
                             .toList(),
                         values: widget.model.progress
                             .map((progress) => progress.value)

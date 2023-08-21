@@ -58,89 +58,60 @@ class _ConnectionDialogState extends State<ConnectionDialog> {
   }
 
   Widget _buildStepContent(RPLocalizations locale) {
-    switch (currentStep) {
-      case CurrentStep.scan:
-        return stepContent(currentStep, widget.device, selectedDevice);
-      case CurrentStep.instructions:
-        return connectionInstructions(widget.device, context);
-      case CurrentStep.done:
-        return confirmDevice(selectedDevice, context);
-      default:
-        return Container(); // Return a default widget or an empty container
-    }
+    final stepContentMap = {
+      CurrentStep.scan: stepContent(currentStep, widget.device, selectedDevice),
+      CurrentStep.instructions: connectionInstructions(widget.device, context),
+      CurrentStep.done: confirmDevice(selectedDevice, context),
+    };
+
+    return stepContentMap[currentStep] ??
+        Container(); // Return a default widget if necessary
   }
 
   List<Widget> _buildActionButtons(RPLocalizations locale) {
-    Widget tButton(String text, VoidCallback onPressed) {
+    Widget buildTranslatedButton(String key, VoidCallback onPressed) {
       return TextButton(
         onPressed: onPressed,
-        child: Text(text.toUpperCase()),
+        child: Text(locale.translate(key).toUpperCase()),
       );
     }
 
-    if (currentStep == CurrentStep.scan) {
-      return [
-        TextButton(
-          child: Text(locale
-              .translate("pages.devices.connection.instructions")
-              .toUpperCase()),
-          onPressed: () => setState(() {
-            currentStep = CurrentStep.instructions;
-          }),
-        ),
-        TextButton(
-          child: Text(
-              locale.translate("pages.devices.connection.next").toUpperCase()),
-          onPressed: () {
-            if (selectedDevice != null) {
-              setState(() {
-                currentStep = CurrentStep.done;
-              });
-            }
-          },
-        ),
-      ];
-    } else if (currentStep == CurrentStep.instructions) {
-      return [
-        TextButton(
-          child: Text(locale
-              .translate("pages.devices.connection.settings")
-              .toUpperCase()),
-          onPressed: () => OpenSettings.openBluetoothSetting(),
-        ),
-        TextButton(
-          child: Text(
-              locale.translate("pages.devices.connection.ok").toUpperCase()),
-          onPressed: () => setState(() {
-            currentStep = CurrentStep.scan;
-          }),
-        ),
-      ];
-    } else {
-      return [
-        TextButton(
-          child: Text(
-              locale.translate("pages.devices.connection.back").toUpperCase()),
-          onPressed: () => setState(() {
-            currentStep = CurrentStep.scan;
-          }),
-        ),
-        TextButton(
-          child: Text(
-              locale.translate("pages.devices.connection.done").toUpperCase()),
-          onPressed: () {
-            FlutterBluePlus.stopScan();
-            if (selectedDevice != null) {
-              bloc.connectToDevice(
-                selectedDevice!,
-                widget.device.deviceManager,
-              );
-              Navigator.of(context).pop();
-            }
-          },
-        ),
-      ];
-    }
+    final stepButtonConfigs = {
+      CurrentStep.scan: [
+        buildTranslatedButton("pages.devices.connection.instructions", () {
+          setState(() => currentStep = CurrentStep.instructions);
+        }),
+        buildTranslatedButton("pages.devices.connection.next", () {
+          if (selectedDevice != null) {
+            setState(() => currentStep = CurrentStep.done);
+          }
+        }),
+      ],
+      CurrentStep.instructions: [
+        buildTranslatedButton("pages.devices.connection.settings", () {
+          OpenSettings.openBluetoothSetting();
+        }),
+        buildTranslatedButton("pages.devices.connection.ok", () {
+          setState(() => currentStep = CurrentStep.scan);
+        }),
+      ],
+      CurrentStep.done: [
+        buildTranslatedButton("pages.devices.connection.back", () {
+          setState(() => currentStep = CurrentStep.scan);
+        }),
+        buildTranslatedButton("pages.devices.connection.done", () {
+          FlutterBluePlus.stopScan();
+          if (selectedDevice != null) {
+            bloc.connectToDevice(
+              selectedDevice!,
+              widget.device.deviceManager,
+            );
+            Navigator.of(context).pop();
+          }
+        }),
+      ],
+    };
+    return stepButtonConfigs[currentStep] ?? [];
   }
 
   Widget stepTitle(
@@ -149,40 +120,38 @@ class _ConnectionDialogState extends State<ConnectionDialog> {
     BuildContext context,
   ) {
     RPLocalizations locale = RPLocalizations.of(context)!;
+    Widget buildStepTitle(String translationKey, BuildContext context,
+            {Color? color, String suffix = ""}) =>
+        Column(
+          children: [
+            Text(
+              locale.translate(translationKey) + suffix,
+              style: sectionTitleStyle.copyWith(color: color),
+            ),
+          ],
+        );
 
-    switch (currentStep) {
-      case CurrentStep.scan:
-        return Column(
-          children: [
-            Text(
-              locale.translate("pages.devices.connection.step.start.title"),
-              style: sectionTitleStyle.copyWith(
-                  color: Theme.of(context).primaryColor),
-            ),
-          ],
-        );
-      case CurrentStep.instructions:
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              "${locale.translate("pages.devices.connection.step.how_to.title")} ${locale.translate(device.name!)}",
-              style: sectionTitleStyle.copyWith(
-                  color: Theme.of(context).primaryColor),
-            ),
-          ],
-        );
-      case CurrentStep.done:
-        return Column(
-          children: [
-            Text(
-              "${locale.translate(device.name!)} ${locale.translate("pages.devices.connection.step.confirm.title")}",
-              style: sectionTitleStyle.copyWith(
-                  color: Theme.of(context).primaryColor),
-            ),
-          ],
-        );
-    }
+    final stepTitleMap = {
+      CurrentStep.scan: buildStepTitle(
+        "pages.devices.connection.step.start.title",
+        context,
+        color: Theme.of(context).primaryColor,
+      ),
+      CurrentStep.instructions: buildStepTitle(
+        "pages.devices.connection.step.how_to.title",
+        context,
+        color: Theme.of(context).primaryColor,
+        suffix: " ${locale.translate(device.name!)}",
+      ),
+      CurrentStep.done: buildStepTitle(
+        "${device.name!} ${locale.translate("pages.devices.connection.step.confirm.title")}",
+        context,
+        color: Theme.of(context).primaryColor,
+      ),
+    };
+
+    return stepTitleMap[currentStep] ??
+        Container(); // Return a default widget if necessary
   }
 
   Widget stepContent(

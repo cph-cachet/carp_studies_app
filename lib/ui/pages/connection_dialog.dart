@@ -3,9 +3,8 @@ part of carp_study_app;
 class ConnectionDialog extends StatefulWidget {
   final DeviceModel device;
 
-  const ConnectionDialog({super.key, required this.device});
+  const ConnectionDialog({Key? key, required this.device}) : super(key: key);
 
-  @override
   @override
   State<StatefulWidget> createState() => _ConnectionDialogState();
 }
@@ -21,98 +20,127 @@ class _ConnectionDialogState extends State<ConnectionDialog> {
 
     return AlertDialog(
       scrollable: true,
-      titlePadding: const EdgeInsets.symmetric(vertical: 5),
+      titlePadding: const EdgeInsets.symmetric(vertical: 4),
       insetPadding: const EdgeInsets.symmetric(vertical: 24, horizontal: 40),
-      title: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
+      title: _buildDialogTitle(locale),
+      content: SizedBox(
+        height: MediaQuery.of(context).size.height * 0.6,
+        child: _buildStepContent(locale),
+      ),
+      actions: _buildActionButtons(locale),
+    );
+  }
+
+  Widget _buildDialogTitle(RPLocalizations locale) {
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            IconButton(
+              onPressed: () => Navigator.of(context).pop(),
+              icon: const Icon(Icons.close),
+              padding: const EdgeInsets.only(right: 8),
+            ),
+          ],
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 24, right: 24, bottom: 8),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              IconButton(
-                  onPressed: () => Navigator.of(context).pop(),
-                  icon: const Icon(Icons.close),
-                  padding: const EdgeInsets.only(right: 10)),
+              stepTitle(currentStep, widget.device, context),
             ],
           ),
-          Padding(
-            padding: const EdgeInsets.only(left: 25, right: 25, bottom: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                stepTitle(currentStep, widget.device, context),
-              ],
-            ),
-          ),
-        ],
-      ),
-      content: SizedBox(
-          height: MediaQuery.of(context).size.height * 0.6,
-          child: stepContent(currentStep, widget.device, selectedDevice)),
-      actions: currentStep == CurrentStep.scan
-          ? [
-              TextButton(
-                child: Text(locale
-                    .translate("pages.devices.connection.instructions")
-                    .toUpperCase()),
-                onPressed: () => setState(() {
-                  currentStep = CurrentStep.instructions;
-                }),
-              ),
-              TextButton(
-                child: Text(locale
-                    .translate("pages.devices.connection.next")
-                    .toUpperCase()),
-                onPressed: () {
-                  if (selectedDevice != null) {
-                    setState(() {
-                      currentStep = CurrentStep.done;
-                    });
-                  }
-                },
-              ),
-            ]
-          : currentStep == CurrentStep.instructions
-              ? [
-                  TextButton(
-                    child: Text(locale
-                        .translate("pages.devices.connection.settings")
-                        .toUpperCase()),
-                    onPressed: () => OpenSettings.openBluetoothSetting(),
-                  ),
-                  TextButton(
-                    child: Text(locale
-                        .translate("pages.devices.connection.ok")
-                        .toUpperCase()),
-                    onPressed: () => setState(() {
-                      currentStep = CurrentStep.scan;
-                    }),
-                  ),
-                ]
-              : [
-                  TextButton(
-                      child: Text(locale
-                          .translate("pages.devices.connection.back")
-                          .toUpperCase()),
-                      onPressed: () => setState(() {
-                            currentStep = CurrentStep.scan;
-                          })),
-                  TextButton(
-                    child: Text(locale
-                        .translate("pages.devices.connection.done")
-                        .toUpperCase()),
-                    onPressed: () {
-                      FlutterBluePlus.stopScan();
-                      if (selectedDevice != null) {
-                        bloc.connectToDevice(
-                          selectedDevice!,
-                          widget.device.deviceManager,
-                        );
-                        Navigator.of(context).pop();
-                      }
-                    },
-                  ),
-                ],
+        ),
+      ],
     );
+  }
+
+  Widget _buildStepContent(RPLocalizations locale) {
+    switch (currentStep) {
+      case CurrentStep.scan:
+        return stepContent(currentStep, widget.device, selectedDevice);
+      case CurrentStep.instructions:
+        return connectionInstructions(widget.device, context);
+      case CurrentStep.done:
+        return confirmDevice(selectedDevice, context);
+      default:
+        return Container(); // Return a default widget or an empty container
+    }
+  }
+
+  List<Widget> _buildActionButtons(RPLocalizations locale) {
+    Widget tButton(String text, VoidCallback onPressed) {
+      return TextButton(
+        onPressed: onPressed,
+        child: Text(text.toUpperCase()),
+      );
+    }
+
+    if (currentStep == CurrentStep.scan) {
+      return [
+        TextButton(
+          child: Text(locale
+              .translate("pages.devices.connection.instructions")
+              .toUpperCase()),
+          onPressed: () => setState(() {
+            currentStep = CurrentStep.instructions;
+          }),
+        ),
+        TextButton(
+          child: Text(
+              locale.translate("pages.devices.connection.next").toUpperCase()),
+          onPressed: () {
+            if (selectedDevice != null) {
+              setState(() {
+                currentStep = CurrentStep.done;
+              });
+            }
+          },
+        ),
+      ];
+    } else if (currentStep == CurrentStep.instructions) {
+      return [
+        TextButton(
+          child: Text(locale
+              .translate("pages.devices.connection.settings")
+              .toUpperCase()),
+          onPressed: () => OpenSettings.openBluetoothSetting(),
+        ),
+        TextButton(
+          child: Text(
+              locale.translate("pages.devices.connection.ok").toUpperCase()),
+          onPressed: () => setState(() {
+            currentStep = CurrentStep.scan;
+          }),
+        ),
+      ];
+    } else {
+      return [
+        TextButton(
+          child: Text(
+              locale.translate("pages.devices.connection.back").toUpperCase()),
+          onPressed: () => setState(() {
+            currentStep = CurrentStep.scan;
+          }),
+        ),
+        TextButton(
+          child: Text(
+              locale.translate("pages.devices.connection.done").toUpperCase()),
+          onPressed: () {
+            FlutterBluePlus.stopScan();
+            if (selectedDevice != null) {
+              bloc.connectToDevice(
+                selectedDevice!,
+                widget.device.deviceManager,
+              );
+              Navigator.of(context).pop();
+            }
+          },
+        ),
+      ];
+    }
   }
 
   Widget stepTitle(

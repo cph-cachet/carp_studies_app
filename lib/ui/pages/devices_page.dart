@@ -38,16 +38,6 @@ class DevicesPageState extends State<DevicesPage> {
   }
 
   @override
-  void initState() {
-    super.initState();
-    for (var element in physicalDevices) {
-      element.deviceEvents.listen((event) {
-        setState(() {});
-      });
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;
     return Scaffold(
@@ -80,10 +70,11 @@ class DevicesPageState extends State<DevicesPage> {
               flex: 4,
               child: CustomScrollView(
                 slivers: [
-                  ...smartphoneDeviceListWidget(),
+                  ...smartphoneDeviceListWidget(locale),
                   if (physicalDevices.isNotEmpty)
-                    ...physicalDevicesListWidget(),
-                  if (onlineServices.isNotEmpty) ...onlineServicesListWidget(),
+                    ...physicalDevicesListWidget(locale),
+                  if (onlineServices.isNotEmpty)
+                    ...onlineServicesListWidget(locale),
                 ],
               ),
             ),
@@ -93,16 +84,14 @@ class DevicesPageState extends State<DevicesPage> {
     );
   }
 
-  List<Widget> smartphoneDeviceListWidget() {
-    RPLocalizations locale = RPLocalizations.of(context)!;
-    return [
-      DevicesPageListTitle(locale: locale, type: DevicesPageTypes.phone),
-      SliverList(
-        delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
-          return Center(
-            child: StudiesCard(
-              child: Column(
-                children: cardListBuilder(
+  List<Widget> smartphoneDeviceListWidget(RPLocalizations locale) => [
+        DevicesPageListTitle(locale: locale, type: DevicesPageTypes.phone),
+        SliverList(
+          delegate:
+              SliverChildBuilderDelegate((BuildContext context, int index) {
+            return Center(
+              child: StudiesCard(
+                child: cardListBuilder(
                   smartphoneDevice[index].icon!,
                   smartphoneDevice[index].phoneInfo['name']!,
                   (
@@ -111,79 +100,66 @@ class DevicesPageState extends State<DevicesPage> {
                   ),
                 ),
               ),
-            ),
-          );
-        }, childCount: smartphoneDevice.length),
-      ), // List of smartphone(s)
-    ];
-  }
+            );
+          }, childCount: smartphoneDevice.length),
+        ), // List of smartphone(s)
+      ];
 
-  List<Widget> physicalDevicesListWidget() {
-    RPLocalizations locale = RPLocalizations.of(context)!;
+  List<Widget> physicalDevicesListWidget(RPLocalizations locale) => [
+        DevicesPageListTitle(locale: locale, type: DevicesPageTypes.devices),
+        SliverList(
+          delegate:
+              SliverChildBuilderDelegate((BuildContext context, int index) {
+            DeviceModel device = physicalDevices[index];
+            return devicesPageCardStream(
+                device.deviceEvents,
+                () => cardListBuilder(
+                    device.icon!,
+                    locale.translate(device.name!),
+                    (device.id, device.batteryLevel ?? 0),
+                    enableFeedback: true,
+                    onTap: () => physicalDeviceClicked(device),
+                    trailing: device.getDeviceStatusIcon is String
+                        ? Text(
+                            locale
+                                .translate(device.getDeviceStatusIcon)
+                                .toUpperCase(),
+                            style: aboutCardTitleStyle.copyWith(
+                                color: Theme.of(context).primaryColor))
+                        : device.getDeviceStatusIcon),
+                DeviceStatus.unknown);
+          }, childCount: physicalDevices.length),
+        ),
+      ];
 
-    return [
-      DevicesPageListTitle(locale: locale, type: DevicesPageTypes.devices),
-      SliverList(
-        delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
-          RPLocalizations locale = RPLocalizations.of(context)!;
-          DeviceModel device = physicalDevices[index];
-          var children = cardListBuilder(
-              device.icon!,
-              locale.translate(device.name!),
-              (device.id, device.batteryLevel ?? 0),
-              enableFeedback: true,
-              onTap: () => physicalDeviceClicked(device),
-              trailing: device.getDeviceStatusIcon is String
-                  ? Text(
-                      locale
-                          .translate(device.getDeviceStatusIcon)
-                          .toUpperCase(),
-                      style: aboutCardTitleStyle.copyWith(
-                          color: Theme.of(context).primaryColor))
-                  : device.getDeviceStatusIcon);
+  List<Widget> onlineServicesListWidget(RPLocalizations locale) => [
+        DevicesPageListTitle(locale: locale, type: DevicesPageTypes.services),
+        SliverList(
+          delegate:
+              SliverChildBuilderDelegate((BuildContext context, int index) {
+            DeviceModel service = onlineServices[index];
+            return devicesPageCardStream(
+                service.deviceEvents,
+                () => cardListBuilder(
+                      service.icon!,
+                      locale.translate(service.name!),
+                      null,
+                      trailing: service.getServiceStatusIcon is String
+                          ? Text(
+                              locale
+                                  .translate(service.getServiceStatusIcon)
+                                  .toUpperCase(),
+                              style: aboutCardTitleStyle.copyWith(
+                                  color: Theme.of(context).primaryColor))
+                          : service.getServiceStatusIcon,
+                      isThreeLine: false,
+                    ),
+                DeviceStatus.unknown);
+          }, childCount: onlineServices.length),
+        ),
+      ];
 
-          return devicesPageCardStream(
-              device.deviceEvents, children, DeviceStatus.unknown);
-        }, childCount: physicalDevices.length),
-      )
-    ];
-  }
-
-  List<Widget> onlineServicesListWidget() {
-    RPLocalizations locale = RPLocalizations.of(context)!;
-
-    return [
-      DevicesPageListTitle(locale: locale, type: DevicesPageTypes.services),
-      SliverList(
-        delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
-          RPLocalizations locale = RPLocalizations.of(context)!;
-
-          var service = onlineServices[index];
-          var children = cardListBuilder(
-            service.icon!,
-            locale.translate(service.name!),
-            null,
-            trailing: service.getServiceStatusIcon is String
-                ? Text(
-                    locale
-                        .translate(service.getServiceStatusIcon)
-                        .toUpperCase(),
-                    style: aboutCardTitleStyle.copyWith(
-                        color: Theme.of(context).primaryColor))
-                : service.getServiceStatusIcon,
-            isThreeLine: false,
-          );
-
-          return devicesPageCardStream<DeviceStatus>(
-              onlineServices[index].deviceEvents,
-              children,
-              DeviceStatus.unknown);
-        }, childCount: onlineServices.length),
-      )
-    ];
-  }
-
-  List<Widget> cardListBuilder(
+  Widget cardListBuilder(
     Icon leading,
     String title,
     (String, int)? subtitle, {
@@ -192,55 +168,50 @@ class DevicesPageState extends State<DevicesPage> {
     enableFeedback = false,
     isThreeLine = true,
   }) =>
-      [
-        ListTile(
-          enableFeedback: enableFeedback,
-          isThreeLine: isThreeLine,
-          leading: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [leading],
-          ),
-          title: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Text(title),
-            ],
-          ),
-          subtitle: subtitle != null
-              ? Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(subtitle.$1),
-                    BatteryPercentage(batteryLevel: subtitle.$2),
-                  ],
-                )
-              : null,
-          trailing: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              if (trailing != null) trailing,
-            ],
-          ),
-          onTap: onTap,
-        )
-      ];
+      ListTile(
+        enableFeedback: enableFeedback,
+        isThreeLine: isThreeLine,
+        leading: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [leading],
+        ),
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Text(title),
+          ],
+        ),
+        subtitle: subtitle != null
+            ? Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(subtitle.$1),
+                  BatteryPercentage(batteryLevel: subtitle.$2),
+                ],
+              )
+            : null,
+        trailing: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            if (trailing != null) trailing,
+          ],
+        ),
+        onTap: onTap,
+      );
 
   Widget devicesPageCardStream<T>(
-      Stream<T> stream, List<Widget> children, T? initialData) {
-    return Center(
-      child: StudiesCard(
-        child: StreamBuilder<T>(
-          stream: stream,
-          initialData: initialData,
-          builder: (context, AsyncSnapshot<T> snapshot) => Column(
-            children: children,
+          Stream<T> stream, Widget Function() childBuilder, T? initialData) =>
+      Center(
+        child: StudiesCard(
+          child: StreamBuilder<T>(
+            stream: stream,
+            initialData: initialData,
+            builder: (context, AsyncSnapshot<T> snapshot) => childBuilder(),
           ),
         ),
-      ),
-    );
-  }
+      );
 
   void physicalDeviceClicked(DeviceModel device) async {
     if (await FlutterBluePlus.isAvailable == false) {

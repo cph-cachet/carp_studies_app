@@ -21,7 +21,8 @@ class DevicesPageListTitle extends StatelessWidget {
     return SliverToBoxAdapter(
       child: Padding(
         padding: const EdgeInsets.only(left: 16, right: 16, top: 8),
-        child: Text(locale.translate("pages.devices.${type.name}.title").toUpperCase(),
+        child: Text(
+            locale.translate("pages.devices.${type.name}.title").toUpperCase(),
             style: dataCardTitleStyle.copyWith(
                 color: Theme.of(context).primaryColor)),
       ),

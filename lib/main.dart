@@ -93,7 +93,8 @@ part 'ui/pages/loading_page.dart';
 part 'ui/pages/error_page.dart';
 part 'ui/pages/cans_login_android_webview.dart';
 part 'ui/pages/cans_login.dart';
-part 'ui/pages/connection_dialog.dart';
+part 'ui/pages/devices_page.connection_dialog.dart';
+part 'ui/pages/devices_page.list_title.dart';
 
 part 'ui/widgets/study_card.dart';
 part 'ui/widgets/horizontal_bar.dart';
@@ -101,6 +102,7 @@ part 'ui/widgets/location_usage_dialog.dart';
 part 'ui/widgets/charts_legend.dart';
 part 'ui/widgets/details_banner.dart';
 part 'ui/widgets/studies_card.dart';
+part 'ui/widgets/battery_icon.dart';
 
 part 'ui/cards/steps_card.dart';
 part 'ui/cards/heart_rate_card.dart';

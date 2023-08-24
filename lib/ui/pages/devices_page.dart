@@ -78,19 +78,14 @@ class DevicesPageState extends State<DevicesPage> {
             ),
             Expanded(
               flex: 4,
-              child: StreamBuilder<UserTask>(
-                  stream: AppTaskController().userTaskEvents,
-                  builder: (context, AsyncSnapshot<UserTask> snapshot) {
-                    return CustomScrollView(
-                      slivers: [
-                        ...smartphoneDeviceListWidget(),
-                        if (physicalDevices.isNotEmpty)
-                          ...physicalDevicesListWidget(),
-                        if (onlineServices.isNotEmpty)
-                          ...onlineServicesListWidget(),
-                      ],
-                    );
-                  }),
+              child: CustomScrollView(
+                slivers: [
+                  ...smartphoneDeviceListWidget(),
+                  if (physicalDevices.isNotEmpty)
+                    ...physicalDevicesListWidget(),
+                  if (onlineServices.isNotEmpty) ...onlineServicesListWidget(),
+                ],
+              ),
             ),
           ],
         ),
@@ -101,15 +96,7 @@ class DevicesPageState extends State<DevicesPage> {
   List<Widget> smartphoneDeviceListWidget() {
     RPLocalizations locale = RPLocalizations.of(context)!;
     return [
-      SliverToBoxAdapter(
-        child: Padding(
-          padding: const EdgeInsets.only(left: 15, right: 15, top: 10),
-          child: Text(
-              locale.translate("pages.devices.phone.title").toUpperCase(),
-              style: dataCardTitleStyle.copyWith(
-                  color: Theme.of(context).primaryColor)),
-        ),
-      ), // Title Widget
+      DevicesPageListTitle(locale: locale, type: DevicesPageTypes.phone),
       SliverList(
         delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
           return Center(
@@ -135,14 +122,7 @@ class DevicesPageState extends State<DevicesPage> {
     RPLocalizations locale = RPLocalizations.of(context)!;
 
     return [
-      SliverToBoxAdapter(
-          child: Padding(
-        padding: const EdgeInsets.only(left: 16, right: 16, top: 8),
-        child: Text(
-            locale.translate("pages.devices.devices.title").toUpperCase(),
-            style: dataCardTitleStyle.copyWith(
-                color: Theme.of(context).primaryColor)),
-      )),
+      DevicesPageListTitle(locale: locale, type: DevicesPageTypes.devices),
       SliverList(
         delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
           RPLocalizations locale = RPLocalizations.of(context)!;
@@ -173,15 +153,7 @@ class DevicesPageState extends State<DevicesPage> {
     RPLocalizations locale = RPLocalizations.of(context)!;
 
     return [
-      SliverToBoxAdapter(
-        child: Padding(
-          padding: const EdgeInsets.only(left: 15, right: 15, top: 10),
-          child: Text(
-              locale.translate("pages.devices.services.title").toUpperCase(),
-              style: dataCardTitleStyle.copyWith(
-                  color: Theme.of(context).primaryColor)),
-        ),
-      ),
+      DevicesPageListTitle(locale: locale, type: DevicesPageTypes.services),
       SliverList(
         delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
           RPLocalizations locale = RPLocalizations.of(context)!;
@@ -211,45 +183,6 @@ class DevicesPageState extends State<DevicesPage> {
     ];
   }
 
-  Widget _showBatteryPercentage(BuildContext context, int bateryLevel,
-      {double scale = 1}) {
-    double width = 25 * scale;
-    double height = 12 * scale;
-    return Row(mainAxisSize: MainAxisSize.min, children: [
-      //SizedBox(width: 8),
-      ClipRRect(
-        borderRadius: const BorderRadius.all(Radius.circular(2)),
-        child: Container(
-          decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.secondary,
-              border: Border.all(color: Theme.of(context).primaryColor)),
-          width: width,
-          height: height,
-          child: Row(children: [
-            SizedBox(
-                width: bateryLevel != 0 ? bateryLevel * (width * 0.9 / 100) : 0,
-                height: height * 0.75,
-                child: Container(color: Theme.of(context).primaryColor)),
-          ]),
-        ),
-      ),
-      ClipRRect(
-        borderRadius: const BorderRadius.all(Radius.circular(4)),
-        child: Container(
-          decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.secondary,
-              border: Border.all(color: Theme.of(context).primaryColor)),
-          width: 2,
-          height: 4,
-        ),
-      ),
-      const SizedBox(width: 4),
-      Text(
-        "$bateryLevel%",
-      )
-    ]);
-  }
-
   List<Widget> cardListBuilder(
     Icon leading,
     String title,
@@ -258,42 +191,41 @@ class DevicesPageState extends State<DevicesPage> {
     void Function()? onTap,
     enableFeedback = false,
     isThreeLine = true,
-  }) {
-    return [
-      ListTile(
-        enableFeedback: enableFeedback,
-        isThreeLine: isThreeLine,
-        leading: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [leading],
-        ),
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Text(title),
-          ],
-        ),
-        subtitle: subtitle != null
-            ? Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(subtitle.$1),
-                  _showBatteryPercentage(context, subtitle.$2, scale: 0.9),
-                ],
-              )
-            : null,
-        trailing: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            if (trailing != null) trailing,
-          ],
-        ),
-        onTap: onTap,
-      )
-    ];
-  }
+  }) =>
+      [
+        ListTile(
+          enableFeedback: enableFeedback,
+          isThreeLine: isThreeLine,
+          leading: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [leading],
+          ),
+          title: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text(title),
+            ],
+          ),
+          subtitle: subtitle != null
+              ? Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(subtitle.$1),
+                    BatteryPercentage(batteryLevel: subtitle.$2),
+                  ],
+                )
+              : null,
+          trailing: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              if (trailing != null) trailing,
+            ],
+          ),
+          onTap: onTap,
+        )
+      ];
 
   Widget devicesPageCardStream<T>(
       Stream<T> stream, List<Widget> children, T? initialData) {

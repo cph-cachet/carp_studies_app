@@ -38,7 +38,7 @@ class _ConnectionDialogState extends State<ConnectionDialog> {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             IconButton(
-              onPressed: () => Navigator.of(context).pop(),
+              onPressed: () => context.pop(),
               icon: const Icon(Icons.close),
               padding: const EdgeInsets.only(right: 8),
             ),
@@ -59,7 +59,7 @@ class _ConnectionDialogState extends State<ConnectionDialog> {
 
   Widget _buildStepContent(RPLocalizations locale) {
     final stepContentMap = {
-      CurrentStep.scan: stepContent(currentStep, widget.device, selectedDevice),
+      CurrentStep.scan: stepContent(currentStep, widget.device),
       CurrentStep.instructions: connectionInstructions(widget.device, context),
       CurrentStep.done: confirmDevice(selectedDevice, context),
     };
@@ -106,7 +106,7 @@ class _ConnectionDialogState extends State<ConnectionDialog> {
               selectedDevice!,
               widget.device.deviceManager,
             );
-            Navigator.of(context).pop();
+            context.pop();
           }
         }),
       ],
@@ -144,7 +144,7 @@ class _ConnectionDialogState extends State<ConnectionDialog> {
         suffix: " ${locale.translate(device.name!)}",
       ),
       CurrentStep.done: buildStepTitle(
-        "${device.name!} ${locale.translate("pages.devices.connection.step.confirm.title")}",
+        "${locale.translate(device.name!)} ${locale.translate("pages.devices.connection.step.confirm.title")}",
         context,
         color: Theme.of(context).primaryColor,
       ),
@@ -157,7 +157,6 @@ class _ConnectionDialogState extends State<ConnectionDialog> {
   Widget stepContent(
     CurrentStep currentStep,
     DeviceModel device,
-    BluetoothDevice? selectedDevice,
   ) {
     RPLocalizations locale = RPLocalizations.of(context)!;
 
@@ -188,7 +187,9 @@ class _ConnectionDialogState extends State<ConnectionDialog> {
                               Theme.of(context).primaryColor.withOpacity(0.2),
                           onTap: () {
                             selectedDevice = bluetoothDevice.value.device;
-                            setState(() => selected = bluetoothDevice.key);
+                            setState(() {
+                              selected = bluetoothDevice.key;
+                            });
                           },
                         ),
                       )

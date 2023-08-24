@@ -11,9 +11,6 @@ class DevicesPage extends StatefulWidget {
 }
 
 class DevicesPageState extends State<DevicesPage> {
-  int selected = 40;
-  BluetoothDevice? selectedDevice;
-
   StreamSubscription? isScanningStream;
   StreamSubscription? scanResultStream;
   StreamSubscription? bluetoothStateStream;
@@ -38,6 +35,16 @@ class DevicesPageState extends State<DevicesPage> {
     scanResultStream?.cancel();
     bluetoothStateStream?.cancel();
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    for (var element in physicalDevices) {
+      element.deviceEvents.listen((event) {
+        setState(() {});
+      });
+    }
   }
 
   @override
@@ -130,7 +137,7 @@ class DevicesPageState extends State<DevicesPage> {
     return [
       SliverToBoxAdapter(
           child: Padding(
-        padding: const EdgeInsets.only(left: 15, right: 15, top: 10),
+        padding: const EdgeInsets.only(left: 16, right: 16, top: 8),
         child: Text(
             locale.translate("pages.devices.devices.title").toUpperCase(),
             style: dataCardTitleStyle.copyWith(
@@ -146,11 +153,14 @@ class DevicesPageState extends State<DevicesPage> {
               (device.id, device.batteryLevel ?? 0),
               enableFeedback: true,
               onTap: () => physicalDeviceClicked(device),
-              trailing: device.statusIcon is String
-                  ? Text(locale.translate(device.statusIcon).toUpperCase(),
+              trailing: device.getDeviceStatusIcon is String
+                  ? Text(
+                      locale
+                          .translate(device.getDeviceStatusIcon)
+                          .toUpperCase(),
                       style: aboutCardTitleStyle.copyWith(
                           color: Theme.of(context).primaryColor))
-                  : device.statusIcon);
+                  : device.getDeviceStatusIcon);
 
           return devicesPageCardStream(
               device.deviceEvents, children, DeviceStatus.unknown);
@@ -177,20 +187,25 @@ class DevicesPageState extends State<DevicesPage> {
           RPLocalizations locale = RPLocalizations.of(context)!;
 
           var service = onlineServices[index];
-          var ch = cardListBuilder(
+          var children = cardListBuilder(
             service.icon!,
             locale.translate(service.name!),
             null,
-            trailing: service.statusIcon is String
-                ? Text(locale.translate(service.statusIcon).toUpperCase(),
+            trailing: service.getServiceStatusIcon is String
+                ? Text(
+                    locale
+                        .translate(service.getServiceStatusIcon)
+                        .toUpperCase(),
                     style: aboutCardTitleStyle.copyWith(
                         color: Theme.of(context).primaryColor))
-                : service.statusIcon,
+                : service.getServiceStatusIcon,
             isThreeLine: false,
           );
 
           return devicesPageCardStream<DeviceStatus>(
-              onlineServices[index].deviceEvents, ch, DeviceStatus.unknown);
+              onlineServices[index].deviceEvents,
+              children,
+              DeviceStatus.unknown);
         }, childCount: onlineServices.length),
       )
     ];
@@ -295,27 +310,12 @@ class DevicesPageState extends State<DevicesPage> {
     );
   }
 
-  Future<void> showConnectionDialog(
-    CurrentStep currentStep,
-    DeviceModel device,
-    setState,
-    selected,
-    BluetoothDevice? selectedDevice,
-  ) {
-    return showDialog(
-      context: context,
-      barrierDismissible: true,
-      builder: (context) {
-        return ConnectionDialog(device: device);
-      },
-    );
-  }
-
   void physicalDeviceClicked(DeviceModel device) async {
     if (await FlutterBluePlus.isAvailable == false) {
       warning("Bluetooth not supported by this device");
       return;
     }
+
     if (device.status == DeviceStatus.connected ||
         device.status == DeviceStatus.connecting) {
       return;
@@ -347,8 +347,11 @@ class DevicesPageState extends State<DevicesPage> {
       }
     });
 
-    await showConnectionDialog(
-        CurrentStep.scan, device, setState, selected, selectedDevice);
+    await showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (context) => ConnectionDialog(device: device),
+    );
 
     FlutterBluePlus.stopScan();
   }

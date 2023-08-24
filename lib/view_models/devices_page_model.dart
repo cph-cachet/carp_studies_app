@@ -49,7 +49,8 @@ class DeviceModel {
   Icon? get icon => deviceTypeIcon[type!];
 
   /// The icon for the status of device.
-  dynamic get statusIcon => deviceStatusIcon[status];
+  dynamic get getDeviceStatusIcon => deviceStatusIcon[status];
+  dynamic get getServiceStatusIcon => serviceStatusIcon[status];
 
   /// The name for the status of device.
   String? get statusText => deviceStatusText[status];
@@ -95,10 +96,24 @@ class DeviceModel {
 
   static Map<DeviceStatus, dynamic> get deviceStatusIcon => {
         DeviceStatus.initialized: "pages.devices.status.action.connect",
-        DeviceStatus.connecting:
-            const Icon(Icons.sensors_off, color: CACHET.GREEN_1, size: 30),
+        DeviceStatus.connecting: const Icon(Icons.bluetooth_searching_rounded,
+            color: CACHET.GREEN_1, size: 30),
+        DeviceStatus.connected: const Icon(Icons.bluetooth_rounded,
+            color: CACHET.GREEN_1, size: 30),
+        DeviceStatus.disconnected: "pages.devices.status.action.connect",
+        DeviceStatus.paired: "pages.devices.status.action.connect",
+        DeviceStatus.error:
+            const Icon(Icons.error_outline, color: CACHET.RED_1, size: 30),
+        DeviceStatus.unknown:
+            const Icon(Icons.error_outline, color: CACHET.RED_1, size: 30),
+      };
+
+  static Map<DeviceStatus, dynamic> get serviceStatusIcon => {
+        DeviceStatus.initialized: "pages.devices.status.action.connect",
+        DeviceStatus.connecting: const Icon(Icons.sensors_off_rounded,
+            color: CACHET.GREEN_1, size: 30),
         DeviceStatus.connected:
-            const Icon(Icons.sensors, color: CACHET.GREEN_1, size: 30),
+            const Icon(Icons.sensors_rounded, color: CACHET.GREEN_1, size: 30),
         DeviceStatus.disconnected: "pages.devices.status.action.connect",
         DeviceStatus.paired: "pages.devices.status.action.connect",
         DeviceStatus.error:

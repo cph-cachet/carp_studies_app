@@ -4,9 +4,9 @@ import 'exports.dart';
   MockSpec<SmartphoneDeploymentController>(),
   MockSpec<HeartRateCardViewModel>(),
   MockSpec<HourlyHeartRate>(),
+  MockSpec<PolarHRSample>(),
   MockSpec<PolarHR>(),
   MockSpec<Measurement>(),
-  // MockSpec<DataPointHeader>(),
   MockSpec<DataModel>(),
 ])
 void main() {
@@ -27,6 +27,7 @@ void main() {
       group('should listen to heart rate events', () {
         final mockSmartphoneDeploymentController =
             MockSmartphoneDeploymentController();
+        final mockPolarHRSample = MockPolarHRSample();
         final mockPolarHRDatum = MockPolarHR();
         final mockMeasurement = MockMeasurement();
         final viewModel = HeartRateCardViewModel();
@@ -45,7 +46,8 @@ void main() {
         group('and update model variables', () {
           test('with one event', () async {
             // Add a heart rate data point to the stream
-            when(mockPolarHRDatum.hr).thenReturn(80);
+            when(mockPolarHRSample.hr).thenReturn(80);
+            when(mockPolarHRDatum.samples).thenReturn([mockPolarHRSample]);
             when(mockMeasurement.data).thenReturn(mockPolarHRDatum);
 
             heartRateStreamController.sink.add(mockMeasurement);
@@ -60,13 +62,15 @@ void main() {
           });
           test('with multiple events', () async {
             // Add a heart rate data point to the stream
-            when(mockPolarHRDatum.hr).thenReturn(90);
+            when(mockPolarHRSample.hr).thenReturn(90);
+            when(mockPolarHRDatum.samples).thenReturn([mockPolarHRSample]);
             when(mockMeasurement.data).thenReturn(mockPolarHRDatum);
 
             heartRateStreamController.sink.add(mockMeasurement);
 
             await Future.delayed(const Duration(milliseconds: 100));
-            when(mockPolarHRDatum.hr).thenReturn(60);
+            when(mockPolarHRSample.hr).thenReturn(60);
+            when(mockPolarHRDatum.samples).thenReturn([mockPolarHRSample]);
             when(mockMeasurement.data).thenReturn(mockPolarHRDatum);
 
             heartRateStreamController.sink.add(mockMeasurement);
@@ -83,7 +87,8 @@ void main() {
           });
           test('with events with data that is 0', () async {
             // Add a heart rate data point to the stream
-            when(mockPolarHRDatum.hr).thenReturn(0);
+            when(mockPolarHRSample.hr).thenReturn(0);
+            when(mockPolarHRDatum.samples).thenReturn([mockPolarHRSample]);
             when(mockMeasurement.data).thenReturn(mockPolarHRDatum);
 
             heartRateStreamController.sink.add(mockMeasurement);
@@ -98,9 +103,10 @@ void main() {
           });
           test('with contactStatus being true', () async {
             // Add a heart rate data point to the stream
-            when(mockPolarHRDatum.hr).thenReturn(1);
-            when(mockPolarHRDatum.contactStatusSupported).thenReturn(true);
-            when(mockPolarHRDatum.contactStatus).thenReturn(true);
+            when(mockPolarHRSample.hr).thenReturn(1);
+            when(mockPolarHRSample.contactStatusSupported).thenReturn(true);
+            when(mockPolarHRSample.contactStatus).thenReturn(true);
+            when(mockPolarHRDatum.samples).thenReturn([mockPolarHRSample]);
             when(mockMeasurement.data).thenReturn(mockPolarHRDatum);
 
             heartRateStreamController.sink.add(mockMeasurement);

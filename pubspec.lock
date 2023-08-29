@@ -85,10 +85,10 @@ packages:
     dependency: "direct main"
     description:
       name: awesome_notifications
-      sha256: "2b430c75cc879d6cfd52bb6eb2b5c1591ed425347816408cdcbd3f6916bba14c"
+      sha256: "6ba98d73553c8a54e7b77f8dd8b95ce9d32a7839ef182b28cf2ad54ec28b1821"
       url: "https://pub.dev"
     source: hosted
-    version: "0.7.4+1"
+    version: "0.7.5-dev.3"
   battery_plus:
     dependency: transitive
     description:
@@ -222,7 +222,7 @@ packages:
     description:
       path: "packages/carp_audio_package"
       ref: "develop-1.1.0"
-      resolved-ref: d7d7d5ab12afbf8b08500c526f5c545e7cca34e0
+      resolved-ref: dec7323ae5d0a1c115fc0a7c3ff92e3c172aad58
       url: "https://github.com/cph-cachet/carp.sensing-flutter.git"
     source: git
     version: "1.1.0"
@@ -231,7 +231,7 @@ packages:
     description:
       path: "backends/carp_backend"
       ref: "develop-1.1.0"
-      resolved-ref: d7d7d5ab12afbf8b08500c526f5c545e7cca34e0
+      resolved-ref: dec7323ae5d0a1c115fc0a7c3ff92e3c172aad58
       url: "https://github.com/cph-cachet/carp.sensing-flutter.git"
     source: git
     version: "1.1.0"
@@ -240,7 +240,7 @@ packages:
     description:
       path: "packages/carp_connectivity_package"
       ref: "develop-1.1.0"
-      resolved-ref: d7d7d5ab12afbf8b08500c526f5c545e7cca34e0
+      resolved-ref: dec7323ae5d0a1c115fc0a7c3ff92e3c172aad58
       url: "https://github.com/cph-cachet/carp.sensing-flutter.git"
     source: git
     version: "1.1.1"
@@ -249,7 +249,7 @@ packages:
     description:
       path: "packages/carp_context_package"
       ref: "develop-1.1.0"
-      resolved-ref: d7d7d5ab12afbf8b08500c526f5c545e7cca34e0
+      resolved-ref: dec7323ae5d0a1c115fc0a7c3ff92e3c172aad58
       url: "https://github.com/cph-cachet/carp.sensing-flutter.git"
     source: git
     version: "1.1.0"
@@ -258,7 +258,7 @@ packages:
     description:
       path: carp_core
       ref: "develop-1.1.0"
-      resolved-ref: d7d7d5ab12afbf8b08500c526f5c545e7cca34e0
+      resolved-ref: dec7323ae5d0a1c115fc0a7c3ff92e3c172aad58
       url: "https://github.com/cph-cachet/carp.sensing-flutter.git"
     source: git
     version: "1.1.0"
@@ -267,7 +267,7 @@ packages:
     description:
       path: "packages/carp_esense_package"
       ref: "develop-1.1.0"
-      resolved-ref: d7d7d5ab12afbf8b08500c526f5c545e7cca34e0
+      resolved-ref: dec7323ae5d0a1c115fc0a7c3ff92e3c172aad58
       url: "https://github.com/cph-cachet/carp.sensing-flutter.git"
     source: git
     version: "1.1.0"
@@ -276,7 +276,7 @@ packages:
     description:
       path: carp_mobile_sensing
       ref: "develop-1.1.0"
-      resolved-ref: d7d7d5ab12afbf8b08500c526f5c545e7cca34e0
+      resolved-ref: dec7323ae5d0a1c115fc0a7c3ff92e3c172aad58
       url: "https://github.com/cph-cachet/carp.sensing-flutter.git"
     source: git
     version: "1.1.4"
@@ -285,10 +285,10 @@ packages:
     description:
       path: "packages/carp_polar_package"
       ref: "develop-1.1.0"
-      resolved-ref: d7d7d5ab12afbf8b08500c526f5c545e7cca34e0
+      resolved-ref: dec7323ae5d0a1c115fc0a7c3ff92e3c172aad58
       url: "https://github.com/cph-cachet/carp.sensing-flutter.git"
     source: git
-    version: "1.1.0"
+    version: "1.1.1"
   carp_serializable:
     dependency: "direct main"
     description:
@@ -302,7 +302,7 @@ packages:
     description:
       path: "packages/carp_survey_package"
       ref: "develop-1.1.0"
-      resolved-ref: d7d7d5ab12afbf8b08500c526f5c545e7cca34e0
+      resolved-ref: dec7323ae5d0a1c115fc0a7c3ff92e3c172aad58
       url: "https://github.com/cph-cachet/carp.sensing-flutter.git"
     source: git
     version: "1.1.0"
@@ -311,7 +311,7 @@ packages:
     description:
       path: "backends/carp_webservices"
       ref: "develop-1.1.0"
-      resolved-ref: d7d7d5ab12afbf8b08500c526f5c545e7cca34e0
+      resolved-ref: dec7323ae5d0a1c115fc0a7c3ff92e3c172aad58
       url: "https://github.com/cph-cachet/carp.sensing-flutter.git"
     source: git
     version: "1.1.0"
@@ -452,13 +452,13 @@ packages:
     source: hosted
     version: "0.7.8"
   device_info_plus:
-    dependency: "direct overridden"
+    dependency: transitive
     description:
       name: device_info_plus
-      sha256: "9b1a0c32b2a503f8fe9f8764fac7b5fcd4f6bd35d8f49de5350bccf9e2a33b8a"
+      sha256: "86add5ef97215562d2e090535b0a16f197902b10c369c558a100e74ea06e8659"
       url: "https://pub.dev"
     source: hosted
-    version: "9.0.0"
+    version: "9.0.3"
   device_info_plus_platform_interface:
     dependency: transitive
     description:
@@ -784,7 +784,7 @@ packages:
     source: hosted
     version: "4.0.17"
   intl:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: intl
       sha256: "3bc132a9dbce73a7e4a21a17d06e1878839ffbf975568bc875c60537824b0c4d"
@@ -1139,10 +1139,10 @@ packages:
     dependency: transitive
     description:
       name: permission_handler_android
-      sha256: "2ffaf52a21f64ac9b35fe7369bb9533edbd4f698e5604db8645b1064ff4cf221"
+      sha256: d74e77a5ecd38649905db0a7d05ef16bed42ff263b9efb73ed794317c5764ec3
       url: "https://pub.dev"
     source: hosted
-    version: "10.3.3"
+    version: "10.3.4"
   permission_handler_apple:
     dependency: transitive
     description:
@@ -1203,10 +1203,10 @@ packages:
     dependency: transitive
     description:
       name: polar
-      sha256: "81b3ccd9ae58f1fbf2de5b26d47c34c08c439841f50cee6f4e80f6cc68ef4f82"
+      sha256: "221c61298c0132122a8858eb9a452507013ab11a4883591562624f731046936b"
       url: "https://pub.dev"
     source: hosted
-    version: "5.2.1"
+    version: "6.0.1"
   pool:
     dependency: transitive
     description:
@@ -1808,18 +1808,18 @@ packages:
     dependency: transitive
     description:
       name: win32
-      sha256: "5a751eddf9db89b3e5f9d50c20ab8612296e4e8db69009788d6c8b060a84191c"
+      sha256: "9e82a402b7f3d518fb9c02d0e9ae45952df31b9bf34d77baf19da2de03fc2aaa"
       url: "https://pub.dev"
     source: hosted
-    version: "4.1.4"
+    version: "5.0.7"
   win32_registry:
     dependency: transitive
     description:
       name: win32_registry
-      sha256: "1c52f994bdccb77103a6231ad4ea331a244dbcef5d1f37d8462f713143b0bfae"
+      sha256: e4506d60b7244251bc59df15656a3093501c37fb5af02105a944d73eb95be4c9
       url: "https://pub.dev"
     source: hosted
-    version: "1.1.0"
+    version: "1.1.1"
   xdg_directories:
     dependency: transitive
     description:

@@ -6,23 +6,22 @@ import 'dart:convert';
 import 'dart:ui' as ui;
 import 'dart:io';
 
-import 'package:flutter/material.dart' hide TimeOfDay;
-import 'package:flutter/src/rendering/sliver_persistent_header.dart';
+import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:timeago/timeago.dart' as timeago;
-import 'package:intl/intl.dart';
 import 'package:camera/camera.dart';
 import 'package:video_player/video_player.dart';
-import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:open_settings/open_settings.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
-// import 'package:flutter_activity_recognition/flutter_activity_recognition.dart';
+import 'package:intl/intl.dart';
+import 'package:flutter/src/rendering/sliver_persistent_header.dart';
+import 'package:flutter_blue_plus/flutter_blue_plus.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 // the CARP packages
 import 'package:carp_serializable/carp_serializable.dart';

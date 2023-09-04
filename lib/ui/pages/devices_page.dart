@@ -102,7 +102,7 @@ class DevicesPageState extends State<DevicesPage> {
               ),
             );
           }, childCount: smartphoneDevice.length),
-        ), // List of smartphone(s)
+        ),
       ];
 
   List<Widget> physicalDevicesListWidget(RPLocalizations locale) => [

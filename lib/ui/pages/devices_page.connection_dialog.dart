@@ -158,58 +158,62 @@ class _ConnectionDialogState extends State<ConnectionDialog> {
     CurrentStep currentStep,
     DeviceModel device,
   ) {
-    RPLocalizations locale = RPLocalizations.of(context)!;
-
     if (currentStep == CurrentStep.scan) {
-      return Column(
-        children: [
-          Text(
-            "${locale.translate("pages.devices.connection.step.start.1")} ${locale.translate(device.name!)} ${locale.translate("pages.devices.connection.step.start.2")}",
-            style: aboutCardContentStyle,
-            textAlign: TextAlign.justify,
-          ),
-          Expanded(
-            child: StreamBuilder<List<ScanResult>>(
-              stream: FlutterBluePlus.scanResults,
-              initialData: const [],
-              builder: (context, snapshot) => SingleChildScrollView(
-                child: Column(
-                  children: snapshot.data!
-                      .where((element) => element.device.localName.isNotEmpty)
-                      .toList()
-                      .asMap()
-                      .entries
-                      .map(
-                        (bluetoothDevice) => ListTile(
-                          selected: bluetoothDevice.key == selected,
-                          title: Text(bluetoothDevice.value.device.localName),
-                          selectedTileColor:
-                              Theme.of(context).primaryColor.withOpacity(0.2),
-                          onTap: () {
-                            selectedDevice = bluetoothDevice.value.device;
-                            setState(() {
-                              selected = bluetoothDevice.key;
-                            });
-                          },
-                        ),
-                      )
-                      .toList(),
-                ),
-              ),
-            ),
-          ),
-          Text(
-            "${locale.translate("pages.devices.connection.step.start.3")} ${locale.translate(device.name!)}  ${locale.translate("pages.devices.connection.step.start.4")} ${locale.translate(device.name!)} ${locale.translate("pages.devices.connection.step.start.5")}",
-            style: aboutCardContentStyle,
-            textAlign: TextAlign.justify,
-          )
-        ],
-      );
+      return scanWidget(device, context);
     } else {
       return (currentStep == CurrentStep.instructions)
           ? connectionInstructions(device, context)
           : confirmDevice(selectedDevice, context);
     }
+  }
+
+  Widget scanWidget(DeviceModel device, BuildContext context) {
+    RPLocalizations locale = RPLocalizations.of(context)!;
+
+    return Column(
+      children: [
+        Text(
+          "${locale.translate("pages.devices.connection.step.start.1")} ${locale.translate(device.name!)} ${locale.translate("pages.devices.connection.step.start.2")}",
+          style: aboutCardContentStyle,
+          textAlign: TextAlign.justify,
+        ),
+        Expanded(
+          child: StreamBuilder<List<ScanResult>>(
+            stream: FlutterBluePlus.scanResults,
+            initialData: const [],
+            builder: (context, snapshot) => SingleChildScrollView(
+              child: Column(
+                children: snapshot.data!
+                    .where((element) => element.device.localName.isNotEmpty)
+                    .toList()
+                    .asMap()
+                    .entries
+                    .map(
+                      (bluetoothDevice) => ListTile(
+                        selected: bluetoothDevice.key == selected,
+                        title: Text(bluetoothDevice.value.device.localName),
+                        selectedTileColor:
+                            Theme.of(context).primaryColor.withOpacity(0.2),
+                        onTap: () {
+                          selectedDevice = bluetoothDevice.value.device;
+                          setState(() {
+                            selected = bluetoothDevice.key;
+                          });
+                        },
+                      ),
+                    )
+                    .toList(),
+              ),
+            ),
+          ),
+        ),
+        Text(
+          "${locale.translate("pages.devices.connection.step.start.3")} ${locale.translate(device.name!)}  ${locale.translate("pages.devices.connection.step.start.4")} ${locale.translate(device.name!)} ${locale.translate("pages.devices.connection.step.start.5")}",
+          style: aboutCardContentStyle,
+          textAlign: TextAlign.justify,
+        )
+      ],
+    );
   }
 
   Widget connectionInstructions(DeviceModel device, BuildContext context) {

@@ -160,10 +160,10 @@ class _ConnectionDialogState extends State<ConnectionDialog> {
   ) {
     if (currentStep == CurrentStep.scan) {
       return scanWidget(device, context);
+    } else if (currentStep == CurrentStep.instructions) {
+      return connectionInstructions(device, context);
     } else {
-      return (currentStep == CurrentStep.instructions)
-          ? connectionInstructions(device, context)
-          : confirmDevice(selectedDevice, context);
+      return confirmDevice(selectedDevice, context);
     }
   }
 

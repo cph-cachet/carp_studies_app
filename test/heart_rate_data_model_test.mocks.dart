@@ -323,9 +323,7 @@ class MockSmartphoneDeploymentController extends _i1.Mock
   @override
   _i5.Future<void> configure({
     _i2.DataEndPoint? dataEndPoint,
-    String? privacySchemaName = r'dk.cachet.carp',
     _i2.DataTransformer? transformer,
-    int? coverageFrequency = 5,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -333,9 +331,7 @@ class MockSmartphoneDeploymentController extends _i1.Mock
           [],
           {
             #dataEndPoint: dataEndPoint,
-            #privacySchemaName: privacySchemaName,
             #transformer: transformer,
-            #coverageFrequency: coverageFrequency,
           },
         ),
         returnValue: _i5.Future<void>.value(),
@@ -693,10 +689,10 @@ class MockHourlyHeartRate extends _i1.Mock implements _i4.HourlyHeartRate {
       ) as Map<String, dynamic>);
 }
 
-/// A class which mocks [PolarHR].
+/// A class which mocks [PolarHRSample].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockPolarHR extends _i1.Mock implements _i6.PolarHR {
+class MockPolarHRSample extends _i1.Mock implements _i6.PolarHRSample {
   @override
   int get hr => (super.noSuchMethod(
         Invocation.getter(#hr),
@@ -704,41 +700,11 @@ class MockPolarHR extends _i1.Mock implements _i6.PolarHR {
         returnValueForMissingStub: 0,
       ) as int);
   @override
-  set hr(int? _hr) => super.noSuchMethod(
-        Invocation.setter(
-          #hr,
-          _hr,
-        ),
-        returnValueForMissingStub: null,
-      );
-  @override
-  List<int> get rrs => (super.noSuchMethod(
-        Invocation.getter(#rrs),
-        returnValue: <int>[],
-        returnValueForMissingStub: <int>[],
-      ) as List<int>);
-  @override
-  set rrs(List<int>? _rrs) => super.noSuchMethod(
-        Invocation.setter(
-          #rrs,
-          _rrs,
-        ),
-        returnValueForMissingStub: null,
-      );
-  @override
   List<int> get rrsMs => (super.noSuchMethod(
         Invocation.getter(#rrsMs),
         returnValue: <int>[],
         returnValueForMissingStub: <int>[],
       ) as List<int>);
-  @override
-  set rrsMs(List<int>? _rrsMs) => super.noSuchMethod(
-        Invocation.setter(
-          #rrsMs,
-          _rrsMs,
-        ),
-        returnValueForMissingStub: null,
-      );
   @override
   bool get contactStatus => (super.noSuchMethod(
         Invocation.getter(#contactStatus),
@@ -746,28 +712,26 @@ class MockPolarHR extends _i1.Mock implements _i6.PolarHR {
         returnValueForMissingStub: false,
       ) as bool);
   @override
-  set contactStatus(bool? _contactStatus) => super.noSuchMethod(
-        Invocation.setter(
-          #contactStatus,
-          _contactStatus,
-        ),
-        returnValueForMissingStub: null,
-      );
-  @override
   bool get contactStatusSupported => (super.noSuchMethod(
         Invocation.getter(#contactStatusSupported),
         returnValue: false,
         returnValueForMissingStub: false,
       ) as bool);
   @override
-  set contactStatusSupported(bool? _contactStatusSupported) =>
-      super.noSuchMethod(
-        Invocation.setter(
-          #contactStatusSupported,
-          _contactStatusSupported,
+  Map<String, dynamic> toJson() => (super.noSuchMethod(
+        Invocation.method(
+          #toJson,
+          [],
         ),
-        returnValueForMissingStub: null,
-      );
+        returnValue: <String, dynamic>{},
+        returnValueForMissingStub: <String, dynamic>{},
+      ) as Map<String, dynamic>);
+}
+
+/// A class which mocks [PolarHR].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockPolarHR extends _i1.Mock implements _i6.PolarHR {
   @override
   Function get fromJsonFunction => (super.noSuchMethod(
         Invocation.getter(#fromJsonFunction),
@@ -781,27 +745,11 @@ class MockPolarHR extends _i1.Mock implements _i6.PolarHR {
         returnValueForMissingStub: '',
       ) as String);
   @override
-  String get deviceIdentifier => (super.noSuchMethod(
-        Invocation.getter(#deviceIdentifier),
-        returnValue: '',
-        returnValueForMissingStub: '',
-      ) as String);
-  @override
-  set deviceIdentifier(String? _deviceIdentifier) => super.noSuchMethod(
-        Invocation.setter(
-          #deviceIdentifier,
-          _deviceIdentifier,
-        ),
-        returnValueForMissingStub: null,
-      );
-  @override
-  set deviceTimestamp(int? _deviceTimestamp) => super.noSuchMethod(
-        Invocation.setter(
-          #deviceTimestamp,
-          _deviceTimestamp,
-        ),
-        returnValueForMissingStub: null,
-      );
+  List<_i6.PolarHRSample> get samples => (super.noSuchMethod(
+        Invocation.getter(#samples),
+        returnValue: <_i6.PolarHRSample>[],
+        returnValueForMissingStub: <_i6.PolarHRSample>[],
+      ) as List<_i6.PolarHRSample>);
   @override
   set sensorSpecificData(_i3.Data? _sensorSpecificData) => super.noSuchMethod(
         Invocation.setter(

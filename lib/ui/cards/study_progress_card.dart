@@ -20,60 +20,44 @@ class StudyProgressCardWidgetState extends State<StudyProgressCardWidget> {
     widget.model.updateProgress();
     widget.model.toString();
 
-    return Padding(
-      padding: const EdgeInsets.all(5.0),
-      child: Card(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        elevation: 4,
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              StreamBuilder(
-                stream: widget.model.userTaskEvents,
-                builder: (context, AsyncSnapshot<UserTask> snapshot) {
-                  return Column(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.only(left: 10),
-                        child: Row(
-                          children: <Widget>[
-                            Expanded(
-                              flex: 5,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  const SizedBox(height: 5),
-                                  Text(
-                                      locale.translate(
-                                          'cards.study_progress.title'),
-                                      style: dataCardTitleStyle),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                          height: 160,
-                          child: HorizontalBar(
-                            names: widget.model.progress
-                                .map((progress) =>
-                                    locale.translate(progress.state))
-                                .toList(),
-                            values: widget.model.progress
-                                .map((progress) => progress.value)
-                                .toList(),
-                            colors: widget.colors,
-                            order: OrderType.none,
-                            labelOrientation: LabelOrientation.horizontal,
-                          )),
+    return StudiesCard(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: StreamBuilder(
+          stream: widget.model.userTaskEvents,
+          builder: (context, AsyncSnapshot<UserTask> snapshot) {
+            return Column(
+              children: [
+                Container(
+                  padding: const EdgeInsets.only(left: 8),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      Text(locale.translate('cards.study_progress.title'),
+                          style: dataCardTitleStyle),
                     ],
-                  );
-                },
-              ),
-            ],
-          ),
+                  ),
+                ),
+                SizedBox(
+                    height: 160,
+                    child: LayoutBuilder(builder:
+                        (BuildContext context, BoxConstraints constraints) {
+                      return HorizontalBar(
+                        parentWidth: constraints.maxWidth,
+                        names: widget.model.progress
+                            .map((progress) => locale.translate(progress.state))
+                            .toList(),
+                        values: widget.model.progress
+                            .map((progress) => progress.value)
+                            .toList(),
+                        colors: widget.colors,
+                        order: OrderType.none,
+                        labelOrientation: LabelOrientation.horizontal,
+                      );
+                    })),
+              ],
+            );
+          },
         ),
       ),
     );

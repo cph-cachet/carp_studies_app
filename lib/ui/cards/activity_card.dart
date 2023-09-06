@@ -66,34 +66,29 @@ class ActivityCardState extends State<ActivityCard> {
   Widget build(BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;
 
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Card(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        elevation: 4,
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              ChartsLegend(
-                title: locale.translate('cards.activity.title'),
-                iconAssetName: Icon(Icons.fitness_center,
-                    color: Theme.of(context).colorScheme.primary),
-                heroTag: 'activity-card',
-                values: [
-                  '$_walk ${locale.translate('cards.activity.walking')}',
-                  '$_run ${locale.translate('cards.activity.running')}',
-                  '$_cycle ${locale.translate('cards.activity.cycling')}'
-                ],
-                colors: widget.colors,
-              ),
-              SizedBox(
-                height: 160,
-                width: MediaQuery.of(context).size.width * 0.9,
-                child: barCharts,
-              ),
-            ],
-          ),
+    return StudiesCard(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            ChartsLegend(
+              title: locale.translate('cards.activity.title'),
+              iconAssetName: Icon(Icons.fitness_center,
+                  color: Theme.of(context).colorScheme.primary),
+              heroTag: 'activity-card',
+              values: [
+                '$_walk ${locale.translate('cards.activity.walking')}',
+                '$_run ${locale.translate('cards.activity.running')}',
+                '$_cycle ${locale.translate('cards.activity.cycling')}'
+              ],
+              colors: widget.colors,
+            ),
+            SizedBox(
+              height: 160,
+              width: MediaQuery.of(context).size.width * 0.9,
+              child: barCharts,
+            ),
+          ],
         ),
       ),
     );

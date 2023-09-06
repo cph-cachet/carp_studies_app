@@ -38,78 +38,71 @@ class _DistanceCardState extends State<DistanceCard> {
   Widget build(BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;
 
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Card(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        elevation: 4,
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 10.0),
-                child: Text(
-                    locale.translate('cards.distance.title').toUpperCase(),
-                    style: dataCardTitleStyle),
-              ),
-              // UI that shows the average distance over the week, in the style of Apple Health
-              Padding(
-                padding: const EdgeInsets.all(10),
-                child: Column(
-                  children: [
-                    // Text saying "Average distance" in the style of Apple Health
-                    Row(
-                      children: [
-                        Text(
-                          locale
-                              .translate('cards.distance.average')
-                              .toUpperCase(),
-                          style: TextStyle(
-                            color: Colors.grey.withOpacity(0.8),
-                            fontSize: 12,
-                          ),
+    return StudiesCard(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 10.0),
+              child: Text(
+                  locale.translate('cards.distance.title').toUpperCase(),
+                  style: dataCardTitleStyle),
+            ),
+            // UI that shows the average distance over the week, in the style of Apple Health
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: Column(
+                children: [
+                  // Text saying "Average distance" in the style of Apple Health
+                  Row(
+                    children: [
+                      Text(
+                        locale
+                            .translate('cards.distance.average')
+                            .toUpperCase(),
+                        style: TextStyle(
+                          color: Colors.grey.withOpacity(0.8),
+                          fontSize: 12,
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
+                  ),
 
-                    Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 4.0),
-                          child: Text(
-                            _distance,
-                            style: TextStyle(
-                              color: Theme.of(context)
-                                      .textTheme
-                                      .bodyLarge
-                                      ?.color ??
-                                  Colors.black,
-                              fontSize: 18,
-                            ),
-                          ),
-                        ),
-                        Text(
-                          ' km',
+                  Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 4.0),
+                        child: Text(
+                          _distance,
                           style: TextStyle(
-                            color: Colors.grey.withOpacity(0.8),
-                            fontSize: 16,
+                            color:
+                                Theme.of(context).textTheme.bodyLarge?.color ??
+                                    Colors.black,
+                            fontSize: 18,
                           ),
                         ),
-                      ],
-                    ),
-                  ],
-                ),
+                      ),
+                      Text(
+                        ' km',
+                        style: TextStyle(
+                          color: Colors.grey.withOpacity(0.8),
+                          fontSize: 16,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
+            ),
 
-              SizedBox(
-                height: 160,
-                width: MediaQuery.of(context).size.width * 0.9,
-                child: barCharts,
-              ),
-            ],
-          ),
+            SizedBox(
+              height: 160,
+              width: MediaQuery.of(context).size.width * 0.9,
+              child: barCharts,
+            ),
+          ],
         ),
       ),
     );

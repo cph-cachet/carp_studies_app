@@ -291,8 +291,8 @@ class StudyAppBLoC {
   /// Map a selected device to the device in the protocol and connect to it.
   void connectToDevice(BluetoothDevice selectedDevice, DeviceManager device) {
     if (device is BTLEDeviceManager) {
-      device.btleAddress = selectedDevice.id.id;
-      device.btleName = selectedDevice.name;
+      device.btleAddress = selectedDevice.remoteId.str;
+      device.btleName = selectedDevice.localName;
     }
 
     // when the device id is updated, save the deployment

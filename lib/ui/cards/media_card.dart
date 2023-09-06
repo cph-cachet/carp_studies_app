@@ -18,62 +18,57 @@ class MediaCardWidgetState extends State<MediaCardWidget> {
       total += element.tasksDone;
     }
 
-    return Padding(
-      padding: const EdgeInsets.all(5.0),
-      child: Card(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        elevation: 4,
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: <Widget>[
-              Column(
-                children: [
-                  Row(
-                    children: <Widget>[
-                      Expanded(
-                        flex: 1,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            const SizedBox(height: 5),
-                            Text('$total MEDIA', style: dataCardTitleStyle),
-                            Column(
-                                children: widget.modelsList
-                                    .asMap()
-                                    .entries
-                                    .map((entry) => Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            const SizedBox(height: 15),
-                                            Text(
-                                              '${entry.value.tasksDone} ${locale.translate('cards.${entry.value.taskType}.title')}',
-                                              style: dataCardTitleStyle
-                                                  .copyWith(fontSize: 14),
-                                            ),
-                                            HorizontalBar(
-                                                names: entry.value.taskCount
-                                                    .map((task) => locale
-                                                        .translate(task.title))
-                                                    .toList(),
-                                                values: entry.value.taskCount
-                                                    .map((task) => task.size)
-                                                    .toList(),
-                                                colors: CACHET.COLOR_LIST,
-                                                height: 18),
-                                          ],
-                                        ))
-                                    .toList()),
-                          ],
-                        ),
+    return StudiesCard(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: <Widget>[
+            Column(
+              children: [
+                Row(
+                  children: <Widget>[
+                    Expanded(
+                      flex: 1,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          const SizedBox(height: 5),
+                          Text('$total MEDIA', style: dataCardTitleStyle),
+                          Column(
+                              children: widget.modelsList
+                                  .asMap()
+                                  .entries
+                                  .map((entry) => Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          const SizedBox(height: 15),
+                                          Text(
+                                            '${entry.value.tasksDone} ${locale.translate('cards.${entry.value.taskType}.title')}',
+                                            style: dataCardTitleStyle.copyWith(
+                                                fontSize: 14),
+                                          ),
+                                          HorizontalBar(
+                                              names: entry.value.taskCount
+                                                  .map((task) => locale
+                                                      .translate(task.title))
+                                                  .toList(),
+                                              values: entry.value.taskCount
+                                                  .map((task) => task.size)
+                                                  .toList(),
+                                              colors: CACHET.COLOR_LIST,
+                                              height: 18),
+                                        ],
+                                      ))
+                                  .toList()),
+                        ],
                       ),
-                    ],
-                  ),
-                ],
-              )
-            ],
-          ),
+                    ),
+                  ],
+                ),
+              ],
+            )
+          ],
         ),
       ),
     );

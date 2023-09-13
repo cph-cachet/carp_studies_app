@@ -96,7 +96,7 @@ class CarpStudyAppState extends State<CarpStudyApp> {
         path: '/task/:taskId',
         parentNavigatorKey: _rootNavigatorKey,
         builder: (context, state) {
-          final taskId = state.params['taskId'] ?? '';
+          final taskId = state.pathParameters['taskId'] ?? '';
           final task = AppTaskController().getUserTask(taskId);
           return task?.widget ?? const ErrorPage();
         },
@@ -127,13 +127,13 @@ class CarpStudyAppState extends State<CarpStudyApp> {
         path: '/message/:messageId',
         parentNavigatorKey: _rootNavigatorKey,
         builder: (context, state) =>
-            MessageDetailsPage(messageId: state.params['messageId'] ?? ''),
+            MessageDetailsPage(messageId: state.pathParameters['messageId'] ?? ''),
       ),
       GoRoute(
         path: '/invitation/:invitationId',
         parentNavigatorKey: _rootNavigatorKey,
         builder: (context, state) => InvitationDetailsPage(
-          invitationId: state.params['invitationId'] ?? '',
+          invitationId: state.pathParameters['invitationId'] ?? '',
         ),
       ),
       GoRoute(

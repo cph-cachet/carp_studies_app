@@ -12,17 +12,17 @@ dependencies:
     sdk: flutter
 
   carp_serializable: ^1.1.0
-  carp_core: ^1.2.0
-  carp_mobile_sensing: ^1.2.0
-  carp_context_package: ^1.1.0
-  carp_connectivity_package: ^1.1.0
-  carp_survey_package: ^0.40.1
-  carp_audio_package: ^1.1.0
-  carp_esense_package: ^1.1.0
-  carp_polar_package: ^1.1.0
-  carp_health_package: ^2.6.0
-  carp_backend: ^1.1.0
-  carp_webservices: ^1.1.0
+  carp_core: ^1.3.0
+  carp_mobile_sensing: ^1.3.0
+  carp_context_package: ^1.3.0
+  carp_connectivity_package: ^1.3.0
+  carp_survey_package: ^1.3.0
+  carp_audio_package: ^1.3.0
+  carp_esense_package: ^1.3.0
+  carp_polar_package: ^1.3.0
+  carp_health_package: ^2.7.0
+  carp_backend: ^1.3.0
+  carp_webservices: ^1.3.0
 
   research_package: ^1.3.0
   cognition_package: ^1.4.0
@@ -42,20 +42,14 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   fl_chart: ^0.63.0
-  google_fonts: ^5.1.0
+  google_fonts: ^6.1.0
   flutter_inappwebview: ^6.0.0-beta.23
-  go_router: ^10.1.2
+  go_router: ^11.0.0
   flutter_svg: ^2.0.4
-  awesome_notifications: 0.7.5-dev.3
   flutter_blue_plus: ^1.15.5
 
 dependency_overrides:
   uuid: 4.0.0
-  carp_survey_package:
-    git:
-      url: https://github.com/cph-cachet/carp.sensing-flutter.git
-      ref: develop-1.1.0
-      path: packages/carp_survey_package/
 
 dev_dependencies:
   # flutter_test:

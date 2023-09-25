@@ -1,5 +1,5 @@
 PODS:
-  - "app_settings (3.0.0+1)":
+  - app_settings (5.1.1):
     - Flutter
   - audio_session (0.0.1):
     - Flutter
@@ -7,9 +7,6 @@ PODS:
     - Flutter
   - audiofileplayer (0.0.1):
     - Flutter
-  - awesome_notifications (0.7.5-dev.3):
-    - Flutter
-    - IosAwnCore (= 0.7.5-dev.3)
   - battery_plus (1.0.0):
     - Flutter
   - camera_avfoundation (0.0.1):
@@ -46,7 +43,8 @@ PODS:
   - FMDB (2.7.5):
     - FMDB/standard (= 2.7.5)
   - FMDB/standard (2.7.5)
-  - IosAwnCore (0.7.5-dev.3)
+  - health (1.0.4):
+    - Flutter
   - just_audio (0.0.1):
     - Flutter
   - light (0.0.1):
@@ -69,8 +67,8 @@ PODS:
     - Flutter
   - polar (0.0.1):
     - Flutter
-    - PolarBleSdk (~> 5.2.0)
-  - PolarBleSdk (5.2.0):
+    - PolarBleSdk (~> 5.3.0)
+  - PolarBleSdk (5.3.0):
     - RxSwift (~> 6.5.0)
     - SwiftProtobuf (~> 1.0)
   - ReachabilitySwift (5.0.0)
@@ -85,7 +83,7 @@ PODS:
   - sqflite (0.0.3):
     - Flutter
     - FMDB (>= 2.7.5)
-  - SwiftProtobuf (1.22.1)
+  - SwiftProtobuf (1.23.0)
   - url_launcher_ios (0.0.1):
     - Flutter
   - video_player_avfoundation (0.0.1):
@@ -96,7 +94,6 @@ DEPENDENCIES:
   - audio_session (from `.symlinks/plugins/audio_session/ios`)
   - audio_streamer (from `.symlinks/plugins/audio_streamer/ios`)
   - audiofileplayer (from `.symlinks/plugins/audiofileplayer/ios`)
-  - awesome_notifications (from `.symlinks/plugins/awesome_notifications/ios`)
   - battery_plus (from `.symlinks/plugins/battery_plus/ios`)
   - camera_avfoundation (from `.symlinks/plugins/camera_avfoundation/ios`)
   - connectivity_plus (from `.symlinks/plugins/connectivity_plus/ios`)
@@ -109,6 +106,7 @@ DEPENDENCIES:
   - flutter_local_notifications (from `.symlinks/plugins/flutter_local_notifications/ios`)
   - flutter_sound (from `.symlinks/plugins/flutter_sound/ios`)
   - flutter_timezone (from `.symlinks/plugins/flutter_timezone/ios`)
+  - health (from `.symlinks/plugins/health/ios`)
   - just_audio (from `.symlinks/plugins/just_audio/ios`)
   - light (from `.symlinks/plugins/light/ios`)
   - location (from `.symlinks/plugins/location/ios`)
@@ -131,7 +129,6 @@ SPEC REPOS:
     - ESense
     - flutter_sound_core
     - FMDB
-    - IosAwnCore
     - OrderedSet
     - PolarBleSdk
     - ReachabilitySwift
@@ -147,8 +144,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/audio_streamer/ios"
   audiofileplayer:
     :path: ".symlinks/plugins/audiofileplayer/ios"
-  awesome_notifications:
-    :path: ".symlinks/plugins/awesome_notifications/ios"
   battery_plus:
     :path: ".symlinks/plugins/battery_plus/ios"
   camera_avfoundation:
@@ -173,6 +168,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_sound/ios"
   flutter_timezone:
     :path: ".symlinks/plugins/flutter_timezone/ios"
+  health:
+    :path: ".symlinks/plugins/health/ios"
   just_audio:
     :path: ".symlinks/plugins/just_audio/ios"
   light:
@@ -207,11 +204,10 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/video_player_avfoundation/ios"
 
 SPEC CHECKSUMS:
-  app_settings: 54b8813f690b34f757c0bf97a46637bed5acc76c
+  app_settings: 017320c6a680cdc94c799949d95b84cb69389ebc
   audio_session: 4f3e461722055d21515cf3261b64c973c062f345
   audio_streamer: af49e73eb66f71c4eeabb4bbcb05f122d03a6709
   audiofileplayer: 4aaff759a721ec3a850a682e0d9ec554e5f9e86f
-  awesome_notifications: 1b6393d6ce02878dc50d0ae87baf7bdbc9d802a2
   battery_plus: 9bff772a7e5e4d5381ca3ca92a97373a3d8b2738
   camera_avfoundation: 3125e8cd1a4387f6f31c6c63abb8a55892a9eeeb
   connectivity_plus: 07c49e96d7fc92bc9920617b83238c4d178b446a
@@ -227,7 +223,7 @@ SPEC CHECKSUMS:
   flutter_sound_core: 26c10e5832e76aaacfae252d8925232281c486ae
   flutter_timezone: ffb07bdad3c6276af8dada0f11978d8a1f8a20bb
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
-  IosAwnCore: edf31913fd18960ebcde7c05912dc860ca2b63b2
+  health: 5a380c0f6c4f619535845992993964293962e99e
   just_audio: baa7252489dbcf47a4c7cc9ca663e9661c99aafa
   light: 86af7a847d218a9a2376bc1c1ae40c3410441135
   location: d5cf8598915965547c3f36761ae9cc4f4e87d22e
@@ -238,15 +234,15 @@ SPEC CHECKSUMS:
   path_provider_foundation: 29f094ae23ebbca9d3d0cec13889cd9060c0e943
   pedometer: 381969883680ade42559782cc41a3bbd453d8234
   permission_handler_apple: e76247795d700c14ea09e3a2d8855d41ee80a2e6
-  polar: f4e6a7929dbc1136295430cd081e9e047d06e513
-  PolarBleSdk: 55b5de863ddc3640efc4df91fe8541a9802c7dc2
+  polar: c48d43d90cb45c893b107339557be03d0fadd39d
+  PolarBleSdk: 0311c165d9e4c4b1f3d7a40add1f5ae43ed6980e
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   RxSwift: 5710a9e6b17f3c3d6e40d6e559b9fa1e813b2ef8
   screen_state: a7ae251997e97f3f001839df09b57313b0ddef18
   sensors_plus: bda64198ccc7d3ccbb49e6ae17d92f67687bee20
   shared_preferences_foundation: 5b919d13b803cadd15ed2dc053125c68730e5126
   sqflite: 31f7eba61e3074736dff8807a9b41581e4f7f15a
-  SwiftProtobuf: 7773c4e96a99d7b8ab7cda0fc30a883732ff93b1
+  SwiftProtobuf: b70d65f419fbfe61a2d58003456ca5da58e337d6
   url_launcher_ios: 08a3dfac5fb39e8759aeb0abbd5d9480f30fc8b4
   video_player_avfoundation: 81e49bb3d9fb63dccf9fa0f6d877dc3ddbeac126
 

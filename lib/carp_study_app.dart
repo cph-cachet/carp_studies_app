@@ -126,8 +126,8 @@ class CarpStudyAppState extends State<CarpStudyApp> {
       GoRoute(
         path: '/message/:messageId',
         parentNavigatorKey: _rootNavigatorKey,
-        builder: (context, state) =>
-            MessageDetailsPage(messageId: state.pathParameters['messageId'] ?? ''),
+        builder: (context, state) => MessageDetailsPage(
+            messageId: state.pathParameters['messageId'] ?? ''),
       ),
       GoRoute(
         path: '/invitation/:invitationId',

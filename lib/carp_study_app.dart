@@ -119,9 +119,7 @@ class CarpStudyAppState extends State<CarpStudyApp> {
         path: '/login',
         parentNavigatorKey: _rootNavigatorKey,
         redirect: (context, state) => CarpService().authenticated ? '/' : null,
-        builder: (context, state) => LoginPage(
-          bloc.data.loginPageViewModel,
-        ),
+        builder: (context, state) => const LoginPage(),
       ),
       GoRoute(
         path: '/message/:messageId',

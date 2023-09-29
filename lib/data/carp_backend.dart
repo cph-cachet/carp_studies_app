@@ -11,18 +11,6 @@ class CarpBackend {
   /// The URL of the official CARP Web Site.
   static const String carpWebsiteUrl = "https://carp.cachet.dk";
 
-  // TODO - take into account deployment mode
-
-  /// The URI for the web-based authentication.
-  WebUri get loginUri => WebUri(
-      'https://cans.cachet.dk/portal/playground/?redirect=carp.studies://auth');
-  // 'https://cans.cachet.dk/portal/${bloc.deploymentMode.name}/login?redirect=carp.studies://auth');
-
-  /// The URI for the web-based registration of users.
-  WebUri get registerUri => WebUri(
-      'https://cans.cachet.dk/portal/playground/register?redirect=carp.studies://auth');
-  // 'https://cans.cachet.dk/portal/${bloc.deploymentMode.name}/register?redirect=carp.studies://auth');
-
   static const Map<DeploymentMode, String> uris = {
     DeploymentMode.dev: 'dev',
     DeploymentMode.test: 'test',
@@ -39,7 +27,7 @@ class CarpBackend {
   CarpApp? app;
 
   /// Has the user been authenticated?
-  bool? get isAuthenticated => user != null;
+  bool get isAuthenticated => CarpService().authenticated;
 
   /// The authenticated user
   CarpUser? get user => CarpService().currentUser;
@@ -47,7 +35,7 @@ class CarpBackend {
   /// The URI of the CANS server - depending on deployment mode.
   Uri get uri => Uri(
         scheme: 'https',
-        host: 'cans.cachet.dk',
+        host: 'carp.computerome.dk',
         pathSegments: [
           uris[bloc.deploymentMode]!,
         ],
@@ -80,63 +68,40 @@ class CarpBackend {
   Future<void> initialize() async {
     app = CarpApp(
       name: "CAWS @ DTU",
-      uri: Uri(
-          scheme: 'https', host: 'carp.computerome.dk', pathSegments: ['dev']),
-      authURL: Uri(
-        scheme: 'https',
-        host: 'carp.computerome.dk',
-        pathSegments: ['auth', 'dev', 'realms', 'Carp'],
+      uri: uri.replace(pathSegments: [uris[bloc.deploymentMode]!]),
+      authURL: uri.replace(
+        pathSegments: ['auth', uris[bloc.deploymentMode]!, 'realms', 'Carp'],
       ),
       clientId: 'carp-webservices-dart',
       redirectURI: Uri.parse('study-app://auth'),
-      discoveryURL: Uri(
-        scheme: 'https',
-        host: 'carp.computerome.dk',
-        pathSegments: ['auth', 'dev', 'realms', 'Carp', '.well-known', 'openid-configuration'],
-      ),
-      // Uri(
-      //   scheme: 'https',
-      //   host: 'carp.computerome.dk',
-      //   pathSegments: ['callback', 'study-app'],
-      // ),
+      discoveryURL: uri.replace(pathSegments: [
+        'auth',
+        uris[bloc.deploymentMode]!,
+        'realms',
+        'Carp',
+        '.well-known',
+        'openid-configuration'
+      ]),
       studyId: studyId,
       studyDeploymentId: studyDeploymentId,
     );
 
     CarpService().configure(app!);
     // var response = CarpService().authenticate();
-    // print(response);
 
-    if (oauthToken != null) {
-      // if we have a token, we can authenticate the user
-      await authenticateWithRefreshToken(oauthToken!.refreshToken);
-    }
     info('$runtimeType initialized - app: $app');
   }
 
-  Future<CarpUser?> authenticateWithRefreshToken(String refreshToken) async {
-    try {
-      var response = CarpService().authenticate();
+  Future<CarpUser> authenticate() async {
+    var response = await CarpService().authenticate();
 
-      print(response);
+    username = response.username;
+    oauthToken = response.token;
+    bloc.stateStream.sink.add(StudiesAppState.accessTokenRetrieved);
 
-      CarpUser user = CarpUser();
+    CarpParticipationService().configureFrom(CarpService());
 
-      info('User authenticated - user: $user');
-
-      // saving username & token on the phone
-      username = user.username;
-      oauthToken = user.token;
-      bloc.stateStream.sink.add(StudiesAppState.accessTokenRetrieved);
-
-      // configure the participation service in order to get the invitations
-      CarpParticipationService().configureFrom(CarpService());
-      return user;
-    } on Exception catch (error) {
-      warning(
-          '$runtimeType - error authenticating based on refresh token - $error');
-      return null;
-    }
+    return response;
   }
 
   Future<ConsentDocument?> uploadInformedConsent(

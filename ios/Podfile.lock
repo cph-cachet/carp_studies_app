@@ -34,13 +34,6 @@ PODS:
     - Flutter
   - flutter_blue_plus (0.0.1):
     - Flutter
-  - flutter_inappwebview (0.0.1):
-    - Flutter
-    - flutter_inappwebview/Core (= 0.0.1)
-    - OrderedSet (~> 5.0)
-  - flutter_inappwebview/Core (0.0.1):
-    - Flutter
-    - OrderedSet (~> 5.0)
   - flutter_local_notifications (0.0.1):
     - Flutter
   - flutter_sound (9.2.13):
@@ -64,7 +57,6 @@ PODS:
     - Flutter
   - open_settings (0.0.1):
     - Flutter
-  - OrderedSet (5.0.0)
   - package_info_plus (0.4.5):
     - Flutter
   - path_provider_foundation (0.0.1):
@@ -112,7 +104,6 @@ DEPENDENCIES:
   - flutter_activity_recognition (from `.symlinks/plugins/flutter_activity_recognition/ios`)
   - flutter_appauth (from `.symlinks/plugins/flutter_appauth/ios`)
   - flutter_blue_plus (from `.symlinks/plugins/flutter_blue_plus/ios`)
-  - flutter_inappwebview (from `.symlinks/plugins/flutter_inappwebview/ios`)
   - flutter_local_notifications (from `.symlinks/plugins/flutter_local_notifications/ios`)
   - flutter_sound (from `.symlinks/plugins/flutter_sound/ios`)
   - flutter_timezone (from `.symlinks/plugins/flutter_timezone/ios`)
@@ -140,7 +131,6 @@ SPEC REPOS:
     - ESense
     - flutter_sound_core
     - FMDB
-    - OrderedSet
     - PolarBleSdk
     - ReachabilitySwift
     - RxSwift
@@ -173,8 +163,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_appauth/ios"
   flutter_blue_plus:
     :path: ".symlinks/plugins/flutter_blue_plus/ios"
-  flutter_inappwebview:
-    :path: ".symlinks/plugins/flutter_inappwebview/ios"
   flutter_local_notifications:
     :path: ".symlinks/plugins/flutter_local_notifications/ios"
   flutter_sound:
@@ -232,7 +220,6 @@ SPEC CHECKSUMS:
   flutter_activity_recognition: 5c3b026997742b01e82424ef257db9640822ad77
   flutter_appauth: cf9b928962105b2a64a9802585d1c8adaf3e0f46
   flutter_blue_plus: 5cb46a0d66c6cacebf7551e0e5a6bfa345ccc224
-  flutter_inappwebview: 0fd654db805825eae42bd8ee7c428890cdaf7ff1
   flutter_local_notifications: 0c0b1ae97e741e1521e4c1629a459d04b9aec743
   flutter_sound: c60effa2a350fb977885f0db2fbc4c1ad5160900
   flutter_sound_core: 26c10e5832e76aaacfae252d8925232281c486ae
@@ -244,7 +231,6 @@ SPEC CHECKSUMS:
   location: d5cf8598915965547c3f36761ae9cc4f4e87d22e
   network_info_plus: 122280582fe2fa2bbb8681a4269745cd5c3a9b32
   open_settings: 9628e736cb2738fd1dc84159565755c214478158
-  OrderedSet: aaeb196f7fef5a9edf55d89760da9176ad40b93c
   package_info_plus: fd030dabf36271f146f1f3beacd48f564b0f17f7
   path_provider_foundation: 29f094ae23ebbca9d3d0cec13889cd9060c0e943
   pedometer: 381969883680ade42559782cc41a3bbd453d8234

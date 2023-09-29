@@ -49,7 +49,9 @@ dependencies:
   flutter_blue_plus: ^1.15.5
 
 dependency_overrides:
-  uuid: 4.0.0
+  uuid: 4.1.0
+  carp_webservices:
+    path: ../carp.sensing-flutter/backends/carp_webservices
 
 dev_dependencies:
   # flutter_test:

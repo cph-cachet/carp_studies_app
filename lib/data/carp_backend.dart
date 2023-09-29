@@ -80,13 +80,32 @@ class CarpBackend {
   Future<void> initialize() async {
     app = CarpApp(
       name: "CAWS @ DTU",
-      uri: uri,
-      oauth: OAuthEndPoint(clientID: clientId, clientSecret: clientSecret),
+      uri: Uri(
+          scheme: 'https', host: 'carp.computerome.dk', pathSegments: ['dev']),
+      authURL: Uri(
+        scheme: 'https',
+        host: 'carp.computerome.dk',
+        pathSegments: ['auth', 'dev', 'realms', 'Carp'],
+      ),
+      clientId: 'carp-webservices-dart',
+      redirectURI: Uri.parse('study-app://auth'),
+      discoveryURL: Uri(
+        scheme: 'https',
+        host: 'carp.computerome.dk',
+        pathSegments: ['auth', 'dev', 'realms', 'Carp', '.well-known', 'openid-configuration'],
+      ),
+      // Uri(
+      //   scheme: 'https',
+      //   host: 'carp.computerome.dk',
+      //   pathSegments: ['callback', 'study-app'],
+      // ),
       studyId: studyId,
       studyDeploymentId: studyDeploymentId,
     );
 
     CarpService().configure(app!);
+    // var response = CarpService().authenticate();
+    // print(response);
 
     if (oauthToken != null) {
       // if we have a token, we can authenticate the user
@@ -97,8 +116,11 @@ class CarpBackend {
 
   Future<CarpUser?> authenticateWithRefreshToken(String refreshToken) async {
     try {
-      CarpUser user =
-          await CarpService().authenticateWithRefreshToken(refreshToken);
+      var response = CarpService().authenticate();
+
+      print(response);
+
+      CarpUser user = CarpUser();
 
       info('User authenticated - user: $user');
 
@@ -139,7 +161,7 @@ class CarpBackend {
   }
 
   Future<void> signOut() async {
-    if (CarpService().authenticated) await CarpService().signOut();
+    // if (CarpService().authenticated) await CarpService().signOut();
     await LocalSettings().eraseAuthCredentials();
   }
 }

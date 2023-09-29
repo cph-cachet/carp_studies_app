@@ -6,8 +6,7 @@
 	<array>
 		<string>webcredentials:cachet.dk</string>
 		<string>webcredentials:cans.cachet.dk</string>
-		<string>applinks:cachet.dk</string>
-		<string>applinks:cans.cachet.dk</string>
+		<string>applinks:carp.computerome.dk</string>
 	</array>
 	<key>com.apple.developer.authentication-services.autofill-credential-provider</key>
 	<true/>

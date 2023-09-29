@@ -7,7 +7,6 @@ class LoginPage extends StatefulWidget {
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
-
 class _LoginPageState extends State<LoginPage> {
   final GlobalKey webViewKey = GlobalKey();
 
@@ -51,6 +50,11 @@ class _LoginPageState extends State<LoginPage> {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
+      floatingActionButton: FloatingActionButton(onPressed: () async {
+        var response = await CarpService().authenticate();
+
+        print(response);
+      }),
       body: SafeArea(
         child: Center(
           child: Column(

@@ -1,6 +1,12 @@
 PODS:
   - app_settings (5.1.1):
     - Flutter
+  - AppAuth (1.6.2):
+    - AppAuth/Core (= 1.6.2)
+    - AppAuth/ExternalUserAgent (= 1.6.2)
+  - AppAuth/Core (1.6.2)
+  - AppAuth/ExternalUserAgent (1.6.2):
+    - AppAuth/Core
   - audio_session (0.0.1):
     - Flutter
   - audio_streamer (0.0.1):
@@ -22,6 +28,9 @@ PODS:
     - Flutter
   - Flutter (1.0.0)
   - flutter_activity_recognition (0.0.1):
+    - Flutter
+  - flutter_appauth (0.0.1):
+    - AppAuth (= 1.6.2)
     - Flutter
   - flutter_blue_plus (0.0.1):
     - Flutter
@@ -101,6 +110,7 @@ DEPENDENCIES:
   - esense_flutter (from `.symlinks/plugins/esense_flutter/ios`)
   - Flutter (from `Flutter`)
   - flutter_activity_recognition (from `.symlinks/plugins/flutter_activity_recognition/ios`)
+  - flutter_appauth (from `.symlinks/plugins/flutter_appauth/ios`)
   - flutter_blue_plus (from `.symlinks/plugins/flutter_blue_plus/ios`)
   - flutter_inappwebview (from `.symlinks/plugins/flutter_inappwebview/ios`)
   - flutter_local_notifications (from `.symlinks/plugins/flutter_local_notifications/ios`)
@@ -126,6 +136,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - AppAuth
     - ESense
     - flutter_sound_core
     - FMDB
@@ -158,6 +169,8 @@ EXTERNAL SOURCES:
     :path: Flutter
   flutter_activity_recognition:
     :path: ".symlinks/plugins/flutter_activity_recognition/ios"
+  flutter_appauth:
+    :path: ".symlinks/plugins/flutter_appauth/ios"
   flutter_blue_plus:
     :path: ".symlinks/plugins/flutter_blue_plus/ios"
   flutter_inappwebview:
@@ -205,6 +218,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   app_settings: 017320c6a680cdc94c799949d95b84cb69389ebc
+  AppAuth: 3bb1d1cd9340bd09f5ed189fb00b1cc28e1e8570
   audio_session: 4f3e461722055d21515cf3261b64c973c062f345
   audio_streamer: af49e73eb66f71c4eeabb4bbcb05f122d03a6709
   audiofileplayer: 4aaff759a721ec3a850a682e0d9ec554e5f9e86f
@@ -216,8 +230,9 @@ SPEC CHECKSUMS:
   esense_flutter: 8bfadfdefe7b51d6f78366e43b2b64ec9b6144b6
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   flutter_activity_recognition: 5c3b026997742b01e82424ef257db9640822ad77
+  flutter_appauth: cf9b928962105b2a64a9802585d1c8adaf3e0f46
   flutter_blue_plus: 5cb46a0d66c6cacebf7551e0e5a6bfa345ccc224
-  flutter_inappwebview: 50b55a88f5dddadc9e741a7caf72f378116e2156
+  flutter_inappwebview: 0fd654db805825eae42bd8ee7c428890cdaf7ff1
   flutter_local_notifications: 0c0b1ae97e741e1521e4c1629a459d04b9aec743
   flutter_sound: c60effa2a350fb977885f0db2fbc4c1ad5160900
   flutter_sound_core: 26c10e5832e76aaacfae252d8925232281c486ae
@@ -248,4 +263,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 42054b155feb53182d53e51787077e2e6389a1c1
 
-COCOAPODS: 1.12.1
+COCOAPODS: 1.13.0

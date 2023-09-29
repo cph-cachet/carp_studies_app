@@ -151,6 +151,24 @@ class CarpStudyAppState extends State<CarpStudyApp> {
           bloc.data.taskListPageViewModel,
         ),
       ),
+      GoRoute(
+        path: '/studies',
+        builder: (context, state) {
+          return const ErrorPage();
+        },
+      ),
+      GoRoute(
+        path: '/auth',
+        builder: (context, state) {
+          return const ErrorPage();
+        },
+      ),
+      GoRoute(
+        path: '//auth',
+        builder: (context, state) {
+          return const ErrorPage();
+        },
+      ),
     ],
     debugLogDiagnostics: true,
   );

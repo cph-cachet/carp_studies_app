@@ -53,6 +53,13 @@ class InvitationListPage extends StatelessWidget {
                   onStretchTrigger: () async {
                     await model.invitations;
                   },
+                  leading: IconButton(
+                    icon: const Icon(Icons.arrow_back),
+                    onPressed: () {
+                      bloc.backend.signOut();
+                      context.go('/login');
+                    },
+                  ),
                 ),
                 child,
               ],

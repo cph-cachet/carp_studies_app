@@ -49,12 +49,12 @@ class CarpBackend {
 
   String? get studyId => bloc.studyId;
   set studyId(String? id) {
-    if (CarpService().isConfigured) CarpService().app!.studyId = id;
+    if (CarpService().isConfigured) CarpService().app.studyId = id;
   }
 
   String? get studyDeploymentId => bloc.studyDeploymentId;
   set studyDeploymentId(String? id) {
-    if (CarpService().isConfigured) CarpService().app!.studyDeploymentId = id;
+    if (CarpService().isConfigured) CarpService().app.studyDeploymentId = id;
   }
 
   CarpBackend._() : super() {
@@ -126,7 +126,7 @@ class CarpBackend {
   }
 
   Future<void> signOut() async {
-    // if (CarpService().authenticated) await CarpService().signOut();
+    if (CarpService().authenticated) await CarpService().logout();
     await LocalSettings().eraseAuthCredentials();
   }
 }

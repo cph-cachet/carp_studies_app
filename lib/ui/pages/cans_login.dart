@@ -47,7 +47,7 @@ class _LoginPageState extends State<LoginPage> {
                     await bloc.backend.authenticate();
                     if (bloc.backend.isAuthenticated) {
                       if (context.mounted) {
-                        context.go('/');
+                        context.go('/invitations');
                       }
                     }
                   },

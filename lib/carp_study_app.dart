@@ -118,7 +118,7 @@ class CarpStudyAppState extends State<CarpStudyApp> {
       GoRoute(
         path: '/login',
         parentNavigatorKey: _rootNavigatorKey,
-        redirect: (context, state) => CarpService().authenticated ? '/' : null,
+        // redirect: (context, state) => CarpService().authenticated ? '/' : null,
         builder: (context, state) => const LoginPage(),
       ),
       GoRoute(

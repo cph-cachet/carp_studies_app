@@ -300,9 +300,11 @@ packages:
   carp_webservices:
     dependency: "direct main"
     description:
-      path: "../carp.sensing-flutter/backends/carp_webservices"
-      relative: true
-    source: path
+      path: "backends/carp_webservices"
+      ref: "LarsRefsgaard/openid-authentication"
+      resolved-ref: "2a1a41cd20c090c9f3861b8f873044e331b86389"
+      url: "https://github.com/cph-cachet/carp.sensing-flutter"
+    source: git
     version: "1.3.0"
   characters:
     dependency: transitive

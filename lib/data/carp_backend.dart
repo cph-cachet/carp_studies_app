@@ -37,7 +37,10 @@ class CarpBackend {
         scheme: 'https',
         host: 'carp.computerome.dk',
         pathSegments: [
+          'auth',
           uris[bloc.deploymentMode]!,
+          'realms',
+          'Carp',
         ],
       );
 
@@ -69,16 +72,11 @@ class CarpBackend {
     app = CarpApp(
       name: "CAWS @ DTU",
       uri: uri.replace(pathSegments: [uris[bloc.deploymentMode]!]),
-      authURL: uri.replace(
-        pathSegments: ['auth', uris[bloc.deploymentMode]!, 'realms', 'Carp'],
-      ),
+      authURL: uri,
       clientId: 'carp-webservices-dart',
       redirectURI: Uri.parse('study-app://auth'),
       discoveryURL: uri.replace(pathSegments: [
-        'auth',
-        uris[bloc.deploymentMode]!,
-        'realms',
-        'Carp',
+        ...uri.pathSegments,
         '.well-known',
         'openid-configuration'
       ]),

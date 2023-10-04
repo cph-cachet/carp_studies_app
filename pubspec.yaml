@@ -46,14 +46,17 @@ dependencies:
   go_router: ^11.0.0
   flutter_svg: ^2.0.4
   flutter_blue_plus: ^1.15.5
+  intl: ^0.18.1
+  permission_handler: ^11.0.1
 
 dependency_overrides:
   uuid: 4.1.0
   carp_webservices:
-    git:
-      url: https://github.com/cph-cachet/carp.sensing-flutter
-      ref: LarsRefsgaard/openid-authentication
-      path: backends/carp_webservices
+    path: ../carp.sensing-flutter/backends/carp_webservices
+    # git:
+      # url: https://github.com/cph-cachet/carp.sensing-flutter
+      # ref: LarsRefsgaard/openid-authentication
+      # path: backends/carp_webservices
 
 dev_dependencies:
   # flutter_test:

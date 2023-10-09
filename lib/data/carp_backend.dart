@@ -74,7 +74,7 @@ class CarpBackend {
       uri: uri.replace(pathSegments: [uris[bloc.deploymentMode]!]),
       authURL: uri,
       clientId: 'carp-webservices-dart',
-      redirectURI: Uri.parse('study-app://auth'),
+      redirectURI: Uri.parse('carp-studies-auth://auth'),
       discoveryURL: uri.replace(pathSegments: [
         ...uri.pathSegments,
         '.well-known',
@@ -85,7 +85,6 @@ class CarpBackend {
     );
 
     CarpService().configure(app!);
-    // var response = CarpService().authenticate();
 
     info('$runtimeType initialized - app: $app');
   }

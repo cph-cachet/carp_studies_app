@@ -7,18 +7,17 @@ class LogoutMessage extends StatelessWidget {
   Widget build(BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;
     return AlertDialog(
-      title:  Text(locale.translate("widgets.logoutmessage.title")),
-      content:  Text(
-          locale.translate("widgets.logoutmessage.message")),
+      title: Text(locale.translate("widgets.logoutmessage.title")),
+      content: Text(locale.translate("widgets.logoutmessage.message")),
       actions: <Widget>[
         TextButton(
-          child:  Text(locale.translate("widgets.logoutmessage.cancel")),
+          child: Text(locale.translate("widgets.logoutmessage.cancel")),
           onPressed: () {
             context.pop(false);
           },
         ),
         TextButton(
-          child:  Text(locale.translate("widgets.logoutmessage.okay")),
+          child: Text(locale.translate("widgets.logoutmessage.okay")),
           onPressed: () {
             context.pop(true);
           },

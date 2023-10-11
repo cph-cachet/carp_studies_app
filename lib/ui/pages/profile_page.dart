@@ -225,18 +225,22 @@ class ProfilePageState extends State<ProfilePage> {
           actions: <Widget>[
             TextButton(
               child: Text(locale.translate("NO")),
-              onPressed: () => context.pop(),
+              onPressed: () => context.pop(false),
             ),
             TextButton(
               child: Text(locale.translate("YES")),
               onPressed: () {
-                bloc.leaveStudyAndSignOut().then((_) => context.go('/'));
+                context.pop(true);
               },
             )
           ],
         );
       },
-    );
+    ).then((value) {
+      if (value == true) {
+        bloc.leaveStudyAndSignOut().then((_) => context.go('/'));
+      }
+    });
   }
 
   Future _showLeaveStudyConfirmationDialog() {
@@ -252,16 +256,18 @@ class ProfilePageState extends State<ProfilePage> {
           actions: <Widget>[
             TextButton(
               child: Text(locale.translate("NO")),
-              onPressed: () => Navigator.of(context).pop(),
+              onPressed: () => context.pop(false),
             ),
             TextButton(
-              child: Text(locale.translate("YES")),
-              onPressed: () =>
-                  bloc.leaveStudy().then((_) => context.go('/invitations')),
-            )
+                child: Text(locale.translate("YES")),
+                onPressed: () => context.pop(true))
           ],
         );
       },
-    );
+    ).then((value) {
+      if (value == true) {
+        bloc.leaveStudy().then((_) => context.go('/invitations'));
+      }
+    });
   }
 }

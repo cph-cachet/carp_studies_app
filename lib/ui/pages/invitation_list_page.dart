@@ -56,8 +56,11 @@ class InvitationListPage extends StatelessWidget {
                   leading: IconButton(
                     icon: const Icon(Icons.arrow_back),
                     onPressed: () {
-                      bloc.backend.signOut();
-                      context.go('/login');
+                      if (context.canPop()) {
+                        context.pop();
+                      } else {
+                        context.go('/login');
+                      }
                     },
                   ),
                 ),

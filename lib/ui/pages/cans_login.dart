@@ -12,6 +12,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    RPLocalizations locale = RPLocalizations.of(context)!;
     return Scaffold(
       body: SafeArea(
         child: Center(
@@ -47,13 +48,13 @@ class _LoginPageState extends State<LoginPage> {
                     await bloc.backend.authenticate();
                     if (bloc.backend.isAuthenticated) {
                       if (context.mounted) {
-                        context.go('/invitations');
+                        context.push('/invitations');
                       }
                     }
                   },
-                  child: const Text(
-                    "Log in",
-                    style: TextStyle(
+                  child: Text(
+                    locale.translate("pages.login.login"),
+                    style: const TextStyle(
                       color: Color(
                         0xffffffff,
                       ),
@@ -63,6 +64,25 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
               ),
+              if (CarpService().authenticated)
+                TextButton(
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return const LogoutMessage();
+                      },
+                    ).then((value) async {
+                      if (value == true) {
+                        await bloc.backend.signOut();
+                        setState(() {});
+                      }
+                    });
+                  },
+                  child: Text(
+                    locale.translate('pages.login.endsession'),
+                  ),
+                )
             ],
           ),
         ),

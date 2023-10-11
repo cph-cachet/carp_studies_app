@@ -99,6 +99,7 @@ part 'ui/widgets/charts_legend.dart';
 part 'ui/widgets/details_banner.dart';
 part 'ui/widgets/studies_card.dart';
 part 'ui/widgets/battery_icon.dart';
+part 'ui/widgets/logout_message.dart';
 
 part 'ui/cards/steps_card.dart';
 part 'ui/cards/heart_rate_card.dart';

@@ -112,13 +112,8 @@ class CarpStudyAppState extends State<CarpStudyApp> {
         ),
       ),
       GoRoute(
-        path: '/failedLogin',
-        builder: (context, state) => const FailedLoginPage(),
-      ),
-      GoRoute(
         path: '/login',
         parentNavigatorKey: _rootNavigatorKey,
-        // redirect: (context, state) => CarpService().authenticated ? '/' : null,
         builder: (context, state) => const LoginPage(),
       ),
       GoRoute(
@@ -142,30 +137,6 @@ class CarpStudyAppState extends State<CarpStudyApp> {
             : (bloc.user == null ? '/login' : null),
         builder: (context, state) =>
             InvitationListPage(bloc.data.invitationsListViewModel),
-      ),
-      GoRoute(
-        path: '/test',
-        builder: (context, state) => TaskListPage(
-          bloc.data.taskListPageViewModel,
-        ),
-      ),
-      GoRoute(
-        path: '/studies',
-        builder: (context, state) {
-          return const ErrorPage();
-        },
-      ),
-      GoRoute(
-        path: '/auth',
-        builder: (context, state) {
-          return const ErrorPage();
-        },
-      ),
-      GoRoute(
-        path: '//auth',
-        builder: (context, state) {
-          return const ErrorPage();
-        },
       ),
     ],
     debugLogDiagnostics: true,

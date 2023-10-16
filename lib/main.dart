@@ -76,7 +76,6 @@ part 'ui/pages/study_page.dart';
 part 'ui/pages/task_list_page.dart';
 part 'ui/pages/profile_page.dart';
 part 'ui/pages/audio_task_page.dart';
-part 'ui/pages/failed_login_page.dart';
 part 'ui/pages/study_details_page.dart';
 part 'ui/pages/message_details_page.dart';
 part 'ui/pages/invitation_page.dart';

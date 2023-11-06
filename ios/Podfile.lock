@@ -68,8 +68,8 @@ PODS:
     - Flutter
   - polar (0.0.1):
     - Flutter
-    - PolarBleSdk (~> 5.3.0)
-  - PolarBleSdk (5.3.0):
+    - PolarBleSdk (~> 5.4.0)
+  - PolarBleSdk (5.4.0):
     - RxSwift (~> 6.5.0)
     - SwiftProtobuf (~> 1.0)
   - ReachabilitySwift (5.0.0)
@@ -84,11 +84,12 @@ PODS:
   - sqflite (0.0.3):
     - Flutter
     - FMDB (>= 2.7.5)
-  - SwiftProtobuf (1.23.0)
+  - SwiftProtobuf (1.25.1)
   - url_launcher_ios (0.0.1):
     - Flutter
   - video_player_avfoundation (0.0.1):
     - Flutter
+    - FlutterMacOS
 
 DEPENDENCIES:
   - app_settings (from `.symlinks/plugins/app_settings/ios`)
@@ -123,7 +124,7 @@ DEPENDENCIES:
   - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
   - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
-  - video_player_avfoundation (from `.symlinks/plugins/video_player_avfoundation/ios`)
+  - video_player_avfoundation (from `.symlinks/plugins/video_player_avfoundation/darwin`)
 
 SPEC REPOS:
   trunk:
@@ -202,7 +203,7 @@ EXTERNAL SOURCES:
   url_launcher_ios:
     :path: ".symlinks/plugins/url_launcher_ios/ios"
   video_player_avfoundation:
-    :path: ".symlinks/plugins/video_player_avfoundation/ios"
+    :path: ".symlinks/plugins/video_player_avfoundation/darwin"
 
 SPEC CHECKSUMS:
   app_settings: 017320c6a680cdc94c799949d95b84cb69389ebc
@@ -210,16 +211,16 @@ SPEC CHECKSUMS:
   audio_session: 4f3e461722055d21515cf3261b64c973c062f345
   audio_streamer: af49e73eb66f71c4eeabb4bbcb05f122d03a6709
   audiofileplayer: 4aaff759a721ec3a850a682e0d9ec554e5f9e86f
-  battery_plus: 9bff772a7e5e4d5381ca3ca92a97373a3d8b2738
+  battery_plus: 091633b7f01cb33dfc4aeedb450816f4d33818fa
   camera_avfoundation: 3125e8cd1a4387f6f31c6c63abb8a55892a9eeeb
   connectivity_plus: 07c49e96d7fc92bc9920617b83238c4d178b446a
-  device_info_plus: 7545d84d8d1b896cb16a4ff98c19f07ec4b298ea
+  device_info_plus: c6fb39579d0f423935b0c9ce7ee2f44b71b9fce6
   ESense: cbe103ad16c435424f2fd6f8b274f2468af84173
   esense_flutter: 8bfadfdefe7b51d6f78366e43b2b64ec9b6144b6
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   flutter_activity_recognition: 5c3b026997742b01e82424ef257db9640822ad77
   flutter_appauth: cf9b928962105b2a64a9802585d1c8adaf3e0f46
-  flutter_blue_plus: 5cb46a0d66c6cacebf7551e0e5a6bfa345ccc224
+  flutter_blue_plus: 4837da7d00cf5d441fdd6635b3a57f936778ea96
   flutter_local_notifications: 0c0b1ae97e741e1521e4c1629a459d04b9aec743
   flutter_sound: c60effa2a350fb977885f0db2fbc4c1ad5160900
   flutter_sound_core: 26c10e5832e76aaacfae252d8925232281c486ae
@@ -229,24 +230,24 @@ SPEC CHECKSUMS:
   just_audio: baa7252489dbcf47a4c7cc9ca663e9661c99aafa
   light: 86af7a847d218a9a2376bc1c1ae40c3410441135
   location: d5cf8598915965547c3f36761ae9cc4f4e87d22e
-  network_info_plus: 122280582fe2fa2bbb8681a4269745cd5c3a9b32
+  network_info_plus: 6d0c3eb8367b8164fa3fb0c19875e3f59d49697f
   open_settings: 9628e736cb2738fd1dc84159565755c214478158
-  package_info_plus: fd030dabf36271f146f1f3beacd48f564b0f17f7
+  package_info_plus: 115f4ad11e0698c8c1c5d8a689390df880f47e85
   path_provider_foundation: 29f094ae23ebbca9d3d0cec13889cd9060c0e943
   pedometer: 381969883680ade42559782cc41a3bbd453d8234
   permission_handler_apple: e76247795d700c14ea09e3a2d8855d41ee80a2e6
-  polar: c48d43d90cb45c893b107339557be03d0fadd39d
-  PolarBleSdk: 0311c165d9e4c4b1f3d7a40add1f5ae43ed6980e
+  polar: 3df98f4edaae7ff57d39fa6af2bd01b5b857e79d
+  PolarBleSdk: 980933f58cb2856c3627f40a54c91b9351a07736
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   RxSwift: 5710a9e6b17f3c3d6e40d6e559b9fa1e813b2ef8
   screen_state: a7ae251997e97f3f001839df09b57313b0ddef18
-  sensors_plus: bda64198ccc7d3ccbb49e6ae17d92f67687bee20
+  sensors_plus: 4ee32bc7d61a055f27f88d3215ad6b6fb96a2b8e
   shared_preferences_foundation: 5b919d13b803cadd15ed2dc053125c68730e5126
   sqflite: 31f7eba61e3074736dff8807a9b41581e4f7f15a
-  SwiftProtobuf: b70d65f419fbfe61a2d58003456ca5da58e337d6
-  url_launcher_ios: 08a3dfac5fb39e8759aeb0abbd5d9480f30fc8b4
-  video_player_avfoundation: 81e49bb3d9fb63dccf9fa0f6d877dc3ddbeac126
+  SwiftProtobuf: 69f02cd54fb03201c5e6bf8b76f687c5ef7541a3
+  url_launcher_ios: 68d46cc9766d0c41dbdc884310529557e3cd7a86
+  video_player_avfoundation: 8563f13d8fc8b2c29dc2d09e60b660e4e8128837
 
-PODFILE CHECKSUM: 42054b155feb53182d53e51787077e2e6389a1c1
+PODFILE CHECKSUM: cf73571b196c8b5799c2f2111e13846fa4ef168b
 
-COCOAPODS: 1.13.0
+COCOAPODS: 1.14.2

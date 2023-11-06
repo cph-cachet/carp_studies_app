@@ -22,7 +22,7 @@ dependencies:
   carp_polar_package: ^1.3.0
   carp_health_package: ^2.7.0
   carp_backend: ^1.3.0
-  carp_webservices: ^1.3.0
+  carp_webservices: ^2.0.0
 
   research_package: ^1.3.0
   cognition_package: ^1.4.0
@@ -51,12 +51,7 @@ dependencies:
 
 dependency_overrides:
   uuid: 4.1.0
-  carp_webservices:
-    # path: ../carp.sensing-flutter/backends/carp_webservices
-    git:
-      url: https://github.com/cph-cachet/carp.sensing-flutter
-      ref: LarsRefsgaard/openid-authentication
-      path: backends/carp_webservices
+  carp_webservices: 2.0.0
 
 dev_dependencies:
   # flutter_test:

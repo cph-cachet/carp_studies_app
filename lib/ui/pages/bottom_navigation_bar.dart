@@ -56,7 +56,7 @@ class HomePageState extends State<HomePage> {
   }
 
   static int _calculateSelectedIndex(BuildContext context) {
-    final String location = GoRouterState.of(context).location;
+    final String location = GoRouterState.of(context).matchedLocation;
     if (location.startsWith('/tasks')) {
       return 0;
     }

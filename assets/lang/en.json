@@ -66,7 +66,7 @@
     "pages.profile.privacy": "Privacy policy",
     "pages.profile.leave_study": "Leave study",
     "pages.profile.log_out": "Log out",
-    "pages.profile.log_out.confirmation": "You are about to log out and leave this study. Are you sure?",
+    "pages.profile.log_out.confirmation": "You are about to leave this study and log out. The operating system will open a browser to log you out. Are you sure?",
     "pages.profile.leave_study.confirmation": "You are about to leave the study. You will no longer participate in this study. Are you sure?",
     "announcement": "Announcement",
     "article": "Article",
@@ -125,5 +125,11 @@
     "pages.devices.connection.step.start.5": "device to the phone, press 'INSTRUCTIONS'.",
     "pages.devices.connection.step.confirm.title": "is connected!",
     "pages.devices.connection.step.confirm.1": "The",
-    "pages.devices.connection.step.confirm.2": "device has succesfully been connected to the phone and is now used for collection of data in this study."
+    "pages.devices.connection.step.confirm.2": "device has succesfully been connected to the phone and is now used for collection of data in this study.",
+    "widgets.logoutmessage.title": "Log out",
+    "widgets.logoutmessage.message": "The operating system will open a browser to log you out. Is this okay?",
+    "widgets.logoutmessage.cancel": "Cancel",
+    "widgets.logoutmessage.okay": "Okay",
+    "pages.login.login": "Log in",
+    "pages.login.endsession": "End login session"
 }

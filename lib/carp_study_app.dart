@@ -96,7 +96,7 @@ class CarpStudyAppState extends State<CarpStudyApp> {
         path: '/task/:taskId',
         parentNavigatorKey: _rootNavigatorKey,
         builder: (context, state) {
-          final taskId = state.params['taskId'] ?? '';
+          final taskId = state.pathParameters['taskId'] ?? '';
           final task = AppTaskController().getUserTask(taskId);
           return task?.widget ?? const ErrorPage();
         },
@@ -112,28 +112,21 @@ class CarpStudyAppState extends State<CarpStudyApp> {
         ),
       ),
       GoRoute(
-        path: '/failedLogin',
-        builder: (context, state) => const FailedLoginPage(),
-      ),
-      GoRoute(
         path: '/login',
         parentNavigatorKey: _rootNavigatorKey,
-        redirect: (context, state) => CarpService().authenticated ? '/' : null,
-        builder: (context, state) => LoginPage(
-          bloc.data.loginPageViewModel,
-        ),
+        builder: (context, state) => const LoginPage(),
       ),
       GoRoute(
         path: '/message/:messageId',
         parentNavigatorKey: _rootNavigatorKey,
-        builder: (context, state) =>
-            MessageDetailsPage(messageId: state.params['messageId'] ?? ''),
+        builder: (context, state) => MessageDetailsPage(
+            messageId: state.pathParameters['messageId'] ?? ''),
       ),
       GoRoute(
         path: '/invitation/:invitationId',
         parentNavigatorKey: _rootNavigatorKey,
         builder: (context, state) => InvitationDetailsPage(
-          invitationId: state.params['invitationId'] ?? '',
+          invitationId: state.pathParameters['invitationId'] ?? '',
         ),
       ),
       GoRoute(
@@ -144,12 +137,6 @@ class CarpStudyAppState extends State<CarpStudyApp> {
             : (bloc.user == null ? '/login' : null),
         builder: (context, state) =>
             InvitationListPage(bloc.data.invitationsListViewModel),
-      ),
-      GoRoute(
-        path: '/test',
-        builder: (context, state) => TaskListPage(
-          bloc.data.taskListPageViewModel,
-        ),
       ),
     ],
     debugLogDiagnostics: true,

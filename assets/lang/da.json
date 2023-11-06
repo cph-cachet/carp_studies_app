@@ -65,7 +65,7 @@
     "pages.profile.privacy": "Fortrolighedspolitik",
     "pages.profile.leave_study": "Forlad studie",
     "pages.profile.log_out": "Log ud",
-    "pages.profile.log_out.confirmation": "Du er ved at logge af og forlade dette studie. Er du sikker?",
+    "pages.profile.log_out.confirmation": "Du er ved at forlade dette studie og logge af. Operativsystemet vil åbne en browser for at logge dig ud. Er du sikker?",
     "pages.profile.leave_study.confirmation": "Du er ved at forlade studiet. Du vil ikke længere deltage i dette studie. Er du sikker?",
     "announcement": "Annoncering",
     "article": "Artikel",
@@ -124,5 +124,11 @@
     "pages.devices.connection.step.start.5": "enheden, skal du trykke på 'Instruktioner'.",
     "pages.devices.connection.step.confirm.title": "er forbundet!",
     "pages.devices.connection.step.confirm.1": "",
-    "pages.devices.connection.step.confirm.2": "enheden er nu forbundet til telefonen og vil blive anvendt til data opsamling i studiet."
+    "pages.devices.connection.step.confirm.2": "enheden er nu forbundet til telefonen og vil blive anvendt til data opsamling i studiet.",
+    "widgets.logoutmessage.title": "Log ud",
+    "widgets.logoutmessage.message": "Operativsystemet vil åbne en browser for at logge dig ud. Er dette okay?",
+    "widgets.logoutmessage.cancel": "Annuller",
+    "widgets.logoutmessage.okay": "Okay",
+    "pages.login.login": "Log ind",
+    "pages.login.endsession": "Afslut log ind session"
 }

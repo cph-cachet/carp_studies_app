@@ -45,7 +45,7 @@ class StudyAppBLoC {
   /// Debug level for the app and CAMS.
   DebugLevel debugLevel;
 
-  /// What kind of deployment are we running - LOCAL or CAWS?
+  /// What kind of deployment are we running - dev, staging, test or production?
   final DeploymentMode deploymentMode;
 
   // ScaffoldMessenger for showing snack bars

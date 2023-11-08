@@ -3,9 +3,4 @@
          to allow setting breakpoints, to provide hot reload, etc.
     -->
     <uses-permission android:name="android.permission.INTERNET"/>
-    <application
-    android:name="${applicationName}"
-    android:label="CARP Studies"
-    android:icon="@mipmap/ic_launcher">
-    </application>
 </manifest>

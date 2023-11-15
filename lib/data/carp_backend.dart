@@ -85,6 +85,11 @@ class CarpBackend {
     );
 
     CarpService().configure(app!);
+    if (oauthToken != null) {
+      if (oauthToken!.hasExpired) {
+        CarpService().refresh();
+      }
+    }
 
     info('$runtimeType initialized - app: $app');
   }

@@ -87,21 +87,32 @@ class CarpBackend {
     CarpService().configure(app!);
     if (oauthToken != null) {
       if (oauthToken!.hasExpired) {
-        CarpService().refresh();
+        await refresh();
       }
     }
+
+    CarpParticipationService().configureFrom(CarpService());
 
     info('$runtimeType initialized - app: $app');
   }
 
   Future<CarpUser> authenticate() async {
+    bloc.stateStream.sink.add(StudiesAppState.authenticating);
     var response = await CarpService().authenticate();
 
     username = response.username;
     oauthToken = response.token;
     bloc.stateStream.sink.add(StudiesAppState.accessTokenRetrieved);
 
-    CarpParticipationService().configureFrom(CarpService());
+    return response;
+  }
+
+  Future<CarpUser> refresh() async {
+    var response = await CarpService().refresh();
+
+    username = response.username;
+    oauthToken = response.token;
+    bloc.stateStream.sink.add(StudiesAppState.accessTokenRetrieved);
 
     return response;
   }

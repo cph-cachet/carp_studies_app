@@ -52,7 +52,7 @@ class LocalSettings {
 
   set user(CarpUser? user) {
     _user = user;
-    Settings().preferences!.setString(usernameKey, jsonEncode(user!.toJson()));
+    Settings().preferences!.setString(userKey, jsonEncode(user!.toJson()));
   }
 
   String? get studyId =>

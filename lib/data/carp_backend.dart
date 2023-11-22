@@ -41,8 +41,6 @@ class CarpBackend {
         ],
       );
 
-
-
   CarpUser? get user => LocalSettings().user;
   set user(CarpUser? user) => LocalSettings().user = user;
 
@@ -72,7 +70,7 @@ class CarpBackend {
       name: "CAWS @ DTU",
       uri: uri.replace(pathSegments: [uris[bloc.deploymentMode]!]),
       authURL: uri,
-      clientId: 'carp-webservices-dart',
+      clientId: 'studies-app',
       redirectURI: Uri.parse('carp-studies-auth://auth'),
       discoveryURL: uri.replace(pathSegments: [
         ...uri.pathSegments,
@@ -87,7 +85,13 @@ class CarpBackend {
     if (user != null) {
       CarpService().currentUser = user;
       if (oauthToken!.hasExpired) {
-        await refresh();
+        try {
+          await refresh();
+        } catch (error) {
+          CarpService().currentUser = null;
+          user = null;
+          warning('Failed to refresh access token - $error');
+        }
       }
     }
 

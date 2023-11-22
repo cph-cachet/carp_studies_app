@@ -10,19 +10,19 @@ class LocalSettings {
   static const String oauthTokenKey = 'token';
   static const String accessTokenKey = 'access_token';
   static const String usernameKey = 'username';
+  static const String userKey = 'user';
   static const informedConsentAcceptedKey = 'informed_consent_accepted';
 
   static final LocalSettings _instance = LocalSettings._();
   factory LocalSettings() => _instance;
   LocalSettings._() : super();
 
-  OAuthToken? _oauthToken;
   String? _accessToken;
   String? _studyId;
   String? _studyDeploymentId;
   String? _deviceRolename;
   bool? _hasInformedConsentBeenAccepted;
-  String? _username;
+  CarpUser? _user;
 
   String? get accessToken {
     if (_accessToken == null) {
@@ -39,31 +39,20 @@ class LocalSettings {
     Settings().preferences!.setString(accessTokenKey, value!);
   }
 
-  OAuthToken? get oauthToken {
-    if (_oauthToken == null) {
-      String? ouathTokenString =
-          Settings().preferences!.getString(oauthTokenKey);
+  CarpUser? get user {
+    if (_user == null) {
+      String? userString = Settings().preferences!.getString(userKey);
 
-      _oauthToken = (ouathTokenString != null)
-          ? OAuthToken.fromJson(jsonDecode(ouathTokenString))
+      _user = (userString != null)
+          ? CarpUser.fromJson(jsonDecode(userString))
           : null;
     }
-    return _oauthToken;
+    return _user;
   }
 
-  set oauthToken(OAuthToken? token) {
-    _oauthToken = token;
-    Settings()
-        .preferences!
-        .setString(oauthTokenKey, jsonEncode(token?.toJson()));
-  }
-
-  String? get username =>
-      (_username ??= Settings().preferences!.getString(usernameKey));
-
-  set username(String? username) {
-    _username = username;
-    Settings().preferences!.setString(usernameKey, username!);
+  set user(CarpUser? user) {
+    _user = user;
+    Settings().preferences!.setString(usernameKey, jsonEncode(user!.toJson()));
   }
 
   String? get studyId =>
@@ -141,8 +130,7 @@ class LocalSettings {
   }
 
   Future<void> eraseAuthCredentials() async {
-    _username = null;
-    _oauthToken = null;
+    _user = null;
     await Settings().preferences!.remove(usernameKey);
     await Settings().preferences!.remove(oauthTokenKey);
   }

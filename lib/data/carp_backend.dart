@@ -29,9 +29,6 @@ class CarpBackend {
   /// Has the user been authenticated?
   bool get isAuthenticated => CarpService().authenticated;
 
-  /// The authenticated user
-  CarpUser? get user => CarpService().currentUser;
-
   /// The URI of the CANS server - depending on deployment mode.
   Uri get uri => Uri(
         scheme: 'https',
@@ -44,11 +41,13 @@ class CarpBackend {
         ],
       );
 
-  OAuthToken? get oauthToken => LocalSettings().oauthToken;
-  set oauthToken(OAuthToken? token) => LocalSettings().oauthToken = token;
 
-  String? get username => LocalSettings().username;
-  set username(String? username) => LocalSettings().username = username;
+
+  CarpUser? get user => LocalSettings().user;
+  set user(CarpUser? user) => LocalSettings().user = user;
+
+  String? get username => user?.username;
+  OAuthToken? get oauthToken => user?.token;
 
   String? get studyId => bloc.studyId;
   set studyId(String? id) {
@@ -85,7 +84,8 @@ class CarpBackend {
     );
 
     CarpService().configure(app!);
-    if (oauthToken != null) {
+    if (user != null) {
+      CarpService().currentUser = user;
       if (oauthToken!.hasExpired) {
         await refresh();
       }
@@ -98,23 +98,20 @@ class CarpBackend {
 
   Future<CarpUser> authenticate() async {
     bloc.stateStream.sink.add(StudiesAppState.authenticating);
-    var response = await CarpService().authenticate();
+    user = await CarpService().authenticate();
 
-    username = response.username;
-    oauthToken = response.token;
     bloc.stateStream.sink.add(StudiesAppState.accessTokenRetrieved);
 
-    return response;
+    return user as CarpUser;
   }
 
   Future<CarpUser> refresh() async {
-    var response = await CarpService().refresh();
+    bloc.stateStream.sink.add(StudiesAppState.authenticating);
+    user = await CarpService().refresh();
 
-    username = response.username;
-    oauthToken = response.token;
     bloc.stateStream.sink.add(StudiesAppState.accessTokenRetrieved);
 
-    return response;
+    return user as CarpUser;
   }
 
   Future<ConsentDocument?> uploadInformedConsent(

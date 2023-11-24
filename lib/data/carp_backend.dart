@@ -89,7 +89,6 @@ class CarpBackend {
           await refresh();
         } catch (error) {
           CarpService().currentUser = null;
-          user = null;
           warning('Failed to refresh access token - $error');
         }
       }

@@ -31,7 +31,7 @@ class StudyDetailsPage extends StatelessWidget {
                 IconButton(
                     onPressed: () => context.canPop()
                         ? context.pop()
-                        : context.replace('/tasks'),
+                        : context.replace('/'),
                     icon: const Icon(Icons.close))
               ]),
               Flexible(

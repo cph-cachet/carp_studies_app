@@ -10,7 +10,8 @@ class LocalSettings {
   static const String oauthTokenKey = 'token';
   static const String accessTokenKey = 'access_token';
   static const String usernameKey = 'username';
-  static const informedConsentAcceptedKey = 'informed_consent_accepted';
+  static const String userKey = 'user';
+  static const String informedConsentAcceptedKey = 'informed_consent_accepted';
 
   static final LocalSettings _instance = LocalSettings._();
   factory LocalSettings() => _instance;
@@ -124,12 +125,15 @@ class LocalSettings {
       : await Settings().getCacheBasePath(studyDeploymentId!);
 
   /// Has the informed consent been shown to, and accepted by the user?
+  /// Is `true` if there is no informed consent.
   bool get hasInformedConsentBeenAccepted => _hasInformedConsentBeenAccepted ??=
       Settings().preferences!.getBool(informedConsentAcceptedKey) ?? false;
 
   /// Specify if the informed consent has been handled.
-  set setHasInformedConsentBeenAccepted(bool accepted) =>
-      Settings().preferences!.setBool(informedConsentAcceptedKey, accepted);
+  set hasInformedConsentBeenAccepted(bool accepted) {
+    hasInformedConsentBeenAccepted = accepted;
+    Settings().preferences!.setBool(informedConsentAcceptedKey, accepted);
+  }
 
   Future<void> eraseStudyIds() async {
     _studyId = null;

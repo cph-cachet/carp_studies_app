@@ -7,9 +7,6 @@ class LocalSettings {
   static const String studyIdKey = 'study_id';
   static const String studyDeploymentIdKey = 'study_deployment_id';
   static const String deviceRolenameKey = 'role_name';
-  static const String oauthTokenKey = 'token';
-  static const String accessTokenKey = 'access_token';
-  static const String usernameKey = 'username';
   static const String userKey = 'user';
   static const informedConsentAcceptedKey = 'informed_consent_accepted';
 
@@ -17,27 +14,12 @@ class LocalSettings {
   factory LocalSettings() => _instance;
   LocalSettings._() : super();
 
-  String? _accessToken;
   String? _studyId;
   String? _studyDeploymentId;
   String? _deviceRolename;
   bool? _hasInformedConsentBeenAccepted;
   CarpUser? _user;
 
-  String? get accessToken {
-    if (_accessToken == null) {
-      String? accessTokenString =
-          Settings().preferences!.getString(accessTokenKey);
-
-      _accessToken = (accessTokenString != null) ? accessTokenString : null;
-    }
-    return _accessToken;
-  }
-
-  set accessToken(String? value) {
-    _accessToken = value;
-    Settings().preferences!.setString(accessTokenKey, value!);
-  }
 
   CarpUser? get user {
     if (_user == null) {
@@ -131,7 +113,6 @@ class LocalSettings {
 
   Future<void> eraseAuthCredentials() async {
     _user = null;
-    await Settings().preferences!.remove(usernameKey);
-    await Settings().preferences!.remove(oauthTokenKey);
+    await Settings().preferences!.remove(userKey);
   }
 }

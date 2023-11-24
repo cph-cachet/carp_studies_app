@@ -23,6 +23,7 @@ class CarpStudyAppState extends State<CarpStudyApp> {
       rpLocalizationsDelegate.reload();
     });
   }
+
   final GoRouter _router = GoRouter(
     initialLocation: '/',
     navigatorKey: _rootNavigatorKey,
@@ -38,7 +39,9 @@ class CarpStudyAppState extends State<CarpStudyApp> {
             parentNavigatorKey: _shellNavigatorKey,
             redirect: (context, state) => !CarpService().authenticated
                 ? '/login'
-                : (bloc.hasInformedConsentBeenAccepted ? firstRoute : '/consent'),
+                : (bloc.hasInformedConsentBeenAccepted
+                    ? firstRoute
+                    : '/consent'),
           ),
           GoRoute(
             path: '/tasks',

@@ -73,6 +73,7 @@ class DeviceModel {
         LocationService.DEVICE_TYPE: "pages.devices.type.location.name",
         ESenseDevice.DEVICE_TYPE: "pages.devices.type.esense.name",
         PolarDevice.DEVICE_TYPE: "pages.devices.type.polar.name",
+        HealthService.DEVICE_TYPE: "pages.devices.type.health.name",
       };
 
   static Map<String, String> get deviceTypeDescription => {
@@ -83,6 +84,7 @@ class DeviceModel {
         LocationService.DEVICE_TYPE: "pages.devices.type.location.description",
         ESenseDevice.DEVICE_TYPE: "pages.devices.type.esense.description",
         PolarDevice.DEVICE_TYPE: "pages.devices.type.polar.description",
+        HealthService.DEVICE_TYPE: "pages.devices.type.health.description",
       };
 
   static Map<String, Icon> get deviceTypeIcon => {
@@ -92,6 +94,7 @@ class DeviceModel {
         LocationService.DEVICE_TYPE: const Icon(Icons.location_on),
         ESenseDevice.DEVICE_TYPE: const Icon(Icons.headphones, size: 30),
         PolarDevice.DEVICE_TYPE: const Icon(Icons.monitor_heart, size: 30),
+        HealthService.DEVICE_TYPE: const Icon(Icons.favorite_rounded, size: 30),
       };
 
   static Map<DeviceStatus, dynamic> get deviceStatusIcon => {

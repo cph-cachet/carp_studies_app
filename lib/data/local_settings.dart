@@ -20,7 +20,6 @@ class LocalSettings {
   bool? _hasInformedConsentBeenAccepted;
   CarpUser? _user;
 
-
   CarpUser? get user {
     if (_user == null) {
       String? userString = Settings().preferences!.getString(userKey);

@@ -13,7 +13,7 @@ class InvitationsListViewModel extends ViewModel {
         .where((invitation) =>
             invitation.assignedDevices
                 ?.any((device) => device.device is Smartphone) ??
-            true)
+            false)
         .toList();
 
     return bloc.invitations;

@@ -24,9 +24,7 @@ class StudyAppBLoC {
 
   get stateStream => _stateStream;
 
-  List<ActiveParticipationInvitation> _invitations = [];
-  set invitations(value) => _invitations = value;
-  get invitations => _invitations;
+  List<ActiveParticipationInvitation> invitations = [];
 
   List<Message> _messages = [];
   final StreamController<int> _messageStreamController =

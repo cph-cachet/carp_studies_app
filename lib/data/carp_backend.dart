@@ -113,9 +113,9 @@ class CarpBackend {
       document = await CarpService().createConsentDocument(informedConsent);
       info(
           'Informed consent document uploaded successfully - id: ${document.id}');
-      bloc.setHasInformedConsentBeenAccepted = true;
+      bloc.hasInformedConsentBeenAccepted = true;
     } on Exception {
-      bloc.setHasInformedConsentBeenAccepted = false;
+      bloc.hasInformedConsentBeenAccepted = false;
       warning('Informed consent upload failed for username: $username');
     }
 

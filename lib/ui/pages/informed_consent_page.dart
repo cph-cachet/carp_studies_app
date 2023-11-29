@@ -15,7 +15,7 @@ class InformedConsentState extends State<InformedConsentPage> {
   void resultCallback(RPTaskResult result) async {
     await widget.model.informedConsentHasBeenAccepted(result);
     if (context.mounted) {
-      context.go('/tasks');
+      context.go('/');
     }
   }
 
@@ -29,7 +29,8 @@ class InformedConsentState extends State<InformedConsentPage> {
         future: widget.model.getInformedConsent(localization.locale).then(
           (value) {
             if (value == null) {
-              context.go('/tasks');
+              bloc.hasInformedConsentBeenAccepted = true;
+              context.go('/');
             }
             return value;
           },

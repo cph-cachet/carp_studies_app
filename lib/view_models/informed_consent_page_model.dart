@@ -29,7 +29,7 @@ class InformedConsentViewModel extends ViewModel {
     RPTaskResult informedConsentResult,
   ) async {
     info('Informed consent has been accepted by user.');
-    bloc.setHasInformedConsentBeenAccepted = true;
+    bloc.hasInformedConsentBeenAccepted = true;
     await bloc.backend.uploadInformedConsent(informedConsentResult);
   }
 }

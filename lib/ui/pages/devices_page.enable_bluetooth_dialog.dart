@@ -3,10 +3,11 @@ part of carp_study_app;
 // import 'package:carp_study_app/main.dart';
 // import 'package:flutter/material.dart';
 
-class AuthorizationDialog extends StatelessWidget {
+class EnableBluetoothDialog extends StatelessWidget {
   final DeviceModel device;
 
-  const AuthorizationDialog({Key? key, required this.device}) : super(key: key);
+  const EnableBluetoothDialog({Key? key, required this.device})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,12 +26,11 @@ class AuthorizationDialog extends StatelessWidget {
 
   Widget _buildContent(
       BuildContext context, DeviceModel device, RPLocalizations locale) {
-    return authorizationionInstructions(context, device) ??
+    return enableBluetoothInstructions(context, device) ??
         Container(); // Return a default widget if necessary
   }
 
-  Widget authorizationionInstructions(
-      BuildContext context, DeviceModel device) {
+  Widget enableBluetoothInstructions(BuildContext context, DeviceModel device) {
     RPLocalizations locale = RPLocalizations.of(context)!;
     return Column(
       children: [
@@ -40,7 +40,7 @@ class AuthorizationDialog extends StatelessWidget {
               children: [
                 Text(
                   (locale.translate(
-                          "pages.devices.connection.bluetooth_authorization"))
+                          "pages.devices.connection.enable_bluetooth"))
                       .trim(),
                   style: aboutCardContentStyle,
                   textAlign: TextAlign.justify,
@@ -55,10 +55,8 @@ class AuthorizationDialog extends StatelessWidget {
                   textAlign: TextAlign.justify,
                 ),
                 TextButton(
-                  onPressed: () => AppSettings.openAppSettings(
-                      type: AppSettingsType.settings),
-                  child: Text(
-                      locale.translate("pages.devices.connection.settings")),
+                  onPressed: () => context.pop(),
+                  child: Text(locale.translate("pages.devices.connection.ok")),
                 )
               ],
             ),

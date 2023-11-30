@@ -237,7 +237,7 @@ class DevicesPageState extends State<DevicesPage> {
         await showDialog(
           context: context,
           barrierDismissible: true,
-          builder: (context) => AuthorizationDialog(device: device),
+          builder: (context) => EnableBluetoothDialog(device: device),
         );
       } else if (state == BluetoothAdapterState.on) {
         //open dialog to select device
@@ -261,20 +261,7 @@ class DevicesPageState extends State<DevicesPage> {
         await showDialog(
           context: context,
           barrierDismissible: true,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: Text('Bluetooth Not Enabled'),
-              content: Text('Please enable Bluetooth'),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: Text('OK'),
-                ),
-              ],
-            );
-          },
+          builder: (context) => AuthorizationDialog(device: device),
         );
       }
     });

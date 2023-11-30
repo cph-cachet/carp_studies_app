@@ -7,64 +7,33 @@ class LocalSettings {
   static const String studyIdKey = 'study_id';
   static const String studyDeploymentIdKey = 'study_deployment_id';
   static const String deviceRolenameKey = 'role_name';
-  static const String oauthTokenKey = 'token';
-  static const String accessTokenKey = 'access_token';
-  static const String usernameKey = 'username';
   static const String userKey = 'user';
-  static const String informedConsentAcceptedKey = 'informed_consent_accepted';
+  static const informedConsentAcceptedKey = 'informed_consent_accepted';
 
   static final LocalSettings _instance = LocalSettings._();
   factory LocalSettings() => _instance;
   LocalSettings._() : super();
 
-  OAuthToken? _oauthToken;
-  String? _accessToken;
   String? _studyId;
   String? _studyDeploymentId;
   String? _deviceRolename;
   bool? _hasInformedConsentBeenAccepted;
-  String? _username;
+  CarpUser? _user;
 
-  String? get accessToken {
-    if (_accessToken == null) {
-      String? accessTokenString =
-          Settings().preferences!.getString(accessTokenKey);
+  CarpUser? get user {
+    if (_user == null) {
+      String? userString = Settings().preferences!.getString(userKey);
 
-      _accessToken = (accessTokenString != null) ? accessTokenString : null;
-    }
-    return _accessToken;
-  }
-
-  set accessToken(String? value) {
-    _accessToken = value;
-    Settings().preferences!.setString(accessTokenKey, value!);
-  }
-
-  OAuthToken? get oauthToken {
-    if (_oauthToken == null) {
-      String? ouathTokenString =
-          Settings().preferences!.getString(oauthTokenKey);
-
-      _oauthToken = (ouathTokenString != null)
-          ? OAuthToken.fromJson(jsonDecode(ouathTokenString))
+      _user = (userString != null)
+          ? CarpUser.fromJson(jsonDecode(userString))
           : null;
     }
-    return _oauthToken;
+    return _user;
   }
 
-  set oauthToken(OAuthToken? token) {
-    _oauthToken = token;
-    Settings()
-        .preferences!
-        .setString(oauthTokenKey, jsonEncode(token?.toJson()));
-  }
-
-  String? get username =>
-      (_username ??= Settings().preferences!.getString(usernameKey));
-
-  set username(String? username) {
-    _username = username;
-    Settings().preferences!.setString(usernameKey, username!);
+  set user(CarpUser? user) {
+    _user = user;
+    Settings().preferences!.setString(userKey, jsonEncode(user!.toJson()));
   }
 
   String? get studyId =>
@@ -145,9 +114,7 @@ class LocalSettings {
   }
 
   Future<void> eraseAuthCredentials() async {
-    _username = null;
-    _oauthToken = null;
-    await Settings().preferences!.remove(usernameKey);
-    await Settings().preferences!.remove(oauthTokenKey);
+    _user = null;
+    await Settings().preferences!.remove(userKey);
   }
 }

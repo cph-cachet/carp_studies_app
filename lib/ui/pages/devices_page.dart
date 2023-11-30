@@ -11,9 +11,8 @@ class DevicesPage extends StatefulWidget {
 }
 
 class DevicesPageState extends State<DevicesPage> {
-  StreamSubscription? isScanningStream;
-  StreamSubscription? scanResultStream;
   StreamSubscription? bluetoothStateStream;
+  BluetoothAdapterState? adapterState;
 
   List<DeviceModel> physicalDevices = bloc.runningDevices
       .where((element) =>
@@ -29,10 +28,18 @@ class DevicesPageState extends State<DevicesPage> {
       .toList();
 
   @override
+  void initState() {
+    super.initState();
+    bluetoothStateStream = FlutterBluePlus.adapterState.listen((event) {
+      adapterState = event;
+      setState(() {});
+      FlutterBluePlus.stopScan();
+    });
+  }
+
+  @override
   void dispose() {
     FlutterBluePlus.stopScan();
-    isScanningStream?.cancel();
-    scanResultStream?.cancel();
     bluetoothStateStream?.cancel();
     super.dispose();
   }
@@ -214,13 +221,8 @@ class DevicesPageState extends State<DevicesPage> {
       );
 
   void physicalDeviceClicked(DeviceModel device) async {
-    if (await FlutterBluePlus.isAvailable == false) {
+    if (await FlutterBluePlus.isSupported == false) {
       warning("Bluetooth not supported by this device");
-      return;
-    }
-
-    if (device.status == DeviceStatus.connected ||
-        device.status == DeviceStatus.connecting) {
       return;
     }
 
@@ -229,32 +231,119 @@ class DevicesPageState extends State<DevicesPage> {
       await FlutterBluePlus.turnOn();
     }
 
-    // wait bluetooth to be on
-    await FlutterBluePlus.adapterState
-        .where((s) => s == BluetoothAdapterState.on)
-        .first;
+    FlutterBluePlus.adapterState.listen((BluetoothAdapterState state) async {
+      if (state == BluetoothAdapterState.off) {
+        // ask user to turn it on.
+        await showDialog(
+          context: context,
+          barrierDismissible: true,
+          builder: (context) => AuthorizationDialog(device: device),
+        );
+      } else if (state == BluetoothAdapterState.on) {
+        //open dialog to select device
+        // dialog starts scanning.
+        if (device.status == DeviceStatus.connected ||
+            device.status == DeviceStatus.connecting) {
+          // open dialog that asks if user wants to disconnect
+        } else {
+          // open dialog to ask user to connect 
+          await showDialog(
+            context: context,
+            barrierDismissible: true,
+            builder: (context) => ConnectionDialog(device: device),
+          ).then((value) async {
+            await FlutterBluePlus.stopScan();
+          });
+        }
+      } else if (state == BluetoothAdapterState.unauthorized) {
+        //open dialog showing user how to allow app to use bluetooth and
+        // have a button opening app settings for them to authorize app.
+        await showDialog(
+          context: context,
+          barrierDismissible: true,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('Bluetooth Not Enabled'),
+              content: Text('Please enable Bluetooth'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text('OK'),
+                ),
+              ],
+            );
+          },
+        );
+      }
+    });
+
+
+
+    bluetoothStateStream = FlutterBluePlus.adapterState
+        .listen((BluetoothAdapterState state) async {
+      print('state is: $state');
+      if (state == BluetoothAdapterState.on) {
+        // FlutterBluePlus.startScan();
+        await showDialog(
+          context: context,
+          barrierDismissible: true,
+          builder: (context) => ConnectionDialog(device: device),
+        ).then((value) async {
+          await FlutterBluePlus.stopScan();
+        });
+      } else if (state == BluetoothAdapterState.off) {
+        FlutterBluePlus.startScan();
+        FlutterBluePlus.stopScan();
+        print("Finished checking if bluetooth is on and it is $state");
+        await showDialog(
+          context: context,
+          barrierDismissible: true,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('Bluetooth Not Enabled'),
+              content: Text('Please enable Bluetooth'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text('OK'),
+                ),
+              ],
+            );
+          },
+        );
+        await FlutterBluePlus.adapterState
+            .where((s) => s == BluetoothAdapterState.on)
+            .first;
+      } else if (state == BluetoothAdapterState.unauthorized) {
+        AppSettings.openAppSettings(type: AppSettingsType.settings);
+      }
+    });
+    FlutterBluePlus.setLogLevel(LogLevel.verbose, color: false);
 
     // start scanning for BTLE devices
     bool isScanning = false;
 
-    FlutterBluePlus.isScanning.listen((scanBool) => isScanning = scanBool);
-
-    bluetoothStateStream = FlutterBluePlus.adapterState.listen((state) {
-      if (state == BluetoothAdapterState.on && !isScanning) {
-        FlutterBluePlus.startScan();
-        isScanning = true;
-      } else {
-        // instantly start and stop a scan to turn on the BT adapter
-        FlutterBluePlus.startScan();
-        FlutterBluePlus.stopScan();
-      }
+    FlutterBluePlus.isScanning.listen((scanBool) {
+      isScanning = scanBool;
+      print('isScanning updated: $isScanning');
     });
 
-    await showDialog(
-      context: context,
-      barrierDismissible: true,
-      builder: (context) => ConnectionDialog(device: device),
-    );
+    // bluetoothStateStream = FlutterBluePlus.adapterState.listen((state) {
+    //   if (state == BluetoothAdapterState.on && !isScanning) {
+    //     print('adapterState.listen state: $state, isScanning: $isScanning');
+    //     FlutterBluePlus.startScan();
+    //     isScanning = true;
+    //   } else {
+    //     print('adapterState.listen state: $state, scanning: $isScanning');
+    //     // instantly start and stop a scan to turn on the BT adapter
+    //     FlutterBluePlus.startScan();
+    //     FlutterBluePlus.stopScan();
+    //   }
+    // });
 
     FlutterBluePlus.stopScan();
   }

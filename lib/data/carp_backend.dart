@@ -73,7 +73,7 @@ class CarpBackend {
       name: "CAWS @ DTU",
       uri: uri.replace(pathSegments: [uris[bloc.deploymentMode]!]),
       authURL: uri,
-      clientId: 'carp-webservices-dart',
+      clientId: 'studies-app',
       redirectURI: Uri.parse('carp-studies-auth://auth'),
       discoveryURL: uri.replace(pathSegments: [
         ...uri.pathSegments,

@@ -15,6 +15,8 @@ import 'package:timeago/timeago.dart' as timeago;
 import 'package:camera/camera.dart';
 import 'package:video_player/video_player.dart';
 import 'package:open_settings/open_settings.dart';
+import 'package:app_settings/app_settings.dart';
+
 import 'package:google_fonts/google_fonts.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
@@ -88,6 +90,7 @@ part 'ui/pages/devices_page.dart';
 part 'ui/pages/loading_page.dart';
 part 'ui/pages/error_page.dart';
 part 'ui/pages/cans_login.dart';
+part 'ui/pages/devices_page.authorization_dialog.dart';
 part 'ui/pages/devices_page.connection_dialog.dart';
 part 'ui/pages/devices_page.list_title.dart';
 
@@ -135,6 +138,6 @@ void main() async {
 /// Configure the debug level and deployment mode here before running the app
 /// or deploying it.
 final bloc = StudyAppBLoC(
-  debugLevel: DebugLevel.debug,
+  debugLevel: DebugLevel.info,
   deploymentMode: DeploymentMode.dev,
 );

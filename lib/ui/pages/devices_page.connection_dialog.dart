@@ -10,6 +10,12 @@ class ConnectionDialog extends StatefulWidget {
 }
 
 class _ConnectionDialogState extends State<ConnectionDialog> {
+  @override
+  initState() {
+    super.initState();
+    FlutterBluePlus.startScan();
+  }
+
   CurrentStep currentStep = CurrentStep.scan;
   BluetoothDevice? selectedDevice;
   int selected = 40;
@@ -89,7 +95,7 @@ class _ConnectionDialogState extends State<ConnectionDialog> {
       ],
       CurrentStep.instructions: [
         buildTranslatedButton("pages.devices.connection.settings", () {
-          OpenSettings.openBluetoothSetting();
+          AppSettings.openAppSettings(type: AppSettingsType.bluetooth);
         }),
         buildTranslatedButton("pages.devices.connection.ok", () {
           setState(() => currentStep = CurrentStep.scan);

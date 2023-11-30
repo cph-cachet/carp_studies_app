@@ -20,18 +20,18 @@ class AuthorizationDialog extends StatelessWidget {
       title: const Text("Enable bluetooth"),
       content: SizedBox(
         height: MediaQuery.of(context).size.height * 0.6,
-        child: _buildContent(locale),
+        child: _buildContent(context, device, locale),
       )
     );
   }
 
-  Widget _buildContent(RPLocalizations locale) {
+  Widget _buildContent(BuildContext context, DeviceModel device, RPLocalizations locale) {
 
-    return authorizationionInstructions(widget.device, context) ??
+    return authorizationionInstructions(context, device) ??
         Container(); // Return a default widget if necessary
   }
 
-  Widget authorizationionInstructions(DeviceModel device, BuildContext context) {
+  Widget authorizationionInstructions(BuildContext context, DeviceModel device) {
     RPLocalizations locale = RPLocalizations.of(context)!;
     return Column(
       children: [
@@ -39,6 +39,12 @@ class AuthorizationDialog extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(
               children: [
+                Text(
+                  (locale.translate("pages.devices.connection.bluetooth_authorization"))
+                      .trim(),
+                  style: aboutCardContentStyle,
+                  textAlign: TextAlign.justify,
+                ),
                 Image(
                     image: const AssetImage('assets/icons/connection.png'),
                     width: MediaQuery.of(context).size.height * 0.2,
@@ -48,27 +54,13 @@ class AuthorizationDialog extends StatelessWidget {
                   style: aboutCardContentStyle,
                   textAlign: TextAlign.justify,
                 ),
+                TextButton(
+                  onPressed: () => AppSettings.openAppSettings(type: AppSettingsType.settings),
+                  child: Text(locale.translate("pages.devices.connection.settings")),
+                )
               ],
             ),
           ),
-        ),
-      ],
-    );
-  }
-
-  Widget confirmAuthorization(BluetoothDevice? device, BuildContext context) {
-    RPLocalizations locale = RPLocalizations.of(context)!;
-    return Column(
-      children: [
-        Image(
-            image: const AssetImage('assets/icons/connection_done.png'),
-            width: MediaQuery.of(context).size.height * 0.2,
-            height: MediaQuery.of(context).size.height * 0.2),
-        Text(
-          ("${locale.translate("pages.devices.connection.step.confirm.1")} '${device?.localName}' ${locale.translate("pages.devices.connection.step.confirm.2")}")
-              .trim(),
-          style: aboutCardContentStyle,
-          textAlign: TextAlign.justify,
         ),
       ],
     );

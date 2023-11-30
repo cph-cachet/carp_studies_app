@@ -116,6 +116,7 @@
     "pages.devices.connection.done": "Done",
     "pages.devices.connection.ok": "OK",
     "pages.devices.connection.settings": "Settings",
+    "pages.devices.connection.bluetooth_authorization": "Please turn on bluetooth following the steps shown in the photo below",
     "pages.devices.connection.step.how_to.title": "How to connect to",
     "pages.devices.connection.step.start.title": "Connect to Device",
     "pages.devices.connection.step.start.1": "Select the name of the",

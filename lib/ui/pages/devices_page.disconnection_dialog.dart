@@ -3,11 +3,10 @@ part of carp_study_app;
 // import 'package:carp_study_app/main.dart';
 // import 'package:flutter/material.dart';
 
-class EnableBluetoothDialog extends StatelessWidget {
+class DisconnectionDialog extends StatelessWidget {
   final DeviceModel device;
 
-  const EnableBluetoothDialog({Key? key, required this.device})
-      : super(key: key);
+  const DisconnectionDialog({Key? key, required this.device}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,14 +14,14 @@ class EnableBluetoothDialog extends StatelessWidget {
         scrollable: true,
         titlePadding: const EdgeInsets.symmetric(vertical: 4),
         insetPadding: const EdgeInsets.symmetric(vertical: 24, horizontal: 40),
-        title: const Text("Enable bluetooth"),
+        title: const Text("Disconnect bluetooth"),
         content: SizedBox(
           height: MediaQuery.of(context).size.height * 0.6,
-          child: enableBluetoothInstructions(context, device),
+          child: disconnectBluetooth(context, device),
         ));
   }
 
-  Widget enableBluetoothInstructions(BuildContext context, DeviceModel device) {
+  Widget disconnectBluetooth(BuildContext context, DeviceModel device) {
     RPLocalizations locale = RPLocalizations.of(context)!;
     return Column(
       children: [
@@ -32,22 +31,20 @@ class EnableBluetoothDialog extends StatelessWidget {
               children: [
                 Text(
                   (locale.translate(
-                          "pages.devices.connection.enable_bluetooth"))
+                          "pages.devices.connection.disconnect_bluetooth"))
                       .trim(),
                   style: aboutCardContentStyle,
                   textAlign: TextAlign.justify,
                 ),
-                Image(
-                    image: const AssetImage('assets/icons/connection.png'),
-                    width: MediaQuery.of(context).size.height * 0.2,
-                    height: MediaQuery.of(context).size.height * 0.2),
-                Text(
-                  locale.translate(device.connectionInstructions!),
-                  style: aboutCardContentStyle,
-                  textAlign: TextAlign.justify,
-                ),
                 TextButton(
-                  onPressed: () => context.pop(),
+                  onPressed: () => {
+                    // selectedDevice: BluetoothDevice?
+                    // widget: Widget from stateful. woops
+                    bloc.disconnectFromDevice(
+                      device.deviceManager,
+                    ),
+                    context.pop()
+                  },
                   child: Text(locale.translate("pages.devices.connection.ok")),
                 )
               ],

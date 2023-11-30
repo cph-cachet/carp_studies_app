@@ -93,6 +93,7 @@ part 'ui/pages/cans_login.dart';
 part 'ui/pages/devices_page.authorization_dialog.dart';
 part 'ui/pages/devices_page.enable_bluetooth_dialog.dart';
 part 'ui/pages/devices_page.connection_dialog.dart';
+part 'ui/pages/devices_page.disconnection_dialog.dart';
 part 'ui/pages/devices_page.list_title.dart';
 
 part 'ui/widgets/study_card.dart';

@@ -10,8 +10,6 @@ class AuthorizationDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    RPLocalizations locale = RPLocalizations.of(context)!;
-
     return AlertDialog(
         scrollable: true,
         titlePadding: const EdgeInsets.symmetric(vertical: 4),
@@ -19,14 +17,8 @@ class AuthorizationDialog extends StatelessWidget {
         title: const Text("Enable bluetooth"),
         content: SizedBox(
           height: MediaQuery.of(context).size.height * 0.6,
-          child: _buildContent(context, device, locale),
+          child: authorizationionInstructions(context, device),
         ));
-  }
-
-  Widget _buildContent(
-      BuildContext context, DeviceModel device, RPLocalizations locale) {
-    return authorizationionInstructions(context, device) ??
-        Container(); // Return a default widget if necessary
   }
 
   Widget authorizationionInstructions(

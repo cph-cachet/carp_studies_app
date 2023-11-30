@@ -245,8 +245,13 @@ class DevicesPageState extends State<DevicesPage> {
         if (device.status == DeviceStatus.connected ||
             device.status == DeviceStatus.connecting) {
           // open dialog that asks if user wants to disconnect
+          await showDialog(
+            context: context,
+            barrierDismissible: true,
+            builder: (context) => DisconnectionDialog(device: device),
+          );
         } else {
-          // open dialog to ask user to connect 
+          // open dialog to ask user to connect
           await showDialog(
             context: context,
             barrierDismissible: true,
@@ -265,8 +270,6 @@ class DevicesPageState extends State<DevicesPage> {
         );
       }
     });
-
-
 
     bluetoothStateStream = FlutterBluePlus.adapterState
         .listen((BluetoothAdapterState state) async {

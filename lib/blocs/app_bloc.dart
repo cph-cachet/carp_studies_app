@@ -301,6 +301,20 @@ class StudyAppBLoC {
     device.connect();
   }
 
+  // Disconnect from the currently connected device
+  void disconnectFromDevice(DeviceManager device) {
+    if (device is BTLEDeviceManager) {
+      device.btleAddress = '';
+      device.btleName = '';
+    }
+
+    // when the device id is updated, save the deployment
+    // shouldn't these 2 lines be inside the if statement?
+    Sensing().controller?.saveDeployment();
+
+    device.disconnect();
+  }
+
   /// Start sensing.
   Future<void> start() async {
     assert(Sensing().controller != null,

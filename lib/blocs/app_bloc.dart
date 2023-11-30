@@ -24,9 +24,7 @@ class StudyAppBLoC {
 
   get stateStream => _stateStream;
 
-  List<ActiveParticipationInvitation> _invitations = [];
-  set invitations(value) => _invitations = value;
-  get invitations => _invitations;
+  List<ActiveParticipationInvitation> invitations = [];
 
   List<Message> _messages = [];
   final StreamController<int> _messageStreamController =
@@ -219,8 +217,8 @@ class StudyAppBLoC {
   ///  * shown to the user
   ///  * accepted by the user
   ///  * successfully uploaded to CARP
-  set setHasInformedConsentBeenAccepted(bool accepted) =>
-      LocalSettings().setHasInformedConsentBeenAccepted = accepted;
+  set hasInformedConsentBeenAccepted(bool accepted) =>
+      LocalSettings().hasInformedConsentBeenAccepted = accepted;
 
   /// Refresh the list of messages (news, announcements, articles) to be shown in
   /// the Study Page of the app.
@@ -336,7 +334,7 @@ class StudyAppBLoC {
   /// available.
   Future<void> leaveStudy() async {
     _state = StudyAppState.initialized;
-    setHasInformedConsentBeenAccepted = false;
+    hasInformedConsentBeenAccepted = false;
     await LocalSettings().eraseStudyIds();
     await Sensing().removeStudy();
   }

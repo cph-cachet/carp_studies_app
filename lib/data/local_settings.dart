@@ -94,12 +94,15 @@ class LocalSettings {
       : await Settings().getCacheBasePath(studyDeploymentId!);
 
   /// Has the informed consent been shown to, and accepted by the user?
+  /// Is `true` if there is no informed consent.
   bool get hasInformedConsentBeenAccepted => _hasInformedConsentBeenAccepted ??=
       Settings().preferences!.getBool(informedConsentAcceptedKey) ?? false;
 
   /// Specify if the informed consent has been handled.
-  set setHasInformedConsentBeenAccepted(bool accepted) =>
-      Settings().preferences!.setBool(informedConsentAcceptedKey, accepted);
+  set hasInformedConsentBeenAccepted(bool accepted) {
+    hasInformedConsentBeenAccepted = accepted;
+    Settings().preferences!.setBool(informedConsentAcceptedKey, accepted);
+  }
 
   Future<void> eraseStudyIds() async {
     _studyId = null;

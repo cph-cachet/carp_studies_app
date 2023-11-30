@@ -2,6 +2,7 @@ part of carp_study_app;
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 final _shellNavigatorKey = GlobalKey<NavigatorState>();
+const String firstRoute = '/about';
 
 class CarpStudyApp extends StatefulWidget {
   const CarpStudyApp({super.key});
@@ -38,7 +39,9 @@ class CarpStudyAppState extends State<CarpStudyApp> {
             parentNavigatorKey: _shellNavigatorKey,
             redirect: (context, state) => !CarpService().authenticated
                 ? '/login'
-                : (bloc.hasInformedConsentBeenAccepted ? '/tasks' : '/consent'),
+                : (bloc.hasInformedConsentBeenAccepted
+                    ? firstRoute
+                    : '/consent'),
           ),
           GoRoute(
             path: '/tasks',
@@ -105,7 +108,7 @@ class CarpStudyAppState extends State<CarpStudyApp> {
         path: '/consent',
         parentNavigatorKey: _rootNavigatorKey,
         redirect: (context, state) => bloc.hasInformedConsentBeenAccepted
-            ? '/tasks'
+            ? firstRoute
             : (bloc.studyId == null ? '/invitations' : null),
         builder: (context, state) => InformedConsentPage(
           bloc.data.informedConsentViewModel,

@@ -1,4 +1,4 @@
-part of carp_study_app;
+part of '../../main.dart';
 
 /// State of Bluetoth connection UI.
 enum CurrentStep { scan, instructions, done }
@@ -271,69 +271,7 @@ class DevicesPageState extends State<DevicesPage> {
       }
     });
 
-    bluetoothStateStream = FlutterBluePlus.adapterState
-        .listen((BluetoothAdapterState state) async {
-      print('state is: $state');
-      if (state == BluetoothAdapterState.on) {
-        // FlutterBluePlus.startScan();
-        await showDialog(
-          context: context,
-          barrierDismissible: true,
-          builder: (context) => ConnectionDialog(device: device),
-        ).then((value) async {
-          await FlutterBluePlus.stopScan();
-        });
-      } else if (state == BluetoothAdapterState.off) {
-        FlutterBluePlus.startScan();
-        FlutterBluePlus.stopScan();
-        print("Finished checking if bluetooth is on and it is $state");
-        await showDialog(
-          context: context,
-          barrierDismissible: true,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: Text('Bluetooth Not Enabled'),
-              content: Text('Please enable Bluetooth'),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: Text('OK'),
-                ),
-              ],
-            );
-          },
-        );
-        await FlutterBluePlus.adapterState
-            .where((s) => s == BluetoothAdapterState.on)
-            .first;
-      } else if (state == BluetoothAdapterState.unauthorized) {
-        AppSettings.openAppSettings(type: AppSettingsType.settings);
-      }
-    });
     FlutterBluePlus.setLogLevel(LogLevel.verbose, color: false);
-
-    // start scanning for BTLE devices
-    bool isScanning = false;
-
-    FlutterBluePlus.isScanning.listen((scanBool) {
-      isScanning = scanBool;
-      print('isScanning updated: $isScanning');
-    });
-
-    // bluetoothStateStream = FlutterBluePlus.adapterState.listen((state) {
-    //   if (state == BluetoothAdapterState.on && !isScanning) {
-    //     print('adapterState.listen state: $state, isScanning: $isScanning');
-    //     FlutterBluePlus.startScan();
-    //     isScanning = true;
-    //   } else {
-    //     print('adapterState.listen state: $state, scanning: $isScanning');
-    //     // instantly start and stop a scan to turn on the BT adapter
-    //     FlutterBluePlus.startScan();
-    //     FlutterBluePlus.stopScan();
-    //   }
-    // });
 
     FlutterBluePlus.stopScan();
   }

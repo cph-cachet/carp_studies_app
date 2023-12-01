@@ -1,12 +1,9 @@
-part of carp_study_app;
-
-// import 'package:carp_study_app/main.dart';
-// import 'package:flutter/material.dart';
+part of '../../main.dart';
 
 class DisconnectionDialog extends StatelessWidget {
   final DeviceModel device;
 
-  const DisconnectionDialog({Key? key, required this.device}) : super(key: key);
+  const DisconnectionDialog({super.key, required this.device});
 
   @override
   Widget build(BuildContext context) {
@@ -31,8 +28,7 @@ class DisconnectionDialog extends StatelessWidget {
               children: [
                 Text(
                   (locale.translate(
-                          "pages.devices.connection.disconnect_bluetooth"))
-                      .trim(),
+                          "pages.devices.connection.disconnect_bluetooth")),
                   style: aboutCardContentStyle,
                   textAlign: TextAlign.justify,
                 ),
@@ -40,7 +36,7 @@ class DisconnectionDialog extends StatelessWidget {
                   onPressed: () => {
                     // selectedDevice: BluetoothDevice?
                     // widget: Widget from stateful. woops
-                    bloc.disconnectFromDevice(
+                    disconnectFromDevice(
                       device.deviceManager,
                     ),
                     context.pop()
@@ -53,5 +49,18 @@ class DisconnectionDialog extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  // Disconnect from the currently connected device
+  void disconnectFromDevice(DeviceManager device) {
+    if (device is BTLEDeviceManager) {
+      device.btleAddress = '';
+      device.btleName = '';
+    }
+
+    // when the device id is updated, save the deployment
+    Sensing().controller?.saveDeployment();
+
+    device.disconnect();
   }
 }

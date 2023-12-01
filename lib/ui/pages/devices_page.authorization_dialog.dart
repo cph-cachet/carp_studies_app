@@ -1,12 +1,9 @@
-part of carp_study_app;
-
-// import 'package:carp_study_app/main.dart';
-// import 'package:flutter/material.dart';
+part of '../../main.dart';
 
 class AuthorizationDialog extends StatelessWidget {
   final DeviceModel device;
 
-  const AuthorizationDialog({Key? key, required this.device}) : super(key: key);
+  const AuthorizationDialog({super.key, required this.device});
 
   @override
   Widget build(BuildContext context) {
@@ -32,8 +29,7 @@ class AuthorizationDialog extends StatelessWidget {
               children: [
                 Text(
                   (locale.translate(
-                          "pages.devices.connection.bluetooth_authorization"))
-                      .trim(),
+                          "pages.devices.connection.bluetooth_authorization")),
                   style: aboutCardContentStyle,
                   textAlign: TextAlign.justify,
                 ),

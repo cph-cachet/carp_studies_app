@@ -1,4 +1,4 @@
-part of carp_study_app;
+part of '../../main.dart';
 
 class ConnectionDialog extends StatefulWidget {
   final DeviceModel device;
@@ -108,7 +108,7 @@ class _ConnectionDialogState extends State<ConnectionDialog> {
         buildTranslatedButton("pages.devices.connection.done", () {
           FlutterBluePlus.stopScan();
           if (selectedDevice != null) {
-            bloc.connectToDevice(
+            connectToDevice(
               selectedDevice!,
               widget.device.deviceManager,
             );
@@ -263,5 +263,18 @@ class _ConnectionDialogState extends State<ConnectionDialog> {
         ),
       ],
     );
+  }
+
+  /// Map a selected device to the device in the protocol and connect to it.
+  void connectToDevice(BluetoothDevice selectedDevice, DeviceManager device) {
+    if (device is BTLEDeviceManager) {
+      device.btleAddress = selectedDevice.remoteId.str;
+      device.btleName = selectedDevice.localName;
+    }
+
+    // when the device id is updated, save the deployment
+    Sensing().controller?.saveDeployment();
+
+    device.connect();
   }
 }

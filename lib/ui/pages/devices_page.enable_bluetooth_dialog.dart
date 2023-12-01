@@ -1,13 +1,9 @@
-part of carp_study_app;
-
-// import 'package:carp_study_app/main.dart';
-// import 'package:flutter/material.dart';
+part of '../../main.dart';
 
 class EnableBluetoothDialog extends StatelessWidget {
   final DeviceModel device;
 
-  const EnableBluetoothDialog({Key? key, required this.device})
-      : super(key: key);
+  const EnableBluetoothDialog({super.key, required this.device});
 
   @override
   Widget build(BuildContext context) {
@@ -32,8 +28,7 @@ class EnableBluetoothDialog extends StatelessWidget {
               children: [
                 Text(
                   (locale.translate(
-                          "pages.devices.connection.enable_bluetooth"))
-                      .trim(),
+                          "pages.devices.connection.enable_bluetooth")),
                   style: aboutCardContentStyle,
                   textAlign: TextAlign.justify,
                 ),

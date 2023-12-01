@@ -8,7 +8,7 @@ class LocalSettings {
   static const String studyDeploymentIdKey = 'study_deployment_id';
   static const String deviceRolenameKey = 'role_name';
   static const String userKey = 'user';
-  static const informedConsentAcceptedKey = 'informed_consent_accepted';
+  static const String informedConsentAcceptedKey = 'informed_consent_accepted';
 
   static final LocalSettings _instance = LocalSettings._();
   factory LocalSettings() => _instance;
@@ -100,7 +100,7 @@ class LocalSettings {
 
   /// Specify if the informed consent has been handled.
   set hasInformedConsentBeenAccepted(bool accepted) {
-    hasInformedConsentBeenAccepted = accepted;
+    _hasInformedConsentBeenAccepted = accepted;
     Settings().preferences!.setBool(informedConsentAcceptedKey, accepted);
   }
 

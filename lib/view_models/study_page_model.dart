@@ -1,4 +1,4 @@
-part of carp_study_app;
+part of '../../main.dart';
 
 class StudyPageViewModel extends ViewModel {
   String get title => bloc.deployment?.studyDescription?.title ?? 'Unnamed';

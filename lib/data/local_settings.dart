@@ -1,4 +1,4 @@
-part of carp_study_app;
+part of '../../main.dart';
 
 /// A local settings manager. Works as a singleton - use `LocalSettings()`
 /// for accessing settings.

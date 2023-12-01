@@ -5,7 +5,7 @@
  * found in the LICENSE file.
  */
 
-part of carp_study_app;
+part of '../../main.dart';
 
 /// This class implements the sensing layer.
 ///

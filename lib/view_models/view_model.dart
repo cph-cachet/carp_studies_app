@@ -1,4 +1,4 @@
-part of carp_study_app;
+part of '../../main.dart';
 
 /// An abstract view model used for all other view models in the app.
 abstract class ViewModel {

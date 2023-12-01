@@ -1,4 +1,4 @@
-part of carp_study_app;
+part of '../../main.dart';
 
 /// View model for the [StudyProgressCardWidget].
 class StudyProgressCardViewModel extends ViewModel {

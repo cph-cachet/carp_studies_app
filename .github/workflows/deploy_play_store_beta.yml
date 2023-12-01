@@ -1,0 +1,18 @@
+name: Deploy to Play Store beta
+on:
+  push:
+    tags:
+      - '*'
+  workflow_dispatch:
+
+
+
+# Declare default permissions as read only.
+permissions: read-all
+
+jobs:
+  workflow_run:
+    uses: cph-cachet/carp-studies-app/.github/workflows/deploy_play_store.yml@LarsRefsgaard/issue163
+    secrets: inherit
+    with:
+      lane: 'beta'

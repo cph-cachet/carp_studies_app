@@ -1,0 +1,2 @@
+package_name("dk.cachet.carp_study_app") #
+json_key_file("PLAY_STORE_CONFIG.json")

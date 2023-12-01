@@ -1,3 +1,0 @@
-This app is used for health research studies in the Copenhagen Center for Health Technology at the Technical University of Denmark. If you have been invited to join one of our studies, this app helps to collect and visualize data from you. Collected data include surveys (questionnaires) and passive data like step count.
-
-By joining a study you can help researchers to better understand the connection between everyday activities and health at a large scale. Each study comes with a detailed description of its purpose, what data is collected, and who has access to the data.

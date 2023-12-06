@@ -30,10 +30,10 @@ class DevicesPageState extends State<DevicesPage> {
   @override
   void initState() {
     super.initState();
+    FlutterBluePlus.stopScan();
     bluetoothStateStream = FlutterBluePlus.adapterState.listen((event) {
       bluetoothAdapterState = event;
       setState(() {});
-      FlutterBluePlus.stopScan();
     });
   }
 
@@ -222,7 +222,6 @@ class DevicesPageState extends State<DevicesPage> {
 
   void physicalDeviceClicked(DeviceModel device) async {
     if (await FlutterBluePlus.isSupported == false) {
-      warning("Bluetooth not supported by this device");
       return;
     }
 
@@ -231,44 +230,42 @@ class DevicesPageState extends State<DevicesPage> {
       await FlutterBluePlus.turnOn();
     }
 
-    if (bluetoothAdapterState == BluetoothAdapterState.off) {
-      // ask user to turn bluetooth on.
-      if (!context.mounted) return;
-      await showDialog(
-        context: context,
-        barrierDismissible: true,
-        builder: (context) => EnableBluetoothDialog(device: device),
-      );
-    } else if (bluetoothAdapterState == BluetoothAdapterState.on) {
-      if (!context.mounted) return;
-      // open dialog to let user select device
-      if (device.status == DeviceStatus.connected ||
-          device.status == DeviceStatus.connecting) {
-        // open dialog that asks if user wants to disconnect device
+    if (context.mounted) {
+      if (bluetoothAdapterState == BluetoothAdapterState.off) {
+        // ask user to turn bluetooth on.
         await showDialog(
           context: context,
           barrierDismissible: true,
-          builder: (context) => DisconnectionDialog(device: device),
+          builder: (context) => EnableBluetoothDialog(device: device),
         );
-      } else {
-        // open dialog to ask user to connect
+      } else if (bluetoothAdapterState == BluetoothAdapterState.on) {
+        // open dialog to let user select device
+        if (device.status == DeviceStatus.connected ||
+            device.status == DeviceStatus.connecting) {
+          // open dialog that asks if user wants to disconnect device
+          await showDialog(
+            context: context,
+            barrierDismissible: true,
+            builder: (context) => DisconnectionDialog(device: device),
+          );
+        } else {
+          // open dialog to ask user to connect
+          await showDialog(
+            context: context,
+            barrierDismissible: true,
+            builder: (context) => ConnectionDialog(device: device),
+          ).then((value) async {
+            await FlutterBluePlus.stopScan();
+          });
+        }
+      } else if (bluetoothAdapterState == BluetoothAdapterState.unauthorized) {
+        // open dialog showing user how to allow app to use bluetooth
         await showDialog(
           context: context,
           barrierDismissible: true,
-          builder: (context) => ConnectionDialog(device: device),
-        ).then((value) async {
-          await FlutterBluePlus.stopScan();
-        });
+          builder: (context) => AuthorizationDialog(device: device),
+        );
       }
-    } else if (bluetoothAdapterState == BluetoothAdapterState.unauthorized) {
-      // open dialog showing user how to allow app to use bluetooth
-      if (!context.mounted) return;
-      await showDialog(
-        context: context,
-        barrierDismissible: true,
-        builder: (context) => AuthorizationDialog(device: device),
-      );
     }
-    ;
   }
 }

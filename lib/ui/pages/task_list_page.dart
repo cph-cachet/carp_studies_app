@@ -18,8 +18,6 @@ class TaskListPageState extends State<TaskListPage> {
   @override
   Widget build(BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;
-    bloc.configurePermissions(context);
-
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.secondary,
       body: SafeArea(

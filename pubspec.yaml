@@ -22,7 +22,7 @@ dependencies:
   carp_polar_package: ^1.3.0
   carp_health_package: ^2.7.0
   carp_backend: ^1.3.0
-  carp_webservices: ^2.0.0
+  carp_webservices: ^2.0.1
 
   research_package: ^1.3.0
   cognition_package: ^1.4.0
@@ -41,17 +41,13 @@ dependencies:
 
   flutter_localizations:
     sdk: flutter
-  fl_chart: ^0.63.0
+  fl_chart: ^0.65.0
   google_fonts: ^6.1.0
-  go_router: ^11.0.0
+  go_router: ^12.1.1
   flutter_svg: ^2.0.4
   flutter_blue_plus: ^1.15.5
   intl: ^0.18.1
   permission_handler: ^11.0.1
-
-dependency_overrides:
-  uuid: 4.1.0
-  carp_webservices: 2.0.0
 
 dev_dependencies:
   # flutter_test:

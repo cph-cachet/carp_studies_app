@@ -30,7 +30,6 @@ class DevicesPageState extends State<DevicesPage> {
   @override
   void initState() {
     super.initState();
-    FlutterBluePlus.stopScan();
     bluetoothStateStream = FlutterBluePlus.adapterState.listen((event) {
       bluetoothAdapterState = event;
       setState(() {});

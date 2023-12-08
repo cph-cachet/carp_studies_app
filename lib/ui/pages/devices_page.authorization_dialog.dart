@@ -12,8 +12,10 @@ class AuthorizationDialog extends StatelessWidget {
         scrollable: true,
         titlePadding: const EdgeInsets.symmetric(vertical: 4),
         insetPadding: const EdgeInsets.symmetric(vertical: 24, horizontal: 40),
-        title: Text(locale.translate(
-            "pages.devices.connection.bluetooth_authorization.title")),
+        title: Text(
+          locale.translate(
+              "pages.devices.connection.bluetooth_authorization.title"),
+        ),
         content: SizedBox(
           height: MediaQuery.of(context).size.height * 0.6,
           child: authorizationionInstructions(context, device),
@@ -30,8 +32,8 @@ class AuthorizationDialog extends StatelessWidget {
             child: Column(
               children: [
                 Text(
-                  (locale.translate(
-                      "pages.devices.connection.bluetooth_authorization.message")),
+                  locale.translate(
+                      "pages.devices.connection.bluetooth_authorization.message"),
                   style: aboutCardContentStyle,
                   textAlign: TextAlign.justify,
                 ),

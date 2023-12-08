@@ -38,29 +38,21 @@ class _ConnectionDialogState extends State<ConnectionDialog> {
   }
 
   Widget _buildDialogTitle(RPLocalizations locale) {
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            IconButton(
-              onPressed: () => context.pop(),
-              icon: const Icon(Icons.close),
-              padding: const EdgeInsets.only(right: 8),
-            ),
-          ],
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 24, right: 24, bottom: 8),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              stepTitle(currentStep, widget.device, context),
-            ],
-          ),
-        ),
-      ],
-    );
+    final stepTitleMap = {
+      CurrentStep.scan: const DialogTitle(
+        title: "pages.devices.connection.step.start.title",
+      ),
+      CurrentStep.instructions: const DialogTitle(
+        title: "pages.devices.connection.step.how_to.title",
+      ),
+      CurrentStep.done: DialogTitle(
+        title: "pages.devices.connection.step.confirm.title",
+        deviceName: widget.device.name,
+      ),
+    };
+
+    return stepTitleMap[currentStep] ??
+        Container(); // Return a default widget if necessary
   }
 
   Widget _buildStepContent(RPLocalizations locale) {
@@ -118,46 +110,6 @@ class _ConnectionDialogState extends State<ConnectionDialog> {
       ],
     };
     return stepButtonConfigs[currentStep] ?? [];
-  }
-
-  Widget stepTitle(
-    CurrentStep currentStep,
-    DeviceModel device,
-    BuildContext context,
-  ) {
-    RPLocalizations locale = RPLocalizations.of(context)!;
-    Widget buildStepTitle(String translationKey, BuildContext context,
-            {Color? color, String suffix = ""}) =>
-        Column(
-          children: [
-            Text(
-              locale.translate(translationKey) + suffix,
-              style: sectionTitleStyle.copyWith(color: color),
-            ),
-          ],
-        );
-
-    final stepTitleMap = {
-      CurrentStep.scan: buildStepTitle(
-        "pages.devices.connection.step.start.title",
-        context,
-        color: Theme.of(context).primaryColor,
-      ),
-      CurrentStep.instructions: buildStepTitle(
-        "pages.devices.connection.step.how_to.title",
-        context,
-        color: Theme.of(context).primaryColor,
-        suffix: " ${locale.translate(device.name!)}",
-      ),
-      CurrentStep.done: buildStepTitle(
-        "${locale.translate(device.name!)} ${locale.translate("pages.devices.connection.step.confirm.title")}",
-        context,
-        color: Theme.of(context).primaryColor,
-      ),
-    };
-
-    return stepTitleMap[currentStep] ??
-        Container(); // Return a default widget if necessary
   }
 
   Widget stepContent(

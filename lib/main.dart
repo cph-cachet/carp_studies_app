@@ -103,6 +103,7 @@ part 'ui/widgets/details_banner.dart';
 part 'ui/widgets/studies_card.dart';
 part 'ui/widgets/battery_icon.dart';
 part 'ui/widgets/logout_message.dart';
+part 'ui/widgets/dialog_title.dart';
 
 part 'ui/cards/steps_card.dart';
 part 'ui/cards/heart_rate_card.dart';
@@ -139,6 +140,6 @@ void main() async {
 /// Configure the debug level and deployment mode here before running the app
 /// or deploying it.
 final bloc = StudyAppBLoC(
-  debugLevel: DebugLevel.debug,
+  debugLevel: DebugLevel.info,
   deploymentMode: DeploymentMode.dev,
 );

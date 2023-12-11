@@ -104,7 +104,7 @@ class _ConnectionDialogState extends State<ConnectionDialog> {
               selectedDevice!,
               widget.device.deviceManager,
             );
-            context.pop();
+            context.pop(true);
           }
         }),
       ],
@@ -208,7 +208,7 @@ class _ConnectionDialogState extends State<ConnectionDialog> {
             width: MediaQuery.of(context).size.height * 0.2,
             height: MediaQuery.of(context).size.height * 0.2),
         Text(
-          ("${locale.translate("pages.devices.connection.step.confirm.1")} '${device?.localName}' ${locale.translate("pages.devices.connection.step.confirm.2")}")
+          ("${locale.translate("pages.devices.connection.step.confirm.1")} '${device?.platformName}' ${locale.translate("pages.devices.connection.step.confirm.2")}")
               .trim(),
           style: aboutCardContentStyle,
           textAlign: TextAlign.justify,

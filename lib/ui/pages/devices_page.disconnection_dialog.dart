@@ -29,23 +29,27 @@ class DisconnectionDialog extends StatelessWidget {
           style: aboutCardContentStyle,
           textAlign: TextAlign.justify,
         ),
-        TextButton(
-          onPressed: () {
-            device.disconnectFromDevice(device.deviceManager);
-            if (context.canPop()) context.pop();
-          },
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            TextButton(
+              child: Text(
                 locale.translate("cancel"),
               ),
-              Text(
+              onPressed: () {
+                if (context.canPop()) context.pop(false);
+              },
+            ),
+            TextButton(
+              onPressed: () {
+                if (context.canPop()) context.pop(true);
+              },
+              child: Text(
                 locale.translate(
                     "pages.devices.connection.disconnect_bluetooth.disconnect"),
               ),
-            ],
-          ),
+            ),
+          ],
         )
       ],
     );

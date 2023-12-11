@@ -57,7 +57,7 @@ class DevicesPageState extends State<DevicesPage> {
             Container(
               color: Theme.of(context).colorScheme.secondary,
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
+                padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Column(
@@ -242,20 +242,24 @@ class DevicesPageState extends State<DevicesPage> {
         if (device.status == DeviceStatus.connected ||
             device.status == DeviceStatus.connecting) {
           // open dialog that asks if user wants to disconnect device
-          await showDialog(
+          bool result = await showDialog(
             context: context,
             barrierDismissible: true,
             builder: (context) => DisconnectionDialog(device: device),
           );
+
+          if (result == true) {
+            device.disconnectFromDevice(device.deviceManager);
+          } else {
+            FlutterBluePlus.stopScan();
+          }
         } else {
           // open dialog to ask user to connect
           await showDialog(
             context: context,
             barrierDismissible: true,
             builder: (context) => ConnectionDialog(device: device),
-          ).then((value) async {
-            await FlutterBluePlus.stopScan();
-          });
+          );
         }
       } else if (bluetoothAdapterState == BluetoothAdapterState.unauthorized) {
         // open dialog showing user how to allow app to use bluetooth

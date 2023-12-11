@@ -18,9 +18,11 @@ class DevicesPageViewModel extends ViewModel {
 
 class DeviceModel {
   DeviceManager deviceManager;
+  DeviceModel(this.deviceManager) : super();
 
   String? get type => deviceManager.type;
   DeviceStatus get status => deviceManager.status;
+  set status(DeviceStatus status) => deviceManager.status = status;
 
   /// Stream of [DeviceStatus] events
   Stream<DeviceStatus> get deviceEvents => deviceManager.statusEvents;
@@ -63,8 +65,6 @@ class DeviceModel {
             '${DeviceInfo().deviceModel} (${DeviceInfo().deviceManufacturer?.toUpperCase()})',
         'version': 'SDK ${DeviceInfo().sdk}',
       };
-
-  DeviceModel(this.deviceManager) : super();
 
   static Map<String, String> get deviceTypeName => {
         Smartphone.DEVICE_TYPE: "pages.devices.type.smartphone.name",
@@ -162,5 +162,6 @@ class DeviceModel {
     Sensing().controller?.saveDeployment();
 
     device.disconnect();
+    device.status = DeviceStatus.disconnected; // Force status update
   }
 }

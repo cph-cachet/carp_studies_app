@@ -142,14 +142,14 @@ class _ConnectionDialogState extends State<ConnectionDialog> {
             builder: (context, snapshot) => SingleChildScrollView(
               child: Column(
                 children: snapshot.data!
-                    .where((element) => element.device.localName.isNotEmpty)
+                    .where((element) => element.device.platformName.isNotEmpty)
                     .toList()
                     .asMap()
                     .entries
                     .map(
                       (bluetoothDevice) => ListTile(
                         selected: bluetoothDevice.key == selected,
-                        title: Text(bluetoothDevice.value.device.localName),
+                        title: Text(bluetoothDevice.value.device.platformName),
                         selectedTileColor:
                             Theme.of(context).primaryColor.withOpacity(0.2),
                         onTap: () {

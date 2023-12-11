@@ -29,29 +29,55 @@ class EnableBluetoothDialog extends StatelessWidget {
               children: [
                 Text(
                   locale.translate(
-                      "pages.devices.connection.enable_bluetooth.message"),
+                      "pages.devices.connection.enable_bluetooth.message1"),
                   style: aboutCardContentStyle,
                   textAlign: TextAlign.justify,
                 ),
-                Image(
-                    image: const AssetImage(
+                const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 16.0),
+                  child: Image(
+                    image: AssetImage(
                         'assets/instructions/Bluetooth_enable_bar.png'),
-                    width: MediaQuery.of(context).size.height * 0.2,
-                    height: MediaQuery.of(context).size.height * 0.2),
+                  ),
+                ),
                 Text(
-                  locale.translate(device.connectionInstructions!),
+                  locale.translate(
+                      "pages.devices.connection.enable_bluetooth.message2"),
                   style: aboutCardContentStyle,
                   textAlign: TextAlign.justify,
                 ),
-                TextButton(
-                  onPressed: () {
-                    AppSettings.openAppSettings(type: AppSettingsType.bluetooth);
-                  },
 
-                  // onPressed: () => AppSettings.openAppSettings(
-                  //   type: AppSettingsType.bluetooth,
-                  // ),
-                  child: Text(locale.translate("pages.devices.connection.ok")),
+                /// TODO: Localise this image, take a screenshot of the settings page in Danish
+                if (Platform.isAndroid || Platform.isIOS)
+                  const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 16.0),
+                    child: Image(
+                      image: AssetImage(
+                          'assets/instructions/Bluetooth_enable_connections_bar.png'),
+                    ),
+                  ),
+                Text(
+                  locale.translate(
+                      "pages.devices.connection.enable_bluetooth.message3"),
+                  style: aboutCardContentStyle,
+                  textAlign: TextAlign.justify,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TextButton(
+                      onPressed: () => context.canPop() ? context.pop() : null,
+                      child: Text(
+                        locale.translate("cancel"),
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () => context.canPop() ? context.pop() : null,
+                      child: Text(
+                        locale.translate("pages.devices.connection.ok"),
+                      ),
+                    )
+                  ],
                 )
               ],
             ),

@@ -30,11 +30,22 @@ class DisconnectionDialog extends StatelessWidget {
           textAlign: TextAlign.justify,
         ),
         TextButton(
-          onPressed: () => {
-            device.disconnectFromDevice(device.deviceManager),
-            context.pop()
+          onPressed: () {
+            device.disconnectFromDevice(device.deviceManager);
+            if (context.canPop()) context.pop();
           },
-          child: Text(locale.translate("pages.devices.connection.ok")),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                locale.translate("cancel"),
+              ),
+              Text(
+                locale.translate(
+                    "pages.devices.connection.disconnect_bluetooth.disconnect"),
+              ),
+            ],
+          ),
         )
       ],
     );

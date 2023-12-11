@@ -7,23 +7,20 @@ class AuthorizationDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    RPLocalizations locale = RPLocalizations.of(context)!;
     return AlertDialog(
         scrollable: true,
         titlePadding: const EdgeInsets.symmetric(vertical: 4),
         insetPadding: const EdgeInsets.symmetric(vertical: 24, horizontal: 40),
-        title: Text(
-          locale.translate(
-              "pages.devices.connection.bluetooth_authorization.title"),
+        title: const DialogTitle(
+          title: "pages.devices.connection.bluetooth_authorization.title",
         ),
         content: SizedBox(
           height: MediaQuery.of(context).size.height * 0.6,
-          child: authorizationionInstructions(context, device),
+          child: authorizationInstructions(context, device),
         ));
   }
 
-  Widget authorizationionInstructions(
-      BuildContext context, DeviceModel device) {
+  Widget authorizationInstructions(BuildContext context, DeviceModel device) {
     RPLocalizations locale = RPLocalizations.of(context)!;
     return Column(
       children: [
@@ -41,16 +38,22 @@ class AuthorizationDialog extends StatelessWidget {
                     image: const AssetImage('assets/icons/connection.png'),
                     width: MediaQuery.of(context).size.height * 0.2,
                     height: MediaQuery.of(context).size.height * 0.2),
-                Text(
-                  locale.translate(device.connectionInstructions!),
-                  style: aboutCardContentStyle,
-                  textAlign: TextAlign.justify,
-                ),
-                TextButton(
-                  onPressed: () => AppSettings.openAppSettings(
-                      type: AppSettingsType.settings),
-                  child: Text(
-                      locale.translate("pages.devices.connection.settings")),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TextButton(
+                      child: Text(locale.translate("cancel")),
+                      onPressed: () {
+                        if (context.canPop()) context.pop();
+                      },
+                    ),
+                    TextButton(
+                      child: Text(locale
+                          .translate("pages.devices.connection.settings")),
+                      onPressed: () => AppSettings.openAppSettings(
+                          type: AppSettingsType.settings),
+                    ),
+                  ],
                 )
               ],
             ),

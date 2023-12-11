@@ -52,6 +52,15 @@ abstract class SerializableViewModel<D extends DataModel> extends ViewModel {
 
     // save the data model on a regular basis.
     Timer.periodic(const Duration(minutes: 3), (_) => save(model.toJson()));
+
+    AppLifecycleListener(
+      onStateChange: (value) {
+        info('AppLifecycleState changed to $value');
+      },
+      onHide: () async {
+        await save(model.toJson());
+      },
+    );
   }
 
   /// Current path and filename of the data.

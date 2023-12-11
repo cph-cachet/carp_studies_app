@@ -1,4 +1,4 @@
-part of carp_study_app;
+part of '../../main.dart';
 
 class DetailsBanner extends StatelessWidget {
   const DetailsBanner(this.title, this.imagePath, {super.key});

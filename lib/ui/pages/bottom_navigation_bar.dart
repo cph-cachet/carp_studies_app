@@ -1,4 +1,4 @@
-part of carp_study_app;
+part of '../../main.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({required this.child, super.key});

@@ -1,4 +1,4 @@
-part of carp_study_app;
+part of '../../main.dart';
 
 class MeasurementsCardViewModel extends ViewModel {
   final Map<String, int> _samplingTable = {};

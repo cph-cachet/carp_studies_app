@@ -1,4 +1,4 @@
-part of carp_study_app;
+part of '../../main.dart';
 
 class MobilityCardViewModel extends SerializableViewModel<WeeklyMobility> {
   @override
@@ -68,8 +68,7 @@ class DailyMobility extends DailyMeasure {
   final int homeStay;
   final double distance;
 
-  DailyMobility(int weekday, this.places, this.homeStay, this.distance)
-      : super(weekday);
+  DailyMobility(super.weekday, this.places, this.homeStay, this.distance);
 
   Map<String, dynamic> toJson() => _$DailyMobilityToJson(this);
   static DailyMobility fromJson(Map<String, dynamic> json) =>

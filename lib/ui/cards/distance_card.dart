@@ -1,4 +1,4 @@
-part of carp_study_app;
+part of '../../main.dart';
 
 class DistanceCard extends StatefulWidget {
   final List<Color> colors;
@@ -118,7 +118,7 @@ class _DistanceCardState extends State<DistanceCard> {
             reservedSize: 20,
           ),
         ),
-        leftTitles: AxisTitles(),
+        leftTitles: const AxisTitles(),
         rightTitles: AxisTitles(
           sideTitles: SideTitles(
             showTitles: true,
@@ -126,7 +126,7 @@ class _DistanceCardState extends State<DistanceCard> {
             reservedSize: 48,
           ),
         ),
-        topTitles: AxisTitles(),
+        topTitles: const AxisTitles(),
       ),
       lineTouchData: LineTouchData(
         enabled: true,
@@ -169,7 +169,7 @@ class _DistanceCardState extends State<DistanceCard> {
             FlSpot(7.5, 0),
           ],
           barWidth: 0,
-          dotData: FlDotData(
+          dotData: const FlDotData(
             show: false,
           ),
         )

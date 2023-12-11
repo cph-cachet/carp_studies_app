@@ -1,4 +1,4 @@
-part of carp_study_app;
+part of '../../main.dart';
 
 class ActivityCardViewModel extends SerializableViewModel<WeeklyActivities> {
   Measurement _lastActivity =
@@ -105,5 +105,5 @@ class DailyActivity extends DailyMeasure {
   /// Activity [type] as a string.
   String get typeString => type.toString().split(".").last;
 
-  DailyActivity(int weekday, this.minutes) : super(weekday);
+  DailyActivity(super.weekday, this.minutes);
 }

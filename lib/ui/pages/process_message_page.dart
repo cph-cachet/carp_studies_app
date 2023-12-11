@@ -1,4 +1,4 @@
-part of carp_study_app;
+part of '../../main.dart';
 
 class ProcessMessagePage extends StatelessWidget {
   // Type of message to display (e.g Error, Succes, Informative)

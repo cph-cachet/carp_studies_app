@@ -1,4 +1,4 @@
-part of carp_study_app;
+part of '../../main.dart';
 
 /// State of Bluetoth connection UI.
 enum CurrentStep { scan, instructions, done }

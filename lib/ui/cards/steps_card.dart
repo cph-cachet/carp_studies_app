@@ -1,4 +1,4 @@
-part of carp_study_app;
+part of '../../main.dart';
 
 class StepsCardWidget extends StatefulWidget {
   final List<Color> colors;
@@ -68,7 +68,7 @@ class StepsCardWidgetState extends State<StepsCardWidget> {
             reservedSize: 20,
           ),
         ),
-        leftTitles: AxisTitles(),
+        leftTitles: const AxisTitles(),
         rightTitles: AxisTitles(
           sideTitles: SideTitles(
             showTitles: true,
@@ -76,7 +76,7 @@ class StepsCardWidgetState extends State<StepsCardWidget> {
             reservedSize: 48,
           ),
         ),
-        topTitles: AxisTitles(),
+        topTitles: const AxisTitles(),
       ),
       barTouchData: BarTouchData(
         enabled: false,

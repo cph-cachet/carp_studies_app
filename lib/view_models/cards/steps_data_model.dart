@@ -1,4 +1,4 @@
-part of carp_study_app;
+part of '../../main.dart';
 
 class StepsCardViewModel extends SerializableViewModel<WeeklySteps> {
   StepCount? _lastStep;
@@ -78,5 +78,5 @@ class DailySteps extends DailyMeasure {
   /// Number of steps for this [weekday].
   final int steps;
 
-  DailySteps(int weekday, this.steps) : super(weekday);
+  DailySteps(super.weekday, this.steps);
 }

@@ -1,12 +1,11 @@
-part of carp_study_app;
+part of '../../main.dart';
 
 class ActivityCard extends StatefulWidget {
   final ActivityCardViewModel model;
   final List<Color> colors;
   const ActivityCard(this.model,
-      {Key? key,
-      this.colors = const [CACHET.BLUE_1, CACHET.BLUE_2, CACHET.BLUE_3]})
-      : super(key: key);
+      {super.key,
+      this.colors = const [CACHET.BLUE_1, CACHET.BLUE_2, CACHET.BLUE_3]});
 
   @override
   State<StatefulWidget> createState() => ActivityCardState();
@@ -106,7 +105,7 @@ class ActivityCardState extends State<ActivityCard> {
               reservedSize: 20,
             ),
           ),
-          leftTitles: AxisTitles(),
+          leftTitles: const AxisTitles(),
           rightTitles: AxisTitles(
             sideTitles: SideTitles(
               showTitles: true,
@@ -114,7 +113,7 @@ class ActivityCardState extends State<ActivityCard> {
               reservedSize: 48,
             ),
           ),
-          topTitles: AxisTitles(),
+          topTitles: const AxisTitles(),
         ),
         barTouchData: BarTouchData(
           enabled: false,

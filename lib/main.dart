@@ -136,6 +136,6 @@ void main() async {
 /// Configure the debug level and deployment mode here before running the app
 /// or deploying it.
 final bloc = StudyAppBLoC(
-  debugLevel: DebugLevel.debug,
+  debugLevel: DebugLevel.info,
   deploymentMode: DeploymentMode.dev,
 );

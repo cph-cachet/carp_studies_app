@@ -1,4 +1,4 @@
-part of carp_study_app;
+part of '../../main.dart';
 
 class MobilityCard extends StatefulWidget {
   final List<Color> colors;
@@ -70,7 +70,7 @@ class _MobilityCardState extends State<MobilityCard> {
             reservedSize: 20,
           ),
         ),
-        leftTitles: AxisTitles(
+        leftTitles: const AxisTitles(
             // sideTitles: SideTitles(
             //   showTitles: true,
             //   getTitlesWidget: leftTitles,
@@ -84,7 +84,7 @@ class _MobilityCardState extends State<MobilityCard> {
             reservedSize: 48,
           ),
         ),
-        topTitles: AxisTitles(),
+        topTitles: const AxisTitles(),
       ),
       barTouchData: BarTouchData(
         enabled: false,

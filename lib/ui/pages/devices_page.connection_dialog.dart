@@ -1,9 +1,9 @@
-part of carp_study_app;
+part of '../../main.dart';
 
 class ConnectionDialog extends StatefulWidget {
   final DeviceModel device;
 
-  const ConnectionDialog({Key? key, required this.device}) : super(key: key);
+  const ConnectionDialog({super.key, required this.device});
 
   @override
   State<StatefulWidget> createState() => _ConnectionDialogState();

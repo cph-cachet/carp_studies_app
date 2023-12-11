@@ -1,4 +1,4 @@
-part of carp_study_app;
+part of '../../main.dart';
 
 class HeartRateCardWidget extends StatefulWidget {
   final HeartRateCardViewModel model;
@@ -274,10 +274,10 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
               getTitlesWidget: rightTitles,
             ),
           ),
-          topTitles: AxisTitles(
+          topTitles: const AxisTitles(
             sideTitles: SideTitles(showTitles: false),
           ),
-          leftTitles: AxisTitles(
+          leftTitles: const AxisTitles(
             sideTitles: SideTitles(showTitles: false),
           ),
         ),

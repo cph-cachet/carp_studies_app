@@ -68,8 +68,8 @@ PODS:
     - Flutter
   - polar (0.0.1):
     - Flutter
-    - PolarBleSdk (~> 5.5.0)
-  - PolarBleSdk (5.5.0):
+    - PolarBleSdk (~> 5.4.0)
+  - PolarBleSdk (5.4.0):
     - RxSwift (~> 6.5.0)
     - SwiftProtobuf (~> 1.0)
   - ReachabilitySwift (5.0.0)
@@ -213,7 +213,7 @@ SPEC CHECKSUMS:
   audiofileplayer: 4aaff759a721ec3a850a682e0d9ec554e5f9e86f
   battery_plus: 091633b7f01cb33dfc4aeedb450816f4d33818fa
   camera_avfoundation: 3125e8cd1a4387f6f31c6c63abb8a55892a9eeeb
-  connectivity_plus: bf0076dd84a130856aa636df1c71ccaff908fa1d
+  connectivity_plus: 07c49e96d7fc92bc9920617b83238c4d178b446a
   device_info_plus: c6fb39579d0f423935b0c9ce7ee2f44b71b9fce6
   ESense: cbe103ad16c435424f2fd6f8b274f2468af84173
   esense_flutter: 8bfadfdefe7b51d6f78366e43b2b64ec9b6144b6
@@ -236,8 +236,8 @@ SPEC CHECKSUMS:
   path_provider_foundation: 29f094ae23ebbca9d3d0cec13889cd9060c0e943
   pedometer: 381969883680ade42559782cc41a3bbd453d8234
   permission_handler_apple: e76247795d700c14ea09e3a2d8855d41ee80a2e6
-  polar: 8efdf64c1b4e0034e8fa3b1d12b64e5b27a877f1
-  PolarBleSdk: 2551160f3dcba0207723fc466a275e2d3aeda01f
+  polar: 3df98f4edaae7ff57d39fa6af2bd01b5b857e79d
+  PolarBleSdk: 980933f58cb2856c3627f40a54c91b9351a07736
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   RxSwift: 5710a9e6b17f3c3d6e40d6e559b9fa1e813b2ef8
   screen_state: a7ae251997e97f3f001839df09b57313b0ddef18
@@ -245,9 +245,9 @@ SPEC CHECKSUMS:
   shared_preferences_foundation: 5b919d13b803cadd15ed2dc053125c68730e5126
   sqflite: 31f7eba61e3074736dff8807a9b41581e4f7f15a
   SwiftProtobuf: 407a385e97fd206c4fbe880cc84123989167e0d1
-  url_launcher_ios: bf5ce03e0e2088bad9cc378ea97fa0ed5b49673b
-  video_player_avfoundation: e9e6f9cae7d7a6d9b43519b0aab382bca60fcfd1
+  url_launcher_ios: 68d46cc9766d0c41dbdc884310529557e3cd7a86
+  video_player_avfoundation: 8563f13d8fc8b2c29dc2d09e60b660e4e8128837
 
 PODFILE CHECKSUM: cf73571b196c8b5799c2f2111e13846fa4ef168b
 
-COCOAPODS: 1.14.2
+COCOAPODS: 1.14.3

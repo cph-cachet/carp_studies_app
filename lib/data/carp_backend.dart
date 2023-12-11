@@ -29,9 +29,6 @@ class CarpBackend {
   /// Has the user been authenticated?
   bool get isAuthenticated => CarpService().authenticated;
 
-  /// The authenticated user
-  CarpUser? get user => CarpService().currentUser;
-
   /// The URI of the CANS server - depending on deployment mode.
   Uri get uri => Uri(
         scheme: 'https',
@@ -44,11 +41,11 @@ class CarpBackend {
         ],
       );
 
-  OAuthToken? get oauthToken => LocalSettings().oauthToken;
-  set oauthToken(OAuthToken? token) => LocalSettings().oauthToken = token;
+  CarpUser? get user => LocalSettings().user;
+  set user(CarpUser? user) => LocalSettings().user = user;
 
-  String? get username => LocalSettings().username;
-  set username(String? username) => LocalSettings().username = username;
+  String? get username => user?.username;
+  OAuthToken? get oauthToken => user?.token;
 
   String? get studyId => bloc.studyId;
   set studyId(String? id) {
@@ -73,7 +70,7 @@ class CarpBackend {
       name: "CAWS @ DTU",
       uri: uri.replace(pathSegments: [uris[bloc.deploymentMode]!]),
       authURL: uri,
-      clientId: 'carp-webservices-dart',
+      clientId: 'studies-app',
       redirectURI: Uri.parse('carp-studies-auth://auth'),
       discoveryURL: uri.replace(pathSegments: [
         ...uri.pathSegments,
@@ -85,20 +82,39 @@ class CarpBackend {
     );
 
     CarpService().configure(app!);
+    if (user != null) {
+      CarpService().currentUser = user;
+      if (oauthToken!.hasExpired) {
+        try {
+          await refresh();
+        } catch (error) {
+          CarpService().currentUser = null;
+          warning('Failed to refresh access token - $error');
+        }
+      }
+    }
+
+    CarpParticipationService().configureFrom(CarpService());
 
     info('$runtimeType initialized - app: $app');
   }
 
   Future<CarpUser> authenticate() async {
-    var response = await CarpService().authenticate();
+    bloc.stateStream.sink.add(StudiesAppState.authenticating);
+    user = await CarpService().authenticate();
 
-    username = response.username;
-    oauthToken = response.token;
     bloc.stateStream.sink.add(StudiesAppState.accessTokenRetrieved);
 
-    CarpParticipationService().configureFrom(CarpService());
+    return user as CarpUser;
+  }
 
-    return response;
+  Future<CarpUser> refresh() async {
+    bloc.stateStream.sink.add(StudiesAppState.authenticating);
+    user = await CarpService().refresh();
+
+    bloc.stateStream.sink.add(StudiesAppState.accessTokenRetrieved);
+
+    return user as CarpUser;
   }
 
   Future<ConsentDocument?> uploadInformedConsent(
@@ -113,9 +129,9 @@ class CarpBackend {
       document = await CarpService().createConsentDocument(informedConsent);
       info(
           'Informed consent document uploaded successfully - id: ${document.id}');
-      bloc.setHasInformedConsentBeenAccepted = true;
+      bloc.hasInformedConsentBeenAccepted = true;
     } on Exception {
-      bloc.setHasInformedConsentBeenAccepted = false;
+      bloc.hasInformedConsentBeenAccepted = false;
       warning('Informed consent upload failed for username: $username');
     }
 

@@ -47,10 +47,14 @@ class StepsCardWidgetState extends State<StepsCardWidget> {
               colors: widget.colors,
             ),
             SizedBox(
-              height: 160,
-              width: MediaQuery.of(context).size.width * 0.9,
-              child: barCharts,
-            ),
+                height: 160,
+                width: MediaQuery.of(context).size.width * 0.9,
+                child: StreamBuilder(
+                  stream: widget.model.pedometerEvents,
+                  builder: (context, snapshot) {
+                    return barCharts;
+                  },
+                )),
           ],
         ),
       ),
@@ -68,7 +72,7 @@ class StepsCardWidgetState extends State<StepsCardWidget> {
             reservedSize: 20,
           ),
         ),
-        leftTitles: AxisTitles(),
+        leftTitles: const AxisTitles(),
         rightTitles: AxisTitles(
           sideTitles: SideTitles(
             showTitles: true,
@@ -76,7 +80,7 @@ class StepsCardWidgetState extends State<StepsCardWidget> {
             reservedSize: 48,
           ),
         ),
-        topTitles: AxisTitles(),
+        topTitles: const AxisTitles(),
       ),
       barTouchData: BarTouchData(
         enabled: false,

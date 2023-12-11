@@ -105,5 +105,5 @@ class DailyActivity extends DailyMeasure {
   /// Activity [type] as a string.
   String get typeString => type.toString().split(".").last;
 
-  DailyActivity(int weekday, this.minutes) : super(weekday);
+  DailyActivity(super.weekday, this.minutes);
 }

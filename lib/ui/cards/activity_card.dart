@@ -4,9 +4,8 @@ class ActivityCard extends StatefulWidget {
   final ActivityCardViewModel model;
   final List<Color> colors;
   const ActivityCard(this.model,
-      {Key? key,
-      this.colors = const [CACHET.BLUE_1, CACHET.BLUE_2, CACHET.BLUE_3]})
-      : super(key: key);
+      {super.key,
+      this.colors = const [CACHET.BLUE_1, CACHET.BLUE_2, CACHET.BLUE_3]});
 
   @override
   State<StatefulWidget> createState() => ActivityCardState();
@@ -28,9 +27,6 @@ class ActivityCardState extends State<ActivityCard> {
 
   @override
   void initState() {
-    widget.model.activityEvents?.listen((event) {
-      setState(() {});
-    });
     _walk =
         widget.model.activities[ActivityType.WALKING]![DateTime.now().weekday];
     _run =
@@ -86,7 +82,18 @@ class ActivityCardState extends State<ActivityCard> {
             SizedBox(
               height: 160,
               width: MediaQuery.of(context).size.width * 0.9,
-              child: barCharts,
+              child: StreamBuilder(
+                stream: widget.model.activityEvents,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return barCharts;
+                  } else {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                },
+              ),
             ),
           ],
         ),
@@ -106,7 +113,7 @@ class ActivityCardState extends State<ActivityCard> {
               reservedSize: 20,
             ),
           ),
-          leftTitles: AxisTitles(),
+          leftTitles: const AxisTitles(),
           rightTitles: AxisTitles(
             sideTitles: SideTitles(
               showTitles: true,
@@ -114,7 +121,7 @@ class ActivityCardState extends State<ActivityCard> {
               reservedSize: 48,
             ),
           ),
-          topTitles: AxisTitles(),
+          topTitles: const AxisTitles(),
         ),
         barTouchData: BarTouchData(
           enabled: false,

@@ -78,5 +78,5 @@ class DailySteps extends DailyMeasure {
   /// Number of steps for this [weekday].
   final int steps;
 
-  DailySteps(int weekday, this.steps) : super(weekday);
+  DailySteps(super.weekday, this.steps);
 }

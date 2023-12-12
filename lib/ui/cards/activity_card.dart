@@ -27,9 +27,6 @@ class ActivityCardState extends State<ActivityCard> {
 
   @override
   void initState() {
-    widget.model.activityEvents?.listen((event) {
-      setState(() {});
-    });
     _walk =
         widget.model.activities[ActivityType.WALKING]![DateTime.now().weekday];
     _run =
@@ -85,7 +82,18 @@ class ActivityCardState extends State<ActivityCard> {
             SizedBox(
               height: 160,
               width: MediaQuery.of(context).size.width * 0.9,
-              child: barCharts,
+              child: StreamBuilder(
+                stream: widget.model.activityEvents,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return barCharts;
+                  } else {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                },
+              ),
             ),
           ],
         ),

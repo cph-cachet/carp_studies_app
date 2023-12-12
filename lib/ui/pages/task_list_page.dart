@@ -10,12 +10,6 @@ class TaskListPage extends StatefulWidget {
 
 class TaskListPageState extends State<TaskListPage> {
   @override
-  void initState() {
-    super.initState();
-    Future.delayed(const Duration(seconds: 1), () => setState(() {}));
-  }
-
-  @override
   Widget build(BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;
     return Scaffold(

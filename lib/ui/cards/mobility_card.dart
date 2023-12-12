@@ -20,9 +20,6 @@ class _MobilityCardState extends State<MobilityCard> {
 
   @override
   void initState() {
-    widget.model.mobilityEvents?.listen((event) {
-      setState(() {});
-    });
     _homestay = widget.model.weekData[DateTime.now().weekday]!.homeStay;
     _places = widget.model.weekData[DateTime.now().weekday]!.places;
     super.initState();
@@ -51,7 +48,18 @@ class _MobilityCardState extends State<MobilityCard> {
             SizedBox(
               height: 160,
               width: MediaQuery.of(context).size.width * 0.9,
-              child: barCharts,
+              child: StreamBuilder(
+                stream: widget.model.mobilityEvents,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return barCharts;
+                  } else {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                },
+              ),
             ),
           ],
         ),
@@ -70,13 +78,7 @@ class _MobilityCardState extends State<MobilityCard> {
             reservedSize: 20,
           ),
         ),
-        leftTitles: const AxisTitles(
-            // sideTitles: SideTitles(
-            //   showTitles: true,
-            //   getTitlesWidget: leftTitles,
-            //   reservedSize: 40,
-            // ),
-            ),
+        leftTitles: const AxisTitles(),
         rightTitles: AxisTitles(
           sideTitles: SideTitles(
             showTitles: true,

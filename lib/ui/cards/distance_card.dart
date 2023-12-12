@@ -22,10 +22,6 @@ class _DistanceCardState extends State<DistanceCard> {
 
   @override
   void initState() {
-    widget.model.mobilityEvents?.listen((event) {
-      setState(() {});
-    });
-
     for (int i = 1; i <= 7; i++) {
       _accumulatedDistance += widget.model.weekData[i]!.distance;
     }
@@ -100,7 +96,18 @@ class _DistanceCardState extends State<DistanceCard> {
             SizedBox(
               height: 160,
               width: MediaQuery.of(context).size.width * 0.9,
-              child: barCharts,
+              child: StreamBuilder(
+                stream: widget.model.mobilityEvents,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return barCharts;
+                  } else {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                },
+              ),
             ),
           ],
         ),

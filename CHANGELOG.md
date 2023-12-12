@@ -1,3 +1,6 @@
+## 1.2.0
+Fix a bunch of issues in the app stemming from 1.1 and 1.0.
+
 ## 0.23.0
 * Track iOS version numbering.
 

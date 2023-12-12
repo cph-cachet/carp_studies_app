@@ -1,4 +1,4 @@
-part of carp_study_app;
+part of '../../main.dart';
 
 /// The data model for the the different task card widgets, like TaskCardWidget]
 /// and [MediaCardWidget].

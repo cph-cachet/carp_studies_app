@@ -1,4 +1,4 @@
-part of carp_study_app;
+part of '../../main.dart';
 
 class InvitationListPage extends StatelessWidget {
   final InvitationsListViewModel model;
@@ -98,9 +98,6 @@ class InvitationCard extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                     fontSize: 20.0,
                   ),
-                ),
-                const SizedBox(
-                  height: 24.0,
                 ),
                 Text(
                   (invitation.invitation.description ?? ''),

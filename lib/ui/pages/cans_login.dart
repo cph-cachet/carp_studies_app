@@ -1,4 +1,4 @@
-part of carp_study_app;
+part of '../../main.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});

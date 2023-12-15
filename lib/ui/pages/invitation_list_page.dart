@@ -99,9 +99,6 @@ class InvitationCard extends StatelessWidget {
                     fontSize: 20.0,
                   ),
                 ),
-                const SizedBox(
-                  height: 24.0,
-                ),
                 Text(
                   (invitation.invitation.description ?? ''),
                   style: const TextStyle(fontSize: 16.0),

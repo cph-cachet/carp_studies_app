@@ -1,4 +1,4 @@
-part of '../../main.dart';
+part of '../main.dart';
 
 class ProfilePageViewModel extends ViewModel {
   String get userid => bloc.user?.id ?? bloc.deployment?.userId ?? '';

@@ -1,4 +1,4 @@
-part of '../../main.dart';
+part of '../main.dart';
 
 enum DeploymentMode {
   /// Use the CARP production server to get the study deployment and store data.

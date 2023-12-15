@@ -1,4 +1,4 @@
-part of '../../main.dart';
+part of 'main.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 final _shellNavigatorKey = GlobalKey<NavigatorState>();

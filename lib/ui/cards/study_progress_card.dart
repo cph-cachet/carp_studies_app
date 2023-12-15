@@ -18,8 +18,6 @@ class StudyProgressCardWidgetState extends State<StudyProgressCardWidget> {
     RPLocalizations locale = RPLocalizations.of(context)!;
 
     widget.model.updateProgress();
-    widget.model.toString();
-
     return StudiesCard(
       child: Padding(
         padding: const EdgeInsets.all(8.0),

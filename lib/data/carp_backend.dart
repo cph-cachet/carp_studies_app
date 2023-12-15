@@ -1,4 +1,4 @@
-part of '../../main.dart';
+part of '../main.dart';
 
 class CarpBackend {
   /// The URI of the CARP Web Service (CAWS) host.

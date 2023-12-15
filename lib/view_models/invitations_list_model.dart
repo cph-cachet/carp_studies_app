@@ -1,4 +1,4 @@
-part of '../../main.dart';
+part of '../main.dart';
 
 class InvitationsListViewModel extends ViewModel {
   Future<List<ActiveParticipationInvitation>> get invitations async {

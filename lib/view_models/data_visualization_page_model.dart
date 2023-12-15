@@ -1,4 +1,4 @@
-part of '../../main.dart';
+part of '../main.dart';
 
 class DataVisualizationPageViewModel extends ViewModel {
   final ActivityCardViewModel _activityCardDataModel = ActivityCardViewModel();

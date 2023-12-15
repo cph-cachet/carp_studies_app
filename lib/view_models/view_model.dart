@@ -1,4 +1,4 @@
-part of '../../main.dart';
+part of '../main.dart';
 
 /// An abstract view model used for all other view models in the app.
 abstract class ViewModel {
@@ -52,6 +52,20 @@ abstract class SerializableViewModel<D extends DataModel> extends ViewModel {
 
     // save the data model on a regular basis.
     Timer.periodic(const Duration(minutes: 3), (_) => save(model.toJson()));
+
+    /// Check if we are running in a test environment.
+    /// If so, do not listen to app lifecycle events.
+    /// [AppLifecycleListener] is not supported in a test environment.
+    if (!Platform.environment.containsKey('FLUTTER_TEST')) {
+      AppLifecycleListener(
+        onStateChange: (value) {
+          info('AppLifecycleState changed to $value');
+        },
+        onHide: () async {
+          await save(model.toJson());
+        },
+      );
+    }
   }
 
   /// Current path and filename of the data.

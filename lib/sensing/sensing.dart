@@ -5,7 +5,7 @@
  * found in the LICENSE file.
  */
 
-part of '../../main.dart';
+part of '../main.dart';
 
 /// This class implements the sensing layer.
 ///

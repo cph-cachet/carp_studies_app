@@ -1,6 +1,6 @@
 // ignore_for_file: constant_identifier_names
 
-part of '../../main.dart';
+part of '../main.dart';
 
 class CACHET {
   static const Color CACHET_BLUE = Color.fromRGBO(97, 195, 217, 1.0);

@@ -1,4 +1,4 @@
-part of '../../main.dart';
+part of '../main.dart';
 
 /// A [UserTaskFactory] that can handle the user tasks in this app.
 class AppUserTaskFactory implements UserTaskFactory {
@@ -82,7 +82,7 @@ class VideoUserTask extends UserTask {
   static const String videoType = 'video';
   static const String imageType = 'image';
 
-  VideoUserTask(AppTaskExecutor executor) : super(executor);
+  VideoUserTask(super.executor);
 
   @override
   bool get hasWidget => true;

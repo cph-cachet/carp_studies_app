@@ -1,4 +1,4 @@
-part of '../../main.dart';
+part of '../main.dart';
 
 enum StudyAppState {
   /// The BLOC is created (initial state)

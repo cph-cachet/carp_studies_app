@@ -274,10 +274,10 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
               getTitlesWidget: rightTitles,
             ),
           ),
-          topTitles: AxisTitles(
+          topTitles: const AxisTitles(
             sideTitles: SideTitles(showTitles: false),
           ),
-          leftTitles: AxisTitles(
+          leftTitles: const AxisTitles(
             sideTitles: SideTitles(showTitles: false),
           ),
         ),

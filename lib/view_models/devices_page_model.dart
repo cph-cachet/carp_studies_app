@@ -142,7 +142,7 @@ class DeviceModel {
   void connectToDevice(BluetoothDevice selectedDevice, DeviceManager device) {
     if (device is BTLEDeviceManager) {
       device.btleAddress = selectedDevice.remoteId.str;
-      device.btleName = selectedDevice.localName;
+      device.btleName = selectedDevice.platformName;
     }
 
     // when the device id is updated, save the deployment

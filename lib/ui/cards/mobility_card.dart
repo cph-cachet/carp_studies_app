@@ -51,13 +51,7 @@ class _MobilityCardState extends State<MobilityCard> {
               child: StreamBuilder(
                 stream: widget.model.mobilityEvents,
                 builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    return barCharts;
-                  } else {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
+                  return barCharts;
                 },
               ),
             ),

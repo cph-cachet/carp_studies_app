@@ -103,6 +103,7 @@ class StudyAppBLoC {
 
   /// The overall data model for this app
   CarpStudyAppViewModel get data => _data;
+  Future<void>? dataPageInitialization;
 
   /// Initialize this BLOC. Called before being used for anything.
   Future<void> initialize() async {
@@ -157,7 +158,7 @@ class StudyAppBLoC {
     await Sensing().addStudy();
 
     // initialize the UI data models
-    data.init(Sensing().controller!);
+    dataPageInitialization = data.init(Sensing().controller!);
 
     // set up the messaging part
     messageManager.initialize().then(

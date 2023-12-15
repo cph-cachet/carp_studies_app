@@ -1,22 +1,28 @@
 part of '../../main.dart';
 
 // todo change text for survey progress
-class DataVisualizationPage extends StatelessWidget {
+class DataVisualizationPage extends StatefulWidget {
   final DataVisualizationPageViewModel model;
   const DataVisualizationPage(this.model, {super.key});
 
   @override
+  State<DataVisualizationPage> createState() => _DataVisualizationPageState();
+}
+
+class _DataVisualizationPageState extends State<DataVisualizationPage> {
+  final dataPageInitialization = bloc.dataPageInitialization ??
+      bloc.data._dataVisualizationPageViewModel.init(Sensing().controller!);
+
+  @override
   Widget build(BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;
-
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.secondary,
       body: SafeArea(
         child: FutureBuilder(
-          future: bloc.data._dataVisualizationPageViewModel
-              .init(Sensing().controller!),
+          future: dataPageInitialization,
           builder: (context, data) {
-            if (!data.hasData) {
+            if (data.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
             } else {
               return Column(
@@ -72,32 +78,34 @@ class DataVisualizationPage extends StatelessWidget {
     final List<Widget> widgets = [];
 
     // always show tasks progress
-    widgets.add(StudyProgressCardWidget(model.studyProgressCardDataModel));
+    widgets
+        .add(StudyProgressCardWidget(widget.model.studyProgressCardDataModel));
 
     // check to show overall measure stats
     //if (bloc.hasMeasures()) widgets.add(MeasuresCardWidget(model.measuresCardDataModel));
 
     // check to show heart rate stats, if there is a POLAR device in the study
     if (bloc.hasMeasure(PolarSamplingPackage.HR)) {
-      widgets.add(HeartRateOuterStatefulWidget(model.heartRateCardDataModel));
+      widgets.add(
+          HeartRateOuterStatefulWidget(widget.model.heartRateCardDataModel));
     }
 
     // check to show surveys stats
     if (bloc.hasSurveys()) {
-      widgets.add(SurveyCard(model.surveysCardDataModel));
+      widgets.add(SurveyCard(widget.model.surveysCardDataModel));
     }
 
     List<TaskCardViewModel> mediaModelsList = [];
 
     // check what media types are in the study and add them to de media card
     if (bloc.hasMeasure(MediaSamplingPackage.AUDIO)) {
-      mediaModelsList.add(model.audioCardDataModel);
+      mediaModelsList.add(widget.model.audioCardDataModel);
     }
     if (bloc.hasMeasure(MediaSamplingPackage.VIDEO)) {
-      mediaModelsList.add(model.videoCardDataModel);
+      mediaModelsList.add(widget.model.videoCardDataModel);
     }
     if (bloc.hasMeasure(MediaSamplingPackage.IMAGE)) {
-      mediaModelsList.add(model.imageCardDataModel);
+      mediaModelsList.add(widget.model.imageCardDataModel);
     }
     if (mediaModelsList.isNotEmpty) {
       widgets.add(MediaCardWidget(mediaModelsList));
@@ -109,14 +117,14 @@ class DataVisualizationPage extends StatelessWidget {
     }
 
     if (bloc.hasMeasure(SensorSamplingPackage.STEP_COUNT)) {
-      widgets.add(StepsCardWidget(model.stepsCardDataModel));
+      widgets.add(StepsCardWidget(widget.model.stepsCardDataModel));
     }
     if (bloc.hasMeasure(ContextSamplingPackage.ACTIVITY)) {
-      widgets.add(ActivityCard(model.activityCardDataModel));
+      widgets.add(ActivityCard(widget.model.activityCardDataModel));
     }
     if (bloc.hasMeasure(ContextSamplingPackage.MOBILITY)) {
-      widgets.add(MobilityCard(model.mobilityCardDataModel));
-      widgets.add(DistanceCard(model.mobilityCardDataModel));
+      widgets.add(MobilityCard(widget.model.mobilityCardDataModel));
+      widgets.add(DistanceCard(widget.model.mobilityCardDataModel));
     }
 
     return widgets.toSet().toList();

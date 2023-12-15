@@ -85,13 +85,7 @@ class ActivityCardState extends State<ActivityCard> {
               child: StreamBuilder(
                 stream: widget.model.activityEvents,
                 builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    return barCharts;
-                  } else {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
+                  return barCharts;
                 },
               ),
             ),

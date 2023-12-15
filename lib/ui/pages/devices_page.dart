@@ -261,7 +261,7 @@ class DevicesPageState extends State<DevicesPage> {
             builder: (context) => ConnectionDialog(device: device),
           );
         }
-      } else if (bluetoothAdapterState == BluetoothAdapterState.unauthorized) {
+      } else if (bluetoothAdapterState == BluetoothAdapterState.unauthorized && Platform.isIOS) {
         // open dialog showing user how to allow app to use bluetooth
         await showDialog(
           context: context,

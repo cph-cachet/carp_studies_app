@@ -15,7 +15,7 @@ class AuthorizationDialog extends StatelessWidget {
           title: "pages.devices.connection.bluetooth_authorization.title",
         ),
         content: SizedBox(
-          height: MediaQuery.of(context).size.height * 0.6,
+          height: MediaQuery.of(context).size.height * 0.45,
           child: authorizationInstructions(context, device),
         ));
   }
@@ -35,7 +35,7 @@ class AuthorizationDialog extends StatelessWidget {
                   textAlign: TextAlign.justify,
                 ),
                 Image(
-                    image: const AssetImage('assets/icons/connection.png'),
+                    image: const AssetImage('assets/instructions/bluetooth_enable_bar.png'),
                     width: MediaQuery.of(context).size.height * 0.2,
                     height: MediaQuery.of(context).size.height * 0.2),
                 Row(

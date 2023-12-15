@@ -229,10 +229,10 @@ packages:
     dependency: "direct main"
     description:
       name: carp_backend
-      sha256: fe000165067bbc49c0dbb1745459e245f593cbd2c04ffa3cc424b74e35591863
+      sha256: c3ff060d888eb42ab1a877dbdd141637672b552400544db3b458ef82ad8fc431
       url: "https://pub.dev"
     source: hosted
-    version: "1.3.0"
+    version: "1.3.1"
   carp_connectivity_package:
     dependency: "direct main"
     description:
@@ -309,10 +309,10 @@ packages:
     dependency: "direct main"
     description:
       name: carp_webservices
-      sha256: ba45c9b6eac9fbc72f961fac1262b3d162a33205709f3464a76043efb2ac0e82
+      sha256: "44670736cd7e131c4d04c9ad7398df52dac63e168ed0772107e67200e641f773"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.0"
+    version: "2.0.1"
   characters:
     dependency: transitive
     description:
@@ -541,10 +541,10 @@ packages:
     dependency: "direct main"
     description:
       name: fl_chart
-      sha256: c1e26c7e48496be85104c16c040950b0436674cdf0737f3f6e95511b2529b592
+      sha256: "5a74434cc83bf64346efb562f1a06eefaf1bcb530dc3d96a104f631a1eff8d79"
       url: "https://pub.dev"
     source: hosted
-    version: "0.63.0"
+    version: "0.65.0"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -729,10 +729,10 @@ packages:
     dependency: "direct main"
     description:
       name: go_router
-      sha256: "2ccd74480706e0a70a0e0dfa9543dede41bc11d0fe3b146a6ad7b7686f6b4407"
+      sha256: c5fa45fa502ee880839e3b2152d987c44abae26d064a2376d4aad434cf0f7b15
       url: "https://pub.dev"
     source: hosted
-    version: "11.1.4"
+    version: "12.1.3"
   google_fonts:
     dependency: "direct main"
     description:
@@ -1530,14 +1530,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.10.0"
-  sprintf:
-    dependency: transitive
-    description:
-      name: sprintf
-      sha256: "1fc9ffe69d4df602376b52949af107d8f5703b77cda567c4d7d86a0693120f23"
-      url: "https://pub.dev"
-    source: hosted
-    version: "7.0.0"
   sqflite:
     dependency: transitive
     description:
@@ -1755,13 +1747,13 @@ packages:
     source: hosted
     version: "3.1.0"
   uuid:
-    dependency: "direct overridden"
+    dependency: transitive
     description:
       name: uuid
-      sha256: b715b8d3858b6fa9f68f87d20d98830283628014750c2b09b6f516c1da4af2a7
+      sha256: "648e103079f7c64a36dc7d39369cabb358d377078a051d6ae2ad3aa539519313"
       url: "https://pub.dev"
     source: hosted
-    version: "4.1.0"
+    version: "3.0.7"
   vector_graphics:
     dependency: transitive
     description:

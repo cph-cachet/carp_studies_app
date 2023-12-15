@@ -14,7 +14,7 @@ class EnableBluetoothDialog extends StatelessWidget {
         title: const DialogTitle(
             title: "pages.devices.connection.enable_bluetooth.title"),
         content: SizedBox(
-          height: MediaQuery.of(context).size.height * 0.6,
+          height: MediaQuery.of(context).size.height * 0.45,
           child: enableBluetoothInstructions(context, device),
         ));
   }
@@ -37,7 +37,7 @@ class EnableBluetoothDialog extends StatelessWidget {
                   padding: EdgeInsets.symmetric(vertical: 16.0),
                   child: Image(
                     image: AssetImage(
-                        'assets/instructions/Bluetooth_enable_bar.png'),
+                        'assets/instructions/bluetooth_enable_bar.png'),
                   ),
                 ),
                 Text(
@@ -53,7 +53,7 @@ class EnableBluetoothDialog extends StatelessWidget {
                     padding: EdgeInsets.symmetric(vertical: 16.0),
                     child: Image(
                       image: AssetImage(
-                          'assets/instructions/Bluetooth_enable_connections_bar.png'),
+                          'assets/instructions/bluetooth_enable_connections_bar.png'),
                     ),
                   ),
                 Text(
@@ -65,12 +65,6 @@ class EnableBluetoothDialog extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    TextButton(
-                      onPressed: () => context.canPop() ? context.pop() : null,
-                      child: Text(
-                        locale.translate("cancel"),
-                      ),
-                    ),
                     TextButton(
                       onPressed: () => context.canPop() ? context.pop() : null,
                       child: Text(

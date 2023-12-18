@@ -20,9 +20,6 @@ class StepsCardWidgetState extends State<StepsCardWidget> {
 
   @override
   void initState() {
-    widget.model.pedometerEvents?.listen((event) {
-      setState(() {});
-    });
     _step = widget.model.steps[DateTime.now().weekday - 1].steps;
     super.initState();
   }
@@ -47,14 +44,15 @@ class StepsCardWidgetState extends State<StepsCardWidget> {
               colors: widget.colors,
             ),
             SizedBox(
-                height: 160,
-                width: MediaQuery.of(context).size.width * 0.9,
-                child: StreamBuilder(
-                  stream: widget.model.pedometerEvents,
-                  builder: (context, snapshot) {
-                    return barCharts;
-                  },
-                )),
+              height: 160,
+              width: MediaQuery.of(context).size.width * 0.9,
+              child: StreamBuilder(
+                stream: widget.model.pedometerEvents,
+                builder: (context, snapshot) {
+                  return barCharts;
+                },
+              ),
+            ),
           ],
         ),
       ),

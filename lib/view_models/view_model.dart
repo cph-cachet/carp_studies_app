@@ -8,7 +8,7 @@ abstract class ViewModel {
 
   /// Initialize this view model before use.
   @mustCallSuper
-  void init(SmartphoneDeploymentController ctrl) {
+  Future<void> init(SmartphoneDeploymentController ctrl) async {
     _controller = ctrl;
   }
 }
@@ -58,9 +58,6 @@ abstract class SerializableViewModel<D extends DataModel> extends ViewModel {
     /// [AppLifecycleListener] is not supported in a test environment.
     if (!Platform.environment.containsKey('FLUTTER_TEST')) {
       AppLifecycleListener(
-        onStateChange: (value) {
-          info('AppLifecycleState changed to $value');
-        },
         onHide: () async {
           await save(model.toJson());
         },
@@ -173,13 +170,13 @@ class CarpStudyAppViewModel extends ViewModel {
       _informedConsentViewModel;
 
   @override
-  void init(SmartphoneDeploymentController ctrl) async {
-    super.init(ctrl);
-    _studyPageViewModel.init(ctrl);
-    _taskListPageViewModel.init(ctrl);
-    _profilePageViewModel.init(ctrl);
-    _devicesPageViewModel.init(ctrl);
-    _invitationsListViewModel.init(ctrl);
-    _informedConsentViewModel.init(ctrl);
+  Future<void> init(SmartphoneDeploymentController ctrl) async {
+    await super.init(ctrl);
+    await _studyPageViewModel.init(ctrl);
+    await _taskListPageViewModel.init(ctrl);
+    await _profilePageViewModel.init(ctrl);
+    await _devicesPageViewModel.init(ctrl);
+    await _invitationsListViewModel.init(ctrl);
+    await _informedConsentViewModel.init(ctrl);
   }
 }

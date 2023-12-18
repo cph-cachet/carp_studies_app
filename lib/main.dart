@@ -14,7 +14,8 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:camera/camera.dart';
 import 'package:video_player/video_player.dart';
-import 'package:open_settings/open_settings.dart';
+import 'package:app_settings/app_settings.dart';
+
 import 'package:google_fonts/google_fonts.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
@@ -84,11 +85,14 @@ part 'ui/pages/process_message_page.dart';
 part 'ui/pages/camera_task_page.dart';
 part 'ui/pages/display_picture_page.dart';
 part 'ui/pages/camera_page.dart';
-part 'ui/pages/devices_page.dart';
 part 'ui/pages/loading_page.dart';
 part 'ui/pages/error_page.dart';
 part 'ui/pages/cans_login.dart';
+part 'ui/pages/devices_page.dart';
+part 'ui/pages/devices_page.authorization_dialog.dart';
+part 'ui/pages/devices_page.enable_bluetooth_dialog.dart';
 part 'ui/pages/devices_page.connection_dialog.dart';
+part 'ui/pages/devices_page.disconnection_dialog.dart';
 part 'ui/pages/devices_page.list_title.dart';
 
 part 'ui/widgets/study_card.dart';
@@ -99,6 +103,7 @@ part 'ui/widgets/details_banner.dart';
 part 'ui/widgets/studies_card.dart';
 part 'ui/widgets/battery_icon.dart';
 part 'ui/widgets/logout_message.dart';
+part 'ui/widgets/dialog_title.dart';
 
 part 'ui/cards/steps_card.dart';
 part 'ui/cards/heart_rate_card.dart';

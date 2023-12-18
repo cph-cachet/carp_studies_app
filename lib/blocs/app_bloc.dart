@@ -286,19 +286,6 @@ class StudyAppBLoC {
   Iterable<DeviceModel> get runningDevices =>
       Sensing().runningDevices!.map((device) => DeviceModel(device));
 
-  /// Map a selected device to the device in the protocol and connect to it.
-  void connectToDevice(BluetoothDevice selectedDevice, DeviceManager device) {
-    if (device is BTLEDeviceManager) {
-      device.btleAddress = selectedDevice.remoteId.str;
-      device.btleName = selectedDevice.localName;
-    }
-
-    // when the device id is updated, save the deployment
-    Sensing().controller?.saveDeployment();
-
-    device.connect();
-  }
-
   /// Start sensing.
   Future<void> start() async {
     assert(Sensing().controller != null,

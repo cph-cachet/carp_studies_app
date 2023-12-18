@@ -11,9 +11,8 @@ class DevicesPage extends StatefulWidget {
 }
 
 class DevicesPageState extends State<DevicesPage> {
-  StreamSubscription? isScanningStream;
-  StreamSubscription? scanResultStream;
   StreamSubscription? bluetoothStateStream;
+  BluetoothAdapterState? bluetoothAdapterState;
 
   List<DeviceModel> physicalDevices = bloc.runningDevices
       .where((element) =>
@@ -29,10 +28,17 @@ class DevicesPageState extends State<DevicesPage> {
       .toList();
 
   @override
+  void initState() {
+    super.initState();
+    bluetoothStateStream = FlutterBluePlus.adapterState.listen((event) {
+      bluetoothAdapterState = event;
+      setState(() {});
+    });
+  }
+
+  @override
   void dispose() {
     FlutterBluePlus.stopScan();
-    isScanningStream?.cancel();
-    scanResultStream?.cancel();
     bluetoothStateStream?.cancel();
     super.dispose();
   }
@@ -51,7 +57,7 @@ class DevicesPageState extends State<DevicesPage> {
             Container(
               color: Theme.of(context).colorScheme.secondary,
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
+                padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Column(
@@ -214,13 +220,7 @@ class DevicesPageState extends State<DevicesPage> {
       );
 
   void physicalDeviceClicked(DeviceModel device) async {
-    if (await FlutterBluePlus.isAvailable == false) {
-      warning("Bluetooth not supported by this device");
-      return;
-    }
-
-    if (device.status == DeviceStatus.connected ||
-        device.status == DeviceStatus.connecting) {
+    if (await FlutterBluePlus.isSupported == false) {
       return;
     }
 
@@ -229,33 +229,43 @@ class DevicesPageState extends State<DevicesPage> {
       await FlutterBluePlus.turnOn();
     }
 
-    // wait bluetooth to be on
-    await FlutterBluePlus.adapterState
-        .where((s) => s == BluetoothAdapterState.on)
-        .first;
+    if (context.mounted) {
+      if (bluetoothAdapterState == BluetoothAdapterState.off &&
+          Platform.isIOS) {
+        await showDialog(
+          context: context,
+          barrierDismissible: true,
+          builder: (context) => EnableBluetoothDialog(device: device),
+        );
+      } else if (bluetoothAdapterState == BluetoothAdapterState.on) {
+        if (device.status == DeviceStatus.connected ||
+            device.status == DeviceStatus.connecting) {
+          bool result = await showDialog(
+            context: context,
+            barrierDismissible: true,
+            builder: (context) => DisconnectionDialog(device: device),
+          );
 
-    // start scanning for BTLE devices
-    bool isScanning = false;
-
-    FlutterBluePlus.isScanning.listen((scanBool) => isScanning = scanBool);
-
-    bluetoothStateStream = FlutterBluePlus.adapterState.listen((state) {
-      if (state == BluetoothAdapterState.on && !isScanning) {
-        FlutterBluePlus.startScan();
-        isScanning = true;
-      } else {
-        // instantly start and stop a scan to turn on the BT adapter
-        FlutterBluePlus.startScan();
-        FlutterBluePlus.stopScan();
+          if (result == true) {
+            device.disconnectFromDevice(device.deviceManager);
+          } else {
+            FlutterBluePlus.stopScan();
+          }
+        } else {
+          await showDialog(
+            context: context,
+            barrierDismissible: true,
+            builder: (context) => ConnectionDialog(device: device),
+          );
+        }
+      } else if (bluetoothAdapterState == BluetoothAdapterState.unauthorized &&
+          Platform.isIOS) {
+        await showDialog(
+          context: context,
+          barrierDismissible: true,
+          builder: (context) => AuthorizationDialog(device: device),
+        );
       }
-    });
-
-    await showDialog(
-      context: context,
-      barrierDismissible: true,
-      builder: (context) => ConnectionDialog(device: device),
-    );
-
-    FlutterBluePlus.stopScan();
+    }
   }
 }

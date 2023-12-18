@@ -10,6 +10,12 @@ class ConnectionDialog extends StatefulWidget {
 }
 
 class _ConnectionDialogState extends State<ConnectionDialog> {
+  @override
+  initState() {
+    super.initState();
+    FlutterBluePlus.startScan();
+  }
+
   CurrentStep currentStep = CurrentStep.scan;
   BluetoothDevice? selectedDevice;
   int selected = 40;
@@ -32,29 +38,21 @@ class _ConnectionDialogState extends State<ConnectionDialog> {
   }
 
   Widget _buildDialogTitle(RPLocalizations locale) {
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            IconButton(
-              onPressed: () => context.pop(),
-              icon: const Icon(Icons.close),
-              padding: const EdgeInsets.only(right: 8),
-            ),
-          ],
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 24, right: 24, bottom: 8),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              stepTitle(currentStep, widget.device, context),
-            ],
-          ),
-        ),
-      ],
-    );
+    final stepTitleMap = {
+      CurrentStep.scan: const DialogTitle(
+        title: "pages.devices.connection.step.start.title",
+      ),
+      CurrentStep.instructions: const DialogTitle(
+        title: "pages.devices.connection.step.how_to.title",
+      ),
+      CurrentStep.done: DialogTitle(
+        title: "pages.devices.connection.step.confirm.title",
+        deviceName: widget.device.name,
+      ),
+    };
+
+    return stepTitleMap[currentStep] ??
+        Container(); // Return a default widget if necessary
   }
 
   Widget _buildStepContent(RPLocalizations locale) {
@@ -89,7 +87,7 @@ class _ConnectionDialogState extends State<ConnectionDialog> {
       ],
       CurrentStep.instructions: [
         buildTranslatedButton("pages.devices.connection.settings", () {
-          OpenSettings.openBluetoothSetting();
+          AppSettings.openAppSettings(type: AppSettingsType.bluetooth);
         }),
         buildTranslatedButton("pages.devices.connection.ok", () {
           setState(() => currentStep = CurrentStep.scan);
@@ -102,56 +100,16 @@ class _ConnectionDialogState extends State<ConnectionDialog> {
         buildTranslatedButton("pages.devices.connection.done", () {
           FlutterBluePlus.stopScan();
           if (selectedDevice != null) {
-            bloc.connectToDevice(
+            widget.device.connectToDevice(
               selectedDevice!,
               widget.device.deviceManager,
             );
-            context.pop();
+            context.pop(true);
           }
         }),
       ],
     };
     return stepButtonConfigs[currentStep] ?? [];
-  }
-
-  Widget stepTitle(
-    CurrentStep currentStep,
-    DeviceModel device,
-    BuildContext context,
-  ) {
-    RPLocalizations locale = RPLocalizations.of(context)!;
-    Widget buildStepTitle(String translationKey, BuildContext context,
-            {Color? color, String suffix = ""}) =>
-        Column(
-          children: [
-            Text(
-              locale.translate(translationKey) + suffix,
-              style: sectionTitleStyle.copyWith(color: color),
-            ),
-          ],
-        );
-
-    final stepTitleMap = {
-      CurrentStep.scan: buildStepTitle(
-        "pages.devices.connection.step.start.title",
-        context,
-        color: Theme.of(context).primaryColor,
-      ),
-      CurrentStep.instructions: buildStepTitle(
-        "pages.devices.connection.step.how_to.title",
-        context,
-        color: Theme.of(context).primaryColor,
-        suffix: " ${locale.translate(device.name!)}",
-      ),
-      CurrentStep.done: buildStepTitle(
-        "${locale.translate(device.name!)} ${locale.translate("pages.devices.connection.step.confirm.title")}",
-        context,
-        color: Theme.of(context).primaryColor,
-      ),
-    };
-
-    return stepTitleMap[currentStep] ??
-        Container(); // Return a default widget if necessary
   }
 
   Widget stepContent(
@@ -184,14 +142,14 @@ class _ConnectionDialogState extends State<ConnectionDialog> {
             builder: (context, snapshot) => SingleChildScrollView(
               child: Column(
                 children: snapshot.data!
-                    .where((element) => element.device.localName.isNotEmpty)
+                    .where((element) => element.device.platformName.isNotEmpty)
                     .toList()
                     .asMap()
                     .entries
                     .map(
                       (bluetoothDevice) => ListTile(
                         selected: bluetoothDevice.key == selected,
-                        title: Text(bluetoothDevice.value.device.localName),
+                        title: Text(bluetoothDevice.value.device.platformName),
                         selectedTileColor:
                             Theme.of(context).primaryColor.withOpacity(0.2),
                         onTap: () {
@@ -250,7 +208,7 @@ class _ConnectionDialogState extends State<ConnectionDialog> {
             width: MediaQuery.of(context).size.height * 0.2,
             height: MediaQuery.of(context).size.height * 0.2),
         Text(
-          ("${locale.translate("pages.devices.connection.step.confirm.1")} '${device?.localName}' ${locale.translate("pages.devices.connection.step.confirm.2")}")
+          ("${locale.translate("pages.devices.connection.step.confirm.1")} '${device?.platformName}' ${locale.translate("pages.devices.connection.step.confirm.2")}")
               .trim(),
           style: aboutCardContentStyle,
           textAlign: TextAlign.justify,

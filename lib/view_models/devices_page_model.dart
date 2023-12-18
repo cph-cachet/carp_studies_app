@@ -18,9 +18,11 @@ class DevicesPageViewModel extends ViewModel {
 
 class DeviceModel {
   DeviceManager deviceManager;
+  DeviceModel(this.deviceManager) : super();
 
   String? get type => deviceManager.type;
   DeviceStatus get status => deviceManager.status;
+  set status(DeviceStatus status) => deviceManager.status = status;
 
   /// Stream of [DeviceStatus] events
   Stream<DeviceStatus> get deviceEvents => deviceManager.statusEvents;
@@ -63,8 +65,6 @@ class DeviceModel {
             '${DeviceInfo().deviceModel} (${DeviceInfo().deviceManufacturer?.toUpperCase()})',
         'version': 'SDK ${DeviceInfo().sdk}',
       };
-
-  DeviceModel(this.deviceManager) : super();
 
   static Map<String, String> get deviceTypeName => {
         Smartphone.DEVICE_TYPE: "pages.devices.type.smartphone.name",
@@ -137,4 +137,31 @@ class DeviceModel {
         ESenseDevice.DEVICE_TYPE: "pages.devices.type.esense.instructions",
         PolarDevice.DEVICE_TYPE: "pages.devices.type.polar.instructions",
       };
+
+  /// Map a selected device to the device in the protocol and connect to it.
+  void connectToDevice(BluetoothDevice selectedDevice, DeviceManager device) {
+    if (device is BTLEDeviceManager) {
+      device.btleAddress = selectedDevice.remoteId.str;
+      device.btleName = selectedDevice.platformName;
+    }
+
+    // when the device id is updated, save the deployment
+    Sensing().controller?.saveDeployment();
+
+    device.connect();
+  }
+
+  // Disconnect from the currently connected device
+  void disconnectFromDevice(DeviceManager device) {
+    if (device is BTLEDeviceManager) {
+      device.btleAddress = '';
+      device.btleName = '';
+    }
+
+    // when the device id is updated, save the deployment
+    Sensing().controller?.saveDeployment();
+
+    device.disconnect();
+    device.status = DeviceStatus.disconnected; // Force status update
+  }
 }

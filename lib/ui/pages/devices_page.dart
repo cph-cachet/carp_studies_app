@@ -159,6 +159,7 @@ class DevicesPageState extends State<DevicesPage> {
                                   color: Theme.of(context).primaryColor))
                           : service.getServiceStatusIcon,
                       isThreeLine: false,
+                      onTap: () => onlineServiceClicked(service),
                     ),
                 DeviceStatus.unknown);
           }, childCount: onlineServices.length),
@@ -218,6 +219,27 @@ class DevicesPageState extends State<DevicesPage> {
           ),
         ),
       );
+
+  void onlineServiceClicked(DeviceModel service) async {
+    if (service.status == DeviceStatus.connected ||
+        service.status == DeviceStatus.connecting) {
+      return;
+    }
+
+    switch (service.type) {
+      case HealthService.DEVICE_TYPE:
+        await service.deviceManager.requestPermissions();
+        await service.deviceManager.connect();
+
+        break;
+      case LocationService.DEVICE_TYPE:
+        await service.deviceManager.requestPermissions();
+        await service.deviceManager.connect();
+
+        break;
+      default:
+    }
+  }
 
   void physicalDeviceClicked(DeviceModel device) async {
     if (await FlutterBluePlus.isSupported == false) {

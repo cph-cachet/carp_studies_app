@@ -1,6 +1,6 @@
 part of '../../main.dart';
 
-/// State of Bluetoth connection UI.
+/// State of Bluetooth connection UI.
 enum CurrentStep { scan, instructions, done }
 
 class DevicesPage extends StatefulWidget {
@@ -76,11 +76,11 @@ class DevicesPageState extends State<DevicesPage> {
               flex: 4,
               child: CustomScrollView(
                 slivers: [
-                  ...smartphoneDeviceListWidget(locale),
+                  ..._smartphoneDeviceListWidget(locale),
                   if (physicalDevices.isNotEmpty)
-                    ...physicalDevicesListWidget(locale),
+                    ..._physicalDevicesListWidget(locale),
                   if (onlineServices.isNotEmpty)
-                    ...onlineServicesListWidget(locale),
+                    ..._onlineServicesListWidget(locale),
                 ],
               ),
             ),
@@ -90,14 +90,14 @@ class DevicesPageState extends State<DevicesPage> {
     );
   }
 
-  List<Widget> smartphoneDeviceListWidget(RPLocalizations locale) => [
+  List<Widget> _smartphoneDeviceListWidget(RPLocalizations locale) => [
         DevicesPageListTitle(locale: locale, type: DevicesPageTypes.phone),
         SliverList(
           delegate:
               SliverChildBuilderDelegate((BuildContext context, int index) {
             return Center(
               child: StudiesCard(
-                child: cardListBuilder(
+                child: _cardListBuilder(
                   smartphoneDevice[index].icon!,
                   smartphoneDevice[index].phoneInfo['name']!,
                   (
@@ -111,20 +111,20 @@ class DevicesPageState extends State<DevicesPage> {
         ),
       ];
 
-  List<Widget> physicalDevicesListWidget(RPLocalizations locale) => [
+  List<Widget> _physicalDevicesListWidget(RPLocalizations locale) => [
         DevicesPageListTitle(locale: locale, type: DevicesPageTypes.devices),
         SliverList(
           delegate:
               SliverChildBuilderDelegate((BuildContext context, int index) {
             DeviceModel device = physicalDevices[index];
-            return devicesPageCardStream(
+            return _devicesPageCardStream(
                 device.deviceEvents,
-                () => cardListBuilder(
+                () => _cardListBuilder(
                     device.icon!,
                     locale.translate(device.name!),
                     (device.id, device.batteryLevel ?? 0),
                     enableFeedback: true,
-                    onTap: () => physicalDeviceClicked(device),
+                    onTap: () => _physicalDeviceClicked(device),
                     trailing: device.getDeviceStatusIcon is String
                         ? Text(
                             locale
@@ -138,15 +138,15 @@ class DevicesPageState extends State<DevicesPage> {
         ),
       ];
 
-  List<Widget> onlineServicesListWidget(RPLocalizations locale) => [
+  List<Widget> _onlineServicesListWidget(RPLocalizations locale) => [
         DevicesPageListTitle(locale: locale, type: DevicesPageTypes.services),
         SliverList(
           delegate:
               SliverChildBuilderDelegate((BuildContext context, int index) {
             DeviceModel service = onlineServices[index];
-            return devicesPageCardStream(
+            return _devicesPageCardStream(
                 service.deviceEvents,
-                () => cardListBuilder(
+                () => _cardListBuilder(
                       service.icon!,
                       locale.translate(service.name!),
                       null,
@@ -159,14 +159,14 @@ class DevicesPageState extends State<DevicesPage> {
                                   color: Theme.of(context).primaryColor))
                           : service.getServiceStatusIcon,
                       isThreeLine: false,
-                      onTap: () => onlineServiceClicked(service),
+                      onTap: () => _onlineServiceClicked(service),
                     ),
                 DeviceStatus.unknown);
           }, childCount: onlineServices.length),
         ),
       ];
 
-  Widget cardListBuilder(
+  Widget _cardListBuilder(
     Icon leading,
     String title,
     (String, int)? subtitle, {
@@ -208,7 +208,7 @@ class DevicesPageState extends State<DevicesPage> {
         onTap: onTap,
       );
 
-  Widget devicesPageCardStream<T>(
+  Widget _devicesPageCardStream<T>(
           Stream<T> stream, Widget Function() childBuilder, T? initialData) =>
       Center(
         child: StudiesCard(
@@ -220,28 +220,24 @@ class DevicesPageState extends State<DevicesPage> {
         ),
       );
 
-  void onlineServiceClicked(DeviceModel service) async {
+  void _onlineServiceClicked(DeviceModel service) {
     if (service.status == DeviceStatus.connected ||
         service.status == DeviceStatus.connecting) {
       return;
     }
 
-    switch (service.type) {
-      case HealthService.DEVICE_TYPE:
-        await service.deviceManager.requestPermissions();
-        await service.deviceManager.connect();
-
-        break;
-      case LocationService.DEVICE_TYPE:
-        await service.deviceManager.requestPermissions();
-        await service.deviceManager.connect();
-
-        break;
-      default:
-    }
+    service.deviceManager.hasPermissions().then((permissions) {
+      if (permissions) {
+        service.deviceManager.connect();
+      } else {
+        service.deviceManager.requestPermissions().then((_) {
+          service.deviceManager.connect();
+        });
+      }
+    });
   }
 
-  void physicalDeviceClicked(DeviceModel device) async {
+  void _physicalDeviceClicked(DeviceModel device) async {
     if (await FlutterBluePlus.isSupported == false) {
       return;
     }

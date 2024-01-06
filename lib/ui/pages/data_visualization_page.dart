@@ -10,9 +10,6 @@ class DataVisualizationPage extends StatefulWidget {
 }
 
 class _DataVisualizationPageState extends State<DataVisualizationPage> {
-  final dataPageInitialization = bloc.dataPageInitialization ??
-      bloc.data._dataVisualizationPageViewModel.init(Sensing().controller!);
-
   @override
   Widget build(BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;
@@ -20,7 +17,8 @@ class _DataVisualizationPageState extends State<DataVisualizationPage> {
       backgroundColor: Theme.of(context).colorScheme.secondary,
       body: SafeArea(
         child: FutureBuilder(
-          future: dataPageInitialization,
+          future: bloc.data._dataVisualizationPageViewModel
+              .init(Sensing().controller!),
           builder: (context, data) {
             if (data.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());

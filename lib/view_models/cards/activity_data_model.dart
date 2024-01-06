@@ -10,8 +10,6 @@ class ActivityCardViewModel extends SerializableViewModel<WeeklyActivities> {
   List<DailyActivity> activitiesByType(ActivityType type) =>
       model.activitiesByType(type);
 
-  ActivityCardViewModel() : super();
-
   /// Stream of activity measurements.
   Stream<Measurement>? get activityEvents => controller?.measurements
       .where((measurement) => measurement.data is Activity);

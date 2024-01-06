@@ -11,8 +11,10 @@ class HeartRateCardViewModel extends SerializableViewModel<HourlyHeartRate> {
   /// The current heart rate
   double? get currentHeartRate => model.currentHeartRate;
 
-  // If the device is touching skin. Returns true if the device is touching skin, false otherwise.
-  // If the device is not capable of detecting skin contact, this value is always true.
+  /// Is the device is touching skin?
+  ///
+  /// Returns true if the device is touching skin, false otherwise. If the device
+  /// is not capable of detecting skin contact, this value is always true.
   bool contactStatus = false;
 
   HeartRateMinMaxPrHour get dayMinMax =>

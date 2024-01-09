@@ -74,9 +74,9 @@
 	<key>NSContactsUsageDescription</key>
 	<string>CARP uses contacts</string>
 	<key>NSHealthShareUsageDescription</key>
-	<string>CARP collects data from the Apple Health app to give you better health insights</string>
+	<string>CARP collects data from the Apple Health database to give you better health insights</string>
 	<key>NSHealthUpdateUsageDescription</key>
-	<string>CARP collects data from the Apple Health app to give you better health insights</string>
+	<string>CARP collects data from the Apple Health database to give you better health insights</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>CARP uses the location API to extract overall mobility patterns</string>
 	<key>NSLocationAlwaysUsageDescription</key>

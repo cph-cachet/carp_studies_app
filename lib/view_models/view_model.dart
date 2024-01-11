@@ -8,7 +8,9 @@ abstract class ViewModel {
 
   /// Initialize this view model before use.
   @mustCallSuper
-  Future<void> init(SmartphoneDeploymentController ctrl) async {
+  void init(SmartphoneDeploymentController ctrl) {
+    debug('$runtimeType - init()');
+
     _controller = ctrl;
   }
 }
@@ -43,12 +45,12 @@ abstract class SerializableViewModel<D extends DataModel> extends ViewModel {
 
   @override
   @mustCallSuper
-  Future<void> init(SmartphoneDeploymentController ctrl) async {
+  void init(SmartphoneDeploymentController ctrl) {
     super.init(ctrl);
     _model = createModel();
 
     // restore the data model (if any saved)
-    await restore().then((savedModel) => _model = savedModel ?? _model);
+    restore().then((savedModel) => _model = savedModel ?? _model);
 
     // save the data model on a regular basis.
     Timer.periodic(const Duration(minutes: 3), (_) => save(model.toJson()));
@@ -170,13 +172,15 @@ class CarpStudyAppViewModel extends ViewModel {
       _informedConsentViewModel;
 
   @override
-  Future<void> init(SmartphoneDeploymentController ctrl) async {
-    await super.init(ctrl);
-    await _studyPageViewModel.init(ctrl);
-    await _taskListPageViewModel.init(ctrl);
-    await _profilePageViewModel.init(ctrl);
-    await _devicesPageViewModel.init(ctrl);
-    await _invitationsListViewModel.init(ctrl);
-    await _informedConsentViewModel.init(ctrl);
+  // Future<void> init(SmartphoneDeploymentController ctrl) async {
+  void init(SmartphoneDeploymentController ctrl) {
+    super.init(ctrl);
+    _studyPageViewModel.init(ctrl);
+    _taskListPageViewModel.init(ctrl);
+    _profilePageViewModel.init(ctrl);
+    _devicesPageViewModel.init(ctrl);
+    _invitationsListViewModel.init(ctrl);
+    _informedConsentViewModel.init(ctrl);
+    _dataVisualizationPageViewModel.init(ctrl);
   }
 }

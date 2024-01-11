@@ -17,7 +17,8 @@ class DetailsBanner extends StatelessWidget {
         if (imagePath != null && imagePath!.isNotEmpty)
           SizedBox(
             height: 300,
-            child: bloc.data.studyPageViewModel.getMessageImage(imagePath),
+            child:
+                bloc.appViewModel.studyPageViewModel.getMessageImage(imagePath),
           ),
         Padding(
           padding: const EdgeInsets.all(16),

@@ -15,8 +15,8 @@ class ActivityCardViewModel extends SerializableViewModel<WeeklyActivities> {
       .where((measurement) => measurement.data is Activity);
 
   @override
-  Future<void> init(SmartphoneDeploymentController ctrl) async {
-    await super.init(ctrl);
+  void init(SmartphoneDeploymentController ctrl) {
+    super.init(ctrl);
 
     // listen for activity events and count the minutes
     activityEvents?.listen((measurement) {

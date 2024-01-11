@@ -25,8 +25,8 @@ class HeartRateCardViewModel extends SerializableViewModel<HourlyHeartRate> {
       .where((measurement) => measurement.data is PolarHR);
 
   @override
-  Future<void> init(SmartphoneDeploymentController ctrl) async {
-    await super.init(ctrl);
+  void init(SmartphoneDeploymentController ctrl) {
+    super.init(ctrl);
 
     heartRateEvents?.listen(
       (heartRateDataPoint) {

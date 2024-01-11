@@ -14,61 +14,49 @@ class _DataVisualizationPageState extends State<DataVisualizationPage> {
   Widget build(BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.secondary,
-      body: SafeArea(
-        child: FutureBuilder(
-          future: bloc.data._dataVisualizationPageViewModel
-              .init(Sensing().controller!),
-          builder: (context, data) {
-            if (data.connectionState == ConnectionState.waiting) {
-              return const Center(child: CircularProgressIndicator());
-            } else {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  const CarpAppBar(),
-                  Container(
-                    color: Theme.of(context).colorScheme.secondary,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 15),
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              '${locale.translate('pages.data_viz.hello')} ${bloc.friendlyUsername}'
-                                  .toUpperCase(),
-                              style: dataCardTitleStyle.copyWith(
-                                  color: Theme.of(context).primaryColor),
-                            ),
-                            Text(locale.translate('pages.data_viz.thanks'),
-                                style: aboutCardSubtitleStyle),
-                            const SizedBox(height: 15),
-                          ],
-                        ),
+        backgroundColor: Theme.of(context).colorScheme.secondary,
+        body: SafeArea(
+            child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            const CarpAppBar(),
+            Container(
+              color: Theme.of(context).colorScheme.secondary,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '${locale.translate('pages.data_viz.hello')} ${bloc.friendlyUsername}'
+                            .toUpperCase(),
+                        style: dataCardTitleStyle.copyWith(
+                            color: Theme.of(context).primaryColor),
                       ),
-                    ),
+                      Text(locale.translate('pages.data_viz.thanks'),
+                          style: aboutCardSubtitleStyle),
+                      const SizedBox(height: 15),
+                    ],
                   ),
-                  Expanded(
-                    flex: 4,
-                    child: SingleChildScrollView(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: _dataVizCards,
-                      ),
-                    ),
-                  )
-                ],
-              );
-            }
-          },
-        ),
-      ),
-    );
+                ),
+              ),
+            ),
+            Expanded(
+              flex: 4,
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: _dataVizCards,
+                ),
+              ),
+            )
+          ],
+        )));
   }
 
   // The list of cards, depending on what measures are defined in the study.
@@ -107,11 +95,6 @@ class _DataVisualizationPageState extends State<DataVisualizationPage> {
     }
     if (mediaModelsList.isNotEmpty) {
       widgets.add(MediaCardWidget(mediaModelsList));
-    }
-
-    // check to show device data visualizations
-    if (bloc.hasDevices()) {
-      //TODO ADD DEVICES VIZ?
     }
 
     if (bloc.hasMeasure(SensorSamplingPackage.STEP_COUNT)) {

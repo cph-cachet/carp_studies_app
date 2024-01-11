@@ -12,8 +12,8 @@ class MobilityCardViewModel extends SerializableViewModel<WeeklyMobility> {
 
   MobilityCardViewModel();
   @override
-  Future<void> init(SmartphoneDeploymentController ctrl) async {
-    await super.init(ctrl);
+  void init(SmartphoneDeploymentController ctrl) {
+    super.init(ctrl);
 
     // listen for mobility events and update the features
     mobilityEvents?.listen((measurement) {

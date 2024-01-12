@@ -102,7 +102,8 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
           margin: const EdgeInsets.only(left: 8, right: 2),
           child: Text(
             min == null || max == null
-                ? locale.translate('cards.no_data')
+                // ? locale.translate('cards.no_data')
+                ? '-'
                 : '${(min.toInt())} - ${(max.toInt())}',
             style: hrVisualisationTextStyle(
               fontSize: 40,

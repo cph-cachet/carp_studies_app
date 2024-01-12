@@ -63,12 +63,11 @@ class _DataVisualizationPageState extends State<DataVisualizationPage> {
   List<Widget> get _dataVizCards {
     final List<Widget> widgets = [];
 
-    // always show tasks progress
-    widgets
-        .add(StudyProgressCardWidget(widget.model.studyProgressCardDataModel));
-
-    // check to show overall measure stats
-    //if (bloc.hasMeasures()) widgets.add(MeasuresCardWidget(model.measuresCardDataModel));
+    // Show user task progress, if study has any tasks.
+    if (bloc.hasSurveys()) {
+      widgets.add(
+          StudyProgressCardWidget(widget.model.studyProgressCardDataModel));
+    }
 
     // check to show heart rate stats, if there is a POLAR device in the study
     if (bloc.hasMeasure(PolarSamplingPackage.HR)) {

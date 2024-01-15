@@ -175,6 +175,11 @@
 
                 <data android:scheme="carp-studies" />
             </intent-filter>
+
+            <!-- Intention to show Permissions screen for Health Connect API -->
+            <intent-filter>
+                <action android:name="androidx.health.ACTION_SHOW_PERMISSIONS_RATIONALE" />
+            </intent-filter>
         </activity>
 
         <!-- service for using the Android activity recognition API

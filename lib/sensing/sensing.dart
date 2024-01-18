@@ -1,10 +1,3 @@
-/*
- * Copyright 2021 Copenhagen Center for Health Technology (CACHET) at the
- * Technical University of Denmark (DTU).
- * Use of this source code is governed by a MIT-style license that can be
- * found in the LICENSE file.
- */
-
 part of carp_study_app;
 
 /// This class implements the sensing layer.
@@ -37,7 +30,7 @@ class Sensing {
   StudyDeploymentStatus? get status => _status;
 
   /// The role name of this device in the deployed study.
-  String? get deviceRolename => _study?.deviceRoleName;
+  String? get deviceRoleName => _study?.deviceRoleName;
 
   /// The study deployment id of the deployment running on this phone.
   String? get studyDeploymentId => _study?.studyDeploymentId;
@@ -68,9 +61,9 @@ class Sensing {
     //SamplingPackageRegistry.register(CommunicationSamplingPackage());
     SamplingPackageRegistry().register(MediaSamplingPackage());
     SamplingPackageRegistry().register(SurveySamplingPackage());
-    SamplingPackageRegistry().register(HealthSamplingPackage());
     SamplingPackageRegistry().register(ESenseSamplingPackage());
     SamplingPackageRegistry().register(PolarSamplingPackage());
+    SamplingPackageRegistry().register(HealthSamplingPackage());
 
     // create and register external data managers
     DataManagerRegistry().register(CarpDataManagerFactory());

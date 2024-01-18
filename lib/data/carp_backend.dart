@@ -41,6 +41,7 @@ class CarpBackend {
         ],
       );
 
+  /// The user logged in, if any.
   CarpUser? get user => LocalSettings().user;
   set user(CarpUser? user) => LocalSettings().user = user;
 
@@ -100,21 +101,13 @@ class CarpBackend {
   }
 
   Future<CarpUser> authenticate() async {
-    // bloc._stateStreamController.add(StudiesAppState.authenticating);
     user = await CarpService().authenticate();
-
-    // bloc._stateStreamController.add(StudiesAppState.accessTokenRetrieved);
-
-    return user as CarpUser;
+    return user!;
   }
 
   Future<CarpUser> refresh() async {
-    // bloc._stateStreamController.add(StudiesAppState.authenticating);
     user = await CarpService().refresh();
-
-    // bloc._stateStreamController.add(StudiesAppState.accessTokenRetrieved);
-
-    return user as CarpUser;
+    return user!;
   }
 
   Future<ConsentDocument?> uploadInformedConsent(

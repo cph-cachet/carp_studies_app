@@ -42,7 +42,7 @@ import 'package:research_package/research_package.dart';
 import 'package:cognition_package/cognition_package.dart';
 
 part 'blocs/app_bloc.dart';
-part 'blocs/common.dart';
+part 'blocs/util.dart';
 
 part 'data/local_settings.dart';
 part 'data/carp_backend.dart';
@@ -87,7 +87,7 @@ part 'ui/pages/display_picture_page.dart';
 part 'ui/pages/camera_page.dart';
 part 'ui/pages/loading_page.dart';
 part 'ui/pages/error_page.dart';
-part 'ui/pages/cans_login.dart';
+part 'ui/pages/caws_login_page.dart';
 part 'ui/pages/devices_page.dart';
 part 'ui/pages/devices_page.authorization_dialog.dart';
 part 'ui/pages/devices_page.enable_bluetooth_dialog.dart';

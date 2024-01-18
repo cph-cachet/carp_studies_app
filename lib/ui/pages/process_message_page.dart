@@ -1,7 +1,13 @@
 part of carp_study_app;
 
+enum ProcessStatus {
+  done,
+  error,
+  other,
+}
+
 class ProcessMessagePage extends StatelessWidget {
-  // Type of message to display (e.g Error, Succes, Informative)
+  // Type of message to display (e.g Error, Success, Informative)
   final ProcessStatus statusType;
 
   // Message title

@@ -15,6 +15,24 @@ enum StudyAppState {
   configured,
 }
 
+/// How to deploy a study.
+enum DeploymentMode {
+  /// Use a local study protocol & deployment and store data locally on the phone.
+  local,
+
+  /// Use the CAWS production server to get the study deployment and store data.
+  production,
+
+  /// Use the CAWS staging server to get the study deployment and store data.
+  staging,
+
+  /// Use the CAWS test server to get the study deployment and store data.
+  test,
+
+  /// Use the CAWS development server to get the study deployment and store data.
+  dev,
+}
+
 class StudyAppBLoC {
   StudyAppState _state = StudyAppState.created;
   final CarpBackend _backend = CarpBackend();

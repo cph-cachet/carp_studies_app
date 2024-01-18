@@ -20,6 +20,7 @@ class LocalSettings {
   bool? _hasInformedConsentBeenAccepted;
   CarpUser? _user;
 
+  /// The user saved on this device, if any.
   CarpUser? get user {
     if (_user == null) {
       String? userString = Settings().preferences!.getString(userKey);
@@ -33,7 +34,9 @@ class LocalSettings {
 
   set user(CarpUser? user) {
     _user = user;
-    Settings().preferences!.setString(userKey, jsonEncode(user!.toJson()));
+    (user != null)
+        ? Settings().preferences!.setString(userKey, jsonEncode(user.toJson()))
+        : Settings().preferences!.remove(userKey);
   }
 
   String? get studyId =>

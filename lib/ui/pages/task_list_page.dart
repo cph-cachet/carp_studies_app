@@ -255,7 +255,7 @@ class TaskListPageState extends State<TaskListPage> {
     ),
     BackgroundSensingUserTask.SENSING_TYPE: const Icon(
       Icons.settings_input_antenna,
-      color: CACHET.CACHET_BLUE,
+      color: CACHET.BLUE,
     ),
     BackgroundSensingUserTask.ONE_TIME_SENSING_TYPE: const Icon(
       Icons.settings_input_component,

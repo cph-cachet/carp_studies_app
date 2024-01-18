@@ -1,16 +1,17 @@
 part of carp_study_app;
 
+/// The state of the [StudyAppBLoC].
 enum StudyAppState {
-  /// The BLOC is created (initial state)
+  /// The BLoC is created (initial state)
   created,
 
-  /// The BLOC is initialized via the [initialized] method.
+  /// The BLoC is initialized via the [initialized] method.
   initialized,
 
-  /// The BLOC is in the process of being configured.
+  /// The BLoC is in the process of being configured.
   configuring,
 
-  /// The BLOC is configured and ready to use.
+  /// The BLoC is configured and ready to use.
   configured,
 }
 
@@ -19,10 +20,8 @@ class StudyAppBLoC {
   final CarpBackend _backend = CarpBackend();
   final CarpStudyAppViewModel _appViewModel = CarpStudyAppViewModel();
   StudyDeploymentStatus? _status;
-  final StreamController<StudiesAppState> _stateStreamController =
+  final StreamController<StudyAppState> _stateStreamController =
       StreamController.broadcast();
-
-  // Stream<StudiesAppState> get stateStream => _stateStreamController.stream;
 
   List<ActiveParticipationInvitation> invitations = [];
 
@@ -35,7 +34,16 @@ class StudyAppBLoC {
   /// The data send on the stream is the number of available messages.
   Stream<int> get messageStream => _messageStreamController.stream;
 
+  /// The state of this BloC.
   StudyAppState get state => _state;
+  set state(StudyAppState state) {
+    _state = state;
+    _stateStreamController.add(state);
+  }
+
+  /// A stream of state changes of this BloC.
+  Stream<StudyAppState> get stateStream => _stateStreamController.stream;
+
   bool get isInitialized => _state.index >= 1;
   bool get isConfiguring => _state.index >= 2;
   bool get isConfigured => _state.index >= 3;
@@ -116,7 +124,7 @@ class StudyAppBLoC {
 
     await backend.initialize();
 
-    _stateStreamController.add(StudiesAppState.initialized);
+    state = StudyAppState.initialized;
     info('$runtimeType initialized.');
   }
 
@@ -149,7 +157,7 @@ class StudyAppBLoC {
     // early out if already configured
     if (isConfiguring) return;
 
-    _stateStreamController.add(StudiesAppState.configuring);
+    state = StudyAppState.configuring;
 
     // set up and initialize sensing
     await Sensing().initialize();

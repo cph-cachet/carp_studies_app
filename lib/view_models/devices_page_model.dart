@@ -88,13 +88,38 @@ class DeviceModel {
       };
 
   static Map<String, Icon> get deviceTypeIcon => {
-        Smartphone.DEVICE_TYPE: const Icon(Icons.phone_android, size: 30),
-        WeatherService.DEVICE_TYPE: const Icon(Icons.wb_cloudy),
-        AirQualityService.DEVICE_TYPE: const Icon(Icons.air),
-        LocationService.DEVICE_TYPE: const Icon(Icons.location_on),
-        ESenseDevice.DEVICE_TYPE: const Icon(Icons.headphones, size: 30),
-        PolarDevice.DEVICE_TYPE: const Icon(Icons.monitor_heart, size: 30),
-        HealthService.DEVICE_TYPE: const Icon(Icons.favorite_rounded, size: 30),
+        Smartphone.DEVICE_TYPE: const Icon(
+          Icons.phone_android,
+          size: 30,
+          color: CACHET.DARK_BLUE,
+        ),
+        WeatherService.DEVICE_TYPE: const Icon(
+          Icons.wb_cloudy,
+          color: CACHET.WHITE,
+        ),
+        AirQualityService.DEVICE_TYPE: const Icon(
+          Icons.air,
+          color: CACHET.GREY_1,
+        ),
+        LocationService.DEVICE_TYPE: const Icon(
+          Icons.location_on,
+          color: CACHET.GREEN,
+        ),
+        ESenseDevice.DEVICE_TYPE: const Icon(
+          Icons.headphones,
+          size: 30,
+          color: CACHET.BLACK,
+        ),
+        PolarDevice.DEVICE_TYPE: const Icon(
+          Icons.monitor_heart,
+          size: 30,
+          color: CACHET.LIGHT_BLUE_2,
+        ),
+        HealthService.DEVICE_TYPE: const Icon(
+          Icons.favorite_rounded,
+          size: 30,
+          color: CACHET.RED_1,
+        ),
       };
 
   static Map<DeviceStatus, dynamic> get deviceStatusIcon => {

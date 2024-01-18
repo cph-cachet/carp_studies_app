@@ -47,7 +47,7 @@ part 'blocs/common.dart';
 part 'data/local_settings.dart';
 part 'data/carp_backend.dart';
 part 'data/localization_loader.dart';
-part 'sensing/sensing.dart';
+part 'blocs/sensing.dart';
 
 part 'view_models/view_model.dart';
 part 'view_models/tasklist_page_model.dart';

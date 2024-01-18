@@ -1,17 +1,20 @@
 part of carp_study_app;
 
-/// Enumeration of different types of deployments on the CARP Web Service (CAWS).
+/// How to deploy a study.
 enum DeploymentMode {
-  /// Use the CARP production server to get the study deployment and store data.
+  /// Use a local study protocol & deployment and store data locally on the phone.
+  local,
+
+  /// Use the CAWS production server to get the study deployment and store data.
   production,
 
-  /// Use the CARP staging server to get the study deployment and store data.
+  /// Use the CAWS staging server to get the study deployment and store data.
   staging,
 
-  /// Use the CARP testing server to get the study deployment and store data.
+  /// Use the CAWS test server to get the study deployment and store data.
   test,
 
-  /// Use the CARP development server to get the study deployment and store data.
+  /// Use the CAWS development server to get the study deployment and store data.
   dev,
 }
 
@@ -49,10 +52,10 @@ enum StudiesAppState {
   initialized,
   authenticating,
   accessTokenRetrieved,
-  configuring,
-  loading,
-  loaded,
-  error,
+  // configuring,
+  // loading,
+  // loaded,
+  // error,
 }
 
 extension StringExtension on String {

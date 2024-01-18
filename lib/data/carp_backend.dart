@@ -100,19 +100,19 @@ class CarpBackend {
   }
 
   Future<CarpUser> authenticate() async {
-    bloc._stateStreamController.add(StudiesAppState.authenticating);
+    // bloc._stateStreamController.add(StudiesAppState.authenticating);
     user = await CarpService().authenticate();
 
-    bloc._stateStreamController.add(StudiesAppState.accessTokenRetrieved);
+    // bloc._stateStreamController.add(StudiesAppState.accessTokenRetrieved);
 
     return user as CarpUser;
   }
 
   Future<CarpUser> refresh() async {
-    bloc._stateStreamController.add(StudiesAppState.authenticating);
+    // bloc._stateStreamController.add(StudiesAppState.authenticating);
     user = await CarpService().refresh();
 
-    bloc._stateStreamController.add(StudiesAppState.accessTokenRetrieved);
+    // bloc._stateStreamController.add(StudiesAppState.accessTokenRetrieved);
 
     return user as CarpUser;
   }

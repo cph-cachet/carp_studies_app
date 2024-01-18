@@ -10,7 +10,6 @@ abstract class ViewModel {
   @mustCallSuper
   void init(SmartphoneDeploymentController ctrl) {
     debug('$runtimeType - init()');
-
     _controller = ctrl;
   }
 }
@@ -28,8 +27,12 @@ abstract class SerializableViewModel<D extends DataModel> extends ViewModel {
   ///
   /// The data model is either created using the [createModel] method or loaded
   /// from persistent storage.
-  D get model => _model!;
-  D? _model;
+  D get model => _model;
+  late D _model;
+
+  SerializableViewModel() {
+    _model = createModel();
+  }
 
   /// The [DataModel] to be serialized.
   ///

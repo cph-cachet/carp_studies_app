@@ -51,7 +51,7 @@ class Sensing {
   List<DeviceManager>? get runningDevices =>
       SmartPhoneClientManager().deviceController.connectedDevices;
 
-  /// The singleton sensing instance
+  /// The singleton sensing instance.
   factory Sensing() => _instance;
 
   Sensing._() {

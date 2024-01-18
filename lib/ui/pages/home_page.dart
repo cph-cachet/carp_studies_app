@@ -1,9 +1,11 @@
 part of carp_study_app;
 
+/// The home page of the app.
+///
+/// Shown once the onboarding process is done.
 class HomePage extends StatefulWidget {
-  const HomePage({required this.child, super.key});
-
   final Widget child;
+  const HomePage({required this.child, super.key});
 
   @override
   HomePageState createState() => HomePageState();

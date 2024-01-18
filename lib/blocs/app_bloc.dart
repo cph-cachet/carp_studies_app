@@ -22,7 +22,7 @@ class StudyAppBLoC {
   final StreamController<StudiesAppState> _stateStreamController =
       StreamController.broadcast();
 
-  Stream<StudiesAppState> get stateStream => _stateStreamController.stream;
+  // Stream<StudiesAppState> get stateStream => _stateStreamController.stream;
 
   List<ActiveParticipationInvitation> invitations = [];
 

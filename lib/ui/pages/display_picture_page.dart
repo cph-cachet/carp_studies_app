@@ -1,4 +1,4 @@
-part of '../../main.dart';
+part of carp_study_app;
 
 class DisplayPicturePage extends StatefulWidget {
   final XFile file;
@@ -173,7 +173,7 @@ class DisplayPicturePageState extends State<DisplayPicturePage> {
   }
 
   // Taken from RP
-  Future _showCancelConfirmationDialog() {
+  Future<void> _showCancelConfirmationDialog() {
     RPLocalizations locale = RPLocalizations.of(context)!;
 
     return showDialog(

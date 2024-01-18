@@ -1,4 +1,4 @@
-part of '../../main.dart';
+part of carp_study_app;
 
 class StudyDetailsPage extends StatelessWidget {
   final StudyPageViewModel studyPageModel = StudyPageViewModel();

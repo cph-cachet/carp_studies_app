@@ -1,4 +1,4 @@
-part of '../../main.dart';
+part of carp_study_app;
 
 class AuthorizationDialog extends StatelessWidget {
   final DeviceModel device;

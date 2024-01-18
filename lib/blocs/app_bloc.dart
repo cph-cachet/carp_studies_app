@@ -1,4 +1,4 @@
-part of '../main.dart';
+part of carp_study_app;
 
 enum StudyAppState {
   /// The BLOC is created (initial state)
@@ -19,10 +19,10 @@ class StudyAppBLoC {
   final CarpBackend _backend = CarpBackend();
   final CarpStudyAppViewModel _appViewModel = CarpStudyAppViewModel();
   StudyDeploymentStatus? _status;
-  final StreamController<StudiesAppState> _stateStream =
+  final StreamController<StudiesAppState> _stateStreamController =
       StreamController.broadcast();
 
-  get stateStream => _stateStream;
+  Stream<StudiesAppState> get stateStream => _stateStreamController.stream;
 
   List<ActiveParticipationInvitation> invitations = [];
 
@@ -47,9 +47,10 @@ class StudyAppBLoC {
   final DeploymentMode deploymentMode;
 
   // ScaffoldMessenger for showing snack bars
-  final _scaffoldKey = GlobalKey<ScaffoldMessengerState>();
-  get scaffoldKey => _scaffoldKey;
-  get scaffoldMessengerState => scaffoldKey.currentState;
+  final GlobalKey<ScaffoldMessengerState> _scaffoldKey =
+      GlobalKey<ScaffoldMessengerState>();
+  GlobalKey<ScaffoldMessengerState> get scaffoldKey => _scaffoldKey;
+  State? get scaffoldMessengerState => scaffoldKey.currentState;
 
   /// Create the BLoC for the app specifying:
   ///  * debug level
@@ -89,8 +90,8 @@ class StudyAppBLoC {
   /// The role name of the device in the currently running study deployment.
   /// Typical set based on an invitation.
   /// `null` if no deployment have been specified.
-  String? get deviceRolename => LocalSettings().deviceRolename;
-  set deviceRolename(String? name) => LocalSettings().deviceRolename = name;
+  String? get deviceRoleName => LocalSettings().deviceRoleName;
+  set deviceRoleName(String? name) => LocalSettings().deviceRoleName = name;
 
   /// The deployment running on this phone.
   SmartphoneDeployment? get deployment => Sensing().controller?.deployment;
@@ -115,7 +116,7 @@ class StudyAppBLoC {
 
     await backend.initialize();
 
-    stateStream.sink.add(StudiesAppState.initialized);
+    _stateStreamController.add(StudiesAppState.initialized);
     info('$runtimeType initialized.');
   }
 
@@ -129,12 +130,12 @@ class StudyAppBLoC {
   ]) {
     bloc.studyId = invitation.studyId;
     bloc.studyDeploymentId = invitation.studyDeploymentId;
-    bloc.deviceRolename = invitation.assignedDevices?.first.device.roleName;
+    bloc.deviceRoleName = invitation.assignedDevices?.first.device.roleName;
 
     info('Invitation received - '
         'study id: ${bloc.studyId}, '
         'deployment id: ${bloc.studyDeploymentId}, '
-        'role name: ${bloc.deviceRolename}');
+        'role name: ${bloc.deviceRoleName}');
 
     if (context != null) CarpStudyApp.reloadLocale(context);
   }
@@ -148,7 +149,7 @@ class StudyAppBLoC {
     // early out if already configured
     if (isConfiguring) return;
 
-    stateStream.sink.add(StudiesAppState.configuring);
+    _stateStreamController.add(StudiesAppState.configuring);
 
     // set up and initialize sensing
     await Sensing().initialize();

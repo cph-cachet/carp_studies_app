@@ -1,4 +1,4 @@
-part of '../../main.dart';
+part of carp_study_app;
 
 class ProfilePage extends StatefulWidget {
   final ProfilePageViewModel model;
@@ -62,9 +62,9 @@ class ProfilePageState extends State<ProfilePage> {
                             style: profileSectionStyle.copyWith(
                                 color: Theme.of(context).primaryColor)),
                         Text(
-                          widget.model.userid,
+                          widget.model.userId,
                           style: profileTitleStyle,
-                          textScaleFactor: 0.75,
+                          textScaler: TextScaler.linear(0.75),
                         ),
                       ],
                     ),
@@ -113,7 +113,7 @@ class ProfilePageState extends State<ProfilePage> {
                         Text(
                           widget.model.studyDeploymentId,
                           style: profileTitleStyle,
-                          textScaleFactor: 0.75,
+                          textScaler: TextScaler.linear(0.75),
                         ),
                       ],
                     ),
@@ -213,10 +213,10 @@ class ProfilePageState extends State<ProfilePage> {
     } finally {}
   }
 
-  Future _showLogoutConfirmationDialog() {
+  Future<void> _showLogoutConfirmationDialog() {
     RPLocalizations locale = RPLocalizations.of(context)!;
 
-    return showDialog(
+    return showDialog<bool>(
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
@@ -243,10 +243,10 @@ class ProfilePageState extends State<ProfilePage> {
     });
   }
 
-  Future _showLeaveStudyConfirmationDialog() {
+  Future<void> _showLeaveStudyConfirmationDialog() {
     RPLocalizations locale = RPLocalizations.of(context)!;
 
-    return showDialog(
+    return showDialog<bool>(
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {

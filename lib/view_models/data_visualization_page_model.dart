@@ -1,4 +1,4 @@
-part of '../main.dart';
+part of carp_study_app;
 
 class DataVisualizationPageViewModel extends ViewModel {
   final ActivityCardViewModel _activityCardDataModel = ActivityCardViewModel();

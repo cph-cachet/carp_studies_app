@@ -1,4 +1,4 @@
-part of '../../main.dart';
+part of carp_study_app;
 
 class CameraTaskPage extends StatefulWidget {
   final VideoUserTask mediaUserTask;
@@ -85,7 +85,7 @@ class CameraTaskPageState extends State<CameraTaskPage> {
                         child: IconButton(
                           onPressed: () => Navigator.push(
                             context,
-                            MaterialPageRoute(
+                            MaterialPageRoute<void>(
                               builder: (context) => CameraPage(
                                 videoUserTask: widget.mediaUserTask,
                                 // cameras: widget.mediaUserTask.cameras,
@@ -121,7 +121,7 @@ class CameraTaskPageState extends State<CameraTaskPage> {
   }
 
 // Taken from RP
-  Future _showCancelConfirmationDialog() {
+  Future<void> _showCancelConfirmationDialog() {
     RPLocalizations locale = RPLocalizations.of(context)!;
 
     return showDialog(

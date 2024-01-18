@@ -1,4 +1,4 @@
-part of '../main.dart';
+part of carp_study_app;
 
 /// A local settings manager. Works as a singleton - use `LocalSettings()`
 /// for accessing settings.
@@ -6,7 +6,7 @@ class LocalSettings {
   // Keys for storing in shared preferences
   static const String studyIdKey = 'study_id';
   static const String studyDeploymentIdKey = 'study_deployment_id';
-  static const String deviceRolenameKey = 'role_name';
+  static const String deviceRoleNameKey = 'role_name';
   static const String userKey = 'user';
   static const String informedConsentAcceptedKey = 'informed_consent_accepted';
 
@@ -16,7 +16,7 @@ class LocalSettings {
 
   String? _studyId;
   String? _studyDeploymentId;
-  String? _deviceRolename;
+  String? _deviceRoleName;
   bool? _hasInformedConsentBeenAccepted;
   CarpUser? _user;
 
@@ -25,7 +25,7 @@ class LocalSettings {
       String? userString = Settings().preferences!.getString(userKey);
 
       _user = (userString != null)
-          ? CarpUser.fromJson(jsonDecode(userString))
+          ? CarpUser.fromJson(jsonDecode(userString) as Map<String, dynamic>)
           : null;
     }
     return _user;
@@ -64,25 +64,25 @@ class LocalSettings {
   /// The device role name for the currently running deployment.
   /// Returns the role name cached locally on the phone (if available).
   /// Returns `null` if no study is deployed (yet).
-  String? get deviceRolename => (_deviceRolename ??=
-      Settings().preferences?.getString(deviceRolenameKey));
+  String? get deviceRoleName => (_deviceRoleName ??=
+      Settings().preferences?.getString(deviceRoleNameKey));
 
   /// Set the device role name for the currently running deployment.
   /// This name will be cached locally on the phone.
-  set deviceRolename(String? name) {
+  set deviceRoleName(String? name) {
     assert(
         name != null,
         'Cannot set the study deployment id to null in Settings. '
         "Use the 'eraseStudyDeployment()' method to erase study deployment information.");
-    _deviceRolename = name;
-    Settings().preferences?.setString(deviceRolenameKey, name!);
+    _deviceRoleName = name;
+    Settings().preferences?.setString(deviceRoleNameKey, name!);
   }
 
   /// Erase all study deployment information cached locally on this phone.
   Future<void> eraseStudyDeployment() async {
     _studyDeploymentId = null;
     await Settings().preferences!.remove(studyDeploymentIdKey);
-    await Settings().preferences!.remove(deviceRolenameKey);
+    await Settings().preferences!.remove(deviceRoleNameKey);
   }
 
   Future<String?> get deploymentBasePath async => (studyDeploymentId == null)

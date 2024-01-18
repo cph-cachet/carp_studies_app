@@ -1,4 +1,4 @@
-part of '../../main.dart';
+part of carp_study_app;
 
 /// State of Bluetooth connection UI.
 enum CurrentStep { scan, instructions, done }
@@ -11,7 +11,7 @@ class DevicesPage extends StatefulWidget {
 }
 
 class DevicesPageState extends State<DevicesPage> {
-  StreamSubscription? bluetoothStateStream;
+  StreamSubscription<BluetoothAdapterState>? bluetoothStateStream;
   BluetoothAdapterState? bluetoothAdapterState;
 
   List<DeviceModel> physicalDevices = bloc.runningDevices
@@ -128,11 +128,11 @@ class DevicesPageState extends State<DevicesPage> {
                     trailing: device.getDeviceStatusIcon is String
                         ? Text(
                             locale
-                                .translate(device.getDeviceStatusIcon)
+                                .translate(device.getDeviceStatusIcon as String)
                                 .toUpperCase(),
                             style: aboutCardTitleStyle.copyWith(
                                 color: Theme.of(context).primaryColor))
-                        : device.getDeviceStatusIcon),
+                        : device.getDeviceStatusIcon as Icon),
                 DeviceStatus.unknown);
           }, childCount: physicalDevices.length),
         ),
@@ -153,11 +153,12 @@ class DevicesPageState extends State<DevicesPage> {
                       trailing: service.getServiceStatusIcon is String
                           ? Text(
                               locale
-                                  .translate(service.getServiceStatusIcon)
+                                  .translate(
+                                      service.getServiceStatusIcon as String)
                                   .toUpperCase(),
                               style: aboutCardTitleStyle.copyWith(
                                   color: Theme.of(context).primaryColor))
-                          : service.getServiceStatusIcon,
+                          : service.getServiceStatusIcon as Icon,
                       isThreeLine: false,
                       onTap: () => _onlineServiceClicked(service),
                     ),
@@ -172,8 +173,8 @@ class DevicesPageState extends State<DevicesPage> {
     (String, int)? subtitle, {
     Widget? trailing,
     void Function()? onTap,
-    enableFeedback = false,
-    isThreeLine = true,
+    bool enableFeedback = false,
+    bool isThreeLine = true,
   }) =>
       ListTile(
         enableFeedback: enableFeedback,
@@ -250,7 +251,7 @@ class DevicesPageState extends State<DevicesPage> {
     if (context.mounted) {
       if (bluetoothAdapterState == BluetoothAdapterState.off &&
           Platform.isIOS) {
-        await showDialog(
+        await showDialog<void>(
           context: context,
           barrierDismissible: true,
           builder: (context) => EnableBluetoothDialog(device: device),
@@ -258,7 +259,7 @@ class DevicesPageState extends State<DevicesPage> {
       } else if (bluetoothAdapterState == BluetoothAdapterState.on) {
         if (device.status == DeviceStatus.connected ||
             device.status == DeviceStatus.connecting) {
-          bool result = await showDialog(
+          bool? result = await showDialog<bool>(
             context: context,
             barrierDismissible: true,
             builder: (context) => DisconnectionDialog(device: device),
@@ -270,7 +271,7 @@ class DevicesPageState extends State<DevicesPage> {
             FlutterBluePlus.stopScan();
           }
         } else {
-          await showDialog(
+          await showDialog<void>(
             context: context,
             barrierDismissible: true,
             builder: (context) => ConnectionDialog(device: device),
@@ -278,7 +279,7 @@ class DevicesPageState extends State<DevicesPage> {
         }
       } else if (bluetoothAdapterState == BluetoothAdapterState.unauthorized &&
           Platform.isIOS) {
-        await showDialog(
+        await showDialog<void>(
           context: context,
           barrierDismissible: true,
           builder: (context) => AuthorizationDialog(device: device),

@@ -1,4 +1,4 @@
-part of '../main.dart';
+part of carp_study_app;
 
 ThemeData carpStudyTheme = ThemeData.light().copyWith(
   primaryColor: const Color(0xFF206FA2),

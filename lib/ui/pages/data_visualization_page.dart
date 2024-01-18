@@ -1,4 +1,4 @@
-part of '../../main.dart';
+part of carp_study_app;
 
 // todo change text for survey progress
 class DataVisualizationPage extends StatefulWidget {

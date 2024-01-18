@@ -1,4 +1,4 @@
-part of 'main.dart';
+part of carp_study_app;
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 final _shellNavigatorKey = GlobalKey<NavigatorState>();
@@ -18,7 +18,7 @@ class CarpStudyApp extends StatefulWidget {
 }
 
 class CarpStudyAppState extends State<CarpStudyApp> {
-  reloadLocale() {
+  void reloadLocale() {
     setState(() {
       rpLocalizationsDelegate.reload();
     });

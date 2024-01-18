@@ -5,7 +5,7 @@
  * found in the LICENSE file.
  */
 
-part of '../main.dart';
+part of carp_study_app;
 
 /// This class implements the sensing layer.
 ///
@@ -115,7 +115,7 @@ class Sensing {
     // Define the study and add it to the client.
     _study = await SmartPhoneClientManager().addStudy(
       bloc.studyDeploymentId!,
-      bloc.deviceRolename!,
+      bloc.deviceRoleName!,
     );
 
     // Get the study controller and try to deploy the study.

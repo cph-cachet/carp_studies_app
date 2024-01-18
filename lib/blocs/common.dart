@@ -1,4 +1,4 @@
-part of '../main.dart';
+part of carp_study_app;
 
 /// Enumeration of different types of deployments on the CARP Web Service (CAWS).
 enum DeploymentMode {

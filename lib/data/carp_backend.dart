@@ -1,4 +1,4 @@
-part of '../main.dart';
+part of carp_study_app;
 
 class CarpBackend {
   /// The URI of the CARP Web Service (CAWS) host.
@@ -100,19 +100,19 @@ class CarpBackend {
   }
 
   Future<CarpUser> authenticate() async {
-    bloc.stateStream.sink.add(StudiesAppState.authenticating);
+    bloc._stateStreamController.add(StudiesAppState.authenticating);
     user = await CarpService().authenticate();
 
-    bloc.stateStream.sink.add(StudiesAppState.accessTokenRetrieved);
+    bloc._stateStreamController.add(StudiesAppState.accessTokenRetrieved);
 
     return user as CarpUser;
   }
 
   Future<CarpUser> refresh() async {
-    bloc.stateStream.sink.add(StudiesAppState.authenticating);
+    bloc._stateStreamController.add(StudiesAppState.authenticating);
     user = await CarpService().refresh();
 
-    bloc.stateStream.sink.add(StudiesAppState.accessTokenRetrieved);
+    bloc._stateStreamController.add(StudiesAppState.accessTokenRetrieved);
 
     return user as CarpUser;
   }

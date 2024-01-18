@@ -1,4 +1,4 @@
-part of '../../main.dart';
+part of carp_study_app;
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -67,7 +67,7 @@ class _LoginPageState extends State<LoginPage> {
               if (CarpService().authenticated)
                 TextButton(
                   onPressed: () {
-                    showDialog(
+                    showDialog<bool>(
                       context: context,
                       builder: (context) {
                         return const LogoutMessage();

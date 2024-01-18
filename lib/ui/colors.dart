@@ -1,6 +1,4 @@
-// ignore_for_file: constant_identifier_names
-
-part of '../main.dart';
+part of carp_study_app;
 
 class CACHET {
   static const Color CACHET_BLUE = Color.fromRGBO(97, 195, 217, 1.0);
@@ -63,8 +61,8 @@ class CACHET {
 }
 
 MaterialColor createMaterialColor(Color color) {
-  List strengths = <double>[.05];
-  Map swatch = <int?, Color>{};
+  var strengths = <double>[.05];
+  var swatch = <int?, Color>{};
   final int r = color.red, g = color.green, b = color.blue;
 
   for (int i = 1; i < 10; i++) {

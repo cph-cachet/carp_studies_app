@@ -6,7 +6,6 @@ import 'dart:convert';
 import 'dart:ui' as ui;
 import 'dart:io';
 
-import 'package:carp_health_package/health_package.dart';
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:fl_chart/fl_chart.dart';

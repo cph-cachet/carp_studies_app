@@ -12,13 +12,13 @@ enum DeviceType {
 }
 
 class DevicesPageViewModel extends ViewModel {
-  final List<DeviceModel> _devices = [];
-  List<DeviceModel> get devices => _devices;
+  final List<DeviceViewModel> _devices = [];
+  List<DeviceViewModel> get devices => _devices;
 }
 
-class DeviceModel {
+class DeviceViewModel extends ViewModel {
   DeviceManager deviceManager;
-  DeviceModel(this.deviceManager) : super();
+  DeviceViewModel(this.deviceManager) : super();
 
   String? get type => deviceManager.type;
   DeviceStatus get status => deviceManager.status;

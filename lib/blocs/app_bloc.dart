@@ -313,8 +313,8 @@ class StudyAppBLoC {
       : [];
 
   /// Get a list of running devices
-  Iterable<DeviceModel> get runningDevices =>
-      Sensing().runningDevices!.map((device) => DeviceModel(device));
+  Iterable<DeviceViewModel> get runningDevices =>
+      Sensing().runningDevices!.map((device) => DeviceViewModel(device));
 
   /// Start sensing.
   Future<void> start() async {

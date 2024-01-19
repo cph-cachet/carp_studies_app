@@ -1,5 +1,6 @@
 part of carp_study_app;
 
+/// A [Card] for this app that makes all cards looks the same.
 class StudiesCard extends StatelessWidget {
   final Widget child;
   final double elevation;

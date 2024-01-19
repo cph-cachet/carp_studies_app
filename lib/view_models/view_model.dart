@@ -1,7 +1,10 @@
 part of carp_study_app;
 
-/// An abstract view model used for all other view models in the app.
-abstract class ViewModel {
+/// An abstract view model used for all view models in the app.
+///
+/// Note that a view model is a [ChangeNotifier] and will notify its listeners
+/// if changed, including any [ListenableBuilder] widgets.
+abstract class ViewModel extends ChangeNotifier {
   SmartphoneDeploymentController? _controller;
 
   SmartphoneDeploymentController? get controller => _controller;
@@ -53,7 +56,10 @@ abstract class SerializableViewModel<D extends DataModel> extends ViewModel {
     _model = createModel();
 
     // restore the data model (if any saved)
-    restore().then((savedModel) => _model = savedModel ?? _model);
+    restore().then((savedModel) {
+      _model = savedModel ?? _model;
+      notifyListeners();
+    });
 
     // save the data model on a regular basis.
     Timer.periodic(const Duration(minutes: 3), (_) => save(model.toJson()));
@@ -106,6 +112,8 @@ abstract class SerializableViewModel<D extends DataModel> extends ViewModel {
     return success;
   }
 
+  /// Restore the [model] from persistent storage.
+  /// Returns null if unsuccessful.
   Future<D?> restore() async {
     D? result;
     try {

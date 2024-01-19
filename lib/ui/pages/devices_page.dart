@@ -15,16 +15,16 @@ class DevicesPageState extends State<DevicesPage> {
   StreamSubscription<BluetoothAdapterState>? bluetoothStateStream;
   BluetoothAdapterState? bluetoothAdapterState;
 
-  List<DeviceModel> physicalDevices = bloc.runningDevices
+  List<DeviceViewModel> physicalDevices = bloc.runningDevices
       .where((element) =>
           element.deviceManager is HardwareDeviceManager &&
           element.deviceManager is! SmartphoneDeviceManager)
       .toList();
-  List<DeviceModel> onlineServices = bloc.runningDevices
+  List<DeviceViewModel> onlineServices = bloc.runningDevices
       .where((element) => element.deviceManager is OnlineServiceManager)
       .toList();
 
-  List<DeviceModel> smartphoneDevice = bloc.runningDevices
+  List<DeviceViewModel> smartphoneDevice = bloc.runningDevices
       .where((element) => element.deviceManager is SmartphoneDeviceManager)
       .toList();
 
@@ -117,7 +117,7 @@ class DevicesPageState extends State<DevicesPage> {
         SliverList(
           delegate:
               SliverChildBuilderDelegate((BuildContext context, int index) {
-            DeviceModel device = physicalDevices[index];
+            DeviceViewModel device = physicalDevices[index];
             return _devicesPageCardStream(
                 device.deviceEvents,
                 () => _cardListBuilder(
@@ -144,7 +144,7 @@ class DevicesPageState extends State<DevicesPage> {
         SliverList(
           delegate:
               SliverChildBuilderDelegate((BuildContext context, int index) {
-            DeviceModel service = onlineServices[index];
+            DeviceViewModel service = onlineServices[index];
             return _devicesPageCardStream(
                 service.deviceEvents,
                 () => _cardListBuilder(
@@ -222,7 +222,7 @@ class DevicesPageState extends State<DevicesPage> {
         ),
       );
 
-  void _onlineServiceClicked(DeviceModel service) {
+  void _onlineServiceClicked(DeviceViewModel service) {
     if (service.status == DeviceStatus.connected ||
         service.status == DeviceStatus.connecting) {
       return;
@@ -239,7 +239,7 @@ class DevicesPageState extends State<DevicesPage> {
     });
   }
 
-  void _physicalDeviceClicked(DeviceModel device) async {
+  void _physicalDeviceClicked(DeviceViewModel device) async {
     if (await FlutterBluePlus.isSupported == false) {
       return;
     }

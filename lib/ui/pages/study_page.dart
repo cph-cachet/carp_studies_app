@@ -1,6 +1,7 @@
 part of carp_study_app;
 
 class StudyPage extends StatefulWidget {
+  static const String route = '/study';
   final StudyPageViewModel model;
   const StudyPage(this.model, {super.key});
 
@@ -35,7 +36,7 @@ class StudyPageState extends State<StudyPage> {
                               context,
                               widget.model.studyDescriptionMessage,
                               onTap: () {
-                                context.push('/studyDetails');
+                                context.push(StudyDetailsPage.route);
                               },
                             );
                           }
@@ -67,7 +68,7 @@ class StudyPageState extends State<StudyPage> {
           if (onTap != null) {
             onTap();
           } else {
-            context.push('/message/${message.id}');
+            context.push('${MessageDetailsPage.route}/${message.id}');
           }
         },
         child: Padding(

@@ -2,7 +2,6 @@ part of carp_study_app;
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 final _shellNavigatorKey = GlobalKey<NavigatorState>();
-const String firstRoute = '/about';
 
 class CarpStudyApp extends StatefulWidget {
   const CarpStudyApp({super.key});
@@ -18,12 +17,18 @@ class CarpStudyApp extends StatefulWidget {
 }
 
 class CarpStudyAppState extends State<CarpStudyApp> {
+  /// The landing page once the onboarding process is done.
+  static const String firstRoute = StudyPage.route;
+
+  /// Reload language translations and re-build the entire app.
   void reloadLocale() {
     setState(() {
       rpLocalizationsDelegate.reload();
     });
   }
 
+  // This create the routing in the entire app. Each page (like [LoginPage])
+  // know the name of its own route.
   final GoRouter _router = GoRouter(
     initialLocation: '/',
     navigatorKey: _rootNavigatorKey,
@@ -38,13 +43,13 @@ class CarpStudyAppState extends State<CarpStudyApp> {
             path: '/',
             parentNavigatorKey: _shellNavigatorKey,
             redirect: (context, state) => !CarpService().authenticated
-                ? '/login'
+                ? LoginPage.route
                 : (bloc.hasInformedConsentBeenAccepted
                     ? firstRoute
-                    : '/consent'),
+                    : InformedConsentPage.route),
           ),
           GoRoute(
-            path: '/tasks',
+            path: TaskListPage.route,
             parentNavigatorKey: _shellNavigatorKey,
             pageBuilder: (context, state) => CustomTransitionPage(
               child: TaskListPage(
@@ -54,7 +59,7 @@ class CarpStudyAppState extends State<CarpStudyApp> {
             ),
           ),
           GoRoute(
-            path: '/about',
+            path: StudyPage.route,
             parentNavigatorKey: _shellNavigatorKey,
             pageBuilder: (context, state) => CustomTransitionPage(
               child: StudyPage(
@@ -64,7 +69,7 @@ class CarpStudyAppState extends State<CarpStudyApp> {
             ),
           ),
           GoRoute(
-            path: '/data',
+            path: DataVisualizationPage.route,
             parentNavigatorKey: _shellNavigatorKey,
             pageBuilder: (context, state) => CustomTransitionPage(
               child: DataVisualizationPage(
@@ -73,7 +78,7 @@ class CarpStudyAppState extends State<CarpStudyApp> {
             ),
           ),
           GoRoute(
-            path: '/devices',
+            path: DevicesPage.route,
             parentNavigatorKey: _shellNavigatorKey,
             pageBuilder: (context, state) => const CustomTransitionPage(
               child: DevicesPage(),
@@ -81,7 +86,7 @@ class CarpStudyAppState extends State<CarpStudyApp> {
             ),
           ),
           GoRoute(
-            path: '/profile',
+            path: ProfilePage.route,
             parentNavigatorKey: _shellNavigatorKey,
             pageBuilder: (context, state) => CustomTransitionPage(
               child: ProfilePage(bloc.appViewModel.profilePageViewModel),
@@ -91,7 +96,7 @@ class CarpStudyAppState extends State<CarpStudyApp> {
         ],
       ),
       GoRoute(
-        path: '/studyDetails',
+        path: StudyDetailsPage.route,
         parentNavigatorKey: _rootNavigatorKey,
         builder: (context, state) => StudyDetailsPage(),
       ),
@@ -105,39 +110,39 @@ class CarpStudyAppState extends State<CarpStudyApp> {
         },
       ),
       GoRoute(
-        path: '/consent',
+        path: InformedConsentPage.route,
         parentNavigatorKey: _rootNavigatorKey,
         redirect: (context, state) => bloc.hasInformedConsentBeenAccepted
             ? firstRoute
-            : (bloc.studyId == null ? '/invitations' : null),
+            : (bloc.studyId == null ? InvitationListPage.route : null),
         builder: (context, state) => InformedConsentPage(
           bloc.appViewModel.informedConsentViewModel,
         ),
       ),
       GoRoute(
-        path: '/login',
+        path: LoginPage.route,
         parentNavigatorKey: _rootNavigatorKey,
         builder: (context, state) => const LoginPage(),
       ),
       GoRoute(
-        path: '/message/:messageId',
+        path: '${MessageDetailsPage.route}/:messageId',
         parentNavigatorKey: _rootNavigatorKey,
         builder: (context, state) => MessageDetailsPage(
             messageId: state.pathParameters['messageId'] ?? ''),
       ),
       GoRoute(
-        path: '/invitation/:invitationId',
+        path: '${InvitationDetailsPage.route}/:invitationId',
         parentNavigatorKey: _rootNavigatorKey,
         builder: (context, state) => InvitationDetailsPage(
           invitationId: state.pathParameters['invitationId'] ?? '',
         ),
       ),
       GoRoute(
-        path: '/invitations',
+        path: InvitationListPage.route,
         parentNavigatorKey: _rootNavigatorKey,
         redirect: (context, state) => bloc.studyId != null
-            ? '/consent'
-            : (bloc.user == null ? '/login' : null),
+            ? InformedConsentPage.route
+            : (bloc.user == null ? LoginPage.route : null),
         builder: (context, state) =>
             InvitationListPage(bloc.appViewModel.invitationsListViewModel),
       ),

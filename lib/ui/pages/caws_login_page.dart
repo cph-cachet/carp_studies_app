@@ -1,6 +1,7 @@
 part of carp_study_app;
 
 class LoginPage extends StatefulWidget {
+  static const String route = '/login';
   const LoginPage({super.key});
 
   @override
@@ -48,7 +49,7 @@ class _LoginPageState extends State<LoginPage> {
                     await bloc.backend.authenticate();
                     if (bloc.backend.isAuthenticated) {
                       if (context.mounted) {
-                        context.push('/invitations');
+                        context.push(InvitationListPage.route);
                       }
                     }
                   },

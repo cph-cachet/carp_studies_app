@@ -59,16 +59,16 @@ class HomePageState extends State<HomePage> {
 
   static int _calculateSelectedIndex(BuildContext context) {
     final String location = GoRouterState.of(context).matchedLocation;
-    if (location.startsWith('/tasks')) {
+    if (location.startsWith(TaskListPage.route)) {
       return 0;
     }
-    if (location.startsWith('/about')) {
+    if (location.startsWith(StudyPage.route)) {
       return 1;
     }
-    if (location.startsWith('/data')) {
+    if (location.startsWith(DataVisualizationPage.route)) {
       return 2;
     }
-    if (location.startsWith('/devices')) {
+    if (location.startsWith(DevicesPage.route)) {
       return 3;
     }
     return -1;
@@ -77,16 +77,16 @@ class HomePageState extends State<HomePage> {
   void _onItemTapped(int index, BuildContext context) {
     switch (index) {
       case 0:
-        context.go('/tasks');
+        context.go(TaskListPage.route);
         break;
       case 1:
-        context.go('/about');
+        context.go(StudyPage.route);
         break;
       case 2:
-        context.go('/data');
+        context.go(DataVisualizationPage.route);
         break;
       case 3:
-        context.go('/devices');
+        context.go(DevicesPage.route);
         break;
       case -1:
         context.go('/');

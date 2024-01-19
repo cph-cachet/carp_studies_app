@@ -1,8 +1,8 @@
 part of carp_study_app;
 
 class StudyDetailsPage extends StatelessWidget {
+  static const String route = '/study_details';
   final StudyPageViewModel studyPageModel = StudyPageViewModel();
-
   StudyDetailsPage({super.key});
 
   @override

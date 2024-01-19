@@ -1,6 +1,7 @@
 part of carp_study_app;
 
 class ProfilePage extends StatefulWidget {
+  static const String route = '/profile';
   final ProfilePageViewModel model;
   const ProfilePage(this.model, {super.key});
 
@@ -266,7 +267,7 @@ class ProfilePageState extends State<ProfilePage> {
       },
     ).then((value) {
       if (value == true) {
-        bloc.leaveStudy().then((_) => context.go('/invitations'));
+        bloc.leaveStudy().then((_) => context.go(InvitationListPage.route));
       }
     });
   }

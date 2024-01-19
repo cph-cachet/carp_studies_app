@@ -30,7 +30,7 @@ class CarpAppBar extends StatelessWidget {
                     ),
                     tooltip: 'Profile',
                     onPressed: () {
-                      context.push('/profile');
+                      context.push(ProfilePage.route);
                     },
                   ),
                 ],

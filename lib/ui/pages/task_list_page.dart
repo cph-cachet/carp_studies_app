@@ -1,6 +1,7 @@
 part of carp_study_app;
 
 class TaskListPage extends StatefulWidget {
+  static const String route = '/tasks';
   final TaskListPageViewModel model;
   const TaskListPage(this.model, {super.key});
 
@@ -96,32 +97,29 @@ class TaskListPageState extends State<TaskListPage> {
     return Center(
       child: StudiesCard(
         child: ListTile(
-          leading: CircleAvatar(
-            backgroundColor: Theme.of(context).hoverColor,
-            child: _taskTypeIcon(userTask),
-          ),
-          title: Text(locale.translate(userTask.title),
-              style: aboutCardTitleStyle.copyWith(
-                  color: Theme.of(context).primaryColor)),
-          subtitle: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 5),
-              Text(_subtitle(userTask),
-                  style: aboutCardSubtitleStyle.copyWith(
-                      color: Theme.of(context).primaryColor)),
-              const SizedBox(height: 5),
-              Text(locale.translate(userTask.description)),
-            ],
-          ),
-          onTap: () {
-            if (userTask.hasWidget) {
-              context.push('/task/${userTask.id}');
-            } else {
-              userTask.onStart();
-            }
-          },
-        ),
+            leading: CircleAvatar(
+              backgroundColor: Theme.of(context).hoverColor,
+              child: _taskTypeIcon(userTask),
+            ),
+            title: Text(locale.translate(userTask.title),
+                style: aboutCardTitleStyle.copyWith(
+                    color: Theme.of(context).primaryColor)),
+            subtitle: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 5),
+                Text(_subtitle(userTask),
+                    style: aboutCardSubtitleStyle.copyWith(
+                        color: Theme.of(context).primaryColor)),
+                const SizedBox(height: 5),
+                Text(locale.translate(userTask.description)),
+              ],
+            ),
+            onTap: () {
+              userTask.hasWidget
+                  ? context.push('/task/${userTask.id}')
+                  : userTask.onStart();
+            }),
       ),
     );
   }

@@ -2,6 +2,7 @@ part of carp_study_app;
 
 // todo change text for survey progress
 class DataVisualizationPage extends StatefulWidget {
+  static const String route = '/data';
   final DataVisualizationPageViewModel model;
   const DataVisualizationPage(this.model, {super.key});
 

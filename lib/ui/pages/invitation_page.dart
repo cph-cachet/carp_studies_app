@@ -1,6 +1,7 @@
 part of carp_study_app;
 
 class InvitationDetailsPage extends StatelessWidget {
+  static const String route = '/invitation';
   final String invitationId;
 
   const InvitationDetailsPage({
@@ -56,7 +57,7 @@ class InvitationDetailsPage extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: () {
                     bloc.setStudyInvitation(invitation, context);
-                    context.push('/consent');
+                    context.push(InformedConsentPage.route);
                   },
                   style: ElevatedButton.styleFrom(
                     shape: const StadiumBorder(),

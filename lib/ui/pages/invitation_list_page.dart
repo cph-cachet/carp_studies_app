@@ -1,8 +1,8 @@
 part of carp_study_app;
 
 class InvitationListPage extends StatelessWidget {
+  static const String route = '/invitations';
   final InvitationsListViewModel model;
-
   const InvitationListPage(this.model, {super.key});
 
   @override
@@ -59,7 +59,7 @@ class InvitationListPage extends StatelessWidget {
                       if (context.canPop()) {
                         context.pop();
                       } else {
-                        context.go('/login');
+                        context.go(LoginPage.route);
                       }
                     },
                   ),
@@ -84,8 +84,8 @@ class InvitationCard extends StatelessWidget {
   Widget build(BuildContext context) => Card(
         child: InkWell(
           onTap: () {
-            context
-                .push('/invitation/${invitation.participation.participantId}');
+            context.push(
+                '${InvitationDetailsPage.route}/${invitation.participation.participantId}');
           },
           child: Padding(
             padding: const EdgeInsets.all(16.0),

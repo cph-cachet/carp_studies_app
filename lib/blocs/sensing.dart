@@ -74,7 +74,7 @@ class Sensing {
 
   /// Initialize and set up sensing.
   Future<void> initialize() async {
-    info('Initializing $runtimeType}');
+    info('Initializing $runtimeType');
 
     // set up the devices available on this phone
     DeviceController().registerAllAvailableDevices();

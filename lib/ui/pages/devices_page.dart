@@ -4,6 +4,7 @@ part of carp_study_app;
 enum CurrentStep { scan, instructions, done }
 
 class DevicesPage extends StatefulWidget {
+  static const String route = '/devices';
   const DevicesPage({super.key});
 
   @override

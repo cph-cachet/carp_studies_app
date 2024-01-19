@@ -3,6 +3,10 @@ part of carp_study_app;
 /// State of Bluetooth connection UI.
 enum CurrentStep { scan, instructions, done }
 
+/// The page showing the list of devices, ordered as:
+///  * The Smartphone device (primary device)
+///  * Any hardware devices (connected devices)
+///  * Any online services (connected services)
 class DevicesPage extends StatefulWidget {
   static const String route = '/devices';
   const DevicesPage({super.key});
@@ -15,17 +19,17 @@ class DevicesPageState extends State<DevicesPage> {
   StreamSubscription<BluetoothAdapterState>? bluetoothStateStream;
   BluetoothAdapterState? bluetoothAdapterState;
 
-  List<DeviceViewModel> physicalDevices = bloc.runningDevices
+  final List<DeviceViewModel> _smartphoneDevice = bloc.runningDevices
+      .where((element) => element.deviceManager is SmartphoneDeviceManager)
+      .toList();
+
+  final List<DeviceViewModel> _hardwareDevices = bloc.runningDevices
       .where((element) =>
           element.deviceManager is HardwareDeviceManager &&
           element.deviceManager is! SmartphoneDeviceManager)
       .toList();
-  List<DeviceViewModel> onlineServices = bloc.runningDevices
+  final List<DeviceViewModel> _onlineServices = bloc.runningDevices
       .where((element) => element.deviceManager is OnlineServiceManager)
-      .toList();
-
-  List<DeviceViewModel> smartphoneDevice = bloc.runningDevices
-      .where((element) => element.deviceManager is SmartphoneDeviceManager)
       .toList();
 
   @override
@@ -77,10 +81,10 @@ class DevicesPageState extends State<DevicesPage> {
               flex: 4,
               child: CustomScrollView(
                 slivers: [
-                  ..._smartphoneDeviceListWidget(locale),
-                  if (physicalDevices.isNotEmpty)
+                  ..._smartphoneDeviceList(locale),
+                  if (_hardwareDevices.isNotEmpty)
                     ..._physicalDevicesListWidget(locale),
-                  if (onlineServices.isNotEmpty)
+                  if (_onlineServices.isNotEmpty)
                     ..._onlineServicesListWidget(locale),
                 ],
               ),
@@ -91,35 +95,34 @@ class DevicesPageState extends State<DevicesPage> {
     );
   }
 
-  List<Widget> _smartphoneDeviceListWidget(RPLocalizations locale) => [
+  /// The list of smartphones - which is a list with only one smartphone.
+  List<Widget> _smartphoneDeviceList(RPLocalizations locale) => [
         DevicesPageListTitle(locale: locale, type: DevicesPageTypes.phone),
         SliverList(
-          delegate:
-              SliverChildBuilderDelegate((BuildContext context, int index) {
-            return Center(
-              child: StudiesCard(
-                child: _cardListBuilder(
-                  smartphoneDevice[index].icon!,
-                  smartphoneDevice[index].phoneInfo['name']!,
-                  (
-                    "${smartphoneDevice[index].phoneInfo["model"]!} - ${smartphoneDevice[index].phoneInfo["version"]!}",
-                    smartphoneDevice[index].batteryLevel ?? 0,
-                  ),
-                ),
-              ),
-            );
-          }, childCount: smartphoneDevice.length),
-        ),
+            delegate: SliverChildBuilderDelegate(
+          (BuildContext context, int index) => ListenableBuilder(
+              listenable: _smartphoneDevice[index],
+              builder: (BuildContext context, Widget? widget) => Center(
+                      child: StudiesCard(
+                          child: _cardListBuilder(
+                              _smartphoneDevice[index].icon!,
+                              _smartphoneDevice[index].phoneInfo['name']!, (
+                    "${_smartphoneDevice[index].phoneInfo["model"]!} - ${_smartphoneDevice[index].phoneInfo["version"]!}",
+                    _smartphoneDevice[index].batteryLevel ?? 0,
+                  ))))),
+          childCount: _smartphoneDevice.length,
+        )),
       ];
 
+  /// The list of connected hardware devices (like the Polar sensor)
   List<Widget> _physicalDevicesListWidget(RPLocalizations locale) => [
         DevicesPageListTitle(locale: locale, type: DevicesPageTypes.devices),
         SliverList(
           delegate:
               SliverChildBuilderDelegate((BuildContext context, int index) {
-            DeviceViewModel device = physicalDevices[index];
+            DeviceViewModel device = _hardwareDevices[index];
             return _devicesPageCardStream(
-                device.deviceEvents,
+                device.statusEvents,
                 () => _cardListBuilder(
                     device.icon!,
                     locale.translate(device.name!),
@@ -135,36 +138,39 @@ class DevicesPageState extends State<DevicesPage> {
                                 color: Theme.of(context).primaryColor))
                         : device.getDeviceStatusIcon as Icon),
                 DeviceStatus.unknown);
-          }, childCount: physicalDevices.length),
+          }, childCount: _hardwareDevices.length),
         ),
       ];
 
+  /// The list of online services (like the Location service)
   List<Widget> _onlineServicesListWidget(RPLocalizations locale) => [
         DevicesPageListTitle(locale: locale, type: DevicesPageTypes.services),
         SliverList(
-          delegate:
-              SliverChildBuilderDelegate((BuildContext context, int index) {
-            DeviceViewModel service = onlineServices[index];
-            return _devicesPageCardStream(
-                service.deviceEvents,
-                () => _cardListBuilder(
-                      service.icon!,
-                      locale.translate(service.name!),
-                      null,
-                      trailing: service.getServiceStatusIcon is String
-                          ? Text(
-                              locale
-                                  .translate(
-                                      service.getServiceStatusIcon as String)
-                                  .toUpperCase(),
-                              style: aboutCardTitleStyle.copyWith(
-                                  color: Theme.of(context).primaryColor))
-                          : service.getServiceStatusIcon as Icon,
-                      isThreeLine: false,
-                      onTap: () => _onlineServiceClicked(service),
-                    ),
-                DeviceStatus.unknown);
-          }, childCount: onlineServices.length),
+          delegate: SliverChildBuilderDelegate(
+            (BuildContext context, int index) {
+              DeviceViewModel service = _onlineServices[index];
+              return _devicesPageCardStream(
+                  service.statusEvents,
+                  () => _cardListBuilder(
+                        service.icon!,
+                        locale.translate(service.name!),
+                        null,
+                        trailing: service.getServiceStatusIcon is String
+                            ? Text(
+                                locale
+                                    .translate(
+                                        service.getServiceStatusIcon as String)
+                                    .toUpperCase(),
+                                style: aboutCardTitleStyle.copyWith(
+                                    color: Theme.of(context).primaryColor))
+                            : service.getServiceStatusIcon as Icon,
+                        isThreeLine: false,
+                        onTap: () => _onlineServiceClicked(service),
+                      ),
+                  DeviceStatus.unknown);
+            },
+            childCount: _onlineServices.length,
+          ),
         ),
       ];
 
@@ -211,7 +217,10 @@ class DevicesPageState extends State<DevicesPage> {
       );
 
   Widget _devicesPageCardStream<T>(
-          Stream<T> stream, Widget Function() childBuilder, T? initialData) =>
+    Stream<T> stream,
+    Widget Function() childBuilder,
+    T? initialData,
+  ) =>
       Center(
         child: StudiesCard(
           child: StreamBuilder<T>(

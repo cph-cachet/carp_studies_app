@@ -25,7 +25,7 @@ class DeviceViewModel extends ViewModel {
   set status(DeviceStatus status) => deviceManager.status = status;
 
   /// Stream of [DeviceStatus] events
-  Stream<DeviceStatus> get deviceEvents => deviceManager.statusEvents;
+  Stream<DeviceStatus> get statusEvents => deviceManager.statusEvents;
 
   /// The device id
   String get id => deviceManager.id;

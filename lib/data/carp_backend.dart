@@ -2,7 +2,7 @@ part of carp_study_app;
 
 class CarpBackend {
   /// The URI of the CARP Web Service (CAWS) host.
-  static const String cawsUri = "https://cans.cachet.dk";
+  static const String cawsUri = 'carp.computerome.dk';
 
   /// The URL of the CARP Privacy Policy for this app.
   static const String carpPrivacyUrl =
@@ -32,7 +32,7 @@ class CarpBackend {
   /// The URI of the CANS server - depending on deployment mode.
   Uri get uri => Uri(
         scheme: 'https',
-        host: 'carp.computerome.dk',
+        host: cawsUri,
         pathSegments: [
           'auth',
           uris[bloc.deploymentMode]!,

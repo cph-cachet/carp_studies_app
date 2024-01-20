@@ -7,7 +7,7 @@ enum DeviceType {
   scale,
   home,
   speaker,
-  heartrateMonitor,
+  heartrate,
   unknown,
 }
 
@@ -46,6 +46,14 @@ class DeviceViewModel extends ViewModel {
   int? get batteryLevel => (deviceManager is HardwareDeviceManager)
       ? (deviceManager as HardwareDeviceManager).batteryLevel
       : null;
+
+  /// The stream of battery level events.
+  ///
+  /// Only relevant if this device is a [HardwareDeviceManager].
+  /// Returns an empty stream if not a hardware device.
+  Stream<int> get batteryEvents => deviceManager is HardwareDeviceManager
+      ? (deviceManager as HardwareDeviceManager).batteryEvents
+      : const Stream.empty();
 
   /// The icon for this type of device.
   Icon? get icon => deviceTypeIcon[type!];

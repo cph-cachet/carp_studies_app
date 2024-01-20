@@ -67,6 +67,8 @@ class CarpBackend {
   factory CarpBackend() => _instance;
 
   Future<void> initialize() async {
+    info('$runtimeType - initializing');
+
     app = CarpApp(
       name: "CAWS @ DTU",
       uri: uri.replace(pathSegments: [uris[bloc.deploymentMode]!]),
@@ -83,14 +85,17 @@ class CarpBackend {
     );
 
     CarpService().configure(app!);
+
+    // check if there is a user stored locally on the phone
     if (user != null) {
+      info('$runtimeType - User stored locally - user: $user');
       CarpService().currentUser = user;
       if (oauthToken!.hasExpired) {
         try {
           await refresh();
         } catch (error) {
           CarpService().currentUser = null;
-          warning('Failed to refresh access token - $error');
+          warning('$runtimeType - Failed to refresh access token - $error');
         }
       }
     }
@@ -102,11 +107,13 @@ class CarpBackend {
 
   Future<CarpUser> authenticate() async {
     user = await CarpService().authenticate();
+    info('$runtimeType - user authenticated - user: $user');
     return user!;
   }
 
   Future<CarpUser> refresh() async {
     user = await CarpService().refresh();
+    info('$runtimeType - user authenticated via refresh - user: $user');
     return user!;
   }
 

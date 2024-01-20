@@ -87,7 +87,7 @@ part 'ui/pages/display_picture_page.dart';
 part 'ui/pages/camera_page.dart';
 part 'ui/pages/loading_page.dart';
 part 'ui/pages/error_page.dart';
-part 'ui/pages/caws_login_page.dart';
+part 'ui/pages/login_page.dart';
 part 'ui/pages/devices_page.dart';
 part 'ui/pages/devices_page.authorization_dialog.dart';
 part 'ui/pages/devices_page.enable_bluetooth_dialog.dart';

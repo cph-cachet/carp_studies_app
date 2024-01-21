@@ -12,7 +12,6 @@ abstract class ViewModel extends ChangeNotifier {
   /// Initialize this view model before use.
   @mustCallSuper
   void init(SmartphoneDeploymentController ctrl) {
-    debug('$runtimeType - init()');
     _controller = ctrl;
   }
 }
@@ -88,7 +87,7 @@ abstract class SerializableViewModel<D extends DataModel> extends ViewModel {
     bool success = true;
     try {
       String name = (await filename);
-      info("Saving $runtimeType data to file '$name'.");
+      debug("Saving $runtimeType data to file '$name'.");
       File(name).writeAsStringSync(jsonEncode(json));
     } catch (exception) {
       success = false;
@@ -103,7 +102,7 @@ abstract class SerializableViewModel<D extends DataModel> extends ViewModel {
     bool success = true;
     try {
       String name = (await filename);
-      info("Deleting $runtimeType data to file '$name'.");
+      debug("Deleting $runtimeType data from file '$name'.");
       File(name).deleteSync();
     } catch (exception) {
       success = false;
@@ -118,7 +117,7 @@ abstract class SerializableViewModel<D extends DataModel> extends ViewModel {
     D? result;
     try {
       String name = (await filename);
-      info("Restoring $runtimeType data from file '$name'.");
+      debug("Restoring $runtimeType data from file '$name'.");
       final jsonString = File(name).readAsStringSync();
       final modelAsJson = json.decode(jsonString) as Map<String, dynamic>;
       result = model.fromJson(modelAsJson) as D;

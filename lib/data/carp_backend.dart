@@ -89,7 +89,7 @@ class CarpBackend {
   Future<CarpUser> authenticate() async {
     user = await CarpService().authenticate();
     info('$runtimeType - User authenticated - user: $user');
-    debug('$toJsonString(user)');
+    debug('${toJsonString(user)}');
     return user!;
   }
 
@@ -97,7 +97,7 @@ class CarpBackend {
   Future<CarpUser> refresh() async {
     user = await CarpService().refresh();
     info('$runtimeType - User authenticated via refresh - user: $user');
-    debug('$toJsonString(user)');
+    debug('${toJsonString(user)}');
     return user!;
   }
 

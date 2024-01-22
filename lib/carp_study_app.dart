@@ -63,7 +63,7 @@ class CarpStudyAppState extends State<CarpStudyApp> {
             parentNavigatorKey: _shellNavigatorKey,
             pageBuilder: (context, state) => CustomTransitionPage(
               child: StudyPage(
-                bloc.appViewModel.studyPageViewModel,
+                model: bloc.appViewModel.studyPageViewModel,
               ),
               transitionsBuilder: bottomNavigationBarAnimation,
             ),

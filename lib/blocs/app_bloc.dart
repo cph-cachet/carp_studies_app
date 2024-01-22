@@ -259,10 +259,10 @@ class StudyAppBLoC extends ChangeNotifier {
       _messages = await messageManager.getMessages();
       _messages.sort((m1, m2) => m1.timestamp.compareTo(m2.timestamp));
       info('Message list refreshed - count: ${_messages.length}');
-      _messageStreamController.add(_messages.length);
     } catch (error) {
       warning('Error getting messages - $error');
     }
+    _messageStreamController.add(_messages.length);
   }
 
   /// The signed in user. Returns null if no user is signed in.

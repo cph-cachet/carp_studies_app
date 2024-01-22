@@ -1,5 +1,7 @@
 part of carp_study_app;
 
+/// The view model for the [StudyPage]. Mainly holds the list of messages like
+/// news articles to be shown as part of the study.
 class StudyPageViewModel extends ViewModel {
   String get title => bloc.deployment?.studyDescription?.title ?? 'Unnamed';
   String get description =>
@@ -19,19 +21,6 @@ class StudyPageViewModel extends ViewModel {
   String get piAffiliation =>
       bloc.deployment?.responsible?.affiliation ??
       'Copenhagen Center for Health Technology';
-
-  /// Events on the state of the study executor
-  Stream<ExecutorState> get studyExecutorStateEvents =>
-      Sensing().controller!.executor.stateEvents;
-
-  /// Current state of the study executor (e.g., resumed, paused, ...)
-  ExecutorState get studyState => Sensing().controller!.executor.state;
-
-  /// Get all sensing events (i.e. all [DataPoint] objects being collected).
-  Stream<Measurement> get samplingEvents => Sensing().controller!.measurements;
-
-  /// The total sampling size so far since this study was started.
-  int get samplingSize => Sensing().controller!.samplingSize;
 
   /// The stream of messages (count)
   Stream<int> get messageStream => bloc.messageStream;

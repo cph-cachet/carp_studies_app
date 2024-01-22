@@ -55,7 +55,7 @@ part 'view_models/study_page_model.dart';
 part 'view_models/profile_page_model.dart';
 part 'view_models/devices_page_model.dart';
 part 'view_models/data_visualization_page_model.dart';
-part 'view_models/invitations_list_model.dart';
+part 'view_models/invitations_view_model.dart';
 part 'view_models/informed_consent_page_model.dart';
 part 'view_models/cards/activity_data_model.dart';
 part 'view_models/cards/mobility_data_model.dart';

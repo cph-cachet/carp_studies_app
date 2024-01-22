@@ -78,6 +78,4 @@ class StudyPageViewModel extends ViewModel {
         timestamp: DateTime.now(),
         image: 'assets/images/kids.png',
       );
-
-  StudyPageViewModel();
 }

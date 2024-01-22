@@ -118,6 +118,33 @@ class CarpBackend {
   String? get username => user?.username;
   OAuthToken? get oauthToken => user?.token;
 
+  /// The list of invitation for this user.
+  List<ActiveParticipationInvitation> invitations = [];
+
+  Future<List<ActiveParticipationInvitation>> getInvitations() async {
+    CarpParticipationService().configureFrom(CarpService());
+
+    invitations =
+        await CarpParticipationService().getActiveParticipationInvitations();
+
+    // Filter the invitations to only include those that
+    // have a smartphone as a device in [ActiveParticipationInvitation.assignedDevices] list
+    // (i.e. the invitation is for a smartphone).
+    // This is done to avoid showing invitations for other devices (e.g. [WebBrowser]).
+    invitations.removeWhere((invitation) =>
+        invitation.assignedDevices
+            ?.any((device) => device.device is! Smartphone) ??
+        false);
+
+    // _invitations = _invitations
+    //     .where((invitation) =>
+    //         invitation.assignedDevices
+    //             ?.any((device) => device.device is Smartphone) ??
+    //         false)
+    //     .toList();
+    return invitations;
+  }
+
   /// Upload the result of an informed consent flow.
   Future<ConsentDocument?> uploadInformedConsent(
       RPTaskResult taskResult) async {

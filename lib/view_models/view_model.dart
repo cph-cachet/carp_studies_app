@@ -163,8 +163,7 @@ class CarpStudyAppViewModel extends ViewModel {
   final TaskListPageViewModel _taskListPageViewModel = TaskListPageViewModel();
   final ProfilePageViewModel _profilePageViewModel = ProfilePageViewModel();
   final DevicesPageViewModel _devicesPageViewModel = DevicesPageViewModel();
-  final InvitationsListViewModel _invitationsListViewModel =
-      InvitationsListViewModel();
+  final InvitationsViewModel _invitationsListViewModel = InvitationsViewModel();
   final InformedConsentViewModel _informedConsentViewModel =
       InformedConsentViewModel();
 
@@ -176,7 +175,7 @@ class CarpStudyAppViewModel extends ViewModel {
   TaskListPageViewModel get taskListPageViewModel => _taskListPageViewModel;
   ProfilePageViewModel get profilePageViewModel => _profilePageViewModel;
   DevicesPageViewModel get devicesPageViewModel => _devicesPageViewModel;
-  InvitationsListViewModel get invitationsListViewModel =>
+  InvitationsViewModel get invitationsListViewModel =>
       _invitationsListViewModel;
   InformedConsentViewModel get informedConsentViewModel =>
       _informedConsentViewModel;

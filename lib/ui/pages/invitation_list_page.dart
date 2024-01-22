@@ -2,15 +2,15 @@ part of carp_study_app;
 
 class InvitationListPage extends StatelessWidget {
   static const String route = '/invitations';
-  final InvitationsListViewModel model;
-  const InvitationListPage(this.model, {super.key});
+  final InvitationsViewModel model;
+  const InvitationListPage({super.key, required this.model});
 
   @override
   Widget build(BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;
     return Scaffold(
       body: FutureBuilder<List<ActiveParticipationInvitation>>(
-          future: model.invitations,
+          future: bloc.backend.getInvitations(),
           builder: (context, snapshot) {
             Widget child;
 
@@ -50,9 +50,7 @@ class InvitationListPage extends StatelessWidget {
                   pinned: true,
                   stretch: true,
                   stretchTriggerOffset: 20,
-                  onStretchTrigger: () async {
-                    await model.invitations;
-                  },
+                  onStretchTrigger: () async => bloc.backend.getInvitations(),
                   leading: IconButton(
                     icon: const Icon(Icons.arrow_back),
                     onPressed: () {

@@ -116,7 +116,7 @@ class CarpStudyAppState extends State<CarpStudyApp> {
             ? firstRoute
             : (bloc.studyId == null ? InvitationListPage.route : null),
         builder: (context, state) => InformedConsentPage(
-          bloc.appViewModel.informedConsentViewModel,
+          model: bloc.appViewModel.informedConsentViewModel,
         ),
       ),
       GoRoute(
@@ -134,6 +134,7 @@ class CarpStudyAppState extends State<CarpStudyApp> {
         path: '${InvitationDetailsPage.route}/:invitationId',
         parentNavigatorKey: _rootNavigatorKey,
         builder: (context, state) => InvitationDetailsPage(
+          model: bloc.appViewModel.invitationsListViewModel,
           invitationId: state.pathParameters['invitationId'] ?? '',
         ),
       ),
@@ -143,8 +144,8 @@ class CarpStudyAppState extends State<CarpStudyApp> {
         redirect: (context, state) => bloc.studyId != null
             ? InformedConsentPage.route
             : (bloc.user == null ? LoginPage.route : null),
-        builder: (context, state) =>
-            InvitationListPage(bloc.appViewModel.invitationsListViewModel),
+        builder: (context, state) => InvitationListPage(
+            model: bloc.appViewModel.invitationsListViewModel),
       ),
     ],
     debugLogDiagnostics: true,

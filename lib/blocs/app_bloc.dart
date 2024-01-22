@@ -45,11 +45,8 @@ class StudyAppBLoC extends ChangeNotifier {
   StudyAppState _state = StudyAppState.created;
   final CarpBackend _backend = CarpBackend();
   final CarpStudyAppViewModel _appViewModel = CarpStudyAppViewModel();
-  StudyDeploymentStatus? _status;
   final StreamController<StudyAppState> _stateStreamController =
       StreamController.broadcast();
-
-  List<ActiveParticipationInvitation> invitations = [];
 
   List<Message> _messages = [];
   final StreamController<int> _messageStreamController =
@@ -88,7 +85,7 @@ class StudyAppBLoC extends ChangeNotifier {
 
   /// Create the BLoC for the app specifying:
   ///  * debug level
-  ///  * deployment mode (production, test, dev)
+  ///  * deployment mode (production, test, dev, local)
   StudyAppBLoC({
     this.debugLevel = DebugLevel.info,
     this.deploymentMode = DeploymentMode.dev,
@@ -124,15 +121,11 @@ class StudyAppBLoC extends ChangeNotifier {
   /// The deployment running on this phone.
   SmartphoneDeployment? get deployment => Sensing().controller?.deployment;
 
-  /// Get the latest status of the study deployment.
-  StudyDeploymentStatus? get status => _status;
-
   /// When was this study deployed on this phone.
   DateTime? get studyStartTimestamp => deployment?.deployed;
 
   /// The overall data model for this app
   CarpStudyAppViewModel get appViewModel => _appViewModel;
-  // Future<void>? dataPageInitialization;
 
   /// Initialize this BLOC. Called before being used for anything.
   Future<void> initialize() async {

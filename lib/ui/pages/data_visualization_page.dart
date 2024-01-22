@@ -65,7 +65,7 @@ class _DataVisualizationPageState extends State<DataVisualizationPage> {
     final List<Widget> widgets = [];
 
     // Show user task progress, if study has any tasks.
-    if (bloc.hasSurveys()) {
+    if (bloc.hasUserTasks()) {
       widgets.add(
           StudyProgressCardWidget(widget.model.studyProgressCardDataModel));
     }
@@ -77,7 +77,7 @@ class _DataVisualizationPageState extends State<DataVisualizationPage> {
     }
 
     // check to show surveys stats
-    if (bloc.hasSurveys()) {
+    if (bloc.hasUserTasks()) {
       widgets.add(SurveyCard(widget.model.surveysCardDataModel));
     }
 

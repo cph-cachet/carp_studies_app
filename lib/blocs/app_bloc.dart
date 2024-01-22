@@ -33,7 +33,15 @@ enum DeploymentMode {
   dev,
 }
 
-class StudyAppBLoC {
+/// The main Business Logic Component (BLoC) for the entire app.
+///
+/// Works as a singleton and can always be accessed via the global `bloc`
+/// variable.
+///
+/// Works as a [ChangeNotifier] and will notify its listeners on important
+/// changes. Is also stateful and has a [state] and state changes are propagated
+/// through the [stateStream].
+class StudyAppBLoC extends ChangeNotifier {
   StudyAppState _state = StudyAppState.created;
   final CarpBackend _backend = CarpBackend();
   final CarpStudyAppViewModel _appViewModel = CarpStudyAppViewModel();
@@ -69,7 +77,7 @@ class StudyAppBLoC {
   /// Debug level for the app and CAMS.
   DebugLevel debugLevel;
 
-  /// What kind of deployment are we running - dev, staging, test or production?
+  /// What kind of deployment are we running?
   final DeploymentMode deploymentMode;
 
   // ScaffoldMessenger for showing snack bars
@@ -99,19 +107,13 @@ class StudyAppBLoC {
   /// Typical set based on an invitation.
   /// `null` if no deployment have been specified.
   String? get studyId => LocalSettings().studyId;
-  set studyId(String? id) {
-    LocalSettings().studyId = id;
-    backend.studyId = id;
-  }
+  set studyId(String? id) => LocalSettings().studyId = id;
 
   /// The id of the currently running study deployment.
   /// Typical set based on an invitation.
   /// `null` if no deployment have been specified.
   String? get studyDeploymentId => LocalSettings().studyDeploymentId;
-  set studyDeploymentId(String? id) {
-    LocalSettings().studyDeploymentId = id;
-    backend.studyDeploymentId = id;
-  }
+  set studyDeploymentId(String? id) => LocalSettings().studyDeploymentId = id;
 
   /// The role name of the device in the currently running study deployment.
   /// Typical set based on an invitation.
@@ -148,15 +150,22 @@ class StudyAppBLoC {
 
   /// Set the active study in the app based on an [invitation].
   ///
-  /// If the [context] is provided, the translation for this study is re-loaded
+  /// If a [context] is provided, the translation for this study is re-loaded
   /// and applied in the app.
   void setStudyInvitation(
     ActiveParticipationInvitation invitation, [
     BuildContext? context,
   ]) {
-    bloc.studyId = invitation.studyId;
-    bloc.studyDeploymentId = invitation.studyDeploymentId;
-    bloc.deviceRoleName = invitation.assignedDevices?.first.device.roleName;
+    studyId = invitation.studyId;
+    studyDeploymentId = invitation.studyDeploymentId;
+    deviceRoleName = invitation.assignedDevices?.first.device.roleName;
+
+    // make sure that the app is configured with the study IDs in order to access
+    // the correct resources (like translations etc.) on CAWS.
+    backend.app?.studyId = studyId;
+    backend.app?.studyDeploymentId = studyDeploymentId;
+
+    notifyListeners();
 
     info('Invitation received - '
         'study id: ${bloc.studyId}, '
@@ -198,6 +207,7 @@ class StudyAppBLoC {
     );
 
     debug('$runtimeType configuration done.');
+    notifyListeners();
     _state = StudyAppState.configured;
   }
 
@@ -208,7 +218,7 @@ class StudyAppBLoC {
           permission == Permission.locationWhenInUse ||
           permission == Permission.locationAlways);
 
-  /// Configuration of permissions.
+  /// Configuration of location permissions.
   ///
   /// If a [context] is provided, this method also opens the [LocationUsageDialog]
   /// if location permissions are needed and not yet granted.
@@ -296,7 +306,7 @@ class StudyAppBLoC {
   }
 
   /// Does this [deployment] have any user tasks?
-  bool hasSurveys() => (deployment == null)
+  bool hasUserTasks() => (deployment == null)
       ? false
       : deployment!.tasks.whereType<AppTask>().isNotEmpty;
 
@@ -323,11 +333,15 @@ class StudyAppBLoC {
     if (!Sensing().isRunning) Sensing().controller?.start();
   }
 
-  // Stop sensing.
+  /// Stop sensing.
   void stop() => Sensing().controller?.executor.stop();
 
-  // Dispose the entire sensing.
-  void dispose() => Sensing().controller?.dispose();
+  /// Dispose the entire sensing.
+  @override
+  void dispose() {
+    super.dispose();
+    Sensing().controller?.dispose();
+  }
 
   /// Add a [Measurement] object to the stream of events.
   void addMeasurement(Measurement measurement) =>

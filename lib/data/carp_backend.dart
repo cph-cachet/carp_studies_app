@@ -60,8 +60,8 @@ class CarpBackend {
         '.well-known',
         'openid-configuration'
       ]),
-      studyId: studyId,
-      studyDeploymentId: studyDeploymentId,
+      studyId: bloc.studyId,
+      studyDeploymentId: bloc.studyDeploymentId,
     );
 
     CarpService().configure(app!);
@@ -88,14 +88,16 @@ class CarpBackend {
   /// Authenticate using a web view.
   Future<CarpUser> authenticate() async {
     user = await CarpService().authenticate();
-    info('$runtimeType - user authenticated - user: $user');
+    info('$runtimeType - User authenticated - user: $user');
+    debug('$toJsonString(user)');
     return user!;
   }
 
   /// Refresh authentication token based on the refresh token.
   Future<CarpUser> refresh() async {
     user = await CarpService().refresh();
-    info('$runtimeType - user authenticated via refresh - user: $user');
+    info('$runtimeType - User authenticated via refresh - user: $user');
+    debug('$toJsonString(user)');
     return user!;
   }
 
@@ -115,18 +117,6 @@ class CarpBackend {
   /// The user name of the user, if authenticated.
   String? get username => user?.username;
   OAuthToken? get oauthToken => user?.token;
-
-  /// The study ID of the running study, if deployed.
-  String? get studyId => bloc.studyId;
-  set studyId(String? id) {
-    if (CarpService().isConfigured) CarpService().app.studyId = id;
-  }
-
-  /// The study deployment ID of the running study, if deployed.
-  String? get studyDeploymentId => bloc.studyDeploymentId;
-  set studyDeploymentId(String? id) {
-    if (CarpService().isConfigured) CarpService().app.studyDeploymentId = id;
-  }
 
   /// Upload the result of an informed consent flow.
   Future<ConsentDocument?> uploadInformedConsent(

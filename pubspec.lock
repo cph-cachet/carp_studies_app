@@ -228,10 +228,9 @@ packages:
   carp_backend:
     dependency: "direct main"
     description:
-      name: carp_backend
-      sha256: "28f2f1fa1d961f9ec3ba540daddd4fb3827bde17d643b785deee2b28a76d901b"
-      url: "https://pub.dev"
-    source: hosted
+      path: "../carp/carp.sensing-flutter/backends/carp_backend"
+      relative: true
+    source: path
     version: "1.3.2"
   carp_connectivity_package:
     dependency: "direct main"
@@ -562,10 +561,10 @@ packages:
     dependency: transitive
     description:
       name: flutter_appauth
-      sha256: "19031ea2438a513762e64ec7b58ae1f00cad6fb87f818e405325cd183dfb9fec"
+      sha256: d2a14491357a9af09e65133bcf82a1cddb5463245c9645c5d532123c6e2a0735
       url: "https://pub.dev"
     source: hosted
-    version: "6.0.2"
+    version: "6.0.3"
   flutter_appauth_platform_interface:
     dependency: transitive
     description:
@@ -602,10 +601,10 @@ packages:
     dependency: transitive
     description:
       name: flutter_local_notifications
-      sha256: "892ada16046d641263f30c72e7432397088810a84f34479f6677494802a2b535"
+      sha256: "66cc2fe16bf4bca71d795939763ad3f1830ad85772dc3b1561613c501859826d"
       url: "https://pub.dev"
     source: hosted
-    version: "16.3.0"
+    version: "16.3.1+1"
   flutter_local_notifications_linux:
     dependency: transitive
     description:
@@ -961,10 +960,10 @@ packages:
     dependency: transitive
     description:
       name: markdown
-      sha256: "4e304b422905967f1f7e35a03cd2a3f8f34306b3e1b0cc7a8677d7a306471a0e"
+      sha256: "1b134d9f8ff2da15cb298efe6cd8b7d2a78958c1b00384ebcbdf13fe340a6c90"
       url: "https://pub.dev"
     source: hosted
-    version: "7.2.0"
+    version: "7.2.1"
   matcher:
     dependency: transitive
     description:

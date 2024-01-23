@@ -93,18 +93,18 @@ packages:
     dependency: transitive
     description:
       name: battery_plus
-      sha256: "80c40c9f5763c797f6802797983392e9560eff749a199baeba1229e5aba77ef5"
+      sha256: "0568fbba70697b8d0c34c1176faa2bc6d61c7fb211a2d2d64e493b91ff72d3f8"
       url: "https://pub.dev"
     source: hosted
-    version: "4.1.0"
+    version: "5.0.2"
   battery_plus_platform_interface:
     dependency: transitive
     description:
       name: battery_plus_platform_interface
-      sha256: "19fd8418a81aeb2dea8fb7026b1fdf56b6c6d319baf8d703fa0d13c1d5c7ba2f"
+      sha256: "942707f90e2f7481dcb178df02e22a9c6971b3562b848d6a1b8c7cff9f1a1fec"
       url: "https://pub.dev"
     source: hosted
-    version: "1.2.2"
+    version: "2.0.0"
   boolean_selector:
     dependency: transitive
     description:
@@ -228,10 +228,11 @@ packages:
   carp_backend:
     dependency: "direct main"
     description:
-      path: "../carp/carp.sensing-flutter/backends/carp_backend"
-      relative: true
-    source: path
-    version: "1.3.2"
+      name: carp_backend
+      sha256: "4422168318123fb38f204a302c28758f9771a91a02b1f427b85bf74740c6bff7"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.3.3"
   carp_connectivity_package:
     dependency: "direct main"
     description:
@@ -275,18 +276,16 @@ packages:
   carp_mobile_sensing:
     dependency: "direct main"
     description:
-      name: carp_mobile_sensing
-      sha256: "10f5dfd54dd897464a564149452e14b52d087ebfdded567e7be05d15d701ca0d"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.4.0+1"
+      path: "../carp/carp.sensing-flutter/carp_mobile_sensing"
+      relative: true
+    source: path
+    version: "1.4.1"
   carp_polar_package:
     dependency: "direct main"
     description:
-      name: carp_polar_package
-      sha256: "6956a7a5bc0144ae406bfc476d1c6e87dd5ce47153541fc9d0dddd148a977dee"
-      url: "https://pub.dev"
-    source: hosted
+      path: "../carp/carp.sensing-flutter/packages/carp_polar_package"
+      relative: true
+    source: path
     version: "1.4.0"
   carp_serializable:
     dependency: "direct main"
@@ -404,10 +403,10 @@ packages:
     dependency: transitive
     description:
       name: cron
-      sha256: d98aa8cdad0cccdb6b098e6a1fb89339c180d8a229145fa4cd8c6fc538f0e35f
+      sha256: "06e8d65e25bb040a10d8f6086df9a88ab9db57fda19a458c4f85fa5fdc80ac3f"
       url: "https://pub.dev"
     source: hosted
-    version: "0.5.1"
+    version: "0.6.0"
   cross_file:
     dependency: transitive
     description:
@@ -601,10 +600,10 @@ packages:
     dependency: transitive
     description:
       name: flutter_local_notifications
-      sha256: "66cc2fe16bf4bca71d795939763ad3f1830ad85772dc3b1561613c501859826d"
+      sha256: c18f1de98fe0bb9dd5ba91e1330d4febc8b6a7de6aae3ffe475ef423723e72f3
       url: "https://pub.dev"
     source: hosted
-    version: "16.3.1+1"
+    version: "16.3.2"
   flutter_local_notifications_linux:
     dependency: transitive
     description:
@@ -1352,10 +1351,10 @@ packages:
     dependency: transitive
     description:
       name: sensors_plus
-      sha256: a1e461f28a8e8d3f81feb07d5c4e87e948379ea91f0b5131266bb79f72b38acb
+      sha256: "8e7fa79b4940442bb595bfc0ee9da4af5a22a0fe6ebacc74998245ee9496a82d"
       url: "https://pub.dev"
     source: hosted
-    version: "3.1.0"
+    version: "4.0.2"
   sensors_plus_platform_interface:
     dependency: transitive
     description:

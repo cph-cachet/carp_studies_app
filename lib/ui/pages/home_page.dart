@@ -68,7 +68,7 @@ class HomePageState extends State<HomePage> {
     if (location.startsWith(DataVisualizationPage.route)) {
       return 2;
     }
-    if (location.startsWith(DevicesPage.route)) {
+    if (location.startsWith(DeviceListPage.route)) {
       return 3;
     }
     return -1;
@@ -86,7 +86,7 @@ class HomePageState extends State<HomePage> {
         context.go(DataVisualizationPage.route);
         break;
       case 3:
-        context.go(DevicesPage.route);
+        context.go(DeviceListPage.route);
         break;
       case -1:
         context.go('/');

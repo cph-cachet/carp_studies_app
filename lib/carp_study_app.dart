@@ -21,11 +21,7 @@ class CarpStudyAppState extends State<CarpStudyApp> {
   static const String firstRoute = StudyPage.route;
 
   /// Reload language translations and re-build the entire app.
-  void reloadLocale() {
-    setState(() {
-      rpLocalizationsDelegate.reload();
-    });
-  }
+  void reloadLocale() => setState(() => rpLocalizationsDelegate.reload());
 
   // This create the routing in the entire app. Each page (like [LoginPage])
   // know the name of its own route.
@@ -40,20 +36,22 @@ class CarpStudyAppState extends State<CarpStudyApp> {
             HomePage(child: child),
         routes: [
           GoRoute(
-            path: '/',
-            parentNavigatorKey: _shellNavigatorKey,
-            redirect: (context, state) => !CarpService().authenticated
-                ? LoginPage.route
-                : (bloc.hasInformedConsentBeenAccepted
-                    ? firstRoute
-                    : InformedConsentPage.route),
-          ),
+              path: '/',
+              parentNavigatorKey: _shellNavigatorKey,
+              redirect: (context, state) {
+                if (!bloc.backend.isAuthenticated) return LoginPage.route;
+                if (!bloc.hasStudyBeenDeployed) return InvitationListPage.route;
+                if (!bloc.hasInformedConsentBeenAccepted)
+                  return InformedConsentPage.route;
+
+                return firstRoute;
+              }),
           GoRoute(
             path: TaskListPage.route,
             parentNavigatorKey: _shellNavigatorKey,
             pageBuilder: (context, state) => CustomTransitionPage(
               child: TaskListPage(
-                bloc.appViewModel.taskListPageViewModel,
+                model: bloc.appViewModel.taskListPageViewModel,
               ),
               transitionsBuilder: bottomNavigationBarAnimation,
             ),
@@ -78,10 +76,10 @@ class CarpStudyAppState extends State<CarpStudyApp> {
             ),
           ),
           GoRoute(
-            path: DevicesPage.route,
+            path: DeviceListPage.route,
             parentNavigatorKey: _shellNavigatorKey,
             pageBuilder: (context, state) => const CustomTransitionPage(
-              child: DevicesPage(),
+              child: DeviceListPage(),
               transitionsBuilder: bottomNavigationBarAnimation,
             ),
           ),

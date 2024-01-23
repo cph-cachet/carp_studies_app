@@ -41,10 +41,11 @@ class _LoginPageState extends State<LoginPage> {
             child: TextButton(
               onPressed: () async {
                 await bloc.backend.authenticate();
-                if (bloc.backend.isAuthenticated) {
-                  if (context.mounted) {
-                    context.push(InvitationListPage.route);
-                  }
+                // if (bloc.backend.isAuthenticated) {
+                if (context.mounted) {
+                  // context.push(InvitationListPage.route);
+                  context.push('/');
+                  // }
                 }
               },
               child: Text(

@@ -100,10 +100,7 @@ class _ConnectionDialogState extends State<ConnectionDialog> {
         buildTranslatedButton("pages.devices.connection.done", () {
           FlutterBluePlus.stopScan();
           if (selectedDevice != null) {
-            widget.device.connectToDevice(
-              selectedDevice!,
-              widget.device.deviceManager,
-            );
+            widget.device.connectToDevice(selectedDevice!);
             context.pop(true);
           }
         }),

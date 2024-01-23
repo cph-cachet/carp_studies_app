@@ -118,6 +118,9 @@ class StudyAppBLoC extends ChangeNotifier {
   String? get deviceRoleName => LocalSettings().deviceRoleName;
   set deviceRoleName(String? name) => LocalSettings().deviceRoleName = name;
 
+  /// Has a study already been deployed on this phone?
+  bool get hasStudyBeenDeployed => studyDeploymentId != null;
+
   /// The deployment running on this phone.
   SmartphoneDeployment? get deployment => Sensing().controller?.deployment;
 

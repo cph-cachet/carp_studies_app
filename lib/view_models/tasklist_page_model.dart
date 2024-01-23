@@ -1,5 +1,6 @@
 part of carp_study_app;
 
+/// A view model for the [TaskListPage].
 class TaskListPageViewModel extends ViewModel {
   TaskListPageViewModel();
 

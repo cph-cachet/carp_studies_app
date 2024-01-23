@@ -3,7 +3,7 @@ part of carp_study_app;
 class TaskListPage extends StatefulWidget {
   static const String route = '/tasks';
   final TaskListPageViewModel model;
-  const TaskListPage(this.model, {super.key});
+  const TaskListPage({super.key, required this.model});
 
   @override
   TaskListPageState createState() => TaskListPageState();

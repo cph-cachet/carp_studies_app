@@ -7,15 +7,15 @@ enum CurrentStep { scan, instructions, done }
 ///  * The Smartphone device (primary device)
 ///  * Any hardware devices (connected devices)
 ///  * Any online services (connected services)
-class DevicesPage extends StatefulWidget {
+class DeviceListPage extends StatefulWidget {
   static const String route = '/devices';
-  const DevicesPage({super.key});
+  const DeviceListPage({super.key});
 
   @override
-  DevicesPageState createState() => DevicesPageState();
+  DeviceListPageState createState() => DeviceListPageState();
 }
 
-class DevicesPageState extends State<DevicesPage> {
+class DeviceListPageState extends State<DeviceListPage> {
   StreamSubscription<BluetoothAdapterState>? bluetoothStateStream;
   BluetoothAdapterState? bluetoothAdapterState;
 
@@ -83,9 +83,9 @@ class DevicesPageState extends State<DevicesPage> {
                 slivers: [
                   ..._smartphoneDeviceList(locale),
                   if (_hardwareDevices.isNotEmpty)
-                    ..._physicalDevicesListWidget(locale),
+                    ..._hardwareDevicesList(locale),
                   if (_onlineServices.isNotEmpty)
-                    ..._onlineServicesListWidget(locale),
+                    ..._onlineServicesList(locale),
                 ],
               ),
             ),
@@ -114,8 +114,8 @@ class DevicesPageState extends State<DevicesPage> {
         )),
       ];
 
-  /// The list of connected hardware devices (like the Polar sensor)
-  List<Widget> _physicalDevicesListWidget(RPLocalizations locale) => [
+  /// The list of connected hardware devices (like a Polar sensor)
+  List<Widget> _hardwareDevicesList(RPLocalizations locale) => [
         DevicesPageListTitle(locale: locale, type: DevicesPageTypes.devices),
         SliverList(
           delegate:
@@ -128,7 +128,7 @@ class DevicesPageState extends State<DevicesPage> {
                     locale.translate(device.name!),
                     (device.id, device.batteryLevel ?? 0),
                     enableFeedback: true,
-                    onTap: () => _physicalDeviceClicked(device),
+                    onTap: () async => await _hardwareDeviceClicked(device),
                     trailing: device.getDeviceStatusIcon is String
                         ? Text(
                             locale
@@ -142,8 +142,8 @@ class DevicesPageState extends State<DevicesPage> {
         ),
       ];
 
-  /// The list of online services (like the Location service)
-  List<Widget> _onlineServicesListWidget(RPLocalizations locale) => [
+  /// The list of online services (like a Location service)
+  List<Widget> _onlineServicesList(RPLocalizations locale) => [
         DevicesPageListTitle(locale: locale, type: DevicesPageTypes.services),
         SliverList(
           delegate: SliverChildBuilderDelegate(
@@ -248,7 +248,7 @@ class DevicesPageState extends State<DevicesPage> {
     });
   }
 
-  void _physicalDeviceClicked(DeviceViewModel device) async {
+  Future<void> _hardwareDeviceClicked(DeviceViewModel device) async {
     if (await FlutterBluePlus.isSupported == false) {
       return;
     }
@@ -276,9 +276,9 @@ class DevicesPageState extends State<DevicesPage> {
           );
 
           if (result == true) {
-            device.disconnectFromDevice(device.deviceManager);
+            await device.disconnectFromDevice();
           } else {
-            FlutterBluePlus.stopScan();
+            await FlutterBluePlus.stopScan();
           }
         } else {
           await showDialog<void>(

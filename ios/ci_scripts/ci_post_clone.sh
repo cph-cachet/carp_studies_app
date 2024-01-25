@@ -18,7 +18,9 @@ HOMEBREW_NO_AUTO_UPDATE=1 # disable homebrew's automatic updates.
 brew install cocoapods
 
 #
-ls -la .
+ls -la workspace
+
+cd workspace/ios
 
 # Install CocoaPods dependencies.
 pod install # run `pod install` in the `ios` directory.

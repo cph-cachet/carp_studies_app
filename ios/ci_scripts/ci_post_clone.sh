@@ -18,7 +18,10 @@ HOMEBREW_NO_AUTO_UPDATE=1 # disable homebrew's automatic updates.
 brew install cocoapods
 
 #
-ls -la workspace
+echo "DOING STUFF 1"
+ls -la $CI_WORKSPACE_PATH
+echo "DOING STUFF 2"
+ls -la $CI_WORKSPACE_PATH/repository
 
 cd $CI_WORKSPACE_PATH
 

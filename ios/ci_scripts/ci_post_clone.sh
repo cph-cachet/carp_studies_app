@@ -20,7 +20,7 @@ brew install cocoapods
 #
 ls -la workspace
 
-cd workspace/ios
+cd $CI_WORKSPACE_PATH
 
 # Install CocoaPods dependencies.
 pod install # run `pod install` in the `ios` directory.

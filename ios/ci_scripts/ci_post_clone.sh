@@ -10,6 +10,9 @@ export PATH="$PATH:$HOME/flutter/bin"
 # Install Flutter artifacts for iOS (--ios), or macOS (--macos) platforms.
 flutter precache --ios
 
+# Change working directory to the root of your cloned repo.
+cd $CI_PRIMARY_REPOSITORY_PATH
+
 # Install Flutter dependencies.
 flutter pub get
 
@@ -17,11 +20,8 @@ flutter pub get
 HOMEBREW_NO_AUTO_UPDATE=1 # disable homebrew's automatic updates.
 brew install cocoapods
 
-#
-echo "DOING STUFF 2"
-ls -la $CI_PRIMARY_REPOSITORY_PATH/ios
-
-cd $CI_PRIMARY_REPOSITORY_PATH/ios
+# cd ios
+cd ios
 
 # Install CocoaPods dependencies.
 pod install # run `pod install` in the `ios` directory.

@@ -1,4 +1,11 @@
-part of carp_study_app;
+/*
+ * Copyright 2021 Copenhagen Center for Health Technology (CACHET) at the
+ * Technical University of Denmark (DTU).
+ * Use of this source code is governed by a MIT-style license that can be
+ * found in the LICENSE file.
+ */
+
+part of '../main.dart';
 
 /// This class implements the sensing layer.
 ///
@@ -10,7 +17,7 @@ part of carp_study_app;
 /// Note that this class is a singleton and only one sensing layer is used.
 /// Hence, the current assumption at the moment is that this Study App only
 /// runs one study at a time, even though CAMS supports that several studies
-/// can be added to the [client].
+/// added to the [client].
 class Sensing {
   static final Sensing _instance = Sensing._();
   StudyDeploymentStatus? _status;
@@ -30,7 +37,7 @@ class Sensing {
   StudyDeploymentStatus? get status => _status;
 
   /// The role name of this device in the deployed study.
-  String? get deviceRoleName => _study?.deviceRoleName;
+  String? get deviceRolename => _study?.deviceRoleName;
 
   /// The study deployment id of the deployment running on this phone.
   String? get studyDeploymentId => _study?.studyDeploymentId;
@@ -51,7 +58,7 @@ class Sensing {
   List<DeviceManager>? get runningDevices =>
       SmartPhoneClientManager().deviceController.connectedDevices;
 
-  /// The singleton sensing instance.
+  /// The singleton sensing instance
   factory Sensing() => _instance;
 
   Sensing._() {
@@ -61,9 +68,9 @@ class Sensing {
     //SamplingPackageRegistry.register(CommunicationSamplingPackage());
     SamplingPackageRegistry().register(MediaSamplingPackage());
     SamplingPackageRegistry().register(SurveySamplingPackage());
+    //SamplingPackageRegistry.register(HealthSamplingPackage());
     SamplingPackageRegistry().register(ESenseSamplingPackage());
     SamplingPackageRegistry().register(PolarSamplingPackage());
-    SamplingPackageRegistry().register(HealthSamplingPackage());
 
     // create and register external data managers
     DataManagerRegistry().register(CarpDataManagerFactory());
@@ -74,7 +81,7 @@ class Sensing {
 
   /// Initialize and set up sensing.
   Future<void> initialize() async {
-    info('Initializing $runtimeType');
+    info('Initializing $runtimeType}');
 
     // set up the devices available on this phone
     DeviceController().registerAllAvailableDevices();
@@ -108,7 +115,7 @@ class Sensing {
     // Define the study and add it to the client.
     _study = await SmartPhoneClientManager().addStudy(
       bloc.studyDeploymentId!,
-      bloc.deviceRoleName!,
+      bloc.deviceRolename!,
     );
 
     // Get the study controller and try to deploy the study.

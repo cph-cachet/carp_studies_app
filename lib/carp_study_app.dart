@@ -39,11 +39,20 @@ class CarpStudyAppState extends State<CarpStudyApp> {
               path: '/',
               parentNavigatorKey: _shellNavigatorKey,
               redirect: (context, state) {
-                if (!bloc.backend.isAuthenticated) return LoginPage.route;
-                if (!bloc.hasStudyBeenDeployed) return InvitationListPage.route;
-                if (!bloc.hasInformedConsentBeenAccepted)
+                if (!bloc.backend.isAuthenticated) {
+                  debug('>>> returning login route');
+                  return LoginPage.route;
+                }
+                if (!bloc.hasStudyBeenDeployed) {
+                  debug('>>> returning login route');
+                  return InvitationListPage.route;
+                }
+                if (!bloc.hasInformedConsentBeenAccepted) {
+                  debug('>>> returning InformedConsentPage route');
                   return InformedConsentPage.route;
+                }
 
+                debug('>>> returning firstRoute route');
                 return firstRoute;
               }),
           GoRoute(

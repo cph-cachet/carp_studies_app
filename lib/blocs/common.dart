@@ -1,5 +1,6 @@
 part of '../main.dart';
 
+/// Enumeration of different types of deployments on the CARP Web Service (CAWS).
 enum DeploymentMode {
   /// Use the CARP production server to get the study deployment and store data.
   production,
@@ -14,20 +15,26 @@ enum DeploymentMode {
   dev,
 }
 
+/// Enumeration of of different user authentication states.
 enum LoginStatus {
-  /// No invitation selected (tap outside the invitation box) - Navigate to login screen
+  /// No invitation selected (tap outside the invitation box).
+  /// Navigate to login screen.
   noSelection,
 
-  /// Informed Consent not accepted - Navigate to message screen / login
+  /// Informed Consent not accepted.
+  /// Navigate to message screen or login.
   noConsent,
 
-  /// User registered but no current ongoing studies - Navigate to message screen
+  /// User registered but no current ongoing studies.
+  /// Navigate to message screen.
   noInvitation,
 
-  /// User temporary blocked for introducing the login credentials wrongly 3 times - Navigate to message screen
+  /// User temporary blocked based on 3 wrongly login credentials.
+  /// Navigate to message screen.
   temporaryBlock,
 
-  /// Successful login - Navigate to home page
+  /// Successful login.
+  /// Navigate to home page.
   successful,
 }
 
@@ -37,9 +44,9 @@ enum ProcessStatus {
   other,
 }
 
+/// Enumeration of different app states.
 enum StudiesAppState {
   initialized,
-  loginpage,
   authenticating,
   accessTokenRetrieved,
   configuring,

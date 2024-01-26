@@ -17,7 +17,7 @@ enum StudyAppState {
 class StudyAppBLoC {
   StudyAppState _state = StudyAppState.created;
   final CarpBackend _backend = CarpBackend();
-  final CarpStudyAppViewModel _data = CarpStudyAppViewModel();
+  final CarpStudyAppViewModel _appViewModel = CarpStudyAppViewModel();
   StudyDeploymentStatus? _status;
   final StreamController<StudiesAppState> _stateStream =
       StreamController.broadcast();
@@ -102,8 +102,8 @@ class StudyAppBLoC {
   DateTime? get studyStartTimestamp => deployment?.deployed;
 
   /// The overall data model for this app
-  CarpStudyAppViewModel get data => _data;
-  Future<void>? dataPageInitialization;
+  CarpStudyAppViewModel get appViewModel => _appViewModel;
+  // Future<void>? dataPageInitialization;
 
   /// Initialize this BLOC. Called before being used for anything.
   Future<void> initialize() async {
@@ -149,7 +149,6 @@ class StudyAppBLoC {
     if (isConfiguring) return;
 
     stateStream.sink.add(StudiesAppState.configuring);
-    info('$runtimeType configuring...');
 
     // set up and initialize sensing
     await Sensing().initialize();
@@ -158,7 +157,9 @@ class StudyAppBLoC {
     await Sensing().addStudy();
 
     // initialize the UI data models
-    dataPageInitialization = data.init(Sensing().controller!);
+    appViewModel.init(Sensing().controller!);
+
+    debug('$runtimeType - done init() of view model');
 
     // set up the messaging part
     messageManager.initialize().then(
@@ -241,7 +242,8 @@ class StudyAppBLoC {
       ? user!.username
       : Sensing().controller!.deployment!.userId!;
 
-  /// The name used for friendly greeting - '' if no user logged in.
+  /// The name used for friendly greeting.
+  /// Returns an empty string if no user logged in.
   String? get friendlyUsername => (user != null) ? user!.firstName : '';
 
   /// Does this [deployment] have any measures?

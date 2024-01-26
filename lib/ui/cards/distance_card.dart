@@ -98,15 +98,7 @@ class _DistanceCardState extends State<DistanceCard> {
               width: MediaQuery.of(context).size.width * 0.9,
               child: StreamBuilder(
                 stream: widget.model.mobilityEvents,
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    return barCharts;
-                  } else {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                },
+                builder: (context, snapshot) => barCharts,
               ),
             ),
           ],

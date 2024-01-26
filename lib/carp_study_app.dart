@@ -48,7 +48,7 @@ class CarpStudyAppState extends State<CarpStudyApp> {
             parentNavigatorKey: _shellNavigatorKey,
             pageBuilder: (context, state) => CustomTransitionPage(
               child: TaskListPage(
-                bloc.data.taskListPageViewModel,
+                bloc.appViewModel.taskListPageViewModel,
               ),
               transitionsBuilder: bottomNavigationBarAnimation,
             ),
@@ -58,7 +58,7 @@ class CarpStudyAppState extends State<CarpStudyApp> {
             parentNavigatorKey: _shellNavigatorKey,
             pageBuilder: (context, state) => CustomTransitionPage(
               child: StudyPage(
-                bloc.data.studyPageViewModel,
+                bloc.appViewModel.studyPageViewModel,
               ),
               transitionsBuilder: bottomNavigationBarAnimation,
             ),
@@ -68,7 +68,7 @@ class CarpStudyAppState extends State<CarpStudyApp> {
             parentNavigatorKey: _shellNavigatorKey,
             pageBuilder: (context, state) => CustomTransitionPage(
               child: DataVisualizationPage(
-                  bloc.data.dataVisualizationPageViewModel),
+                  bloc.appViewModel.dataVisualizationPageViewModel),
               transitionsBuilder: bottomNavigationBarAnimation,
             ),
           ),
@@ -84,7 +84,7 @@ class CarpStudyAppState extends State<CarpStudyApp> {
             path: '/profile',
             parentNavigatorKey: _shellNavigatorKey,
             pageBuilder: (context, state) => CustomTransitionPage(
-              child: ProfilePage(bloc.data.profilePageViewModel),
+              child: ProfilePage(bloc.appViewModel.profilePageViewModel),
               transitionsBuilder: bottomNavigationBarAnimation,
             ),
           ),
@@ -111,7 +111,7 @@ class CarpStudyAppState extends State<CarpStudyApp> {
             ? firstRoute
             : (bloc.studyId == null ? '/invitations' : null),
         builder: (context, state) => InformedConsentPage(
-          bloc.data.informedConsentViewModel,
+          bloc.appViewModel.informedConsentViewModel,
         ),
       ),
       GoRoute(
@@ -139,7 +139,7 @@ class CarpStudyAppState extends State<CarpStudyApp> {
             ? '/consent'
             : (bloc.user == null ? '/login' : null),
         builder: (context, state) =>
-            InvitationListPage(bloc.data.invitationsListViewModel),
+            InvitationListPage(bloc.appViewModel.invitationsListViewModel),
       ),
     ],
     debugLogDiagnostics: true,

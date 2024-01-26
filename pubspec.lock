@@ -173,10 +173,10 @@ packages:
     dependency: transitive
     description:
       name: built_value
-      sha256: c9aabae0718ec394e5bc3c7272e6bb0dc0b32201a08fe185ec1d8401d3e39309
+      sha256: a3ec2e0f967bc47f69f95009bb93db936288d61d5343b9436e378b28a2f830c6
       url: "https://pub.dev"
     source: hosted
-    version: "8.8.1"
+    version: "8.9.0"
   camera:
     dependency: "direct main"
     description:
@@ -276,17 +276,19 @@ packages:
   carp_mobile_sensing:
     dependency: "direct main"
     description:
-      path: "../carp/carp.sensing-flutter/carp_mobile_sensing"
-      relative: true
-    source: path
-    version: "1.4.1"
+      name: carp_mobile_sensing
+      sha256: "1bc8d19d1b528c87abbf0a7624f356f8c77b09d950c563fef41da4d78b02cd3a"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.4.2"
   carp_polar_package:
     dependency: "direct main"
     description:
-      path: "../carp/carp.sensing-flutter/packages/carp_polar_package"
-      relative: true
-    source: path
-    version: "1.4.0"
+      name: carp_polar_package
+      sha256: "11bc4ccbe9ad223fd0623fc5360967e819c00eb23db2525e03f883ade8a18aa2"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.4.1"
   carp_serializable:
     dependency: "direct main"
     description:
@@ -539,10 +541,10 @@ packages:
     dependency: "direct main"
     description:
       name: fl_chart
-      sha256: "5a74434cc83bf64346efb562f1a06eefaf1bcb530dc3d96a104f631a1eff8d79"
+      sha256: b5e2b0f13d93f8c532b5a2786bfb44580de1f50b927bf95813fa1af617e9caf8
       url: "https://pub.dev"
     source: hosted
-    version: "0.65.0"
+    version: "0.66.1"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -576,10 +578,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_blue_plus
-      sha256: "3baf3bfb4876855316b34489204eb090ee5842ba174e47d3b9b2c378d8568fdf"
+      sha256: "280fb9bd30fba07072e43c7ae77f1dc46cbfce2a4e426871565a88af60bb740d"
       url: "https://pub.dev"
     source: hosted
-    version: "1.31.8"
+    version: "1.31.10"
   flutter_launcher_icons:
     dependency: "direct main"
     description:
@@ -727,10 +729,10 @@ packages:
     dependency: "direct main"
     description:
       name: go_router
-      sha256: c5fa45fa502ee880839e3b2152d987c44abae26d064a2376d4aad434cf0f7b15
+      sha256: "3b40e751eaaa855179b416974d59d29669e750d2e50fcdb2b37f1cb0ca8c803a"
       url: "https://pub.dev"
     source: hosted
-    version: "12.1.3"
+    version: "13.0.1"
   google_fonts:
     dependency: "direct main"
     description:
@@ -991,10 +993,10 @@ packages:
     dependency: transitive
     description:
       name: mime
-      sha256: e4ff8e8564c03f255408decd16e7899da1733852a9110a58fe6d1b817684a63e
+      sha256: "2e123074287cc9fd6c09de8336dae606d1ddb88d9ac47358826db698c176a1f2"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.4"
+    version: "1.0.5"
   mobility_features:
     dependency: transitive
     description:
@@ -1532,18 +1534,18 @@ packages:
     dependency: transitive
     description:
       name: sqflite
-      sha256: "591f1602816e9c31377d5f008c2d9ef7b8aca8941c3f89cc5fd9d84da0c38a9a"
+      sha256: c2c32eb0c74021d987336522acc3b6bf0082fbd0c540c36a9cf4ddb8ba891ddc
       url: "https://pub.dev"
     source: hosted
-    version: "2.3.0"
+    version: "2.3.1"
   sqflite_common:
     dependency: transitive
     description:
       name: sqflite_common
-      sha256: bb4738f15b23352822f4c42a531677e5c6f522e079461fd240ead29d8d8a54a6
+      sha256: "28d8c66baee4968519fb8bd6cdbedad982d6e53359091f0b74544a9f32ec72d5"
       url: "https://pub.dev"
     source: hosted
-    version: "2.5.0+2"
+    version: "2.5.3"
   stack_trace:
     dependency: transitive
     description:
@@ -1684,10 +1686,10 @@ packages:
     dependency: "direct main"
     description:
       name: url_launcher
-      sha256: d25bb0ca00432a5e1ee40e69c36c85863addf7cc45e433769d61bed3fe81fd96
+      sha256: c512655380d241a337521703af62d2c122bf7b77a46ff7dd750092aa9433499c
       url: "https://pub.dev"
     source: hosted
-    version: "6.2.3"
+    version: "6.2.4"
   url_launcher_android:
     dependency: transitive
     description:

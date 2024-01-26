@@ -2,16 +2,16 @@ part of carp_study_app;
 
 /// The state of the [StudyAppBLoC].
 enum StudyAppState {
-  /// The BLoC is created (initial state)
+  /// The BLoC is created but not ready for use.
   created,
 
   /// The BLoC is initialized via the [initialized] method.
   initialized,
 
-  /// The BLoC is in the process of being configured.
+  /// The BLoC is in the process of being configured with a study.
   configuring,
 
-  /// The BLoC is configured and ready to use.
+  /// The BLoC is configured with a study and ready to use.
   configured,
 }
 
@@ -45,8 +45,6 @@ class StudyAppBLoC extends ChangeNotifier {
   StudyAppState _state = StudyAppState.created;
   final CarpBackend _backend = CarpBackend();
   final CarpStudyAppViewModel _appViewModel = CarpStudyAppViewModel();
-  final StreamController<StudyAppState> _stateStreamController =
-      StreamController.broadcast();
 
   List<Message> _messages = [];
   final StreamController<int> _messageStreamController =
@@ -59,13 +57,6 @@ class StudyAppBLoC extends ChangeNotifier {
 
   /// The state of this BloC.
   StudyAppState get state => _state;
-  set state(StudyAppState state) {
-    _state = state;
-    _stateStreamController.add(state);
-  }
-
-  /// A stream of state changes of this BloC.
-  Stream<StudyAppState> get stateStream => _stateStreamController.stream;
 
   bool get isInitialized => _state.index >= 1;
   bool get isConfiguring => _state.index >= 2;
@@ -140,8 +131,9 @@ class StudyAppBLoC extends ChangeNotifier {
 
     await backend.initialize();
 
-    state = StudyAppState.initialized;
-    info('$runtimeType initialized.');
+    _state = StudyAppState.initialized;
+    notifyListeners();
+    debug('$runtimeType initialized.');
   }
 
   /// Set the active study in the app based on an [invitation].
@@ -180,7 +172,7 @@ class StudyAppBLoC extends ChangeNotifier {
     // early out if already configured
     if (isConfiguring) return;
 
-    state = StudyAppState.configuring;
+    _state = StudyAppState.configuring;
 
     // set up and initialize sensing
     await Sensing().initialize();
@@ -191,8 +183,6 @@ class StudyAppBLoC extends ChangeNotifier {
     // initialize the UI data models
     appViewModel.init(Sensing().controller!);
 
-    debug('$runtimeType - done init() of view model');
-
     // set up the messaging part
     messageManager.initialize().then(
       (value) {
@@ -202,7 +192,7 @@ class StudyAppBLoC extends ChangeNotifier {
       },
     );
 
-    debug('$runtimeType configuration done.');
+    info('$runtimeType - Study configuration done.');
     notifyListeners();
     _state = StudyAppState.configured;
   }
@@ -271,6 +261,7 @@ class StudyAppBLoC extends ChangeNotifier {
   /// The signed in user. Returns null if no user is signed in.
   CarpUser? get user => backend.user;
 
+  /// The username of the user running this study.
   String get username => (user != null)
       ? user!.username
       : Sensing().controller!.deployment!.userId!;
@@ -364,6 +355,7 @@ class StudyAppBLoC extends ChangeNotifier {
     hasInformedConsentBeenAccepted = false;
     await LocalSettings().eraseStudyIds();
     await Sensing().removeStudy();
+    notifyListeners();
   }
 
   /// Leave the study and also sign out the user.
@@ -374,5 +366,6 @@ class StudyAppBLoC extends ChangeNotifier {
   Future<void> leaveStudyAndSignOut() async {
     await leaveStudy();
     await backend.signOut();
+    notifyListeners();
   }
 }

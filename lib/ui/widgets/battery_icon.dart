@@ -46,9 +46,7 @@ class BatteryPercentage extends StatelessWidget {
         ),
       ),
       const SizedBox(width: 4),
-      Text(
-        "$batteryLevel%",
-      )
+      Text("$batteryLevel%")
     ]);
   }
 }

@@ -10,7 +10,7 @@ part of carp_study_app;
 /// Note that this class is a singleton and only one sensing layer is used.
 /// Hence, the current assumption at the moment is that this Study App only
 /// runs one study at a time, even though CAMS supports that several studies
-/// added to the [client].
+/// can be added to the [client].
 class Sensing {
   static final Sensing _instance = Sensing._();
   StudyDeploymentStatus? _status;

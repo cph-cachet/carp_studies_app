@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 56;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -535,7 +535,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "Runner/base.lproj/Main.storyboard Runner/Assets.xcassets Runner/base.lproj/LaunchScreen.storyboard";
-				DEVELOPMENT_TEAM = 8TB3T6MAZG;
+				DEVELOPMENT_TEAM = 59TCTNUBMQ;
 				ENABLE_BITCODE = "$(inherited)";
 				FLUTTER_ROOT = "$(HOME)/flutter";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -578,7 +578,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "Runner/base.lproj/Main.storyboard Runner/Assets.xcassets Runner/base.lproj/LaunchScreen.storyboard";
-				DEVELOPMENT_TEAM = 8TB3T6MAZG;
+				DEVELOPMENT_TEAM = 59TCTNUBMQ;
 				ENABLE_BITCODE = "$(inherited)";
 				FLUTTER_ROOT = "$(HOME)/flutter";
 				FRAMEWORK_SEARCH_PATHS = (

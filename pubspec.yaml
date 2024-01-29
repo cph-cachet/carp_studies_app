@@ -1,7 +1,7 @@
 name: carp_study_app
 description: The generic CARP study app.
 publish_to: 'none'
-version: 1.4.0
+version: 1.5.0
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
@@ -115,6 +115,7 @@ flutter:
     - assets/instructions/
     - assets/icons/
     - assets/lang/
+    - assets/lang_local/
     - assets/images/messages/
     - assets/carp_logo.png
     - assets/logo.png

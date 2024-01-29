@@ -12,8 +12,8 @@ class InformedConsentPage extends StatefulWidget {
 class InformedConsentState extends State<InformedConsentPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  void resultCallback(RPTaskResult result) async {
-    await widget.model.informedConsentHasBeenAccepted(result);
+  void resultCallback(RPTaskResult result) {
+    widget.model.informedConsentHasBeenAccepted(result);
     if (context.mounted) {
       context.go('/');
     }

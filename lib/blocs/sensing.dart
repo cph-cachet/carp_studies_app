@@ -15,7 +15,7 @@ part of carp_study_app;
 /// (i.e., start or stop).
 ///
 /// Note that this class is a singleton and only one sensing layer is used.
-/// Hence, the current assumption at the moment is that this Study App only
+/// The current assumption at the moment is that this Study App only
 /// runs one study at a time, even though CAMS supports that several studies
 /// added to the [client].
 class Sensing {
@@ -68,7 +68,7 @@ class Sensing {
     //SamplingPackageRegistry.register(CommunicationSamplingPackage());
     SamplingPackageRegistry().register(MediaSamplingPackage());
     SamplingPackageRegistry().register(SurveySamplingPackage());
-    //SamplingPackageRegistry.register(HealthSamplingPackage());
+    SamplingPackageRegistry().register(HealthSamplingPackage());
     SamplingPackageRegistry().register(ESenseSamplingPackage());
     SamplingPackageRegistry().register(PolarSamplingPackage());
 
@@ -81,18 +81,48 @@ class Sensing {
 
   /// Initialize and set up sensing.
   Future<void> initialize() async {
-    info('Initializing $runtimeType}');
+    info('Initializing $runtimeType - mode: ${bloc.deploymentMode}');
 
-    // set up the devices available on this phone
+    // Set up the devices available on this phone
     DeviceController().registerAllAvailableDevices();
 
-    // Use the CARP deployment service which can download a protocol from CAWS
-    CarpDeploymentService().configureFrom(CarpService());
-    deploymentService = CarpDeploymentService();
+    switch (bloc.deploymentMode) {
+      case DeploymentMode.local:
+        // Use the local, phone-based deployment service.
+        deploymentService = SmartphoneDeploymentService();
 
-    // Register the CARP data manager for uploading data back to CARP.
+        // Get the protocol from the local study protocol manager.
+        // Note that the study id is not used since it always returns the same protocol.
+        StudyProtocol protocol =
+            await LocalStudyProtocolManager().getStudyProtocol('');
+
+        // Deploy this protocol using the on-phone deployment service.
+        // Reuse the study deployment id, if this is stored on the phone.
+        _status = await SmartphoneDeploymentService().createStudyDeployment(
+          protocol,
+          [],
+          bloc.studyDeploymentId,
+        );
+
+        // Save the correct deployment id on the phone for later use.
+        bloc.studyDeploymentId = _status?.studyDeploymentId;
+        bloc.deviceRoleName = _status?.primaryDeviceStatus?.device.roleName;
+
+        break;
+      case DeploymentMode.production:
+      case DeploymentMode.staging:
+      case DeploymentMode.test:
+      case DeploymentMode.dev:
+        // Use the CARP deployment service which can download a protocol from CAWS
+        CarpDeploymentService().configureFrom(CarpService());
+        deploymentService = CarpDeploymentService();
+
+        break;
+    }
+
+    // Register the CARP data manager for uploading data back to CAWS.
     // This is needed in both LOCAL and CARP deployments, since a local study
-    // protocol may still upload to CARP
+    // protocol may still upload to CAWS
     DataManagerRegistry().register(CarpDataManagerFactory());
 
     // Create and configure a client manager for this phone

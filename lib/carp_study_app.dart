@@ -36,6 +36,7 @@ class CarpStudyAppState extends State<CarpStudyApp> {
             HomePage(child: child),
         routes: [
           // This is the root route, handling the onboarding. Checks if;
+          //  - do we run locally and need authentication
           //  - the user is authenticated, if not show login page
           //  - a study is deployed, if not show list of invitations for the user
           //  - the user has accepted the informed consent, if not show informed consent page
@@ -45,13 +46,30 @@ class CarpStudyAppState extends State<CarpStudyApp> {
           GoRoute(
               path: '/',
               parentNavigatorKey: _shellNavigatorKey,
-              redirect: (context, state) => (!bloc.backend.isAuthenticated)
-                  ? LoginPage.route
-                  : (!bloc.hasStudyBeenDeployed)
-                      ? InvitationListPage.route
-                      : (!bloc.hasInformedConsentBeenAccepted)
-                          ? InformedConsentPage.route
-                          : firstRoute),
+              redirect: (context, state) {
+                if (bloc.deploymentMode != DeploymentMode.local) {
+                  // check authentication to CAWS
+                  if (!bloc.backend.isAuthenticated) {
+                    return LoginPage.route;
+                  } else if (!bloc.hasStudyBeenDeployed) {
+                    return InvitationListPage.route;
+                  }
+                }
+
+                if (!bloc.hasInformedConsentBeenAccepted) {
+                  return InformedConsentPage.route;
+                }
+
+                return firstRoute;
+
+                //     !bloc.backend.isAuthenticated
+                // ? LoginPage.route
+                // : (!bloc.hasStudyBeenDeployed)
+                //     ? InvitationListPage.route
+                //     : (!bloc.hasInformedConsentBeenAccepted)
+                //         ? InformedConsentPage.route
+                //         : firstRoute),
+              }),
           GoRoute(
             path: TaskListPage.route,
             parentNavigatorKey: _shellNavigatorKey,
@@ -118,9 +136,9 @@ class CarpStudyAppState extends State<CarpStudyApp> {
       GoRoute(
         path: InformedConsentPage.route,
         parentNavigatorKey: _rootNavigatorKey,
-        redirect: (context, state) => bloc.hasInformedConsentBeenAccepted
-            ? firstRoute
-            : (bloc.studyId == null ? InvitationListPage.route : null),
+        // redirect: (context, state) => bloc.hasInformedConsentBeenAccepted
+        //     ? firstRoute
+        //     : (bloc.studyId == null ? InvitationListPage.route : null),
         builder: (context, state) => InformedConsentPage(
           model: bloc.appViewModel.informedConsentViewModel,
         ),

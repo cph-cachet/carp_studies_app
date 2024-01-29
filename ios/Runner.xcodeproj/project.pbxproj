@@ -378,7 +378,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "Runner/base.lproj/Main.storyboard Runner/Assets.xcassets Runner/base.lproj/LaunchScreen.storyboard";
-				DEVELOPMENT_TEAM = 59TCTNUBMQ;
+				DEVELOPMENT_TEAM = 8TB3T6MAZG;
 				ENABLE_BITCODE = "$(inherited)";
 				FLUTTER_ROOT = "$(HOME)/flutter";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -397,7 +397,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
-				MARKETING_VERSION = 1.4;
+				MARKETING_VERSION = 1.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.cachet.carpstudyapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -535,7 +535,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "Runner/base.lproj/Main.storyboard Runner/Assets.xcassets Runner/base.lproj/LaunchScreen.storyboard";
-				DEVELOPMENT_TEAM = 59TCTNUBMQ;
+				DEVELOPMENT_TEAM = 8TB3T6MAZG;
 				ENABLE_BITCODE = "$(inherited)";
 				FLUTTER_ROOT = "$(HOME)/flutter";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -554,7 +554,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
-				MARKETING_VERSION = 1.4;
+				MARKETING_VERSION = 1.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.cachet.carpstudyapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -578,7 +578,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "Runner/base.lproj/Main.storyboard Runner/Assets.xcassets Runner/base.lproj/LaunchScreen.storyboard";
-				DEVELOPMENT_TEAM = 59TCTNUBMQ;
+				DEVELOPMENT_TEAM = 8TB3T6MAZG;
 				ENABLE_BITCODE = "$(inherited)";
 				FLUTTER_ROOT = "$(HOME)/flutter";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -597,7 +597,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
-				MARKETING_VERSION = 1.4;
+				MARKETING_VERSION = 1.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.cachet.carpstudyapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

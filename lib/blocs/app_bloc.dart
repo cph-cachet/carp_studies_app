@@ -78,15 +78,27 @@ class StudyAppBLoC extends ChangeNotifier {
   ///  * deployment mode (production, test, dev, local)
   StudyAppBLoC({
     this.debugLevel = DebugLevel.info,
-    this.deploymentMode = DeploymentMode.dev,
+    this.deploymentMode = DeploymentMode.production,
   }) : super();
 
-  LocalizationManager get localizationManager => CarpResourceManager();
+  LocalizationManager get localizationManager =>
+      (deploymentMode == DeploymentMode.local
+          ? LocalResourceManager()
+          : CarpResourceManager()) as LocalizationManager;
 
-  LocalizationLoader get localizationLoader =>
-      ResourceLocalizationLoader(localizationManager);
+  LocalizationLoader get localizationLoader {
+    debug('$runtimeType - using localizationManager: $localizationManager');
+    return ResourceLocalizationLoader(localizationManager);
+  }
 
-  MessageManager get messageManager => CarpResourceManager();
+  MessageManager get messageManager => (deploymentMode == DeploymentMode.local
+      ? LocalResourceManager()
+      : CarpResourceManager()) as MessageManager;
+
+  InformedConsentManager get informedConsentManager =>
+      (bloc.deploymentMode == DeploymentMode.local
+          ? LocalResourceManager()
+          : CarpResourceManager()) as InformedConsentManager;
 
   CarpBackend get backend => _backend;
 
@@ -128,11 +140,13 @@ class StudyAppBLoC extends ChangeNotifier {
     await Settings().init();
     await localizationManager.initialize();
 
-    await backend.initialize();
-
+    // Initialize and use the CAWS backend if not in local deployment mode
+    if (deploymentMode != DeploymentMode.local) {
+      await backend.initialize();
+    }
     _state = StudyAppState.initialized;
     notifyListeners();
-    debug('$runtimeType initialized.');
+    debug('$runtimeType initialized - deployment mode: ${deploymentMode.name}');
   }
 
   /// Set the active study in the app based on an [invitation].
@@ -184,7 +198,7 @@ class StudyAppBLoC extends ChangeNotifier {
 
     // set up the messaging part
     messageManager.initialize().then(
-      (value) {
+      (_) {
         refreshMessages();
         // refresh the list of messages on a regular basis
         Timer.periodic(const Duration(minutes: 30), (_) => refreshMessages());
@@ -243,6 +257,21 @@ class StudyAppBLoC extends ChangeNotifier {
   ///  * successfully uploaded to CARP
   set hasInformedConsentBeenAccepted(bool accepted) =>
       LocalSettings().hasInformedConsentBeenAccepted = accepted;
+
+  /// The informed consent has been accepted by the user.
+  ///
+  /// This entails that it has been shown to the user and accepted by the user.
+  /// Will upload it to CAWS.
+  Future<void> informedConsentHasBeenAccepted(
+    RPTaskResult informedConsentResult,
+  ) async {
+    info('Informed consent has been accepted by user.');
+    hasInformedConsentBeenAccepted = true;
+
+    if (deploymentMode != DeploymentMode.local) {
+      await backend.uploadInformedConsent(informedConsentResult);
+    }
+  }
 
   /// Refresh the list of messages (news, announcements, articles) to be shown in
   /// the Study Page of the app.

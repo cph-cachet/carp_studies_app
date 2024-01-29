@@ -1,3 +1,7 @@
+## 1.5.0
+
+* support for running app in local deployment mode in order to debug a protocol before uploading it to CAWS
+
 ## 1.4.0
 
 * added support for collection of health data from Apple Health or Google Health Connect
@@ -13,7 +17,7 @@
 ## 0.23.0
 
 * track iOS version numbering.
-* this version adds a heart rate visualisation with a Polar device and created a Continous integration pipeline for iOS deployment.
+* this version adds a heart rate visualization with a Polar device and created a continuous integration pipeline for iOS deployment.
 * fixed some visual issues in the devices page.
 
 ## 0.40.0

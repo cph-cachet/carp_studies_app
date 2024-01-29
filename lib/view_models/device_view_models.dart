@@ -204,7 +204,5 @@ class DeviceViewModel extends ViewModel {
       warning(
           "$runtimeType - Error disconnecting to device '${deviceManager.id}' - $error.");
     }
-
-    // deviceManager.status = DeviceStatus.disconnected; // Force status update
   }
 }

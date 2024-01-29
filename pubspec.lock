@@ -277,10 +277,10 @@ packages:
     dependency: "direct main"
     description:
       name: carp_mobile_sensing
-      sha256: "1bc8d19d1b528c87abbf0a7624f356f8c77b09d950c563fef41da4d78b02cd3a"
+      sha256: ecd7cc3eff8af5133ac01a1bff703015fa5eca96f1ed62a72e5bfb15e61310bb
       url: "https://pub.dev"
     source: hosted
-    version: "1.4.2"
+    version: "1.4.3"
   carp_polar_package:
     dependency: "direct main"
     description:

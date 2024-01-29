@@ -27,12 +27,12 @@ class InformedConsentState extends State<InformedConsentPage> {
       key: _scaffoldKey,
       body: FutureBuilder<RPOrderedTask?>(
         future: widget.model.getInformedConsent(localization.locale).then(
-          (value) {
-            if (value == null) {
+          (document) {
+            if (document == null) {
               bloc.hasInformedConsentBeenAccepted = true;
               context.go('/');
             }
-            return value;
+            return document;
           },
         ),
         builder: (context, snapshot) {
@@ -45,9 +45,7 @@ class InformedConsentState extends State<InformedConsentPage> {
             }
           }
 
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
+          return const Center(child: CircularProgressIndicator());
         },
       ),
     );

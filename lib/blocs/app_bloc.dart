@@ -69,8 +69,7 @@ class StudyAppBLoC extends ChangeNotifier {
   final DeploymentMode deploymentMode;
 
   // ScaffoldMessenger for showing snack bars
-  final GlobalKey<ScaffoldMessengerState> _scaffoldKey =
-      GlobalKey<ScaffoldMessengerState>();
+  final _scaffoldKey = GlobalKey<ScaffoldMessengerState>();
   GlobalKey<ScaffoldMessengerState> get scaffoldKey => _scaffoldKey;
   State? get scaffoldMessengerState => scaffoldKey.currentState;
 

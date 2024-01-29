@@ -19,25 +19,27 @@ class StudyDetailsPage extends StatelessWidget {
         '${locale.translate(model.piEmail)}\n';
 
     return Scaffold(
-        body: Container(
-            //height: MediaQuery.of(context).size.height * 0.3,
-            color: Theme.of(context).colorScheme.secondary,
-            child: Padding(
-                padding: const EdgeInsets.only(top: 35),
-                child: Column(children: [
-                  Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-                    IconButton(
-                        onPressed: () => context.canPop()
-                            ? context.pop()
-                            : context.replace('/'),
-                        icon: const Icon(Icons.close))
-                  ]),
-                  Flexible(
-                      child: ListView(children: [
+      body: Container(
+        //height: MediaQuery.of(context).size.height * 0.3,
+        color: Theme.of(context).colorScheme.secondary,
+        child: Padding(
+          padding: const EdgeInsets.only(top: 35),
+          child: Column(
+            children: [
+              Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+                IconButton(
+                    onPressed: () =>
+                        context.canPop() ? context.pop() : context.replace('/'),
+                    icon: const Icon(Icons.close))
+              ]),
+              Flexible(
+                child: ListView(
+                  children: [
                     DetailsBanner(model.title, './assets/images/kids.png'),
                     Padding(
-                        padding: const EdgeInsets.all(16),
-                        child: Column(children: [
+                      padding: const EdgeInsets.all(16),
+                      child: Column(
+                        children: [
                           Text(locale.translate(model.piAffiliation),
                               style: aboutCardSubtitleStyle.copyWith(
                                   color: Theme.of(context).primaryColor)),
@@ -45,60 +47,67 @@ class StudyDetailsPage extends StatelessWidget {
                             studyDescription(),
                             style: aboutCardContentStyle,
                             textAlign: TextAlign.justify,
-                          )
-                        ]))
-                  ])),
-                  Padding(
-                      padding: const EdgeInsets.only(bottom: 30, top: 20),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 30, top: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    InkWell(
+                      onTap: () async {
+                        String url = locale.translate(model.privacyPolicyUrl);
+                        try {
+                          await launchUrl(Uri.parse(url));
+                        } catch (error) {
+                          warning(
+                              "Could not launch privacy policy URL - '$url'");
+                        }
+                      },
                       child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            InkWell(
-                                onTap: () async {
-                                  String url =
-                                      locale.translate(model.privacyPolicyUrl);
-                                  try {
-                                    await launchUrl(Uri.parse(url));
-                                  } catch (error) {
-                                    warning(
-                                        "Could not launch privacy policy URL - '$url'");
-                                  }
-                                },
-                                child: Row(children: [
-                                  Icon(Icons.policy_outlined,
-                                      color: Theme.of(context).primaryColor),
-                                  Text(
-                                      locale.translate(
-                                          'pages.about.study.privacy'),
-                                      style: aboutCardSubtitleStyle.copyWith(
-                                          color:
-                                              Theme.of(context).primaryColor))
-                                ])),
-                            const SizedBox(width: 15),
-                            InkWell(
-                                onTap: () async {
-                                  String url = locale
-                                      .translate(model.studyDescriptionUrl);
-                                  try {
-                                    await launchUrl(Uri.parse(url));
-                                  } catch (error) {
-                                    warning(
-                                        "Could not launch study description URL - '$url'");
-                                  }
-                                },
-                                child: Row(
-                                  children: [
-                                    Icon(Icons.public_outlined,
-                                        color: Theme.of(context).primaryColor),
-                                    Text(
-                                        locale.translate(
-                                            'pages.about.study.website'),
-                                        style: aboutCardSubtitleStyle.copyWith(
-                                            color: Theme.of(context)
-                                                .primaryColor)),
-                                  ],
-                                ))
-                          ]))
-                ]))));
+                        children: [
+                          Icon(Icons.policy_outlined,
+                              color: Theme.of(context).primaryColor),
+                          Text(locale.translate('pages.about.study.privacy'),
+                              style: aboutCardSubtitleStyle.copyWith(
+                                  color: Theme.of(context).primaryColor))
+                        ],
+                      ),
+                    ),
+                    const SizedBox(width: 15),
+                    InkWell(
+                      onTap: () async {
+                        String url =
+                            locale.translate(model.studyDescriptionUrl);
+                        try {
+                          await launchUrl(Uri.parse(url));
+                        } catch (error) {
+                          warning(
+                              "Could not launch study description URL - '$url'");
+                        }
+                      },
+                      child: Row(
+                        children: [
+                          Icon(Icons.public_outlined,
+                              color: Theme.of(context).primaryColor),
+                          Text(locale.translate('pages.about.study.website'),
+                              style: aboutCardSubtitleStyle.copyWith(
+                                  color: Theme.of(context).primaryColor)),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

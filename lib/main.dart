@@ -85,7 +85,6 @@ part 'ui/pages/process_message_page.dart';
 part 'ui/pages/camera_task_page.dart';
 part 'ui/pages/display_picture_page.dart';
 part 'ui/pages/camera_page.dart';
-part 'ui/pages/loading_page.dart';
 part 'ui/pages/error_page.dart';
 part 'ui/pages/login_page.dart';
 part 'ui/pages/device_list_page.dart';

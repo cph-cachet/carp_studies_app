@@ -141,5 +141,5 @@
     "widgets.logoutmessage.cancel": "Annuller",
     "widgets.logoutmessage.okay": "Okay",
     "pages.login.login": "Log ind",
-    "pages.login.endsession": "Afslut log ind session"
+    "pages.login.logout": "Log ud"
 }

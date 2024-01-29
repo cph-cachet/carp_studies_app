@@ -1,18 +1,20 @@
-part of '../../main.dart';
+part of carp_study_app;
 
 class InvitationDetailsPage extends StatelessWidget {
+  static const String route = '/invitation';
   final String invitationId;
+  final InvitationsViewModel model;
 
   const InvitationDetailsPage({
     super.key,
     required this.invitationId,
+    required this.model,
   });
 
   @override
   Widget build(BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;
-    ActiveParticipationInvitation invitation = bloc.invitations.firstWhere(
-        (element) => element.participation.participantId == invitationId);
+    var invitation = model.getInvitation(invitationId);
 
     return Scaffold(
       appBar: AppBar(
@@ -56,7 +58,7 @@ class InvitationDetailsPage extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: () {
                     bloc.setStudyInvitation(invitation, context);
-                    context.push('/consent');
+                    context.push(InformedConsentPage.route);
                   },
                   style: ElevatedButton.styleFrom(
                     shape: const StadiumBorder(),

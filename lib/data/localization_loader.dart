@@ -1,4 +1,4 @@
-part of '../main.dart';
+part of carp_study_app;
 
 /// A [LocalizationLoader] that knows how to load localizations from a
 /// [LocalizationManager].

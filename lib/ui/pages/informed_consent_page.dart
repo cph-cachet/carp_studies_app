@@ -1,9 +1,9 @@
-part of '../../main.dart';
+part of carp_study_app;
 
 class InformedConsentPage extends StatefulWidget {
+  static const String route = '/consent';
   final InformedConsentViewModel model;
-
-  const InformedConsentPage(this.model, {super.key});
+  const InformedConsentPage({super.key, required this.model});
 
   @override
   InformedConsentState createState() => InformedConsentState();

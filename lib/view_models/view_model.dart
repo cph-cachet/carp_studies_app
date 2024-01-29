@@ -1,7 +1,10 @@
-part of '../main.dart';
+part of carp_study_app;
 
-/// An abstract view model used for all other view models in the app.
-abstract class ViewModel {
+/// An abstract view model used for all view models in the app.
+///
+/// Note that a view model is a [ChangeNotifier] and will notify its listeners
+/// if changed, including any [ListenableBuilder] widgets.
+abstract class ViewModel extends ChangeNotifier {
   SmartphoneDeploymentController? _controller;
 
   SmartphoneDeploymentController? get controller => _controller;
@@ -9,8 +12,6 @@ abstract class ViewModel {
   /// Initialize this view model before use.
   @mustCallSuper
   void init(SmartphoneDeploymentController ctrl) {
-    debug('$runtimeType - init()');
-
     _controller = ctrl;
   }
 }
@@ -28,8 +29,12 @@ abstract class SerializableViewModel<D extends DataModel> extends ViewModel {
   ///
   /// The data model is either created using the [createModel] method or loaded
   /// from persistent storage.
-  D get model => _model!;
-  D? _model;
+  D get model => _model;
+  late D _model;
+
+  SerializableViewModel() {
+    _model = createModel();
+  }
 
   /// The [DataModel] to be serialized.
   ///
@@ -50,7 +55,10 @@ abstract class SerializableViewModel<D extends DataModel> extends ViewModel {
     _model = createModel();
 
     // restore the data model (if any saved)
-    restore().then((savedModel) => _model = savedModel ?? _model);
+    restore().then((savedModel) {
+      _model = savedModel ?? _model;
+      notifyListeners();
+    });
 
     // save the data model on a regular basis.
     Timer.periodic(const Duration(minutes: 3), (_) => save(model.toJson()));
@@ -79,7 +87,7 @@ abstract class SerializableViewModel<D extends DataModel> extends ViewModel {
     bool success = true;
     try {
       String name = (await filename);
-      info("Saving $runtimeType data to file '$name'.");
+      debug("Saving $runtimeType data to file '$name'.");
       File(name).writeAsStringSync(jsonEncode(json));
     } catch (exception) {
       success = false;
@@ -94,7 +102,7 @@ abstract class SerializableViewModel<D extends DataModel> extends ViewModel {
     bool success = true;
     try {
       String name = (await filename);
-      info("Deleting $runtimeType data to file '$name'.");
+      debug("Deleting $runtimeType data from file '$name'.");
       File(name).deleteSync();
     } catch (exception) {
       success = false;
@@ -103,11 +111,13 @@ abstract class SerializableViewModel<D extends DataModel> extends ViewModel {
     return success;
   }
 
+  /// Restore the [model] from persistent storage.
+  /// Returns null if unsuccessful.
   Future<D?> restore() async {
     D? result;
     try {
       String name = (await filename);
-      info("Restoring $runtimeType data from file '$name'.");
+      debug("Restoring $runtimeType data from file '$name'.");
       final jsonString = File(name).readAsStringSync();
       final modelAsJson = json.decode(jsonString) as Map<String, dynamic>;
       result = model.fromJson(modelAsJson) as D;
@@ -152,9 +162,9 @@ class CarpStudyAppViewModel extends ViewModel {
   final StudyPageViewModel _studyPageViewModel = StudyPageViewModel();
   final TaskListPageViewModel _taskListPageViewModel = TaskListPageViewModel();
   final ProfilePageViewModel _profilePageViewModel = ProfilePageViewModel();
-  final DevicesPageViewModel _devicesPageViewModel = DevicesPageViewModel();
-  final InvitationsListViewModel _invitationsListViewModel =
-      InvitationsListViewModel();
+  final DeviceListPageViewModel _devicesPageViewModel =
+      DeviceListPageViewModel();
+  final InvitationsViewModel _invitationsListViewModel = InvitationsViewModel();
   final InformedConsentViewModel _informedConsentViewModel =
       InformedConsentViewModel();
 
@@ -165,8 +175,8 @@ class CarpStudyAppViewModel extends ViewModel {
   StudyPageViewModel get studyPageViewModel => _studyPageViewModel;
   TaskListPageViewModel get taskListPageViewModel => _taskListPageViewModel;
   ProfilePageViewModel get profilePageViewModel => _profilePageViewModel;
-  DevicesPageViewModel get devicesPageViewModel => _devicesPageViewModel;
-  InvitationsListViewModel get invitationsListViewModel =>
+  DeviceListPageViewModel get devicesPageViewModel => _devicesPageViewModel;
+  InvitationsViewModel get invitationsListViewModel =>
       _invitationsListViewModel;
   InformedConsentViewModel get informedConsentViewModel =>
       _informedConsentViewModel;

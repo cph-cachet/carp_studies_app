@@ -1,4 +1,4 @@
-part of '../../main.dart';
+part of carp_study_app;
 
 class CameraPage extends StatefulWidget {
   final VideoUserTask videoUserTask;
@@ -107,11 +107,12 @@ class CameraPageState extends State<CameraPage> {
                       var picture = await _cameraController!.takePicture();
                       widget.videoUserTask.onPictureCapture(picture);
                       if (context.mounted) {
-                        await Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => DisplayPicturePage(
-                                  file: picture,
-                                  videoUserTask: widget.videoUserTask,
-                                )));
+                        await Navigator.of(context)
+                            .push(MaterialPageRoute<void>(
+                                builder: (context) => DisplayPicturePage(
+                                      file: picture,
+                                      videoUserTask: widget.videoUserTask,
+                                    )));
                       }
 
                       setState(() {
@@ -140,7 +141,7 @@ class CameraPageState extends State<CameraPage> {
                         widget.videoUserTask.onRecordStop(video);
                         if (context.mounted) {
                           await Navigator.of(context).push(
-                            MaterialPageRoute(
+                            MaterialPageRoute<void>(
                                 builder: (context) => DisplayPicturePage(
                                     file: video,
                                     isVideo: true,
@@ -213,7 +214,7 @@ class CameraPageState extends State<CameraPage> {
     );
   }
 
-  Future _showCancelConfirmationDialog() {
+  Future<void> _showCancelConfirmationDialog() {
     RPLocalizations locale = RPLocalizations.of(context)!;
 
     return showDialog(

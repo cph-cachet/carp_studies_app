@@ -1,6 +1,7 @@
-part of '../../main.dart';
+part of carp_study_app;
 
 class MessageDetailsPage extends StatelessWidget {
+  static const String route = '/message';
   final String messageId;
 
   const MessageDetailsPage({

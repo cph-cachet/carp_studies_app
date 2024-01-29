@@ -1,16 +1,16 @@
-part of '../../main.dart';
+part of carp_study_app;
 
 class InvitationListPage extends StatelessWidget {
-  final InvitationsListViewModel model;
-
-  const InvitationListPage(this.model, {super.key});
+  static const String route = '/invitations';
+  final InvitationsViewModel model;
+  const InvitationListPage({super.key, required this.model});
 
   @override
   Widget build(BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;
     return Scaffold(
       body: FutureBuilder<List<ActiveParticipationInvitation>>(
-          future: model.invitations,
+          future: bloc.backend.getInvitations(),
           builder: (context, snapshot) {
             Widget child;
 
@@ -50,16 +50,14 @@ class InvitationListPage extends StatelessWidget {
                   pinned: true,
                   stretch: true,
                   stretchTriggerOffset: 20,
-                  onStretchTrigger: () async {
-                    await model.invitations;
-                  },
+                  onStretchTrigger: () async => bloc.backend.getInvitations(),
                   leading: IconButton(
                     icon: const Icon(Icons.arrow_back),
                     onPressed: () {
                       if (context.canPop()) {
                         context.pop();
                       } else {
-                        context.go('/login');
+                        context.go(LoginPage.route);
                       }
                     },
                   ),
@@ -84,8 +82,8 @@ class InvitationCard extends StatelessWidget {
   Widget build(BuildContext context) => Card(
         child: InkWell(
           onTap: () {
-            context
-                .push('/invitation/${invitation.participation.participantId}');
+            context.push(
+                '${InvitationDetailsPage.route}/${invitation.participation.participantId}');
           },
           child: Padding(
             padding: const EdgeInsets.all(16.0),

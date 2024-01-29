@@ -1,7 +1,7 @@
 name: carp_study_app
 description: The generic CARP study app.
 publish_to: 'none'
-version: 1.2.0
+version: 1.4.0
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
@@ -41,20 +41,50 @@ dependencies:
 
   flutter_localizations:
     sdk: flutter
-  fl_chart: ^0.65.0
+  fl_chart: ^0.66.0
   google_fonts: ^6.1.0
-  go_router: ^12.1.1
+  go_router: ^13.0.0
   flutter_svg: ^2.0.4
   flutter_blue_plus: ^1.15.5
   intl: ^0.18.1
   permission_handler: ^11.0.1
 
+# Overriding carp libraries to use the local copy
+dependency_overrides:
+  # carp_serializable:
+  #   path: ../../carp_serializable/
+  # carp_core:
+  #   path: ../../carp_core/
+  # carp_mobile_sensing:
+  #   path: ../carp/carp.sensing-flutter/carp_mobile_sensing/
+  # carp_context_package:
+  #   path: ../../packages/carp_context_package/
+  # carp_connectivity_package:
+  #   path: ../../packages/carp_connectivity_package/
+  # carp_communication_package:
+  #   path: ../../packages/carp_communication_package/
+  # carp_audio_package:
+  #   path: ../../packages/carp_audio_package/
+  # carp_apps_package:
+  #   path: ../../packages/carp_apps_package/
+  # carp_esense_package:
+  #   path: ../../packages/carp_esense_package/
+  # carp_polar_package:
+  #   path: ../carp/carp.sensing-flutter/packages/carp_polar_package/
+  # carp_movisens_package:
+  #   path: ../../packages/carp_movisens_package/
+  # carp_health_package:
+  #   path: ../../packages/carp_health_package/
+  # carp_backend:
+  #   path: ../carp/carp.sensing-flutter/backends/carp_backend/
+  # carp_webservices:
+  #   path: ../../backends/carp_webservices/
+
+
 dev_dependencies:
   # flutter_test:
   #   sdk: flutter
 
-  #  auto generate json code (.g files) with:
-  #    flutter pub run build_runner build --delete-conflicting-outputs
   test: any
   json_serializable: any
   build_runner: any
@@ -63,9 +93,6 @@ dev_dependencies:
   mockito: any
 
   flutter_lints: any
-
-# For information on the generic Dart part of this file, see the
-# following page: https://dart.dev/tools/pub/pubspec
 
 # Is used to change the default app launch icons on iOS and Android.
 # To install:
@@ -80,14 +107,9 @@ flutter_icons:
   image_path: "assets/logo.png"
   # image_path: "assets/app_icon.png"
 
-# The following section is specific to Flutter.
 flutter:
-  # The following line ensures that the Material Icons font is
-  # included with your application, so that you can use the icons in
-  # the material Icons class.
   uses-material-design: true
 
-  # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/
     - assets/instructions/
@@ -97,27 +119,5 @@ flutter:
     - assets/carp_logo.png
     - assets/logo.png
 
-  # An image asset can refer to one or more resolution-specific "variants", see
-  # https://flutter.dev/assets-and-images/#resolution-aware.
-
-  # For details regarding adding assets from package dependencies, see
-  # https://flutter.dev/assets-and-images/#from-packages
-
-  # To add custom fonts to your application, add a fonts section here,
-  # in this "flutter" section. Each entry in this list should have a
-  # "family" key with the font family name, and a "fonts" key with a
-  # list giving the asset and other descriptors for the font. For
-  # example:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
-  #   - family: Trajan Pro
-  #     fonts:
-  #       - asset: fonts/TrajanPro.ttf
-  #       - asset: fonts/TrajanPro_Bold.ttf
-  #         weight: 700
-  #
-  # For details regarding fonts from package dependencies,
-  # see https://flutter.dev/custom-fonts/#from-packages
+  #  auto generate json code (.g files) with:
+  #    dart run build_runner build --delete-conflicting-outputs

@@ -1,7 +1,7 @@
-part of '../../main.dart';
+part of carp_study_app;
 
 class ConnectionDialog extends StatefulWidget {
-  final DeviceModel device;
+  final DeviceViewModel device;
 
   const ConnectionDialog({super.key, required this.device});
 
@@ -100,10 +100,7 @@ class _ConnectionDialogState extends State<ConnectionDialog> {
         buildTranslatedButton("pages.devices.connection.done", () {
           FlutterBluePlus.stopScan();
           if (selectedDevice != null) {
-            widget.device.connectToDevice(
-              selectedDevice!,
-              widget.device.deviceManager,
-            );
+            widget.device.connectToDevice(selectedDevice!);
             context.pop(true);
           }
         }),
@@ -114,7 +111,7 @@ class _ConnectionDialogState extends State<ConnectionDialog> {
 
   Widget stepContent(
     CurrentStep currentStep,
-    DeviceModel device,
+    DeviceViewModel device,
   ) {
     if (currentStep == CurrentStep.scan) {
       return scanWidget(device, context);
@@ -125,7 +122,7 @@ class _ConnectionDialogState extends State<ConnectionDialog> {
     }
   }
 
-  Widget scanWidget(DeviceModel device, BuildContext context) {
+  Widget scanWidget(DeviceViewModel device, BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;
 
     return Column(
@@ -174,7 +171,7 @@ class _ConnectionDialogState extends State<ConnectionDialog> {
     );
   }
 
-  Widget connectionInstructions(DeviceModel device, BuildContext context) {
+  Widget connectionInstructions(DeviceViewModel device, BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;
     return Column(
       children: [

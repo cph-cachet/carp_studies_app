@@ -1,7 +1,8 @@
-part of '../../main.dart';
+part of carp_study_app;
 
 // todo change text for survey progress
 class DataVisualizationPage extends StatefulWidget {
+  static const String route = '/data';
   final DataVisualizationPageViewModel model;
   const DataVisualizationPage(this.model, {super.key});
 
@@ -64,7 +65,7 @@ class _DataVisualizationPageState extends State<DataVisualizationPage> {
     final List<Widget> widgets = [];
 
     // Show user task progress, if study has any tasks.
-    if (bloc.hasSurveys()) {
+    if (bloc.hasUserTasks()) {
       widgets.add(
           StudyProgressCardWidget(widget.model.studyProgressCardDataModel));
     }
@@ -76,7 +77,7 @@ class _DataVisualizationPageState extends State<DataVisualizationPage> {
     }
 
     // check to show surveys stats
-    if (bloc.hasSurveys()) {
+    if (bloc.hasUserTasks()) {
       widgets.add(SurveyCard(widget.model.surveysCardDataModel));
     }
 

@@ -5,7 +5,7 @@
  * found in the LICENSE file.
  */
 
-part of '../main.dart';
+part of carp_study_app;
 
 /// This class implements the sensing layer.
 ///
@@ -37,7 +37,7 @@ class Sensing {
   StudyDeploymentStatus? get status => _status;
 
   /// The role name of this device in the deployed study.
-  String? get deviceRolename => _study?.deviceRoleName;
+  String? get deviceRoleName => _study?.deviceRoleName;
 
   /// The study deployment id of the deployment running on this phone.
   String? get studyDeploymentId => _study?.studyDeploymentId;
@@ -68,7 +68,7 @@ class Sensing {
     //SamplingPackageRegistry.register(CommunicationSamplingPackage());
     SamplingPackageRegistry().register(MediaSamplingPackage());
     SamplingPackageRegistry().register(SurveySamplingPackage());
-    SamplingPackageRegistry().register(HealthSamplingPackage());
+    //SamplingPackageRegistry.register(HealthSamplingPackage());
     SamplingPackageRegistry().register(ESenseSamplingPackage());
     SamplingPackageRegistry().register(PolarSamplingPackage());
 
@@ -115,7 +115,7 @@ class Sensing {
     // Define the study and add it to the client.
     _study = await SmartPhoneClientManager().addStudy(
       bloc.studyDeploymentId!,
-      bloc.deviceRolename!,
+      bloc.deviceRoleName!,
     );
 
     // Get the study controller and try to deploy the study.

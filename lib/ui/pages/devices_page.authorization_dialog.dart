@@ -1,7 +1,7 @@
-part of '../../main.dart';
+part of carp_study_app;
 
 class AuthorizationDialog extends StatelessWidget {
-  final DeviceModel device;
+  final DeviceViewModel device;
 
   const AuthorizationDialog({super.key, required this.device});
 
@@ -20,7 +20,8 @@ class AuthorizationDialog extends StatelessWidget {
         ));
   }
 
-  Widget authorizationInstructions(BuildContext context, DeviceModel device) {
+  Widget authorizationInstructions(
+      BuildContext context, DeviceViewModel device) {
     RPLocalizations locale = RPLocalizations.of(context)!;
     return Column(
       children: [

@@ -1,8 +1,9 @@
-part of '../../main.dart';
+part of carp_study_app;
 
 class StudyPage extends StatefulWidget {
+  static const String route = '/study';
   final StudyPageViewModel model;
-  const StudyPage(this.model, {super.key});
+  const StudyPage({super.key, required this.model});
 
   @override
   StudyPageState createState() => StudyPageState();
@@ -35,7 +36,7 @@ class StudyPageState extends State<StudyPage> {
                               context,
                               widget.model.studyDescriptionMessage,
                               onTap: () {
-                                context.push('/studyDetails');
+                                context.push(StudyDetailsPage.route);
                               },
                             );
                           }
@@ -53,8 +54,11 @@ class StudyPageState extends State<StudyPage> {
     );
   }
 
-  Widget _aboutStudyCard(BuildContext context, Message message,
-      {Function? onTap}) {
+  Widget _aboutStudyCard(
+    BuildContext context,
+    Message message, {
+    Function? onTap,
+  }) {
     RPLocalizations locale = RPLocalizations.of(context)!;
 
     // Initialization the language of the tiemago package
@@ -67,7 +71,7 @@ class StudyPageState extends State<StudyPage> {
           if (onTap != null) {
             onTap();
           } else {
-            context.push('/message/${message.id}');
+            context.push('${MessageDetailsPage.route}/${message.id}');
           }
         },
         child: Padding(

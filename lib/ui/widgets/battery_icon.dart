@@ -1,4 +1,4 @@
-part of '../../main.dart';
+part of carp_study_app;
 
 class BatteryPercentage extends StatelessWidget {
   const BatteryPercentage({
@@ -46,9 +46,7 @@ class BatteryPercentage extends StatelessWidget {
         ),
       ),
       const SizedBox(width: 4),
-      Text(
-        "$batteryLevel%",
-      )
+      Text("$batteryLevel%")
     ]);
   }
 }

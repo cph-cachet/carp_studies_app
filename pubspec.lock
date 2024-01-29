@@ -197,10 +197,10 @@ packages:
     dependency: transitive
     description:
       name: camera_avfoundation
-      sha256: "7d0763dfcbf060f56aa254a68c103210280bee9e97bbe4fdef23e257a4f70ab9"
+      sha256: "608b56b0880722f703871329c4d7d4c2f379c8e2936940851df7fc041abc6f51"
       url: "https://pub.dev"
     source: hosted
-    version: "0.9.14"
+    version: "0.9.13+10"
   camera_platform_interface:
     dependency: transitive
     description:
@@ -277,18 +277,18 @@ packages:
     dependency: "direct main"
     description:
       name: carp_mobile_sensing
-      sha256: "13c4269321777b48beb7f0022d4e1ef124329c3b3da412da523f46fe2e12f8d4"
+      sha256: "1bc8d19d1b528c87abbf0a7624f356f8c77b09d950c563fef41da4d78b02cd3a"
       url: "https://pub.dev"
     source: hosted
-    version: "1.4.1"
+    version: "1.4.2"
   carp_polar_package:
     dependency: "direct main"
     description:
       name: carp_polar_package
-      sha256: "6956a7a5bc0144ae406bfc476d1c6e87dd5ce47153541fc9d0dddd148a977dee"
+      sha256: "11bc4ccbe9ad223fd0623fc5360967e819c00eb23db2525e03f883ade8a18aa2"
       url: "https://pub.dev"
     source: hosted
-    version: "1.4.0"
+    version: "1.4.1"
   carp_serializable:
     dependency: "direct main"
     description:
@@ -541,10 +541,10 @@ packages:
     dependency: "direct main"
     description:
       name: fl_chart
-      sha256: "5a74434cc83bf64346efb562f1a06eefaf1bcb530dc3d96a104f631a1eff8d79"
+      sha256: b5e2b0f13d93f8c532b5a2786bfb44580de1f50b927bf95813fa1af617e9caf8
       url: "https://pub.dev"
     source: hosted
-    version: "0.65.0"
+    version: "0.66.1"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -562,10 +562,10 @@ packages:
     dependency: transitive
     description:
       name: flutter_appauth
-      sha256: d2a14491357a9af09e65133bcf82a1cddb5463245c9645c5d532123c6e2a0735
+      sha256: "4ad7d446888b1486642226db6aa04ffb4651d76388715aba6e6e572ebeb915c3"
       url: "https://pub.dev"
     source: hosted
-    version: "6.0.3"
+    version: "6.0.4"
   flutter_appauth_platform_interface:
     dependency: transitive
     description:
@@ -578,10 +578,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_blue_plus
-      sha256: "280fb9bd30fba07072e43c7ae77f1dc46cbfce2a4e426871565a88af60bb740d"
+      sha256: "3f7c5b9402919cfb16a6fc219adb9ed4ca2da77dceb9214732c77e58cf9569e8"
       url: "https://pub.dev"
     source: hosted
-    version: "1.31.10"
+    version: "1.31.12"
   flutter_launcher_icons:
     dependency: "direct main"
     description:
@@ -729,10 +729,10 @@ packages:
     dependency: "direct main"
     description:
       name: go_router
-      sha256: c5fa45fa502ee880839e3b2152d987c44abae26d064a2376d4aad434cf0f7b15
+      sha256: "07ee2436909f749d606f53521dc1725dd738dc5196e5ff815bc254253c594075"
       url: "https://pub.dev"
     source: hosted
-    version: "12.1.3"
+    version: "13.1.0"
   google_fonts:
     dependency: "direct main"
     description:
@@ -1534,18 +1534,18 @@ packages:
     dependency: transitive
     description:
       name: sqflite
-      sha256: c2c32eb0c74021d987336522acc3b6bf0082fbd0c540c36a9cf4ddb8ba891ddc
+      sha256: a9016f495c927cb90557c909ff26a6d92d9bd54fc42ba92e19d4e79d61e798c6
       url: "https://pub.dev"
     source: hosted
-    version: "2.3.1"
+    version: "2.3.2"
   sqflite_common:
     dependency: transitive
     description:
       name: sqflite_common
-      sha256: bb4738f15b23352822f4c42a531677e5c6f522e079461fd240ead29d8d8a54a6
+      sha256: "28d8c66baee4968519fb8bd6cdbedad982d6e53359091f0b74544a9f32ec72d5"
       url: "https://pub.dev"
     source: hosted
-    version: "2.5.0+2"
+    version: "2.5.3"
   stack_trace:
     dependency: transitive
     description:
@@ -1646,10 +1646,10 @@ packages:
     dependency: "direct main"
     description:
       name: timeago
-      sha256: c44b80cbc6b44627c00d76960f2af571f6f50e5dbedef4d9215d455e4335165b
+      sha256: d3204eb4c788214883380253da7f23485320a58c11d145babc82ad16bf4e7764
       url: "https://pub.dev"
     source: hosted
-    version: "3.6.0"
+    version: "3.6.1"
   timezone:
     dependency: transitive
     description:
@@ -1915,5 +1915,5 @@ packages:
     source: hosted
     version: "3.1.2"
 sdks:
-  dart: ">=3.2.3 <4.0.0"
-  flutter: ">=3.16.6"
+  dart: ">=3.2.0 <4.0.0"
+  flutter: ">=3.16.0"

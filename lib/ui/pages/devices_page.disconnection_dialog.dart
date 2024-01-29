@@ -1,7 +1,7 @@
-part of '../../main.dart';
+part of carp_study_app;
 
 class DisconnectionDialog extends StatelessWidget {
-  final DeviceModel device;
+  final DeviceViewModel device;
 
   const DisconnectionDialog({super.key, required this.device});
 
@@ -19,7 +19,7 @@ class DisconnectionDialog extends StatelessWidget {
         ));
   }
 
-  Widget disconnectBluetooth(BuildContext context, DeviceModel device) {
+  Widget disconnectBluetooth(BuildContext context, DeviceViewModel device) {
     RPLocalizations locale = RPLocalizations.of(context)!;
 
     return Column(

@@ -1,6 +1,7 @@
-part of '../../main.dart';
+part of carp_study_app;
 
 class ProfilePage extends StatefulWidget {
+  static const String route = '/profile';
   final ProfilePageViewModel model;
   const ProfilePage(this.model, {super.key});
 
@@ -62,9 +63,9 @@ class ProfilePageState extends State<ProfilePage> {
                             style: profileSectionStyle.copyWith(
                                 color: Theme.of(context).primaryColor)),
                         Text(
-                          widget.model.userid,
+                          widget.model.userId,
                           style: profileTitleStyle,
-                          textScaleFactor: 0.75,
+                          textScaler: TextScaler.linear(0.75),
                         ),
                       ],
                     ),
@@ -113,7 +114,7 @@ class ProfilePageState extends State<ProfilePage> {
                         Text(
                           widget.model.studyDeploymentId,
                           style: profileTitleStyle,
-                          textScaleFactor: 0.75,
+                          textScaler: TextScaler.linear(0.75),
                         ),
                       ],
                     ),
@@ -213,10 +214,10 @@ class ProfilePageState extends State<ProfilePage> {
     } finally {}
   }
 
-  Future _showLogoutConfirmationDialog() {
+  Future<void> _showLogoutConfirmationDialog() {
     RPLocalizations locale = RPLocalizations.of(context)!;
 
-    return showDialog(
+    return showDialog<bool>(
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
@@ -243,10 +244,10 @@ class ProfilePageState extends State<ProfilePage> {
     });
   }
 
-  Future _showLeaveStudyConfirmationDialog() {
+  Future<void> _showLeaveStudyConfirmationDialog() {
     RPLocalizations locale = RPLocalizations.of(context)!;
 
-    return showDialog(
+    return showDialog<bool>(
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
@@ -266,7 +267,7 @@ class ProfilePageState extends State<ProfilePage> {
       },
     ).then((value) {
       if (value == true) {
-        bloc.leaveStudy().then((_) => context.go('/invitations'));
+        bloc.leaveStudy().then((_) => context.go(InvitationListPage.route));
       }
     });
   }

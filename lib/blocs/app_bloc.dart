@@ -1,30 +1,50 @@
-part of '../main.dart';
+part of carp_study_app;
 
+/// The state of the [StudyAppBLoC].
 enum StudyAppState {
-  /// The BLOC is created (initial state)
+  /// The BLoC is created but not ready for use.
   created,
 
-  /// The BLOC is initialized via the [initialized] method.
+  /// The BLoC is initialized via the [initialized] method.
   initialized,
 
-  /// The BLOC is in the process of being configured.
+  /// The BLoC is in the process of being configured with a study.
   configuring,
 
-  /// The BLOC is configured and ready to use.
+  /// The BLoC is configured with a study and ready to use.
   configured,
 }
 
-class StudyAppBLoC {
+/// How to deploy a study.
+enum DeploymentMode {
+  /// Use a local study protocol & deployment and store data locally on the phone.
+  local,
+
+  /// Use the CAWS production server to get the study deployment and store data.
+  production,
+
+  /// Use the CAWS staging server to get the study deployment and store data.
+  staging,
+
+  /// Use the CAWS test server to get the study deployment and store data.
+  test,
+
+  /// Use the CAWS development server to get the study deployment and store data.
+  dev,
+}
+
+/// The main Business Logic Component (BLoC) for the entire app.
+///
+/// Works as a singleton and can always be accessed via the global `bloc`
+/// variable.
+///
+/// Works as a [ChangeNotifier] and will notify its listeners on important
+/// changes. Is also stateful and has a [state] and state changes are propagated
+/// through the [stateStream].
+class StudyAppBLoC extends ChangeNotifier {
   StudyAppState _state = StudyAppState.created;
   final CarpBackend _backend = CarpBackend();
   final CarpStudyAppViewModel _appViewModel = CarpStudyAppViewModel();
-  StudyDeploymentStatus? _status;
-  final StreamController<StudiesAppState> _stateStream =
-      StreamController.broadcast();
-
-  get stateStream => _stateStream;
-
-  List<ActiveParticipationInvitation> invitations = [];
 
   List<Message> _messages = [];
   final StreamController<int> _messageStreamController =
@@ -35,7 +55,9 @@ class StudyAppBLoC {
   /// The data send on the stream is the number of available messages.
   Stream<int> get messageStream => _messageStreamController.stream;
 
+  /// The state of this BloC.
   StudyAppState get state => _state;
+
   bool get isInitialized => _state.index >= 1;
   bool get isConfiguring => _state.index >= 2;
   bool get isConfigured => _state.index >= 3;
@@ -43,17 +65,17 @@ class StudyAppBLoC {
   /// Debug level for the app and CAMS.
   DebugLevel debugLevel;
 
-  /// What kind of deployment are we running - dev, staging, test or production?
+  /// What kind of deployment are we running?
   final DeploymentMode deploymentMode;
 
   // ScaffoldMessenger for showing snack bars
   final _scaffoldKey = GlobalKey<ScaffoldMessengerState>();
-  get scaffoldKey => _scaffoldKey;
-  get scaffoldMessengerState => scaffoldKey.currentState;
+  GlobalKey<ScaffoldMessengerState> get scaffoldKey => _scaffoldKey;
+  State? get scaffoldMessengerState => scaffoldKey.currentState;
 
   /// Create the BLoC for the app specifying:
   ///  * debug level
-  ///  * deployment mode (production, test, dev)
+  ///  * deployment mode (production, test, dev, local)
   StudyAppBLoC({
     this.debugLevel = DebugLevel.info,
     this.deploymentMode = DeploymentMode.dev,
@@ -72,38 +94,31 @@ class StudyAppBLoC {
   /// Typical set based on an invitation.
   /// `null` if no deployment have been specified.
   String? get studyId => LocalSettings().studyId;
-  set studyId(String? id) {
-    LocalSettings().studyId = id;
-    backend.studyId = id;
-  }
+  set studyId(String? id) => LocalSettings().studyId = id;
 
   /// The id of the currently running study deployment.
   /// Typical set based on an invitation.
   /// `null` if no deployment have been specified.
   String? get studyDeploymentId => LocalSettings().studyDeploymentId;
-  set studyDeploymentId(String? id) {
-    LocalSettings().studyDeploymentId = id;
-    backend.studyDeploymentId = id;
-  }
+  set studyDeploymentId(String? id) => LocalSettings().studyDeploymentId = id;
 
   /// The role name of the device in the currently running study deployment.
   /// Typical set based on an invitation.
   /// `null` if no deployment have been specified.
-  String? get deviceRolename => LocalSettings().deviceRolename;
-  set deviceRolename(String? name) => LocalSettings().deviceRolename = name;
+  String? get deviceRoleName => LocalSettings().deviceRoleName;
+  set deviceRoleName(String? name) => LocalSettings().deviceRoleName = name;
+
+  /// Has a study already been deployed on this phone?
+  bool get hasStudyBeenDeployed => studyDeploymentId != null;
 
   /// The deployment running on this phone.
   SmartphoneDeployment? get deployment => Sensing().controller?.deployment;
-
-  /// Get the latest status of the study deployment.
-  StudyDeploymentStatus? get status => _status;
 
   /// When was this study deployed on this phone.
   DateTime? get studyStartTimestamp => deployment?.deployed;
 
   /// The overall data model for this app
   CarpStudyAppViewModel get appViewModel => _appViewModel;
-  // Future<void>? dataPageInitialization;
 
   /// Initialize this BLOC. Called before being used for anything.
   Future<void> initialize() async {
@@ -115,26 +130,34 @@ class StudyAppBLoC {
 
     await backend.initialize();
 
-    stateStream.sink.add(StudiesAppState.initialized);
-    info('$runtimeType initialized.');
+    _state = StudyAppState.initialized;
+    notifyListeners();
+    debug('$runtimeType initialized.');
   }
 
   /// Set the active study in the app based on an [invitation].
   ///
-  /// If the [context] is provided, the translation for this study is re-loaded
+  /// If a [context] is provided, the translation for this study is re-loaded
   /// and applied in the app.
   void setStudyInvitation(
     ActiveParticipationInvitation invitation, [
     BuildContext? context,
   ]) {
-    bloc.studyId = invitation.studyId;
-    bloc.studyDeploymentId = invitation.studyDeploymentId;
-    bloc.deviceRolename = invitation.assignedDevices?.first.device.roleName;
+    studyId = invitation.studyId;
+    studyDeploymentId = invitation.studyDeploymentId;
+    deviceRoleName = invitation.assignedDevices?.first.device.roleName;
+
+    // make sure that the app is configured with the study IDs in order to access
+    // the correct resources (like translations etc.) on CAWS.
+    backend.app?.studyId = studyId;
+    backend.app?.studyDeploymentId = studyDeploymentId;
+
+    notifyListeners();
 
     info('Invitation received - '
         'study id: ${bloc.studyId}, '
         'deployment id: ${bloc.studyDeploymentId}, '
-        'role name: ${bloc.deviceRolename}');
+        'role name: ${bloc.deviceRoleName}');
 
     if (context != null) CarpStudyApp.reloadLocale(context);
   }
@@ -148,7 +171,7 @@ class StudyAppBLoC {
     // early out if already configured
     if (isConfiguring) return;
 
-    stateStream.sink.add(StudiesAppState.configuring);
+    _state = StudyAppState.configuring;
 
     // set up and initialize sensing
     await Sensing().initialize();
@@ -159,8 +182,6 @@ class StudyAppBLoC {
     // initialize the UI data models
     appViewModel.init(Sensing().controller!);
 
-    debug('$runtimeType - done init() of view model');
-
     // set up the messaging part
     messageManager.initialize().then(
       (value) {
@@ -170,7 +191,8 @@ class StudyAppBLoC {
       },
     );
 
-    debug('$runtimeType configuration done.');
+    info('$runtimeType - Study configuration done.');
+    notifyListeners();
     _state = StudyAppState.configured;
   }
 
@@ -181,7 +203,7 @@ class StudyAppBLoC {
           permission == Permission.locationWhenInUse ||
           permission == Permission.locationAlways);
 
-  /// Configuration of permissions.
+  /// Configuration of location permissions.
   ///
   /// If a [context] is provided, this method also opens the [LocationUsageDialog]
   /// if location permissions are needed and not yet granted.
@@ -229,15 +251,16 @@ class StudyAppBLoC {
       _messages = await messageManager.getMessages();
       _messages.sort((m1, m2) => m1.timestamp.compareTo(m2.timestamp));
       info('Message list refreshed - count: ${_messages.length}');
-      _messageStreamController.add(_messages.length);
     } catch (error) {
       warning('Error getting messages - $error');
     }
+    _messageStreamController.add(_messages.length);
   }
 
   /// The signed in user. Returns null if no user is signed in.
   CarpUser? get user => backend.user;
 
+  /// The username of the user running this study.
   String get username => (user != null)
       ? user!.username
       : Sensing().controller!.deployment!.userId!;
@@ -269,7 +292,7 @@ class StudyAppBLoC {
   }
 
   /// Does this [deployment] have any user tasks?
-  bool hasSurveys() => (deployment == null)
+  bool hasUserTasks() => (deployment == null)
       ? false
       : deployment!.tasks.whereType<AppTask>().isNotEmpty;
 
@@ -286,8 +309,8 @@ class StudyAppBLoC {
       : [];
 
   /// Get a list of running devices
-  Iterable<DeviceModel> get runningDevices =>
-      Sensing().runningDevices!.map((device) => DeviceModel(device));
+  Iterable<DeviceViewModel> get runningDevices =>
+      Sensing().runningDevices!.map((device) => DeviceViewModel(device));
 
   /// Start sensing.
   Future<void> start() async {
@@ -296,11 +319,15 @@ class StudyAppBLoC {
     if (!Sensing().isRunning) Sensing().controller?.start();
   }
 
-  // Stop sensing.
+  /// Stop sensing.
   void stop() => Sensing().controller?.executor.stop();
 
-  // Dispose the entire sensing.
-  void dispose() => Sensing().controller?.dispose();
+  /// Dispose the entire sensing.
+  @override
+  void dispose() {
+    super.dispose();
+    Sensing().controller?.dispose();
+  }
 
   /// Add a [Measurement] object to the stream of events.
   void addMeasurement(Measurement measurement) =>
@@ -327,6 +354,7 @@ class StudyAppBLoC {
     hasInformedConsentBeenAccepted = false;
     await LocalSettings().eraseStudyIds();
     await Sensing().removeStudy();
+    notifyListeners();
   }
 
   /// Leave the study and also sign out the user.
@@ -337,5 +365,6 @@ class StudyAppBLoC {
   Future<void> leaveStudyAndSignOut() async {
     await leaveStudy();
     await backend.signOut();
+    notifyListeners();
   }
 }

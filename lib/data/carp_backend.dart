@@ -1,14 +1,18 @@
-part of '../main.dart';
+part of carp_study_app;
 
+/// Handles a connection to the CAWS backend, including configuring the CAWS [app],
+/// authentication, storing study IDs, and uploading informed consent.
+///
+/// Use as a singleton ` CarpBackend()`.
 class CarpBackend {
   /// The URI of the CARP Web Service (CAWS) host.
-  static const String cawsUri = "https://cans.cachet.dk";
+  static const String cawsUri = 'carp.computerome.dk';
 
   /// The URL of the CARP Privacy Policy for this app.
   static const String carpPrivacyUrl =
       "https://carp.cachet.dk/privacy-policy-app";
 
-  /// The URL of the official CARP Web Site.
+  /// The URL of the official CARP web site.
   static const String carpWebsiteUrl = "https://carp.cachet.dk";
 
   static const Map<DeploymentMode, String> uris = {
@@ -19,20 +23,17 @@ class CarpBackend {
   };
 
   static final CarpBackend _instance = CarpBackend._();
-
-  String get clientId => "carp";
-  String get clientSecret => "carp";
-
-  /// The CAWS app configuration.
-  CarpApp? app;
-
-  /// Has the user been authenticated?
-  bool get isAuthenticated => CarpService().authenticated;
+  factory CarpBackend() => _instance;
+  CarpBackend._() : super() {
+    // make sure that the json functions are loaded
+    CarpMobileSensing.ensureInitialized();
+    CognitionPackage.ensureInitialized();
+  }
 
   /// The URI of the CANS server - depending on deployment mode.
   Uri get uri => Uri(
         scheme: 'https',
-        host: 'carp.computerome.dk',
+        host: cawsUri,
         pathSegments: [
           'auth',
           uris[bloc.deploymentMode]!,
@@ -41,31 +42,13 @@ class CarpBackend {
         ],
       );
 
-  CarpUser? get user => LocalSettings().user;
-  set user(CarpUser? user) => LocalSettings().user = user;
+  /// The CAWS app configuration.
+  CarpApp? app;
 
-  String? get username => user?.username;
-  OAuthToken? get oauthToken => user?.token;
-
-  String? get studyId => bloc.studyId;
-  set studyId(String? id) {
-    if (CarpService().isConfigured) CarpService().app.studyId = id;
-  }
-
-  String? get studyDeploymentId => bloc.studyDeploymentId;
-  set studyDeploymentId(String? id) {
-    if (CarpService().isConfigured) CarpService().app.studyDeploymentId = id;
-  }
-
-  CarpBackend._() : super() {
-    // make sure that the json functions are loaded
-    CarpMobileSensing.ensureInitialized();
-    CognitionPackage.ensureInitialized();
-  }
-
-  factory CarpBackend() => _instance;
-
+  /// Initialize this backend. Must be called before used.
   Future<void> initialize() async {
+    info('$runtimeType - initializing');
+
     app = CarpApp(
       name: "CAWS @ DTU",
       uri: uri.replace(pathSegments: [uris[bloc.deploymentMode]!]),
@@ -77,19 +60,22 @@ class CarpBackend {
         '.well-known',
         'openid-configuration'
       ]),
-      studyId: studyId,
-      studyDeploymentId: studyDeploymentId,
+      studyId: bloc.studyId,
+      studyDeploymentId: bloc.studyDeploymentId,
     );
 
     CarpService().configure(app!);
+
+    // check if there is a user stored locally on the phone
     if (user != null) {
+      info('$runtimeType - User stored locally - user: $user');
       CarpService().currentUser = user;
       if (oauthToken!.hasExpired) {
         try {
           await refresh();
         } catch (error) {
           CarpService().currentUser = null;
-          warning('Failed to refresh access token - $error');
+          warning('$runtimeType - Failed to refresh access token - $error');
         }
       }
     }
@@ -99,24 +85,61 @@ class CarpBackend {
     info('$runtimeType initialized - app: $app');
   }
 
+  /// Authenticate using a web view.
   Future<CarpUser> authenticate() async {
-    bloc.stateStream.sink.add(StudiesAppState.authenticating);
     user = await CarpService().authenticate();
-
-    bloc.stateStream.sink.add(StudiesAppState.accessTokenRetrieved);
-
-    return user as CarpUser;
+    info('$runtimeType - User authenticated - user: $user');
+    debug(toJsonString(user));
+    return user!;
   }
 
+  /// Refresh authentication token based on the refresh token.
   Future<CarpUser> refresh() async {
-    bloc.stateStream.sink.add(StudiesAppState.authenticating);
     user = await CarpService().refresh();
-
-    bloc.stateStream.sink.add(StudiesAppState.accessTokenRetrieved);
-
-    return user as CarpUser;
+    info('$runtimeType - User authenticated via refresh - user: $user');
+    debug(toJsonString(user));
+    return user!;
   }
 
+  /// Sign out from CAWS and erase all local authentication information.
+  Future<void> signOut() async {
+    if (CarpService().authenticated) await CarpService().logout();
+    await LocalSettings().eraseAuthCredentials();
+  }
+
+  /// Has the user been authenticated?
+  bool get isAuthenticated => CarpService().authenticated;
+
+  /// The user authenticated, if any.
+  CarpUser? get user => LocalSettings().user;
+  set user(CarpUser? user) => LocalSettings().user = user;
+
+  /// The user name of the user, if authenticated.
+  String? get username => user?.username;
+  OAuthToken? get oauthToken => user?.token;
+
+  /// The list of invitation for this user.
+  List<ActiveParticipationInvitation> invitations = [];
+
+  Future<List<ActiveParticipationInvitation>> getInvitations() async {
+    CarpParticipationService().configureFrom(CarpService());
+
+    invitations =
+        await CarpParticipationService().getActiveParticipationInvitations();
+
+    // Filter the invitations to only include those that
+    // have a smartphone as a device in [ActiveParticipationInvitation.assignedDevices] list
+    // (i.e. the invitation is for a smartphone).
+    // This is done to avoid showing invitations for other devices (e.g. [WebBrowser]).
+    invitations.removeWhere((invitation) =>
+        invitation.assignedDevices
+            ?.any((device) => device.device is! Smartphone) ??
+        false);
+
+    return invitations;
+  }
+
+  /// Upload the result of an informed consent flow.
   Future<ConsentDocument?> uploadInformedConsent(
       RPTaskResult taskResult) async {
     RPConsentSignatureResult signatureResult =
@@ -136,10 +159,5 @@ class CarpBackend {
     }
 
     return document;
-  }
-
-  Future<void> signOut() async {
-    if (CarpService().authenticated) await CarpService().logout();
-    await LocalSettings().eraseAuthCredentials();
   }
 }

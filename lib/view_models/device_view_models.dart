@@ -1,4 +1,4 @@
-part of '../main.dart';
+part of carp_study_app;
 
 enum DeviceType {
   phone,
@@ -7,25 +7,27 @@ enum DeviceType {
   scale,
   home,
   speaker,
-  heartrateMonitor,
+  heartrate,
   unknown,
 }
 
-class DevicesPageViewModel extends ViewModel {
-  final List<DeviceModel> _devices = [];
-  List<DeviceModel> get devices => _devices;
+/// The view model for the [DeviceListPage].
+class DeviceListPageViewModel extends ViewModel {
+  final List<DeviceViewModel> _devices = [];
+  List<DeviceViewModel> get devices => _devices;
 }
 
-class DeviceModel {
+/// The view model for each device - [DeviceManager].
+class DeviceViewModel extends ViewModel {
   DeviceManager deviceManager;
-  DeviceModel(this.deviceManager) : super();
+  DeviceViewModel(this.deviceManager) : super();
 
   String? get type => deviceManager.type;
   DeviceStatus get status => deviceManager.status;
   set status(DeviceStatus status) => deviceManager.status = status;
 
   /// Stream of [DeviceStatus] events
-  Stream<DeviceStatus> get deviceEvents => deviceManager.statusEvents;
+  Stream<DeviceStatus> get statusEvents => deviceManager.statusEvents;
 
   /// The device id
   String get id => deviceManager.id;
@@ -46,6 +48,14 @@ class DeviceModel {
   int? get batteryLevel => (deviceManager is HardwareDeviceManager)
       ? (deviceManager as HardwareDeviceManager).batteryLevel
       : null;
+
+  /// The stream of battery level events.
+  ///
+  /// Only relevant if this device is a [HardwareDeviceManager].
+  /// Returns an empty stream if not a hardware device.
+  Stream<int> get batteryEvents => deviceManager is HardwareDeviceManager
+      ? (deviceManager as HardwareDeviceManager).batteryEvents
+      : const Stream.empty();
 
   /// The icon for this type of device.
   Icon? get icon => deviceTypeIcon[type!];
@@ -88,13 +98,38 @@ class DeviceModel {
       };
 
   static Map<String, Icon> get deviceTypeIcon => {
-        Smartphone.DEVICE_TYPE: const Icon(Icons.phone_android, size: 30),
-        WeatherService.DEVICE_TYPE: const Icon(Icons.wb_cloudy),
-        AirQualityService.DEVICE_TYPE: const Icon(Icons.air),
-        LocationService.DEVICE_TYPE: const Icon(Icons.location_on),
-        ESenseDevice.DEVICE_TYPE: const Icon(Icons.headphones, size: 30),
-        PolarDevice.DEVICE_TYPE: const Icon(Icons.monitor_heart, size: 30),
-        HealthService.DEVICE_TYPE: const Icon(Icons.favorite_rounded, size: 30),
+        Smartphone.DEVICE_TYPE: const Icon(
+          Icons.phone_android,
+          size: 30,
+          color: CACHET.DARK_BLUE,
+        ),
+        WeatherService.DEVICE_TYPE: const Icon(
+          Icons.wb_cloudy,
+          color: CACHET.WHITE,
+        ),
+        AirQualityService.DEVICE_TYPE: const Icon(
+          Icons.air,
+          color: CACHET.GREY_1,
+        ),
+        LocationService.DEVICE_TYPE: const Icon(
+          Icons.location_on,
+          color: CACHET.GREEN,
+        ),
+        ESenseDevice.DEVICE_TYPE: const Icon(
+          Icons.headphones,
+          size: 30,
+          color: CACHET.BLACK,
+        ),
+        PolarDevice.DEVICE_TYPE: const Icon(
+          Icons.monitor_heart,
+          size: 30,
+          color: CACHET.RED,
+        ),
+        HealthService.DEVICE_TYPE: const Icon(
+          Icons.favorite_rounded,
+          size: 30,
+          color: CACHET.RED_1,
+        ),
       };
 
   static Map<DeviceStatus, dynamic> get deviceStatusIcon => {
@@ -142,29 +177,34 @@ class DeviceModel {
       };
 
   /// Map a selected device to the device in the protocol and connect to it.
-  void connectToDevice(BluetoothDevice selectedDevice, DeviceManager device) {
-    if (device is BTLEDeviceManager) {
-      device.btleAddress = selectedDevice.remoteId.str;
-      device.btleName = selectedDevice.platformName;
+  void connectToDevice(BluetoothDevice selectedDevice) {
+    if (deviceManager is BTLEDeviceManager) {
+      (deviceManager as BTLEDeviceManager).btleAddress =
+          selectedDevice.remoteId.str;
+      (deviceManager as BTLEDeviceManager).btleName =
+          selectedDevice.platformName;
     }
 
-    // when the device id is updated, save the deployment
     Sensing().controller?.saveDeployment();
-
-    device.connect();
+    deviceManager.connect();
   }
 
   // Disconnect from the currently connected device
-  void disconnectFromDevice(DeviceManager device) {
-    if (device is BTLEDeviceManager) {
-      device.btleAddress = '';
-      device.btleName = '';
+  Future<void> disconnectFromDevice() async {
+    if (deviceManager is BTLEDeviceManager) {
+      (deviceManager as BTLEDeviceManager).btleAddress = '';
+      (deviceManager as BTLEDeviceManager).btleName = '';
     }
 
-    // when the device id is updated, save the deployment
     Sensing().controller?.saveDeployment();
 
-    device.disconnect();
-    device.status = DeviceStatus.disconnected; // Force status update
+    try {
+      await deviceManager.disconnect();
+    } catch (error) {
+      warning(
+          "$runtimeType - Error disconnecting to device '${deviceManager.id}' - $error.");
+    }
+
+    // deviceManager.status = DeviceStatus.disconnected; // Force status update
   }
 }

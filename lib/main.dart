@@ -6,20 +6,21 @@ import 'dart:convert';
 import 'dart:ui' as ui;
 import 'dart:io';
 
+import 'package:carp_health_package/health_package.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+
 import 'package:json_annotation/json_annotation.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:camera/camera.dart';
 import 'package:video_player/video_player.dart';
 import 'package:app_settings/app_settings.dart';
-
 import 'package:google_fonts/google_fonts.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
-import 'package:flutter/src/rendering/sliver_persistent_header.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -28,7 +29,6 @@ import 'package:carp_serializable/carp_serializable.dart';
 import 'package:carp_core/carp_core.dart';
 import 'package:carp_mobile_sensing/carp_mobile_sensing.dart';
 import 'package:carp_audio_package/media.dart';
-import 'package:carp_health_package/health_package.dart';
 //import 'package:carp_connectivity_package/connectivity.dart';
 //import 'package:carp_communication_package/communication.dart';
 import 'package:carp_context_package/carp_context_package.dart';
@@ -42,20 +42,20 @@ import 'package:research_package/research_package.dart';
 import 'package:cognition_package/cognition_package.dart';
 
 part 'blocs/app_bloc.dart';
-part 'blocs/common.dart';
+part 'blocs/util.dart';
 
 part 'data/local_settings.dart';
 part 'data/carp_backend.dart';
 part 'data/localization_loader.dart';
-part 'sensing/sensing.dart';
+part 'blocs/sensing.dart';
 
 part 'view_models/view_model.dart';
 part 'view_models/tasklist_page_model.dart';
 part 'view_models/study_page_model.dart';
 part 'view_models/profile_page_model.dart';
-part 'view_models/devices_page_model.dart';
+part 'view_models/device_view_models.dart';
 part 'view_models/data_visualization_page_model.dart';
-part 'view_models/invitations_list_model.dart';
+part 'view_models/invitations_view_model.dart';
 part 'view_models/informed_consent_page_model.dart';
 part 'view_models/cards/activity_data_model.dart';
 part 'view_models/cards/mobility_data_model.dart';
@@ -68,7 +68,7 @@ part 'view_models/user_tasks.dart';
 
 part 'carp_study_app.dart';
 part 'ui/pages/informed_consent_page.dart';
-part 'ui/pages/bottom_navigation_bar.dart';
+part 'ui/pages/home_page.dart';
 part 'ui/widgets/carp_app_bar.dart';
 part 'ui/carp_study_style.dart';
 part 'ui/colors.dart';
@@ -85,10 +85,9 @@ part 'ui/pages/process_message_page.dart';
 part 'ui/pages/camera_task_page.dart';
 part 'ui/pages/display_picture_page.dart';
 part 'ui/pages/camera_page.dart';
-part 'ui/pages/loading_page.dart';
 part 'ui/pages/error_page.dart';
-part 'ui/pages/cans_login.dart';
-part 'ui/pages/devices_page.dart';
+part 'ui/pages/login_page.dart';
+part 'ui/pages/device_list_page.dart';
 part 'ui/pages/devices_page.authorization_dialog.dart';
 part 'ui/pages/devices_page.enable_bluetooth_dialog.dart';
 part 'ui/pages/devices_page.connection_dialog.dart';

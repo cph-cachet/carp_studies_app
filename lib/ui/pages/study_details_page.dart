@@ -1,23 +1,22 @@
-part of '../../main.dart';
+part of carp_study_app;
 
 class StudyDetailsPage extends StatelessWidget {
-  final StudyPageViewModel studyPageModel = StudyPageViewModel();
-
-  StudyDetailsPage({super.key});
+  static const String route = '/study_details';
+  final StudyPageViewModel model;
+  StudyDetailsPage({super.key, required this.model});
 
   @override
   Widget build(BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;
 
-    String studyDescription() =>
-        '${locale.translate(studyPageModel.description)}\n\n'
-        '${locale.translate('widgets.study_card.title')}: "${locale.translate(studyPageModel.title)}".\n'
-        '${locale.translate('widgets.study_card.purpose')}: "${locale.translate(studyPageModel.purpose)}".\n\n'
+    String studyDescription() => '${locale.translate(model.description)}\n\n'
+        '${locale.translate('widgets.study_card.title')}: "${locale.translate(model.title)}".\n'
+        '${locale.translate('widgets.study_card.purpose')}: "${locale.translate(model.purpose)}".\n\n'
         '${locale.translate('widgets.study_card.responsibles')}:\n'
-        '${locale.translate(studyPageModel.piName)}, ${locale.translate(studyPageModel.piTitle)}\n\n'
-        '${locale.translate(studyPageModel.piAffiliation)}\n'
-        '${locale.translate(studyPageModel.piAddress)}\n'
-        '${locale.translate(studyPageModel.piEmail)}\n';
+        '${locale.translate(model.piName)}, ${locale.translate(model.piTitle)}\n\n'
+        '${locale.translate(model.piAffiliation)}\n'
+        '${locale.translate(model.piAddress)}\n'
+        '${locale.translate(model.piEmail)}\n';
 
     return Scaffold(
       body: Container(
@@ -36,13 +35,12 @@ class StudyDetailsPage extends StatelessWidget {
               Flexible(
                 child: ListView(
                   children: [
-                    DetailsBanner(
-                        studyPageModel.title, './assets/images/kids.png'),
+                    DetailsBanner(model.title, './assets/images/kids.png'),
                     Padding(
                       padding: const EdgeInsets.all(16),
                       child: Column(
                         children: [
-                          Text(locale.translate(studyPageModel.piAffiliation),
+                          Text(locale.translate(model.piAffiliation),
                               style: aboutCardSubtitleStyle.copyWith(
                                   color: Theme.of(context).primaryColor)),
                           Text(
@@ -63,8 +61,7 @@ class StudyDetailsPage extends StatelessWidget {
                   children: [
                     InkWell(
                       onTap: () async {
-                        String url =
-                            locale.translate(studyPageModel.privacyPolicyUrl);
+                        String url = locale.translate(model.privacyPolicyUrl);
                         try {
                           await launchUrl(Uri.parse(url));
                         } catch (error) {
@@ -85,8 +82,8 @@ class StudyDetailsPage extends StatelessWidget {
                     const SizedBox(width: 15),
                     InkWell(
                       onTap: () async {
-                        String url = locale
-                            .translate(studyPageModel.studyDescriptionUrl);
+                        String url =
+                            locale.translate(model.studyDescriptionUrl);
                         try {
                           await launchUrl(Uri.parse(url));
                         } catch (error) {

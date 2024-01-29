@@ -52,7 +52,7 @@ void main() {
 
             heartRateStreamController.sink.add(mockMeasurement);
 
-            await Future.delayed(const Duration(milliseconds: 100));
+            await Future<void>.delayed(const Duration(milliseconds: 100));
             expect(viewModel.currentHeartRate, equals(80.0));
             expect(viewModel.dayMinMax, equals(HeartRateMinMaxPrHour(80, 80)));
             expect(
@@ -68,14 +68,14 @@ void main() {
 
             heartRateStreamController.sink.add(mockMeasurement);
 
-            await Future.delayed(const Duration(milliseconds: 100));
+            await Future<void>.delayed(const Duration(milliseconds: 100));
             when(mockPolarHRSample.hr).thenReturn(60);
             when(mockPolarHRDatum.samples).thenReturn([mockPolarHRSample]);
             when(mockMeasurement.data).thenReturn(mockPolarHRDatum);
 
             heartRateStreamController.sink.add(mockMeasurement);
 
-            await Future.delayed(const Duration(milliseconds: 100));
+            await Future<void>.delayed(const Duration(milliseconds: 100));
             expect(viewModel.currentHeartRate, equals(60));
             expect(viewModel.dayMinMax, equals(HeartRateMinMaxPrHour(60, 90)));
             expect(
@@ -93,7 +93,7 @@ void main() {
 
             heartRateStreamController.sink.add(mockMeasurement);
 
-            await Future.delayed(const Duration(milliseconds: 100));
+            await Future<void>.delayed(const Duration(milliseconds: 100));
             expect(viewModel.currentHeartRate, equals(null));
             expect(
                 viewModel.dayMinMax, equals(HeartRateMinMaxPrHour(null, null)));
@@ -111,7 +111,7 @@ void main() {
 
             heartRateStreamController.sink.add(mockMeasurement);
 
-            await Future.delayed(const Duration(milliseconds: 100));
+            await Future<void>.delayed(const Duration(milliseconds: 100));
             expect(viewModel.currentHeartRate, equals(anything));
             expect(viewModel.dayMinMax, equals(anything));
             expect(viewModel.hourlyHeartRate, equals(anything));

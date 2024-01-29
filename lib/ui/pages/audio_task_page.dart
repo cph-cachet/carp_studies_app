@@ -1,4 +1,4 @@
-part of '../../main.dart';
+part of carp_study_app;
 
 class AudioTaskPage extends StatefulWidget {
   final AudioUserTask? audioUserTask;
@@ -330,7 +330,7 @@ class AudioTaskPageState extends State<AudioTaskPage> {
   }
 
   // Taken from RP
-  Future _showCancelConfirmationDialog() {
+  Future<void> _showCancelConfirmationDialog() {
     RPLocalizations locale = RPLocalizations.of(context)!;
 
     return showDialog(

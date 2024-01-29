@@ -1,4 +1,4 @@
-part of '../main.dart';
+part of carp_study_app;
 
 /// A [UserTaskFactory] that can handle the user tasks in this app.
 class AppUserTaskFactory implements UserTaskFactory {

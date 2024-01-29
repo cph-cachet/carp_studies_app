@@ -1,7 +1,7 @@
-part of '../../main.dart';
+part of carp_study_app;
 
 class EnableBluetoothDialog extends StatelessWidget {
-  final DeviceModel device;
+  final DeviceViewModel device;
 
   const EnableBluetoothDialog({super.key, required this.device});
 
@@ -19,7 +19,8 @@ class EnableBluetoothDialog extends StatelessWidget {
         ));
   }
 
-  Widget enableBluetoothInstructions(BuildContext context, DeviceModel device) {
+  Widget enableBluetoothInstructions(
+      BuildContext context, DeviceViewModel device) {
     RPLocalizations locale = RPLocalizations.of(context)!;
     return Column(
       children: [

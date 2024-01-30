@@ -208,12 +208,12 @@ SPEC CHECKSUMS:
   audio_streamer: af49e73eb66f71c4eeabb4bbcb05f122d03a6709
   audiofileplayer: 4aaff759a721ec3a850a682e0d9ec554e5f9e86f
   battery_plus: 3b68b6e7710fe49c022999753d22760e6dbbc471
-  camera_avfoundation: 759172d1a77ae7be0de08fc104cfb79738b8a59e
+  camera_avfoundation: 8b8d780bcfb6a4a02b0fbe2b4bd17b5b71946e68
   connectivity_plus: bf0076dd84a130856aa636df1c71ccaff908fa1d
   device_info_plus: c6fb39579d0f423935b0c9ce7ee2f44b71b9fce6
   ESense: cbe103ad16c435424f2fd6f8b274f2468af84173
   esense_flutter: 8bfadfdefe7b51d6f78366e43b2b64ec9b6144b6
-  Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
+  Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   flutter_activity_recognition: 5c3b026997742b01e82424ef257db9640822ad77
   flutter_appauth: 0863b1f33110b410213e736aead4a6727303f509
   flutter_blue_plus: 4837da7d00cf5d441fdd6635b3a57f936778ea96
@@ -245,4 +245,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: cf73571b196c8b5799c2f2111e13846fa4ef168b
 
-COCOAPODS: 1.14.3
+COCOAPODS: 1.15.0

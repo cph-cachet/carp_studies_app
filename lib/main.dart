@@ -41,19 +41,16 @@ import 'package:carp_polar_package/carp_polar_package.dart';
 import 'package:research_package/research_package.dart';
 import 'package:cognition_package/cognition_package.dart';
 import 'package:carp_health_package/health_package.dart';
-import 'package:health/health.dart';
+// import 'package:health/health.dart';
 
 part 'blocs/app_bloc.dart';
 part 'blocs/util.dart';
+part 'blocs/sensing.dart';
 
 part 'data/local_settings.dart';
 part 'data/carp_backend.dart';
 part 'data/localization_loader.dart';
-part 'blocs/sensing.dart';
-
-part 'local/local_study_protocol_manager.dart';
-part 'local/local_surveys.dart';
-part 'local/local_resource_manager.dart';
+part 'data/local_resource_manager.dart';
 
 part 'view_models/view_model.dart';
 part 'view_models/tasklist_page_model.dart';

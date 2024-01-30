@@ -93,13 +93,12 @@ class Sensing {
 
         // Get the protocol from the local study protocol manager.
         // Note that the study id is not used since it always returns the same protocol.
-        StudyProtocol protocol =
-            await LocalStudyProtocolManager().getStudyProtocol('');
+        var protocol = await LocalResourceManager().getStudyProtocol('');
 
         // Deploy this protocol using the on-phone deployment service.
         // Reuse the study deployment id, if this is stored on the phone.
         _status = await SmartphoneDeploymentService().createStudyDeployment(
-          protocol,
+          protocol!,
           [],
           bloc.studyDeploymentId,
         );

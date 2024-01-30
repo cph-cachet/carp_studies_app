@@ -115,7 +115,9 @@ flutter:
     - assets/instructions/
     - assets/icons/
     - assets/lang/
-    - assets/lang_local/
+    - assets/carp/lang/
+    - assets/carp/resources/
+    - assets/carp/messages/
     - assets/images/messages/
     - assets/carp_logo.png
     - assets/logo.png

@@ -74,7 +74,7 @@ dependency_overrides:
   # carp_movisens_package:
   #   path: ../../packages/carp_movisens_package/
   # carp_health_package:
-  #   path: ../../packages/carp_health_package/
+  #   path: ../../carp/carp.sensing-flutter/packages/carp_health_package/
   # carp_backend:
   #   path: ../carp/carp.sensing-flutter/backends/carp_backend/
   # carp_webservices:

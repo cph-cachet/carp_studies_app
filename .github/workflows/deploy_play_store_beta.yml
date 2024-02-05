@@ -12,7 +12,7 @@ permissions: read-all
 
 jobs:
   workflow_run:
-    uses: cph-cachet/carp-studies-app/.github/workflows/deploy_play_store.yml@LarsRefsgaard/issue163
+    uses: cph-cachet/carp-studies-app/.github/workflows/deploy_play_store.yml@panosfunk/google_store
     secrets: inherit
     with:
       lane: 'beta'

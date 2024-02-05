@@ -62,9 +62,9 @@ class StudyAppBLoC extends ChangeNotifier {
   /// The state of this BloC.
   StudyAppState get state => _state;
 
-  bool get isInitialized => _state.index >= 1;
-  bool get isConfiguring => _state.index >= 2;
-  bool get isConfigured => _state.index >= 3;
+  bool get isInitialized => _state.index >= StudyAppState.initialized.index;
+  bool get isConfiguring => _state.index >= StudyAppState.configuring.index;
+  bool get isConfigured => _state.index >= StudyAppState.configured.index;
 
   /// Debug level for the app and CAMS.
   DebugLevel debugLevel = DebugLevel.info;

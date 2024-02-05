@@ -41,6 +41,16 @@ enum DeploymentMode {
 /// Works as a [ChangeNotifier] and will notify its listeners on important
 /// changes. Is also stateful and has a [state] and state changes are propagated
 /// through the [stateStream].
+///
+/// The BLoC is configured using two environment variables:
+///
+///  * `deployment-mode` set the [DeploymentMode].
+///  * `debug-level` set the [DebugLevel].
+///
+/// In Flutter these environment variables is set by specifying the `--dart-define`
+/// option in `flutter run`. For example:
+///
+///  `flutter run --dart-define=deployment-mode=local,debug-level=info`
 class StudyAppBLoC extends ChangeNotifier {
   StudyAppState _state = StudyAppState.created;
   final CarpBackend _backend = CarpBackend();
@@ -63,23 +73,30 @@ class StudyAppBLoC extends ChangeNotifier {
   bool get isConfigured => _state.index >= 3;
 
   /// Debug level for the app and CAMS.
-  DebugLevel debugLevel;
+  DebugLevel debugLevel = DebugLevel.info;
 
   /// What kind of deployment are we running?
-  final DeploymentMode deploymentMode;
+  DeploymentMode deploymentMode = DeploymentMode.production;
 
   // ScaffoldMessenger for showing snack bars
   final _scaffoldKey = GlobalKey<ScaffoldMessengerState>();
   GlobalKey<ScaffoldMessengerState> get scaffoldKey => _scaffoldKey;
   State? get scaffoldMessengerState => scaffoldKey.currentState;
 
-  /// Create the BLoC for the app specifying:
-  ///  * debug level
-  ///  * deployment mode (production, test, dev, local)
-  StudyAppBLoC({
-    this.debugLevel = DebugLevel.info,
-    this.deploymentMode = DeploymentMode.production,
-  }) : super();
+  /// Create the BLoC for the app.
+  StudyAppBLoC() : super() {
+    const dep =
+        String.fromEnvironment('deployment-mode', defaultValue: 'production');
+    deploymentMode =
+        DeploymentMode.values.where((element) => element.name == dep).first;
+
+    const deb = String.fromEnvironment('debug-level', defaultValue: 'info');
+    debugLevel =
+        DebugLevel.values.where((element) => element.name == deb).first;
+
+    info(
+        '$runtimeType create. DeploymentMode: ${deploymentMode.name}, DebugLevel: ${debugLevel.name}');
+  }
 
   LocalizationManager get localizationManager =>
       (deploymentMode == DeploymentMode.local

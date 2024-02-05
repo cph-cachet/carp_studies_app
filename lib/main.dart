@@ -138,10 +138,4 @@ void main() async {
 }
 
 /// The singleton BLoC.
-///
-/// Configure the debug level and deployment mode here before running the app
-/// or deploying it.
-final bloc = StudyAppBLoC(
-  debugLevel: DebugLevel.debug,
-  deploymentMode: DeploymentMode.local,
-);
+final bloc = StudyAppBLoC();

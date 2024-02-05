@@ -47,7 +47,7 @@ enum DeploymentMode {
 ///  * `deployment-mode` set the [DeploymentMode].
 ///  * `debug-level` set the [DebugLevel].
 ///
-/// In Flutter these environment variables is set by specifying the `--dart-define`
+/// In Flutter these environment variables are set by specifying the `--dart-define`
 /// option in `flutter run`. For example:
 ///
 ///  `flutter run --dart-define=deployment-mode=local,debug-level=info`
@@ -55,15 +55,9 @@ class StudyAppBLoC extends ChangeNotifier {
   StudyAppState _state = StudyAppState.created;
   final CarpBackend _backend = CarpBackend();
   final CarpStudyAppViewModel _appViewModel = CarpStudyAppViewModel();
-
   List<Message> _messages = [];
   final StreamController<int> _messageStreamController =
       StreamController.broadcast();
-  List<Message> get messages => _messages;
-
-  /// A stream of event when the list of [messages] is updated.
-  /// The data send on the stream is the number of available messages.
-  Stream<int> get messageStream => _messageStreamController.stream;
 
   /// The state of this BloC.
   StudyAppState get state => _state;
@@ -77,6 +71,13 @@ class StudyAppBLoC extends ChangeNotifier {
 
   /// What kind of deployment are we running?
   DeploymentMode deploymentMode = DeploymentMode.production;
+
+  /// The list of currently available messages.
+  List<Message> get messages => _messages;
+
+  /// A stream of event when the list of [messages] is updated.
+  /// The data send on the stream is the number of available messages.
+  Stream<int> get messageStream => _messageStreamController.stream;
 
   // ScaffoldMessenger for showing snack bars
   final _scaffoldKey = GlobalKey<ScaffoldMessengerState>();

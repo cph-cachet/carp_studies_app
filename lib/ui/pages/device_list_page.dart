@@ -253,7 +253,7 @@ class DeviceListPageState extends State<DeviceListPage> {
       return;
     }
 
-    // turn on bluetooth ourself if we can
+    // turn on bluetooth if we can
     if (Platform.isAndroid) {
       await FlutterBluePlus.turnOn();
     }

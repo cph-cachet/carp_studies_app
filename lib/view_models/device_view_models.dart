@@ -101,7 +101,7 @@ class DeviceViewModel extends ViewModel {
         Smartphone.DEVICE_TYPE: const Icon(
           Icons.phone_android,
           size: 30,
-          color: CACHET.DARK_BLUE,
+          color: CACHET.GREEN_1,
         ),
         WeatherService.DEVICE_TYPE: const Icon(
           Icons.wb_cloudy,
@@ -109,7 +109,7 @@ class DeviceViewModel extends ViewModel {
         ),
         AirQualityService.DEVICE_TYPE: const Icon(
           Icons.air,
-          color: CACHET.GREY_1,
+          color: CACHET.LIGHT_BLUE_2,
         ),
         LocationService.DEVICE_TYPE: const Icon(
           Icons.location_on,
@@ -118,7 +118,7 @@ class DeviceViewModel extends ViewModel {
         ESenseDevice.DEVICE_TYPE: const Icon(
           Icons.headphones,
           size: 30,
-          color: CACHET.BLACK,
+          color: CACHET.BLUE_1,
         ),
         PolarDevice.DEVICE_TYPE: const Icon(
           Icons.monitor_heart,

@@ -230,40 +230,7 @@ class StudyAppBLoC extends ChangeNotifier {
   }
 
   /// Does this app use location permissions?
-  bool get usingLocationPermissions =>
-      SamplingPackageRegistry().permissions.any((permission) =>
-          permission == Permission.location ||
-          permission == Permission.locationWhenInUse ||
-          permission == Permission.locationAlways);
-
-  /// Configuration of location permissions.
-  ///
-  /// If a [context] is provided, this method also opens the [LocationUsageDialog]
-  /// if location permissions are needed and not yet granted.
-  Future<void> configurePermissions(BuildContext? context) async {
-    if (usingLocationPermissions && context != null) {
-      var status = await Permission.locationAlways.status;
-      if (!status.isGranted && Platform.isAndroid && context.mounted) {
-        await showGeneralDialog(
-            context: context,
-            barrierDismissible: false,
-            barrierColor: Colors.black38,
-            transitionBuilder: (ctx, anim1, anim2, child) => BackdropFilter(
-                  filter: ui.ImageFilter.blur(
-                      sigmaX: 4 * anim1.value, sigmaY: 4 * anim1.value),
-                  child: FadeTransition(
-                    opacity: anim1,
-                    child: child,
-                  ),
-                ),
-            pageBuilder: (context, anim1, anim2) => LocationUsageDialog().build(
-                  context,
-                  "ic.location.content",
-                ));
-        await LocationManager().requestPermission();
-      }
-    }
-  }
+  bool get usingLocationPermissions => true;
 
   /// Has the informed consent been shown to, and accepted by the user?
   bool get hasInformedConsentBeenAccepted =>

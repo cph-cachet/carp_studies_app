@@ -61,14 +61,6 @@ class CarpStudyAppState extends State<CarpStudyApp> {
                 }
 
                 return firstRoute;
-
-                //     !bloc.backend.isAuthenticated
-                // ? LoginPage.route
-                // : (!bloc.hasStudyBeenDeployed)
-                //     ? InvitationListPage.route
-                //     : (!bloc.hasInformedConsentBeenAccepted)
-                //         ? InformedConsentPage.route
-                //         : firstRoute),
               }),
           GoRoute(
             path: TaskListPage.route,

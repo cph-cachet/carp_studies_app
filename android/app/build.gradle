@@ -5,7 +5,8 @@ plugins {
 }
 
 def localProperties = new Properties()
-def localPropertiesFile = rootProject.file('local.properties')
+// it is file('local.properties') for deploying using local terminal. might be file('../android/local.properties') for github actions.
+def localPropertiesFile = rootProject.file('./android/local.properties')
 if (localPropertiesFile.exists()) {
     localPropertiesFile.withReader('UTF-8') { reader ->
         localProperties.load(reader)
@@ -13,7 +14,8 @@ if (localPropertiesFile.exists()) {
 }
 
 def keyProperties = new Properties()
-def keyPropertiesFile = rootProject.file('key.properties')
+// it is file('key.properties') for deploying using local terminal. might be file('../android/key.properties') for github actions.
+def keyPropertiesFile = rootProject.file('./android/key.properties')
 if (keyPropertiesFile.exists()) {
     keyPropertiesFile.withReader('UTF-8') { reader ->
         keyProperties.load(reader)

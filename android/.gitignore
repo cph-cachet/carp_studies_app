@@ -11,4 +11,5 @@ GeneratedPluginRegistrant.java
 key.properties
 upload-keystore.jks
 PLAY_STORE_CONFIG.json
+android/PLAY_STORE_CONFIG.json
 ```

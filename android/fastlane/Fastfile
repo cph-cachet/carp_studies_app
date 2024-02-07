@@ -41,6 +41,6 @@ platform :android do
       track: 'beta',
       track_promote_to: 'production',
       skip_upload_changelogs: true,
-      )
+    )
   end
 end

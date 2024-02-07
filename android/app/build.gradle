@@ -59,24 +59,24 @@ android {
     }
 
     // This is to be used for deployment only when we manually run fastlane beta from the terminal locally.
+    signingConfigs {
+        release {
+            storeFile keyProperties.getProperty('storeFile')
+            storePassword keyProperties.getProperty('storePassword')
+            keyAlias keyProperties.getProperty('keyAlias')
+            keyPassword keyProperties.getProperty('keyPassword')
+        }
+    }
+
+    // // This is to be used for deployment by github actions trying to run fastlane. This not work.
     //  signingConfigs {
     //     release {
-    //         storeFile file('../fastlane/upload-keystore.jks') ? file('../fastlane/upload-keystore.jks') : null
+    //         storeFile file('../app/upload-keystore.jks') ? file('../app/upload-keystore.jks') : null
     //         storePassword keyProperties.getProperty('storePassword')
     //         keyAlias keyProperties.getProperty('keyAlias')
     //         keyPassword keyProperties.getProperty('keyPassword')
     //     }
     //  }
-
-    // This is to be used for deployment by github actions trying to run fastlane.
-     signingConfigs {
-        release {
-            storeFile file('../app/upload-keystore.jks') ? file('../app/upload-keystore.jks') : null
-            storePassword keyProperties.getProperty('storePassword')
-            keyAlias keyProperties.getProperty('keyAlias')
-            keyPassword keyProperties.getProperty('keyPassword')
-        }
-     }
 
 
     buildTypes {

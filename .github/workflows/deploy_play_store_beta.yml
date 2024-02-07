@@ -1,18 +1,28 @@
-name: Deploy to Play Store beta
+name: Deploy to Google Play Store
+
 on:
   push:
-    tags:
-      - '*'
-  workflow_dispatch:
-
-
-
-# Declare default permissions as read only.
-permissions: read-all
+    branches:
+      - 'panosfunk/google_store'
 
 jobs:
-  workflow_run:
-    uses: cph-cachet/carp-studies-app/.github/workflows/deploy_play_store.yml@panosfunk/google_store
-    secrets: inherit
-    with:
-      lane: 'beta'
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Ruby
+        uses: actions/setup-ruby@v1
+        with:
+          ruby-version: '2.6'
+
+      - name: Install Bundler
+        run: gem install bundler
+
+      - name: Install dependencies
+        run: bundle install
+
+      - name: Run Fastlane
+        run: bundle exec fastlane beta

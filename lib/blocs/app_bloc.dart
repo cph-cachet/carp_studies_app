@@ -95,7 +95,7 @@ class StudyAppBLoC extends ChangeNotifier {
     debugLevel =
         DebugLevel.values.where((element) => element.name == deb).first;
 
-    info('$runtimeType create. '
+    info('$runtimeType created. '
         'DeploymentMode: ${deploymentMode.name}, '
         'DebugLevel: ${debugLevel.name}');
   }

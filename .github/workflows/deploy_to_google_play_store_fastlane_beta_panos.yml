@@ -41,18 +41,18 @@ jobs:
 
         - name: Configure Keystore
           run: |
-            echo "$PLAY_STORE_UPLOAD_KEY" | base64 --decode > ./android/app/upload-keystore.jks
+            echo "$PLAY_STORE_UPLOAD_KEY" | base64 --decode > ./android/fastlane/upload-keystore.jks
             echo "$PLAY_STORE_CONFIG_JSON" > PLAY_STORE_CONFIG.json
             echo "keyPassword=$KEYSTORE_KEY_PASSWORD" >> key.properties
             echo "storePassword=$KEYSTORE_STORE_PASSWORD" >> key.properties
             echo "keyAlias=$KEYSTORE_KEY_ALIAS" >> key.properties
-            echo "storeFile=upload-keystore.jks" >> key.properties
+            echo "storeFile=aupload-keystore.jks" >> key.properties
           env:
             PLAY_STORE_UPLOAD_KEY: ${{ secrets.PLAY_STORE_UPLOAD_KEY }}
             KEYSTORE_KEY_ALIAS: ${{ secrets.KEYSTORE_KEY_ALIAS }}
             KEYSTORE_KEY_PASSWORD: ${{ secrets.KEYSTORE_KEY_PASSWORD }}
             KEYSTORE_STORE_PASSWORD: ${{ secrets.KEYSTORE_STORE_PASSWORD }}
-          working-directory: android
+            working-directory: android
 
     
         - run: fastlane beta

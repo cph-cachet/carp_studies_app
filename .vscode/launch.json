@@ -1,0 +1,41 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "carp-studies-app (local mode)",
+            "request": "launch",
+            "type": "dart",
+            "toolArgs": [
+                "--dart-define",
+                "deployment-mode=local",
+                "--dart-define",
+                "debug-level=debug"
+            ],
+            "flutterMode": "debug"
+        },
+        {
+            "name": "carp-studies-app (dev mode)",
+            "request": "launch",
+            "type": "dart",
+            "toolArgs": [
+                "--dart-define",
+                "deployment-mode=dev",
+                "--dart-define",
+                "debug-level=debug"
+            ],
+            "flutterMode": "debug"
+        },
+        {
+            "name": "carp-studies-app (production mode)",
+            "request": "launch",
+            "type": "dart",
+            "toolArgs": [
+                "--dart-define",
+                "deployment-mode=production",
+                "--dart-define",
+                "debug-level=info"
+            ],
+            "flutterMode": "release"
+        }
+    ]
+}

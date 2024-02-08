@@ -245,10 +245,10 @@ packages:
     dependency: "direct main"
     description:
       name: carp_context_package
-      sha256: ad198e72cce21cff0c77eb2de000491ec6585cb98809a09a0b57fd8408576ec8
+      sha256: "3958538454df9a1c6aed9ec2fd143997754801db9968f44ecb6d0670d781d631"
       url: "https://pub.dev"
     source: hosted
-    version: "1.4.2"
+    version: "1.4.3"
   carp_core:
     dependency: "direct main"
     description:

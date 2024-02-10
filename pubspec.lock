@@ -276,10 +276,9 @@ packages:
   carp_mobile_sensing:
     dependency: "direct main"
     description:
-      name: carp_mobile_sensing
-      sha256: ecd7cc3eff8af5133ac01a1bff703015fa5eca96f1ed62a72e5bfb15e61310bb
-      url: "https://pub.dev"
-    source: hosted
+      path: "../carp/carp.sensing-flutter/carp_mobile_sensing"
+      relative: true
+    source: path
     version: "1.4.3"
   carp_polar_package:
     dependency: "direct main"

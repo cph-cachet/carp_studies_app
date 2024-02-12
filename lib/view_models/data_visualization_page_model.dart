@@ -9,11 +9,11 @@ class DataVisualizationPageViewModel extends ViewModel {
   final TaskCardViewModel _surveysCardDataModel =
       TaskCardViewModel(SurveyUserTask.SURVEY_TYPE);
   final TaskCardViewModel _audioCardDataModel =
-      TaskCardViewModel(AudioUserTask.audioType);
+      TaskCardViewModel(SurveyUserTask.AUDIO_TYPE);
   final TaskCardViewModel _videoCardDataModel =
-      TaskCardViewModel(VideoUserTask.videoType);
+      TaskCardViewModel(SurveyUserTask.VIDEO_TYPE);
   final TaskCardViewModel _imageCardDataModel =
-      TaskCardViewModel(VideoUserTask.imageType);
+      TaskCardViewModel(SurveyUserTask.IMAGE_TYPE);
   final StudyProgressCardViewModel _studyProgressCardDataModel =
       StudyProgressCardViewModel();
   final HeartRateCardViewModel _heartRateCardDataModel =

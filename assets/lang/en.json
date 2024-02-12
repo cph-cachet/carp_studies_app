@@ -136,7 +136,7 @@
     "pages.devices.connection.step.start.5": "device to the phone, press 'INSTRUCTIONS'.",
     "pages.devices.connection.step.confirm.title": "is connected!",
     "pages.devices.connection.step.confirm.1": "The",
-    "pages.devices.connection.step.confirm.2": "device has succesfully been connected to the phone and is now used for collection of data in this study.",
+    "pages.devices.connection.step.confirm.2": "device has successfully been connected to the phone and is now used for collection of data in this study.",
     "widgets.logoutmessage.title": "Log out",
     "widgets.logoutmessage.message": "The operating system will open a browser to log you out. Is this okay?",
     "widgets.logoutmessage.cancel": "Cancel",

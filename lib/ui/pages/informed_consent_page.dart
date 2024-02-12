@@ -12,8 +12,8 @@ class InformedConsentPage extends StatefulWidget {
 class InformedConsentState extends State<InformedConsentPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  void resultCallback(RPTaskResult result) async {
-    await widget.model.informedConsentHasBeenAccepted(result);
+  void resultCallback(RPTaskResult result) {
+    widget.model.informedConsentHasBeenAccepted(result);
     if (context.mounted) {
       context.go('/');
     }
@@ -27,12 +27,12 @@ class InformedConsentState extends State<InformedConsentPage> {
       key: _scaffoldKey,
       body: FutureBuilder<RPOrderedTask?>(
         future: widget.model.getInformedConsent(localization.locale).then(
-          (value) {
-            if (value == null) {
+          (document) {
+            if (document == null) {
               bloc.hasInformedConsentBeenAccepted = true;
               context.go('/');
             }
-            return value;
+            return document;
           },
         ),
         builder: (context, snapshot) {
@@ -45,9 +45,7 @@ class InformedConsentState extends State<InformedConsentPage> {
             }
           }
 
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
+          return const Center(child: CircularProgressIndicator());
         },
       ),
     );

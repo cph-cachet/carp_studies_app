@@ -6,9 +6,9 @@ import 'dart:convert';
 import 'dart:ui' as ui;
 import 'dart:io';
 
-import 'package:carp_health_package/health_package.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'package:json_annotation/json_annotation.dart';
@@ -40,14 +40,17 @@ import 'package:carp_esense_package/esense.dart';
 import 'package:carp_polar_package/carp_polar_package.dart';
 import 'package:research_package/research_package.dart';
 import 'package:cognition_package/cognition_package.dart';
+import 'package:carp_health_package/health_package.dart';
+// import 'package:health/health.dart';
 
 part 'blocs/app_bloc.dart';
 part 'blocs/util.dart';
+part 'blocs/sensing.dart';
 
 part 'data/local_settings.dart';
 part 'data/carp_backend.dart';
 part 'data/localization_loader.dart';
-part 'blocs/sensing.dart';
+part 'data/local_resource_manager.dart';
 
 part 'view_models/view_model.dart';
 part 'view_models/tasklist_page_model.dart';
@@ -118,14 +121,14 @@ part 'main.g.dart';
 
 late CarpStudyApp app;
 void main() async {
-  // initialize CAMS and Cognition Packages (loading json deserialization functions)
+  // Initialize CAMS and related packages (loading json deserialization functions)
   CarpMobileSensing.ensureInitialized();
   CognitionPackage.ensureInitialized();
-  CarpDataManager();
+  CarpDataManager.ensureInitialized();
 
-  // make sure to have an instance of the WidgetsBinding, which is required
-  // to use platform channels to call native code
-  // see also >> https://stackoverflow.com/questions/63873338/what-does-widgetsflutterbinding-ensureinitialized-do/63873689
+  // Make sure to have an instance of the WidgetsBinding, which is required
+  // to use platform channels to call native code.
+  // See also >> https://stackoverflow.com/questions/63873338/what-does-widgetsflutterbinding-ensureinitialized-do/63873689
   WidgetsFlutterBinding.ensureInitialized();
 
   await bloc.initialize();
@@ -135,10 +138,4 @@ void main() async {
 }
 
 /// The singleton BLoC.
-///
-/// Configure the debug level and deployment mode here before running the app
-/// or deploying it.
-final bloc = StudyAppBLoC(
-  debugLevel: DebugLevel.debug,
-  deploymentMode: DeploymentMode.dev,
-);
+final bloc = StudyAppBLoC();

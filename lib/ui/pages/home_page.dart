@@ -12,16 +12,63 @@ class HomePage extends StatefulWidget {
 }
 
 class HomePageState extends State<HomePage> {
+  /// Ask for location permissions.
+  ///
+  /// The method opens the [LocationUsageDialog] if location permissions are
+  /// needed and not yet granted.
+  ///
+  /// Android requires the app to show a modal window explaining "why" the app
+  /// needs access to location. Best practice for doing this is explain on the
+  /// [Request location permissions](https://developer.android.com/develop/sensors-and-location/location/permissions)
+  /// Android Developer page.
+  ///
+  /// This approach is used on both Android and iOS, even though it is an
+  /// Android recommendation / requirement.
+  Future<void> askForLocationPermissions(BuildContext context) async {
+    if (!context.mounted) return;
+
+    if (bloc.usingLocationPermissions) {
+      var granted = await LocationManager().isGranted();
+      if (!granted) {
+        await showGeneralDialog(
+            context: context,
+            barrierDismissible: false,
+            barrierColor: Colors.black38,
+            transitionBuilder: (ctx, anim1, anim2, child) => BackdropFilter(
+                  filter: ui.ImageFilter.blur(
+                      sigmaX: 4 * anim1.value, sigmaY: 4 * anim1.value),
+                  child: FadeTransition(
+                    opacity: anim1,
+                    child: child,
+                  ),
+                ),
+            pageBuilder: (context, anim1, anim2) => LocationUsageDialog().build(
+                  context,
+                  "ic.location.content",
+                ));
+        await LocationManager().requestPermission();
+      }
+    }
+  }
+
   @override
   void initState() {
     super.initState();
-    bloc.configurePermissions(context);
-    bloc.configureStudy().then((_) => bloc.start());
+
+    // Setting up sensing, which entails;
+    //  - asking for location permissions
+    //  - configuring the study
+    //  - starting sensing
+    askForLocationPermissions(context)
+        .then((_) => bloc.configureStudy().then((_) => bloc.start()));
   }
 
   @override
   Widget build(BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;
+
+    // Make sure to translate the user tasks in the study protocol before using
+    // them in the app's task list.
     Sensing().translateStudyProtocol(locale);
 
     return Scaffold(

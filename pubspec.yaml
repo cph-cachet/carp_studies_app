@@ -1,7 +1,7 @@
 name: carp_study_app
 description: The generic CARP study app.
 publish_to: 'none'
-version: 1.4.0
+version: 1.5.0
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
@@ -46,7 +46,7 @@ dependencies:
   go_router: ^13.0.0
   flutter_svg: ^2.0.4
   flutter_blue_plus: ^1.15.5
-  intl: ^0.18.1
+  intl: '>=0.18.0 <1.0.0'
   permission_handler: ^11.0.1
 
 # Overriding carp libraries to use the local copy
@@ -58,7 +58,7 @@ dependency_overrides:
   # carp_mobile_sensing:
   #   path: ../carp/carp.sensing-flutter/carp_mobile_sensing/
   # carp_context_package:
-  #   path: ../../packages/carp_context_package/
+  #   path: ../carp/carp.sensing-flutter/packages/carp_context_package/
   # carp_connectivity_package:
   #   path: ../../packages/carp_connectivity_package/
   # carp_communication_package:
@@ -74,7 +74,7 @@ dependency_overrides:
   # carp_movisens_package:
   #   path: ../../packages/carp_movisens_package/
   # carp_health_package:
-  #   path: ../../packages/carp_health_package/
+  #   path: ../carp/carp.sensing-flutter/packages/carp_health_package/
   # carp_backend:
   #   path: ../carp/carp.sensing-flutter/backends/carp_backend/
   # carp_webservices:
@@ -115,6 +115,9 @@ flutter:
     - assets/instructions/
     - assets/icons/
     - assets/lang/
+    - assets/carp/lang/
+    - assets/carp/resources/
+    - assets/carp/messages/
     - assets/images/messages/
     - assets/carp_logo.png
     - assets/logo.png

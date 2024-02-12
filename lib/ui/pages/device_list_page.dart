@@ -165,7 +165,7 @@ class DeviceListPageState extends State<DeviceListPage> {
                                     color: Theme.of(context).primaryColor))
                             : service.getServiceStatusIcon as Icon,
                         isThreeLine: false,
-                        onTap: () => _onlineServiceClicked(service),
+                        onTap: () async => await _onlineServiceClicked(service),
                       ),
                   DeviceStatus.unknown);
             },
@@ -231,32 +231,24 @@ class DeviceListPageState extends State<DeviceListPage> {
         ),
       );
 
-  void _onlineServiceClicked(DeviceViewModel service) {
+  Future<void> _onlineServiceClicked(DeviceViewModel service) async {
     if (service.status == DeviceStatus.connected ||
         service.status == DeviceStatus.connecting) {
       return;
     }
 
-    service.deviceManager.hasPermissions().then((permissions) {
-      if (permissions) {
-        service.deviceManager.connect();
-      } else {
-        service.deviceManager.requestPermissions().then((_) {
-          service.deviceManager.connect();
-        });
-      }
-    });
+    if (!(await service.deviceManager.hasPermissions())) {
+      await service.deviceManager.requestPermissions();
+    }
+    await service.deviceManager.connect();
   }
 
   Future<void> _hardwareDeviceClicked(DeviceViewModel device) async {
-    if (await FlutterBluePlus.isSupported == false) {
-      return;
-    }
+    // fast out if no Bluetooth
+    if (!(await FlutterBluePlus.isSupported)) return;
 
     // turn on bluetooth if we can
-    if (Platform.isAndroid) {
-      await FlutterBluePlus.turnOn();
-    }
+    if (Platform.isAndroid) await FlutterBluePlus.turnOn();
 
     if (context.mounted) {
       if (bluetoothAdapterState == BluetoothAdapterState.off &&

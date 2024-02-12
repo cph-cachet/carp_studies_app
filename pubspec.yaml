@@ -46,7 +46,7 @@ dependencies:
   go_router: ^13.0.0
   flutter_svg: ^2.0.4
   flutter_blue_plus: ^1.15.5
-  intl: ^0.18.1
+  intl: '>=0.18.0 <1.0.0'
   permission_handler: ^11.0.1
 
 # Overriding carp libraries to use the local copy
@@ -55,8 +55,8 @@ dependency_overrides:
   #   path: ../../carp_serializable/
   # carp_core:
   #   path: ../../carp_core/
-  carp_mobile_sensing:
-    path: ../carp/carp.sensing-flutter/carp_mobile_sensing/
+  # carp_mobile_sensing:
+  #   path: ../carp/carp.sensing-flutter/carp_mobile_sensing/
   # carp_context_package:
   #   path: ../carp/carp.sensing-flutter/packages/carp_context_package/
   # carp_connectivity_package:
@@ -74,7 +74,7 @@ dependency_overrides:
   # carp_movisens_package:
   #   path: ../../packages/carp_movisens_package/
   # carp_health_package:
-  #   path: ../../carp/carp.sensing-flutter/packages/carp_health_package/
+  #   path: ../carp/carp.sensing-flutter/packages/carp_health_package/
   # carp_backend:
   #   path: ../carp/carp.sensing-flutter/backends/carp_backend/
   # carp_webservices:

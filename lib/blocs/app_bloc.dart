@@ -288,9 +288,9 @@ class StudyAppBLoC extends ChangeNotifier {
   bool hasMeasures() => (deployment == null)
       ? false
       : (deployment!.measures.any((measure) =>
-          (measure.type != VideoUserTask.imageType &&
-              measure.type != VideoUserTask.videoType &&
-              measure.type != AudioUserTask.audioType &&
+          (measure.type != SurveyUserTask.VIDEO_TYPE &&
+              measure.type != SurveyUserTask.IMAGE_TYPE &&
+              measure.type != SurveyUserTask.AUDIO_TYPE &&
               measure.type != SurveyUserTask.SURVEY_TYPE)));
 
   /// Does this [deployment] have the measure of type [type]?

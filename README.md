@@ -8,20 +8,15 @@ Read more about the [CARP Studies app](https://carp.cachet.dk/carp-studies-app/)
 
 ## Deployment Mode
 
-This study app can run in two basic modes - using CAWS or locally. Deployment mode is set in the `main.dart` file, like this:
+This study app can run in two basic modes - using CAWS or locally. Deployment mode is set using the environment variable `deployment-mode` file. In Flutter environment variables are set by specifying the `--dart-define` option in flutter run. For example;
 
-```dart
-/// The singleton BLoC.
-///
-/// Configure the debug level and deployment mode here before running the app
-/// or deploying it.
-final bloc = StudyAppBLoC(
-  debugLevel: DebugLevel.debug,
-  deploymentMode: DeploymentMode.local,
-);
+```shell
+flutter run --dart-define=deployment-mode=local,debug-level=info
 ```
 
-The above entails that deployment is in local mode.
+would run the app in local deployment mode with debug level set to info.
+
+In VSCode you can add a `launch.json` file to specify different deployment modes.
 
 ### Local Deployment
 
@@ -30,6 +25,8 @@ Local mode is intended for designing and debugging a study protocol, informed co
 * `protocol.json` and `consent.json` files goes to `carp/resources`
 * language file goes to `carp/lang`
 * message files goes to `carp/messages`
+
+> **Note:** Since the app buffers the protocol locally on the phone, you need to delete the app and its data on the phone when changing or updating the protocol.
 
 ### CAWS Deployment
 

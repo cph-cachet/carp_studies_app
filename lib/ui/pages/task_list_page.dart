@@ -239,17 +239,21 @@ class TaskListPageState extends State<TaskListPage> {
       Icons.face_retouching_natural,
       color: CACHET.RED_2,
     ),
-    AudioUserTask.audioType: const Icon(
+    SurveyUserTask.AUDIO_TYPE: const Icon(
       Icons.record_voice_over,
       color: CACHET.GREEN,
     ),
-    VideoUserTask.videoType: const Icon(
+    SurveyUserTask.VIDEO_TYPE: const Icon(
       Icons.videocam,
       color: CACHET.BLUE_1,
     ),
-    VideoUserTask.imageType: const Icon(
+    SurveyUserTask.IMAGE_TYPE: const Icon(
       Icons.camera_alt,
       color: CACHET.YELLOW,
+    ),
+    SurveyUserTask.HEALTH_ASSESSMENT_TYPE: const Icon(
+      Icons.favorite_rounded,
+      color: CACHET.RED_1,
     ),
     BackgroundSensingUserTask.SENSING_TYPE: const Icon(
       Icons.settings_input_antenna,

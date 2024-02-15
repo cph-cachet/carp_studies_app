@@ -128,7 +128,7 @@ class _ConnectionDialogState extends State<ConnectionDialog> {
     return Column(
       children: [
         Text(
-          "${locale.translate("pages.devices.connection.step.start.1")} ${locale.translate(device.name!)} ${locale.translate("pages.devices.connection.step.start.2")}",
+          "${locale.translate("pages.devices.connection.step.start.1")} ${locale.translate(device.typeName)} ${locale.translate("pages.devices.connection.step.start.2")}",
           style: aboutCardContentStyle,
           textAlign: TextAlign.justify,
         ),
@@ -163,7 +163,7 @@ class _ConnectionDialogState extends State<ConnectionDialog> {
           ),
         ),
         Text(
-          "${locale.translate("pages.devices.connection.step.start.3")} ${locale.translate(device.name!)}  ${locale.translate("pages.devices.connection.step.start.4")} ${locale.translate(device.name!)} ${locale.translate("pages.devices.connection.step.start.5")}",
+          "${locale.translate("pages.devices.connection.step.start.3")} ${locale.translate(device.typeName)}  ${locale.translate("pages.devices.connection.step.start.4")} ${locale.translate(device.name!)} ${locale.translate("pages.devices.connection.step.start.5")}",
           style: aboutCardContentStyle,
           textAlign: TextAlign.justify,
         )

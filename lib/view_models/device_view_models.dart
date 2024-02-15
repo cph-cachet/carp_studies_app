@@ -23,6 +23,11 @@ class DeviceViewModel extends ViewModel {
   DeviceViewModel(this.deviceManager) : super();
 
   String? get type => deviceManager.type;
+
+  /// A printer-friendly name for this [type] of device.
+  String get typeName =>
+      deviceTypeName[type!] ?? 'pages.devices.type.unknown.name';
+
   DeviceStatus get status => deviceManager.status;
   set status(DeviceStatus status) => deviceManager.status = status;
 
@@ -33,7 +38,9 @@ class DeviceViewModel extends ViewModel {
   String get id => deviceManager.id;
 
   /// A printer-friendly name for this device.
-  String? get name => deviceTypeName[type!];
+  String? get name => deviceManager is BTLEDeviceManager
+      ? (deviceManager as BTLEDeviceManager).btleName
+      : id;
 
   /// A printer-friendly description of this device.
   String get description =>
@@ -83,6 +90,7 @@ class DeviceViewModel extends ViewModel {
         LocationService.DEVICE_TYPE: "pages.devices.type.location.name",
         ESenseDevice.DEVICE_TYPE: "pages.devices.type.esense.name",
         PolarDevice.DEVICE_TYPE: "pages.devices.type.polar.name",
+        MovesenseDevice.DEVICE_TYPE: "pages.devices.type.movesense.name",
         HealthService.DEVICE_TYPE: "pages.devices.type.health.name",
       };
 
@@ -94,6 +102,7 @@ class DeviceViewModel extends ViewModel {
         LocationService.DEVICE_TYPE: "pages.devices.type.location.description",
         ESenseDevice.DEVICE_TYPE: "pages.devices.type.esense.description",
         PolarDevice.DEVICE_TYPE: "pages.devices.type.polar.description",
+        MovesenseDevice.DEVICE_TYPE: "pages.devices.type.movesense.description",
         HealthService.DEVICE_TYPE: "pages.devices.type.health.description",
       };
 
@@ -124,6 +133,11 @@ class DeviceViewModel extends ViewModel {
           Icons.monitor_heart,
           size: 30,
           color: CACHET.RED,
+        ),
+        MovesenseDevice.DEVICE_TYPE: const Icon(
+          Icons.circle,
+          size: 30,
+          color: CACHET.GREY_1,
         ),
         HealthService.DEVICE_TYPE: const Icon(
           Icons.favorite_rounded,
@@ -174,6 +188,8 @@ class DeviceViewModel extends ViewModel {
         Smartphone.DEVICE_TYPE: "pages.devices.type.smartphone.instructions",
         ESenseDevice.DEVICE_TYPE: "pages.devices.type.esense.instructions",
         PolarDevice.DEVICE_TYPE: "pages.devices.type.polar.instructions",
+        MovesenseDevice.DEVICE_TYPE:
+            "pages.devices.type.movesense.instructions",
       };
 
   /// Map a selected device to the device in the protocol and connect to it.

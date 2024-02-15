@@ -11,7 +11,7 @@ class HeartRateCardViewModel extends SerializableViewModel<HourlyHeartRate> {
   /// The current heart rate
   double? get currentHeartRate => model.currentHeartRate;
 
-  /// Is the device is touching skin?
+  /// Is the device touching skin?
   ///
   /// Returns true if the device is touching skin, false otherwise. If the device
   /// is not capable of detecting skin contact, this value is always true.
@@ -20,7 +20,7 @@ class HeartRateCardViewModel extends SerializableViewModel<HourlyHeartRate> {
   HeartRateMinMaxPrHour get dayMinMax =>
       HeartRateMinMaxPrHour(model.minHeartRate, model.maxHeartRate);
 
-  /// Stream of heart rate [PolarHRDatum] measures.
+  /// Stream of heart rate [PolarHR] measures.
   Stream<Measurement>? get heartRateEvents => controller?.measurements
       .where((measurement) => measurement.data is PolarHR);
 

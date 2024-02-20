@@ -1,4 +1,4 @@
-part of '../../main.dart';
+part of carp_study_app;
 
 class HeartRateCardViewModel extends SerializableViewModel<HourlyHeartRate> {
   @override
@@ -11,52 +11,41 @@ class HeartRateCardViewModel extends SerializableViewModel<HourlyHeartRate> {
   /// The current heart rate
   double? get currentHeartRate => model.currentHeartRate;
 
-  /// Is the device touching skin?
-  ///
-  /// Returns true if the device is touching skin, false otherwise. If the device
-  /// is not capable of detecting skin contact, this value is always true.
-  bool contactStatus = false;
-
   HeartRateMinMaxPrHour get dayMinMax =>
       HeartRateMinMaxPrHour(model.minHeartRate, model.maxHeartRate);
 
-  /// Stream of heart rate [PolarHR] measures.
-  Stream<Measurement>? get heartRateEvents => controller?.measurements
-      .where((measurement) => measurement.data is PolarHR);
+  final StreamGroup<double> _group = StreamGroup.broadcast();
+
+  Stream<double>? get heartRateStream => _group.stream.asBroadcastStream();
+
+  /// Stream of heart rate based on [PolarHR] measures.
+  Stream<double>? get polarHRStream => controller?.measurements
+      .where((measurement) => measurement.data is PolarHR)
+      .map((measurement) =>
+          (measurement.data as PolarHR).samples.firstOrNull?.hr.toDouble() ??
+          0);
+
+  /// Stream of heart rate based on [MovesenseHR] measures.
+  Stream<double>? get movesenseHRStream => controller?.measurements
+      .where((measurement) => measurement.data is MovesenseHR)
+      .map((measurement) => (measurement.data as MovesenseHR).hr);
 
   @override
   void init(SmartphoneDeploymentController ctrl) {
     super.init(ctrl);
 
-    heartRateEvents?.listen(
-      (heartRateDataPoint) {
-        PolarHRSample heartRate =
-            (heartRateDataPoint.data as PolarHR).samples.firstOrNull ??
-                PolarHRSample(
-                  hr: 0,
-                  contactStatus: false,
-                  rrsMs: [],
-                  contactStatusSupported: true,
-                );
+    if (polarHRStream != null) _group.add(polarHRStream!);
+    if (movesenseHRStream != null) _group.add(movesenseHRStream!);
 
-        double hr = heartRate.hr.toDouble();
+    heartRateStream?.listen(
+      (hr) {
         if (!(hr > 0)) {
-          contactStatus = false;
           model.currentHeartRate = null;
           return;
         }
         model.addHeartRate(DateTime.now().hour, hr);
-
-        if (hr > (model.maxHeartRate ?? 0)) {
-          model.maxHeartRate = hr;
-        }
-        if (hr < (model.minHeartRate ?? 100000)) {
-          model.minHeartRate = hr;
-        }
-
-        contactStatus =
-            heartRate.contactStatusSupported ? heartRate.contactStatus : true;
-
+        if (hr > (model.maxHeartRate ?? 0)) model.maxHeartRate = hr;
+        if (hr < (model.minHeartRate ?? 100000)) model.minHeartRate = hr;
         model.resetDataAtMidnight();
       },
     );

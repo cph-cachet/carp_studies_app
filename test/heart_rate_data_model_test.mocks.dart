@@ -468,14 +468,14 @@ class MockSmartphoneDeploymentController extends _i1.Mock
 class MockHeartRateCardViewModel extends _i1.Mock
     implements _i4.HeartRateCardViewModel {
   @override
-  bool get contactStatus => (super.noSuchMethod(
+  bool get skinContact => (super.noSuchMethod(
         Invocation.getter(#contactStatus),
         returnValue: false,
         returnValueForMissingStub: false,
       ) as bool);
 
   @override
-  set contactStatus(bool? _contactStatus) => super.noSuchMethod(
+  set skinContact(bool? _contactStatus) => super.noSuchMethod(
         Invocation.setter(
           #contactStatus,
           _contactStatus,

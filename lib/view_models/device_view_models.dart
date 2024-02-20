@@ -38,7 +38,7 @@ class DeviceViewModel extends ViewModel {
   String get id => deviceManager.id;
 
   /// A printer-friendly name for this device.
-  String? get name => deviceManager is BTLEDeviceManager
+  String get name => deviceManager is BTLEDeviceManager
       ? (deviceManager as BTLEDeviceManager).btleName
       : id;
 

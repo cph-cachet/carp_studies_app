@@ -158,8 +158,8 @@ class LocalResourceManager
       _protocol = SmartphoneStudyProtocol.fromJson(jsonMap);
 
       if (_protocol?.dataEndPoint?.type != null) {
-        if (_protocol!.dataEndPoint!.type != DataEndPointTypes.FILE ||
-            _protocol!.dataEndPoint!.type != DataEndPointTypes.SQLITE) {
+        if (!(_protocol!.dataEndPoint!.type == DataEndPointTypes.FILE ||
+            _protocol!.dataEndPoint!.type == DataEndPointTypes.SQLITE)) {
           warning(
               "$runtimeType - Local protocol is trying to use a non-local data endpoint of type: '${_protocol!.dataEndPoint!.type}'. "
               "This will not work. Replacing this data endpoint to use a local SQLite backend instead. "

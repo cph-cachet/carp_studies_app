@@ -126,7 +126,7 @@ class DeviceListPageState extends State<DeviceListPage> {
                 () => _cardListBuilder(
                     device.icon!,
                     locale.translate(device.typeName),
-                    (device.id, device.batteryLevel ?? 0),
+                    (device.name, device.batteryLevel ?? 0),
                     enableFeedback: true,
                     onTap: () async => await _hardwareDeviceClicked(device),
                     trailing: device.getDeviceStatusIcon is String

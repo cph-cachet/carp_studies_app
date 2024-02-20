@@ -173,10 +173,10 @@ packages:
     dependency: transitive
     description:
       name: built_value
-      sha256: a3ec2e0f967bc47f69f95009bb93db936288d61d5343b9436e378b28a2f830c6
+      sha256: fedde275e0a6b798c3296963c5cd224e3e1b55d0e478d5b7e65e6b540f363a0e
       url: "https://pub.dev"
     source: hosted
-    version: "8.9.0"
+    version: "8.9.1"
   camera:
     dependency: "direct main"
     description:
@@ -252,10 +252,9 @@ packages:
   carp_core:
     dependency: "direct main"
     description:
-      name: carp_core
-      sha256: ee1d2925efbdcc33fd959871a87dfd5c7d2d45376728344ac11d9b3099a2e08b
-      url: "https://pub.dev"
-    source: hosted
+      path: "../carp/carp.sensing-flutter/carp_core"
+      relative: true
+    source: path
     version: "1.4.0"
   carp_esense_package:
     dependency: "direct main"
@@ -279,7 +278,7 @@ packages:
       path: "../carp/carp.sensing-flutter/carp_mobile_sensing"
       relative: true
     source: path
-    version: "1.4.4"
+    version: "1.4.5"
   carp_movesense_package:
     dependency: "direct overridden"
     description:
@@ -584,10 +583,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_blue_plus
-      sha256: "5390406cae8639182d538195208f15fd42b4284db6f73ce040354aef3a7be016"
+      sha256: "3a1299f3a5b97047fb66e48fc9f371ea2aca0d3fb40b380c440aa8392066ac98"
       url: "https://pub.dev"
     source: hosted
-    version: "1.31.14"
+    version: "1.31.15"
   flutter_launcher_icons:
     dependency: "direct main"
     description:

@@ -12,8 +12,8 @@
             "dataFormat": "dk.cachet.carp"
         }
     },
-    "id": "27fd7ab0-cf54-11ee-b344-e9556e867365",
-    "createdOn": "2024-02-19T18:24:45.019972Z",
+    "id": "945d4820-d026-11ee-88e5-ebd152be2e3e",
+    "createdOn": "2024-02-20T19:31:01.154850Z",
     "version": 0,
     "description": "A simple study used to test the Movesense device.",
     "ownerId": "jakba",
@@ -117,6 +117,10 @@
                 {
                     "__type": "dk.cachet.carp.common.application.tasks.Measure.DataStream",
                     "type": "dk.cachet.carp.movesense.hr"
+                },
+                {
+                    "__type": "dk.cachet.carp.common.application.tasks.Measure.DataStream",
+                    "type": "dk.cachet.carp.movesense.temperature"
                 }
             ]
         }

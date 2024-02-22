@@ -50,6 +50,11 @@ PODS:
     - Flutter
   - location (0.0.1):
     - Flutter
+  - mdsflutter (0.0.1):
+    - Flutter
+    - Movesense
+    - SwiftProtobuf
+  - Movesense (3.15.0)
   - network_info_plus (0.0.1):
     - Flutter
   - open_settings (0.0.1):
@@ -109,6 +114,8 @@ DEPENDENCIES:
   - just_audio (from `.symlinks/plugins/just_audio/ios`)
   - light (from `.symlinks/plugins/light/ios`)
   - location (from `.symlinks/plugins/location/ios`)
+  - mdsflutter (from `.symlinks/plugins/mdsflutter/ios`)
+  - Movesense (from `https://bitbucket.org/movesense/movesense-mobile-lib/`)
   - network_info_plus (from `.symlinks/plugins/network_info_plus/ios`)
   - open_settings (from `.symlinks/plugins/open_settings/ios`)
   - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
@@ -174,6 +181,10 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/light/ios"
   location:
     :path: ".symlinks/plugins/location/ios"
+  mdsflutter:
+    :path: ".symlinks/plugins/mdsflutter/ios"
+  Movesense:
+    :git: https://bitbucket.org/movesense/movesense-mobile-lib/
   network_info_plus:
     :path: ".symlinks/plugins/network_info_plus/ios"
   open_settings:
@@ -201,6 +212,11 @@ EXTERNAL SOURCES:
   video_player_avfoundation:
     :path: ".symlinks/plugins/video_player_avfoundation/darwin"
 
+CHECKOUT OPTIONS:
+  Movesense:
+    :commit: c7cc4933823553d2ad3f67db458c507a633ab33d
+    :git: https://bitbucket.org/movesense/movesense-mobile-lib/
+
 SPEC CHECKSUMS:
   app_settings: 017320c6a680cdc94c799949d95b84cb69389ebc
   AppAuth: 3bb1d1cd9340bd09f5ed189fb00b1cc28e1e8570
@@ -225,6 +241,8 @@ SPEC CHECKSUMS:
   just_audio: baa7252489dbcf47a4c7cc9ca663e9661c99aafa
   light: 86af7a847d218a9a2376bc1c1ae40c3410441135
   location: d5cf8598915965547c3f36761ae9cc4f4e87d22e
+  mdsflutter: 841344e0d5781afbbddd13e057e1cb2e9d86e012
+  Movesense: a1068c58b31d8032a13d69d0cb35ba6c444d2aae
   network_info_plus: 6d0c3eb8367b8164fa3fb0c19875e3f59d49697f
   open_settings: 9628e736cb2738fd1dc84159565755c214478158
   package_info_plus: 115f4ad11e0698c8c1c5d8a689390df880f47e85
@@ -243,6 +261,6 @@ SPEC CHECKSUMS:
   url_launcher_ios: bbd758c6e7f9fd7b5b1d4cde34d2b95fcce5e812
   video_player_avfoundation: 02011213dab73ae3687df27ce441fbbcc82b5579
 
-PODFILE CHECKSUM: cf73571b196c8b5799c2f2111e13846fa4ef168b
+PODFILE CHECKSUM: 930c200f783568fcde26aac3ee0e85213f9f639c
 
 COCOAPODS: 1.15.0

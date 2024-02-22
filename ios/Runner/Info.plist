@@ -100,6 +100,10 @@
 		<string>location</string>
 		<string>processing</string>
 	</array>
+	<key>BGTaskSchedulerPermittedIdentifiers</key>
+		<array>
+    		<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	</array>	
 	<key>UIFileSharingEnabled</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>

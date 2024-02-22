@@ -48,7 +48,6 @@ class CarpStudyAppState extends State<CarpStudyApp> {
               parentNavigatorKey: _shellNavigatorKey,
               redirect: (context, state) {
                 if (bloc.deploymentMode != DeploymentMode.local) {
-                  // check authentication to CAWS
                   if (!bloc.backend.isAuthenticated) {
                     return LoginPage.route;
                   } else if (!bloc.hasStudyBeenDeployed) {

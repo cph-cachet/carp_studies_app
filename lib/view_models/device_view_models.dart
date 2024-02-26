@@ -149,9 +149,9 @@ class DeviceViewModel extends ViewModel {
   static Map<DeviceStatus, dynamic> get deviceStatusIcon => {
         DeviceStatus.initialized: "pages.devices.status.action.connect",
         DeviceStatus.connecting: const Icon(Icons.bluetooth_searching_rounded,
-            color: CACHET.GREEN_1, size: 30),
+            color: CACHET.DARK_BLUE, size: 30),
         DeviceStatus.connected: const Icon(Icons.bluetooth_rounded,
-            color: CACHET.GREEN_1, size: 30),
+            color: CACHET.DARK_BLUE, size: 30),
         DeviceStatus.disconnected: "pages.devices.status.action.connect",
         DeviceStatus.paired: "pages.devices.status.action.connect",
         DeviceStatus.error:
@@ -205,17 +205,18 @@ class DeviceViewModel extends ViewModel {
     deviceManager.connect();
   }
 
-  // Disconnect from the currently connected device
+  /// Disconnect from the currently connected device
   Future<void> disconnectFromDevice() async {
-    if (deviceManager is BTLEDeviceManager) {
-      (deviceManager as BTLEDeviceManager).btleAddress = '';
-      (deviceManager as BTLEDeviceManager).btleName = '';
-    }
-
-    Sensing().controller?.saveDeployment();
-
     try {
       await deviceManager.disconnect();
+
+      // Erase BTLE information so the user can connect to another device, if needed.
+      if (deviceManager is BTLEDeviceManager) {
+        (deviceManager as BTLEDeviceManager).btleAddress = '';
+        (deviceManager as BTLEDeviceManager).btleName = '';
+      }
+
+      Sensing().controller?.saveDeployment();
     } catch (error) {
       warning(
           "$runtimeType - Error disconnecting to device '${deviceManager.id}' - $error.");

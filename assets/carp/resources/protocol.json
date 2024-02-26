@@ -12,8 +12,8 @@
             "dataFormat": "dk.cachet.carp"
         }
     },
-    "id": "945d4820-d026-11ee-88e5-ebd152be2e3e",
-    "createdOn": "2024-02-20T19:31:01.154850Z",
+    "id": "a165c890-d4b7-11ee-ac21-634ec5ef0402",
+    "createdOn": "2024-02-26T14:59:24.697170Z",
     "version": 0,
     "description": "A simple study used to test the Movesense device.",
     "ownerId": "jakba",
@@ -34,6 +34,16 @@
     ],
     "connectedDevices": [
         {
+            "__type": "dk.cachet.carp.common.application.devices.LocationService",
+            "roleName": "Location Service",
+            "isOptional": true,
+            "defaultSamplingConfiguration": {},
+            "accuracy": "balanced",
+            "distance": 10.0,
+            "interval": 60000000,
+            "notificationOnTapBringToFront": false
+        },
+        {
             "__type": "dk.cachet.carp.common.application.devices.MovesenseDevice",
             "roleName": "Movesense ECG Device",
             "isOptional": true,
@@ -41,6 +51,10 @@
         }
     ],
     "connections": [
+        {
+            "roleName": "Location Service",
+            "connectedToRoleName": "Primary Phone"
+        },
         {
             "roleName": "Movesense ECG Device",
             "connectedToRoleName": "Primary Phone"
@@ -76,15 +90,15 @@
             "measures": [
                 {
                     "__type": "dk.cachet.carp.common.application.tasks.Measure.DataStream",
-                    "type": "dk.cachet.carp.ambientlight"
+                    "type": "dk.cachet.carp.heartbeat"
                 },
                 {
                     "__type": "dk.cachet.carp.common.application.tasks.Measure.DataStream",
-                    "type": "dk.cachet.carp.freememory"
+                    "type": "dk.cachet.carp.triggeredtask"
                 },
                 {
                     "__type": "dk.cachet.carp.common.application.tasks.Measure.DataStream",
-                    "type": "dk.cachet.carp.batterystate"
+                    "type": "dk.cachet.carp.completedtask"
                 }
             ]
         },
@@ -112,6 +126,28 @@
             "measures": [
                 {
                     "__type": "dk.cachet.carp.common.application.tasks.Measure.DataStream",
+                    "type": "dk.cachet.carp.ambientlight"
+                },
+                {
+                    "__type": "dk.cachet.carp.common.application.tasks.Measure.DataStream",
+                    "type": "dk.cachet.carp.freememory"
+                },
+                {
+                    "__type": "dk.cachet.carp.common.application.tasks.Measure.DataStream",
+                    "type": "dk.cachet.carp.deviceinformation"
+                },
+                {
+                    "__type": "dk.cachet.carp.common.application.tasks.Measure.DataStream",
+                    "type": "dk.cachet.carp.batterystate"
+                }
+            ]
+        },
+        {
+            "__type": "dk.cachet.carp.common.application.tasks.BackgroundTask",
+            "name": "Task #12",
+            "measures": [
+                {
+                    "__type": "dk.cachet.carp.common.application.tasks.Measure.DataStream",
                     "type": "dk.cachet.carp.movesense.state"
                 },
                 {
@@ -123,6 +159,204 @@
                     "type": "dk.cachet.carp.movesense.temperature"
                 }
             ]
+        },
+        {
+            "__type": "dk.cachet.carp.common.application.tasks.RPAppTask",
+            "name": "Task #13",
+            "measures": [
+                {
+                    "__type": "dk.cachet.carp.common.application.tasks.Measure.DataStream",
+                    "type": "dk.cachet.carp.currentlocation"
+                }
+            ],
+            "type": "survey",
+            "title": "Cardiovascular Event",
+            "description": "You tapped the ECG device. Please provide details on the cardiovascular event you experienced.",
+            "instructions": "",
+            "minutesToComplete": 2,
+            "expire": 14400000000,
+            "notification": true,
+            "rpTask": {
+                "__type": "RPOrderedTask",
+                "identifier": "symptoms_survey",
+                "close_after_finished": true,
+                "steps": [
+                    {
+                        "__type": "RPInstructionStep",
+                        "identifier": "cvd_instruction",
+                        "title": "Cardiovascular Event",
+                        "text": "In the following pages, you will be able to report on any cardiovascular event you may have experienced.This event is based on you tapping the device.",
+                        "optional": false
+                    },
+                    {
+                        "__type": "RPQuestionStep",
+                        "identifier": "cvd_timestamp",
+                        "title": "When did you experience this event?",
+                        "optional": false,
+                        "answer_format": {
+                            "__type": "RPDateTimeAnswerFormat",
+                            "question_type": "DateAndTime",
+                            "date_time_answer_style": "DateAndTime"
+                        },
+                        "auto_skip": false,
+                        "timeout": 0,
+                        "auto_focus": false
+                    },
+                    {
+                        "__type": "RPQuestionStep",
+                        "identifier": "cvd_symptoms",
+                        "title": "Which symptom(s) did you experience when you tapped the device?",
+                        "optional": false,
+                        "answer_format": {
+                            "__type": "RPChoiceAnswerFormat",
+                            "question_type": "MultipleChoice",
+                            "choices": [
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "None",
+                                    "value": 1,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "Palpitation",
+                                    "value": 2,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "Dizziness",
+                                    "value": 3,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "Shortness of Breath",
+                                    "value": 4,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "Chest Pain",
+                                    "value": 5,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "Sweating",
+                                    "value": 6,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "Heart Burn",
+                                    "value": 7,
+                                    "is_free_text": false
+                                }
+                            ],
+                            "answer_style": "MultipleChoice"
+                        },
+                        "auto_skip": false,
+                        "timeout": 0,
+                        "auto_focus": false
+                    },
+                    {
+                        "__type": "RPQuestionStep",
+                        "identifier": "cvd_duration",
+                        "title": "For how long time did you experience the symptom(s)?",
+                        "optional": true,
+                        "answer_format": {
+                            "__type": "RPIntegerAnswerFormat",
+                            "min_value": 0,
+                            "max_value": 20,
+                            "suffix": "minutes",
+                            "question_type": "Integer"
+                        },
+                        "auto_skip": false,
+                        "timeout": 0,
+                        "auto_focus": false
+                    },
+                    {
+                        "__type": "RPQuestionStep",
+                        "identifier": "cvd_activity",
+                        "title": "What activity were you doing when experienced these symptom(s)?",
+                        "optional": false,
+                        "answer_format": {
+                            "__type": "RPChoiceAnswerFormat",
+                            "question_type": "SingleChoice",
+                            "choices": [
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "Running",
+                                    "value": 1,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "Walking",
+                                    "value": 2,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "Cycling",
+                                    "value": 3,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "Climbing Stairs",
+                                    "value": 4,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "Bathing",
+                                    "value": 5,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "Watching TV",
+                                    "value": 6,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "Reading",
+                                    "value": 7,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "Talking",
+                                    "value": 8,
+                                    "is_free_text": false
+                                }
+                            ],
+                            "answer_style": "SingleChoice"
+                        },
+                        "auto_skip": false,
+                        "timeout": 0,
+                        "auto_focus": false
+                    },
+                    {
+                        "__type": "RPQuestionStep",
+                        "identifier": "cvd_note",
+                        "title": "Additional notes",
+                        "optional": false,
+                        "answer_format": {
+                            "__type": "RPTextAnswerFormat",
+                            "hint_text": "Add note...",
+                            "auto_focus": false,
+                            "question_type": "Text"
+                        },
+                        "auto_skip": false,
+                        "timeout": 0,
+                        "auto_focus": false
+                    }
+                ]
+            }
         }
     ],
     "triggers": {
@@ -131,8 +365,8 @@
             "sourceDeviceRoleName": "Primary Phone"
         },
         "1": {
-            "__type": "dk.cachet.carp.common.application.triggers.ImmediateTrigger",
-            "sourceDeviceRoleName": "Primary Phone"
+            "__type": "dk.cachet.carp.common.application.triggers.NoOpTrigger",
+            "sourceDeviceRoleName": "Location Service"
         },
         "2": {
             "__type": "dk.cachet.carp.common.application.triggers.NoOpTrigger",
@@ -140,7 +374,21 @@
         },
         "3": {
             "__type": "dk.cachet.carp.common.application.triggers.ImmediateTrigger",
+            "sourceDeviceRoleName": "Primary Phone"
+        },
+        "4": {
+            "__type": "dk.cachet.carp.common.application.triggers.ImmediateTrigger",
             "sourceDeviceRoleName": "Movesense ECG Device"
+        },
+        "5": {
+            "__type": "dk.cachet.carp.common.application.triggers.SamplingEventTrigger",
+            "sourceDeviceRoleName": "Primary Phone",
+            "measureType": "dk.cachet.carp.movesense.state",
+            "triggerCondition": {
+                "__type": "dk.cachet.carp.movesense.state",
+                "state": "tap",
+                "timestamp": 699
+            }
         }
     },
     "taskControls": [
@@ -153,7 +401,7 @@
         {
             "triggerId": 1,
             "taskName": "Task #9",
-            "destinationDeviceRoleName": "Primary Phone",
+            "destinationDeviceRoleName": "Location Service",
             "control": "Start"
         },
         {
@@ -165,7 +413,19 @@
         {
             "triggerId": 3,
             "taskName": "Task #11",
+            "destinationDeviceRoleName": "Primary Phone",
+            "control": "Start"
+        },
+        {
+            "triggerId": 4,
+            "taskName": "Task #12",
             "destinationDeviceRoleName": "Movesense ECG Device",
+            "control": "Start"
+        },
+        {
+            "triggerId": 5,
+            "taskName": "Task #13",
+            "destinationDeviceRoleName": "Primary Phone",
             "control": "Start"
         }
     ],

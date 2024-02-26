@@ -129,7 +129,7 @@
     "pages.devices.connection.enable_bluetooth.message2": "If Bluetooth is already turned on, make sure that you are allowing new connections.",
     "pages.devices.connection.enable_bluetooth.message3": "Click 'Settings' to open Bluetooth settings.",
     "pages.devices.connection.disconnect_bluetooth.title": "Disconnect Bluetooth",
-    "pages.devices.connection.disconnect_bluetooth.message": "Are you sure you want to disconnect the",
+    "pages.devices.connection.disconnect_bluetooth.message": "Are you sure you want to disconnect",
     "pages.devices.connection.disconnect_bluetooth.disconnect": "Disconnect",
     "pages.devices.connection.step.how_to.title": "How to connect to",
     "pages.devices.connection.step.start.title": "Connect to Device",

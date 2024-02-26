@@ -261,17 +261,13 @@ class DeviceListPageState extends State<DeviceListPage> {
       } else if (bluetoothAdapterState == BluetoothAdapterState.on) {
         if (device.status == DeviceStatus.connected ||
             device.status == DeviceStatus.connecting) {
-          bool? result = await showDialog<bool>(
-            context: context,
-            barrierDismissible: true,
-            builder: (context) => DisconnectionDialog(device: device),
-          );
-
-          if (result == true) {
-            await device.disconnectFromDevice();
-          } else {
-            await FlutterBluePlus.stopScan();
-          }
+          bool disconnect = await showDialog<bool?>(
+                context: context,
+                barrierDismissible: true,
+                builder: (context) => DisconnectionDialog(device: device),
+              ) ??
+              false;
+          if (disconnect) await device.disconnectFromDevice();
         } else {
           await showDialog<void>(
             context: context,

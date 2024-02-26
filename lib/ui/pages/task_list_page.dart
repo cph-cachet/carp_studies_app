@@ -119,9 +119,8 @@ class TaskListPageState extends State<TaskListPage> {
               // only start if not already started, done, or expired
               if (userTask.state == UserTaskState.enqueued ||
                   userTask.state == UserTaskState.canceled) {
-                userTask.hasWidget
-                    ? context.push('/task/${userTask.id}')
-                    : userTask.onStart();
+                userTask.onStart();
+                if (userTask.hasWidget) context.push('/task/${userTask.id}');
               }
             }),
       ),

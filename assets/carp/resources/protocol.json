@@ -12,8 +12,8 @@
             "dataFormat": "dk.cachet.carp"
         }
     },
-    "id": "a165c890-d4b7-11ee-ac21-634ec5ef0402",
-    "createdOn": "2024-02-26T14:59:24.697170Z",
+    "id": "4c6db890-d4f1-11ee-a73f-554972e7efa3",
+    "createdOn": "2024-02-26T21:52:12.953601Z",
     "version": 0,
     "description": "A simple study used to test the Movesense device.",
     "ownerId": "jakba",
@@ -161,8 +161,23 @@
             ]
         },
         {
-            "__type": "dk.cachet.carp.common.application.tasks.RPAppTask",
+            "__type": "dk.cachet.carp.common.application.tasks.AppTask",
             "name": "Task #13",
+            "measures": [
+                {
+                    "__type": "dk.cachet.carp.common.application.tasks.Measure.DataStream",
+                    "type": "dk.cachet.carp.deviceinformation"
+                }
+            ],
+            "type": "one_time_sensing",
+            "title": "Device",
+            "description": "Collect device information.",
+            "instructions": "",
+            "notification": false
+        },
+        {
+            "__type": "dk.cachet.carp.common.application.tasks.RPAppTask",
+            "name": "Task #14",
             "measures": [
                 {
                     "__type": "dk.cachet.carp.common.application.tasks.Measure.DataStream",
@@ -171,7 +186,7 @@
             ],
             "type": "survey",
             "title": "Cardiovascular Event",
-            "description": "You tapped the ECG device. Please provide details on the cardiovascular event you experienced.",
+            "description": "You tapped the heart rate monitor. Please provide details on the event you experienced.",
             "instructions": "",
             "minutesToComplete": 2,
             "expire": 14400000000,
@@ -185,7 +200,7 @@
                         "__type": "RPInstructionStep",
                         "identifier": "cvd_instruction",
                         "title": "Cardiovascular Event",
-                        "text": "In the following pages, you will be able to report on any cardiovascular event you may have experienced.This event is based on you tapping the device.",
+                        "text": "In the following pages, you will be able to report on any cardiovascular event you may have experienced.\nThis event is based on you tapping the device.",
                         "optional": false
                     },
                     {
@@ -332,6 +347,12 @@
                                     "text": "Talking",
                                     "value": 8,
                                     "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "None of the above",
+                                    "value": 9,
+                                    "is_free_text": false
                                 }
                             ],
                             "answer_style": "SingleChoice"
@@ -344,7 +365,7 @@
                         "__type": "RPQuestionStep",
                         "identifier": "cvd_note",
                         "title": "Additional notes",
-                        "optional": false,
+                        "optional": true,
                         "answer_format": {
                             "__type": "RPTextAnswerFormat",
                             "hint_text": "Add note...",
@@ -381,13 +402,23 @@
             "sourceDeviceRoleName": "Movesense ECG Device"
         },
         "5": {
+            "__type": "dk.cachet.carp.common.application.triggers.OneTimeTrigger",
+            "sourceDeviceRoleName": "Primary Phone"
+        },
+        "6": {
+            "__type": "dk.cachet.carp.common.application.triggers.UserTaskTrigger",
+            "sourceDeviceRoleName": "Primary Phone",
+            "taskName": "Task #13",
+            "triggerCondition": "done"
+        },
+        "7": {
             "__type": "dk.cachet.carp.common.application.triggers.SamplingEventTrigger",
             "sourceDeviceRoleName": "Primary Phone",
             "measureType": "dk.cachet.carp.movesense.state",
             "triggerCondition": {
                 "__type": "dk.cachet.carp.movesense.state",
                 "state": "tap",
-                "timestamp": 699
+                "timestamp": 955
             }
         }
     },
@@ -425,6 +456,18 @@
         {
             "triggerId": 5,
             "taskName": "Task #13",
+            "destinationDeviceRoleName": "Primary Phone",
+            "control": "Start"
+        },
+        {
+            "triggerId": 6,
+            "taskName": "Task #13",
+            "destinationDeviceRoleName": "Primary Phone",
+            "control": "Start"
+        },
+        {
+            "triggerId": 7,
+            "taskName": "Task #14",
             "destinationDeviceRoleName": "Primary Phone",
             "control": "Start"
         }

@@ -48,13 +48,17 @@ class LocalResourceManager
   @override
   Future<RPOrderedTask?> getInformedConsent() async {
     if (_informedConsent == null) {
-      var jsonString =
-          await rootBundle.loadString('$basePath/resources/consent.json');
-      Map<String, dynamic> jsonMap =
-          json.decode(jsonString) as Map<String, dynamic>;
-      _informedConsent = RPOrderedTask.fromJson(jsonMap);
+      try {
+        var jsonString =
+            await rootBundle.loadString('$basePath/resources/consent.json');
+        Map<String, dynamic> jsonMap =
+            json.decode(jsonString) as Map<String, dynamic>;
+        _informedConsent = RPOrderedTask.fromJson(jsonMap);
+      } catch (error) {
+        warning('$runtimeType - $error');
+      }
     }
-    return _informedConsent!;
+    return _informedConsent;
   }
 
   @override

@@ -55,7 +55,8 @@ class LocalResourceManager
             json.decode(jsonString) as Map<String, dynamic>;
         _informedConsent = RPOrderedTask.fromJson(jsonMap);
       } catch (error) {
-        warning('$runtimeType - $error');
+        warning("$runtimeType - Could not load a local informed consent. "
+            "It should be added as an asset resource in 'carp/resources/consent.json'. $error");
       }
     }
     return _informedConsent;
@@ -154,26 +155,31 @@ class LocalResourceManager
   @override
   Future<SmartphoneStudyProtocol?> getStudyProtocol(String id) async {
     if (_protocol == null) {
-      var jsonString =
-          await rootBundle.loadString('$basePath/resources/protocol.json');
+      try {
+        var jsonString =
+            await rootBundle.loadString('$basePath/resources/protocol.json');
 
-      Map<String, dynamic> jsonMap =
-          json.decode(jsonString) as Map<String, dynamic>;
-      _protocol = SmartphoneStudyProtocol.fromJson(jsonMap);
+        Map<String, dynamic> jsonMap =
+            json.decode(jsonString) as Map<String, dynamic>;
+        _protocol = SmartphoneStudyProtocol.fromJson(jsonMap);
 
-      if (_protocol?.dataEndPoint?.type != null) {
-        if (!(_protocol!.dataEndPoint!.type == DataEndPointTypes.FILE ||
-            _protocol!.dataEndPoint!.type == DataEndPointTypes.SQLITE)) {
-          warning(
-              "$runtimeType - Local protocol is trying to use a non-local data endpoint of type: '${_protocol!.dataEndPoint!.type}'. "
-              "This will not work. Replacing this data endpoint to use a local SQLite backend instead. "
-              "You can also change this in the local protocol stored in the 'carp/resources/protocol.json' file.");
+        if (_protocol?.dataEndPoint?.type != null) {
+          if (!(_protocol!.dataEndPoint!.type == DataEndPointTypes.FILE ||
+              _protocol!.dataEndPoint!.type == DataEndPointTypes.SQLITE)) {
+            warning(
+                "$runtimeType - Local protocol is trying to use a non-local data endpoint of type: '${_protocol!.dataEndPoint!.type}'. "
+                "This will not work. Replacing this data endpoint to use a local SQLite backend instead. "
+                "You can also change this in the local protocol stored in the 'carp/resources/protocol.json' file.");
 
-          _protocol!.dataEndPoint = SQLiteDataEndPoint();
+            _protocol!.dataEndPoint = SQLiteDataEndPoint();
+          }
         }
+      } catch (error) {
+        warning("$runtimeType - Could not load a local study protocol. "
+            "It should be added as an asset resource in 'carp/resources/protocol.json'. $error");
       }
     }
-    return _protocol!;
+    return _protocol;
   }
 
   @override

@@ -12,8 +12,8 @@
             "dataFormat": "dk.cachet.carp"
         }
     },
-    "id": "4c6db890-d4f1-11ee-a73f-554972e7efa3",
-    "createdOn": "2024-02-26T21:52:12.953601Z",
+    "id": "8e98e270-d63c-11ee-9874-377aa063a86c",
+    "createdOn": "2024-02-28T13:23:27.383295Z",
     "version": 0,
     "description": "A simple study used to test the Movesense device.",
     "ownerId": "jakba",
@@ -156,7 +156,15 @@
                 },
                 {
                     "__type": "dk.cachet.carp.common.application.tasks.Measure.DataStream",
+                    "type": "dk.cachet.carp.movesense.ecg"
+                },
+                {
+                    "__type": "dk.cachet.carp.common.application.tasks.Measure.DataStream",
                     "type": "dk.cachet.carp.movesense.temperature"
+                },
+                {
+                    "__type": "dk.cachet.carp.common.application.tasks.Measure.DataStream",
+                    "type": "dk.cachet.carp.movesense.imu"
                 }
             ]
         },
@@ -167,11 +175,15 @@
                 {
                     "__type": "dk.cachet.carp.common.application.tasks.Measure.DataStream",
                     "type": "dk.cachet.carp.deviceinformation"
+                },
+                {
+                    "__type": "dk.cachet.carp.common.application.tasks.Measure.DataStream",
+                    "type": "dk.cachet.carp.currentlocation"
                 }
             ],
             "type": "one_time_sensing",
-            "title": "Device",
-            "description": "Collect device information.",
+            "title": "Device Info & Location",
+            "description": "Collect device information at the current location.",
             "instructions": "",
             "notification": false
         },
@@ -418,7 +430,7 @@
             "triggerCondition": {
                 "__type": "dk.cachet.carp.movesense.state",
                 "state": "tap",
-                "timestamp": 955
+                "timestamp": 385
             }
         }
     },

@@ -252,10 +252,11 @@ packages:
   carp_core:
     dependency: "direct main"
     description:
-      path: "../carp/carp.sensing-flutter/carp_core"
-      relative: true
-    source: path
-    version: "1.4.0"
+      name: carp_core
+      sha256: "8f1471862f10fcca84d643a23ff62d308803a6a31f625b3c2a017730bc024b1e"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.4.1"
   carp_esense_package:
     dependency: "direct main"
     description:
@@ -275,16 +276,18 @@ packages:
   carp_mobile_sensing:
     dependency: "direct main"
     description:
-      path: "../carp/carp.sensing-flutter/carp_mobile_sensing"
-      relative: true
-    source: path
+      name: carp_mobile_sensing
+      sha256: "0620c40ae08a77a93fc7fc6b8cf2700f7c78247e2201dc7cc1607f7637c2331a"
+      url: "https://pub.dev"
+    source: hosted
     version: "1.4.5"
   carp_movesense_package:
-    dependency: "direct overridden"
+    dependency: "direct main"
     description:
-      path: "../carp/carp.sensing-flutter/packages/carp_movesense_package"
-      relative: true
-    source: path
+      name: carp_movesense_package
+      sha256: "90698790544098e34a18bb700763890cffdd319bb1eb4bad569b2de1a09fc4a9"
+      url: "https://pub.dev"
+    source: hosted
     version: "1.4.0"
   carp_polar_package:
     dependency: "direct main"
@@ -305,10 +308,11 @@ packages:
   carp_survey_package:
     dependency: "direct main"
     description:
-      path: "../carp/carp.sensing-flutter/packages/carp_survey_package"
-      relative: true
-    source: path
-    version: "1.4.2"
+      name: carp_survey_package
+      sha256: "56f443f9131ab8d8a6927c036e746e4012b84daaa480a1fd74ee0ac7f2e2f99e"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.4.3"
   carp_webservices:
     dependency: "direct main"
     description:
@@ -441,10 +445,10 @@ packages:
     dependency: transitive
     description:
       name: dart_style
-      sha256: "40ae61a5d43feea6d24bd22c0537a6629db858963b99b4bc1c3db80676f32368"
+      sha256: "25b4624c231844a7a70a3817a729a6190a751ef1c07ded256e126a3b72261444"
       url: "https://pub.dev"
     source: hosted
-    version: "2.3.4"
+    version: "2.3.5"
   data_serializer:
     dependency: transitive
     description:
@@ -1293,10 +1297,10 @@ packages:
     dependency: transitive
     description:
       name: provider
-      sha256: "9a96a0a19b594dbc5bf0f1f27d2bc67d5f95957359b461cd9feb44ed6ae75096"
+      sha256: c8a055ee5ce3fd98d6fc872478b03823ffdb448699c6ebdbbc71d59b596fd48c
       url: "https://pub.dev"
     source: hosted
-    version: "6.1.1"
+    version: "6.1.2"
   pub_semver:
     dependency: transitive
     description:

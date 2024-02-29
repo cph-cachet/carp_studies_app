@@ -3,7 +3,7 @@ part of carp_study_app;
 /// State of Bluetooth connection UI.
 enum CurrentStep { scan, instructions, done }
 
-/// The page showing the list of devices, ordered as:
+/// The page showing the list of devices and online services, ordered as:
 ///  * The Smartphone device (primary device)
 ///  * Any hardware devices (connected devices)
 ///  * Any online services (connected services)
@@ -52,47 +52,37 @@ class DeviceListPageState extends State<DeviceListPage> {
   Widget build(BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.secondary,
-      body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const CarpAppBar(),
-            Container(
-              color: Theme.of(context).colorScheme.secondary,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(locale.translate("pages.devices.message"),
-                          style: aboutCardSubtitleStyle),
-                      const SizedBox(height: 15),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            Expanded(
-              flex: 4,
-              child: CustomScrollView(
-                slivers: [
-                  ..._smartphoneDeviceList(locale),
-                  if (_hardwareDevices.isNotEmpty)
-                    ..._hardwareDevicesList(locale),
-                  if (_onlineServices.isNotEmpty)
-                    ..._onlineServicesList(locale),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
+        backgroundColor: Theme.of(context).colorScheme.secondary,
+        body: SafeArea(
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+              const CarpAppBar(),
+              Container(
+                  color: Theme.of(context).colorScheme.secondary,
+                  child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(locale.translate("pages.devices.message"),
+                                    style: aboutCardSubtitleStyle),
+                                const SizedBox(height: 15),
+                              ])))),
+              Expanded(
+                  flex: 4,
+                  child: CustomScrollView(slivers: [
+                    ..._smartphoneDeviceList(locale),
+                    if (_hardwareDevices.isNotEmpty)
+                      ..._hardwareDevicesList(locale),
+                    if (_onlineServices.isNotEmpty)
+                      ..._onlineServicesList(locale),
+                  ]))
+            ])));
   }
 
   /// The list of smartphones - which is a list with only one smartphone.

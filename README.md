@@ -11,7 +11,7 @@ Read more about the [CARP Studies app](https://carp.cachet.dk/carp-studies-app/)
 This study app can run in two basic modes - using CAWS or locally. Deployment mode is set using the environment variable `deployment-mode` file. In Flutter environment variables are set by specifying the `--dart-define` option in flutter run. For example;
 
 ```shell
-flutter run --dart-define=deployment-mode=local,debug-level=info
+flutter run --dart-define="deployment-mode=local" --dart-define="debug-level=debug"
 ```
 
 would run the app in local deployment mode with debug level set to info.

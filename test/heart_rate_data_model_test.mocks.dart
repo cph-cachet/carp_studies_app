@@ -372,6 +372,45 @@ class MockSmartphoneDeploymentController extends _i1.Mock
       ) as _i6.Future<void>);
 
   @override
+  void initializeDevices() => super.noSuchMethod(
+        Invocation.method(
+          #initializeDevices,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void initializeDevice(
+          _i3.DeviceConfiguration<_i3.DeviceRegistration>? configuration) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #initializeDevice,
+          [configuration],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void startHeartbeatMonitoring() => super.noSuchMethod(
+        Invocation.method(
+          #startHeartbeatMonitoring,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  _i6.Future<void> connectAllConnectableDevices() => (super.noSuchMethod(
+        Invocation.method(
+          #connectAllConnectableDevices,
+          [],
+        ),
+        returnValue: _i6.Future<void>.value(),
+        returnValueForMissingStub: _i6.Future<void>.value(),
+      ) as _i6.Future<void>);
+
+  @override
   void start([bool? start = true]) => super.noSuchMethod(
         Invocation.method(
           #start,
@@ -467,22 +506,6 @@ class MockSmartphoneDeploymentController extends _i1.Mock
 /// See the documentation for Mockito's code generation for more information.
 class MockHeartRateCardViewModel extends _i1.Mock
     implements _i4.HeartRateCardViewModel {
-  @override
-  bool get skinContact => (super.noSuchMethod(
-        Invocation.getter(#contactStatus),
-        returnValue: false,
-        returnValueForMissingStub: false,
-      ) as bool);
-
-  @override
-  set skinContact(bool? _contactStatus) => super.noSuchMethod(
-        Invocation.setter(
-          #contactStatus,
-          _contactStatus,
-        ),
-        returnValueForMissingStub: null,
-      );
-
   @override
   Map<int, _i4.HeartRateMinMaxPrHour> get hourlyHeartRate =>
       (super.noSuchMethod(

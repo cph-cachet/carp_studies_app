@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:carp_survey_package/survey.dart';
 import 'package:cognition_package/model.dart';
 
 import 'package:carp_connectivity_package/connectivity.dart';
@@ -15,7 +16,6 @@ import 'package:research_package/model.dart';
 import 'package:carp_movesense_package/carp_movesense_package.dart';
 
 import 'exports.dart';
-// import 'credentials.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -36,10 +36,11 @@ void main() {
     SamplingPackageRegistry().register(ESenseSamplingPackage());
     SamplingPackageRegistry().register(PolarSamplingPackage());
     SamplingPackageRegistry().register(MovesenseSamplingPackage());
+    SamplingPackageRegistry().register(SurveySamplingPackage());
   });
 
   group("Local Study Protocol Manager", () {
-    test('JSON File -> StudyProtocol', skip: true, () async {
+    test('JSON File -> StudyProtocol', skip: false, () async {
       final plainJson =
           File('test/json/study_protocol.json').readAsStringSync();
 

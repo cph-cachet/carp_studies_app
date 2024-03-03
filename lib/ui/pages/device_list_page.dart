@@ -1,8 +1,5 @@
 part of carp_study_app;
 
-/// State of Bluetooth connection UI.
-enum CurrentStep { scan, instructions, done }
-
 /// The page showing the list of devices and online services, ordered as:
 ///  * The Smartphone device (primary device)
 ///  * Any hardware devices (connected devices)
@@ -35,15 +32,14 @@ class DeviceListPageState extends State<DeviceListPage> {
   @override
   void initState() {
     super.initState();
-    bluetoothStateStream = FlutterBluePlus.adapterState.listen((event) {
-      bluetoothAdapterState = event;
+    bluetoothStateStream = FlutterBluePlus.adapterState.listen((state) {
+      bluetoothAdapterState = state;
       setState(() {});
     });
   }
 
   @override
   void dispose() {
-    FlutterBluePlus.stopScan();
     bluetoothStateStream?.cancel();
     super.dispose();
   }

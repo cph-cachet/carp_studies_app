@@ -1,5 +1,8 @@
 part of carp_study_app;
 
+/// State of Bluetooth connection UI.
+enum CurrentStep { scan, instructions, done }
+
 class ConnectionDialog extends StatefulWidget {
   final DeviceViewModel device;
 
@@ -14,6 +17,12 @@ class _ConnectionDialogState extends State<ConnectionDialog> {
   initState() {
     super.initState();
     FlutterBluePlus.startScan();
+  }
+
+  @override
+  void dispose() {
+    FlutterBluePlus.stopScan();
+    super.dispose();
   }
 
   CurrentStep currentStep = CurrentStep.scan;

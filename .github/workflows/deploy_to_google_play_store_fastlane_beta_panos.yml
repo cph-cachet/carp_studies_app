@@ -52,14 +52,11 @@ jobs:
               KEYSTORE_KEY_ALIAS: ${{ secrets.KEYSTORE_KEY_ALIAS }}
               KEYSTORE_KEY_PASSWORD: ${{ secrets.KEYSTORE_KEY_PASSWORD }}
               KEYSTORE_STORE_PASSWORD: ${{ secrets.KEYSTORE_STORE_PASSWORD }}
-              PLAYSTORE_CONFIG_JSON: ${{ secrets.PLAY_STORE_JSON_KEY }}
+              FASTLANE_JSON_KEY_FILE: ${{secrets.PLAY_STORE_CONFIG_JSON}}
             working-directory: android
 
       
-          - run: |
-              gem install bundler
-              bundle install
-              bundle exec fastlane beta
+          - run: fastlane beta
             env:
-              FASTLANE_JSON_KEY_FILE: PLAY_STORE_CONFIG.json
+              PLAY_STORE_JSON_KEY: PLAY_STORE_CONFIG.json
             working-directory: android

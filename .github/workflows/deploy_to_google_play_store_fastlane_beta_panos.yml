@@ -57,6 +57,7 @@ jobs:
 
       
           - run: |
+              gem install bundler
               bundle install
               bundle exec fastlane beta
             env:

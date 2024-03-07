@@ -5,9 +5,6 @@ part of carp_study_app;
 ///
 /// Use as a singleton ` CarpBackend()`.
 class CarpBackend {
-  /// The URI of the CARP Web Service (CAWS) host.
-  static const String cawsUri = 'carp.computerome.dk';
-
   /// The URL of the CARP Privacy Policy for this app.
   static const String carpPrivacyUrl =
       "https://carp.cachet.dk/privacy-policy-app";
@@ -15,11 +12,11 @@ class CarpBackend {
   /// The URL of the official CARP web site.
   static const String carpWebsiteUrl = "https://carp.cachet.dk";
 
+  /// The URIs of the CARP Web Service (CAWS) host for each [DeploymentMode].
   static const Map<DeploymentMode, String> uris = {
-    DeploymentMode.dev: 'dev',
-    DeploymentMode.test: 'test',
-    DeploymentMode.staging: 'stage',
-    DeploymentMode.production: '',
+    DeploymentMode.dev: 'dev.carp.dk',
+    DeploymentMode.test: 'test.carp.dk',
+    DeploymentMode.production: 'carp.computerome.dk',
   };
 
   static final CarpBackend _instance = CarpBackend._();
@@ -27,16 +24,16 @@ class CarpBackend {
   CarpBackend._() : super() {
     // make sure that the json functions are loaded
     CarpMobileSensing.ensureInitialized();
+    ResearchPackage.ensureInitialized();
     CognitionPackage.ensureInitialized();
   }
 
-  /// The URI of the CANS server - depending on deployment mode.
+  /// The URI of the CAWS server - depending on deployment mode.
   Uri get uri => Uri(
         scheme: 'https',
-        host: cawsUri,
+        host: uris[bloc.deploymentMode],
         pathSegments: [
           'auth',
-          uris[bloc.deploymentMode]!,
           'realms',
           'Carp',
         ],

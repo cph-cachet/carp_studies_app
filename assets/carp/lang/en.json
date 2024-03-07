@@ -1,7 +1,7 @@
 {
     "ic.overview.title": "Welcome!",
-    "ic.overview.summary": "Welcome to the CARP Studies Demo study.\n\nBefore we begin, we want to tell you about the study and your participation.\n\nIf you are under 18, please go through this with your parent.",
-    "ic.overview.content": "Welcome to the CARP Studies Demo study.\n\nIn this app you will have access to the tasks and exercises of the Demo study. Before we begin, we want to tell you about the study and your participation.\n\nIf you are under 18, please go through this with your parent.",
+    "ic.overview.summary": "Welcome to the App Store Demo study.\n\nBefore we begin, we want to tell you about the study and your participation.\n\nIf you are under 18, please go through this with your parent.",
+    "ic.overview.content": "Welcome to the App Store Demo study.\n\nIn this app you will have access to the tasks and exercises of the App Store study. Before we begin, we want to tell you about the study and your participation.\n\nIf you are under 18, please go through this with your parent.",
     "ic.who.title": "Who are we?",
     "ic.who.summary": "This study is conducted by researchers at the Technical University of Denmark.\n\nThe main contact person is professor Jakob E. Bardram",
     "ic.who.content": "PROJECT TEAM\n\nThis research is done by the Copenhagen Center for Health Technology (CACHET) at the Technical University of Denmark (DTU).\n\nThe investigators directly working with this study include: \n\n - Professor Jakob E. Bardram from DTU.\n\nPROJECT FUNDING\n\nThis study is funded by the Copenhagen Center for Health Technology (CACHET), which again recieve funing from a range of funding bodies.",
@@ -28,7 +28,7 @@
     "ic.review.text": "Agree?",
     "ic.completion.title": "Thank you!",
     "ic.completion.text": "We have saved your consent document.",
-    "study.description.title": "CARP Demo Study",
+    "study.description.title": "CARP App Store Study",
     "study.description.purpose": "To provide a simple demonstration of how the CARP Study App can be configured.",
     "study.description.description": "We would like to have you help in testing the technical stability and the usability of the CARP Mobile Sensing app.",
     "study.description.url": "https://carp.cachet.dk/",

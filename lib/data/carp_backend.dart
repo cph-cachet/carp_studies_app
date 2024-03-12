@@ -48,7 +48,7 @@ class CarpBackend {
 
     app = CarpApp(
       name: "CAWS @ DTU",
-      uri: uri.replace(pathSegments: [uris[bloc.deploymentMode]!]),
+      uri: uri.replace(pathSegments: []),
       authURL: uri,
       clientId: 'studies-app',
       redirectURI: Uri.parse('carp-studies-auth://auth'),

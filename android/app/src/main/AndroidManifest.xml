@@ -121,6 +121,7 @@
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name="net.openid.appauth.RedirectUriReceiverActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"
             android:exported="true"
             tools:node="replace">
             <intent-filter>

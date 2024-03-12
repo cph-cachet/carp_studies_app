@@ -128,7 +128,9 @@ class Sensing {
     await SmartPhoneClientManager().configure(
       deploymentService: deploymentService,
       deviceController: DeviceController(),
-      askForPermissions: false,
+
+      // Need to ask for permissions all at once on Android.
+      askForPermissions: Platform.isAndroid ? true : false,
     );
 
     info('$runtimeType initialized');

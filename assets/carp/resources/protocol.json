@@ -26,8 +26,8 @@
             "deleteWhenUploaded": true
         }
     },
-    "id": "8f86fa10-e04f-11ee-b74d-43a20e6d31fe",
-    "createdOn": "2024-03-12T09:04:41.009653Z",
+    "id": "6f624ee0-e060-11ee-b0ba-39296eb49de4",
+    "createdOn": "2024-03-12T11:05:28.526263Z",
     "version": 0,
     "description": "study.description.description",
     "ownerId": "979b408d-784e-4b1b-bb1e-ff9204e072f3",
@@ -59,10 +59,7 @@
             "__type": "dk.cachet.carp.common.application.devices.PolarDevice",
             "roleName": "Polar HR Device",
             "isOptional": true,
-            "defaultSamplingConfiguration": {},
-            "identifier": "1C709B20",
-            "polarDeviceType": "H10",
-            "name": "H10"
+            "defaultSamplingConfiguration": {}
         },
         {
             "__type": "dk.cachet.carp.common.application.devices.HealthService",

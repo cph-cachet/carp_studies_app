@@ -5,8 +5,6 @@
             "title": "study.description.title",
             "description": "study.description.description",
             "purpose": "study.description.purpose",
-            "studyDescriptionUrl": "study.description.url",
-            "privacyPolicyUrl": "study.description.privacy",
             "responsible": {
                 "__type": "StudyResponsible",
                 "id": "study.responsible.id",
@@ -22,18 +20,18 @@
             "type": "CAWS",
             "dataFormat": "dk.cachet.carp",
             "uploadMethod": "stream",
-            "name": "CARP Service",
+            "name": "CARP Web Service @Computerome",
             "onlyUploadOnWiFi": false,
             "uploadInterval": 10,
             "deleteWhenUploaded": true
         }
     },
-    "id": "a77704e0-dc7a-11ee-88ea-f1b4ce37a9de",
-    "createdOn": "2024-03-07T12:03:04.878461Z",
+    "id": "8f86fa10-e04f-11ee-b74d-43a20e6d31fe",
+    "createdOn": "2024-03-12T09:04:41.009653Z",
     "version": 0,
     "description": "study.description.description",
-    "ownerId": "carp.dk",
-    "name": "CARP App Store Protocol",
+    "ownerId": "979b408d-784e-4b1b-bb1e-ff9204e072f3",
+    "name": "CATCH Protocol v. 1.0",
     "participantRoles": [
         {
             "role": "Participant",
@@ -51,20 +49,26 @@
     ],
     "connectedDevices": [
         {
+            "__type": "dk.cachet.carp.common.application.devices.MovesenseDevice",
+            "roleName": "Movesense ECG Device",
+            "isOptional": true,
+            "defaultSamplingConfiguration": {},
+            "deviceType": "UNKNOWN"
+        },
+        {
             "__type": "dk.cachet.carp.common.application.devices.PolarDevice",
             "roleName": "Polar HR Device",
             "isOptional": true,
-            "defaultSamplingConfiguration": {}
+            "defaultSamplingConfiguration": {},
+            "identifier": "1C709B20",
+            "polarDeviceType": "H10",
+            "name": "H10"
         },
         {
-            "__type": "dk.cachet.carp.common.application.devices.LocationService",
-            "roleName": "Location Service",
+            "__type": "dk.cachet.carp.common.application.devices.HealthService",
+            "roleName": "Health Service",
             "isOptional": true,
-            "defaultSamplingConfiguration": {},
-            "accuracy": "balanced",
-            "distance": 10.0,
-            "interval": 60000000,
-            "notificationOnTapBringToFront": false
+            "defaultSamplingConfiguration": {}
         },
         {
             "__type": "dk.cachet.carp.common.application.devices.WeatherService",
@@ -72,19 +76,34 @@
             "isOptional": true,
             "defaultSamplingConfiguration": {},
             "apiKey": "12b6e28582eb9298577c734a31ba9f4f"
+        },
+        {
+            "__type": "dk.cachet.carp.common.application.devices.AirQualityService",
+            "roleName": "Air Quality Service",
+            "isOptional": true,
+            "defaultSamplingConfiguration": {},
+            "apiKey": "9e538456b2b85c92647d8b65090e29f957638c77"
         }
     ],
     "connections": [
+        {
+            "roleName": "Movesense ECG Device",
+            "connectedToRoleName": "Primary Phone"
+        },
         {
             "roleName": "Polar HR Device",
             "connectedToRoleName": "Primary Phone"
         },
         {
-            "roleName": "Location Service",
+            "roleName": "Health Service",
             "connectedToRoleName": "Primary Phone"
         },
         {
             "roleName": "Weather Service",
+            "connectedToRoleName": "Primary Phone"
+        },
+        {
+            "roleName": "Air Quality Service",
             "connectedToRoleName": "Primary Phone"
         }
     ],
@@ -172,7 +191,7 @@
             "measures": [
                 {
                     "__type": "dk.cachet.carp.common.application.tasks.Measure.DataStream",
-                    "type": "dk.cachet.carp.ambientlight"
+                    "type": "dk.cachet.carp.deviceinformation"
                 },
                 {
                     "__type": "dk.cachet.carp.common.application.tasks.Measure.DataStream",
@@ -180,7 +199,7 @@
                 },
                 {
                     "__type": "dk.cachet.carp.common.application.tasks.Measure.DataStream",
-                    "type": "dk.cachet.carp.freememory"
+                    "type": "dk.cachet.carp.location"
                 },
                 {
                     "__type": "dk.cachet.carp.common.application.tasks.Measure.DataStream",
@@ -193,10 +212,6 @@
                 {
                     "__type": "dk.cachet.carp.common.application.tasks.Measure.DataStream",
                     "type": "dk.cachet.carp.activity"
-                },
-                {
-                    "__type": "dk.cachet.carp.common.application.tasks.Measure.DataStream",
-                    "type": "dk.cachet.carp.mobility"
                 }
             ]
         },
@@ -207,609 +222,162 @@
                 {
                     "__type": "dk.cachet.carp.common.application.tasks.Measure.DataStream",
                     "type": "dk.cachet.carp.polar.hr"
+                },
+                {
+                    "__type": "dk.cachet.carp.common.application.tasks.Measure.DataStream",
+                    "type": "dk.cachet.carp.polar.ecg"
+                },
+                {
+                    "__type": "dk.cachet.carp.common.application.tasks.Measure.DataStream",
+                    "type": "dk.cachet.carp.polar.accelerometer"
+                },
+                {
+                    "__type": "dk.cachet.carp.common.application.tasks.Measure.DataStream",
+                    "type": "dk.cachet.carp.polar.gyroscope"
+                },
+                {
+                    "__type": "dk.cachet.carp.common.application.tasks.Measure.DataStream",
+                    "type": "dk.cachet.carp.polar.magnetometer"
                 }
             ]
         },
         {
-            "__type": "dk.cachet.carp.common.application.tasks.AppTask",
+            "__type": "dk.cachet.carp.common.application.tasks.BackgroundTask",
             "name": "Task #14",
             "measures": [
                 {
                     "__type": "dk.cachet.carp.common.application.tasks.Measure.DataStream",
-                    "type": "dk.cachet.carp.location"
+                    "type": "dk.cachet.carp.movesense.state"
                 },
                 {
                     "__type": "dk.cachet.carp.common.application.tasks.Measure.DataStream",
-                    "type": "dk.cachet.carp.weather"
+                    "type": "dk.cachet.carp.movesense.hr"
+                },
+                {
+                    "__type": "dk.cachet.carp.common.application.tasks.Measure.DataStream",
+                    "type": "dk.cachet.carp.movesense.ecg"
+                },
+                {
+                    "__type": "dk.cachet.carp.common.application.tasks.Measure.DataStream",
+                    "type": "dk.cachet.carp.movesense.imu"
                 }
-            ],
-            "type": "one_time_sensing",
-            "title": "environment.title",
-            "description": "environment.description",
-            "instructions": "",
-            "notification": false
+            ]
         },
         {
-            "__type": "dk.cachet.carp.common.application.tasks.RPAppTask",
+            "__type": "dk.cachet.carp.common.application.tasks.BackgroundTask",
             "name": "Task #15",
             "measures": [
                 {
                     "__type": "dk.cachet.carp.common.application.tasks.Measure.DataStream",
-                    "type": "dk.cachet.carp.location"
-                }
-            ],
-            "type": "survey",
-            "title": "survey.demographics.title",
-            "description": "survey.demographics.description",
-            "instructions": "",
-            "minutesToComplete": 2,
-            "expire": 432000000000,
-            "notification": false,
-            "rpTask": {
-                "__type": "RPOrderedTask",
-                "identifier": "demo_survey",
-                "close_after_finished": true,
-                "steps": [
-                    {
-                        "__type": "RPQuestionStep",
-                        "identifier": "survey.demographics.1",
-                        "title": "survey.demographics.question.sex",
-                        "optional": false,
-                        "answer_format": {
-                            "__type": "RPChoiceAnswerFormat",
-                            "question_type": "SingleChoice",
-                            "choices": [
-                                {
-                                    "__type": "RPChoice",
-                                    "text": "survey.demographics.femal",
-                                    "value": 1,
-                                    "is_free_text": false
-                                },
-                                {
-                                    "__type": "RPChoice",
-                                    "text": "survey.demographics.male",
-                                    "value": 2,
-                                    "is_free_text": false
-                                },
-                                {
-                                    "__type": "RPChoice",
-                                    "text": "survey.demographics.other",
-                                    "value": 3,
-                                    "is_free_text": false
-                                },
-                                {
-                                    "__type": "RPChoice",
-                                    "text": "survey.demographics.prefer_not",
-                                    "value": 4,
-                                    "is_free_text": false
-                                }
-                            ],
-                            "answer_style": "SingleChoice"
-                        },
-                        "auto_skip": false,
-                        "timeout": 0,
-                        "auto_focus": false
-                    },
-                    {
-                        "__type": "RPQuestionStep",
-                        "identifier": "survey.demographics.2",
-                        "title": "survey.demographics.question.age",
-                        "optional": false,
-                        "answer_format": {
-                            "__type": "RPChoiceAnswerFormat",
-                            "question_type": "SingleChoice",
-                            "choices": [
-                                {
-                                    "__type": "RPChoice",
-                                    "text": "survey.demographics.under_20",
-                                    "value": 1,
-                                    "is_free_text": false
-                                },
-                                {
-                                    "__type": "RPChoice",
-                                    "text": "20-29",
-                                    "value": 2,
-                                    "is_free_text": false
-                                },
-                                {
-                                    "__type": "RPChoice",
-                                    "text": "30-39",
-                                    "value": 3,
-                                    "is_free_text": false
-                                },
-                                {
-                                    "__type": "RPChoice",
-                                    "text": "40-49",
-                                    "value": 4,
-                                    "is_free_text": false
-                                },
-                                {
-                                    "__type": "RPChoice",
-                                    "text": "50-59",
-                                    "value": 5,
-                                    "is_free_text": false
-                                },
-                                {
-                                    "__type": "RPChoice",
-                                    "text": "60-69",
-                                    "value": 6,
-                                    "is_free_text": false
-                                },
-                                {
-                                    "__type": "RPChoice",
-                                    "text": "70-79",
-                                    "value": 7,
-                                    "is_free_text": false
-                                },
-                                {
-                                    "__type": "RPChoice",
-                                    "text": "80-89",
-                                    "value": 8,
-                                    "is_free_text": false
-                                },
-                                {
-                                    "__type": "RPChoice",
-                                    "text": "survey.demographics.90_above",
-                                    "value": 9,
-                                    "is_free_text": false
-                                },
-                                {
-                                    "__type": "RPChoice",
-                                    "text": "survey.demographics.prefer_not",
-                                    "value": 10,
-                                    "is_free_text": false
-                                }
-                            ],
-                            "answer_style": "SingleChoice"
-                        },
-                        "auto_skip": false,
-                        "timeout": 0,
-                        "auto_focus": false
-                    },
-                    {
-                        "__type": "RPQuestionStep",
-                        "identifier": "survey.demographics.3",
-                        "title": "survey.demographics.question.smoke",
-                        "optional": false,
-                        "answer_format": {
-                            "__type": "RPChoiceAnswerFormat",
-                            "question_type": "SingleChoice",
-                            "choices": [
-                                {
-                                    "__type": "RPChoice",
-                                    "text": "survey.demographics.smoke.never",
-                                    "value": 1,
-                                    "is_free_text": false
-                                },
-                                {
-                                    "__type": "RPChoice",
-                                    "text": "survey.demographics.smoke.ex",
-                                    "value": 2,
-                                    "is_free_text": false
-                                },
-                                {
-                                    "__type": "RPChoice",
-                                    "text": "survey.demographics.smoke.1",
-                                    "value": 3,
-                                    "is_free_text": false
-                                },
-                                {
-                                    "__type": "RPChoice",
-                                    "text": "survey.demographics.smoke.1-10",
-                                    "value": 4,
-                                    "is_free_text": false
-                                },
-                                {
-                                    "__type": "RPChoice",
-                                    "text": "survey.demographics.smoke.11-20",
-                                    "value": 5,
-                                    "is_free_text": false
-                                },
-                                {
-                                    "__type": "RPChoice",
-                                    "text": "survey.demographics.smoke.21+",
-                                    "value": 6,
-                                    "is_free_text": false
-                                },
-                                {
-                                    "__type": "RPChoice",
-                                    "text": "survey.demographics.prefer_not",
-                                    "value": 7,
-                                    "is_free_text": false
-                                }
-                            ],
-                            "answer_style": "SingleChoice"
-                        },
-                        "auto_skip": false,
-                        "timeout": 0,
-                        "auto_focus": false
+                    "type": "dk.cachet.carp.health",
+                    "overrideSamplingConfiguration": {
+                        "__type": "dk.cachet.carp.common.application.sampling.HealthSamplingConfiguration",
+                        "past": 2592000000000,
+                        "future": 86400000000,
+                        "healthDataTypes": [
+                            "WEIGHT",
+                            "STEPS",
+                            "SLEEP_ASLEEP",
+                            "FLIGHTS_CLIMBED",
+                            "SLEEP_IN_BED",
+                            "SLEEP_AWAKE",
+                            "SLEEP_ASLEEP",
+                            "SLEEP_DEEP",
+                            "SLEEP_REM",
+                            "EXERCISE_TIME"
+                        ]
                     }
-                ]
-            }
+                }
+            ]
         },
         {
-            "__type": "dk.cachet.carp.common.application.tasks.RPAppTask",
+            "__type": "dk.cachet.carp.common.application.tasks.BackgroundTask",
             "name": "Task #16",
             "measures": [
                 {
                     "__type": "dk.cachet.carp.common.application.tasks.Measure.DataStream",
-                    "type": "dk.cachet.carp.location"
+                    "type": "dk.cachet.carp.heartbeat"
+                },
+                {
+                    "__type": "dk.cachet.carp.common.application.tasks.Measure.DataStream",
+                    "type": "dk.cachet.carp.triggeredtask"
+                },
+                {
+                    "__type": "dk.cachet.carp.common.application.tasks.Measure.DataStream",
+                    "type": "dk.cachet.carp.completedtask"
                 }
-            ],
-            "type": "survey",
-            "title": "Symptoms",
-            "description": "A short 1-item survey on your daily symptoms.",
-            "instructions": "",
-            "minutesToComplete": 1,
-            "expire": 86400000000,
-            "notification": true,
-            "rpTask": {
-                "__type": "RPOrderedTask",
-                "identifier": "symptoms_survey",
-                "close_after_finished": true,
-                "steps": [
-                    {
-                        "__type": "RPQuestionStep",
-                        "identifier": "sym_1",
-                        "title": "Do you have any of the following symptoms today?",
-                        "optional": false,
-                        "answer_format": {
-                            "__type": "RPChoiceAnswerFormat",
-                            "question_type": "MultipleChoice",
-                            "choices": [
-                                {
-                                    "__type": "RPChoice",
-                                    "text": "None",
-                                    "value": 1,
-                                    "is_free_text": false
-                                },
-                                {
-                                    "__type": "RPChoice",
-                                    "text": "Fever (warmer than usual)",
-                                    "value": 2,
-                                    "is_free_text": false
-                                },
-                                {
-                                    "__type": "RPChoice",
-                                    "text": "Dry cough",
-                                    "value": 3,
-                                    "is_free_text": false
-                                },
-                                {
-                                    "__type": "RPChoice",
-                                    "text": "Wet cough",
-                                    "value": 4,
-                                    "is_free_text": false
-                                },
-                                {
-                                    "__type": "RPChoice",
-                                    "text": "Sore throat, runny or blocked nose",
-                                    "value": 5,
-                                    "is_free_text": false
-                                },
-                                {
-                                    "__type": "RPChoice",
-                                    "text": "Loss of taste and smell",
-                                    "value": 6,
-                                    "is_free_text": false
-                                },
-                                {
-                                    "__type": "RPChoice",
-                                    "text": "Difficulty breathing or feeling short of breath",
-                                    "value": 7,
-                                    "is_free_text": false
-                                },
-                                {
-                                    "__type": "RPChoice",
-                                    "text": "Tightness in your chest",
-                                    "value": 8,
-                                    "is_free_text": false
-                                },
-                                {
-                                    "__type": "RPChoice",
-                                    "text": "Dizziness, confusion or vertigo",
-                                    "value": 9,
-                                    "is_free_text": false
-                                },
-                                {
-                                    "__type": "RPChoice",
-                                    "text": "Headache",
-                                    "value": 10,
-                                    "is_free_text": false
-                                },
-                                {
-                                    "__type": "RPChoice",
-                                    "text": "Muscle aches",
-                                    "value": 11,
-                                    "is_free_text": false
-                                },
-                                {
-                                    "__type": "RPChoice",
-                                    "text": "Chills",
-                                    "value": 12,
-                                    "is_free_text": false
-                                },
-                                {
-                                    "__type": "RPChoice",
-                                    "text": "Prefer not to say",
-                                    "value": 13,
-                                    "is_free_text": false
-                                }
-                            ],
-                            "answer_style": "MultipleChoice"
-                        },
-                        "auto_skip": false,
-                        "timeout": 0,
-                        "auto_focus": false
-                    }
-                ]
-            }
+            ]
         },
         {
-            "__type": "dk.cachet.carp.common.application.tasks.AppTask",
+            "__type": "dk.cachet.carp.common.application.tasks.BackgroundTask",
             "name": "Task #17",
             "measures": [
                 {
                     "__type": "dk.cachet.carp.common.application.tasks.Measure.DataStream",
-                    "type": "dk.cachet.carp.audio"
-                },
-                {
-                    "__type": "dk.cachet.carp.common.application.tasks.Measure.DataStream",
-                    "type": "dk.cachet.carp.location"
+                    "type": "dk.cachet.carp.weather"
                 }
-            ],
-            "type": "audio",
-            "title": "reading.title",
-            "description": "reading.description",
-            "instructions": "reading.instructions",
-            "minutesToComplete": 3,
-            "notification": false
+            ]
         },
         {
-            "__type": "dk.cachet.carp.common.application.tasks.AppTask",
+            "__type": "dk.cachet.carp.common.application.tasks.BackgroundTask",
             "name": "Task #18",
             "measures": [
                 {
                     "__type": "dk.cachet.carp.common.application.tasks.Measure.DataStream",
-                    "type": "dk.cachet.carp.image"
+                    "type": "dk.cachet.carp.heartbeat"
+                },
+                {
+                    "__type": "dk.cachet.carp.common.application.tasks.Measure.DataStream",
+                    "type": "dk.cachet.carp.triggeredtask"
+                },
+                {
+                    "__type": "dk.cachet.carp.common.application.tasks.Measure.DataStream",
+                    "type": "dk.cachet.carp.completedtask"
                 }
-            ],
-            "type": "image",
-            "title": "wound.title",
-            "description": "wound.description",
-            "instructions": "wound.instructions",
-            "minutesToComplete": 3,
-            "notification": false
+            ]
+        },
+        {
+            "__type": "dk.cachet.carp.common.application.tasks.BackgroundTask",
+            "name": "Task #19",
+            "measures": [
+                {
+                    "__type": "dk.cachet.carp.common.application.tasks.Measure.DataStream",
+                    "type": "dk.cachet.carp.airquality"
+                }
+            ]
         },
         {
             "__type": "dk.cachet.carp.common.application.tasks.RPAppTask",
-            "name": "Task #19",
+            "name": "onboarding.name",
             "measures": [],
-            "type": "cognition",
-            "title": "Parkinsons Assessment",
-            "description": "A simple task assessing cognitive functioning and finger tapping speed.",
+            "type": "survey",
+            "title": "onboarding.name",
+            "description": "onboarding.description",
             "instructions": "",
-            "minutesToComplete": 3,
             "notification": false,
             "rpTask": {
-                "__type": "RPOrderedTask",
-                "identifier": "parkinsons_assessment",
+                "__type": "RPNavigableOrderedTask",
+                "identifier": "surveyTaskID",
                 "close_after_finished": true,
                 "steps": [
                     {
                         "__type": "RPInstructionStep",
-                        "identifier": "parkinsons_instruction",
-                        "title": "Parkinsons Disease Assessment",
-                        "text": "In the following pages, you will be asked to solve two simple test which will help assess your symptoms on a daily basis. Each test has an instruction page, which you should read carefully before starting the test.\n\nPlease sit down comfortably and hold the phone in one hand while performing the test with the other.",
-                        "optional": false
-                    },
-                    {
-                        "__type": "RPFlankerActivity",
-                        "identifier": "flanker_1",
-                        "title": "RPActivityStep",
+                        "identifier": "instructionID",
+                        "title": "onboarding.instruction.title",
+                        "text": "onboarding.instruction.text",
                         "optional": false,
-                        "include_instructions": true,
-                        "include_results": true,
-                        "length_of_test": 30,
-                        "number_of_cards": 10
-                    },
-                    {
-                        "__type": "RPTappingActivity",
-                        "identifier": "tapping_1",
-                        "title": "RPActivityStep",
-                        "optional": false,
-                        "include_instructions": true,
-                        "include_results": true,
-                        "length_of_test": 10
-                    }
-                ]
-            }
-        },
-        {
-            "__type": "dk.cachet.carp.common.application.tasks.RPAppTask",
-            "name": "Task #20",
-            "measures": [
-                {
-                    "__type": "dk.cachet.carp.common.application.tasks.Measure.DataStream",
-                    "type": "dk.cachet.carp.location"
-                }
-            ],
-            "type": "survey",
-            "title": "Parkinsons Disease Activities of Daily Living Scale",
-            "description": "A new simple and brief subjective measure of disability in Parkinsons disease",
-            "instructions": "",
-            "minutesToComplete": 1,
-            "expire": 86400000000,
-            "notification": true,
-            "rpTask": {
-                "__type": "RPOrderedTask",
-                "identifier": "parkinsons_survey",
-                "close_after_finished": true,
-                "steps": [
-                    {
-                        "__type": "RPQuestionStep",
-                        "identifier": "parkinsons_1",
-                        "title": "Please tick one of the descriptions that best describes how your Parkinsons disease has affected your day-to-day activities in the last month.",
-                        "optional": false,
-                        "answer_format": {
-                            "__type": "RPChoiceAnswerFormat",
-                            "question_type": "SingleChoice",
-                            "choices": [
-                                {
-                                    "__type": "RPChoice",
-                                    "text": "No difficulties with day-to-day activities.",
-                                    "value": 1,
-                                    "detail_text": "For example: Your Parkinsons disease at present is not affecting your daily living.",
-                                    "is_free_text": false
-                                },
-                                {
-                                    "__type": "RPChoice",
-                                    "text": "Mild difficulties with day-to-day activities.",
-                                    "value": 2,
-                                    "detail_text": "For example: Slowness with some aspects of housework, gardening or shopping. Able to dress and manage personal hygiene completely independently but rate is slower. You may feel that your medication is not quite effective as it was.",
-                                    "is_free_text": false
-                                },
-                                {
-                                    "__type": "RPChoice",
-                                    "text": "Moderate difficulties with day-to-day activities.",
-                                    "value": 3,
-                                    "detail_text": "For example: Your Parkinsons disease is interfering with your daily activities. It is increasingly difficult to do simple activities without some help such as rising from a chair, washing, dressing, shopping, housework. You may have some difficulties walking and may require assistance. Difficulties with recreational activities or the ability to drive a car. The medication is now less effective.",
-                                    "is_free_text": false
-                                },
-                                {
-                                    "__type": "RPChoice",
-                                    "text": "High levels of difficulties with day-to-day activities.",
-                                    "value": 4,
-                                    "detail_text": "For example: You now require much more assistance with activities of daily living such as washing, dressing, housework or feeding yourself. You may have greater difficulties with mobility and find you are becoming more dependent for assistance from others or aids and appliances. Your medication appears to be significantly less effective.",
-                                    "is_free_text": false
-                                },
-                                {
-                                    "__type": "RPChoice",
-                                    "text": "Extreme difficulties with day-to-day activities.",
-                                    "value": 5,
-                                    "detail_text": "For example: You require assistance in all daily activities. These may include dressing, washing, feeding yourself or walking unaided. You may now be housebound and obtain little or no benefit from your medication.",
-                                    "is_free_text": false
-                                }
-                            ],
-                            "answer_style": "SingleChoice"
-                        },
-                        "auto_skip": false,
-                        "timeout": 0,
-                        "auto_focus": false
-                    }
-                ]
-            }
-        },
-        {
-            "__type": "dk.cachet.carp.common.application.tasks.RPAppTask",
-            "name": "Task #21",
-            "measures": [
-                {
-                    "__type": "dk.cachet.carp.common.application.tasks.Measure.DataStream",
-                    "type": "dk.cachet.carp.currentlocation"
-                }
-            ],
-            "type": "survey",
-            "title": "Cardiovascular Event",
-            "description": "Please provide details on any heart event you may have experienced.",
-            "instructions": "",
-            "minutesToComplete": 2,
-            "expire": 14400000000,
-            "notification": true,
-            "rpTask": {
-                "__type": "RPOrderedTask",
-                "identifier": "symptoms_survey",
-                "close_after_finished": true,
-                "steps": [
-                    {
-                        "__type": "RPInstructionStep",
-                        "identifier": "cvd_instruction",
-                        "title": "Cardiovascular Event",
-                        "text": "In the following pages, you will be able to report on any cardiovascular event you may have experienced.\nThis event is based on you tapping the device.",
-                        "optional": false
+                        "detail_text": "onboarding.instruction.detailText"
                     },
                     {
                         "__type": "RPQuestionStep",
-                        "identifier": "cvd_timestamp",
-                        "title": "When did you experience this event?",
+                        "identifier": "onboardingAge",
+                        "title": "onboarding.age.question",
                         "optional": false,
-                        "answer_format": {
-                            "__type": "RPDateTimeAnswerFormat",
-                            "question_type": "DateAndTime",
-                            "date_time_answer_style": "DateAndTime"
-                        },
-                        "auto_skip": false,
-                        "timeout": 0,
-                        "auto_focus": false
-                    },
-                    {
-                        "__type": "RPQuestionStep",
-                        "identifier": "cvd_symptoms",
-                        "title": "Which symptom(s) did you experience when you tapped the device?",
-                        "optional": false,
-                        "answer_format": {
-                            "__type": "RPChoiceAnswerFormat",
-                            "question_type": "MultipleChoice",
-                            "choices": [
-                                {
-                                    "__type": "RPChoice",
-                                    "text": "None",
-                                    "value": 1,
-                                    "is_free_text": false
-                                },
-                                {
-                                    "__type": "RPChoice",
-                                    "text": "Palpitation",
-                                    "value": 2,
-                                    "is_free_text": false
-                                },
-                                {
-                                    "__type": "RPChoice",
-                                    "text": "Dizziness",
-                                    "value": 3,
-                                    "is_free_text": false
-                                },
-                                {
-                                    "__type": "RPChoice",
-                                    "text": "Shortness of Breath",
-                                    "value": 4,
-                                    "is_free_text": false
-                                },
-                                {
-                                    "__type": "RPChoice",
-                                    "text": "Chest Pain",
-                                    "value": 5,
-                                    "is_free_text": false
-                                },
-                                {
-                                    "__type": "RPChoice",
-                                    "text": "Sweating",
-                                    "value": 6,
-                                    "is_free_text": false
-                                },
-                                {
-                                    "__type": "RPChoice",
-                                    "text": "Heart Burn",
-                                    "value": 7,
-                                    "is_free_text": false
-                                }
-                            ],
-                            "answer_style": "MultipleChoice"
-                        },
-                        "auto_skip": false,
-                        "timeout": 0,
-                        "auto_focus": false
-                    },
-                    {
-                        "__type": "RPQuestionStep",
-                        "identifier": "cvd_duration",
-                        "title": "For how long time did you experience the symptom(s)?",
-                        "optional": true,
                         "answer_format": {
                             "__type": "RPIntegerAnswerFormat",
                             "min_value": 0,
-                            "max_value": 20,
-                            "suffix": "minutes",
+                            "max_value": 100,
+                            "suffix": "onboarding.age.unit",
                             "question_type": "Integer"
                         },
                         "auto_skip": false,
@@ -818,8 +386,8 @@
                     },
                     {
                         "__type": "RPQuestionStep",
-                        "identifier": "cvd_activity",
-                        "title": "What activity were you doing when experienced these symptom(s)?",
+                        "identifier": "onboardingGender",
+                        "title": "onboarding.gender.question",
                         "optional": false,
                         "answer_format": {
                             "__type": "RPChoiceAnswerFormat",
@@ -827,56 +395,20 @@
                             "choices": [
                                 {
                                     "__type": "RPChoice",
-                                    "text": "Running",
+                                    "text": "onboarding.gender.female",
+                                    "value": 0,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "onboarding.gender.male",
                                     "value": 1,
                                     "is_free_text": false
                                 },
                                 {
                                     "__type": "RPChoice",
-                                    "text": "Walking",
+                                    "text": "onboarding.gender.other",
                                     "value": 2,
-                                    "is_free_text": false
-                                },
-                                {
-                                    "__type": "RPChoice",
-                                    "text": "Cycling",
-                                    "value": 3,
-                                    "is_free_text": false
-                                },
-                                {
-                                    "__type": "RPChoice",
-                                    "text": "Climbing Stairs",
-                                    "value": 4,
-                                    "is_free_text": false
-                                },
-                                {
-                                    "__type": "RPChoice",
-                                    "text": "Bathing",
-                                    "value": 5,
-                                    "is_free_text": false
-                                },
-                                {
-                                    "__type": "RPChoice",
-                                    "text": "Watching TV",
-                                    "value": 6,
-                                    "is_free_text": false
-                                },
-                                {
-                                    "__type": "RPChoice",
-                                    "text": "Reading",
-                                    "value": 7,
-                                    "is_free_text": false
-                                },
-                                {
-                                    "__type": "RPChoice",
-                                    "text": "Talking",
-                                    "value": 8,
-                                    "is_free_text": false
-                                },
-                                {
-                                    "__type": "RPChoice",
-                                    "text": "None of the above",
-                                    "value": 9,
                                     "is_free_text": false
                                 }
                             ],
@@ -888,18 +420,1963 @@
                     },
                     {
                         "__type": "RPQuestionStep",
-                        "identifier": "cvd_note",
-                        "title": "Additional notes",
-                        "optional": true,
+                        "identifier": "diagnosisQuestion",
+                        "title": "onboarding.disease.question",
+                        "optional": false,
+                        "answer_format": {
+                            "__type": "RPChoiceAnswerFormat",
+                            "question_type": "MultipleChoice",
+                            "choices": [
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "onboarding.disease.hypertension",
+                                    "value": 1,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "onboarding.disease.diabetes",
+                                    "value": 2,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "onboarding.disease.stroke",
+                                    "value": 3,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "onboarding.disease.hf",
+                                    "value": 4,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "onboarding.disease.otherCardiacDiseases",
+                                    "value": 5,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "onboarding.disease.none",
+                                    "value": 6,
+                                    "is_free_text": false
+                                }
+                            ],
+                            "answer_style": "MultipleChoice"
+                        },
+                        "auto_skip": false,
+                        "timeout": 0,
+                        "auto_focus": false
+                    },
+                    {
+                        "__type": "RPQuestionStep",
+                        "identifier": "familyHQuestion",
+                        "title": "onboarding.familyhistory.question",
+                        "optional": false,
+                        "answer_format": {
+                            "__type": "RPChoiceAnswerFormat",
+                            "question_type": "MultipleChoice",
+                            "choices": [
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "onboarding.disease.hypertension",
+                                    "value": 1,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "onboarding.disease.diabetes",
+                                    "value": 2,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "onboarding.disease.stroke",
+                                    "value": 3,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "onboarding.disease.hf",
+                                    "value": 4,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "onboarding.disease.otherCardiacDiseases",
+                                    "value": 5,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "onboarding.disease.none",
+                                    "value": 6,
+                                    "is_free_text": false
+                                }
+                            ],
+                            "answer_style": "MultipleChoice"
+                        },
+                        "auto_skip": false,
+                        "timeout": 0,
+                        "auto_focus": false
+                    },
+                    {
+                        "__type": "RPQuestionStep",
+                        "identifier": "smokingQuestionId",
+                        "title": "onboarding.smoking.question1",
+                        "optional": false,
+                        "answer_format": {
+                            "__type": "RPChoiceAnswerFormat",
+                            "question_type": "SingleChoice",
+                            "choices": [
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "survey.yes",
+                                    "value": 1,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "survey.no",
+                                    "value": 0,
+                                    "is_free_text": false
+                                }
+                            ],
+                            "answer_style": "SingleChoice"
+                        },
+                        "auto_skip": false,
+                        "timeout": 0,
+                        "auto_focus": false
+                    },
+                    {
+                        "__type": "RPFormStep",
+                        "identifier": "formstepID",
+                        "title": "onboarding.smoking.title",
+                        "optional": false,
+                        "answer_format": {
+                            "__type": "RPFormAnswerFormat",
+                            "question_type": "Form"
+                        },
+                        "auto_skip": false,
+                        "timeout": 0,
+                        "auto_focus": false,
+                        "questions": [
+                            {
+                                "__type": "RPQuestionStep",
+                                "identifier": "nrOfCigarettesQuestionStepID",
+                                "title": "onboarding.smoking.question2",
+                                "optional": false,
+                                "answer_format": {
+                                    "__type": "RPIntegerAnswerFormat",
+                                    "min_value": 0,
+                                    "max_value": 200,
+                                    "suffix": "cigarettes",
+                                    "question_type": "Integer"
+                                },
+                                "auto_skip": false,
+                                "timeout": 0,
+                                "auto_focus": false
+                            },
+                            {
+                                "__type": "RPQuestionStep",
+                                "identifier": "dietChoiceQuestionStepID2",
+                                "title": "onboarding.smoking.question3",
+                                "optional": false,
+                                "answer_format": {
+                                    "__type": "RPSliderAnswerFormat",
+                                    "min_value": 16.0,
+                                    "max_value": 90.0,
+                                    "divisions": 74,
+                                    "prefix": "",
+                                    "suffix": "onboarding.age.unit",
+                                    "question_type": "Scale"
+                                },
+                                "auto_skip": false,
+                                "timeout": 0,
+                                "auto_focus": false
+                            }
+                        ],
+                        "save_results_on_auto_skip": false
+                    },
+                    {
+                        "__type": "RPQuestionStep",
+                        "identifier": "alcoholQuestionId",
+                        "title": "onboarding.alcohol.question1",
+                        "optional": false,
+                        "answer_format": {
+                            "__type": "RPChoiceAnswerFormat",
+                            "question_type": "SingleChoice",
+                            "choices": [
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "survey.yes",
+                                    "value": 1,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "survey.no",
+                                    "value": 0,
+                                    "is_free_text": false
+                                }
+                            ],
+                            "answer_style": "SingleChoice"
+                        },
+                        "auto_skip": false,
+                        "timeout": 0,
+                        "auto_focus": false
+                    },
+                    {
+                        "__type": "RPFormStep",
+                        "identifier": "formstepID",
+                        "title": "Alcohol Questionaire",
+                        "optional": false,
+                        "answer_format": {
+                            "__type": "RPFormAnswerFormat",
+                            "question_type": "Form"
+                        },
+                        "auto_skip": false,
+                        "timeout": 0,
+                        "auto_focus": false,
+                        "questions": [
+                            {
+                                "__type": "RPQuestionStep",
+                                "identifier": "nrOfalcoholQuestionStepID",
+                                "title": "onboarding.alcohol.question2",
+                                "optional": false,
+                                "answer_format": {
+                                    "__type": "RPIntegerAnswerFormat",
+                                    "min_value": 0,
+                                    "max_value": 6,
+                                    "suffix": "days",
+                                    "question_type": "Integer"
+                                },
+                                "auto_skip": false,
+                                "timeout": 0,
+                                "auto_focus": false
+                            },
+                            {
+                                "__type": "RPQuestionStep",
+                                "identifier": "familyHQuestion",
+                                "title": "onboarding.alcohol.question3",
+                                "optional": false,
+                                "answer_format": {
+                                    "__type": "RPChoiceAnswerFormat",
+                                    "question_type": "SingleChoice",
+                                    "choices": [
+                                        {
+                                            "__type": "RPChoice",
+                                            "text": "onboarding.alcohol.option1",
+                                            "value": 1,
+                                            "is_free_text": false
+                                        },
+                                        {
+                                            "__type": "RPChoice",
+                                            "text": "onboarding.alcohol.option2",
+                                            "value": 2,
+                                            "is_free_text": false
+                                        },
+                                        {
+                                            "__type": "RPChoice",
+                                            "text": "onboarding.alcohol.option3",
+                                            "value": 3,
+                                            "is_free_text": false
+                                        }
+                                    ],
+                                    "answer_style": "SingleChoice"
+                                },
+                                "auto_skip": false,
+                                "timeout": 0,
+                                "auto_focus": false
+                            }
+                        ],
+                        "save_results_on_auto_skip": false
+                    },
+                    {
+                        "__type": "RPCompletionStep",
+                        "identifier": "completionID",
+                        "title": "survey.completion",
+                        "text": "survey.completion.thanks",
+                        "optional": false
+                    }
+                ],
+                "step_navigation_rules": {
+                    "smokingQuestionId": {
+                        "__type": "RPStepJumpRule",
+                        "answer_map": {
+                            "1": "nrOfCigarettesQuestionStepID",
+                            "0": "alcoholQuestionId"
+                        }
+                    },
+                    "alcoholQuestionId": {
+                        "__type": "RPStepJumpRule",
+                        "answer_map": {
+                            "1": "nrOfalcoholQuestionStepID",
+                            "0": "completionID"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "__type": "dk.cachet.carp.common.application.tasks.RPAppTask",
+            "name": "survey.sleep.title",
+            "measures": [],
+            "type": "survey",
+            "title": "survey.sleep.title",
+            "description": "survey.sleep.description",
+            "instructions": "",
+            "expire": 43200000000,
+            "notification": true,
+            "rpTask": {
+                "__type": "RPOrderedTask",
+                "identifier": "surveyTaskID",
+                "close_after_finished": true,
+                "steps": [
+                    {
+                        "__type": "RPQuestionStep",
+                        "identifier": "imageStepID",
+                        "title": "survey.sleep.question",
+                        "optional": false,
+                        "answer_format": {
+                            "__type": "RPImageChoiceAnswerFormat",
+                            "choices": [
+                                {
+                                    "__type": "RPImageChoice",
+                                    "image_url": "assets/icons/very-sad.png",
+                                    "value": 1,
+                                    "description": "survey.sleep.image1"
+                                },
+                                {
+                                    "__type": "RPImageChoice",
+                                    "image_url": "assets/icons/sad.png",
+                                    "value": 2,
+                                    "description": "survey.sleep.image2"
+                                },
+                                {
+                                    "__type": "RPImageChoice",
+                                    "image_url": "assets/icons/ok.png",
+                                    "value": 3,
+                                    "description": "survey.sleep.image3"
+                                },
+                                {
+                                    "__type": "RPImageChoice",
+                                    "image_url": "assets/icons/happy.png",
+                                    "value": 4,
+                                    "description": "survey.sleep.image4"
+                                },
+                                {
+                                    "__type": "RPImageChoice",
+                                    "image_url": "assets/icons/very-happy.png",
+                                    "value": 5,
+                                    "description": "survey.sleep.image5"
+                                }
+                            ],
+                            "question_type": "ImageChoice"
+                        },
+                        "auto_skip": false,
+                        "timeout": 0,
+                        "auto_focus": false
+                    },
+                    {
+                        "__type": "RPQuestionStep",
+                        "identifier": "dietChoiceQuestionStepID1",
+                        "title": "survey.sleep.question_hours",
+                        "optional": false,
+                        "answer_format": {
+                            "__type": "RPChoiceAnswerFormat",
+                            "question_type": "SingleChoice",
+                            "choices": [
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "survey.sleep.choice1",
+                                    "value": 3,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "survey.sleep.choice2",
+                                    "value": 2,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "survey.sleep.choice3",
+                                    "value": 1,
+                                    "is_free_text": false
+                                }
+                            ],
+                            "answer_style": "SingleChoice"
+                        },
+                        "auto_skip": false,
+                        "timeout": 0,
+                        "auto_focus": false
+                    },
+                    {
+                        "__type": "RPCompletionStep",
+                        "identifier": "completionID",
+                        "title": "survey.completion",
+                        "text": "survey.completion.thanks",
+                        "optional": false
+                    }
+                ]
+            }
+        },
+        {
+            "__type": "dk.cachet.carp.common.application.tasks.RPAppTask",
+            "name": "survey.stress.title",
+            "measures": [],
+            "type": "survey",
+            "title": "survey.stress.title",
+            "description": "survey.stress.description",
+            "instructions": "",
+            "expire": 43200000000,
+            "notification": true,
+            "rpTask": {
+                "__type": "RPOrderedTask",
+                "identifier": "surveyTaskID",
+                "close_after_finished": true,
+                "steps": [
+                    {
+                        "__type": "RPQuestionStep",
+                        "identifier": "stressQuestionStepID",
+                        "title": "survey.stress.question",
+                        "optional": false,
+                        "answer_format": {
+                            "__type": "RPSliderAnswerFormat",
+                            "min_value": 0.0,
+                            "max_value": 10.0,
+                            "divisions": 10,
+                            "prefix": "",
+                            "suffix": "",
+                            "question_type": "Scale"
+                        },
+                        "auto_skip": false,
+                        "timeout": 0,
+                        "auto_focus": false
+                    },
+                    {
+                        "__type": "RPCompletionStep",
+                        "identifier": "completionID",
+                        "title": "survey.completion",
+                        "text": "survey.completion.thanks",
+                        "optional": false
+                    }
+                ]
+            }
+        },
+        {
+            "__type": "dk.cachet.carp.common.application.tasks.RPAppTask",
+            "name": "qap.measurements.title",
+            "measures": [],
+            "type": "survey",
+            "title": "qap.measurements.title",
+            "description": "qap.measurements.description",
+            "instructions": "",
+            "expire": 172800000000,
+            "notification": true,
+            "rpTask": {
+                "__type": "RPOrderedTask",
+                "identifier": "measurementsTask",
+                "close_after_finished": true,
+                "steps": [
+                    {
+                        "__type": "RPQuestionStep",
+                        "identifier": "weightByQAP",
+                        "title": "qap.weight.question",
+                        "optional": false,
+                        "answer_format": {
+                            "__type": "RPIntegerAnswerFormat",
+                            "min_value": 0,
+                            "max_value": 150,
+                            "suffix": "kg",
+                            "question_type": "Integer"
+                        },
+                        "auto_skip": false,
+                        "timeout": 0,
+                        "auto_focus": false
+                    },
+                    {
+                        "__type": "RPQuestionStep",
+                        "identifier": "bpByQAP",
+                        "title": "qap.bp.question",
+                        "optional": false,
                         "answer_format": {
                             "__type": "RPTextAnswerFormat",
-                            "hint_text": "Add note...",
+                            "hint_text": "120/80",
                             "auto_focus": false,
                             "question_type": "Text"
                         },
                         "auto_skip": false,
                         "timeout": 0,
                         "auto_focus": false
+                    },
+                    {
+                        "__type": "RPCompletionStep",
+                        "identifier": "completionID",
+                        "title": "survey.completion",
+                        "text": "survey.completion.thanks",
+                        "optional": false
+                    }
+                ]
+            }
+        },
+        {
+            "__type": "dk.cachet.carp.common.application.tasks.RPAppTask",
+            "name": "euroQoL.instruction.title",
+            "measures": [],
+            "type": "survey",
+            "title": "euroQoL.instruction.title",
+            "description": "survey.description",
+            "instructions": "",
+            "expire": 259200000000,
+            "notification": true,
+            "rpTask": {
+                "__type": "RPOrderedTask",
+                "identifier": "EuroQolsurveyTask",
+                "close_after_finished": true,
+                "steps": [
+                    {
+                        "__type": "RPInstructionStep",
+                        "identifier": "euroQoLinstructionID",
+                        "title": "euroQoL.instruction.title",
+                        "text": "euroQoL.instruction.text",
+                        "optional": false,
+                        "detail_text": "euroQoL.instruction.detailText"
+                    },
+                    {
+                        "__type": "RPQuestionStep",
+                        "identifier": "euroMobilityQuestion",
+                        "title": "euroqol.mobility.question",
+                        "optional": false,
+                        "answer_format": {
+                            "__type": "RPChoiceAnswerFormat",
+                            "question_type": "SingleChoice",
+                            "choices": [
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "euroqol.mobility.choice1",
+                                    "value": 1,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "euroqol.mobility.choice2",
+                                    "value": 2,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "euroqol.mobility.choice3",
+                                    "value": 3,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "euroqol.mobility.choice4",
+                                    "value": 4,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "euroqol.mobility.choice5",
+                                    "value": 5,
+                                    "is_free_text": false
+                                }
+                            ],
+                            "answer_style": "SingleChoice"
+                        },
+                        "auto_skip": false,
+                        "timeout": 0,
+                        "auto_focus": false
+                    },
+                    {
+                        "__type": "RPQuestionStep",
+                        "identifier": "euroSelfCareQuestion",
+                        "title": "euroqol.selfCare.question",
+                        "optional": false,
+                        "answer_format": {
+                            "__type": "RPChoiceAnswerFormat",
+                            "question_type": "SingleChoice",
+                            "choices": [
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "euroqol.selfCare.choice1",
+                                    "value": 1,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "euroqol.selfCare.choice2",
+                                    "value": 2,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "euroqol.selfCare.choice3",
+                                    "value": 3,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "euroqol.selfCare.choice4",
+                                    "value": 4,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "euroqol.selfCare.choice5",
+                                    "value": 5,
+                                    "is_free_text": false
+                                }
+                            ],
+                            "answer_style": "SingleChoice"
+                        },
+                        "auto_skip": false,
+                        "timeout": 0,
+                        "auto_focus": false
+                    },
+                    {
+                        "__type": "RPQuestionStep",
+                        "identifier": "euroActivityQuestion",
+                        "title": "euroqol.activity.question",
+                        "optional": false,
+                        "answer_format": {
+                            "__type": "RPChoiceAnswerFormat",
+                            "question_type": "SingleChoice",
+                            "choices": [
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "euroqol.activity.choice1",
+                                    "value": 1,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "euroqol.activity.choice2",
+                                    "value": 2,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "euroqol.activity.choice3",
+                                    "value": 3,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "euroqol.activity.choice4",
+                                    "value": 4,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "euroqol.activity.choice5",
+                                    "value": 5,
+                                    "is_free_text": false
+                                }
+                            ],
+                            "answer_style": "SingleChoice"
+                        },
+                        "auto_skip": false,
+                        "timeout": 0,
+                        "auto_focus": false
+                    },
+                    {
+                        "__type": "RPQuestionStep",
+                        "identifier": "euroPainQuestion",
+                        "title": "euroqol.pain.question",
+                        "optional": false,
+                        "answer_format": {
+                            "__type": "RPChoiceAnswerFormat",
+                            "question_type": "SingleChoice",
+                            "choices": [
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "euroqol.pain.choice1",
+                                    "value": 1,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "euroqol.pain.choice2",
+                                    "value": 2,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "euroqol.pain.choice3",
+                                    "value": 3,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "euroqol.pain.choice4",
+                                    "value": 4,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "euroqol.pain.choice5",
+                                    "value": 5,
+                                    "is_free_text": false
+                                }
+                            ],
+                            "answer_style": "SingleChoice"
+                        },
+                        "auto_skip": false,
+                        "timeout": 0,
+                        "auto_focus": false
+                    },
+                    {
+                        "__type": "RPQuestionStep",
+                        "identifier": "euroAnxietyQuestion",
+                        "title": "euroqol.anxiety.question",
+                        "optional": false,
+                        "answer_format": {
+                            "__type": "RPChoiceAnswerFormat",
+                            "question_type": "SingleChoice",
+                            "choices": [
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "euroqol.anxiety.choice1",
+                                    "value": 1,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "euroqol.anxiety.choice2",
+                                    "value": 2,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "euroqol.anxiety.choice3",
+                                    "value": 3,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "euroqol.anxiety.choice4",
+                                    "value": 4,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "euroqol.anxiety.choice5",
+                                    "value": 5,
+                                    "is_free_text": false
+                                }
+                            ],
+                            "answer_style": "SingleChoice"
+                        },
+                        "auto_skip": false,
+                        "timeout": 0,
+                        "auto_focus": false
+                    },
+                    {
+                        "__type": "RPQuestionStep",
+                        "identifier": "euroHealthQuestion",
+                        "title": "euroqol.health.question",
+                        "optional": false,
+                        "answer_format": {
+                            "__type": "RPSliderAnswerFormat",
+                            "min_value": 0.0,
+                            "max_value": 100.0,
+                            "divisions": 100,
+                            "prefix": "",
+                            "suffix": "",
+                            "question_type": "Scale"
+                        },
+                        "auto_skip": false,
+                        "timeout": 0,
+                        "auto_focus": false
+                    },
+                    {
+                        "__type": "RPCompletionStep",
+                        "identifier": "completionID",
+                        "title": "survey.completion",
+                        "text": "survey.completion.thanks",
+                        "optional": false
+                    }
+                ]
+            }
+        },
+        {
+            "__type": "dk.cachet.carp.common.application.tasks.RPAppTask",
+            "name": "fas.instruction.title",
+            "measures": [],
+            "type": "survey",
+            "title": "fas.instruction.title",
+            "description": "survey.description",
+            "instructions": "",
+            "expire": 259200000000,
+            "notification": true,
+            "rpTask": {
+                "__type": "RPOrderedTask",
+                "identifier": "FASsurveyTask",
+                "close_after_finished": true,
+                "steps": [
+                    {
+                        "__type": "RPInstructionStep",
+                        "identifier": "fasinstructionID",
+                        "title": "fas.instruction.title",
+                        "text": "fas.instruction.text",
+                        "optional": false,
+                        "detail_text": "fas.instruction.detailText"
+                    },
+                    {
+                        "__type": "RPQuestionStep",
+                        "identifier": "fasQuestion1",
+                        "title": "fas.question1",
+                        "optional": false,
+                        "answer_format": {
+                            "__type": "RPChoiceAnswerFormat",
+                            "question_type": "SingleChoice",
+                            "choices": [
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "fas.choice1",
+                                    "value": 1,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "fas.choice2",
+                                    "value": 2,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "fas.choice3",
+                                    "value": 3,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "fas.choice4",
+                                    "value": 4,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "fas.choice5",
+                                    "value": 5,
+                                    "is_free_text": false
+                                }
+                            ],
+                            "answer_style": "SingleChoice"
+                        },
+                        "auto_skip": false,
+                        "timeout": 0,
+                        "auto_focus": false
+                    },
+                    {
+                        "__type": "RPQuestionStep",
+                        "identifier": "fasQuestion2",
+                        "title": "fas.question2",
+                        "optional": false,
+                        "answer_format": {
+                            "__type": "RPChoiceAnswerFormat",
+                            "question_type": "SingleChoice",
+                            "choices": [
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "fas.choice1",
+                                    "value": 1,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "fas.choice2",
+                                    "value": 2,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "fas.choice3",
+                                    "value": 3,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "fas.choice4",
+                                    "value": 4,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "fas.choice5",
+                                    "value": 5,
+                                    "is_free_text": false
+                                }
+                            ],
+                            "answer_style": "SingleChoice"
+                        },
+                        "auto_skip": false,
+                        "timeout": 0,
+                        "auto_focus": false
+                    },
+                    {
+                        "__type": "RPQuestionStep",
+                        "identifier": "fasQuestion3",
+                        "title": "fas.question3",
+                        "optional": false,
+                        "answer_format": {
+                            "__type": "RPChoiceAnswerFormat",
+                            "question_type": "SingleChoice",
+                            "choices": [
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "fas.choice1",
+                                    "value": 1,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "fas.choice2",
+                                    "value": 2,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "fas.choice3",
+                                    "value": 3,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "fas.choice4",
+                                    "value": 4,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "fas.choice5",
+                                    "value": 5,
+                                    "is_free_text": false
+                                }
+                            ],
+                            "answer_style": "SingleChoice"
+                        },
+                        "auto_skip": false,
+                        "timeout": 0,
+                        "auto_focus": false
+                    },
+                    {
+                        "__type": "RPQuestionStep",
+                        "identifier": "fasQuestion4",
+                        "title": "fas.question4",
+                        "optional": false,
+                        "answer_format": {
+                            "__type": "RPChoiceAnswerFormat",
+                            "question_type": "SingleChoice",
+                            "choices": [
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "fas.choice1",
+                                    "value": 1,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "fas.choice2",
+                                    "value": 2,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "fas.choice3",
+                                    "value": 3,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "fas.choice4",
+                                    "value": 4,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "fas.choice5",
+                                    "value": 5,
+                                    "is_free_text": false
+                                }
+                            ],
+                            "answer_style": "SingleChoice"
+                        },
+                        "auto_skip": false,
+                        "timeout": 0,
+                        "auto_focus": false
+                    },
+                    {
+                        "__type": "RPQuestionStep",
+                        "identifier": "fasQuestion5",
+                        "title": "fas.question5",
+                        "optional": false,
+                        "answer_format": {
+                            "__type": "RPChoiceAnswerFormat",
+                            "question_type": "SingleChoice",
+                            "choices": [
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "fas.choice1",
+                                    "value": 1,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "fas.choice2",
+                                    "value": 2,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "fas.choice3",
+                                    "value": 3,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "fas.choice4",
+                                    "value": 4,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "fas.choice5",
+                                    "value": 5,
+                                    "is_free_text": false
+                                }
+                            ],
+                            "answer_style": "SingleChoice"
+                        },
+                        "auto_skip": false,
+                        "timeout": 0,
+                        "auto_focus": false
+                    },
+                    {
+                        "__type": "RPQuestionStep",
+                        "identifier": "fasQuestion6",
+                        "title": "fas.question6",
+                        "optional": false,
+                        "answer_format": {
+                            "__type": "RPChoiceAnswerFormat",
+                            "question_type": "SingleChoice",
+                            "choices": [
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "fas.choice1",
+                                    "value": 1,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "fas.choice2",
+                                    "value": 2,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "fas.choice3",
+                                    "value": 3,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "fas.choice4",
+                                    "value": 4,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "fas.choice5",
+                                    "value": 5,
+                                    "is_free_text": false
+                                }
+                            ],
+                            "answer_style": "SingleChoice"
+                        },
+                        "auto_skip": false,
+                        "timeout": 0,
+                        "auto_focus": false
+                    },
+                    {
+                        "__type": "RPQuestionStep",
+                        "identifier": "fasQuestion7",
+                        "title": "fas.question7",
+                        "optional": false,
+                        "answer_format": {
+                            "__type": "RPChoiceAnswerFormat",
+                            "question_type": "SingleChoice",
+                            "choices": [
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "fas.choice1",
+                                    "value": 1,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "fas.choice2",
+                                    "value": 2,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "fas.choice3",
+                                    "value": 3,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "fas.choice4",
+                                    "value": 4,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "fas.choice5",
+                                    "value": 5,
+                                    "is_free_text": false
+                                }
+                            ],
+                            "answer_style": "SingleChoice"
+                        },
+                        "auto_skip": false,
+                        "timeout": 0,
+                        "auto_focus": false
+                    },
+                    {
+                        "__type": "RPQuestionStep",
+                        "identifier": "fasQuestion8",
+                        "title": "fas.question8",
+                        "optional": false,
+                        "answer_format": {
+                            "__type": "RPChoiceAnswerFormat",
+                            "question_type": "SingleChoice",
+                            "choices": [
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "fas.choice1",
+                                    "value": 1,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "fas.choice2",
+                                    "value": 2,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "fas.choice3",
+                                    "value": 3,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "fas.choice4",
+                                    "value": 4,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "fas.choice5",
+                                    "value": 5,
+                                    "is_free_text": false
+                                }
+                            ],
+                            "answer_style": "SingleChoice"
+                        },
+                        "auto_skip": false,
+                        "timeout": 0,
+                        "auto_focus": false
+                    },
+                    {
+                        "__type": "RPQuestionStep",
+                        "identifier": "fasQuestion9",
+                        "title": "fas.question9",
+                        "optional": false,
+                        "answer_format": {
+                            "__type": "RPChoiceAnswerFormat",
+                            "question_type": "SingleChoice",
+                            "choices": [
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "fas.choice1",
+                                    "value": 1,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "fas.choice2",
+                                    "value": 2,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "fas.choice3",
+                                    "value": 3,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "fas.choice4",
+                                    "value": 4,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "fas.choice5",
+                                    "value": 5,
+                                    "is_free_text": false
+                                }
+                            ],
+                            "answer_style": "SingleChoice"
+                        },
+                        "auto_skip": false,
+                        "timeout": 0,
+                        "auto_focus": false
+                    },
+                    {
+                        "__type": "RPQuestionStep",
+                        "identifier": "fasQuestion10",
+                        "title": "fas.question10",
+                        "optional": false,
+                        "answer_format": {
+                            "__type": "RPChoiceAnswerFormat",
+                            "question_type": "SingleChoice",
+                            "choices": [
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "fas.choice1",
+                                    "value": 1,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "fas.choice2",
+                                    "value": 2,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "fas.choice3",
+                                    "value": 3,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "fas.choice4",
+                                    "value": 4,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "fas.choice5",
+                                    "value": 5,
+                                    "is_free_text": false
+                                }
+                            ],
+                            "answer_style": "SingleChoice"
+                        },
+                        "auto_skip": false,
+                        "timeout": 0,
+                        "auto_focus": false
+                    },
+                    {
+                        "__type": "RPCompletionStep",
+                        "identifier": "completionID",
+                        "title": "survey.completion",
+                        "text": "survey.completion.thanks",
+                        "optional": false
+                    }
+                ]
+            }
+        },
+        {
+            "__type": "dk.cachet.carp.common.application.tasks.RPAppTask",
+            "name": "pro.instruction.title",
+            "measures": [],
+            "type": "survey",
+            "title": "pro.instruction.title",
+            "description": "pro.instruction.description",
+            "instructions": "",
+            "expire": 604800000000,
+            "notification": true,
+            "rpTask": {
+                "__type": "RPOrderedTask",
+                "identifier": "pro",
+                "close_after_finished": true,
+                "steps": [
+                    {
+                        "__type": "RPQuestionStep",
+                        "identifier": "proQuestion1",
+                        "title": "pro.question.one",
+                        "optional": false,
+                        "answer_format": {
+                            "__type": "RPChoiceAnswerFormat",
+                            "question_type": "SingleChoice",
+                            "choices": [
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "pro.choice1",
+                                    "value": 1,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "pro.choice2",
+                                    "value": 2,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "pro.choice3",
+                                    "value": 3,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "pro.choice4",
+                                    "value": 4,
+                                    "is_free_text": false
+                                }
+                            ],
+                            "answer_style": "SingleChoice"
+                        },
+                        "auto_skip": false,
+                        "timeout": 0,
+                        "auto_focus": false
+                    },
+                    {
+                        "__type": "RPFormStep",
+                        "identifier": "proTime",
+                        "title": "pro.time.title",
+                        "optional": false,
+                        "answer_format": {
+                            "__type": "RPFormAnswerFormat",
+                            "question_type": "Form"
+                        },
+                        "auto_skip": false,
+                        "timeout": 0,
+                        "auto_focus": false,
+                        "questions": [
+                            {
+                                "__type": "RPQuestionStep",
+                                "identifier": "proTime1",
+                                "title": "pro.time.question1",
+                                "optional": false,
+                                "answer_format": {
+                                    "__type": "RPDateTimeAnswerFormat",
+                                    "question_type": "TimeOfDay",
+                                    "date_time_answer_style": "TimeOfDay"
+                                },
+                                "auto_skip": false,
+                                "timeout": 0,
+                                "auto_focus": false
+                            },
+                            {
+                                "__type": "RPQuestionStep",
+                                "identifier": "proTime2",
+                                "title": "pro.time.question2",
+                                "optional": false,
+                                "answer_format": {
+                                    "__type": "RPChoiceAnswerFormat",
+                                    "question_type": "SingleChoice",
+                                    "choices": [
+                                        {
+                                            "__type": "RPChoice",
+                                            "text": "pro.time.choice1",
+                                            "value": 1,
+                                            "is_free_text": false
+                                        },
+                                        {
+                                            "__type": "RPChoice",
+                                            "text": "pro.time.choice2",
+                                            "value": 2,
+                                            "is_free_text": false
+                                        },
+                                        {
+                                            "__type": "RPChoice",
+                                            "text": "pro.time.choice3",
+                                            "value": 3,
+                                            "is_free_text": false
+                                        }
+                                    ],
+                                    "answer_style": "SingleChoice"
+                                },
+                                "auto_skip": false,
+                                "timeout": 0,
+                                "auto_focus": false
+                            }
+                        ],
+                        "save_results_on_auto_skip": false
+                    },
+                    {
+                        "__type": "RPQuestionStep",
+                        "identifier": "proActivity",
+                        "title": "pro.activity.question",
+                        "optional": false,
+                        "answer_format": {
+                            "__type": "RPChoiceAnswerFormat",
+                            "question_type": "SingleChoice",
+                            "choices": [
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "pro.activity.choice1",
+                                    "value": 1,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "pro.activity.choice2",
+                                    "value": 2,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "pro.activity.choice3",
+                                    "value": 3,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "pro.activity.choice4",
+                                    "value": 4,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "pro.activity.choice5",
+                                    "value": 5,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "pro.activity.choice6",
+                                    "value": 6,
+                                    "is_free_text": false
+                                }
+                            ],
+                            "answer_style": "SingleChoice"
+                        },
+                        "auto_skip": false,
+                        "timeout": 0,
+                        "auto_focus": false
+                    },
+                    {
+                        "__type": "RPQuestionStep",
+                        "identifier": "proMedicationId",
+                        "title": "pro.medication.question",
+                        "optional": false,
+                        "answer_format": {
+                            "__type": "RPChoiceAnswerFormat",
+                            "question_type": "SingleChoice",
+                            "choices": [
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "survey.yes",
+                                    "value": 1,
+                                    "is_free_text": false
+                                },
+                                {
+                                    "__type": "RPChoice",
+                                    "text": "survey.no",
+                                    "value": 0,
+                                    "is_free_text": false
+                                }
+                            ],
+                            "answer_style": "SingleChoice"
+                        },
+                        "auto_skip": false,
+                        "timeout": 0,
+                        "auto_focus": false
+                    },
+                    {
+                        "__type": "RPCompletionStep",
+                        "identifier": "completionID",
+                        "title": "survey.completion",
+                        "text": "survey.completion.thanks",
+                        "optional": false
+                    }
+                ]
+            }
+        },
+        {
+            "__type": "dk.cachet.carp.common.application.tasks.RPAppTask",
+            "name": "helena.instruction.title",
+            "measures": [],
+            "type": "survey",
+            "title": "helena.instruction.title",
+            "description": "helena.instruction.description",
+            "instructions": "",
+            "expire": 259200000000,
+            "notification": true,
+            "rpTask": {
+                "__type": "RPOrderedTask",
+                "identifier": "helenaTask",
+                "close_after_finished": true,
+                "steps": [
+                    {
+                        "__type": "RPQuestionStep",
+                        "identifier": "helenaQuestion1",
+                        "title": "helena.question1",
+                        "optional": false,
+                        "answer_format": {
+                            "__type": "RPImageChoiceAnswerFormat",
+                            "choices": [
+                                {
+                                    "__type": "RPImageChoice",
+                                    "image_url": "assets/icons/very-sad.png",
+                                    "value": 1,
+                                    "description": "survey.sleep.image1"
+                                },
+                                {
+                                    "__type": "RPImageChoice",
+                                    "image_url": "assets/icons/sad.png",
+                                    "value": 2,
+                                    "description": "survey.sleep.image2"
+                                },
+                                {
+                                    "__type": "RPImageChoice",
+                                    "image_url": "assets/icons/ok.png",
+                                    "value": 3,
+                                    "description": "survey.sleep.image3"
+                                },
+                                {
+                                    "__type": "RPImageChoice",
+                                    "image_url": "assets/icons/happy.png",
+                                    "value": 4,
+                                    "description": "survey.sleep.image4"
+                                },
+                                {
+                                    "__type": "RPImageChoice",
+                                    "image_url": "assets/icons/very-happy.png",
+                                    "value": 5,
+                                    "description": "survey.sleep.image5"
+                                }
+                            ],
+                            "question_type": "ImageChoice"
+                        },
+                        "auto_skip": false,
+                        "timeout": 0,
+                        "auto_focus": false
+                    },
+                    {
+                        "__type": "RPQuestionStep",
+                        "identifier": "helenaQuestion2",
+                        "title": "helena.question2",
+                        "optional": false,
+                        "answer_format": {
+                            "__type": "RPImageChoiceAnswerFormat",
+                            "choices": [
+                                {
+                                    "__type": "RPImageChoice",
+                                    "image_url": "assets/icons/very-sad.png",
+                                    "value": 1,
+                                    "description": "survey.sleep.image1"
+                                },
+                                {
+                                    "__type": "RPImageChoice",
+                                    "image_url": "assets/icons/sad.png",
+                                    "value": 2,
+                                    "description": "survey.sleep.image2"
+                                },
+                                {
+                                    "__type": "RPImageChoice",
+                                    "image_url": "assets/icons/ok.png",
+                                    "value": 3,
+                                    "description": "survey.sleep.image3"
+                                },
+                                {
+                                    "__type": "RPImageChoice",
+                                    "image_url": "assets/icons/happy.png",
+                                    "value": 4,
+                                    "description": "survey.sleep.image4"
+                                },
+                                {
+                                    "__type": "RPImageChoice",
+                                    "image_url": "assets/icons/very-happy.png",
+                                    "value": 5,
+                                    "description": "survey.sleep.image5"
+                                }
+                            ],
+                            "question_type": "ImageChoice"
+                        },
+                        "auto_skip": false,
+                        "timeout": 0,
+                        "auto_focus": false
+                    },
+                    {
+                        "__type": "RPQuestionStep",
+                        "identifier": "helenaQuestion3",
+                        "title": "helena.question3",
+                        "optional": false,
+                        "answer_format": {
+                            "__type": "RPImageChoiceAnswerFormat",
+                            "choices": [
+                                {
+                                    "__type": "RPImageChoice",
+                                    "image_url": "assets/icons/very-sad.png",
+                                    "value": 1,
+                                    "description": "survey.sleep.image1"
+                                },
+                                {
+                                    "__type": "RPImageChoice",
+                                    "image_url": "assets/icons/sad.png",
+                                    "value": 2,
+                                    "description": "survey.sleep.image2"
+                                },
+                                {
+                                    "__type": "RPImageChoice",
+                                    "image_url": "assets/icons/ok.png",
+                                    "value": 3,
+                                    "description": "survey.sleep.image3"
+                                },
+                                {
+                                    "__type": "RPImageChoice",
+                                    "image_url": "assets/icons/happy.png",
+                                    "value": 4,
+                                    "description": "survey.sleep.image4"
+                                },
+                                {
+                                    "__type": "RPImageChoice",
+                                    "image_url": "assets/icons/very-happy.png",
+                                    "value": 5,
+                                    "description": "survey.sleep.image5"
+                                }
+                            ],
+                            "question_type": "ImageChoice"
+                        },
+                        "auto_skip": false,
+                        "timeout": 0,
+                        "auto_focus": false
+                    },
+                    {
+                        "__type": "RPQuestionStep",
+                        "identifier": "helenaQuestion4",
+                        "title": "helena.question4",
+                        "optional": false,
+                        "answer_format": {
+                            "__type": "RPImageChoiceAnswerFormat",
+                            "choices": [
+                                {
+                                    "__type": "RPImageChoice",
+                                    "image_url": "assets/icons/very-sad.png",
+                                    "value": 1,
+                                    "description": "survey.sleep.image1"
+                                },
+                                {
+                                    "__type": "RPImageChoice",
+                                    "image_url": "assets/icons/sad.png",
+                                    "value": 2,
+                                    "description": "survey.sleep.image2"
+                                },
+                                {
+                                    "__type": "RPImageChoice",
+                                    "image_url": "assets/icons/ok.png",
+                                    "value": 3,
+                                    "description": "survey.sleep.image3"
+                                },
+                                {
+                                    "__type": "RPImageChoice",
+                                    "image_url": "assets/icons/happy.png",
+                                    "value": 4,
+                                    "description": "survey.sleep.image4"
+                                },
+                                {
+                                    "__type": "RPImageChoice",
+                                    "image_url": "assets/icons/very-happy.png",
+                                    "value": 5,
+                                    "description": "survey.sleep.image5"
+                                }
+                            ],
+                            "question_type": "ImageChoice"
+                        },
+                        "auto_skip": false,
+                        "timeout": 0,
+                        "auto_focus": false
+                    },
+                    {
+                        "__type": "RPQuestionStep",
+                        "identifier": "helenaQuestion5",
+                        "title": "helena.question5",
+                        "optional": false,
+                        "answer_format": {
+                            "__type": "RPImageChoiceAnswerFormat",
+                            "choices": [
+                                {
+                                    "__type": "RPImageChoice",
+                                    "image_url": "assets/icons/very-sad.png",
+                                    "value": 1,
+                                    "description": "survey.sleep.image1"
+                                },
+                                {
+                                    "__type": "RPImageChoice",
+                                    "image_url": "assets/icons/sad.png",
+                                    "value": 2,
+                                    "description": "survey.sleep.image2"
+                                },
+                                {
+                                    "__type": "RPImageChoice",
+                                    "image_url": "assets/icons/ok.png",
+                                    "value": 3,
+                                    "description": "survey.sleep.image3"
+                                },
+                                {
+                                    "__type": "RPImageChoice",
+                                    "image_url": "assets/icons/happy.png",
+                                    "value": 4,
+                                    "description": "survey.sleep.image4"
+                                },
+                                {
+                                    "__type": "RPImageChoice",
+                                    "image_url": "assets/icons/very-happy.png",
+                                    "value": 5,
+                                    "description": "survey.sleep.image5"
+                                }
+                            ],
+                            "question_type": "ImageChoice"
+                        },
+                        "auto_skip": false,
+                        "timeout": 0,
+                        "auto_focus": false
+                    },
+                    {
+                        "__type": "RPQuestionStep",
+                        "identifier": "helenaQuestion6",
+                        "title": "helena.question6",
+                        "optional": false,
+                        "answer_format": {
+                            "__type": "RPImageChoiceAnswerFormat",
+                            "choices": [
+                                {
+                                    "__type": "RPImageChoice",
+                                    "image_url": "assets/icons/very-sad.png",
+                                    "value": 1,
+                                    "description": "survey.sleep.image1"
+                                },
+                                {
+                                    "__type": "RPImageChoice",
+                                    "image_url": "assets/icons/sad.png",
+                                    "value": 2,
+                                    "description": "survey.sleep.image2"
+                                },
+                                {
+                                    "__type": "RPImageChoice",
+                                    "image_url": "assets/icons/ok.png",
+                                    "value": 3,
+                                    "description": "survey.sleep.image3"
+                                },
+                                {
+                                    "__type": "RPImageChoice",
+                                    "image_url": "assets/icons/happy.png",
+                                    "value": 4,
+                                    "description": "survey.sleep.image4"
+                                },
+                                {
+                                    "__type": "RPImageChoice",
+                                    "image_url": "assets/icons/very-happy.png",
+                                    "value": 5,
+                                    "description": "survey.sleep.image5"
+                                }
+                            ],
+                            "question_type": "ImageChoice"
+                        },
+                        "auto_skip": false,
+                        "timeout": 0,
+                        "auto_focus": false
+                    },
+                    {
+                        "__type": "RPQuestionStep",
+                        "identifier": "helenaQuestion7",
+                        "title": "helena.question7",
+                        "optional": false,
+                        "answer_format": {
+                            "__type": "RPImageChoiceAnswerFormat",
+                            "choices": [
+                                {
+                                    "__type": "RPImageChoice",
+                                    "image_url": "assets/icons/very-sad.png",
+                                    "value": 1,
+                                    "description": "survey.sleep.image1"
+                                },
+                                {
+                                    "__type": "RPImageChoice",
+                                    "image_url": "assets/icons/sad.png",
+                                    "value": 2,
+                                    "description": "survey.sleep.image2"
+                                },
+                                {
+                                    "__type": "RPImageChoice",
+                                    "image_url": "assets/icons/ok.png",
+                                    "value": 3,
+                                    "description": "survey.sleep.image3"
+                                },
+                                {
+                                    "__type": "RPImageChoice",
+                                    "image_url": "assets/icons/happy.png",
+                                    "value": 4,
+                                    "description": "survey.sleep.image4"
+                                },
+                                {
+                                    "__type": "RPImageChoice",
+                                    "image_url": "assets/icons/very-happy.png",
+                                    "value": 5,
+                                    "description": "survey.sleep.image5"
+                                }
+                            ],
+                            "question_type": "ImageChoice"
+                        },
+                        "auto_skip": false,
+                        "timeout": 0,
+                        "auto_focus": false
+                    },
+                    {
+                        "__type": "RPQuestionStep",
+                        "identifier": "helenaQuestion8",
+                        "title": "helena.question8",
+                        "optional": false,
+                        "answer_format": {
+                            "__type": "RPImageChoiceAnswerFormat",
+                            "choices": [
+                                {
+                                    "__type": "RPImageChoice",
+                                    "image_url": "assets/icons/very-sad.png",
+                                    "value": 1,
+                                    "description": "survey.sleep.image1"
+                                },
+                                {
+                                    "__type": "RPImageChoice",
+                                    "image_url": "assets/icons/sad.png",
+                                    "value": 2,
+                                    "description": "survey.sleep.image2"
+                                },
+                                {
+                                    "__type": "RPImageChoice",
+                                    "image_url": "assets/icons/ok.png",
+                                    "value": 3,
+                                    "description": "survey.sleep.image3"
+                                },
+                                {
+                                    "__type": "RPImageChoice",
+                                    "image_url": "assets/icons/happy.png",
+                                    "value": 4,
+                                    "description": "survey.sleep.image4"
+                                },
+                                {
+                                    "__type": "RPImageChoice",
+                                    "image_url": "assets/icons/very-happy.png",
+                                    "value": 5,
+                                    "description": "survey.sleep.image5"
+                                }
+                            ],
+                            "question_type": "ImageChoice"
+                        },
+                        "auto_skip": false,
+                        "timeout": 0,
+                        "auto_focus": false
+                    },
+                    {
+                        "__type": "RPQuestionStep",
+                        "identifier": "helenaQuestion9",
+                        "title": "helena.question9",
+                        "optional": false,
+                        "answer_format": {
+                            "__type": "RPImageChoiceAnswerFormat",
+                            "choices": [
+                                {
+                                    "__type": "RPImageChoice",
+                                    "image_url": "assets/icons/very-sad.png",
+                                    "value": 1,
+                                    "description": "survey.sleep.image1"
+                                },
+                                {
+                                    "__type": "RPImageChoice",
+                                    "image_url": "assets/icons/sad.png",
+                                    "value": 2,
+                                    "description": "survey.sleep.image2"
+                                },
+                                {
+                                    "__type": "RPImageChoice",
+                                    "image_url": "assets/icons/ok.png",
+                                    "value": 3,
+                                    "description": "survey.sleep.image3"
+                                },
+                                {
+                                    "__type": "RPImageChoice",
+                                    "image_url": "assets/icons/happy.png",
+                                    "value": 4,
+                                    "description": "survey.sleep.image4"
+                                },
+                                {
+                                    "__type": "RPImageChoice",
+                                    "image_url": "assets/icons/very-happy.png",
+                                    "value": 5,
+                                    "description": "survey.sleep.image5"
+                                }
+                            ],
+                            "question_type": "ImageChoice"
+                        },
+                        "auto_skip": false,
+                        "timeout": 0,
+                        "auto_focus": false
+                    },
+                    {
+                        "__type": "RPQuestionStep",
+                        "identifier": "helenaQuestion10",
+                        "title": "helena.question10",
+                        "optional": false,
+                        "answer_format": {
+                            "__type": "RPImageChoiceAnswerFormat",
+                            "choices": [
+                                {
+                                    "__type": "RPImageChoice",
+                                    "image_url": "assets/icons/very-sad.png",
+                                    "value": 1,
+                                    "description": "survey.sleep.image1"
+                                },
+                                {
+                                    "__type": "RPImageChoice",
+                                    "image_url": "assets/icons/sad.png",
+                                    "value": 2,
+                                    "description": "survey.sleep.image2"
+                                },
+                                {
+                                    "__type": "RPImageChoice",
+                                    "image_url": "assets/icons/ok.png",
+                                    "value": 3,
+                                    "description": "survey.sleep.image3"
+                                },
+                                {
+                                    "__type": "RPImageChoice",
+                                    "image_url": "assets/icons/happy.png",
+                                    "value": 4,
+                                    "description": "survey.sleep.image4"
+                                },
+                                {
+                                    "__type": "RPImageChoice",
+                                    "image_url": "assets/icons/very-happy.png",
+                                    "value": 5,
+                                    "description": "survey.sleep.image5"
+                                }
+                            ],
+                            "question_type": "ImageChoice"
+                        },
+                        "auto_skip": false,
+                        "timeout": 0,
+                        "auto_focus": false
+                    },
+                    {
+                        "__type": "RPCompletionStep",
+                        "identifier": "completionID",
+                        "title": "survey.completion",
+                        "text": "survey.completion.thanks",
+                        "optional": false
                     }
                 ]
             }
@@ -912,15 +2389,15 @@
         },
         "1": {
             "__type": "dk.cachet.carp.common.application.triggers.NoOpTrigger",
-            "sourceDeviceRoleName": "Polar HR Device"
+            "sourceDeviceRoleName": "Movesense ECG Device"
         },
         "2": {
             "__type": "dk.cachet.carp.common.application.triggers.NoOpTrigger",
-            "sourceDeviceRoleName": "Location Service"
+            "sourceDeviceRoleName": "Polar HR Device"
         },
         "3": {
             "__type": "dk.cachet.carp.common.application.triggers.NoOpTrigger",
-            "sourceDeviceRoleName": "Weather Service"
+            "sourceDeviceRoleName": "Health Service"
         },
         "4": {
             "__type": "dk.cachet.carp.common.application.triggers.ImmediateTrigger",
@@ -931,80 +2408,121 @@
             "sourceDeviceRoleName": "Polar HR Device"
         },
         "6": {
-            "__type": "dk.cachet.carp.common.application.triggers.OneTimeTrigger",
-            "sourceDeviceRoleName": "Primary Phone"
+            "__type": "dk.cachet.carp.common.application.triggers.ImmediateTrigger",
+            "sourceDeviceRoleName": "Movesense ECG Device"
         },
         "7": {
-            "__type": "dk.cachet.carp.common.application.triggers.OneTimeTrigger",
-            "sourceDeviceRoleName": "Primary Phone"
+            "__type": "dk.cachet.carp.common.application.triggers.PeriodicTrigger",
+            "sourceDeviceRoleName": "Health Service",
+            "period": 3600000000
         },
         "8": {
-            "__type": "dk.cachet.carp.common.application.triggers.OneTimeTrigger",
-            "sourceDeviceRoleName": "Primary Phone"
+            "__type": "dk.cachet.carp.common.application.triggers.NoOpTrigger",
+            "sourceDeviceRoleName": "Weather Service"
         },
         "9": {
-            "__type": "dk.cachet.carp.common.application.triggers.OneTimeTrigger",
-            "sourceDeviceRoleName": "Primary Phone"
+            "__type": "dk.cachet.carp.common.application.triggers.PeriodicTrigger",
+            "sourceDeviceRoleName": "Weather Service",
+            "period": 1800000000
         },
         "10": {
-            "__type": "dk.cachet.carp.common.application.triggers.OneTimeTrigger",
-            "sourceDeviceRoleName": "Primary Phone"
+            "__type": "dk.cachet.carp.common.application.triggers.NoOpTrigger",
+            "sourceDeviceRoleName": "Air Quality Service"
         },
         "11": {
-            "__type": "dk.cachet.carp.common.application.triggers.OneTimeTrigger",
-            "sourceDeviceRoleName": "Primary Phone"
+            "__type": "dk.cachet.carp.common.application.triggers.PeriodicTrigger",
+            "sourceDeviceRoleName": "Air Quality Service",
+            "period": 1800000000
         },
         "12": {
-            "__type": "dk.cachet.carp.common.application.triggers.UserTaskTrigger",
-            "sourceDeviceRoleName": "Primary Phone",
-            "taskName": "Task #14",
-            "triggerCondition": "done"
-        },
-        "13": {
-            "__type": "dk.cachet.carp.common.application.triggers.UserTaskTrigger",
-            "sourceDeviceRoleName": "Primary Phone",
-            "taskName": "Task #15",
-            "triggerCondition": "done"
-        },
-        "14": {
-            "__type": "dk.cachet.carp.common.application.triggers.UserTaskTrigger",
-            "sourceDeviceRoleName": "Primary Phone",
-            "taskName": "Task #16",
-            "triggerCondition": "done"
-        },
-        "15": {
-            "__type": "dk.cachet.carp.common.application.triggers.UserTaskTrigger",
-            "sourceDeviceRoleName": "Primary Phone",
-            "taskName": "Task #17",
-            "triggerCondition": "done"
-        },
-        "16": {
-            "__type": "dk.cachet.carp.common.application.triggers.UserTaskTrigger",
-            "sourceDeviceRoleName": "Primary Phone",
-            "taskName": "Task #18",
-            "triggerCondition": "done"
-        },
-        "17": {
-            "__type": "dk.cachet.carp.common.application.triggers.UserTaskTrigger",
-            "sourceDeviceRoleName": "Primary Phone",
-            "taskName": "Task #19",
-            "triggerCondition": "done"
-        },
-        "18": {
-            "__type": "dk.cachet.carp.common.application.triggers.UserTaskTrigger",
-            "sourceDeviceRoleName": "Primary Phone",
-            "taskName": "Task #19",
-            "triggerCondition": "done"
-        },
-        "19": {
             "__type": "dk.cachet.carp.common.application.triggers.OneTimeTrigger",
             "sourceDeviceRoleName": "Primary Phone"
         },
-        "20": {
+        "13": {
+            "__type": "dk.cachet.carp.common.application.triggers.RecurrentScheduledTrigger",
+            "sourceDeviceRoleName": "Primary Phone",
+            "type": "daily",
+            "time": {
+                "hour": 10,
+                "minute": 0,
+                "second": 0
+            },
+            "separationCount": 0,
+            "period": 86400000000
+        },
+        "14": {
+            "__type": "dk.cachet.carp.common.application.triggers.RecurrentScheduledTrigger",
+            "sourceDeviceRoleName": "Primary Phone",
+            "type": "daily",
+            "time": {
+                "hour": 20,
+                "minute": 0,
+                "second": 0
+            },
+            "separationCount": 0,
+            "period": 86400000000
+        },
+        "15": {
+            "__type": "dk.cachet.carp.common.application.triggers.RecurrentScheduledTrigger",
+            "sourceDeviceRoleName": "Primary Phone",
+            "type": "weekly",
+            "time": {
+                "hour": 10,
+                "minute": 0,
+                "second": 0
+            },
+            "separationCount": 0,
+            "dayOfWeek": 1,
+            "period": 604800000000
+        },
+        "16": {
+            "__type": "dk.cachet.carp.common.application.triggers.RecurrentScheduledTrigger",
+            "sourceDeviceRoleName": "Primary Phone",
+            "type": "weekly",
+            "time": {
+                "hour": 10,
+                "minute": 0,
+                "second": 0
+            },
+            "separationCount": 0,
+            "dayOfWeek": 1,
+            "period": 604800000000
+        },
+        "17": {
+            "__type": "dk.cachet.carp.common.application.triggers.RecurrentScheduledTrigger",
+            "sourceDeviceRoleName": "Primary Phone",
+            "type": "weekly",
+            "time": {
+                "hour": 10,
+                "minute": 0,
+                "second": 0
+            },
+            "separationCount": 0,
+            "dayOfWeek": 1,
+            "period": 604800000000
+        },
+        "18": {
+            "__type": "dk.cachet.carp.common.application.triggers.OneTimeTrigger",
+            "sourceDeviceRoleName": "Primary Phone"
+        },
+        "19": {
             "__type": "dk.cachet.carp.common.application.triggers.UserTaskTrigger",
             "sourceDeviceRoleName": "Primary Phone",
-            "taskName": "Task #21",
+            "taskName": "pro.instruction.title",
             "triggerCondition": "done"
+        },
+        "20": {
+            "__type": "dk.cachet.carp.common.application.triggers.RecurrentScheduledTrigger",
+            "sourceDeviceRoleName": "Primary Phone",
+            "type": "weekly",
+            "time": {
+                "hour": 10,
+                "minute": 0,
+                "second": 0
+            },
+            "separationCount": 0,
+            "dayOfWeek": 7,
+            "period": 604800000000
         }
     },
     "taskControls": [
@@ -1017,19 +2535,19 @@
         {
             "triggerId": 1,
             "taskName": "Task #9",
-            "destinationDeviceRoleName": "Polar HR Device",
+            "destinationDeviceRoleName": "Movesense ECG Device",
             "control": "Start"
         },
         {
             "triggerId": 2,
             "taskName": "Task #10",
-            "destinationDeviceRoleName": "Location Service",
+            "destinationDeviceRoleName": "Polar HR Device",
             "control": "Start"
         },
         {
             "triggerId": 3,
             "taskName": "Task #11",
-            "destinationDeviceRoleName": "Weather Service",
+            "destinationDeviceRoleName": "Health Service",
             "control": "Start"
         },
         {
@@ -1047,90 +2565,90 @@
         {
             "triggerId": 6,
             "taskName": "Task #14",
-            "destinationDeviceRoleName": "Primary Phone",
+            "destinationDeviceRoleName": "Movesense ECG Device",
             "control": "Start"
         },
         {
             "triggerId": 7,
             "taskName": "Task #15",
-            "destinationDeviceRoleName": "Primary Phone",
+            "destinationDeviceRoleName": "Health Service",
             "control": "Start"
         },
         {
             "triggerId": 8,
             "taskName": "Task #16",
-            "destinationDeviceRoleName": "Primary Phone",
+            "destinationDeviceRoleName": "Weather Service",
             "control": "Start"
         },
         {
             "triggerId": 9,
             "taskName": "Task #17",
-            "destinationDeviceRoleName": "Primary Phone",
+            "destinationDeviceRoleName": "Weather Service",
             "control": "Start"
         },
         {
             "triggerId": 10,
             "taskName": "Task #18",
-            "destinationDeviceRoleName": "Primary Phone",
+            "destinationDeviceRoleName": "Air Quality Service",
             "control": "Start"
         },
         {
             "triggerId": 11,
             "taskName": "Task #19",
-            "destinationDeviceRoleName": "Primary Phone",
+            "destinationDeviceRoleName": "Air Quality Service",
             "control": "Start"
         },
         {
             "triggerId": 12,
-            "taskName": "Task #14",
+            "taskName": "onboarding.name",
             "destinationDeviceRoleName": "Primary Phone",
             "control": "Start"
         },
         {
             "triggerId": 13,
-            "taskName": "Task #15",
+            "taskName": "survey.sleep.title",
             "destinationDeviceRoleName": "Primary Phone",
             "control": "Start"
         },
         {
             "triggerId": 14,
-            "taskName": "Task #16",
+            "taskName": "survey.stress.title",
             "destinationDeviceRoleName": "Primary Phone",
             "control": "Start"
         },
         {
             "triggerId": 15,
-            "taskName": "Task #17",
+            "taskName": "qap.measurements.title",
             "destinationDeviceRoleName": "Primary Phone",
             "control": "Start"
         },
         {
             "triggerId": 16,
-            "taskName": "Task #18",
+            "taskName": "euroQoL.instruction.title",
             "destinationDeviceRoleName": "Primary Phone",
             "control": "Start"
         },
         {
             "triggerId": 17,
-            "taskName": "Task #19",
+            "taskName": "fas.instruction.title",
             "destinationDeviceRoleName": "Primary Phone",
             "control": "Start"
         },
         {
             "triggerId": 18,
-            "taskName": "Task #20",
+            "taskName": "pro.instruction.title",
             "destinationDeviceRoleName": "Primary Phone",
             "control": "Start"
         },
         {
             "triggerId": 19,
-            "taskName": "Task #21",
+            "taskName": "pro.instruction.title",
             "destinationDeviceRoleName": "Primary Phone",
             "control": "Start"
         },
         {
             "triggerId": 20,
-            "taskName": "Task #21",
+            "taskName": "helena.instruction.title",
             "destinationDeviceRoleName": "Primary Phone",
             "control": "Start"
         }

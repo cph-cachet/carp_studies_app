@@ -60,6 +60,11 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
+    <!-- The following permissions are used in the flutter_local_notifications Package  -->
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"
+            android:maxSdkVersion="32" />
+    <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
+
     <!-- The following permissions are used in the Media Package  -->
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.CAMERA" />

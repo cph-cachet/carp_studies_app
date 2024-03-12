@@ -570,10 +570,10 @@ packages:
     dependency: transitive
     description:
       name: flutter_appauth
-      sha256: "4ad7d446888b1486642226db6aa04ffb4651d76388715aba6e6e572ebeb915c3"
+      sha256: "6aca161b2a1758478a13f758897fc98688277951dafb4b7e62729c1dfbcefdaa"
       url: "https://pub.dev"
     source: hosted
-    version: "6.0.4"
+    version: "6.0.5"
   flutter_appauth_platform_interface:
     dependency: transitive
     description:
@@ -586,10 +586,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_blue_plus
-      sha256: "3a1299f3a5b97047fb66e48fc9f371ea2aca0d3fb40b380c440aa8392066ac98"
+      sha256: a4e2e7d536f24dfc265a4eb43b63a1293bf6d972ddd243dc3ed2d900b38d9a4d
       url: "https://pub.dev"
     source: hosted
-    version: "1.31.15"
+    version: "1.31.16"
   flutter_launcher_icons:
     dependency: "direct main"
     description:
@@ -993,10 +993,10 @@ packages:
     dependency: transitive
     description:
       name: markdown
-      sha256: "1b134d9f8ff2da15cb298efe6cd8b7d2a78958c1b00384ebcbdf13fe340a6c90"
+      sha256: ef2a1298144e3f985cc736b22e0ccdaf188b5b3970648f2d9dc13efd1d9df051
       url: "https://pub.dev"
     source: hosted
-    version: "7.2.1"
+    version: "7.2.2"
   matcher:
     dependency: transitive
     description:
@@ -1926,10 +1926,10 @@ packages:
     dependency: transitive
     description:
       name: win32
-      sha256: "464f5674532865248444b4c3daca12bd9bf2d7c47f759ce2617986e7229494a8"
+      sha256: "8cb58b45c47dcb42ab3651533626161d6b67a2921917d8d429791f76972b3480"
       url: "https://pub.dev"
     source: hosted
-    version: "5.2.0"
+    version: "5.3.0"
   win32_registry:
     dependency: transitive
     description:

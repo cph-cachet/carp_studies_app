@@ -48,16 +48,22 @@ class MediaCardWidgetState extends State<MediaCardWidget> {
                                             style: dataCardTitleStyle.copyWith(
                                                 fontSize: 14),
                                           ),
-                                          HorizontalBar(
-                                              names: entry.value.taskCount
-                                                  .map((task) => locale
-                                                      .translate(task.title))
-                                                  .toList(),
-                                              values: entry.value.taskCount
-                                                  .map((task) => task.size)
-                                                  .toList(),
-                                              colors: CACHET.COLOR_LIST,
-                                              height: 18),
+                                          LayoutBuilder(builder:
+                                              (BuildContext context,
+                                                  BoxConstraints constraints) {
+                                            return HorizontalBar(
+                                                parentWidth:
+                                                    constraints.maxWidth,
+                                                names: entry.value.taskCount
+                                                    .map((task) => locale
+                                                        .translate(task.title))
+                                                    .toList(),
+                                                values: entry.value.taskCount
+                                                    .map((task) => task.size)
+                                                    .toList(),
+                                                colors: CACHET.COLOR_LIST,
+                                                height: 18);
+                                          })
                                         ],
                                       ))
                                   .toList()),

@@ -244,10 +244,11 @@ packages:
   carp_context_package:
     dependency: "direct main"
     description:
-      path: "../carp/carp.sensing-flutter/packages/carp_context_package"
-      relative: true
-    source: path
-    version: "1.4.3"
+      name: carp_context_package
+      sha256: a68bc13d44d401c9a78cb54f5a33a912dd0efc4db146dcfa8188fe67c343f09c
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.4.4"
   carp_core:
     dependency: "direct main"
     description:

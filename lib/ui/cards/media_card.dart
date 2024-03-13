@@ -35,38 +35,40 @@ class MediaCardWidgetState extends State<MediaCardWidget> {
                           const SizedBox(height: 5),
                           Text('$total MEDIA', style: dataCardTitleStyle),
                           Column(
-                              children: widget.modelsList
-                                  .asMap()
-                                  .entries
-                                  .map((entry) => Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          const SizedBox(height: 15),
-                                          Text(
-                                            '${entry.value.tasksDone} ${locale.translate('cards.${entry.value.taskType}.title')}',
-                                            style: dataCardTitleStyle.copyWith(
-                                                fontSize: 14),
-                                          ),
-                                          LayoutBuilder(builder:
-                                              (BuildContext context,
-                                                  BoxConstraints constraints) {
-                                            return HorizontalBar(
-                                                parentWidth:
-                                                    constraints.maxWidth,
-                                                names: entry.value.taskCount
-                                                    .map((task) => locale
-                                                        .translate(task.title))
-                                                    .toList(),
-                                                values: entry.value.taskCount
-                                                    .map((task) => task.size)
-                                                    .toList(),
-                                                colors: CACHET.COLOR_LIST,
-                                                height: 18);
-                                          })
-                                        ],
-                                      ))
-                                  .toList()),
+                            children: widget.modelsList
+                                .asMap()
+                                .entries
+                                .map(
+                                  (entry) => Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const SizedBox(height: 15),
+                                      Text(
+                                        '${entry.value.tasksDone} ${locale.translate('cards.${entry.value.taskType}.title')}',
+                                        style: dataCardTitleStyle.copyWith(
+                                            fontSize: 14),
+                                      ),
+                                      LayoutBuilder(builder:
+                                          (BuildContext context,
+                                              BoxConstraints constraints) {
+                                        return HorizontalBar(
+                                            parentWidth: constraints.maxWidth,
+                                            names: entry.value.taskCount
+                                                .map((task) => locale
+                                                    .translate(task.title))
+                                                .toList(),
+                                            values: entry.value.taskCount
+                                                .map((task) => task.size)
+                                                .toList(),
+                                            colors: CACHET.COLOR_LIST,
+                                            height: 18);
+                                      }),
+                                    ],
+                                  ),
+                                )
+                                .toList(),
+                          ),
                         ],
                       ),
                     ),

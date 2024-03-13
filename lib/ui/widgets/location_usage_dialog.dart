@@ -41,8 +41,12 @@ class LocationUsageDialog {
           style: ButtonStyle(
             backgroundColor:
                 MaterialStateProperty.all(Theme.of(context).primaryColor),
+            foregroundColor: MaterialStateProperty.all(Theme.of(context).colorScheme.onPrimary),
+
           ),
-          child: Text(locale.translate("dialog.location.allow")),
+          child: Text(
+            locale.translate("dialog.location.allow"),
+          ),
         ),
       ],
     );

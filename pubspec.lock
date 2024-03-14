@@ -265,14 +265,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.4.0"
-  carp_health_package:
-    dependency: "direct main"
-    description:
-      name: carp_health_package
-      sha256: f2c37831a652e3f768b5b8f5db8eba4c2b466c845188588cedfec5ead67506cd
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.9.3"
   carp_mobile_sensing:
     dependency: "direct main"
     description:
@@ -309,10 +301,10 @@ packages:
     dependency: "direct main"
     description:
       name: carp_survey_package
-      sha256: "56f443f9131ab8d8a6927c036e746e4012b84daaa480a1fd74ee0ac7f2e2f99e"
+      sha256: "236839bc20701517b2b917bb650a5e11dc33760ed8fb2f4deaced80712950c9a"
       url: "https://pub.dev"
     source: hosted
-    version: "1.4.3"
+    version: "1.4.4"
   carp_webservices:
     dependency: "direct main"
     description:
@@ -745,10 +737,10 @@ packages:
     dependency: "direct main"
     description:
       name: google_fonts
-      sha256: b1ac0fe2832c9cc95e5e88b57d627c5e68c223b9657f4b96e1487aa9098c7b82
+      sha256: "5b1726fee554d1cc9db1baef8061b126567ff0a1140a03ed7de936e62f2ab98b"
       url: "https://pub.dev"
     source: hosted
-    version: "6.2.1"
+    version: "6.2.0"
   graphs:
     dependency: transitive
     description:
@@ -757,14 +749,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.1"
-  health:
-    dependency: transitive
-    description:
-      name: health
-      sha256: "885104e4cdd1b6db5a04f85304cfb16d50bd1729124c0da11464f1d4c85b9d1c"
-      url: "https://pub.dev"
-    source: hosted
-    version: "9.0.1"
   html:
     dependency: transitive
     description:
@@ -1964,4 +1948,4 @@ packages:
     version: "3.1.2"
 sdks:
   dart: ">=3.3.0 <4.0.0"
-  flutter: ">=3.19.2"
+  flutter: ">=3.19.0"

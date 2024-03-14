@@ -1,11 +1,11 @@
 PODS:
   - app_settings (5.1.1):
     - Flutter
-  - AppAuth (1.6.2):
-    - AppAuth/Core (= 1.6.2)
-    - AppAuth/ExternalUserAgent (= 1.6.2)
-  - AppAuth/Core (1.6.2)
-  - AppAuth/ExternalUserAgent (1.6.2):
+  - AppAuth (1.7.2):
+    - AppAuth/Core (= 1.7.2)
+    - AppAuth/ExternalUserAgent (= 1.7.2)
+  - AppAuth/Core (1.7.2)
+  - AppAuth/ExternalUserAgent (1.7.2):
     - AppAuth/Core
   - audio_session (0.0.1):
     - Flutter
@@ -30,7 +30,7 @@ PODS:
   - flutter_activity_recognition (0.0.1):
     - Flutter
   - flutter_appauth (0.0.1):
-    - AppAuth (= 1.6.2)
+    - AppAuth (= 1.7.2)
     - Flutter
   - flutter_blue_plus (0.0.1):
     - Flutter
@@ -41,8 +41,6 @@ PODS:
     - flutter_sound_core (= 9.2.13)
   - flutter_sound_core (9.2.13)
   - flutter_timezone (0.0.1):
-    - Flutter
-  - health (1.0.4):
     - Flutter
   - just_audio (0.0.1):
     - Flutter
@@ -110,7 +108,6 @@ DEPENDENCIES:
   - flutter_local_notifications (from `.symlinks/plugins/flutter_local_notifications/ios`)
   - flutter_sound (from `.symlinks/plugins/flutter_sound/ios`)
   - flutter_timezone (from `.symlinks/plugins/flutter_timezone/ios`)
-  - health (from `.symlinks/plugins/health/ios`)
   - just_audio (from `.symlinks/plugins/just_audio/ios`)
   - light (from `.symlinks/plugins/light/ios`)
   - location (from `.symlinks/plugins/location/ios`)
@@ -173,8 +170,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_sound/ios"
   flutter_timezone:
     :path: ".symlinks/plugins/flutter_timezone/ios"
-  health:
-    :path: ".symlinks/plugins/health/ios"
   just_audio:
     :path: ".symlinks/plugins/just_audio/ios"
   light:
@@ -219,7 +214,7 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   app_settings: 017320c6a680cdc94c799949d95b84cb69389ebc
-  AppAuth: 3bb1d1cd9340bd09f5ed189fb00b1cc28e1e8570
+  AppAuth: ca2458caccec349cc1e26d8d9e8fd7d22f1d01f3
   audio_session: 4f3e461722055d21515cf3261b64c973c062f345
   audio_streamer: af49e73eb66f71c4eeabb4bbcb05f122d03a6709
   audiofileplayer: 4aaff759a721ec3a850a682e0d9ec554e5f9e86f
@@ -231,13 +226,12 @@ SPEC CHECKSUMS:
   esense_flutter: 8bfadfdefe7b51d6f78366e43b2b64ec9b6144b6
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   flutter_activity_recognition: 5c3b026997742b01e82424ef257db9640822ad77
-  flutter_appauth: 0863b1f33110b410213e736aead4a6727303f509
+  flutter_appauth: c5e36e22af413d4b5b2997d61c97f7350d9bd25b
   flutter_blue_plus: 4837da7d00cf5d441fdd6635b3a57f936778ea96
   flutter_local_notifications: 4cde75091f6327eb8517fa068a0a5950212d2086
   flutter_sound: c60effa2a350fb977885f0db2fbc4c1ad5160900
   flutter_sound_core: 26c10e5832e76aaacfae252d8925232281c486ae
   flutter_timezone: ffb07bdad3c6276af8dada0f11978d8a1f8a20bb
-  health: 5a380c0f6c4f619535845992993964293962e99e
   just_audio: baa7252489dbcf47a4c7cc9ca663e9661c99aafa
   light: 86af7a847d218a9a2376bc1c1ae40c3410441135
   location: d5cf8598915965547c3f36761ae9cc4f4e87d22e

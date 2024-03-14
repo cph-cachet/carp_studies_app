@@ -60,7 +60,7 @@
     "survey.who5.completion.description": "Thank you for filling out the survey!",
     "survey.demographics.title": "Demographics",
     "survey.demographics.description": "A short 3-item survey on your background.",
-    "survey.demographics.femal": "Femal",
+    "survey.demographics.female": "Female",
     "survey.demographics.male": "Male",
     "survey.demographics.other": "Other",
     "survey.demographics.prefer_not": "Prefer not to say",

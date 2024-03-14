@@ -60,7 +60,7 @@
     "survey.who5.completion.description": "Tak fordi du udfyldte dette spørgeskema!",
     "survey.demographics.title": "Demografisk",
     "survey.demographics.description": "Et kort spørgeskema om dig og din baggrund.",
-    "survey.demographics.femal": "Kvinde",
+    "survey.demographics.female": "Kvinde",
     "survey.demographics.male": "Mand",
     "survey.demographics.other": "Andet",
     "survey.demographics.prefer_not": "Foretrækker ikke at besvare",

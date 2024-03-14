@@ -1,16 +1,21 @@
 ---
 name: Improvement
-about: Suggest improvements or changes to existing plugins
-title: '[Specify the plugin name and version here]'
+about: Suggest improvements or changes to the CARP Studies App
+title: 'Provide a detailed title that summarizes the suggested improvement'
 labels: 'improvement'
 assignees: ''
 
 ---
 
-**Remember to specify the plugin name in the title!**
 
-### Description
-Describe what you will like to see improved/added/removed.
+## Description
 
-### Additional information
+Describe what you will like to see improved/added/removed and why, e.g., what study would this help.
+
+## Screenshots
+
+If applicable, add screenshots to help explain what you want to improve.
+
+## Additional information
+
 Add any other info about the problem here.

@@ -1,40 +1,57 @@
 ---
 name: Bug fix
 about: Create a report to help us improve any bug you may experience. 
-title: '[Specify the plugin name and version here]'
+title: 'Provide a detailed title that summarizes the bug'
 labels: 'bugfix'
 assignees: ''
 
 ---
 
-**Remember to specify the plugin name in the title!**
+Please fill in the following details.
 
-### Device / Emulator and OS
+## Device Hardware / Emulator and OS
+
 Please complete the following information for each phone and/or emulator you're experiencing this bug on:
- - Device: [e.g. iPhone 6s]
- - OS: [e.g. iOS 13.1]
 
-**NB: Bugs pertaining to old devices/OS versions will likely not be fixed.**
-* For iOS only the latest OS is supported. 
-* For Android, see [the OS versions for which Google support security fixes](https://en.wikipedia.org/wiki/Android_version_history)**
+- **Hardware:** [e.g. iPhone 12 Pro]
+- **OS:** [e.g. iOS 13.1]
+- **SDK:** [e.g. Android API level 31]
+- **App version:** [e.g. 1.5]
+- **App deployment mode:** [e.g. local]
 
-### Describe the bug
+## Describe the bug
+
 A clear and concise description of what the bug is.
 
-### To Reproduce
+## To Reproduce
+
 Steps to reproduce the behavior.
 
-### Expected behavior
+## Expected behavior
+
 What did you expect to happen?
 
-### Actual behavior
-What did happen? Include stack traces and exception print-outs.
+## Actual behavior
 
-### Screenshots
+What did happen?
+
+## Stack trace and debug console
+
+Include stack traces and debug print-outs below:
+
+<details>
+  <summary>Debug Output</summary>
+  
+  ```
+    [Copy-paste relevant console print-out here]
+  ```
+
+</details>
+
+## Screenshots
+
 If applicable, add screenshots to help explain your problem.
 
-### Flutter doctor 
-Please run `flutter doctor` and add the output here.
+## Additional information
 
-### Additional information
 Add any other info about the problem here.

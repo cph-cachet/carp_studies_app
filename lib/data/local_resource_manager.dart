@@ -176,7 +176,8 @@ class LocalResourceManager
         }
       } catch (error) {
         warning("$runtimeType - Could not load a local study protocol. "
-            "It should be added as an asset resource in 'carp/resources/protocol.json'. $error");
+            "It should be added as an asset resource in 'carp/resources/protocol.json'.\n"
+            "Error: $error");
       }
     }
     return _protocol;

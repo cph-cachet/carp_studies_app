@@ -228,11 +228,10 @@ packages:
   carp_backend:
     dependency: "direct main"
     description:
-      name: carp_backend
-      sha256: "4422168318123fb38f204a302c28758f9771a91a02b1f427b85bf74740c6bff7"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.3.3"
+      path: "../carp/carp.sensing-flutter/backends/carp_backend"
+      relative: true
+    source: path
+    version: "1.4.0"
   carp_connectivity_package:
     dependency: "direct main"
     description:
@@ -252,10 +251,9 @@ packages:
   carp_core:
     dependency: "direct main"
     description:
-      name: carp_core
-      sha256: "8f1471862f10fcca84d643a23ff62d308803a6a31f625b3c2a017730bc024b1e"
-      url: "https://pub.dev"
-    source: hosted
+      path: "../carp/carp.sensing-flutter/carp_core"
+      relative: true
+    source: path
     version: "1.4.1"
   carp_esense_package:
     dependency: "direct main"
@@ -265,13 +263,20 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.4.0"
+  carp_health_package:
+    dependency: "direct main"
+    description:
+      name: carp_health_package
+      sha256: "27a4ac0fc454039cc46f1aebbc5e227cbab4e8f4f6eed2d425d783d0e6acc4ea"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.9.4"
   carp_mobile_sensing:
     dependency: "direct main"
     description:
-      name: carp_mobile_sensing
-      sha256: "0620c40ae08a77a93fc7fc6b8cf2700f7c78247e2201dc7cc1607f7637c2331a"
-      url: "https://pub.dev"
-    source: hosted
+      path: "../carp/carp.sensing-flutter/carp_mobile_sensing"
+      relative: true
+    source: path
     version: "1.4.5"
   carp_movesense_package:
     dependency: "direct main"
@@ -284,11 +289,10 @@ packages:
   carp_polar_package:
     dependency: "direct main"
     description:
-      name: carp_polar_package
-      sha256: "11bc4ccbe9ad223fd0623fc5360967e819c00eb23db2525e03f883ade8a18aa2"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.4.1"
+      path: "../carp/carp.sensing-flutter/packages/carp_polar_package"
+      relative: true
+    source: path
+    version: "1.4.2"
   carp_serializable:
     dependency: "direct main"
     description:
@@ -308,10 +312,9 @@ packages:
   carp_webservices:
     dependency: "direct main"
     description:
-      name: carp_webservices
-      sha256: "44670736cd7e131c4d04c9ad7398df52dac63e168ed0772107e67200e641f773"
-      url: "https://pub.dev"
-    source: hosted
+      path: "../carp/carp.sensing-flutter/backends/carp_webservices"
+      relative: true
+    source: path
     version: "2.0.1"
   characters:
     dependency: transitive
@@ -737,10 +740,10 @@ packages:
     dependency: "direct main"
     description:
       name: google_fonts
-      sha256: "5b1726fee554d1cc9db1baef8061b126567ff0a1140a03ed7de936e62f2ab98b"
+      sha256: b1ac0fe2832c9cc95e5e88b57d627c5e68c223b9657f4b96e1487aa9098c7b82
       url: "https://pub.dev"
     source: hosted
-    version: "6.2.0"
+    version: "6.2.1"
   graphs:
     dependency: transitive
     description:
@@ -749,6 +752,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.1"
+  health:
+    dependency: transitive
+    description:
+      name: health
+      sha256: "885104e4cdd1b6db5a04f85304cfb16d50bd1729124c0da11464f1d4c85b9d1c"
+      url: "https://pub.dev"
+    source: hosted
+    version: "9.0.1"
   html:
     dependency: transitive
     description:
@@ -1345,10 +1356,10 @@ packages:
     dependency: "direct main"
     description:
       name: research_package
-      sha256: "4c72da3d88937c9e29d770bf75fa721b60c21731c15c8b7ab704ed208568015b"
+      sha256: "979674019091ee2728a5b5565ef99afd9ac652c95cc97472e5da4c3c0514d228"
       url: "https://pub.dev"
     source: hosted
-    version: "1.4.1"
+    version: "1.4.2"
   retry:
     dependency: transitive
     description:
@@ -1948,4 +1959,4 @@ packages:
     version: "3.1.2"
 sdks:
   dart: ">=3.3.0 <4.0.0"
-  flutter: ">=3.19.0"
+  flutter: ">=3.19.2"

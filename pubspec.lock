@@ -732,10 +732,10 @@ packages:
     dependency: "direct main"
     description:
       name: go_router
-      sha256: "170c46e237d6eb0e6e9f0e8b3f56101e14fb64f787016e42edd74c39cf8b176a"
+      sha256: "7ecb2f391edbca5473db591b48555a8912dde60edd0fb3013bd6743033b2d3f8"
       url: "https://pub.dev"
     source: hosted
-    version: "13.2.0"
+    version: "13.2.1"
   google_fonts:
     dependency: "direct main"
     description:
@@ -1356,10 +1356,10 @@ packages:
     dependency: "direct main"
     description:
       name: research_package
-      sha256: "979674019091ee2728a5b5565ef99afd9ac652c95cc97472e5da4c3c0514d228"
+      sha256: "643792af8440878ff3b15267213c926bfe459612c0073c57829e6d24e398a04c"
       url: "https://pub.dev"
     source: hosted
-    version: "1.4.2"
+    version: "1.4.3"
   retry:
     dependency: transitive
     description:
@@ -1585,10 +1585,10 @@ packages:
     dependency: transitive
     description:
       name: sqflite_common
-      sha256: "28d8c66baee4968519fb8bd6cdbedad982d6e53359091f0b74544a9f32ec72d5"
+      sha256: "3da423ce7baf868be70e2c0976c28a1bb2f73644268b7ffa7d2e08eab71f16a4"
       url: "https://pub.dev"
     source: hosted
-    version: "2.5.3"
+    version: "2.5.4"
   stack_trace:
     dependency: transitive
     description:

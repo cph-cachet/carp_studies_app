@@ -261,14 +261,15 @@ class ProfilePageState extends State<ProfilePage> {
             ),
             TextButton(
                 child: Text(locale.translate("YES")),
-                onPressed: () => context.pop(true))
+                onPressed: () async {
+                  if (context.mounted) {
+                    await bloc.leaveStudy();
+                    context.go(InvitationListPage.route);
+                  }
+                }),
           ],
         );
       },
-    ).then((value) {
-      if (value == true) {
-        bloc.leaveStudy().then((_) => context.go(InvitationListPage.route));
-      }
-    });
+    );
   }
 }

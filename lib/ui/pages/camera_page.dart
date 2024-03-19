@@ -9,15 +9,16 @@ class CameraPage extends StatefulWidget {
 
 class CameraPageState extends State<CameraPage> {
   List<CameraDescription>? cameras;
+  late CameraController _cameraController;
+  late Future<void> cameraInit;
 
   IconData flashIcon = Icons.flash_off;
   bool isFlashOff = true;
-  late File capturedImages;
   bool isRecording = false;
-  late CameraController _cameraController;
-  late Future<void> cameraInit;
   bool isFrontCamera = false;
   bool isFlashOn = false;
+
+  late File capturedImages;
 
   @override
   void initState() {
@@ -35,7 +36,6 @@ class CameraPageState extends State<CameraPage> {
     cameras = await availableCameras();
     _cameraController = CameraController(cameras![0], ResolutionPreset.max,
         imageFormatGroup: ImageFormatGroup.yuv420, enableAudio: true);
-    cameraInit = _cameraController.initialize();
     setState(() {});
   }
 
@@ -58,17 +58,61 @@ class CameraPageState extends State<CameraPage> {
     }
     setState(() {
       isFlashOn = !isFlashOn;
+      flashIcon = isFlashOn ? Icons.flash_on : Icons.flash_off;
     });
   }
 
   void takePicture() async {
+    var picture = await _cameraController.takePicture();
+    widget.videoUserTask.onPictureCapture(picture);
+    if (context.mounted) {
+      await Navigator.of(context).push(
+        MaterialPageRoute<void>(
+          builder: (context) => DisplayPicturePage(
+            file: picture,
+            videoUserTask: widget.videoUserTask,
+          ),
+        ),
+      );
+    }
+
+    setState(() {
+      capturedImages = File(picture.path);
+    });
+  }
+
+  void startRecording() async {
     try {
-      await cameraInit;
-      final image = await _cameraController.takePicture();
-      // Do something with the captured image, like saving it to gallery
-      print('Image saved to ${image.path}');
-    } catch (e) {
-      print(e);
+      await _cameraController.startVideoRecording();
+      widget.videoUserTask.onRecordStart();
+      setState(() {
+        isRecording = true;
+      });
+    } on CameraException catch (e) {
+      warning('$runtimeType - error: ${e.code}\n${e.description}');
+    }
+  }
+
+  void stopRecording(details) async {
+    try {
+      var video = await _cameraController.stopVideoRecording();
+
+      widget.videoUserTask.onRecordStop(video);
+      if (context.mounted) {
+        await Navigator.of(context).push(
+          MaterialPageRoute<void>(
+              builder: (context) => DisplayPicturePage(
+                  file: video,
+                  isVideo: true,
+                  videoUserTask: widget.videoUserTask)),
+        );
+      }
+      setState(() {
+        capturedImages = File(video.path);
+        isRecording = false;
+      });
+    } on CameraException catch (e) {
+      warning('$runtimeType - error: ${e.code}\n${e.description}');
     }
   }
 
@@ -123,58 +167,9 @@ class CameraPageState extends State<CameraPage> {
                         color: Colors.white),
                   ),
                   GestureDetector(
-                    onTap: () async {
-                      var picture = await _cameraController.takePicture();
-                      widget.videoUserTask.onPictureCapture(picture);
-                      if (context.mounted) {
-                        await Navigator.of(context)
-                            .push(MaterialPageRoute<void>(
-                                builder: (context) => DisplayPicturePage(
-                                      file: picture,
-                                      videoUserTask: widget.videoUserTask,
-                                    )));
-                      }
-
-                      setState(() {
-                        capturedImages = File(picture.path);
-                      });
-                    },
-                    onLongPress: () async {
-                      try {
-                        await _cameraController.startVideoRecording();
-                        widget.videoUserTask.onRecordStart();
-                        setState(() {
-                          isRecording = true;
-                        });
-                      } on CameraException catch (e) {
-                        warning(
-                            '$runtimeType - error: ${e.code}\n${e.description}');
-                      }
-                    },
-                    onLongPressEnd: (details) async {
-                      try {
-                        var video =
-                            await _cameraController.stopVideoRecording();
-
-                        widget.videoUserTask.onRecordStop(video);
-                        if (context.mounted) {
-                          await Navigator.of(context).push(
-                            MaterialPageRoute<void>(
-                                builder: (context) => DisplayPicturePage(
-                                    file: video,
-                                    isVideo: true,
-                                    videoUserTask: widget.videoUserTask)),
-                          );
-                        }
-                        setState(() {
-                          capturedImages = File(video.path);
-                          isRecording = false;
-                        });
-                      } on CameraException catch (e) {
-                        warning(
-                            '$runtimeType - error: ${e.code}\n${e.description}');
-                      }
-                    },
+                    onTap: takePicture,
+                    onLongPress: startRecording,
+                    onLongPressEnd: stopRecording,
                     child: isRecording
                         ? Stack(
                             alignment: Alignment.center,
@@ -193,7 +188,7 @@ class CameraPageState extends State<CameraPage> {
                                 width: 60,
                                 decoration: const BoxDecoration(
                                     shape: BoxShape.circle,
-                                    color: Colors.white),
+                                    color: Colors.red),
                               ),
                             ],
                           )

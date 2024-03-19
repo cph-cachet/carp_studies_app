@@ -143,7 +143,17 @@ class CameraPageState extends State<CameraPage> {
                 onPressed: () {
                   _showCancelConfirmationDialog();
                 },
-                icon: const Icon(Icons.close, color: Colors.white, size: 30),
+                icon: const Icon(
+                  Icons.close,
+                  color: Colors.white,
+                  size: 30,
+                  shadows: <Shadow>[
+                    Shadow(
+                      blurRadius: 3.0,
+                      color: Colors.black,
+                    ),
+                  ],
+                ),
               ),
             ),
             Positioned(
@@ -155,8 +165,17 @@ class CameraPageState extends State<CameraPage> {
                 children: [
                   IconButton(
                     onPressed: toggleCamera,
-                    icon: const Icon(Icons.flip_camera_android,
-                        color: Colors.white),
+                    icon: const Icon(
+                      Icons.flip_camera_android,
+                      color: Colors.white,
+                      shadows: <Shadow>[
+                        Shadow(
+                          offset: Offset(1.0, 0.0),
+                          blurRadius: 3.0,
+                          color: Colors.black,
+                        ),
+                      ],
+                    ),
                   ),
                   GestureDetector(
                     onTap: takePicture,
@@ -200,6 +219,13 @@ class CameraPageState extends State<CameraPage> {
                     icon: Icon(
                       flashIcon,
                       color: Colors.white,
+                      shadows: <Shadow>[
+                        Shadow(
+                          offset: Offset(1.0, 1.0),
+                          blurRadius: 3.0,
+                          color: Colors.black,
+                        ),
+                      ],
                     ),
                   ),
                 ],

@@ -36,6 +36,7 @@ class CameraPageState extends State<CameraPage> {
     cameras = await availableCameras();
     _cameraController = CameraController(cameras![0], ResolutionPreset.max,
         imageFormatGroup: ImageFormatGroup.yuv420, enableAudio: true);
+    cameraInit = _cameraController.initialize();
     setState(() {});
   }
 
@@ -121,43 +122,34 @@ class CameraPageState extends State<CameraPage> {
     return Scaffold(
       backgroundColor: Colors.black,
       body: SafeArea(
-        child: Column(
+        child: Stack(
           children: [
-            const SizedBox(height: 35),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                IconButton(
-                    onPressed: () {
-                      _showCancelConfirmationDialog();
-                    },
-                    icon:
-                        const Icon(Icons.close, color: Colors.white, size: 30))
-              ],
+            Positioned.fill(
+              child: FutureBuilder<void>(
+                future: cameraInit,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    return CameraPreview(_cameraController);
+                  } else {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                },
+              ),
             ),
-            const SizedBox(height: 35),
-            FutureBuilder<void>(
-              future: cameraInit,
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.done) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: ClipRRect(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(20)),
-                        child: SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.6,
-                            width: MediaQuery.of(context).size.width * 0.9,
-                            child: CameraPreview(_cameraController))),
-                  );
-                } else {
-                  return const Center(child: CircularProgressIndicator());
-                }
-              },
+            Positioned(
+              top: 10,
+              right: 10,
+              child: IconButton(
+                onPressed: () {
+                  _showCancelConfirmationDialog();
+                },
+                icon: const Icon(Icons.close, color: Colors.white, size: 30),
+              ),
             ),
-            const Spacer(),
-            Padding(
-              padding: const EdgeInsets.only(right: 10, left: 10, bottom: 30),
+            Positioned(
+              bottom: 30,
+              left: 10,
+              right: 10,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -178,17 +170,19 @@ class CameraPageState extends State<CameraPage> {
                                 width: 65,
                                 height: 65,
                                 child: CircularProgressIndicator(
-                                    backgroundColor: Colors.white54,
-                                    valueColor:
-                                        AlwaysStoppedAnimation(Colors.black54),
-                                    strokeWidth: 5),
+                                  backgroundColor: Colors.white54,
+                                  valueColor:
+                                      AlwaysStoppedAnimation(Colors.black54),
+                                  strokeWidth: 5,
+                                ),
                               ),
                               Container(
                                 height: 60,
                                 width: 60,
                                 decoration: const BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Colors.red),
+                                  shape: BoxShape.circle,
+                                  color: Colors.red,
+                                ),
                               ),
                             ],
                           )
@@ -196,17 +190,21 @@ class CameraPageState extends State<CameraPage> {
                             height: 60,
                             width: 60,
                             decoration: const BoxDecoration(
-                                shape: BoxShape.circle, color: Colors.white),
+                              shape: BoxShape.circle,
+                              color: Colors.white,
+                            ),
                           ),
                   ),
                   IconButton(
                     onPressed: toggleFlash,
-                    icon: Icon(flashIcon, color: Colors.white),
+                    icon: Icon(
+                      flashIcon,
+                      color: Colors.white,
+                    ),
                   ),
                 ],
               ),
             ),
-            const Spacer(),
           ],
         ),
       ),

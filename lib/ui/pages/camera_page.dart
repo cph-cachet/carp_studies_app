@@ -122,120 +122,141 @@ class CameraPageState extends State<CameraPage> {
     return Scaffold(
       backgroundColor: Colors.black,
       body: SafeArea(
-        child: Stack(
-          children: [
-            Positioned.fill(
-              child: FutureBuilder<void>(
+        child: Center(
+          child: Stack(
+            children: [
+              FutureBuilder<void>(
                 future: cameraInit,
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.done) {
-                    return CameraPreview(_cameraController);
+                    return LayoutBuilder(
+                      builder:
+                          (BuildContext context, BoxConstraints constraints) {
+                        return SizedBox(
+                          width: constraints.maxWidth,
+                          height: constraints.maxHeight,
+                          child: OverflowBox(
+                            alignment: Alignment.center,
+                            child: FittedBox(
+                              fit: BoxFit.cover,
+                              child: SizedBox(
+                                width:
+                                    _cameraController.value.previewSize!.height,
+                                height:
+                                    _cameraController.value.previewSize!.width,
+                                child: CameraPreview(_cameraController),
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    );
                   } else {
-                    return const Center(child: CircularProgressIndicator());
+                    return CircularProgressIndicator();
                   }
                 },
               ),
-            ),
-            Positioned(
-              top: 10,
-              right: 10,
-              child: IconButton(
-                onPressed: () {
-                  _showCancelConfirmationDialog();
-                },
-                icon: const Icon(
-                  Icons.close,
-                  color: Colors.white,
-                  size: 30,
-                  shadows: <Shadow>[
-                    Shadow(
-                      blurRadius: 3.0,
-                      color: Colors.black,
+              Positioned(
+                top: 10,
+                right: 10,
+                child: IconButton(
+                  onPressed: () {
+                    _showCancelConfirmationDialog();
+                  },
+                  icon: const Icon(
+                    Icons.close,
+                    color: Colors.white,
+                    size: 30,
+                    shadows: <Shadow>[
+                      Shadow(
+                        blurRadius: 3.0,
+                        color: Colors.black,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Positioned(
+                bottom: 30,
+                left: 10,
+                right: 10,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    IconButton(
+                      onPressed: toggleCamera,
+                      icon: const Icon(
+                        Icons.flip_camera_android,
+                        color: Colors.white,
+                        shadows: <Shadow>[
+                          Shadow(
+                            blurRadius: 3.0,
+                            color: Colors.black,
+                          ),
+                        ],
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: takePicture,
+                      onLongPress: startRecording,
+                      onLongPressEnd: stopRecording,
+                      child: isRecording
+                          ? Stack(
+                              alignment: Alignment.center,
+                              children: [
+                                const SizedBox(
+                                  width: 65,
+                                  height: 65,
+                                  child: CircularProgressIndicator(
+                                    backgroundColor: Colors.white54,
+                                    valueColor:
+                                        AlwaysStoppedAnimation(Colors.black54),
+                                    strokeWidth: 5,
+                                  ),
+                                ),
+                                Container(
+                                  height: 60,
+                                  width: 60,
+                                  decoration: const BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Colors.red,
+                                  ),
+                                ),
+                              ],
+                            )
+                          : Container(
+                              height: 60,
+                              width: 60,
+                              decoration: const BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black,
+                                    blurRadius: 3.0,
+                                  )
+                                ],
+                                shape: BoxShape.circle,
+                                color: Colors.white,
+                              ),
+                            ),
+                    ),
+                    IconButton(
+                      onPressed: toggleFlash,
+                      icon: Icon(
+                        flashIcon,
+                        color: Colors.white,
+                        shadows: <Shadow>[
+                          Shadow(
+                            blurRadius: 3.0,
+                            color: Colors.black,
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
               ),
-            ),
-            Positioned(
-              bottom: 30,
-              left: 10,
-              right: 10,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  IconButton(
-                    onPressed: toggleCamera,
-                    icon: const Icon(
-                      Icons.flip_camera_android,
-                      color: Colors.white,
-                      shadows: <Shadow>[
-                        Shadow(
-                          blurRadius: 3.0,
-                          color: Colors.black,
-                        ),
-                      ],
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: takePicture,
-                    onLongPress: startRecording,
-                    onLongPressEnd: stopRecording,
-                    child: isRecording
-                        ? Stack(
-                            alignment: Alignment.center,
-                            children: [
-                              const SizedBox(
-                                width: 65,
-                                height: 65,
-                                child: CircularProgressIndicator(
-                                  backgroundColor: Colors.white54,
-                                  valueColor:
-                                      AlwaysStoppedAnimation(Colors.black54),
-                                  strokeWidth: 5,
-                                ),
-                              ),
-                              Container(
-                                height: 60,
-                                width: 60,
-                                decoration: const BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Colors.red,
-                                ),
-                              ),
-                            ],
-                          )
-                        : Container(
-                            height: 60,
-                            width: 60,
-                            decoration: const BoxDecoration(
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black,
-                                  blurRadius: 3.0,
-                                )
-                              ],
-                              shape: BoxShape.circle,
-                              color: Colors.white,
-                            ),
-                          ),
-                  ),
-                  IconButton(
-                    onPressed: toggleFlash,
-                    icon: Icon(
-                      flashIcon,
-                      color: Colors.white,
-                      shadows: <Shadow>[
-                        Shadow(
-                          blurRadius: 3.0,
-                          color: Colors.black,
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

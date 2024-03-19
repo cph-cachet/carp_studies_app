@@ -9,39 +9,67 @@ class CameraPage extends StatefulWidget {
 
 class CameraPageState extends State<CameraPage> {
   List<CameraDescription>? cameras;
-  CameraController? _cameraController;
 
-  int selectedCamera = 0; // 0 = external camera
   IconData flashIcon = Icons.flash_off;
   bool isFlashOff = true;
   late File capturedImages;
   bool isRecording = false;
+  late CameraController _cameraController;
+  late Future<void> cameraInit;
+  bool isFrontCamera = false;
+  bool isFlashOn = false;
 
   @override
   void initState() {
-    initializeCamera(selectedCamera);
     super.initState();
-  }
-
-  Future<void> initializeCamera(int cameraIndex) async {
-    try {
-      cameras ??= await availableCameras();
-    } catch (error) {
-      warning('$runtimeType - error getting cameras, error: $error');
-    }
-    if (cameras != null && cameras!.isNotEmpty) {
-      _cameraController = CameraController(
-          cameras![cameraIndex], ResolutionPreset.max,
-          imageFormatGroup: ImageFormatGroup.yuv420, enableAudio: true);
-
-      await _cameraController?.initialize();
-    }
+    initializeCamera();
   }
 
   @override
   void dispose() {
-    _cameraController?.dispose();
+    _cameraController.dispose();
     super.dispose();
+  }
+
+  Future<void> initializeCamera() async {
+    cameras = await availableCameras();
+    _cameraController = CameraController(cameras![0], ResolutionPreset.max,
+        imageFormatGroup: ImageFormatGroup.yuv420, enableAudio: true);
+    cameraInit = _cameraController.initialize();
+    setState(() {});
+  }
+
+  void toggleCamera() async {
+    int newCameraIndex = isFrontCamera ? 0 : 1;
+    _cameraController = CameraController(
+        cameras![newCameraIndex], ResolutionPreset.max,
+        imageFormatGroup: ImageFormatGroup.yuv420, enableAudio: true);
+    await _cameraController.initialize();
+    setState(() {
+      isFrontCamera = !isFrontCamera;
+    });
+  }
+
+  void toggleFlash() {
+    if (isFlashOn) {
+      _cameraController.setFlashMode(FlashMode.off);
+    } else {
+      _cameraController.setFlashMode(FlashMode.torch);
+    }
+    setState(() {
+      isFlashOn = !isFlashOn;
+    });
+  }
+
+  void takePicture() async {
+    try {
+      await cameraInit;
+      final image = await _cameraController.takePicture();
+      // Do something with the captured image, like saving it to gallery
+      print('Image saved to ${image.path}');
+    } catch (e) {
+      print(e);
+    }
   }
 
   @override
@@ -65,7 +93,7 @@ class CameraPageState extends State<CameraPage> {
             ),
             const SizedBox(height: 35),
             FutureBuilder<void>(
-              future: initializeCamera(selectedCamera),
+              future: cameraInit,
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.done) {
                   return Padding(
@@ -76,7 +104,7 @@ class CameraPageState extends State<CameraPage> {
                         child: SizedBox(
                             height: MediaQuery.of(context).size.height * 0.6,
                             width: MediaQuery.of(context).size.width * 0.9,
-                            child: CameraPreview(_cameraController!))),
+                            child: CameraPreview(_cameraController))),
                   );
                 } else {
                   return const Center(child: CircularProgressIndicator());
@@ -90,21 +118,13 @@ class CameraPageState extends State<CameraPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   IconButton(
-                    onPressed: () {
-                      if (cameras!.length > 1) {
-                        setState(() {
-                          selectedCamera = selectedCamera == 0 ? 1 : 0;
-                          initializeCamera(selectedCamera);
-                        });
-                      }
-                    },
+                    onPressed: toggleCamera,
                     icon: const Icon(Icons.flip_camera_android,
                         color: Colors.white),
                   ),
                   GestureDetector(
                     onTap: () async {
-                      await initializeCamera(selectedCamera);
-                      var picture = await _cameraController!.takePicture();
+                      var picture = await _cameraController.takePicture();
                       widget.videoUserTask.onPictureCapture(picture);
                       if (context.mounted) {
                         await Navigator.of(context)
@@ -120,10 +140,8 @@ class CameraPageState extends State<CameraPage> {
                       });
                     },
                     onLongPress: () async {
-                      await initializeCamera(selectedCamera);
-
                       try {
-                        await _cameraController!.startVideoRecording();
+                        await _cameraController.startVideoRecording();
                         widget.videoUserTask.onRecordStart();
                         setState(() {
                           isRecording = true;
@@ -136,7 +154,7 @@ class CameraPageState extends State<CameraPage> {
                     onLongPressEnd: (details) async {
                       try {
                         var video =
-                            await _cameraController!.stopVideoRecording();
+                            await _cameraController.stopVideoRecording();
 
                         widget.videoUserTask.onRecordStop(video);
                         if (context.mounted) {
@@ -187,21 +205,7 @@ class CameraPageState extends State<CameraPage> {
                           ),
                   ),
                   IconButton(
-                    onPressed: () {
-                      if (isFlashOff) {
-                        setState(() {
-                          isFlashOff = false;
-                          flashIcon = Icons.flash_on;
-                        });
-                        _cameraController?.setFlashMode(FlashMode.always);
-                      } else {
-                        setState(() {
-                          isFlashOff = true;
-                          flashIcon = Icons.flash_off;
-                        });
-                        _cameraController?.setFlashMode(FlashMode.off);
-                      }
-                    },
+                    onPressed: toggleFlash,
                     icon: Icon(flashIcon, color: Colors.white),
                   ),
                 ],

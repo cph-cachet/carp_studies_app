@@ -170,7 +170,6 @@ class CameraPageState extends State<CameraPage> {
                       color: Colors.white,
                       shadows: <Shadow>[
                         Shadow(
-                          offset: Offset(1.0, 0.0),
                           blurRadius: 3.0,
                           color: Colors.black,
                         ),
@@ -209,6 +208,12 @@ class CameraPageState extends State<CameraPage> {
                             height: 60,
                             width: 60,
                             decoration: const BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black,
+                                blurRadius: 3.0,
+                              )
+                            ],
                               shape: BoxShape.circle,
                               color: Colors.white,
                             ),
@@ -221,7 +226,6 @@ class CameraPageState extends State<CameraPage> {
                       color: Colors.white,
                       shadows: <Shadow>[
                         Shadow(
-                          offset: Offset(1.0, 1.0),
                           blurRadius: 3.0,
                           color: Colors.black,
                         ),

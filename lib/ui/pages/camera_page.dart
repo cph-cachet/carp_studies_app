@@ -208,12 +208,12 @@ class CameraPageState extends State<CameraPage> {
                             height: 60,
                             width: 60,
                             decoration: const BoxDecoration(
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black,
-                                blurRadius: 3.0,
-                              )
-                            ],
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black,
+                                  blurRadius: 3.0,
+                                )
+                              ],
                               shape: BoxShape.circle,
                               color: Colors.white,
                             ),

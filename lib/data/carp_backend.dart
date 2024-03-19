@@ -32,12 +32,31 @@ class CarpBackend {
   Uri get uri => Uri(
         scheme: 'https',
         host: uris[bloc.deploymentMode],
+      );
+
+  /// The URI of the CAWS authentication service.
+  ///
+  /// Of the form:
+  ///    https://dev.carp.dk/auth/realms/Carp/
+  Uri get authUri => Uri(
+        scheme: 'https',
+        host: uris[bloc.deploymentMode],
         pathSegments: [
           'auth',
           'realms',
           'Carp',
         ],
       );
+
+  /// The discovery URL of the authentication service.
+  ///
+  /// Of the form:
+  ///    https://dev.carp.dk/auth/realms/Carp/.well-known/openid-configuration/
+  Uri get discoveryURL => authUri.replace(pathSegments: [
+        ...authUri.pathSegments,
+        '.well-known',
+        'openid-configuration'
+      ]);
 
   /// The CAWS app configuration.
   CarpApp? app;
@@ -48,15 +67,11 @@ class CarpBackend {
 
     app = CarpApp(
       name: "CAWS @ DTU",
-      uri: uri.replace(pathSegments: []),
-      authURL: uri,
+      uri: uri,
+      authURL: authUri,
       clientId: 'studies-app',
       redirectURI: Uri.parse('carp-studies-auth://auth'),
-      discoveryURL: uri.replace(pathSegments: [
-        ...uri.pathSegments,
-        '.well-known',
-        'openid-configuration'
-      ]),
+      discoveryURL: discoveryURL,
       studyId: bloc.studyId,
       studyDeploymentId: bloc.studyDeploymentId,
     );

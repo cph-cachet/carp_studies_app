@@ -10,7 +10,7 @@ class CameraPage extends StatefulWidget {
 class CameraPageState extends State<CameraPage> {
   List<CameraDescription>? cameras;
   late CameraController _cameraController;
-  late Future<void> cameraInit;
+  Future<void>? cameraInit;
 
   IconData flashIcon = Icons.flash_off;
   bool isFlashOff = true;
@@ -119,6 +119,11 @@ class CameraPageState extends State<CameraPage> {
 
   @override
   Widget build(BuildContext context) {
+    if (cameras == null || cameraInit == null) {
+      return const Center(
+        child: CircularProgressIndicator(),
+      );
+    }
     return Scaffold(
       backgroundColor: Colors.black,
       body: SafeArea(

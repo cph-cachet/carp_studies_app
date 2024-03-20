@@ -136,7 +136,7 @@ class HomePageState extends State<HomePage> {
         context.go(DeviceListPage.route);
         break;
       case -1:
-        context.go('/');
+        context.go(CarpStudyAppState.homeRoute);
         break;
     }
   }

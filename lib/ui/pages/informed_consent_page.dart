@@ -15,7 +15,7 @@ class InformedConsentState extends State<InformedConsentPage> {
   void resultCallback(RPTaskResult result) {
     widget.model.informedConsentHasBeenAccepted(result);
     if (context.mounted) {
-      context.go('/');
+      context.go(CarpStudyAppState.homeRoute);
     }
   }
 
@@ -30,7 +30,7 @@ class InformedConsentState extends State<InformedConsentPage> {
           (document) {
             if (document == null) {
               bloc.hasInformedConsentBeenAccepted = true;
-              context.go('/');
+              context.go(CarpStudyAppState.homeRoute);
             }
             return document;
           },

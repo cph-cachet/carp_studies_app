@@ -9,206 +9,259 @@ class CameraPage extends StatefulWidget {
 
 class CameraPageState extends State<CameraPage> {
   List<CameraDescription>? cameras;
-  CameraController? _cameraController;
+  late CameraController _cameraController;
+  Future<void>? cameraInit;
 
-  int selectedCamera = 0; // 0 = external camera
   IconData flashIcon = Icons.flash_off;
   bool isFlashOff = true;
-  late File capturedImages;
   bool isRecording = false;
+  bool isFrontCamera = false;
+  bool isFlashOn = false;
+
+  late File capturedImages;
 
   @override
   void initState() {
-    initializeCamera(selectedCamera);
     super.initState();
-  }
-
-  Future<void> initializeCamera(int cameraIndex) async {
-    try {
-      cameras ??= await availableCameras();
-    } catch (error) {
-      warning('$runtimeType - error getting cameras, error: $error');
-    }
-    if (cameras != null && cameras!.isNotEmpty) {
-      _cameraController = CameraController(
-          cameras![cameraIndex], ResolutionPreset.max,
-          imageFormatGroup: ImageFormatGroup.yuv420, enableAudio: true);
-
-      await _cameraController?.initialize();
-    }
+    initializeCamera();
   }
 
   @override
   void dispose() {
-    _cameraController?.dispose();
+    _cameraController.dispose();
     super.dispose();
+  }
+
+  Future<void> initializeCamera() async {
+    cameras = await availableCameras();
+    _cameraController = CameraController(cameras![0], ResolutionPreset.max,
+        imageFormatGroup: ImageFormatGroup.yuv420, enableAudio: true);
+    cameraInit = _cameraController.initialize();
+    setState(() {});
+  }
+
+  void toggleCamera() async {
+    int newCameraIndex = isFrontCamera ? 0 : 1;
+    _cameraController = CameraController(
+        cameras![newCameraIndex], ResolutionPreset.max,
+        imageFormatGroup: ImageFormatGroup.yuv420, enableAudio: true);
+    await _cameraController.initialize();
+    setState(() {
+      isFrontCamera = !isFrontCamera;
+    });
+  }
+
+  void toggleFlash() {
+    if (isFlashOn) {
+      _cameraController.setFlashMode(FlashMode.off);
+    } else {
+      _cameraController.setFlashMode(FlashMode.torch);
+    }
+    setState(() {
+      isFlashOn = !isFlashOn;
+      flashIcon = isFlashOn ? Icons.flash_on : Icons.flash_off;
+    });
+  }
+
+  void takePicture() async {
+    var picture = await _cameraController.takePicture();
+    widget.videoUserTask.onPictureCapture(picture);
+    if (context.mounted) {
+      await Navigator.of(context).push(
+        MaterialPageRoute<void>(
+          builder: (context) => DisplayPicturePage(
+            file: picture,
+            videoUserTask: widget.videoUserTask,
+          ),
+        ),
+      );
+    }
+
+    setState(() {
+      capturedImages = File(picture.path);
+    });
+  }
+
+  void startRecording() async {
+    try {
+      await _cameraController.startVideoRecording();
+      widget.videoUserTask.onRecordStart();
+      setState(() {
+        isRecording = true;
+      });
+    } on CameraException catch (e) {
+      warning('$runtimeType - error: ${e.code}\n${e.description}');
+    }
+  }
+
+  void stopRecording(details) async {
+    try {
+      var video = await _cameraController.stopVideoRecording();
+
+      widget.videoUserTask.onRecordStop(video);
+      if (context.mounted) {
+        await Navigator.of(context).push(
+          MaterialPageRoute<void>(
+              builder: (context) => DisplayPicturePage(
+                  file: video,
+                  isVideo: true,
+                  videoUserTask: widget.videoUserTask)),
+        );
+      }
+      setState(() {
+        capturedImages = File(video.path);
+        isRecording = false;
+      });
+    } on CameraException catch (e) {
+      warning('$runtimeType - error: ${e.code}\n${e.description}');
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    if (cameras == null || cameraInit == null) {
+      return const Center(
+        child: CircularProgressIndicator(),
+      );
+    }
     return Scaffold(
       backgroundColor: Colors.black,
       body: SafeArea(
-        child: Column(
-          children: [
-            const SizedBox(height: 35),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                IconButton(
-                    onPressed: () {
-                      _showCancelConfirmationDialog();
-                    },
-                    icon:
-                        const Icon(Icons.close, color: Colors.white, size: 30))
-              ],
-            ),
-            const SizedBox(height: 35),
-            FutureBuilder<void>(
-              future: initializeCamera(selectedCamera),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.done) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: ClipRRect(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(20)),
-                        child: SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.6,
-                            width: MediaQuery.of(context).size.width * 0.9,
-                            child: CameraPreview(_cameraController!))),
-                  );
-                } else {
-                  return const Center(child: CircularProgressIndicator());
-                }
-              },
-            ),
-            const Spacer(),
-            Padding(
-              padding: const EdgeInsets.only(right: 10, left: 10, bottom: 30),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  IconButton(
-                    onPressed: () {
-                      if (cameras!.length > 1) {
-                        setState(() {
-                          selectedCamera = selectedCamera == 0 ? 1 : 0;
-                          initializeCamera(selectedCamera);
-                        });
-                      }
-                    },
-                    icon: const Icon(Icons.flip_camera_android,
-                        color: Colors.white),
-                  ),
-                  GestureDetector(
-                    onTap: () async {
-                      await initializeCamera(selectedCamera);
-                      var picture = await _cameraController!.takePicture();
-                      widget.videoUserTask.onPictureCapture(picture);
-                      if (context.mounted) {
-                        await Navigator.of(context)
-                            .push(MaterialPageRoute<void>(
-                                builder: (context) => DisplayPicturePage(
-                                      file: picture,
-                                      videoUserTask: widget.videoUserTask,
-                                    )));
-                      }
-
-                      setState(() {
-                        capturedImages = File(picture.path);
-                      });
-                    },
-                    onLongPress: () async {
-                      await initializeCamera(selectedCamera);
-
-                      try {
-                        await _cameraController!.startVideoRecording();
-                        widget.videoUserTask.onRecordStart();
-                        setState(() {
-                          isRecording = true;
-                        });
-                      } on CameraException catch (e) {
-                        warning(
-                            '$runtimeType - error: ${e.code}\n${e.description}');
-                      }
-                    },
-                    onLongPressEnd: (details) async {
-                      try {
-                        var video =
-                            await _cameraController!.stopVideoRecording();
-
-                        widget.videoUserTask.onRecordStop(video);
-                        if (context.mounted) {
-                          await Navigator.of(context).push(
-                            MaterialPageRoute<void>(
-                                builder: (context) => DisplayPicturePage(
-                                    file: video,
-                                    isVideo: true,
-                                    videoUserTask: widget.videoUserTask)),
-                          );
-                        }
-                        setState(() {
-                          capturedImages = File(video.path);
-                          isRecording = false;
-                        });
-                      } on CameraException catch (e) {
-                        warning(
-                            '$runtimeType - error: ${e.code}\n${e.description}');
-                      }
-                    },
-                    child: isRecording
-                        ? Stack(
+        child: Center(
+          child: Stack(
+            children: [
+              FutureBuilder<void>(
+                future: cameraInit,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    return LayoutBuilder(
+                      builder:
+                          (BuildContext context, BoxConstraints constraints) {
+                        return SizedBox(
+                          width: constraints.maxWidth,
+                          height: constraints.maxHeight,
+                          child: OverflowBox(
                             alignment: Alignment.center,
-                            children: [
-                              const SizedBox(
-                                width: 65,
-                                height: 65,
-                                child: CircularProgressIndicator(
+                            child: FittedBox(
+                              fit: BoxFit.cover,
+                              child: SizedBox(
+                                width:
+                                    _cameraController.value.previewSize!.height,
+                                height:
+                                    _cameraController.value.previewSize!.width,
+                                child: CameraPreview(_cameraController),
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  } else {
+                    return CircularProgressIndicator();
+                  }
+                },
+              ),
+              Positioned(
+                top: 10,
+                right: 10,
+                child: IconButton(
+                  onPressed: () {
+                    _showCancelConfirmationDialog();
+                  },
+                  icon: const Icon(
+                    Icons.close,
+                    color: Colors.white,
+                    size: 30,
+                    shadows: <Shadow>[
+                      Shadow(
+                        blurRadius: 3.0,
+                        color: Colors.black,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Positioned(
+                bottom: 30,
+                left: 10,
+                right: 10,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    IconButton(
+                      onPressed: toggleCamera,
+                      icon: const Icon(
+                        Icons.flip_camera_android,
+                        color: Colors.white,
+                        shadows: <Shadow>[
+                          Shadow(
+                            blurRadius: 3.0,
+                            color: Colors.black,
+                          ),
+                        ],
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: takePicture,
+                      onLongPress: startRecording,
+                      onLongPressEnd: stopRecording,
+                      child: isRecording
+                          ? Stack(
+                              alignment: Alignment.center,
+                              children: [
+                                const SizedBox(
+                                  width: 65,
+                                  height: 65,
+                                  child: CircularProgressIndicator(
                                     backgroundColor: Colors.white54,
                                     valueColor:
                                         AlwaysStoppedAnimation(Colors.black54),
-                                    strokeWidth: 5),
-                              ),
-                              Container(
-                                height: 60,
-                                width: 60,
-                                decoration: const BoxDecoration(
+                                    strokeWidth: 5,
+                                  ),
+                                ),
+                                Container(
+                                  height: 60,
+                                  width: 60,
+                                  decoration: const BoxDecoration(
                                     shape: BoxShape.circle,
-                                    color: Colors.white),
+                                    color: Colors.red,
+                                  ),
+                                ),
+                              ],
+                            )
+                          : Container(
+                              height: 60,
+                              width: 60,
+                              decoration: const BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black,
+                                    blurRadius: 3.0,
+                                  )
+                                ],
+                                shape: BoxShape.circle,
+                                color: Colors.white,
                               ),
-                            ],
-                          )
-                        : Container(
-                            height: 60,
-                            width: 60,
-                            decoration: const BoxDecoration(
-                                shape: BoxShape.circle, color: Colors.white),
+                            ),
+                    ),
+                    IconButton(
+                      onPressed: toggleFlash,
+                      icon: Icon(
+                        flashIcon,
+                        color: Colors.white,
+                        shadows: <Shadow>[
+                          Shadow(
+                            blurRadius: 3.0,
+                            color: Colors.black,
                           ),
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      if (isFlashOff) {
-                        setState(() {
-                          isFlashOff = false;
-                          flashIcon = Icons.flash_on;
-                        });
-                        _cameraController?.setFlashMode(FlashMode.always);
-                      } else {
-                        setState(() {
-                          isFlashOff = true;
-                          flashIcon = Icons.flash_off;
-                        });
-                        _cameraController?.setFlashMode(FlashMode.off);
-                      }
-                    },
-                    icon: Icon(flashIcon, color: Colors.white),
-                  ),
-                ],
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-            const Spacer(),
-          ],
+            ],
+          ),
         ),
       ),
     );

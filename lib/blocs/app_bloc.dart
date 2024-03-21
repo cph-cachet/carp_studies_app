@@ -328,7 +328,7 @@ class StudyAppBLoC extends ChangeNotifier {
   Future<void> start() async {
     assert(Sensing().controller != null,
         'No Study Controller - the study has not been deployed.');
-    if (!Sensing().isRunning) Sensing().controller?.start();
+    if (!Sensing().isRunning) Sensing().controller?.start(false);
   }
 
   /// Stop sensing.

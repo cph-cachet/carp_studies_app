@@ -7,6 +7,7 @@
     "invitation.invited_to_study": "Invitation til studie",
     "invitation.accept_invite": "Acceptér",
     "login.failed_login": "Det ser ud til at du ikke har adgang til dette studie. Kontakt din forsker for at få adgang.",
+    "pages.location.info": "Denne app indsamler lokaliseringsdata.\n\nVi beder dig om at have lokalitet slået til på din telefon sådan at sporing at lokalitet 'Altid' er tilladt, da lokalitet bruges til at holde appen kørende i baggrunden. Lokalitet bruges til at sikre, for eksempel, at udregne hvor stor en del af tiden du opholder dig hjemme.",
     "pages.task_list.title": "OPGAVER",
     "pages.task_list.task.time_to_complete": "min. at fuldføre",
     "pages.task_list.task.auto_complete": "Udføres automatisk",

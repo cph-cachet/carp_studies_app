@@ -19,8 +19,9 @@
 .classpath
 .project
 .settings/
-.vscode/
+.vscode/*
 !.vscode/launch.json
+!.vscode/nvim.launch.lua
 
 # Flutter repo-specific
 /bin/cache/

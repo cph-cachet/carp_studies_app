@@ -1,57 +1,57 @@
 {
-    "version": "0.2.0",
-    "configurations": [
-        {
-            // used for local debug deployment using files in the /assets/carp folder
-            "name": "carp-studies-app (local mode)",
-            "request": "launch",
-            "type": "dart",
-            "toolArgs": [
-                "--dart-define",
-                "deployment-mode=local",
-                "--dart-define",
-                "debug-level=debug"
-            ],
-            "flutterMode": "debug"
-        },
-        {
-            // used for debug deployment using the dev CAWS instance
-            "name": "carp-studies-app (dev mode)",
-            "request": "launch",
-            "type": "dart",
-            "toolArgs": [
-                "--dart-define",
-                "deployment-mode=dev",
-                "--dart-define",
-                "debug-level=debug"
-            ],
-            "flutterMode": "debug"
-        },
-        {
-            // used for debug deployment using the test CAWS instance
-            "name": "carp-studies-app (test mode)",
-            "request": "launch",
-            "type": "dart",
-            "toolArgs": [
-                "--dart-define",
-                "deployment-mode=test",
-                "--dart-define",
-                "debug-level=debug"
-            ],
-            "flutterMode": "debug"
-        },
-        {
-            // used for release in app stores
-            "name": "carp-studies-app (production mode)",
-            "request": "launch",
-            "type": "dart",
-            "toolArgs": [
-                "--dart-define",
-                "deployment-mode=production",
-                "--dart-define",
-                "debug-level=info"
-            ],
-            "flutterMode": "release"
-        }
-    ]
+  "version": "0.2.0",
+  "configurations": [
+    {
+      // used for local debug deployment using files in the /assets/carp folder
+      "name": "carp-studies-app (local mode)",
+      "request": "launch",
+      "type": "dart",
+      "toolArgs": [
+        "--dart-define",
+        "deployment-mode=local",
+        "--dart-define",
+        "debug-level=debug"
+      ],
+      "flutterMode": "debug"
+    },
+    {
+      // used for debug deployment using the dev CAWS instance
+      "name": "carp-studies-app (dev mode)",
+      "request": "launch",
+      "type": "dart",
+      "toolArgs": [
+        "--dart-define",
+        "deployment-mode=dev",
+        "--dart-define",
+        "debug-level=debug"
+      ],
+      "flutterMode": "debug"
+    },
+    {
+      // used for debug deployment using the test CAWS instance
+      "name": "carp-studies-app (test mode)",
+      "request": "launch",
+      "type": "dart",
+      "toolArgs": [
+        "--dart-define",
+        "deployment-mode=test",
+        "--dart-define",
+        "debug-level=debug"
+      ],
+      "flutterMode": "debug"
+    },
+    {
+      // used for release in app stores
+      "name": "carp-studies-app (production mode)",
+      "request": "launch",
+      "type": "dart",
+      "toolArgs": [
+        "--dart-define",
+        "deployment-mode=production",
+        "--dart-define",
+        "debug-level=info"
+      ],
+      "flutterMode": "release"
+    }
+  ]
 }

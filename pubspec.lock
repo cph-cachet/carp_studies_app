@@ -189,10 +189,10 @@ packages:
     dependency: transitive
     description:
       name: camera_android
-      sha256: "351429510121d179b9aac5a2e8cb525c3cd6c39f4d709c5f72dfb21726e52371"
+      sha256: "15a6543878a41c141807ffab496f66b7fef6da0f23372f5513fc6349e60f437e"
       url: "https://pub.dev"
     source: hosted
-    version: "0.10.8+16"
+    version: "0.10.8+17"
   camera_avfoundation:
     dependency: transitive
     description:
@@ -265,14 +265,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.4.0"
-  carp_health_package:
-    dependency: "direct main"
-    description:
-      name: carp_health_package
-      sha256: "27a4ac0fc454039cc46f1aebbc5e227cbab4e8f4f6eed2d425d783d0e6acc4ea"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.9.4"
   carp_mobile_sensing:
     dependency: "direct main"
     description:
@@ -757,14 +749,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.1"
-  health:
-    dependency: transitive
-    description:
-      name: health
-      sha256: "885104e4cdd1b6db5a04f85304cfb16d50bd1729124c0da11464f1d4c85b9d1c"
-      url: "https://pub.dev"
-    source: hosted
-    version: "9.0.1"
   html:
     dependency: transitive
     description:
@@ -1233,10 +1217,10 @@ packages:
     dependency: transitive
     description:
       name: permission_handler_apple
-      sha256: "8c90be7f8244eeb2bbfa4248221d38a66ca3e3cc3ab967a25a2529d86eee7c45"
+      sha256: "92861b0f0c2443dd8898398c2baa4f1ae925109b5909ae4a17d0108a6a788932"
       url: "https://pub.dev"
     source: hosted
-    version: "9.4.1"
+    version: "9.4.2"
   permission_handler_html:
     dependency: transitive
     description:

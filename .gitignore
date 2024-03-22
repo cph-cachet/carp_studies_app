@@ -19,7 +19,9 @@
 .classpath
 .project
 .settings/
-.vscode/
+.vscode/*
+!.vscode/launch.json
+!.vscode/nvim.launch.lua
 
 # Flutter repo-specific
 /bin/cache/
@@ -114,6 +116,9 @@ lib/generated_plugin_registrant.dart
 # Obfuscation related
 app.*.map.json
 lib/blocs/credentials.dart
-carp/carpspec.yaml
 android/key.properties
 android/fastlane/report.xml
+
+# CARP related
+carp/carpspec.yaml
+assets/carp/

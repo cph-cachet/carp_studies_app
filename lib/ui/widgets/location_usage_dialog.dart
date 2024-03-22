@@ -21,15 +21,19 @@ class LocationUsageDialog {
       ),
       contentPadding: const EdgeInsets.all(15),
       insetPadding: const EdgeInsets.all(30),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            locale.translate(message),
-            style: aboutCardContentStyle,
-            textAlign: TextAlign.justify,
+      content: Scrollbar(
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                locale.translate(message),
+                style: aboutCardContentStyle,
+                textAlign: TextAlign.justify,
+              ),
+            ],
           ),
-        ],
+        ),
       ),
       actions: [
         ElevatedButton(
@@ -41,8 +45,12 @@ class LocationUsageDialog {
           style: ButtonStyle(
             backgroundColor:
                 MaterialStateProperty.all(Theme.of(context).primaryColor),
+            foregroundColor: MaterialStateProperty.all(
+                Theme.of(context).colorScheme.onPrimary),
           ),
-          child: Text(locale.translate("dialog.location.allow")),
+          child: Text(
+            locale.translate("dialog.location.allow"),
+          ),
         ),
       ],
     );

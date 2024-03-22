@@ -70,8 +70,9 @@ class _DataVisualizationPageState extends State<DataVisualizationPage> {
           StudyProgressCardWidget(widget.model.studyProgressCardDataModel));
     }
 
-    // check to show heart rate stats, if there is a POLAR device in the study
-    if (bloc.hasMeasure(PolarSamplingPackage.HR)) {
+    // Show HR if there is a POLAR or MOVESENSE device in the study
+    if (bloc.hasMeasure(PolarSamplingPackage.HR) ||
+        bloc.hasMeasure(MovesenseSamplingPackage.HR)) {
       widgets.add(
           HeartRateOuterStatefulWidget(widget.model.heartRateCardDataModel));
     }

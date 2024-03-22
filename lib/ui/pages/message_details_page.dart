@@ -36,7 +36,7 @@ class MessageDetailsPage extends StatelessWidget {
                       if (context.canPop()) {
                         context.pop();
                       } else {
-                        context.go('/');
+                        context.go(CarpStudyAppState.homeRoute);
                       }
                     },
                     icon: const Icon(Icons.close_rounded))

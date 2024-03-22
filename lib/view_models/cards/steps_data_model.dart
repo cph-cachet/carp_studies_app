@@ -1,4 +1,4 @@
-part of '../../main.dart';
+part of carp_study_app;
 
 class StepsCardViewModel extends SerializableViewModel<WeeklySteps> {
   StepCount? _lastStep;

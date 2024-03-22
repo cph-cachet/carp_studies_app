@@ -28,8 +28,9 @@ class StudyDetailsPage extends StatelessWidget {
             children: [
               Row(mainAxisAlignment: MainAxisAlignment.end, children: [
                 IconButton(
-                    onPressed: () =>
-                        context.canPop() ? context.pop() : context.replace(CarpStudyAppState.homeRoute),
+                    onPressed: () => context.canPop()
+                        ? context.pop()
+                        : context.replace(CarpStudyAppState.homeRoute),
                     icon: const Icon(Icons.close))
               ]),
               Flexible(

@@ -19,6 +19,7 @@ class CarpStudyApp extends StatefulWidget {
 class CarpStudyAppState extends State<CarpStudyApp> {
   /// The landing page once the onboarding process is done.
   static const String firstRoute = StudyPage.route;
+  static const String homeRoute = '/';
 
   /// Reload language translations and re-build the entire app.
   void reloadLocale() => setState(() => rpLocalizationsDelegate.reload());
@@ -26,7 +27,7 @@ class CarpStudyAppState extends State<CarpStudyApp> {
   // This create the routing in the entire app.
   // Each page (like [LoginPage]) know the name of its own route.
   final GoRouter _router = GoRouter(
-    initialLocation: '/',
+    initialLocation: homeRoute,
     navigatorKey: _rootNavigatorKey,
     errorBuilder: (context, state) => const ErrorPage(),
     routes: <RouteBase>[
@@ -44,7 +45,7 @@ class CarpStudyAppState extends State<CarpStudyApp> {
           // Once the above is done, then show the "first route", which currently is
           // the "study" information page.
           GoRoute(
-              path: '/',
+              path: homeRoute,
               parentNavigatorKey: _shellNavigatorKey,
               redirect: (context, state) {
                 if (bloc.deploymentMode != DeploymentMode.local) {

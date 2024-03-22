@@ -369,14 +369,14 @@ class StudyAppBLoC extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// Leave the study and also sign out the user.
+  /// Sign user out and leave the study.
   ///
   /// This entails everything from the [leaveStudy] method plus permanently
   /// deleting all user authentication information from this phone, including
   /// the authentication and refresh tokens.
-  Future<void> leaveStudyAndSignOut() async {
-    await leaveStudy();
+  Future<void> signOutAndLeaveStudy() async {
     await backend.signOut();
+    await leaveStudy();
     notifyListeners();
   }
 }

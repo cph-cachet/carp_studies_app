@@ -6,9 +6,7 @@ extension StringExtension on String {
 }
 
 extension Humanize on Duration {
-  String humanize(BuildContext context) {
-    RPLocalizations locale = RPLocalizations.of(context)!;
-
+  String humanize(RPLocalizations locale) {
     // Convert the difference into a human-readable format
     if (inSeconds < 60) {
       return _pluralize(inSeconds, locale, 'seconds');

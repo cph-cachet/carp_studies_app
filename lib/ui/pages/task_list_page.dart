@@ -153,7 +153,7 @@ class TaskListPageState extends State<TaskListPage> {
         userTask.onExpired();
       }
 
-      humanizedTimeRemaining = userTask.expiresIn!.humanize(context);
+      humanizedTimeRemaining = userTask.expiresIn!.humanize(locale);
     }
 
     if (humanizedTimeRemaining.isNotEmpty) {

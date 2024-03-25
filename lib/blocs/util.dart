@@ -15,9 +15,9 @@ extension Humanize on Duration {
     } else if (inMinutes < 60) {
       return _pluralize(inMinutes, locale, 'minutes');
     } else if (inHours < 24) {
-        return _pluralize(inHours, locale, 'hours');
+      return _pluralize(inHours, locale, 'hours');
     } else {
-        return _pluralize(inDays, locale, 'days');
+      return _pluralize(inDays, locale, 'days');
     }
   }
 

@@ -143,22 +143,24 @@ class TaskListPageState extends State<TaskListPage> {
 
   String _subtitle(UserTask userTask) {
     RPLocalizations locale = RPLocalizations.of(context)!;
-    String str = (userTask.task.minutesToComplete != null)
+    String subtitle = (userTask.task.minutesToComplete != null)
         ? '${userTask.task.minutesToComplete} ${locale.translate('pages.task_list.task.time_to_complete')}'
         : locale.translate('pages.task_list.task.auto_complete');
 
+    String humanizedTimeRemaining = "";
     if (userTask.expiresIn != null) {
       if (userTask.expiresIn!.isNegative) {
         userTask.onExpired();
       }
-      str +=
-          ' - ${userTask.expiresIn!.inDays + 1} ${locale.translate('pages.task_list.task.days_remaining')}';
+
+      humanizedTimeRemaining = userTask.expiresIn!.humanize(context);
     }
-    str += '';
 
-    str = (str.isEmpty) ? locale.translate(userTask.description) : str;
+    if (humanizedTimeRemaining.isNotEmpty) {
+      subtitle = "$subtitle - $humanizedTimeRemaining";
+    }
 
-    return str;
+    return subtitle.isEmpty ? locale.translate(userTask.description) : subtitle;
   }
 
   Widget _buildDoneTaskCard(BuildContext context, UserTask userTask) {

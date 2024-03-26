@@ -56,7 +56,7 @@ class _ConnectionDialogState extends State<ConnectionDialog> {
       ),
       CurrentStep.done: DialogTitle(
         title: "pages.devices.connection.step.confirm.title",
-        deviceName: widget.device.name,
+        deviceName: selectedDevice?.platformName,
       ),
     };
 

@@ -127,7 +127,7 @@
     "pages.devices.connection.bluetooth_authorization.message": "This app needs authorization to pair with Bluetooth. Please authorize the app following the steps shown in the photo below.",
     "pages.devices.connection.enable_bluetooth.title": "Enable bluetooth",
     "pages.devices.connection.enable_bluetooth.message1": "Bluetooth needs to be turned on. Open Bluetooth settings and turn on Bluetooth.",
-    "pages.devices.connection.enable_bluetooth.message2": "If Bluetooth is already turned on, make sure that you are allowing new connections.",
+    "pages.devices.connection.enable_bluetooth.message2": "If Bluetooth is already turned on, make sure that you are allowing for new connections by clicking this button in sett.",
     "pages.devices.connection.enable_bluetooth.message3": "Click 'Settings' to open Bluetooth settings.",
     "pages.devices.connection.disconnect_bluetooth.title": "Disconnect Bluetooth",
     "pages.devices.connection.disconnect_bluetooth.message": "Are you sure you want to disconnect",
@@ -145,5 +145,9 @@
     "widgets.logoutmessage.cancel": "Cancel",
     "widgets.logoutmessage.okay": "Okay",
     "pages.login.login": "Log in",
-    "pages.login.logout": "Logout"
+    "pages.login.logout": "Logout",
+    "pages.login.internet_connection.enable_internet_connections.title": "Enable internet connections",
+    "pages.login.internet_connection.enable_internet_connections.message1": "Wifi or mobile data needs to be turned on. Please turn on Wifi or mobile data.",
+    "pages.login.internet_connection.enable_internet_connections.message2": "To turn on Wifi, go to 'Settings' -> 'Wi-Fi' and click on the button depicted in the image below.",
+    "pages.login.internet_connection.enable_internet_connections.message3": "To turn on mobile data, go to 'Settings' -> 'Mobile Service' and click on the button depicted in the image below."
 }

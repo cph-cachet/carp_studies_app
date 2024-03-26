@@ -50,6 +50,7 @@ dependencies:
   flutter_blue_plus: ^1.15.5
   intl: '>=0.18.0 <0.20.0'
   permission_handler: ^11.0.1
+  connectivity_plus: ^5.0.2
 
 # Overriding carp libraries to use the local copy
 dependency_overrides:

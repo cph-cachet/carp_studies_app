@@ -25,6 +25,7 @@ import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 
 // the CARP packages
 import 'package:carp_serializable/carp_serializable.dart';
@@ -49,6 +50,7 @@ import 'package:carp_movesense_package/carp_movesense_package.dart';
 part 'blocs/app_bloc.dart';
 part 'blocs/util.dart';
 part 'blocs/sensing.dart';
+part 'blocs/check_connectivity.dart';
 
 part 'data/local_settings.dart';
 part 'data/carp_backend.dart';
@@ -93,6 +95,7 @@ part 'ui/pages/display_picture_page.dart';
 part 'ui/pages/camera_page.dart';
 part 'ui/pages/error_page.dart';
 part 'ui/pages/login_page.dart';
+part 'ui/pages/login_page.enable_connection_dialog.dart';
 part 'ui/pages/device_list_page.dart';
 part 'ui/pages/devices_page.authorization_dialog.dart';
 part 'ui/pages/devices_page.enable_bluetooth_dialog.dart';

@@ -52,8 +52,7 @@ class AuthorizationDialog extends StatelessWidget {
                     TextButton(
                       child: Text(locale
                           .translate("pages.devices.connection.settings")),
-                      onPressed: () => AppSettings.openAppSettings(
-                          type: AppSettingsType.settings),
+                      onPressed: () => OpenSettingsPlusIOS().bluetooth(),
                     ),
                   ],
                 )

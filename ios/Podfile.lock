@@ -57,6 +57,8 @@ PODS:
     - Flutter
   - open_settings (0.0.1):
     - Flutter
+  - open_settings_plus (0.0.1):
+    - Flutter
   - package_info_plus (0.4.5):
     - Flutter
   - path_provider_foundation (0.0.1):
@@ -115,6 +117,7 @@ DEPENDENCIES:
   - Movesense (from `https://bitbucket.org/movesense/movesense-mobile-lib/`)
   - network_info_plus (from `.symlinks/plugins/network_info_plus/ios`)
   - open_settings (from `.symlinks/plugins/open_settings/ios`)
+  - open_settings_plus (from `.symlinks/plugins/open_settings_plus/ios`)
   - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - pedometer (from `.symlinks/plugins/pedometer/ios`)
@@ -184,6 +187,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/network_info_plus/ios"
   open_settings:
     :path: ".symlinks/plugins/open_settings/ios"
+  open_settings_plus:
+    :path: ".symlinks/plugins/open_settings_plus/ios"
   package_info_plus:
     :path: ".symlinks/plugins/package_info_plus/ios"
   path_provider_foundation:
@@ -239,6 +244,7 @@ SPEC CHECKSUMS:
   Movesense: a1068c58b31d8032a13d69d0cb35ba6c444d2aae
   network_info_plus: 6d0c3eb8367b8164fa3fb0c19875e3f59d49697f
   open_settings: 9628e736cb2738fd1dc84159565755c214478158
+  open_settings_plus: 4bd848866fea2becc124581d868a6164cf768831
   package_info_plus: 58f0028419748fad15bf008b270aaa8e54380b1c
   path_provider_foundation: 3784922295ac71e43754bd15e0653ccfd36a147c
   pedometer: 381969883680ade42559782cc41a3bbd453d8234

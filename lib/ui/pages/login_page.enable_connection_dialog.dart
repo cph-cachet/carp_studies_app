@@ -72,7 +72,16 @@ class EnableInternetConnectionDialog extends StatelessWidget {
                       child: Text(
                         locale.translate("pages.devices.connection.ok"),
                       ),
-                    )
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        switch(OpenSettingsPlus.shared) {
+                          case OpenSettingsPlusAndroid(): OpenSettingsPlusAndroid().wifi();
+                          case OpenSettingsPlusIOS(): OpenSettingsPlusIOS().wifi();
+                        }
+                      },
+                      child: Text('Wi-Fi'),
+                    ),
                   ],
                 )
               ],

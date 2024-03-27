@@ -148,6 +148,6 @@
     "pages.login.logout": "Logout",
     "pages.login.internet_connection.enable_internet_connections.title": "Enable internet connections",
     "pages.login.internet_connection.enable_internet_connections.message1": "Wifi or mobile data needs to be turned on. Please turn on Wifi or mobile data.",
-    "pages.login.internet_connection.enable_internet_connections.message2": "To turn on Wifi, go to 'Settings' -> 'Wi-Fi' and click on the button depicted in the image below.",
+    "pages.login.internet_connection.enable_internet_connections.message2": "To turn on Wi-Fi, click the 'Wi-Fi' button at the end.",
     "pages.login.internet_connection.enable_internet_connections.message3": "To turn on mobile data, go to 'Settings' -> 'Mobile Service' and click on the button depicted in the image below."
 }

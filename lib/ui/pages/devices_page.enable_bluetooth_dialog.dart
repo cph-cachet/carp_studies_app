@@ -34,12 +34,8 @@ class EnableBluetoothDialog extends StatelessWidget {
                   style: aboutCardContentStyle,
                   textAlign: TextAlign.justify,
                 ),
-                const Padding(
+                Padding(
                   padding: EdgeInsets.symmetric(vertical: 16.0),
-                  child: Image(
-                    image: AssetImage(
-                        'assets/instructions/bluetooth_enable_bar.png'),
-                  ),
                 ),
                 Text(
                   locale.translate(
@@ -71,6 +67,10 @@ class EnableBluetoothDialog extends StatelessWidget {
                       child: Text(
                         locale.translate("pages.devices.connection.ok"),
                       ),
+                    ),
+                    TextButton(
+                      child: Text('Settings'),
+                      onPressed: () => OpenSettingsPlusIOS().bluetooth(),
                     )
                   ],
                 )

@@ -14,11 +14,18 @@ class EnableInternetConnectionDialog extends StatelessWidget {
                 "pages.login.internet_connection.enable_internet_connections.title"),
         content: SizedBox(
           height: MediaQuery.of(context).size.height * 0.45,
-          child: enableInternetConnectionInstructions(context),
+          child: (() {
+            switch (OpenSettingsPlus.shared) {
+              case OpenSettingsPlusAndroid():
+                return enableInternetConnectionInstructionsAndroid(context);
+              case OpenSettingsPlusIOS():
+                return enableInternetConnectionInstructionsIOS(context);
+            }
+          }()),
         ));
   }
 
-  Widget enableInternetConnectionInstructions(BuildContext context) {
+  Widget enableInternetConnectionInstructionsAndroid(BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;
     return Column(
       children: [
@@ -28,7 +35,7 @@ class EnableInternetConnectionDialog extends StatelessWidget {
               children: [
                 Text(
                   locale.translate(
-                      "pages.login.internet_connection.enable_internet_connections.message1"),
+                      "pages.login.internet_connection.enable_internet_connections.general_message"),
                   style: aboutCardContentStyle,
                   textAlign: TextAlign.justify,
                 ),
@@ -36,7 +43,7 @@ class EnableInternetConnectionDialog extends StatelessWidget {
                     padding: EdgeInsets.symmetric(vertical: 16.0),
                     child: Text(
                       locale.translate(
-                          "pages.login.internet_connection.enable_internet_connections.message2"),
+                          "pages.login.internet_connection.enable_internet_connections.wifi_message"),
                       style: aboutCardContentStyle,
                       textAlign: TextAlign.justify,
                     )),
@@ -52,7 +59,7 @@ class EnableInternetConnectionDialog extends StatelessWidget {
                   padding: EdgeInsets.symmetric(vertical: 16.0),
                   child: Text(
                     locale.translate(
-                        "pages.login.internet_connection.enable_internet_connections.message3"),
+                        "pages.login.internet_connection.enable_internet_connections.mobile_data_message_android"),
                     style: aboutCardContentStyle,
                     textAlign: TextAlign.justify,
                   ),
@@ -61,26 +68,84 @@ class EnableInternetConnectionDialog extends StatelessWidget {
                   padding: EdgeInsets.symmetric(vertical: 16.0),
                   child: Image(
                     image: AssetImage(
-                        'assets/instructions/enable_mobile_data.jpg'),
+                        'assets/instructions/enable_mobile_data_android.png'),
                   ),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     TextButton(
-                      onPressed: () => context.canPop() ? context.pop() : null,
-                      child: Text(
-                        locale.translate("pages.devices.connection.ok"),
-                      ),
+                      onPressed: () => OpenSettingsPlusAndroid().wifi(),
+                      child: Text('Wi-Fi'),
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget enableInternetConnectionInstructionsIOS(BuildContext context) {
+    RPLocalizations locale = RPLocalizations.of(context)!;
+    return Column(
+      children: [
+        Expanded(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Text(
+                  locale.translate(
+                      "pages.login.internet_connection.enable_internet_connections.general_message"),
+                  style: aboutCardContentStyle,
+                  textAlign: TextAlign.justify,
+                ),
+                Padding(
+                    padding: EdgeInsets.symmetric(vertical: 16.0),
+                    child: Text(
+                      locale.translate(
+                          "pages.login.internet_connection.enable_internet_connections.wifi_message"),
+                      style: aboutCardContentStyle,
+                      textAlign: TextAlign.justify,
+                    )),
+                const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 16.0),
+                  child: Image(
+                    image: AssetImage('assets/instructions/enable_wifi.png'),
+                  ),
+                ),
+
+                /// TODO: Localise this image, take a screenshot of the settings page in Danish
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: 16.0),
+                  child: Column(children: [
+                    Text(
+                      locale.translate(
+                          "pages.login.internet_connection.enable_internet_connections.mobile_data_message_ios"),
+                      style: aboutCardContentStyle,
+                      textAlign: TextAlign.justify,
+                    ),
+                  ]),
+                ),
+                const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 16.0),
+                  child: Image(
+                    image: AssetImage(
+                        'assets/instructions/enable_mobile_data_ios.png'),
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TextButton(
+                      onPressed: () => OpenSettingsPlusIOS().wifi(),
+                      child: Text('Wi-Fi'),
                     ),
                     TextButton(
-                      onPressed: () {
-                        switch(OpenSettingsPlus.shared) {
-                          case OpenSettingsPlusAndroid(): OpenSettingsPlusAndroid().wifi();
-                          case OpenSettingsPlusIOS(): OpenSettingsPlusIOS().wifi();
-                        }
-                      },
-                      child: Text('Wi-Fi'),
+                      onPressed: () => OpenSettingsPlusIOS().cellular(),
+                      child: Text('Data'),
                     ),
                   ],
                 )

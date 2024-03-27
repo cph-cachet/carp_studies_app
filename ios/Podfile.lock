@@ -1,6 +1,4 @@
 PODS:
-  - app_settings (5.1.1):
-    - Flutter
   - AppAuth (1.7.2):
     - AppAuth/Core (= 1.7.2)
     - AppAuth/ExternalUserAgent (= 1.7.2)
@@ -94,7 +92,6 @@ PODS:
     - FlutterMacOS
 
 DEPENDENCIES:
-  - app_settings (from `.symlinks/plugins/app_settings/ios`)
   - audio_session (from `.symlinks/plugins/audio_session/ios`)
   - audio_streamer (from `.symlinks/plugins/audio_streamer/ios`)
   - audiofileplayer (from `.symlinks/plugins/audiofileplayer/ios`)
@@ -141,8 +138,6 @@ SPEC REPOS:
     - SwiftProtobuf
 
 EXTERNAL SOURCES:
-  app_settings:
-    :path: ".symlinks/plugins/app_settings/ios"
   audio_session:
     :path: ".symlinks/plugins/audio_session/ios"
   audio_streamer:
@@ -218,7 +213,6 @@ CHECKOUT OPTIONS:
     :git: https://bitbucket.org/movesense/movesense-mobile-lib/
 
 SPEC CHECKSUMS:
-  app_settings: 017320c6a680cdc94c799949d95b84cb69389ebc
   AppAuth: ca2458caccec349cc1e26d8d9e8fd7d22f1d01f3
   audio_session: 4f3e461722055d21515cf3261b64c973c062f345
   audio_streamer: af49e73eb66f71c4eeabb4bbcb05f122d03a6709

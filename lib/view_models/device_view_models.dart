@@ -39,14 +39,14 @@ class DeviceViewModel extends ViewModel {
 
   /// A printer-friendly name for this device.
   String get name {
-  if (deviceManager is BTLEDeviceManager) {
-    return (deviceManager as BTLEDeviceManager).btleName;
-  } else if (deviceManager is PolarDeviceManager) {
-    return (deviceManager as PolarDeviceManager).displayName ?? id;
-  } else {
-    return id;
+    if (deviceManager is BTLEDeviceManager) {
+      return (deviceManager as BTLEDeviceManager).btleName;
+    } else if (deviceManager is PolarDeviceManager) {
+      return (deviceManager as PolarDeviceManager).displayName ?? '';
+    } else {
+      return id;
+    }
   }
-}
 
   /// A printer-friendly description of this device.
   String get description =>

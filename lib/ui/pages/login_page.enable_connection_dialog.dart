@@ -50,7 +50,8 @@ class EnableInternetConnectionDialog extends StatelessWidget {
                 const Padding(
                   padding: EdgeInsets.symmetric(vertical: 16.0),
                   child: Image(
-                    image: AssetImage('assets/instructions/enable_wifi.png'),
+                    image: AssetImage(
+                        'assets/instructions/enable_wifi_android.png'),
                   ),
                 ),
 
@@ -71,17 +72,20 @@ class EnableInternetConnectionDialog extends StatelessWidget {
                         'assets/instructions/enable_mobile_data_android.png'),
                   ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    TextButton(
-                      onPressed: () => OpenSettingsPlusAndroid().wifi(),
-                      child: Text('Wi-Fi'),
-                    ),
-                  ],
-                )
               ],
             ),
+          ),
+        ),
+        Container(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Spacer(),
+              TextButton(
+                onPressed: () => OpenSettingsPlusAndroid().wifi(),
+                child: Text('Wi-Fi'),
+              ),
+            ],
           ),
         ),
       ],
@@ -113,7 +117,8 @@ class EnableInternetConnectionDialog extends StatelessWidget {
                 const Padding(
                   padding: EdgeInsets.symmetric(vertical: 16.0),
                   child: Image(
-                    image: AssetImage('assets/instructions/enable_wifi.png'),
+                    image:
+                        AssetImage('assets/instructions/enable_wifi_ios.png'),
                   ),
                 ),
 
@@ -136,21 +141,23 @@ class EnableInternetConnectionDialog extends StatelessWidget {
                         'assets/instructions/enable_mobile_data_ios.png'),
                   ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    TextButton(
-                      onPressed: () => OpenSettingsPlusIOS().wifi(),
-                      child: Text('Wi-Fi'),
-                    ),
-                    TextButton(
-                      onPressed: () => OpenSettingsPlusIOS().cellular(),
-                      child: Text('Data'),
-                    ),
-                  ],
-                )
               ],
             ),
+          ),
+        ),
+        Container(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              TextButton(
+                onPressed: () => OpenSettingsPlusIOS().wifi(),
+                child: Text('Wi-Fi'),
+              ),
+              TextButton(
+                onPressed: () => OpenSettingsPlusIOS().cellular(),
+                child: Text('Data'),
+              ),
+            ],
           ),
         ),
       ],

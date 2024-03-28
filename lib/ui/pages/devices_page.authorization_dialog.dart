@@ -40,24 +40,26 @@ class AuthorizationDialog extends StatelessWidget {
                         'assets/instructions/bluetooth_enable_bar.png'),
                     width: MediaQuery.of(context).size.height * 0.2,
                     height: MediaQuery.of(context).size.height * 0.2),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    TextButton(
-                      child: Text(locale.translate("cancel")),
-                      onPressed: () {
-                        if (context.canPop()) context.pop();
-                      },
-                    ),
-                    TextButton(
-                      child: Text(locale
-                          .translate("pages.devices.connection.settings")),
-                      onPressed: () => OpenSettingsPlusIOS().bluetooth(),
-                    ),
-                  ],
-                )
               ],
             ),
+          ),
+        ),
+        Container(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              TextButton(
+                child: Text(locale.translate("cancel")),
+                onPressed: () {
+                  if (context.canPop()) context.pop();
+                },
+              ),
+              TextButton(
+                child:
+                    Text(locale.translate("pages.devices.connection.settings")),
+                onPressed: () => OpenSettingsPlusIOS().bluetooth(),
+              ),
+            ],
           ),
         ),
       ],

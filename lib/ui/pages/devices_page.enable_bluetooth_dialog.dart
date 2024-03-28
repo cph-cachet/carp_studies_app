@@ -59,23 +59,28 @@ class EnableBluetoothDialog extends StatelessWidget {
                   style: aboutCardContentStyle,
                   textAlign: TextAlign.justify,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    TextButton(
-                      onPressed: () => context.canPop() ? context.pop() : null,
-                      child: Text(
-                        locale.translate("pages.devices.connection.ok"),
-                      ),
-                    ),
-                    TextButton(
-                      child: Text('Settings'),
-                      onPressed: () => OpenSettingsPlusIOS().bluetooth(),
-                    )
-                  ],
-                )
               ],
             ),
+          ),
+        ),
+        Container(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              TextButton(
+                child: Text('Settings'),
+                onPressed: () {
+                  OpenSettingsPlusIOS().bluetooth();
+                  context.canPop() ? context.pop() : null;
+                },
+              ),
+              TextButton(
+                onPressed: () => context.canPop() ? context.pop() : null,
+                child: Text(
+                  locale.translate("pages.devices.connection.ok"),
+                ),
+              ),
+            ],
           ),
         ),
       ],

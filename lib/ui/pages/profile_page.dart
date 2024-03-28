@@ -220,21 +220,24 @@ class ProfilePageState extends State<ProfilePage> {
     return showDialog<bool>(
       context: context,
       barrierDismissible: false,
-      builder: (BuildContext context) {
+      builder: (BuildContext builderContext) {
         return AlertDialog(
           title: Text(locale.translate("pages.profile.log_out.confirmation")),
           actions: <Widget>[
             TextButton(
-              child: Text(locale.translate("NO")),
-              onPressed: () => context.pop(),
-            ),
+                child: Text(locale.translate("NO")),
+                onPressed: () {
+                  if (builderContext.mounted) {
+                    Navigator.of(builderContext).pop();
+                  }
+                }),
             TextButton(
                 child: Text(locale.translate("YES")),
                 onPressed: () async {
-                  if (context.mounted) {
+                  if (builderContext.mounted) {
                     await bloc.signOutAndLeaveStudy();
-                    context.pop();
-                    context.go(CarpStudyAppState.homeRoute);
+                    builderContext.pop();
+                    builderContext.go(CarpStudyAppState.homeRoute);
                   }
                 }),
           ],
@@ -245,26 +248,31 @@ class ProfilePageState extends State<ProfilePage> {
 
   Future<void> _showLeaveStudyConfirmationDialog() {
     RPLocalizations locale = RPLocalizations.of(context)!;
+    print('ones $context');
 
     return showDialog<bool>(
       context: context,
       barrierDismissible: false,
-      builder: (BuildContext context) {
+      builder: (BuildContext builderContext) {
         return AlertDialog(
           title:
               Text(locale.translate("pages.profile.leave_study.confirmation")),
           actions: <Widget>[
             TextButton(
               child: Text(locale.translate("NO")),
-              onPressed: () => context.pop(),
+              onPressed: () {
+                if (builderContext.mounted) {
+                  Navigator.of(builderContext).pop();
+                }
+              },
             ),
             TextButton(
                 child: Text(locale.translate("YES")),
                 onPressed: () async {
-                  if (context.mounted) {
+                  if (builderContext.mounted) {
                     await bloc.leaveStudy();
-                    context.pop();
-                    context.go(InvitationListPage.route);
+                    builderContext.pop();
+                    builderContext.go(InvitationListPage.route);
                   }
                 }),
           ],

@@ -1,6 +1,4 @@
 PODS:
-  - app_settings (5.1.1):
-    - Flutter
   - AppAuth (1.7.2):
     - AppAuth/Core (= 1.7.2)
     - AppAuth/ExternalUserAgent (= 1.7.2)
@@ -57,6 +55,8 @@ PODS:
     - Flutter
   - open_settings (0.0.1):
     - Flutter
+  - open_settings_plus (0.0.1):
+    - Flutter
   - package_info_plus (0.4.5):
     - Flutter
   - path_provider_foundation (0.0.1):
@@ -92,7 +92,6 @@ PODS:
     - FlutterMacOS
 
 DEPENDENCIES:
-  - app_settings (from `.symlinks/plugins/app_settings/ios`)
   - audio_session (from `.symlinks/plugins/audio_session/ios`)
   - audio_streamer (from `.symlinks/plugins/audio_streamer/ios`)
   - audiofileplayer (from `.symlinks/plugins/audiofileplayer/ios`)
@@ -115,6 +114,7 @@ DEPENDENCIES:
   - Movesense (from `https://bitbucket.org/movesense/movesense-mobile-lib/`)
   - network_info_plus (from `.symlinks/plugins/network_info_plus/ios`)
   - open_settings (from `.symlinks/plugins/open_settings/ios`)
+  - open_settings_plus (from `.symlinks/plugins/open_settings_plus/ios`)
   - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - pedometer (from `.symlinks/plugins/pedometer/ios`)
@@ -138,8 +138,6 @@ SPEC REPOS:
     - SwiftProtobuf
 
 EXTERNAL SOURCES:
-  app_settings:
-    :path: ".symlinks/plugins/app_settings/ios"
   audio_session:
     :path: ".symlinks/plugins/audio_session/ios"
   audio_streamer:
@@ -184,6 +182,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/network_info_plus/ios"
   open_settings:
     :path: ".symlinks/plugins/open_settings/ios"
+  open_settings_plus:
+    :path: ".symlinks/plugins/open_settings_plus/ios"
   package_info_plus:
     :path: ".symlinks/plugins/package_info_plus/ios"
   path_provider_foundation:
@@ -213,7 +213,6 @@ CHECKOUT OPTIONS:
     :git: https://bitbucket.org/movesense/movesense-mobile-lib/
 
 SPEC CHECKSUMS:
-  app_settings: 017320c6a680cdc94c799949d95b84cb69389ebc
   AppAuth: ca2458caccec349cc1e26d8d9e8fd7d22f1d01f3
   audio_session: 4f3e461722055d21515cf3261b64c973c062f345
   audio_streamer: af49e73eb66f71c4eeabb4bbcb05f122d03a6709
@@ -221,7 +220,7 @@ SPEC CHECKSUMS:
   battery_plus: 1ff2e16ba75af2a78387f65476057a390b47885e
   camera_avfoundation: 759172d1a77ae7be0de08fc104cfb79738b8a59e
   connectivity_plus: bf0076dd84a130856aa636df1c71ccaff908fa1d
-  device_info_plus: c6fb39579d0f423935b0c9ce7ee2f44b71b9fce6
+  device_info_plus: 97af1d7e84681a90d0693e63169a5d50e0839a0d
   ESense: cbe103ad16c435424f2fd6f8b274f2468af84173
   esense_flutter: 8bfadfdefe7b51d6f78366e43b2b64ec9b6144b6
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
@@ -239,6 +238,7 @@ SPEC CHECKSUMS:
   Movesense: a1068c58b31d8032a13d69d0cb35ba6c444d2aae
   network_info_plus: 6d0c3eb8367b8164fa3fb0c19875e3f59d49697f
   open_settings: 9628e736cb2738fd1dc84159565755c214478158
+  open_settings_plus: 4bd848866fea2becc124581d868a6164cf768831
   package_info_plus: 58f0028419748fad15bf008b270aaa8e54380b1c
   path_provider_foundation: 3784922295ac71e43754bd15e0653ccfd36a147c
   pedometer: 381969883680ade42559782cc41a3bbd453d8234

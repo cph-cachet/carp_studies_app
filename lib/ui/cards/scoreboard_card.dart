@@ -17,7 +17,7 @@ class ScoreboardCardState extends State<ScoreboardCard> {
       delegate: ScoreboardPersistentHeaderDelegate(
         model: widget.model,
         locale: locale,
-        minExtent: 30,
+        minExtent: 40,
         maxExtent: 110,
       ),
     );
@@ -51,7 +51,7 @@ class ScoreboardPersistentHeaderDelegate
       BuildContext context, double shrinkOffset, bool overlapsContent) {
     double height = 110;
 
-    double offsetForShrink = 60;
+    double offsetForShrink = 50;
 
     List<Widget> childrenTasks = [
       Text(model.taskCompleted.toString(),

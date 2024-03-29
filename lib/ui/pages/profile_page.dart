@@ -226,22 +226,21 @@ class ProfilePageState extends State<ProfilePage> {
           actions: <Widget>[
             TextButton(
               child: Text(locale.translate("NO")),
-              onPressed: () => context.pop(false),
+              onPressed: () => context.pop(),
             ),
             TextButton(
-              child: Text(locale.translate("YES")),
-              onPressed: () {
-                context.pop(true);
-              },
-            )
+                child: Text(locale.translate("YES")),
+                onPressed: () async {
+                  if (context.mounted) {
+                    await bloc.signOutAndLeaveStudy();
+                    context.pop();
+                    context.go(CarpStudyAppState.homeRoute);
+                  }
+                }),
           ],
         );
       },
-    ).then((value) {
-      if (value == true) {
-        bloc.leaveStudyAndSignOut().then((_) => context.go('/'));
-      }
-    });
+    );
   }
 
   Future<void> _showLeaveStudyConfirmationDialog() {
@@ -257,18 +256,20 @@ class ProfilePageState extends State<ProfilePage> {
           actions: <Widget>[
             TextButton(
               child: Text(locale.translate("NO")),
-              onPressed: () => context.pop(false),
+              onPressed: () => context.pop(),
             ),
             TextButton(
                 child: Text(locale.translate("YES")),
-                onPressed: () => context.pop(true))
+                onPressed: () async {
+                  if (context.mounted) {
+                    await bloc.leaveStudy();
+                    context.pop();
+                    context.go(InvitationListPage.route);
+                  }
+                }),
           ],
         );
       },
-    ).then((value) {
-      if (value == true) {
-        bloc.leaveStudy().then((_) => context.go(InvitationListPage.route));
-      }
-    });
+    );
   }
 }

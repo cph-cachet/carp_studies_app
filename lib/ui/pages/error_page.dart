@@ -19,7 +19,7 @@ class ErrorPage extends StatelessWidget {
             ),
             const SizedBox(height: 16.0),
             ElevatedButton(
-              onPressed: () => context.go('/'),
+              onPressed: () => context.go(CarpStudyAppState.homeRoute),
               child: const Text('Go back'),
             ),
           ],

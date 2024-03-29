@@ -28,11 +28,11 @@
             "deleteWhenUploaded": true
         }
     },
-    "id": "ddeaabf0-da26-11ed-8c4c-1d1942cdecec",
+    "id": "eb5e585f-e247-41dc-8e8d-39697b68732f",
     "createdOn": "2023-04-13T18:13:18.511469Z",
     "version": 0,
     "description": "study.description.description",
-    "ownerId": "john_doe",
+    "ownerId": "eb5e585f-e247-41dc-8e8d-39697b68732f",
     "name": "CARP Study App Demo Protocol",
     "primaryDevices": [
         {
@@ -364,7 +364,7 @@
                             "choices": [
                                 {
                                     "__type": "RPChoice",
-                                    "text": "Femal",
+                                    "text": "Female",
                                     "value": 1,
                                     "is_free_text": false
                                 },

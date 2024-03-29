@@ -33,9 +33,9 @@ if (flutterVersionName == null) {
 }
 
 android {
-    namespace "com.cachet.carp_studies_app"
-    compileSdkVersion 34
-    ndkVersion flutter.ndkVersion
+    // namespace "com.cachet.carp_studies_app"
+    // compileSdkVersion 34
+    // ndkVersion flutter.ndkVersion
 
     // compileOptions {
     //     sourceCompatibility JavaVersion.VERSION_1_8

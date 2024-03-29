@@ -56,7 +56,7 @@ jobs:
             working-directory: android
 
       
-          - run: fastlane beta
+          - run: bundle exec fastlane beta
             env:
               PLAY_STORE_JSON_KEY: PLAY_STORE_CONFIG.json
             working-directory: android

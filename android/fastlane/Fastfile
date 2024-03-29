@@ -27,7 +27,7 @@ platform :android do
     sh "flutter clean"
     sh "flutter pub get"
     sh "flutter pub upgrade"
-    sh "flutter build appbundle --release --no-deferred-components --no-tree-shake-icons --info"
+    sh "flutter build appbundle --release --no-deferred-components --no-tree-shake-icons"
     # gradle(
     #   task: 'assemble',
     #   build_type: 'Release',

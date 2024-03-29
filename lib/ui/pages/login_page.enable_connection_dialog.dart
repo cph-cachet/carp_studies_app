@@ -150,11 +150,17 @@ class EnableInternetConnectionDialog extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               TextButton(
-                onPressed: () => OpenSettingsPlusIOS().wifi(),
+                onPressed: () {
+                  context.canPop() ? context.pop() : null;
+                  OpenSettingsPlusIOS().wifi();
+                },
                 child: Text('Wi-Fi'),
               ),
               TextButton(
-                onPressed: () => OpenSettingsPlusIOS().cellular(),
+                onPressed: () {
+                  context.canPop() ? context.pop() : null;
+                  OpenSettingsPlusIOS().cellular();
+                },
                 child: Text('Data'),
               ),
             ],

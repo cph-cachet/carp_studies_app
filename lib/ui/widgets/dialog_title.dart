@@ -28,12 +28,13 @@ class DialogTitle extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.only(left: 24, right: 24, bottom: 8),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Column(
-                children: [
-                  Text(
+          child: Container(
+            alignment: Alignment.center,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Flexible(
+                  child: Text(
                     (deviceName != null
                             ? "${locale.translate(deviceName!)} "
                             : "") +
@@ -43,10 +44,11 @@ class DialogTitle extends StatelessWidget {
                     style: sectionTitleStyle.copyWith(
                       color: Theme.of(context).primaryColor,
                     ),
+                    textAlign: TextAlign.center,
                   ),
-                ],
-              ),
-            ],
+                ),
+              ],
+            ),
           ),
         ),
       ],

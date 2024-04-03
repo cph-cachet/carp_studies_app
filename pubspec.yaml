@@ -1,6 +1,6 @@
 name: carp_study_app
 description: The generic CARP study app.
-publish_to: 'none'
+publish_to: "none"
 version: 1.5.1
 
 environment:
@@ -48,7 +48,7 @@ dependencies:
   go_router: ^13.0.0
   flutter_svg: ^2.0.4
   flutter_blue_plus: ^1.15.5
-  intl: '>=0.18.0 <0.20.0'
+  intl: ">=0.18.0 <0.20.0"
   permission_handler: ^11.0.1
 
 # Overriding carp libraries to use the local copy
@@ -79,13 +79,18 @@ dependency_overrides:
   #   path: ../../packages/carp_movisens_package/
   # carp_health_package:
   #   path: ../carp/carp.sensing-flutter/packages/carp_health_package/
-  # carp_webservices:
-  #   path: ../carp/carp.sensing-flutter/backends/carp_webservices/
+  carp_webservices:
+    path: ../carp.sensing-flutter/backends/carp_webservices/
+  # research_package:
+  #   path: ../research.package/
   # carp_backend:
   #   path: ../carp/carp.sensing-flutter/backends/carp_backend/
   # carp_movesense_package:
   #   path: ../carp/carp.sensing-flutter/packages/carp_movesense_package/
-
+  # this is needed to be overriden due to a dependency conflict between research_package
+  # and the authentication library in carp_webservices.
+  # nonetheless, the API is backwards compatible so this is not an issue.
+  uuid: "^4.3.3"
 
 dev_dependencies:
   test: any

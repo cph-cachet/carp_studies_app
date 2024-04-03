@@ -54,8 +54,6 @@ class CarpBackend {
   ///    https://dev.carp.dk/auth/realms/Carp/.well-known/openid-configuration/
   Uri get discoveryURL => authUri.replace(pathSegments: [
         ...authUri.pathSegments,
-        '.well-known',
-        'openid-configuration'
       ]);
 
   /// The CAWS app configuration.
@@ -76,7 +74,7 @@ class CarpBackend {
       studyDeploymentId: bloc.studyDeploymentId,
     );
 
-    CarpService().configure(app!);
+    await CarpService().configure(app!);
 
     // check if there is a user stored locally on the phone
     if (user != null) {

@@ -5,8 +5,8 @@ plugins {
 }
 
 def localProperties = new Properties()
-// it is file('local.properties') for deploying using local terminal. might be file('../android/local.properties') for github actions.
-def localPropertiesFile = rootProject.file('./android/local.properties')
+// it is file('../local.propertieslocal.properties') for deploying using local terminal. file('./android/local.properties') for github actions.
+def localPropertiesFile = rootProject.file('local.properties')
 if (localPropertiesFile.exists()) {
     localPropertiesFile.withReader('UTF-8') { reader ->
         localProperties.load(reader)
@@ -14,8 +14,8 @@ if (localPropertiesFile.exists()) {
 }
 
 def keyProperties = new Properties()
-// it is file('key.properties') for deploying using local terminal. might be file('../android/key.properties') for github actions.
-def keyPropertiesFile = rootProject.file('./android/key.properties')
+// it is file('../key.properties') for deploying using local terminal. and file('./android/key.properties') for github actions.
+def keyPropertiesFile = rootProject.file('key.properties')
 if (keyPropertiesFile.exists()) {
     keyPropertiesFile.withReader('UTF-8') { reader ->
         keyProperties.load(reader)
@@ -24,16 +24,18 @@ if (keyPropertiesFile.exists()) {
 
 def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
 if (flutterVersionCode == null) {
+    print("flutterVersionCode is null and going to be 1 wtf")
     flutterVersionCode = '1'
 }
 
 def flutterVersionName = localProperties.getProperty('flutter.versionName')
 if (flutterVersionName == null) {
+    print("flutterVersionName is null and going to be '1.0' wtf")
     flutterVersionName = '1.0'
 }
 
 android {
-    namespace 'dk.cachet.carp_study_app'
+    namespace "com.cachet.carp_studies_app"
     compileSdkVersion 34
     ndkVersion flutter.ndkVersion
 
@@ -63,7 +65,8 @@ android {
     // This is to be used for deployment only when we manually run fastlane beta from the terminal locally.
     signingConfigs {
         release {
-            storeFile keyProperties.getProperty('storeFile')
+            // storeFile file('../fastlane/upload-keystore.jks') ? file('../fastlane/upload-keystore.jks') : null
+            storeFile file(keyProperties.getProperty('storeFile')) ? file(keyProperties.getProperty('storeFile')) : null
             storePassword keyProperties.getProperty('storePassword')
             keyAlias keyProperties.getProperty('keyAlias')
             keyPassword keyProperties.getProperty('keyPassword')

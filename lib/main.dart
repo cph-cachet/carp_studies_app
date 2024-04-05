@@ -146,3 +146,4 @@ void main() async {
 
 /// The singleton BLoC.
 final bloc = StudyAppBLoC();
+

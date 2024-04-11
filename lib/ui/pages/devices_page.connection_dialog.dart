@@ -13,7 +13,6 @@ class ConnectionDialog extends StatefulWidget {
 }
 
 class _ConnectionDialogState extends State<ConnectionDialog> {
-
   @override
   initState() {
     super.initState();

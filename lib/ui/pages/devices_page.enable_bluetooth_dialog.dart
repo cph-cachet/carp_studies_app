@@ -65,7 +65,7 @@ class EnableBluetoothDialog extends StatelessWidget {
         ),
         Container(
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
               TextButton(
                 child: Text('Settings'),
@@ -73,12 +73,6 @@ class EnableBluetoothDialog extends StatelessWidget {
                   OpenSettingsPlusIOS().bluetooth();
                   context.canPop() ? context.pop() : null;
                 },
-              ),
-              TextButton(
-                onPressed: () => context.canPop() ? context.pop() : null,
-                child: Text(
-                  locale.translate("pages.devices.connection.ok"),
-                ),
               ),
             ],
           ),

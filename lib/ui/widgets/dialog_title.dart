@@ -20,7 +20,7 @@ class DialogTitle extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             IconButton(
-              onPressed: () => context.canPop() ? context.pop() : null,
+              onPressed: () => Navigator.of(context).canPop() ? Navigator.of(context).pop() : null,
               icon: const Icon(Icons.close),
               padding: const EdgeInsets.only(right: 8),
             ),

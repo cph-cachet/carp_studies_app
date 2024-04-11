@@ -15,7 +15,6 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'package:json_annotation/json_annotation.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'package:open_settings_plus/core/open_settings_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:camera/camera.dart';
@@ -27,6 +26,7 @@ import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:open_settings_plus/open_settings_plus.dart';
+import 'package:open_settings_plus/core/open_settings_plus.dart';
 
 // the CARP packages
 import 'package:carp_serializable/carp_serializable.dart';
@@ -96,7 +96,7 @@ part 'ui/pages/display_picture_page.dart';
 part 'ui/pages/camera_page.dart';
 part 'ui/pages/error_page.dart';
 part 'ui/pages/login_page.dart';
-part 'ui/pages/login_page.enable_connection_dialog.dart';
+part 'ui/pages/enable_connection_dialog.dart';
 part 'ui/pages/device_list_page.dart';
 part 'ui/pages/devices_page.authorization_dialog.dart';
 part 'ui/pages/devices_page.enable_bluetooth_dialog.dart';

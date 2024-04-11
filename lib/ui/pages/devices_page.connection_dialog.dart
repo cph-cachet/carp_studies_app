@@ -13,6 +13,7 @@ class ConnectionDialog extends StatefulWidget {
 }
 
 class _ConnectionDialogState extends State<ConnectionDialog> {
+
   @override
   initState() {
     super.initState();
@@ -27,6 +28,7 @@ class _ConnectionDialogState extends State<ConnectionDialog> {
 
   CurrentStep currentStep = CurrentStep.scan;
   BluetoothDevice? selectedDevice;
+  bool deviceIsSelected = false;
   int selected = 40;
 
   @override
@@ -76,9 +78,14 @@ class _ConnectionDialogState extends State<ConnectionDialog> {
   }
 
   List<Widget> _buildActionButtons(RPLocalizations locale) {
-    Widget buildTranslatedButton(String key, VoidCallback onPressed) {
+    Widget buildTranslatedButton(
+        String key, VoidCallback onPressed, bool enabled) {
       return TextButton(
-        onPressed: onPressed,
+        onPressed: enabled
+            ? () {
+                onPressed;
+              }
+            : null,
         child: Text(locale.translate(key).toUpperCase()),
       );
     }
@@ -87,32 +94,32 @@ class _ConnectionDialogState extends State<ConnectionDialog> {
       CurrentStep.scan: [
         buildTranslatedButton("pages.devices.connection.instructions", () {
           setState(() => currentStep = CurrentStep.instructions);
-        }),
+        }, deviceIsSelected = true),
         buildTranslatedButton("pages.devices.connection.next", () {
           if (selectedDevice != null) {
             setState(() => currentStep = CurrentStep.done);
           }
-        }),
+        }, deviceIsSelected),
       ],
       CurrentStep.instructions: [
         buildTranslatedButton("pages.devices.connection.settings", () {
           OpenSettingsPlusIOS().bluetooth();
-        }),
+        }, deviceIsSelected = true),
         buildTranslatedButton("pages.devices.connection.ok", () {
           setState(() => currentStep = CurrentStep.scan);
-        }),
+        }, deviceIsSelected = true),
       ],
       CurrentStep.done: [
         buildTranslatedButton("pages.devices.connection.back", () {
           setState(() => currentStep = CurrentStep.scan);
-        }),
+        }, deviceIsSelected = true),
         buildTranslatedButton("pages.devices.connection.done", () {
           FlutterBluePlus.stopScan();
           if (selectedDevice != null) {
             widget.device.connectToDevice(selectedDevice!);
             context.pop(true);
           }
-        }),
+        }, deviceIsSelected = true),
       ],
     };
     return stepButtonConfigs[currentStep] ?? [];
@@ -161,6 +168,7 @@ class _ConnectionDialogState extends State<ConnectionDialog> {
                         onTap: () {
                           selectedDevice = bluetoothDevice.value.device;
                           setState(() {
+                            deviceIsSelected = true;
                             selected = bluetoothDevice.key;
                           });
                         },

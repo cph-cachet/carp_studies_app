@@ -214,7 +214,7 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   AppAuth: ca2458caccec349cc1e26d8d9e8fd7d22f1d01f3
-  audio_session: 4f3e461722055d21515cf3261b64c973c062f345
+  audio_session: 088d2483ebd1dc43f51d253d4a1c517d9a2e7207
   audio_streamer: af49e73eb66f71c4eeabb4bbcb05f122d03a6709
   audiofileplayer: 4aaff759a721ec3a850a682e0d9ec554e5f9e86f
   battery_plus: 1ff2e16ba75af2a78387f65476057a390b47885e

@@ -47,7 +47,12 @@ class _LoginPageState extends State<LoginPage> {
                 } else {
                   showDialog<bool>(
                     context: context,
-                    builder: (context) => EnableInternetConnectionDialog(),
+                    builder: (context) => PopScope(
+                      onPopInvoked: (didPop) async {
+                        Navigator.of(context).pop();
+                      },
+                      child: EnableInternetConnectionDialog(),
+                    ),
                   );
                 }
               },

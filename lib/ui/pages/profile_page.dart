@@ -39,7 +39,7 @@ class ProfilePageState extends State<ProfilePage> {
                       color: Theme.of(context).primaryColor, size: 30),
                   tooltip: locale.translate('Back'),
                   onPressed: () {
-                    context.pop();
+                    Navigator.of(context).pop();
                   },
                 ),
               ],
@@ -188,8 +188,14 @@ class ProfilePageState extends State<ProfilePage> {
                     title: Text(locale.translate('pages.profile.log_out'),
                         style:
                             profileActionStyle.copyWith(color: CACHET.RED_1)),
-                    onTap: () {
-                      _showLogoutConfirmationDialog();
+                    onTap: () async {
+                      bool isConnected =
+                          await ConnectivityPlus().checkConnectivity();
+                      if (isConnected) {
+                        _showLogoutConfirmationDialog();
+                      } else {
+                        _showEnableInternetConnectionDialog();
+                      }
                     },
                   ),
                 ]).toList(),
@@ -219,14 +225,13 @@ class ProfilePageState extends State<ProfilePage> {
 
     return showDialog<bool>(
       context: context,
-      barrierDismissible: false,
       builder: (BuildContext builderContext) {
         return AlertDialog(
           title: Text(locale.translate("pages.profile.log_out.confirmation")),
           actions: <Widget>[
             TextButton(
                 child: Text(locale.translate("NO")),
-                onPressed: () {
+                onPressed: () async {
                   if (builderContext.mounted) {
                     Navigator.of(builderContext).pop();
                   }
@@ -248,11 +253,9 @@ class ProfilePageState extends State<ProfilePage> {
 
   Future<void> _showLeaveStudyConfirmationDialog() {
     RPLocalizations locale = RPLocalizations.of(context)!;
-    print('ones $context');
 
     return showDialog<bool>(
       context: context,
-      barrierDismissible: false,
       builder: (BuildContext builderContext) {
         return AlertDialog(
           title:
@@ -277,6 +280,15 @@ class ProfilePageState extends State<ProfilePage> {
                 }),
           ],
         );
+      },
+    );
+  }
+
+  Future<void> _showEnableInternetConnectionDialog() async {
+    await showDialog<bool>(
+      context: context,
+      builder: (BuildContext builderContext) {
+        return EnableInternetConnectionDialog();
       },
     );
   }

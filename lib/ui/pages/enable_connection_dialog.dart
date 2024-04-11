@@ -6,23 +6,62 @@ class EnableInternetConnectionDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-        scrollable: true,
-        titlePadding: const EdgeInsets.symmetric(vertical: 4),
-        insetPadding: const EdgeInsets.symmetric(vertical: 24, horizontal: 40),
-        title: const DialogTitle(
-            title:
-                "pages.login.internet_connection.enable_internet_connections.title"),
-        content: SizedBox(
-          height: MediaQuery.of(context).size.height * 0.45,
-          child: (() {
-            switch (OpenSettingsPlus.shared) {
-              case OpenSettingsPlusAndroid():
-                return enableInternetConnectionInstructionsAndroid(context);
-              case OpenSettingsPlusIOS():
-                return enableInternetConnectionInstructionsIOS(context);
-            }
-          }()),
-        ));
+      scrollable: true,
+      titlePadding: const EdgeInsets.symmetric(vertical: 4),
+      insetPadding: const EdgeInsets.symmetric(vertical: 24, horizontal: 40),
+      title: DialogTitle(title: "pages.login.internet_connection.enable_internet_connections.title"),
+      content: SizedBox(
+        height: MediaQuery.of(context).size.height * 0.45,
+        child: (() {
+          switch (OpenSettingsPlus.shared) {
+            case OpenSettingsPlusAndroid():
+              return enableInternetConnectionInstructionsAndroid(context);
+            case OpenSettingsPlusIOS():
+              return enableInternetConnectionInstructionsIOS(context);
+          }
+        }()),
+      ),
+    );
+  }
+
+  Widget _makeTitle(BuildContext context) {
+    RPLocalizations locale = RPLocalizations.of(context)!;
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            IconButton(
+              onPressed: () => Navigator.of(context).pop(),
+              icon: const Icon(Icons.close),
+              padding: const EdgeInsets.only(right: 8),
+            ),
+          ],
+        ),
+        Padding(
+          padding:
+              const EdgeInsets.only(left: 24, right: 24, top: 12, bottom: 8),
+          child: Container(
+            alignment: Alignment.center,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Flexible(
+                  child: Text(
+                    locale.translate(
+                        "pages.login.internet_connection.enable_internet_connections.title"),
+                    style: sectionTitleStyle.copyWith(
+                      color: Theme.of(context).primaryColor,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
   }
 
   Widget enableInternetConnectionInstructionsAndroid(BuildContext context) {
@@ -60,7 +99,7 @@ class EnableInternetConnectionDialog extends StatelessWidget {
                   padding: EdgeInsets.symmetric(vertical: 16.0),
                   child: Text(
                     locale.translate(
-                        "pages.login.internet_connection.enable_internet_connections.mobile_data_message_android"),
+                        "pages.login.internet_connection.enable_internet_connections.mobile_data_message"),
                     style: aboutCardContentStyle,
                     textAlign: TextAlign.justify,
                   ),
@@ -78,12 +117,21 @@ class EnableInternetConnectionDialog extends StatelessWidget {
         ),
         Container(
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Spacer(),
               TextButton(
-                onPressed: () => OpenSettingsPlusAndroid().wifi(),
-                child: Text('Wi-Fi'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  OpenSettingsPlusAndroid().wifi();
+                },
+                child: Text(locale.translate('pages.enable_connection.wifi')),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  OpenSettingsPlusAndroid().dataUsage();
+                },
+                child: Text(locale.translate('pages.enable_connection.data')),
               ),
             ],
           ),
@@ -128,7 +176,7 @@ class EnableInternetConnectionDialog extends StatelessWidget {
                   child: Column(children: [
                     Text(
                       locale.translate(
-                          "pages.login.internet_connection.enable_internet_connections.mobile_data_message_ios"),
+                          "pages.login.internet_connection.enable_internet_connections.mobile_data_message"),
                       style: aboutCardContentStyle,
                       textAlign: TextAlign.justify,
                     ),
@@ -147,21 +195,21 @@ class EnableInternetConnectionDialog extends StatelessWidget {
         ),
         Container(
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
               TextButton(
                 onPressed: () {
-                  context.canPop() ? context.pop() : null;
+                  Navigator.of(context).pop();
                   OpenSettingsPlusIOS().wifi();
                 },
-                child: Text('Wi-Fi'),
+                child: Text(locale.translate('pages.enable_connection.wifi')),
               ),
               TextButton(
                 onPressed: () {
-                  context.canPop() ? context.pop() : null;
+                  Navigator.of(context).pop();
                   OpenSettingsPlusIOS().cellular();
                 },
-                child: Text('Data'),
+                child: Text(locale.translate('pages.enable_connection.data')),
               ),
             ],
           ),

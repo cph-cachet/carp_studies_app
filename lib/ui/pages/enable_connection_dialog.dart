@@ -23,47 +23,7 @@ class EnableInternetConnectionDialog extends StatelessWidget {
       ),
     );
   }
-
-  Widget _makeTitle(BuildContext context) {
-    RPLocalizations locale = RPLocalizations.of(context)!;
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            IconButton(
-              onPressed: () => Navigator.of(context).pop(),
-              icon: const Icon(Icons.close),
-              padding: const EdgeInsets.only(right: 8),
-            ),
-          ],
-        ),
-        Padding(
-          padding:
-              const EdgeInsets.only(left: 24, right: 24, top: 12, bottom: 8),
-          child: Container(
-            alignment: Alignment.center,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Flexible(
-                  child: Text(
-                    locale.translate(
-                        "pages.login.internet_connection.enable_internet_connections.title"),
-                    style: sectionTitleStyle.copyWith(
-                      color: Theme.of(context).primaryColor,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
+  
   Widget enableInternetConnectionInstructionsAndroid(BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;
     return Column(

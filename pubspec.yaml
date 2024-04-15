@@ -83,8 +83,8 @@ dependency_overrides:
     path: ../carp.sensing-flutter/backends/carp_webservices/
   # research_package:
   #   path: ../research.package/
-  # carp_backend:
-  #   path: ../carp/carp.sensing-flutter/backends/carp_backend/
+  carp_backend:
+    path: ../carp.sensing-flutter/backends/carp_backend/
   # carp_movesense_package:
   #   path: ../carp/carp.sensing-flutter/packages/carp_movesense_package/
   # this is needed to be overriden due to a dependency conflict between research_package

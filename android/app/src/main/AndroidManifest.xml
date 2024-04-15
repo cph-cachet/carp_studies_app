@@ -70,7 +70,7 @@
 
      <!-- Permissions for Health Connect API -->
      <!-- TODO: remove write permissions -->
-    <uses-permission android:name="android.permission.health.READ_STEPS"/>
+    <!-- <uses-permission android:name="android.permission.health.READ_STEPS"/>
     <uses-permission android:name="android.permission.health.WRITE_STEPS"/>
     <uses-permission android:name="android.permission.health.READ_WEIGHT"/>
     <uses-permission android:name="android.permission.health.WRITE_WEIGHT"/>
@@ -104,14 +104,14 @@
     <uses-permission android:name="android.permission.health.WRITE_HYDRATION"/>
     <uses-permission android:name="android.permission.health.READ_RESTING_HEART_RATE"/>
     <uses-permission android:name="android.permission.health.WRITE_RESTING_HEART_RATE"/>
-    <uses-permission android:name="android.permission.health.WRITE_FLOORS_CLIMBED"/>
     <uses-permission android:name="android.permission.health.READ_FLOORS_CLIMBED"/>
-    <uses-permission android:name="android.permission.health.WRITE_BASAL_METABOLIC_RATE"/>
+    <uses-permission android:name="android.permission.health.WRITE_FLOORS_CLIMBED"/>
     <uses-permission android:name="android.permission.health.READ_BASAL_METABOLIC_RATE"/>
+    <uses-permission android:name="android.permission.health.WRITE_BASAL_METABOLIC_RATE"/>
     <uses-permission android:name="android.permission.health.READ_RESPIRATORY_RATE"/>
     <uses-permission android:name="android.permission.health.WRITE_RESPIRATORY_RATE"/>
-    <uses-permission android:name="android.permission.health.WRITE_NUTRITION"/>
     <uses-permission android:name="android.permission.health.READ_NUTRITION"/>
+    <uses-permission android:name="android.permission.health.WRITE_NUTRITION"/> -->
 
 
     <!-- io.flutter.app.FlutterApplication is an android.app.Application that

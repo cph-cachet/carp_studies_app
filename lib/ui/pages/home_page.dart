@@ -71,6 +71,15 @@ class HomePageState extends State<HomePage> {
     // them in the app's task list.
     Sensing().translateStudyProtocol(locale);
 
+    // Listen for user task notification clicked in the OS
+    AppTaskController().userTaskEvents.listen((userTask) {
+      if (userTask.state == UserTaskState.notified) {
+        debug('Notification for task id: ${userTask.id} was clicked.');
+        userTask.onStart();
+        if (userTask.hasWidget) context.push('/task/${userTask.id}');
+      }
+    });
+
     return Scaffold(
       body: SafeArea(
         child: widget.child,

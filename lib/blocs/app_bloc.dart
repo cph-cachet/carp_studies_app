@@ -69,6 +69,9 @@ class StudyAppBLoC extends ChangeNotifier {
   /// What kind of deployment are we running?
   DeploymentMode deploymentMode = DeploymentMode.production;
 
+  /// The localization (language)) of this app.
+  RPLocalizations? localization;
+
   /// The list of currently available messages.
   List<Message> get messages => _messages;
 

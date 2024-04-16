@@ -151,13 +151,16 @@ class Sensing {
 
     // Get the study controller and try to deploy the study.
     //
-    // Note that if the study has already been deployed on this phone
-    // it has been cached locally in a file and the local cache will
-    // be used pr. default.
+    // Note that if the study has already been deployed on this phone it has
+    // been cached locally and the local version will be used pr. default.
     // If not deployed before (i.e., cached) the study deployment will be
     // fetched from the deployment service.
     _controller = SmartPhoneClientManager().getStudyRuntime(study!);
     await controller?.tryDeployment(useCached: true);
+
+    // Make sure to translate the user tasks in the study protocol before using
+    // them in the app's task list.
+    translateStudyProtocol();
 
     // Configure the controller
     await controller?.configure();
@@ -175,20 +178,25 @@ class Sensing {
 
   /// Translate the title and description of all AppTask in the study protocol
   /// of the current master deployment.
-  void translateStudyProtocol(AssetLocalizations localization) {
-    // fast out, if not configured or no protocol
+  void translateStudyProtocol([RPLocalizations? localization]) {
+    bloc.localization ??= localization;
+
+    // Fast out is no localization
+    if (bloc.localization == null) return;
+
+    // Fast out, if not configured or no protocol
     if (controller?.status != StudyStatus.Deployed ||
         controller?.deployment == null) return;
 
     for (var task in controller!.deployment!.tasks) {
-      if (task.runtimeType == AppTask) {
-        AppTask appTask = task as AppTask;
-        appTask.title = localization.translate(appTask.title);
-        appTask.description = localization.translate(appTask.description);
+      if (task is AppTask) {
+        task.title = bloc.localization!.translate(task.title);
+        task.description = bloc.localization!.translate(task.description);
       }
     }
 
-    info("Study protocol translated to locale '${localization.locale}'");
+    info(
+        "$runtimeType - Study protocol translated to locale '${bloc.localization!.locale}'");
   }
 
   Future<void> askForPermissions() async =>

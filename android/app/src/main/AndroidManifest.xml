@@ -62,6 +62,8 @@
     <!-- The following permissions are used in the flutter_local_notifications Package  -->
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"
             android:maxSdkVersion="32" />
+    <!-- This permission is not allowed in google play unless we have a reason to ask for it. 
+    Until the notifications changes are implemented, our app will be rejected. -->
     <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
 
     <!-- The following permissions are used in the Media Package  -->

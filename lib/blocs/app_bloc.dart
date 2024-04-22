@@ -182,8 +182,8 @@ class StudyAppBLoC extends ChangeNotifier {
 
     // make sure that the app is configured with the study IDs in order to access
     // the correct resources (like translations etc.) on CAWS.
-    backend.app?.studyId = studyId;
-    backend.app?.studyDeploymentId = studyDeploymentId;
+    backend.app.studyId = studyId;
+    backend.app.studyDeploymentId = studyDeploymentId;
 
     notifyListeners();
 

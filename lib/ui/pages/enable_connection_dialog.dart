@@ -127,8 +127,8 @@ class EnableInternetConnectionDialog extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.symmetric(vertical: 16.0),
                   child: Image(
-                    image:
-                        AssetImage('assets/instructions/${Localizations.localeOf(context).languageCode}/enable_wifi_ios.png'),
+                    image: AssetImage(
+                        'assets/instructions/${Localizations.localeOf(context).languageCode}/enable_wifi_ios.png'),
                   ),
                 ),
 

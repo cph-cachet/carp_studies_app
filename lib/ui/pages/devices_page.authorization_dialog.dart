@@ -36,8 +36,8 @@ class AuthorizationDialog extends StatelessWidget {
                   textAlign: TextAlign.justify,
                 ),
                 Image(
-                    image: const AssetImage(
-                        'assets/instructions/bluetooth_enable_bar.png'),
+                    image: AssetImage(
+                        'assets/instructions/${Localizations.localeOf(context).languageCode}/bluetooth_enable_bar.png'),
                     width: MediaQuery.of(context).size.height * 0.2,
                     height: MediaQuery.of(context).size.height * 0.2),
               ],

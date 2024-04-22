@@ -48,11 +48,11 @@ class EnableInternetConnectionDialog extends StatelessWidget {
                       style: aboutCardContentStyle,
                       textAlign: TextAlign.justify,
                     )),
-                const Padding(
+                Padding(
                   padding: EdgeInsets.symmetric(vertical: 16.0),
                   child: Image(
                     image: AssetImage(
-                        'assets/instructions/enable_wifi_android.png'),
+                        'assets/instructions/${Localizations.localeOf(context).languageCode}/enable_wifi_android.png'),
                   ),
                 ),
 
@@ -66,11 +66,11 @@ class EnableInternetConnectionDialog extends StatelessWidget {
                     textAlign: TextAlign.justify,
                   ),
                 ),
-                const Padding(
+                Padding(
                   padding: EdgeInsets.symmetric(vertical: 16.0),
                   child: Image(
                     image: AssetImage(
-                        'assets/instructions/enable_mobile_data_android.png'),
+                        'assets/instructions/${Localizations.localeOf(context).languageCode}/enable_mobile_data_android.png'),
                   ),
                 ),
               ],
@@ -124,11 +124,11 @@ class EnableInternetConnectionDialog extends StatelessWidget {
                       style: aboutCardContentStyle,
                       textAlign: TextAlign.justify,
                     )),
-                const Padding(
+                Padding(
                   padding: EdgeInsets.symmetric(vertical: 16.0),
                   child: Image(
                     image:
-                        AssetImage('assets/instructions/enable_wifi_ios.png'),
+                        AssetImage('assets/instructions/${Localizations.localeOf(context).languageCode}/enable_wifi_ios.png'),
                   ),
                 ),
 
@@ -144,11 +144,11 @@ class EnableInternetConnectionDialog extends StatelessWidget {
                     ),
                   ]),
                 ),
-                const Padding(
+                Padding(
                   padding: EdgeInsets.symmetric(vertical: 16.0),
                   child: Image(
                     image: AssetImage(
-                        'assets/instructions/enable_mobile_data_ios.png'),
+                        'assets/instructions/${Localizations.localeOf(context).languageCode}/enable_mobile_data_ios.png'),
                   ),
                 ),
               ],

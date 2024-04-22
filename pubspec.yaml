@@ -116,6 +116,8 @@ flutter:
   assets:
     - assets/images/
     - assets/instructions/
+    - assets/instructions/en/
+    - assets/instructions/da/
     - assets/icons/
     - assets/lang/
     - assets/carp/lang/

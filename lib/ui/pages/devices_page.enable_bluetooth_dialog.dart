@@ -46,11 +46,11 @@ class EnableBluetoothDialog extends StatelessWidget {
 
                 /// TODO: Localise this image, take a screenshot of the settings page in Danish
                 if (Platform.isAndroid || Platform.isIOS)
-                  const Padding(
+                  Padding(
                     padding: EdgeInsets.symmetric(vertical: 16.0),
                     child: Image(
                       image: AssetImage(
-                          'assets/instructions/bluetooth_enable_connections_bar.png'),
+                          'assets/instructions/${Localizations.localeOf(context).languageCode}/bluetooth_enable_connections_bar.png'),
                     ),
                   ),
                 Text(

@@ -71,7 +71,7 @@ class CarpBackend {
       discoveryURL: discoveryURL,
     );
 
-    CarpAuthService().configure(authProperties!);
+    await CarpAuthService().configure(authProperties!);
 
     // check if there is a user stored locally on the phone
     if (user != null) {

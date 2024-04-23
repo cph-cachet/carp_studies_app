@@ -32,6 +32,8 @@ PODS:
     - Flutter
   - flutter_local_notifications (0.0.1):
     - Flutter
+  - flutter_secure_storage (6.0.0):
+    - Flutter
   - flutter_sound (9.2.13):
     - Flutter
     - flutter_sound_core (= 9.2.13)
@@ -50,6 +52,8 @@ PODS:
     - SwiftProtobuf
   - Movesense (3.15.0)
   - network_info_plus (0.0.1):
+    - Flutter
+  - oidc_ios (0.0.1):
     - Flutter
   - open_settings (0.0.1):
     - Flutter
@@ -102,6 +106,7 @@ DEPENDENCIES:
   - flutter_appauth (from `.symlinks/plugins/flutter_appauth/ios`)
   - flutter_blue_plus (from `.symlinks/plugins/flutter_blue_plus/ios`)
   - flutter_local_notifications (from `.symlinks/plugins/flutter_local_notifications/ios`)
+  - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
   - flutter_sound (from `.symlinks/plugins/flutter_sound/ios`)
   - flutter_timezone (from `.symlinks/plugins/flutter_timezone/ios`)
   - just_audio (from `.symlinks/plugins/just_audio/ios`)
@@ -110,6 +115,7 @@ DEPENDENCIES:
   - mdsflutter (from `.symlinks/plugins/mdsflutter/ios`)
   - Movesense (from `https://bitbucket.org/movesense/movesense-mobile-lib/`)
   - network_info_plus (from `.symlinks/plugins/network_info_plus/ios`)
+  - oidc_ios (from `.symlinks/plugins/oidc_ios/ios`)
   - open_settings (from `.symlinks/plugins/open_settings/ios`)
   - open_settings_plus (from `.symlinks/plugins/open_settings_plus/ios`)
   - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
@@ -159,6 +165,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_blue_plus/ios"
   flutter_local_notifications:
     :path: ".symlinks/plugins/flutter_local_notifications/ios"
+  flutter_secure_storage:
+    :path: ".symlinks/plugins/flutter_secure_storage/ios"
   flutter_sound:
     :path: ".symlinks/plugins/flutter_sound/ios"
   flutter_timezone:
@@ -175,6 +183,8 @@ EXTERNAL SOURCES:
     :git: https://bitbucket.org/movesense/movesense-mobile-lib/
   network_info_plus:
     :path: ".symlinks/plugins/network_info_plus/ios"
+  oidc_ios:
+    :path: ".symlinks/plugins/oidc_ios/ios"
   open_settings:
     :path: ".symlinks/plugins/open_settings/ios"
   open_settings_plus:
@@ -222,6 +232,7 @@ SPEC CHECKSUMS:
   flutter_appauth: 1ce438877bc111c5d8f42da47729909290624886
   flutter_blue_plus: 4837da7d00cf5d441fdd6635b3a57f936778ea96
   flutter_local_notifications: 4cde75091f6327eb8517fa068a0a5950212d2086
+  flutter_secure_storage: 23fc622d89d073675f2eaa109381aefbcf5a49be
   flutter_sound: c60effa2a350fb977885f0db2fbc4c1ad5160900
   flutter_sound_core: 26c10e5832e76aaacfae252d8925232281c486ae
   flutter_timezone: ffb07bdad3c6276af8dada0f11978d8a1f8a20bb
@@ -231,6 +242,7 @@ SPEC CHECKSUMS:
   mdsflutter: 841344e0d5781afbbddd13e057e1cb2e9d86e012
   Movesense: a1068c58b31d8032a13d69d0cb35ba6c444d2aae
   network_info_plus: 6d0c3eb8367b8164fa3fb0c19875e3f59d49697f
+  oidc_ios: e80c00b7089ae7cdc45ab9ed636fdaed3e01e6a1
   open_settings: 9628e736cb2738fd1dc84159565755c214478158
   open_settings_plus: 4bd848866fea2becc124581d868a6164cf768831
   package_info_plus: 58f0028419748fad15bf008b270aaa8e54380b1c
@@ -251,4 +263,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 24c972fbbf44ae72ef5a1d99d3fd7081907fd755
 
-COCOAPODS: 1.15.0
+COCOAPODS: 1.15.2

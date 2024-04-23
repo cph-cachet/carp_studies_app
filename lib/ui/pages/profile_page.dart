@@ -39,7 +39,7 @@ class ProfilePageState extends State<ProfilePage> {
                       color: Theme.of(context).primaryColor, size: 30),
                   tooltip: locale.translate('Back'),
                   onPressed: () {
-                    context.pop();
+                    Navigator.of(context).pop();
                   },
                 ),
               ],
@@ -188,8 +188,14 @@ class ProfilePageState extends State<ProfilePage> {
                     title: Text(locale.translate('pages.profile.log_out'),
                         style:
                             profileActionStyle.copyWith(color: CACHET.RED_1)),
-                    onTap: () {
-                      _showLogoutConfirmationDialog();
+                    onTap: () async {
+                      bool isConnected =
+                          await ConnectivityPlus().checkConnectivity();
+                      if (isConnected) {
+                        _showLogoutConfirmationDialog();
+                      } else {
+                        _showEnableInternetConnectionDialog();
+                      }
                     },
                   ),
                 ]).toList(),
@@ -219,22 +225,24 @@ class ProfilePageState extends State<ProfilePage> {
 
     return showDialog<bool>(
       context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
+      builder: (BuildContext builderContext) {
         return AlertDialog(
           title: Text(locale.translate("pages.profile.log_out.confirmation")),
           actions: <Widget>[
             TextButton(
-              child: Text(locale.translate("NO")),
-              onPressed: () => context.pop(),
-            ),
+                child: Text(locale.translate("NO")),
+                onPressed: () async {
+                  if (builderContext.mounted) {
+                    Navigator.of(builderContext).pop();
+                  }
+                }),
             TextButton(
                 child: Text(locale.translate("YES")),
                 onPressed: () async {
-                  if (context.mounted) {
+                  if (builderContext.mounted) {
                     await bloc.signOutAndLeaveStudy();
-                    context.pop();
-                    context.go(CarpStudyAppState.homeRoute);
+                    builderContext.pop();
+                    builderContext.go(CarpStudyAppState.homeRoute);
                   }
                 }),
           ],
@@ -248,27 +256,39 @@ class ProfilePageState extends State<ProfilePage> {
 
     return showDialog<bool>(
       context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
+      builder: (BuildContext builderContext) {
         return AlertDialog(
           title:
               Text(locale.translate("pages.profile.leave_study.confirmation")),
           actions: <Widget>[
             TextButton(
               child: Text(locale.translate("NO")),
-              onPressed: () => context.pop(),
+              onPressed: () {
+                if (builderContext.mounted) {
+                  Navigator.of(builderContext).pop();
+                }
+              },
             ),
             TextButton(
                 child: Text(locale.translate("YES")),
                 onPressed: () async {
-                  if (context.mounted) {
+                  if (builderContext.mounted) {
                     await bloc.leaveStudy();
-                    context.pop();
-                    context.go(InvitationListPage.route);
+                    builderContext.pop();
+                    builderContext.go(InvitationListPage.route);
                   }
                 }),
           ],
         );
+      },
+    );
+  }
+
+  Future<void> _showEnableInternetConnectionDialog() async {
+    await showDialog<bool>(
+      context: context,
+      builder: (BuildContext builderContext) {
+        return EnableInternetConnectionDialog();
       },
     );
   }

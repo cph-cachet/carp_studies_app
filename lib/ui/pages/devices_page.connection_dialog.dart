@@ -56,7 +56,7 @@ class _ConnectionDialogState extends State<ConnectionDialog> {
       ),
       CurrentStep.done: DialogTitle(
         title: "pages.devices.connection.step.confirm.title",
-        deviceName: widget.device.name,
+        deviceName: selectedDevice?.platformName,
       ),
     };
 
@@ -76,9 +76,10 @@ class _ConnectionDialogState extends State<ConnectionDialog> {
   }
 
   List<Widget> _buildActionButtons(RPLocalizations locale) {
-    Widget buildTranslatedButton(String key, VoidCallback onPressed) {
+    Widget buildTranslatedButton(
+        String key, VoidCallback onPressed, bool enabled) {
       return TextButton(
-        onPressed: onPressed,
+        onPressed: enabled ? onPressed : null,
         child: Text(locale.translate(key).toUpperCase()),
       );
     }
@@ -87,32 +88,32 @@ class _ConnectionDialogState extends State<ConnectionDialog> {
       CurrentStep.scan: [
         buildTranslatedButton("pages.devices.connection.instructions", () {
           setState(() => currentStep = CurrentStep.instructions);
-        }),
+        }, true),
         buildTranslatedButton("pages.devices.connection.next", () {
           if (selectedDevice != null) {
             setState(() => currentStep = CurrentStep.done);
           }
-        }),
+        }, selectedDevice != null),
       ],
       CurrentStep.instructions: [
         buildTranslatedButton("pages.devices.connection.settings", () {
-          AppSettings.openAppSettings(type: AppSettingsType.bluetooth);
-        }),
+          OpenSettingsPlusIOS().bluetooth();
+        }, true),
         buildTranslatedButton("pages.devices.connection.ok", () {
           setState(() => currentStep = CurrentStep.scan);
-        }),
+        }, true),
       ],
       CurrentStep.done: [
         buildTranslatedButton("pages.devices.connection.back", () {
           setState(() => currentStep = CurrentStep.scan);
-        }),
+        }, true),
         buildTranslatedButton("pages.devices.connection.done", () {
           FlutterBluePlus.stopScan();
           if (selectedDevice != null) {
             widget.device.connectToDevice(selectedDevice!);
             context.pop(true);
           }
-        }),
+        }, true),
       ],
     };
     return stepButtonConfigs[currentStep] ?? [];

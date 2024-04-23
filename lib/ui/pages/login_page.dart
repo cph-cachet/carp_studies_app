@@ -40,8 +40,21 @@ class _LoginPageState extends State<LoginPage> {
             ),
             child: TextButton(
               onPressed: () async {
-                await bloc.backend.authenticate();
-                if (context.mounted) context.go(CarpStudyAppState.homeRoute);
+                bool isConnected = await ConnectivityPlus().checkConnectivity();
+                if (isConnected) {
+                  await bloc.backend.authenticate();
+                  if (context.mounted) context.go(CarpStudyAppState.homeRoute);
+                } else {
+                  showDialog<bool>(
+                    context: context,
+                    builder: (context) => PopScope(
+                      onPopInvoked: (didPop) async {
+                        Navigator.of(context).pop();
+                      },
+                      child: EnableInternetConnectionDialog(),
+                    ),
+                  );
+                }
               },
               child: Text(
                 locale.translate("pages.login.login"),

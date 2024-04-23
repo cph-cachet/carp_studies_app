@@ -133,8 +133,8 @@
     "pages.devices.connection.bluetooth_authorization.title": "Authorize app",
     "pages.devices.connection.bluetooth_authorization.message": "This app needs authorization to pair with Bluetooth. Please authorize the app following the steps shown in the photo below.",
     "pages.devices.connection.enable_bluetooth.title": "Enable bluetooth",
-    "pages.devices.connection.enable_bluetooth.message1": "Bluetooth needs to be turned on. Open Bluetooth settings and turn on Bluetooth.",
-    "pages.devices.connection.enable_bluetooth.message2": "If Bluetooth is already turned on, make sure that you are allowing new connections.",
+    "pages.devices.connection.enable_bluetooth.message1": "Bluetooth needs to be turned on. Open Bluetooth settings by clicking the button at the end and turn on Bluetooth.",
+    "pages.devices.connection.enable_bluetooth.message2": "If Bluetooth is already turned on, make sure that you are allowing for new connections by clicking the option depicted in the image below in settings.",
     "pages.devices.connection.enable_bluetooth.message3": "Click 'Settings' to open Bluetooth settings.",
     "pages.devices.connection.disconnect_bluetooth.title": "Disconnect Bluetooth",
     "pages.devices.connection.disconnect_bluetooth.message": "Are you sure you want to disconnect",
@@ -152,5 +152,11 @@
     "widgets.logoutmessage.cancel": "Cancel",
     "widgets.logoutmessage.okay": "Okay",
     "pages.login.login": "Log in",
-    "pages.login.logout": "Logout"
+    "pages.login.logout": "Logout",
+    "pages.login.internet_connection.enable_internet_connections.title": "Enable internet connections",
+    "pages.login.internet_connection.enable_internet_connections.general_message": "Wi-Fi or mobile data needs to be turned on to log in. Please turn on Wi-Fi or mobile data.",
+    "pages.login.internet_connection.enable_internet_connections.wifi_message": "You can access Wi-Fi settings using the 'Wi-Fi' button at the end. Turn Wi-Fi on and select a network.",
+    "pages.login.internet_connection.enable_internet_connections.mobile_data_message": "To turn on mobile data, click the 'Data' button at the end of the page and turn on the button depicted in the image below.",
+    "pages.enable_connection.wifi": "Wi-Fi",
+    "pages.enable_connection.data": "Data"
 }

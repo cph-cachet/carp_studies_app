@@ -38,9 +38,15 @@ class DeviceViewModel extends ViewModel {
   String get id => deviceManager.id;
 
   /// A printer-friendly name for this device.
-  String get name => deviceManager is BTLEDeviceManager
-      ? (deviceManager as BTLEDeviceManager).btleName
-      : id;
+  String get name {
+    if (deviceManager is BTLEDeviceManager) {
+      return (deviceManager as BTLEDeviceManager).btleName;
+    } else if (deviceManager is PolarDeviceManager) {
+      return (deviceManager as PolarDeviceManager).displayName ?? '';
+    } else {
+      return id;
+    }
+  }
 
   /// A printer-friendly description of this device.
   String get description =>

@@ -1,4 +1,4 @@
-package com.cachet.carp_studies_app
+package dk.carp.studies_app
 
 import io.flutter.embedding.android.FlutterFragmentActivity
 

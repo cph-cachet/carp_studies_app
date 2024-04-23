@@ -19,12 +19,14 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:camera/camera.dart';
 import 'package:video_player/video_player.dart';
-import 'package:app_settings/app_settings.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:open_settings_plus/open_settings_plus.dart';
+import 'package:open_settings_plus/core/open_settings_plus.dart';
 
 // the CARP packages
 import 'package:carp_serializable/carp_serializable.dart';
@@ -49,6 +51,7 @@ import 'package:carp_movesense_package/carp_movesense_package.dart';
 part 'blocs/app_bloc.dart';
 part 'blocs/util.dart';
 part 'blocs/sensing.dart';
+part 'blocs/check_connectivity.dart';
 
 part 'data/local_settings.dart';
 part 'data/carp_backend.dart';
@@ -93,6 +96,7 @@ part 'ui/pages/display_picture_page.dart';
 part 'ui/pages/camera_page.dart';
 part 'ui/pages/error_page.dart';
 part 'ui/pages/login_page.dart';
+part 'ui/pages/enable_connection_dialog.dart';
 part 'ui/pages/device_list_page.dart';
 part 'ui/pages/devices_page.authorization_dialog.dart';
 part 'ui/pages/devices_page.enable_bluetooth_dialog.dart';

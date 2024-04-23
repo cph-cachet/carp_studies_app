@@ -34,12 +34,8 @@ class EnableBluetoothDialog extends StatelessWidget {
                   style: aboutCardContentStyle,
                   textAlign: TextAlign.justify,
                 ),
-                const Padding(
+                Padding(
                   padding: EdgeInsets.symmetric(vertical: 16.0),
-                  child: Image(
-                    image: AssetImage(
-                        'assets/instructions/bluetooth_enable_bar.png'),
-                  ),
                 ),
                 Text(
                   locale.translate(
@@ -50,11 +46,11 @@ class EnableBluetoothDialog extends StatelessWidget {
 
                 /// TODO: Localise this image, take a screenshot of the settings page in Danish
                 if (Platform.isAndroid || Platform.isIOS)
-                  const Padding(
+                  Padding(
                     padding: EdgeInsets.symmetric(vertical: 16.0),
                     child: Image(
                       image: AssetImage(
-                          'assets/instructions/bluetooth_enable_connections_bar.png'),
+                          'assets/instructions/${Localizations.localeOf(context).languageCode}/bluetooth_enable_connections_bar.png'),
                     ),
                   ),
                 Text(
@@ -63,19 +59,22 @@ class EnableBluetoothDialog extends StatelessWidget {
                   style: aboutCardContentStyle,
                   textAlign: TextAlign.justify,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    TextButton(
-                      onPressed: () => context.canPop() ? context.pop() : null,
-                      child: Text(
-                        locale.translate("pages.devices.connection.ok"),
-                      ),
-                    )
-                  ],
-                )
               ],
             ),
+          ),
+        ),
+        Container(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              TextButton(
+                child: Text('Settings'),
+                onPressed: () {
+                  OpenSettingsPlusIOS().bluetooth();
+                  context.canPop() ? context.pop() : null;
+                },
+              ),
+            ],
           ),
         ),
       ],

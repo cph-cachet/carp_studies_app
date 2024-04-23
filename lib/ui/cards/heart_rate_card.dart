@@ -204,7 +204,7 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
           enabled: true,
           touchTooltipData: BarTouchTooltipData(
             fitInsideHorizontally: true,
-            tooltipBgColor: Theme.of(context).primaryColorLight,
+            // tooltipBgColor: Theme.of(context).primaryColorLight,
             getTooltipItem: (group, groupIndex, rod, rodIndex) {
               return BarTooltipItem(
                 '',

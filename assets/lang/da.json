@@ -42,6 +42,7 @@
     "cards.activity.running": "min løb",
     "cards.activity.cycling": "min cykling",
     "cards.mobility.title": "Mobilitet",
+    "cards.mobility.distance": "km tilbagelagt",
     "cards.mobility.homestay": "% hjemme",
     "cards.mobility.places": "steder",
     "cards.distance.title": "Afstand",
@@ -132,8 +133,8 @@
     "pages.devices.connection.bluetooth_authorization.title": "Autoriser app",
     "pages.devices.connection.bluetooth_authorization.message": "This app needs authorization to pair with Bluetooth. Please authorize the app following the steps shown in the photo below.",
     "pages.devices.connection.enable_bluetooth.title": "Aktiver Bluetooth",
-    "pages.devices.connection.enable_bluetooth.message1": "Bluetooth skal være tændt. Åbn Bluetooth-indstillinger, og tænd for Bluetooth.",
-    "pages.devices.connection.enable_bluetooth.message2": "Hvis Bluetooth allerede er slået til, skal du sikre dig, at du tillader nye forbindelser.",
+    "pages.devices.connection.enable_bluetooth.message1": "Bluetooth skal være slået til. Åbn Bluetooth-indstillinger ved at klikke på knappen i slutningen og slå Bluetooth til.",
+    "pages.devices.connection.enable_bluetooth.message2": "Hvis Bluetooth allerede er slået til, skal du sørge for, at du tillader nye forbindelser ved at klikke på indstillingen afbildet på billedet nedenfor i indstillinger.",
     "pages.devices.connection.enable_bluetooth.message3": "Klik på 'Indstillinger' for at åbne Bluetooth-indstillingerne.",
     "pages.devices.connection.disconnect_bluetooth.title": "Frakobl Bluetooth",
     "pages.devices.connection.disconnect_bluetooth.message": "Er du sikker på, at du vil frakoble",
@@ -151,5 +152,11 @@
     "widgets.logoutmessage.cancel": "Annuller",
     "widgets.logoutmessage.okay": "Okay",
     "pages.login.login": "Log ind",
-    "pages.login.logout": "Log ud"
+    "pages.login.logout": "Log ud",
+    "pages.login.internet_connection.enable_internet_connections.title": "Aktiver internetforbindelser",
+    "pages.login.internet_connection.enable_internet_connections.general_message": "Wi-Fi eller mobildata skal være aktiveret for at logge ind. Slå Wi-Fi eller mobildata til.",
+    "pages.login.internet_connection.enable_internet_connections.wifi_message": "Du kan få adgang til Wi-Fi-indstillinger ved at bruge knappen 'Wi-Fi' i slutningen. Slå Wi-Fi til, og vælg et netværk.",
+    "pages.login.internet_connection.enable_internet_connections.mobile_data_message": "For at slå mobildata til, skal du klikke på knappen 'Data' i slutningen af siden og tænde for knappen vist på billedet nedenfor.",
+    "pages.enable_connection.wifi": "Wi-Fi",
+    "pages.enable_connection.data": "Data"
 }

@@ -27,7 +27,7 @@ Contains the pending & completed tasks & stats about the study participations (`
 
 #### `study_page.dart`
 
-Contains the information about the study and the messages. When taping on them, `study_details_page.dart` or `message_details_page.dart` is oppened to display all the details.  Makes use of `study_page_view_model.dart`.
+Contains the information about the study and the messages. When taping on them, `study_details_page.dart` or `message_details_page.dart` is oppened to display all the details. Makes use of `study_page_view_model.dart`.
 
 #### `data_viz_page.dart`
 
@@ -73,7 +73,7 @@ A local resource manager handling: informed consent, localization & study descri
 
 #### `local_settings.dart`
 
-Local settings manager storing: authentication crdentials  & study id
+Local settings manager storing: authentication crdentials & study id
 
 #### `localization_loader.dart`
 
@@ -102,10 +102,10 @@ Used to define enums
 
 1. Create `carpspec.yaml` & **do not add to version control**
 2. In server, point to the right uri:
-   - PROD <https://cans.cachet.dk>
-   - DEV <https://cans.cachet.dk/portal/dev/>
-   - STAGE <https://cans.cachet.dk/portal/stage/>
-   - TEST <https://cans.cachet.dk/portal/test/>
+
+   - PROD <carp.computerome.dk>
+   - DEV <dev.carp.dk>
+   - TEST <test.carp.dk>
 
 3. Add username & password of the researcher account
 4. Make sure the following paths exist
@@ -132,14 +132,13 @@ Used to define enums
     locales:
         - en
         - da
-    ```
+   ```
 
 5. After making changes in any of these, `local_protocol_manager.dart`,`local_resource_manager.dart`,`local_surveys.dart`, run the respectiive test & copy the output into the respective `.json`
 6. Run command:
 
 `flutter test carp/<command>`
-    ```
-         help                   Prints this help message.\\
+`      help                   Prints this help message.\\
         dryrun                 Makes a dryrun testing access to the CARP server the correctness of the json resources.\\
         create                 Create a study protocol based on a json file and uploads it to the CARP server.\\
         update                 Update an existing study protocol as a new version.\\
@@ -147,12 +146,11 @@ Used to define enums
         localization           Upload the localization files to the CARP server.\\
         message                Upload the list of messages to the CARP server.\\
         message-delete-all     Delete all messages on the CARP server.\\
-    ```
-7. Notes:
+` 7. Notes:
 
 - Once the protocol is created it can be updated unless there are changes in the protocolName
 - Once a study ha started, the protocol can not be updated, but the informed consent, localization & messages can. Thus, the suty is bonded to whatever version of the protocol it was firstly assigned.
-- The consent, localization & messages need to be uploaded to each study. To do so, once a protocol is created, a study needs to be created. Copy the `study_id` shown in the portal into the `carspec.yaml` & run  `consent`,`localization`,`message`  commands.
+- The consent, localization & messages need to be uploaded to each study. To do so, once a protocol is created, a study needs to be created. Copy the `study_id` shown in the portal into the `carspec.yaml` & run `consent`,`localization`,`message` commands.
 
 ## Submision to stores
 
@@ -175,13 +173,15 @@ Used to define enums
 ### Age restriction on Stores
 
 #### Android
->
+
 > 3 y.0.
+
 ####  iOS:
+
 > 12 y.o, can be surpased with parental control. Workaround described [here](https://trello.com/c/RhwGuXxu/146-age-restriction-on-ios)
->
+
 #### TestFlight
->
+
 > 13 y.o requires to change birthday. Workaround described [here](https://trello.com/c/RhwGuXxu/146-age-restriction-on-ios)
 
 ### Store releases status

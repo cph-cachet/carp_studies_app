@@ -116,9 +116,12 @@ class TaskListPageState extends State<TaskListPage> {
               ],
             ),
             onTap: () {
-              userTask.hasWidget
-                  ? context.push('/task/${userTask.id}')
-                  : userTask.onStart();
+              // only start if not already started, done, or expired
+              if (userTask.state == UserTaskState.enqueued ||
+                  userTask.state == UserTaskState.canceled) {
+                userTask.onStart();
+                if (userTask.hasWidget) context.push('/task/${userTask.id}');
+              }
             }),
       ),
     );
@@ -140,22 +143,24 @@ class TaskListPageState extends State<TaskListPage> {
 
   String _subtitle(UserTask userTask) {
     RPLocalizations locale = RPLocalizations.of(context)!;
-    String str = (userTask.task.minutesToComplete != null)
+    String subtitle = (userTask.task.minutesToComplete != null)
         ? '${userTask.task.minutesToComplete} ${locale.translate('pages.task_list.task.time_to_complete')}'
         : locale.translate('pages.task_list.task.auto_complete');
 
+    String humanizedTimeRemaining = "";
     if (userTask.expiresIn != null) {
       if (userTask.expiresIn!.isNegative) {
         userTask.onExpired();
       }
-      str +=
-          ' - ${userTask.expiresIn!.inDays + 1} ${locale.translate('pages.task_list.task.days_remaining')}';
+
+      humanizedTimeRemaining = userTask.expiresIn!.humanize(locale);
     }
-    str += '';
 
-    str = (str.isEmpty) ? locale.translate(userTask.description) : str;
+    if (humanizedTimeRemaining.isNotEmpty) {
+      subtitle = "$subtitle - $humanizedTimeRemaining";
+    }
 
-    return str;
+    return subtitle.isEmpty ? locale.translate(userTask.description) : subtitle;
   }
 
   Widget _buildDoneTaskCard(BuildContext context, UserTask userTask) {
@@ -239,17 +244,21 @@ class TaskListPageState extends State<TaskListPage> {
       Icons.face_retouching_natural,
       color: CACHET.RED_2,
     ),
-    AudioUserTask.audioType: const Icon(
+    SurveyUserTask.AUDIO_TYPE: const Icon(
       Icons.record_voice_over,
       color: CACHET.GREEN,
     ),
-    VideoUserTask.videoType: const Icon(
+    SurveyUserTask.VIDEO_TYPE: const Icon(
       Icons.videocam,
       color: CACHET.BLUE_1,
     ),
-    VideoUserTask.imageType: const Icon(
+    SurveyUserTask.IMAGE_TYPE: const Icon(
       Icons.camera_alt,
       color: CACHET.YELLOW,
+    ),
+    SurveyUserTask.HEALTH_ASSESSMENT_TYPE: const Icon(
+      Icons.favorite_rounded,
+      color: CACHET.RED_1,
     ),
     BackgroundSensingUserTask.SENSING_TYPE: const Icon(
       Icons.settings_input_antenna,

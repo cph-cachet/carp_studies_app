@@ -1,17 +1,13 @@
 PODS:
-  - app_settings (5.1.1):
-    - Flutter
-  - AppAuth (1.6.2):
-    - AppAuth/Core (= 1.6.2)
-    - AppAuth/ExternalUserAgent (= 1.6.2)
-  - AppAuth/Core (1.6.2)
-  - AppAuth/ExternalUserAgent (1.6.2):
+  - AppAuth (1.7.2):
+    - AppAuth/Core (= 1.7.2)
+    - AppAuth/ExternalUserAgent (= 1.7.2)
+  - AppAuth/Core (1.7.2)
+  - AppAuth/ExternalUserAgent (1.7.2):
     - AppAuth/Core
   - audio_session (0.0.1):
     - Flutter
   - audio_streamer (0.0.1):
-    - Flutter
-  - audiofileplayer (0.0.1):
     - Flutter
   - battery_plus (1.0.0):
     - Flutter
@@ -30,11 +26,13 @@ PODS:
   - flutter_activity_recognition (0.0.1):
     - Flutter
   - flutter_appauth (0.0.1):
-    - AppAuth (= 1.6.2)
+    - AppAuth (= 1.7.2)
     - Flutter
   - flutter_blue_plus (0.0.1):
     - Flutter
   - flutter_local_notifications (0.0.1):
+    - Flutter
+  - flutter_secure_storage (6.0.0):
     - Flutter
   - flutter_sound (9.2.13):
     - Flutter
@@ -42,17 +40,24 @@ PODS:
   - flutter_sound_core (9.2.13)
   - flutter_timezone (0.0.1):
     - Flutter
-  - health (1.0.4):
-    - Flutter
   - just_audio (0.0.1):
     - Flutter
   - light (0.0.1):
     - Flutter
   - location (0.0.1):
     - Flutter
+  - mdsflutter (0.0.1):
+    - Flutter
+    - Movesense
+    - SwiftProtobuf
+  - Movesense (3.15.0)
   - network_info_plus (0.0.1):
     - Flutter
+  - oidc_ios (0.0.1):
+    - Flutter
   - open_settings (0.0.1):
+    - Flutter
+  - open_settings_plus (0.0.1):
     - Flutter
   - package_info_plus (0.4.5):
     - Flutter
@@ -61,7 +66,7 @@ PODS:
     - FlutterMacOS
   - pedometer (0.0.1):
     - Flutter
-  - permission_handler_apple (9.1.1):
+  - permission_handler_apple (9.3.0):
     - Flutter
   - polar (0.0.1):
     - Flutter
@@ -69,7 +74,7 @@ PODS:
   - PolarBleSdk (5.5.0):
     - RxSwift (~> 6.5.0)
     - SwiftProtobuf (~> 1.0)
-  - ReachabilitySwift (5.0.0)
+  - ReachabilitySwift (5.2.2)
   - RxSwift (6.5.0)
   - screen_state (0.0.1):
     - Flutter
@@ -81,7 +86,7 @@ PODS:
   - sqflite (0.0.3):
     - Flutter
     - FlutterMacOS
-  - SwiftProtobuf (1.25.2)
+  - SwiftProtobuf (1.26.0)
   - url_launcher_ios (0.0.1):
     - Flutter
   - video_player_avfoundation (0.0.1):
@@ -89,10 +94,8 @@ PODS:
     - FlutterMacOS
 
 DEPENDENCIES:
-  - app_settings (from `.symlinks/plugins/app_settings/ios`)
   - audio_session (from `.symlinks/plugins/audio_session/ios`)
   - audio_streamer (from `.symlinks/plugins/audio_streamer/ios`)
-  - audiofileplayer (from `.symlinks/plugins/audiofileplayer/ios`)
   - battery_plus (from `.symlinks/plugins/battery_plus/ios`)
   - camera_avfoundation (from `.symlinks/plugins/camera_avfoundation/ios`)
   - connectivity_plus (from `.symlinks/plugins/connectivity_plus/ios`)
@@ -103,14 +106,18 @@ DEPENDENCIES:
   - flutter_appauth (from `.symlinks/plugins/flutter_appauth/ios`)
   - flutter_blue_plus (from `.symlinks/plugins/flutter_blue_plus/ios`)
   - flutter_local_notifications (from `.symlinks/plugins/flutter_local_notifications/ios`)
+  - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
   - flutter_sound (from `.symlinks/plugins/flutter_sound/ios`)
   - flutter_timezone (from `.symlinks/plugins/flutter_timezone/ios`)
-  - health (from `.symlinks/plugins/health/ios`)
   - just_audio (from `.symlinks/plugins/just_audio/ios`)
   - light (from `.symlinks/plugins/light/ios`)
   - location (from `.symlinks/plugins/location/ios`)
+  - mdsflutter (from `.symlinks/plugins/mdsflutter/ios`)
+  - Movesense (from `https://bitbucket.org/movesense/movesense-mobile-lib/`)
   - network_info_plus (from `.symlinks/plugins/network_info_plus/ios`)
+  - oidc_ios (from `.symlinks/plugins/oidc_ios/ios`)
   - open_settings (from `.symlinks/plugins/open_settings/ios`)
+  - open_settings_plus (from `.symlinks/plugins/open_settings_plus/ios`)
   - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - pedometer (from `.symlinks/plugins/pedometer/ios`)
@@ -134,14 +141,10 @@ SPEC REPOS:
     - SwiftProtobuf
 
 EXTERNAL SOURCES:
-  app_settings:
-    :path: ".symlinks/plugins/app_settings/ios"
   audio_session:
     :path: ".symlinks/plugins/audio_session/ios"
   audio_streamer:
     :path: ".symlinks/plugins/audio_streamer/ios"
-  audiofileplayer:
-    :path: ".symlinks/plugins/audiofileplayer/ios"
   battery_plus:
     :path: ".symlinks/plugins/battery_plus/ios"
   camera_avfoundation:
@@ -162,22 +165,30 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_blue_plus/ios"
   flutter_local_notifications:
     :path: ".symlinks/plugins/flutter_local_notifications/ios"
+  flutter_secure_storage:
+    :path: ".symlinks/plugins/flutter_secure_storage/ios"
   flutter_sound:
     :path: ".symlinks/plugins/flutter_sound/ios"
   flutter_timezone:
     :path: ".symlinks/plugins/flutter_timezone/ios"
-  health:
-    :path: ".symlinks/plugins/health/ios"
   just_audio:
     :path: ".symlinks/plugins/just_audio/ios"
   light:
     :path: ".symlinks/plugins/light/ios"
   location:
     :path: ".symlinks/plugins/location/ios"
+  mdsflutter:
+    :path: ".symlinks/plugins/mdsflutter/ios"
+  Movesense:
+    :git: https://bitbucket.org/movesense/movesense-mobile-lib/
   network_info_plus:
     :path: ".symlinks/plugins/network_info_plus/ios"
+  oidc_ios:
+    :path: ".symlinks/plugins/oidc_ios/ios"
   open_settings:
     :path: ".symlinks/plugins/open_settings/ios"
+  open_settings_plus:
+    :path: ".symlinks/plugins/open_settings_plus/ios"
   package_info_plus:
     :path: ".symlinks/plugins/package_info_plus/ios"
   path_provider_foundation:
@@ -201,13 +212,16 @@ EXTERNAL SOURCES:
   video_player_avfoundation:
     :path: ".symlinks/plugins/video_player_avfoundation/darwin"
 
+CHECKOUT OPTIONS:
+  Movesense:
+    :commit: c7cc4933823553d2ad3f67db458c507a633ab33d
+    :git: https://bitbucket.org/movesense/movesense-mobile-lib/
+
 SPEC CHECKSUMS:
-  app_settings: 017320c6a680cdc94c799949d95b84cb69389ebc
-  AppAuth: 3bb1d1cd9340bd09f5ed189fb00b1cc28e1e8570
+  AppAuth: ca2458caccec349cc1e26d8d9e8fd7d22f1d01f3
   audio_session: 4f3e461722055d21515cf3261b64c973c062f345
   audio_streamer: af49e73eb66f71c4eeabb4bbcb05f122d03a6709
-  audiofileplayer: 4aaff759a721ec3a850a682e0d9ec554e5f9e86f
-  battery_plus: 3b68b6e7710fe49c022999753d22760e6dbbc471
+  battery_plus: 1ff2e16ba75af2a78387f65476057a390b47885e
   camera_avfoundation: 759172d1a77ae7be0de08fc104cfb79738b8a59e
   connectivity_plus: bf0076dd84a130856aa636df1c71ccaff908fa1d
   device_info_plus: c6fb39579d0f423935b0c9ce7ee2f44b71b9fce6
@@ -215,34 +229,38 @@ SPEC CHECKSUMS:
   esense_flutter: 8bfadfdefe7b51d6f78366e43b2b64ec9b6144b6
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   flutter_activity_recognition: 5c3b026997742b01e82424ef257db9640822ad77
-  flutter_appauth: 0863b1f33110b410213e736aead4a6727303f509
+  flutter_appauth: c5e36e22af413d4b5b2997d61c97f7350d9bd25b
   flutter_blue_plus: 4837da7d00cf5d441fdd6635b3a57f936778ea96
   flutter_local_notifications: 4cde75091f6327eb8517fa068a0a5950212d2086
+  flutter_secure_storage: 23fc622d89d073675f2eaa109381aefbcf5a49be
   flutter_sound: c60effa2a350fb977885f0db2fbc4c1ad5160900
   flutter_sound_core: 26c10e5832e76aaacfae252d8925232281c486ae
   flutter_timezone: ffb07bdad3c6276af8dada0f11978d8a1f8a20bb
-  health: 5a380c0f6c4f619535845992993964293962e99e
   just_audio: baa7252489dbcf47a4c7cc9ca663e9661c99aafa
   light: 86af7a847d218a9a2376bc1c1ae40c3410441135
   location: d5cf8598915965547c3f36761ae9cc4f4e87d22e
+  mdsflutter: 841344e0d5781afbbddd13e057e1cb2e9d86e012
+  Movesense: a1068c58b31d8032a13d69d0cb35ba6c444d2aae
   network_info_plus: 6d0c3eb8367b8164fa3fb0c19875e3f59d49697f
+  oidc_ios: e80c00b7089ae7cdc45ab9ed636fdaed3e01e6a1
   open_settings: 9628e736cb2738fd1dc84159565755c214478158
-  package_info_plus: 115f4ad11e0698c8c1c5d8a689390df880f47e85
+  open_settings_plus: 4bd848866fea2becc124581d868a6164cf768831
+  package_info_plus: 58f0028419748fad15bf008b270aaa8e54380b1c
   path_provider_foundation: 3784922295ac71e43754bd15e0653ccfd36a147c
   pedometer: 381969883680ade42559782cc41a3bbd453d8234
-  permission_handler_apple: e76247795d700c14ea09e3a2d8855d41ee80a2e6
+  permission_handler_apple: 9878588469a2b0d0fc1e048d9f43605f92e6cec2
   polar: 8efdf64c1b4e0034e8fa3b1d12b64e5b27a877f1
   PolarBleSdk: 2551160f3dcba0207723fc466a275e2d3aeda01f
-  ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
+  ReachabilitySwift: 2128f3a8c9107e1ad33574c6e58e8285d460b149
   RxSwift: 5710a9e6b17f3c3d6e40d6e559b9fa1e813b2ef8
   screen_state: a7ae251997e97f3f001839df09b57313b0ddef18
-  sensors_plus: 42b9de1b8237675fa8d8121e4bb93be0f79fa61d
+  sensors_plus: 18a9b346c43e157da17d2c8e99def703f9efb9d8
   shared_preferences_foundation: b4c3b4cddf1c21f02770737f147a3f5da9d39695
   sqflite: 673a0e54cc04b7d6dba8d24fb8095b31c3a99eec
-  SwiftProtobuf: 407a385e97fd206c4fbe880cc84123989167e0d1
-  url_launcher_ios: bbd758c6e7f9fd7b5b1d4cde34d2b95fcce5e812
+  SwiftProtobuf: 5e8349171e7c2f88f5b9e683cb3cb79d1dc780b3
+  url_launcher_ios: 6116280ddcfe98ab8820085d8d76ae7449447586
   video_player_avfoundation: 02011213dab73ae3687df27ce441fbbcc82b5579
 
-PODFILE CHECKSUM: cf73571b196c8b5799c2f2111e13846fa4ef168b
+PODFILE CHECKSUM: 24c972fbbf44ae72ef5a1d99d3fd7081907fd755
 
-COCOAPODS: 1.14.3
+COCOAPODS: 1.15.2

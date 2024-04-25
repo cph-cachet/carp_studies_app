@@ -4,20 +4,23 @@ part of carp_study_app;
 class AppUserTaskFactory implements UserTaskFactory {
   @override
   List<String> types = [
-    AudioUserTask.audioType,
-    VideoUserTask.videoType,
-    VideoUserTask.imageType,
+    SurveyUserTask.AUDIO_TYPE,
+    SurveyUserTask.VIDEO_TYPE,
+    SurveyUserTask.IMAGE_TYPE,
+    SurveyUserTask.HEALTH_ASSESSMENT_TYPE,
   ];
 
   @override
   UserTask create(AppTaskExecutor executor) {
     switch (executor.task.type) {
-      case AudioUserTask.audioType:
+      case SurveyUserTask.AUDIO_TYPE:
         return AudioUserTask(executor);
-      case VideoUserTask.videoType:
+      case SurveyUserTask.VIDEO_TYPE:
         return VideoUserTask(executor);
-      case VideoUserTask.imageType:
+      case SurveyUserTask.IMAGE_TYPE:
         return VideoUserTask(executor);
+      case SurveyUserTask.HEALTH_ASSESSMENT_TYPE:
+        return OneTimeBackgroundSensingUserTask(executor);
       default:
         return BackgroundSensingUserTask(executor);
     }
@@ -27,8 +30,6 @@ class AppUserTaskFactory implements UserTaskFactory {
 /// A user task handling audio recordings.
 /// When started, creates a [AudioTaskPage] and shows it to the user.
 class AudioUserTask extends UserTask {
-  static const String audioType = 'audio';
-
   final StreamController<int> _countDownController =
       StreamController.broadcast();
   Stream<int>? get countDownEvents => _countDownController.stream;
@@ -79,9 +80,6 @@ class AudioUserTask extends UserTask {
 /// A user task handling video and image recordings.
 /// When started, creates a [CameraTaskPage].
 class VideoUserTask extends UserTask {
-  static const String videoType = 'video';
-  static const String imageType = 'image';
-
   VideoUserTask(super.executor);
 
   @override

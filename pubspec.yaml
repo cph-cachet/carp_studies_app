@@ -1,7 +1,7 @@
 name: carp_study_app
 description: The generic CARP study app.
-publish_to: 'none'
-version: 1.4.0
+publish_to: "none"
+version: 2.0.0
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
@@ -12,55 +12,64 @@ dependencies:
     sdk: flutter
 
   carp_serializable: ^1.1.0
-  carp_core: ^1.3.0
-  carp_mobile_sensing: ^1.3.0
-  carp_context_package: ^1.3.0
+  carp_core: ^1.4.0
+  carp_mobile_sensing: ^1.5.0
+  carp_context_package: ^1.4.0
   carp_connectivity_package: ^1.3.0
   carp_survey_package: ^1.3.0
   carp_audio_package: ^1.3.0
   carp_esense_package: ^1.3.0
   carp_polar_package: ^1.3.0
-  carp_health_package: ^2.7.0
-  carp_backend: ^1.3.0
-  carp_webservices: ^2.0.1
+  # Due to this conflict with the mdsfluttere plugin we can't use health at the moment
+  #  https://github.com/petri-lipponen-movesense/mdsflutter/issues/18
+  # carp_health_package: ^2.7.0
+  carp_movesense_package: ^1.4.0
 
-  research_package: ^1.3.0
+  carp_webservices: ^3.0.0
+  carp_backend: ^1.5.0
+
+  research_package: ^1.5.0
   cognition_package: ^1.4.0
 
   flutter_launcher_icons: ^0.13.1
   url_launcher: ^6.1.5
   timeago: ^3.1.0
   expandable: ^5.0.1
-  flutter_markdown: ^0.6.4
+  flutter_markdown: ^0.7.0
   camera: ^0.10.0
   video_player: ^2.2.7
   path_provider: ^2.0.2
   json_annotation: ^4.4.0
-  app_settings: ^5.0.0
   open_settings: ^2.0.0
 
   flutter_localizations:
     sdk: flutter
-  fl_chart: ^0.66.0
+  fl_chart: ^0.67.0
   google_fonts: ^6.1.0
   go_router: ^13.0.0
   flutter_svg: ^2.0.4
   flutter_blue_plus: ^1.15.5
-  intl: ^0.18.1
+  intl: ">=0.18.0 <0.20.0"
   permission_handler: ^11.0.1
+  connectivity_plus: ^5.0.2
+  open_settings_plus: ^0.3.0
 
 # Overriding carp libraries to use the local copy
 dependency_overrides:
+  uuid: "^4.3.3"
+
   # carp_serializable:
-  #   path: ../../carp_serializable/
+  #   path: ../carp/carp.sensing-flutter/carp_serializable/
   # carp_core:
-  #   path: ../../carp_core/
+  #   path: ../carp/carp.sensing-flutter/carp_core/
   # carp_mobile_sensing:
   #   path: ../carp/carp.sensing-flutter/carp_mobile_sensing/
   # carp_context_package:
-  #   path: ../../packages/carp_context_package/
+  #   path: ../carp/carp.sensing-flutter/packages/carp_context_package/
   # carp_connectivity_package:
   #   path: ../../packages/carp_connectivity_package/
+  # carp_survey_package:
+  #   path: ../carp/carp.sensing-flutter/packages/carp_survey_package/
   # carp_communication_package:
   #   path: ../../packages/carp_communication_package/
   # carp_audio_package:
@@ -74,24 +83,21 @@ dependency_overrides:
   # carp_movisens_package:
   #   path: ../../packages/carp_movisens_package/
   # carp_health_package:
-  #   path: ../../packages/carp_health_package/
+  #   path: ../carp/carp.sensing-flutter/packages/carp_health_package/
+  # carp_webservices:
+  #   path: ../carp/carp.sensing-flutter/backends/carp_webservices/
   # carp_backend:
   #   path: ../carp/carp.sensing-flutter/backends/carp_backend/
-  # carp_webservices:
-  #   path: ../../backends/carp_webservices/
-
+  # carp_movesense_package:
+  #   path: ../carp/carp.sensing-flutter/packages/carp_movesense_package/
 
 dev_dependencies:
-  # flutter_test:
-  #   sdk: flutter
-
   test: any
   json_serializable: any
   build_runner: any
   flutter_test:
     sdk: flutter
   mockito: any
-
   flutter_lints: any
 
 # Is used to change the default app launch icons on iOS and Android.
@@ -113,8 +119,13 @@ flutter:
   assets:
     - assets/images/
     - assets/instructions/
+    - assets/instructions/en/
+    - assets/instructions/da/
     - assets/icons/
     - assets/lang/
+    - assets/carp/lang/
+    - assets/carp/resources/
+    - assets/carp/messages/
     - assets/images/messages/
     - assets/carp_logo.png
     - assets/logo.png

@@ -23,9 +23,6 @@ enum DeploymentMode {
   /// Use the CAWS production server to get the study deployment and store data.
   production,
 
-  /// Use the CAWS staging server to get the study deployment and store data.
-  staging,
-
   /// Use the CAWS test server to get the study deployment and store data.
   test,
 
@@ -41,52 +38,86 @@ enum DeploymentMode {
 /// Works as a [ChangeNotifier] and will notify its listeners on important
 /// changes. Is also stateful and has a [state] and state changes are propagated
 /// through the [stateStream].
+///
+/// The BLoC is configured using two environment variables:
+///
+///  * `deployment-mode` set the [DeploymentMode].
+///  * `debug-level` set the [DebugLevel].
+///
+/// In Flutter these environment variables are set by specifying the `--dart-define`
+/// option in `flutter run`. For example:
+///
+///  `flutter run --dart-define=deployment-mode=local,debug-level=info`
 class StudyAppBLoC extends ChangeNotifier {
   StudyAppState _state = StudyAppState.created;
   final CarpBackend _backend = CarpBackend();
   final CarpStudyAppViewModel _appViewModel = CarpStudyAppViewModel();
-
   List<Message> _messages = [];
   final StreamController<int> _messageStreamController =
       StreamController.broadcast();
+
+  /// The state of this BloC.
+  StudyAppState get state => _state;
+
+  bool get isInitialized => _state.index >= StudyAppState.initialized.index;
+  bool get isConfiguring => _state.index >= StudyAppState.configuring.index;
+  bool get isConfigured => _state.index >= StudyAppState.configured.index;
+
+  /// Debug level for the app and CAMS.
+  DebugLevel debugLevel = DebugLevel.info;
+
+  /// What kind of deployment are we running?
+  DeploymentMode deploymentMode = DeploymentMode.production;
+
+  /// The localization (language)) of this app.
+  RPLocalizations? localization;
+
+  /// The list of currently available messages.
   List<Message> get messages => _messages;
 
   /// A stream of event when the list of [messages] is updated.
   /// The data send on the stream is the number of available messages.
   Stream<int> get messageStream => _messageStreamController.stream;
 
-  /// The state of this BloC.
-  StudyAppState get state => _state;
-
-  bool get isInitialized => _state.index >= 1;
-  bool get isConfiguring => _state.index >= 2;
-  bool get isConfigured => _state.index >= 3;
-
-  /// Debug level for the app and CAMS.
-  DebugLevel debugLevel;
-
-  /// What kind of deployment are we running?
-  final DeploymentMode deploymentMode;
-
   // ScaffoldMessenger for showing snack bars
   final _scaffoldKey = GlobalKey<ScaffoldMessengerState>();
   GlobalKey<ScaffoldMessengerState> get scaffoldKey => _scaffoldKey;
   State? get scaffoldMessengerState => scaffoldKey.currentState;
 
-  /// Create the BLoC for the app specifying:
-  ///  * debug level
-  ///  * deployment mode (production, test, dev, local)
-  StudyAppBLoC({
-    this.debugLevel = DebugLevel.info,
-    this.deploymentMode = DeploymentMode.dev,
-  }) : super();
+  /// Create the BLoC for the app.
+  StudyAppBLoC() : super() {
+    const dep =
+        String.fromEnvironment('deployment-mode', defaultValue: 'production');
+    deploymentMode =
+        DeploymentMode.values.where((element) => element.name == dep).first;
 
-  LocalizationManager get localizationManager => CarpResourceManager();
+    const deb = String.fromEnvironment('debug-level', defaultValue: 'info');
+    debugLevel =
+        DebugLevel.values.where((element) => element.name == deb).first;
 
-  LocalizationLoader get localizationLoader =>
-      ResourceLocalizationLoader(localizationManager);
+    info('$runtimeType created. '
+        'DeploymentMode: ${deploymentMode.name}, '
+        'DebugLevel: ${debugLevel.name}');
+  }
 
-  MessageManager get messageManager => CarpResourceManager();
+  LocalizationManager get localizationManager =>
+      (deploymentMode == DeploymentMode.local
+          ? LocalResourceManager()
+          : CarpResourceManager()) as LocalizationManager;
+
+  LocalizationLoader get localizationLoader {
+    debug('$runtimeType - using localizationManager: $localizationManager');
+    return ResourceLocalizationLoader(localizationManager);
+  }
+
+  MessageManager get messageManager => (deploymentMode == DeploymentMode.local
+      ? LocalResourceManager()
+      : CarpResourceManager()) as MessageManager;
+
+  InformedConsentManager get informedConsentManager =>
+      (bloc.deploymentMode == DeploymentMode.local
+          ? LocalResourceManager()
+          : CarpResourceManager()) as InformedConsentManager;
 
   CarpBackend get backend => _backend;
 
@@ -128,11 +159,13 @@ class StudyAppBLoC extends ChangeNotifier {
     await Settings().init();
     await localizationManager.initialize();
 
-    await backend.initialize();
-
+    // Initialize and use the CAWS backend if not in local deployment mode
+    if (deploymentMode != DeploymentMode.local) {
+      await backend.initialize();
+    }
     _state = StudyAppState.initialized;
     notifyListeners();
-    debug('$runtimeType initialized.');
+    debug('$runtimeType initialized - deployment mode: ${deploymentMode.name}');
   }
 
   /// Set the active study in the app based on an [invitation].
@@ -149,8 +182,8 @@ class StudyAppBLoC extends ChangeNotifier {
 
     // make sure that the app is configured with the study IDs in order to access
     // the correct resources (like translations etc.) on CAWS.
-    backend.app?.studyId = studyId;
-    backend.app?.studyDeploymentId = studyDeploymentId;
+    backend.app.studyId = studyId;
+    backend.app.studyDeploymentId = studyDeploymentId;
 
     notifyListeners();
 
@@ -184,7 +217,7 @@ class StudyAppBLoC extends ChangeNotifier {
 
     // set up the messaging part
     messageManager.initialize().then(
-      (value) {
+      (_) {
         refreshMessages();
         // refresh the list of messages on a regular basis
         Timer.periodic(const Duration(minutes: 30), (_) => refreshMessages());
@@ -197,40 +230,7 @@ class StudyAppBLoC extends ChangeNotifier {
   }
 
   /// Does this app use location permissions?
-  bool get usingLocationPermissions =>
-      SamplingPackageRegistry().permissions.any((permission) =>
-          permission == Permission.location ||
-          permission == Permission.locationWhenInUse ||
-          permission == Permission.locationAlways);
-
-  /// Configuration of location permissions.
-  ///
-  /// If a [context] is provided, this method also opens the [LocationUsageDialog]
-  /// if location permissions are needed and not yet granted.
-  Future<void> configurePermissions(BuildContext? context) async {
-    if (usingLocationPermissions && context != null) {
-      var status = await Permission.locationAlways.status;
-      if (!status.isGranted && Platform.isAndroid && context.mounted) {
-        await showGeneralDialog(
-            context: context,
-            barrierDismissible: false,
-            barrierColor: Colors.black38,
-            transitionBuilder: (ctx, anim1, anim2, child) => BackdropFilter(
-                  filter: ui.ImageFilter.blur(
-                      sigmaX: 4 * anim1.value, sigmaY: 4 * anim1.value),
-                  child: FadeTransition(
-                    opacity: anim1,
-                    child: child,
-                  ),
-                ),
-            pageBuilder: (context, anim1, anim2) => LocationUsageDialog().build(
-                  context,
-                  "ic.location.content",
-                ));
-        await LocationManager().requestPermission();
-      }
-    }
-  }
+  bool get usingLocationPermissions => true;
 
   /// Has the informed consent been shown to, and accepted by the user?
   bool get hasInformedConsentBeenAccepted =>
@@ -243,6 +243,21 @@ class StudyAppBLoC extends ChangeNotifier {
   ///  * successfully uploaded to CARP
   set hasInformedConsentBeenAccepted(bool accepted) =>
       LocalSettings().hasInformedConsentBeenAccepted = accepted;
+
+  /// The informed consent has been accepted by the user.
+  ///
+  /// This entails that it has been shown to the user and accepted by the user.
+  /// Will upload it to CAWS.
+  Future<void> informedConsentHasBeenAccepted(
+    RPTaskResult informedConsentResult,
+  ) async {
+    info('Informed consent has been accepted by user.');
+    hasInformedConsentBeenAccepted = true;
+
+    if (deploymentMode != DeploymentMode.local) {
+      await backend.uploadInformedConsent(informedConsentResult);
+    }
+  }
 
   /// Refresh the list of messages (news, announcements, articles) to be shown in
   /// the Study Page of the app.
@@ -273,9 +288,9 @@ class StudyAppBLoC extends ChangeNotifier {
   bool hasMeasures() => (deployment == null)
       ? false
       : (deployment!.measures.any((measure) =>
-          (measure.type != VideoUserTask.imageType &&
-              measure.type != VideoUserTask.videoType &&
-              measure.type != AudioUserTask.audioType &&
+          (measure.type != SurveyUserTask.VIDEO_TYPE &&
+              measure.type != SurveyUserTask.IMAGE_TYPE &&
+              measure.type != SurveyUserTask.AUDIO_TYPE &&
               measure.type != SurveyUserTask.SURVEY_TYPE)));
 
   /// Does this [deployment] have the measure of type [type]?
@@ -316,7 +331,7 @@ class StudyAppBLoC extends ChangeNotifier {
   Future<void> start() async {
     assert(Sensing().controller != null,
         'No Study Controller - the study has not been deployed.');
-    if (!Sensing().isRunning) Sensing().controller?.start();
+    if (!Sensing().isRunning) Sensing().controller?.start(false);
   }
 
   /// Stop sensing.
@@ -357,14 +372,14 @@ class StudyAppBLoC extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// Leave the study and also sign out the user.
+  /// Sign user out and leave the study.
   ///
   /// This entails everything from the [leaveStudy] method plus permanently
   /// deleting all user authentication information from this phone, including
   /// the authentication and refresh tokens.
-  Future<void> leaveStudyAndSignOut() async {
-    await leaveStudy();
+  Future<void> signOutAndLeaveStudy() async {
     await backend.signOut();
+    await leaveStudy();
     notifyListeners();
   }
 }

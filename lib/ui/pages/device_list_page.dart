@@ -1,9 +1,6 @@
 part of carp_study_app;
 
-/// State of Bluetooth connection UI.
-enum CurrentStep { scan, instructions, done }
-
-/// The page showing the list of devices, ordered as:
+/// The page showing the list of devices and online services, ordered as:
 ///  * The Smartphone device (primary device)
 ///  * Any hardware devices (connected devices)
 ///  * Any online services (connected services)
@@ -35,15 +32,14 @@ class DeviceListPageState extends State<DeviceListPage> {
   @override
   void initState() {
     super.initState();
-    bluetoothStateStream = FlutterBluePlus.adapterState.listen((event) {
-      bluetoothAdapterState = event;
+    bluetoothStateStream = FlutterBluePlus.adapterState.listen((state) {
+      bluetoothAdapterState = state;
       setState(() {});
     });
   }
 
   @override
   void dispose() {
-    FlutterBluePlus.stopScan();
     bluetoothStateStream?.cancel();
     super.dispose();
   }
@@ -52,47 +48,37 @@ class DeviceListPageState extends State<DeviceListPage> {
   Widget build(BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.secondary,
-      body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const CarpAppBar(),
-            Container(
-              color: Theme.of(context).colorScheme.secondary,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(locale.translate("pages.devices.message"),
-                          style: aboutCardSubtitleStyle),
-                      const SizedBox(height: 15),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            Expanded(
-              flex: 4,
-              child: CustomScrollView(
-                slivers: [
-                  ..._smartphoneDeviceList(locale),
-                  if (_hardwareDevices.isNotEmpty)
-                    ..._hardwareDevicesList(locale),
-                  if (_onlineServices.isNotEmpty)
-                    ..._onlineServicesList(locale),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
+        backgroundColor: Theme.of(context).colorScheme.secondary,
+        body: SafeArea(
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+              const CarpAppBar(),
+              Container(
+                  color: Theme.of(context).colorScheme.secondary,
+                  child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(locale.translate("pages.devices.message"),
+                                    style: aboutCardSubtitleStyle),
+                                const SizedBox(height: 15),
+                              ])))),
+              Expanded(
+                  flex: 4,
+                  child: CustomScrollView(slivers: [
+                    ..._smartphoneDeviceList(locale),
+                    if (_hardwareDevices.isNotEmpty)
+                      ..._hardwareDevicesList(locale),
+                    if (_onlineServices.isNotEmpty)
+                      ..._onlineServicesList(locale),
+                  ]))
+            ])));
   }
 
   /// The list of smartphones - which is a list with only one smartphone.
@@ -125,8 +111,8 @@ class DeviceListPageState extends State<DeviceListPage> {
                 device.statusEvents,
                 () => _cardListBuilder(
                     device.icon!,
-                    locale.translate(device.name!),
-                    (device.id, device.batteryLevel ?? 0),
+                    locale.translate(device.typeName),
+                    (device.name, device.batteryLevel ?? 0),
                     enableFeedback: true,
                     onTap: () async => await _hardwareDeviceClicked(device),
                     trailing: device.getDeviceStatusIcon is String
@@ -153,7 +139,7 @@ class DeviceListPageState extends State<DeviceListPage> {
                   service.statusEvents,
                   () => _cardListBuilder(
                         service.icon!,
-                        locale.translate(service.name!),
+                        locale.translate(service.typeName),
                         null,
                         trailing: service.getServiceStatusIcon is String
                             ? Text(
@@ -165,7 +151,7 @@ class DeviceListPageState extends State<DeviceListPage> {
                                     color: Theme.of(context).primaryColor))
                             : service.getServiceStatusIcon as Icon,
                         isThreeLine: false,
-                        onTap: () => _onlineServiceClicked(service),
+                        onTap: () async => await _onlineServiceClicked(service),
                       ),
                   DeviceStatus.unknown);
             },
@@ -231,32 +217,24 @@ class DeviceListPageState extends State<DeviceListPage> {
         ),
       );
 
-  void _onlineServiceClicked(DeviceViewModel service) {
+  Future<void> _onlineServiceClicked(DeviceViewModel service) async {
     if (service.status == DeviceStatus.connected ||
         service.status == DeviceStatus.connecting) {
       return;
     }
 
-    service.deviceManager.hasPermissions().then((permissions) {
-      if (permissions) {
-        service.deviceManager.connect();
-      } else {
-        service.deviceManager.requestPermissions().then((_) {
-          service.deviceManager.connect();
-        });
-      }
-    });
+    if (!(await service.deviceManager.hasPermissions())) {
+      await service.deviceManager.requestPermissions();
+    }
+    await service.deviceManager.connect();
   }
 
   Future<void> _hardwareDeviceClicked(DeviceViewModel device) async {
-    if (await FlutterBluePlus.isSupported == false) {
-      return;
-    }
+    // fast out if no Bluetooth
+    if (!(await FlutterBluePlus.isSupported)) return;
 
-    // turn on bluetooth ourself if we can
-    if (Platform.isAndroid) {
-      await FlutterBluePlus.turnOn();
-    }
+    // turn on bluetooth if we can
+    if (Platform.isAndroid) await FlutterBluePlus.turnOn();
 
     if (context.mounted) {
       if (bluetoothAdapterState == BluetoothAdapterState.off &&
@@ -269,17 +247,13 @@ class DeviceListPageState extends State<DeviceListPage> {
       } else if (bluetoothAdapterState == BluetoothAdapterState.on) {
         if (device.status == DeviceStatus.connected ||
             device.status == DeviceStatus.connecting) {
-          bool? result = await showDialog<bool>(
-            context: context,
-            barrierDismissible: true,
-            builder: (context) => DisconnectionDialog(device: device),
-          );
-
-          if (result == true) {
-            await device.disconnectFromDevice();
-          } else {
-            await FlutterBluePlus.stopScan();
-          }
+          bool disconnect = await showDialog<bool?>(
+                context: context,
+                barrierDismissible: true,
+                builder: (context) => DisconnectionDialog(device: device),
+              ) ??
+              false;
+          if (disconnect) await device.disconnectFromDevice();
         } else {
           await showDialog<void>(
             context: context,

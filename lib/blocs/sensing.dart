@@ -15,7 +15,7 @@ part of carp_study_app;
 /// (i.e., start or stop).
 ///
 /// Note that this class is a singleton and only one sensing layer is used.
-/// Hence, the current assumption at the moment is that this Study App only
+/// The current assumption at the moment is that this Study App only
 /// runs one study at a time, even though CAMS supports that several studies
 /// added to the [client].
 class Sensing {
@@ -68,9 +68,10 @@ class Sensing {
     //SamplingPackageRegistry.register(CommunicationSamplingPackage());
     SamplingPackageRegistry().register(MediaSamplingPackage());
     SamplingPackageRegistry().register(SurveySamplingPackage());
-    //SamplingPackageRegistry.register(HealthSamplingPackage());
+    // SamplingPackageRegistry().register(HealthSamplingPackage());
     SamplingPackageRegistry().register(ESenseSamplingPackage());
     SamplingPackageRegistry().register(PolarSamplingPackage());
+    SamplingPackageRegistry().register(MovesenseSamplingPackage());
 
     // create and register external data managers
     DataManagerRegistry().register(CarpDataManagerFactory());
@@ -81,25 +82,55 @@ class Sensing {
 
   /// Initialize and set up sensing.
   Future<void> initialize() async {
-    info('Initializing $runtimeType}');
+    info('Initializing $runtimeType - mode: ${bloc.deploymentMode}');
 
-    // set up the devices available on this phone
+    // Set up the devices available on this phone
     DeviceController().registerAllAvailableDevices();
 
-    // Use the CARP deployment service which can download a protocol from CAWS
-    CarpDeploymentService().configureFrom(CarpService());
-    deploymentService = CarpDeploymentService();
+    switch (bloc.deploymentMode) {
+      case DeploymentMode.local:
+        // Use the local, phone-based deployment service.
+        deploymentService = SmartphoneDeploymentService();
 
-    // Register the CARP data manager for uploading data back to CARP.
+        // Get the protocol from the local study protocol manager.
+        // Note that the study id is not used since it always returns the same protocol.
+        var protocol = await LocalResourceManager().getStudyProtocol('');
+
+        // Deploy this protocol using the on-phone deployment service.
+        // Reuse the study deployment id, if this is stored on the phone.
+        _status = await SmartphoneDeploymentService().createStudyDeployment(
+          protocol!,
+          [],
+          bloc.studyDeploymentId,
+        );
+
+        // Save the correct deployment id on the phone for later use.
+        bloc.studyDeploymentId = _status?.studyDeploymentId;
+        bloc.deviceRoleName = _status?.primaryDeviceStatus?.device.roleName;
+
+        break;
+      case DeploymentMode.production:
+      case DeploymentMode.test:
+      case DeploymentMode.dev:
+        // Use the CARP deployment service which can download a protocol from CAWS
+        CarpDeploymentService().configureFrom(CarpService());
+        deploymentService = CarpDeploymentService();
+
+        break;
+    }
+
+    // Register the CARP data manager for uploading data back to CAWS.
     // This is needed in both LOCAL and CARP deployments, since a local study
-    // protocol may still upload to CARP
+    // protocol may still upload to CAWS
     DataManagerRegistry().register(CarpDataManagerFactory());
 
     // Create and configure a client manager for this phone
     await SmartPhoneClientManager().configure(
       deploymentService: deploymentService,
       deviceController: DeviceController(),
-      askForPermissions: false,
+
+      // Need to ask for permissions all at once on Android.
+      askForPermissions: Platform.isAndroid ? true : false,
     );
 
     info('$runtimeType initialized');
@@ -120,13 +151,16 @@ class Sensing {
 
     // Get the study controller and try to deploy the study.
     //
-    // Note that if the study has already been deployed on this phone
-    // it has been cached locally in a file and the local cache will
-    // be used pr. default.
+    // Note that if the study has already been deployed on this phone it has
+    // been cached locally and the local version will be used pr. default.
     // If not deployed before (i.e., cached) the study deployment will be
     // fetched from the deployment service.
     _controller = SmartPhoneClientManager().getStudyRuntime(study!);
     await controller?.tryDeployment(useCached: true);
+
+    // Make sure to translate the user tasks in the study protocol before using
+    // them in the app's task list.
+    translateStudyProtocol();
 
     // Configure the controller
     await controller?.configure();
@@ -144,20 +178,25 @@ class Sensing {
 
   /// Translate the title and description of all AppTask in the study protocol
   /// of the current master deployment.
-  void translateStudyProtocol(AssetLocalizations localization) {
-    // fast out, if not configured or no protocol
+  void translateStudyProtocol([RPLocalizations? localization]) {
+    bloc.localization ??= localization;
+
+    // Fast out is no localization
+    if (bloc.localization == null) return;
+
+    // Fast out, if not configured or no protocol
     if (controller?.status != StudyStatus.Deployed ||
         controller?.deployment == null) return;
 
     for (var task in controller!.deployment!.tasks) {
-      if (task.runtimeType == AppTask) {
-        AppTask appTask = task as AppTask;
-        appTask.title = localization.translate(appTask.title);
-        appTask.description = localization.translate(appTask.description);
+      if (task is AppTask) {
+        task.title = bloc.localization!.translate(task.title);
+        task.description = bloc.localization!.translate(task.description);
       }
     }
 
-    info("Study protocol translated to locale '${localization.locale}'");
+    info(
+        "$runtimeType - Study protocol translated to locale '${bloc.localization!.locale}'");
   }
 
   Future<void> askForPermissions() async =>

@@ -12,17 +12,72 @@ class HomePage extends StatefulWidget {
 }
 
 class HomePageState extends State<HomePage> {
+  /// Ask for location permissions.
+  ///
+  /// The method opens the [LocationUsageDialog] if location permissions are
+  /// needed and not yet granted.
+  ///
+  /// Android requires the app to show a modal window explaining "why" the app
+  /// needs access to location. Best practice for doing this is explain on the
+  /// [Request location permissions](https://developer.android.com/develop/sensors-and-location/location/permissions)
+  /// Android Developer page.
+  ///
+  /// This approach is used on both Android and iOS, even though it is an
+  /// Android recommendation / requirement.
+  Future<void> askForLocationPermissions(BuildContext context) async {
+    if (!context.mounted) return;
+
+    if (bloc.usingLocationPermissions) {
+      var granted = await LocationManager().isGranted();
+      if (!granted) {
+        await showGeneralDialog(
+            context: context,
+            barrierDismissible: false,
+            barrierColor: Colors.black38,
+            transitionBuilder: (ctx, anim1, anim2, child) => BackdropFilter(
+                  filter: ui.ImageFilter.blur(
+                      sigmaX: 4 * anim1.value, sigmaY: 4 * anim1.value),
+                  child: FadeTransition(
+                    opacity: anim1,
+                    child: child,
+                  ),
+                ),
+            pageBuilder: (context, anim1, anim2) => LocationUsageDialog().build(
+                  context,
+                  "pages.location.info",
+                ));
+        await LocationManager().requestPermission();
+      }
+    }
+  }
+
   @override
   void initState() {
     super.initState();
-    bloc.configurePermissions(context);
-    bloc.configureStudy().then((_) => bloc.start());
+
+    // Setting up sensing, which entails;
+    //  - asking for location permissions
+    //  - configuring the study
+    //  - starting sensing
+    askForLocationPermissions(context)
+        .then((_) => bloc.configureStudy().then((_) => bloc.start()));
   }
 
   @override
   Widget build(BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;
-    Sensing().translateStudyProtocol(locale);
+
+    // Save the localization for the app
+    bloc.localization = locale;
+
+    // Listen for user task notification clicked in the OS
+    AppTaskController().userTaskEvents.listen((userTask) {
+      if (userTask.state == UserTaskState.notified) {
+        debug('Notification for task id: ${userTask.id} was clicked.');
+        userTask.onStart();
+        if (userTask.hasWidget) context.push('/task/${userTask.id}');
+      }
+    });
 
     return Scaffold(
       body: SafeArea(
@@ -89,7 +144,7 @@ class HomePageState extends State<HomePage> {
         context.go(DeviceListPage.route);
         break;
       case -1:
-        context.go('/');
+        context.go(CarpStudyAppState.homeRoute);
         break;
     }
   }

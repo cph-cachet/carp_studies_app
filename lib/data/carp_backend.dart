@@ -5,9 +5,6 @@ part of carp_study_app;
 ///
 /// Use as a singleton ` CarpBackend()`.
 class CarpBackend {
-  /// The URI of the CARP Web Service (CAWS) host.
-  static const String cawsUri = 'carp.computerome.dk';
-
   /// The URL of the CARP Privacy Policy for this app.
   static const String carpPrivacyUrl =
       "https://carp.cachet.dk/privacy-policy-app";
@@ -15,11 +12,11 @@ class CarpBackend {
   /// The URL of the official CARP web site.
   static const String carpWebsiteUrl = "https://carp.cachet.dk";
 
+  /// The URIs of the CARP Web Service (CAWS) host for each [DeploymentMode].
   static const Map<DeploymentMode, String> uris = {
-    DeploymentMode.dev: 'dev',
-    DeploymentMode.test: 'test',
-    DeploymentMode.staging: 'stage',
-    DeploymentMode.production: '',
+    DeploymentMode.dev: 'dev.carp.dk',
+    DeploymentMode.test: 'test.carp.dk',
+    DeploymentMode.production: 'carp.computerome.dk',
   };
 
   static final CarpBackend _instance = CarpBackend._();
@@ -27,54 +24,69 @@ class CarpBackend {
   CarpBackend._() : super() {
     // make sure that the json functions are loaded
     CarpMobileSensing.ensureInitialized();
+    ResearchPackage.ensureInitialized();
     CognitionPackage.ensureInitialized();
   }
 
-  /// The URI of the CANS server - depending on deployment mode.
+  /// The URI of the CAWS server - depending on deployment mode.
   Uri get uri => Uri(
         scheme: 'https',
-        host: cawsUri,
+        host: uris[bloc.deploymentMode],
+      );
+
+  /// The URI of the CAWS authentication service.
+  ///
+  /// Of the form:
+  ///    https://dev.carp.dk/auth/realms/Carp/
+  Uri get authUri => Uri(
+        scheme: 'https',
+        host: uris[bloc.deploymentMode],
         pathSegments: [
           'auth',
-          uris[bloc.deploymentMode]!,
           'realms',
           'Carp',
         ],
       );
 
   /// The CAWS app configuration.
-  CarpApp? app;
+  late CarpApp _app = CarpApp(
+    name: "CAWS @ DTU",
+    uri: uri,
+    studyId: bloc.studyId,
+    studyDeploymentId: bloc.studyDeploymentId,
+  );
+
+  CarpApp get app => _app;
+
+  // The authentication configuration
+  CarpAuthProperties get authProperties => CarpAuthProperties(
+        authURL: uri,
+        clientId: 'studies-app',
+        redirectURI: Uri.parse('carp-studies-auth://auth'),
+        // For authentication at CAWS the path is '/auth/realms/Carp'
+        discoveryURL: uri.replace(pathSegments: [
+          'auth',
+          'realms',
+          'Carp',
+        ]),
+      );
 
   /// Initialize this backend. Must be called before used.
   Future<void> initialize() async {
     info('$runtimeType - initializing');
 
-    app = CarpApp(
-      name: "CAWS @ DTU",
-      uri: uri.replace(pathSegments: [uris[bloc.deploymentMode]!]),
-      authURL: uri,
-      clientId: 'studies-app',
-      redirectURI: Uri.parse('carp-studies-auth://auth'),
-      discoveryURL: uri.replace(pathSegments: [
-        ...uri.pathSegments,
-        '.well-known',
-        'openid-configuration'
-      ]),
-      studyId: bloc.studyId,
-      studyDeploymentId: bloc.studyDeploymentId,
-    );
-
-    CarpService().configure(app!);
+    await CarpAuthService().configure(authProperties);
+    CarpService().configure(app);
 
     // check if there is a user stored locally on the phone
     if (user != null) {
       info('$runtimeType - User stored locally - user: $user');
-      CarpService().currentUser = user;
+      CarpAuthService().currentUser = user;
       if (oauthToken!.hasExpired) {
         try {
           await refresh();
         } catch (error) {
-          CarpService().currentUser = null;
+          CarpAuthService().currentUser = null;
           warning('$runtimeType - Failed to refresh access token - $error');
         }
       }
@@ -87,7 +99,7 @@ class CarpBackend {
 
   /// Authenticate using a web view.
   Future<CarpUser> authenticate() async {
-    user = await CarpService().authenticate();
+    user = await CarpAuthService().authenticate();
     info('$runtimeType - User authenticated - user: $user');
     debug(toJsonString(user));
     return user!;
@@ -95,7 +107,7 @@ class CarpBackend {
 
   /// Refresh authentication token based on the refresh token.
   Future<CarpUser> refresh() async {
-    user = await CarpService().refresh();
+    user = await CarpAuthService().refresh();
     info('$runtimeType - User authenticated via refresh - user: $user');
     debug(toJsonString(user));
     return user!;
@@ -103,12 +115,12 @@ class CarpBackend {
 
   /// Sign out from CAWS and erase all local authentication information.
   Future<void> signOut() async {
-    if (CarpService().authenticated) await CarpService().logout();
+    if (CarpAuthService().authenticated) await CarpAuthService().logout();
     await LocalSettings().eraseAuthCredentials();
   }
 
   /// Has the user been authenticated?
-  bool get isAuthenticated => CarpService().authenticated;
+  bool get isAuthenticated => CarpAuthService().authenticated;
 
   /// The user authenticated, if any.
   CarpUser? get user => LocalSettings().user;

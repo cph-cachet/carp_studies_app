@@ -30,9 +30,7 @@ class InvitationListPage extends StatelessWidget {
                     ),
                   )
                 : const SliverToBoxAdapter(
-                    child: Center(
-                      child: CircularProgressIndicator(),
-                    ),
+                    child: Center(child: CircularProgressIndicator()),
                   );
 
             return CustomScrollView(

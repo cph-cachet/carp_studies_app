@@ -20,7 +20,9 @@ class DialogTitle extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             IconButton(
-              onPressed: () => context.canPop() ? context.pop() : null,
+              onPressed: () => Navigator.of(context).canPop()
+                  ? Navigator.of(context).pop()
+                  : null,
               icon: const Icon(Icons.close),
               padding: const EdgeInsets.only(right: 8),
             ),
@@ -28,12 +30,13 @@ class DialogTitle extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.only(left: 24, right: 24, bottom: 8),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Column(
-                children: [
-                  Text(
+          child: Container(
+            alignment: Alignment.center,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Flexible(
+                  child: Text(
                     (deviceName != null
                             ? "${locale.translate(deviceName!)} "
                             : "") +
@@ -43,10 +46,11 @@ class DialogTitle extends StatelessWidget {
                     style: sectionTitleStyle.copyWith(
                       color: Theme.of(context).primaryColor,
                     ),
+                    textAlign: TextAlign.center,
                   ),
-                ],
-              ),
-            ],
+                ),
+              ],
+            ),
           ),
         ),
       ],

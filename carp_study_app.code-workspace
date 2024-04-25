@@ -15,12 +15,13 @@
 			"editor.suggest.snippetsPreventQuickSuggestions": false,
 			"editor.suggestSelection": "first",
 			"editor.tabCompletion": "onlySnippets",
-			"editor.wordBasedSuggestions": false,
+			"editor.wordBasedSuggestions": "off",
 			"editor.defaultFormatter": "Dart-Code.dart-code"
 		},
 		"dart.debugExternalPackageLibraries": false,
 		"dart.debugSdkLibraries": false,
 		"dart.openDevTools": "never",
+		"java.configuration.updateBuildConfiguration": "automatic",
 	},
 	"extensions": {
 		"recommendations": [

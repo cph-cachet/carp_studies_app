@@ -97,7 +97,6 @@ class LocalSettings {
       : await Settings().getCacheBasePath(studyDeploymentId!);
 
   /// Has the informed consent been shown to, and accepted by the user?
-  /// Is `true` if there is no informed consent.
   bool get hasInformedConsentBeenAccepted => _hasInformedConsentBeenAccepted ??=
       Settings().preferences!.getBool(informedConsentAcceptedKey) ?? false;
 

@@ -23,6 +23,11 @@ class DeviceViewModel extends ViewModel {
   DeviceViewModel(this.deviceManager) : super();
 
   String? get type => deviceManager.type;
+
+  /// A printer-friendly name for this [type] of device.
+  String get typeName =>
+      deviceTypeName[type!] ?? 'pages.devices.type.unknown.name';
+
   DeviceStatus get status => deviceManager.status;
   set status(DeviceStatus status) => deviceManager.status = status;
 
@@ -33,7 +38,15 @@ class DeviceViewModel extends ViewModel {
   String get id => deviceManager.id;
 
   /// A printer-friendly name for this device.
-  String? get name => deviceTypeName[type!];
+  String get name {
+    if (deviceManager is BTLEDeviceManager) {
+      return (deviceManager as BTLEDeviceManager).btleName;
+    } else if (deviceManager is PolarDeviceManager) {
+      return (deviceManager as PolarDeviceManager).displayName ?? '';
+    } else {
+      return id;
+    }
+  }
 
   /// A printer-friendly description of this device.
   String get description =>
@@ -83,7 +96,8 @@ class DeviceViewModel extends ViewModel {
         LocationService.DEVICE_TYPE: "pages.devices.type.location.name",
         ESenseDevice.DEVICE_TYPE: "pages.devices.type.esense.name",
         PolarDevice.DEVICE_TYPE: "pages.devices.type.polar.name",
-        HealthService.DEVICE_TYPE: "pages.devices.type.health.name",
+        MovesenseDevice.DEVICE_TYPE: "pages.devices.type.movesense.name",
+        // HealthService.DEVICE_TYPE: "pages.devices.type.health.name",
       };
 
   static Map<String, String> get deviceTypeDescription => {
@@ -94,14 +108,15 @@ class DeviceViewModel extends ViewModel {
         LocationService.DEVICE_TYPE: "pages.devices.type.location.description",
         ESenseDevice.DEVICE_TYPE: "pages.devices.type.esense.description",
         PolarDevice.DEVICE_TYPE: "pages.devices.type.polar.description",
-        HealthService.DEVICE_TYPE: "pages.devices.type.health.description",
+        MovesenseDevice.DEVICE_TYPE: "pages.devices.type.movesense.description",
+        // HealthService.DEVICE_TYPE: "pages.devices.type.health.description",
       };
 
   static Map<String, Icon> get deviceTypeIcon => {
         Smartphone.DEVICE_TYPE: const Icon(
           Icons.phone_android,
           size: 30,
-          color: CACHET.DARK_BLUE,
+          color: CACHET.GREEN_1,
         ),
         WeatherService.DEVICE_TYPE: const Icon(
           Icons.wb_cloudy,
@@ -109,7 +124,7 @@ class DeviceViewModel extends ViewModel {
         ),
         AirQualityService.DEVICE_TYPE: const Icon(
           Icons.air,
-          color: CACHET.GREY_1,
+          color: CACHET.LIGHT_BLUE_2,
         ),
         LocationService.DEVICE_TYPE: const Icon(
           Icons.location_on,
@@ -118,26 +133,31 @@ class DeviceViewModel extends ViewModel {
         ESenseDevice.DEVICE_TYPE: const Icon(
           Icons.headphones,
           size: 30,
-          color: CACHET.BLACK,
+          color: CACHET.BLUE_1,
         ),
         PolarDevice.DEVICE_TYPE: const Icon(
           Icons.monitor_heart,
           size: 30,
           color: CACHET.RED,
         ),
-        HealthService.DEVICE_TYPE: const Icon(
-          Icons.favorite_rounded,
+        MovesenseDevice.DEVICE_TYPE: const Icon(
+          Icons.circle,
           size: 30,
-          color: CACHET.RED_1,
+          color: CACHET.GREY_1,
         ),
+        // HealthService.DEVICE_TYPE: const Icon(
+        //   Icons.favorite_rounded,
+        //   size: 30,
+        //   color: CACHET.RED_1,
+        // ),
       };
 
   static Map<DeviceStatus, dynamic> get deviceStatusIcon => {
         DeviceStatus.initialized: "pages.devices.status.action.connect",
         DeviceStatus.connecting: const Icon(Icons.bluetooth_searching_rounded,
-            color: CACHET.GREEN_1, size: 30),
+            color: CACHET.DARK_BLUE, size: 30),
         DeviceStatus.connected: const Icon(Icons.bluetooth_rounded,
-            color: CACHET.GREEN_1, size: 30),
+            color: CACHET.DARK_BLUE, size: 30),
         DeviceStatus.disconnected: "pages.devices.status.action.connect",
         DeviceStatus.paired: "pages.devices.status.action.connect",
         DeviceStatus.error:
@@ -174,6 +194,8 @@ class DeviceViewModel extends ViewModel {
         Smartphone.DEVICE_TYPE: "pages.devices.type.smartphone.instructions",
         ESenseDevice.DEVICE_TYPE: "pages.devices.type.esense.instructions",
         PolarDevice.DEVICE_TYPE: "pages.devices.type.polar.instructions",
+        MovesenseDevice.DEVICE_TYPE:
+            "pages.devices.type.movesense.instructions",
       };
 
   /// Map a selected device to the device in the protocol and connect to it.
@@ -189,22 +211,21 @@ class DeviceViewModel extends ViewModel {
     deviceManager.connect();
   }
 
-  // Disconnect from the currently connected device
+  /// Disconnect from the currently connected device
   Future<void> disconnectFromDevice() async {
-    if (deviceManager is BTLEDeviceManager) {
-      (deviceManager as BTLEDeviceManager).btleAddress = '';
-      (deviceManager as BTLEDeviceManager).btleName = '';
-    }
-
-    Sensing().controller?.saveDeployment();
-
     try {
       await deviceManager.disconnect();
+
+      // Erase BTLE information so the user can connect to another device, if needed.
+      if (deviceManager is BTLEDeviceManager) {
+        (deviceManager as BTLEDeviceManager).btleAddress = '';
+        (deviceManager as BTLEDeviceManager).btleName = '';
+      }
+
+      Sensing().controller?.saveDeployment();
     } catch (error) {
       warning(
           "$runtimeType - Error disconnecting to device '${deviceManager.id}' - $error.");
     }
-
-    // deviceManager.status = DeviceStatus.disconnected; // Force status update
   }
 }

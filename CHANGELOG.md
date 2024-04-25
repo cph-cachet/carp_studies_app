@@ -1,5 +1,6 @@
 ## 2.0.0
 
+- Update to latest version of Carp Mobile Sensing (1.5.0)
 - Add support for connecting to Movesense devices, collecting HR data, visualizing HR data collected
 - Memove support for Apple HealthKit (temporily, due to conflict with Movesense integration)
 - Support for running app in local deployment mode in order to debug a protocol before uploading it to CAWS

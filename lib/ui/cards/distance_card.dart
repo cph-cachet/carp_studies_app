@@ -131,7 +131,6 @@ class _DistanceCardState extends State<DistanceCard> {
         enabled: true,
         touchTooltipData: LineTouchTooltipData(
           fitInsideHorizontally: true,
-          // tooltipBgColor: Colors.grey.withOpacity(0.1),
           tooltipRoundedRadius: 8,
           getTooltipItems: (touchedSpots) {
             return touchedSpots.map((LineBarSpot touchedSpot) {

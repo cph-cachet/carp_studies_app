@@ -10,47 +10,51 @@ class InvitationListPage extends StatelessWidget {
     RPLocalizations locale = RPLocalizations.of(context)!;
     return Scaffold(
       body: FutureBuilder<List<ActiveParticipationInvitation>>(
-          future: bloc.backend.getInvitations(),
-          builder: (context, snapshot) {
-            Widget child;
+        future: bloc.backend.getInvitations(),
+        builder: (context, snapshot) {
+          Widget child;
 
-            child = snapshot.hasData
-                ? child = SliverFixedExtentList(
-                    itemExtent: 150,
-                    delegate: SliverChildBuilderDelegate(
-                      (context, index) {
-                        return Container(
-                          margin: const EdgeInsets.only(top: 16.0),
-                          child: InvitationCard(
-                            invitation: snapshot.data![index],
-                          ),
-                        );
-                      },
-                      childCount: snapshot.data!.length,
+          if (snapshot.hasData) {
+            child = SliverFixedExtentList(
+              itemExtent: 150,
+              delegate: SliverChildBuilderDelegate(
+                (context, index) {
+                  return Container(
+                    margin: const EdgeInsets.only(top: 16.0),
+                    child: InvitationMaterial(
+                      invitation: snapshot.data![index],
                     ),
-                  )
-                : const SliverToBoxAdapter(
-                    child: Center(child: CircularProgressIndicator()),
                   );
+                },
+                childCount: snapshot.data!.length,
+              ),
+            );
+          } else {
+            child = const SliverToBoxAdapter(
+              child: Center(child: CircularProgressIndicator()),
+            );
+          }
 
-            return CustomScrollView(
-              physics: const BouncingScrollPhysics(
-                  parent: AlwaysScrollableScrollPhysics()),
+          return Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: CustomScrollView(
               slivers: [
                 SliverAppBar(
                   title: Text(
                     locale.translate('invitation.invitations'),
+                    textAlign: TextAlign.center,
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 28.0,
+                      fontSize: 22.0,
                     ),
                   ),
+                  centerTitle: true,
                   pinned: true,
                   stretch: true,
                   stretchTriggerOffset: 20,
                   onStretchTrigger: () async => bloc.backend.getInvitations(),
                   leading: IconButton(
-                    icon: const Icon(Icons.arrow_back),
+                    icon: const Icon(Icons.arrow_back_ios),
                     onPressed: () {
                       if (context.canPop()) {
                         context.pop();
@@ -60,24 +64,44 @@ class InvitationListPage extends StatelessWidget {
                     },
                   ),
                 ),
+                SliverToBoxAdapter(
+                  child: Container(
+                    padding: EdgeInsets.all(10.0),
+                    child: Text(
+                      locale.translate('invitation.subtitle'),
+                      textAlign: TextAlign.left,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14.0,
+                      ),
+                    ),
+                  ),
+                ),
                 child,
               ],
-            );
-          }),
+            ),
+          );
+        },
+      ),
     );
   }
 }
 
-class InvitationCard extends StatelessWidget {
+class InvitationMaterial extends StatelessWidget {
   final ActiveParticipationInvitation invitation;
 
-  const InvitationCard({
+  const InvitationMaterial({
     super.key,
     required this.invitation,
   });
 
   @override
-  Widget build(BuildContext context) => Card(
+  Widget build(BuildContext context) => Material(
+        elevation: 8.0,
+        shape: RoundedRectangleBorder(
+          borderRadius:
+              BorderRadius.circular(12.0), // Adjust the radius as needed
+        ),
         child: InkWell(
           onTap: () {
             context.push(

@@ -4,6 +4,7 @@
     "app_home.nav_bar_item.data": "Data",
     "app_home.nav_bar_item.devices": "Enheder",
     "invitation.invitations": "Invitationer",
+    "invitation.subtitle": "Her kan du finde alle de invitationer til studier, du er blevet inviteret til.",
     "invitation.invited_to_study": "Invitation til studie",
     "invitation.accept_invite": "Acceptér",
     "login.failed_login": "Det ser ud til at du ikke har adgang til dette studie. Kontakt din forsker for at få adgang.",

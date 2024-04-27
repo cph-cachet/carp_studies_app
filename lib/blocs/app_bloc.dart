@@ -264,7 +264,7 @@ class StudyAppBLoC extends ChangeNotifier {
   Future<void> refreshMessages() async {
     try {
       _messages = await messageManager.getMessages();
-      _messages.sort((m1, m2) => m1.timestamp.compareTo(m2.timestamp));
+      _messages.sort((m1, m2) => m2.timestamp.compareTo(m1.timestamp));
       info('Message list refreshed - count: ${_messages.length}');
     } catch (error) {
       warning('Error getting messages - $error');

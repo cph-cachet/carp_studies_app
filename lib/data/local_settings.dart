@@ -83,9 +83,15 @@ class LocalSettings {
 
   /// Erase all study deployment information cached locally on this phone.
   Future<void> eraseStudyDeployment() async {
+    _studyId = null;
     _studyDeploymentId = null;
+    _hasInformedConsentBeenAccepted = null;
+
+    await Settings().preferences!.remove(studyIdKey);
     await Settings().preferences!.remove(studyDeploymentIdKey);
     await Settings().preferences!.remove(deviceRoleNameKey);
+    await Settings().preferences!.remove(informedConsentAcceptedKey);
+    debug('$runtimeType - study deployment erased.');
   }
 
   Future<String?> get deploymentBasePath async => (studyDeploymentId == null)
@@ -104,15 +110,6 @@ class LocalSettings {
   set hasInformedConsentBeenAccepted(bool accepted) {
     _hasInformedConsentBeenAccepted = accepted;
     Settings().preferences!.setBool(informedConsentAcceptedKey, accepted);
-  }
-
-  Future<void> eraseStudyIds() async {
-    _studyId = null;
-    _hasInformedConsentBeenAccepted = null;
-    await eraseStudyDeployment();
-    await Settings().preferences!.remove(studyIdKey);
-    await Settings().preferences!.remove(informedConsentAcceptedKey);
-    debug('$runtimeType - study erased.');
   }
 
   Future<void> eraseAuthCredentials() async {

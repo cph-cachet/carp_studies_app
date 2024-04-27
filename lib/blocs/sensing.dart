@@ -54,8 +54,23 @@ class Sensing {
   List<Probe> get runningProbes =>
       (_controller != null) ? _controller!.executor.probes : [];
 
+  // /// The smartphone (primary device) manager.
+  // SmartphoneDeviceManager get smartphoneDeviceManager =>
+  //     SmartPhoneClientManager().deviceController.smartphoneDeviceManager;
+
+  /// The list of devices in the current deployment.
+  List<DeviceManager>? get deploymentDevices => deployment != null
+      ? SmartPhoneClientManager()
+          .deviceController
+          .devices
+          .values
+          .where((manager) => deployment!.devices
+              .any((element) => element.type == manager.type))
+          .toList()
+      : [];
+
   /// The list of connected devices.
-  List<DeviceManager>? get runningDevices =>
+  List<DeviceManager>? get connectedDevices =>
       SmartPhoneClientManager().deviceController.connectedDevices;
 
   /// The singleton sensing instance

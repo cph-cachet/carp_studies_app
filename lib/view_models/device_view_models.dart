@@ -1,16 +1,5 @@
 part of carp_study_app;
 
-enum DeviceType {
-  phone,
-  watch,
-  headset,
-  scale,
-  home,
-  speaker,
-  heartrate,
-  unknown,
-}
-
 /// The view model for the [DeviceListPage].
 class DeviceListPageViewModel extends ViewModel {
   final List<DeviceViewModel> _devices = [];
@@ -18,16 +7,21 @@ class DeviceListPageViewModel extends ViewModel {
 }
 
 /// The view model for each device - [DeviceManager].
+///
+/// Note that the [deviceManager] can represent both a hardware device and
+/// an online service.
 class DeviceViewModel extends ViewModel {
   DeviceManager deviceManager;
   DeviceViewModel(this.deviceManager) : super();
 
+  /// The type of this device.
   String? get type => deviceManager.type;
 
   /// A printer-friendly name for this [type] of device.
   String get typeName =>
-      deviceTypeName[type!] ?? 'pages.devices.type.unknown.name';
+      _deviceTypeName[type!] ?? 'pages.devices.type.unknown.name';
 
+  /// The status of this device.
   DeviceStatus get status => deviceManager.status;
   set status(DeviceStatus status) => deviceManager.status = status;
 
@@ -50,9 +44,7 @@ class DeviceViewModel extends ViewModel {
 
   /// A printer-friendly description of this device.
   String get description =>
-      '${deviceTypeDescription[type!]} - $statusString\n$batteryLevel% battery remaining.';
-
-  String get statusString => status.toString().split('.').last;
+      '${_deviceTypeDescription[type!]} - ${status.name}\n$batteryLevel% battery remaining.';
 
   /// The battery level of this device.
   ///
@@ -71,131 +63,26 @@ class DeviceViewModel extends ViewModel {
       : const Stream.empty();
 
   /// The icon for this type of device.
-  Icon? get icon => deviceTypeIcon[type!];
+  Icon? get icon => _deviceTypeIcon[type!];
 
-  /// The icon for the status of device.
-  dynamic get getDeviceStatusIcon => deviceStatusIcon[status];
-  dynamic get getServiceStatusIcon => serviceStatusIcon[status];
+  /// The icon or string for the status of this hardware device.
+  dynamic get getDeviceStatusIcon => _deviceStatusIcon[status];
+
+  /// The icon or string for the status of service.
+  dynamic get getServiceStatusIcon => _serviceStatusIcon[status];
 
   /// The name for the status of device.
-  String? get statusText => deviceStatusText[status];
+  String? get statusText => _deviceStatusText[status];
 
-  String? get connectionInstructions => deviceConnectionInstructions[type!];
+  /// Instructions to the user on how to connect to this type of device.
+  String? get connectionInstructions => _deviceConnectionInstructions[type!];
 
+  /// Display information about this phone.
   Map<String, String?> get phoneInfo => {
         'name': '${DeviceInfo().deviceID}',
         'model':
             '${DeviceInfo().deviceModel} (${DeviceInfo().deviceManufacturer?.toUpperCase()})',
         'version': 'SDK ${DeviceInfo().sdk}',
-      };
-
-  static Map<String, String> get deviceTypeName => {
-        Smartphone.DEVICE_TYPE: "pages.devices.type.smartphone.name",
-        WeatherService.DEVICE_TYPE: "pages.devices.type.weather.name",
-        AirQualityService.DEVICE_TYPE: "pages.devices.type.air_quality.name",
-        LocationService.DEVICE_TYPE: "pages.devices.type.location.name",
-        ESenseDevice.DEVICE_TYPE: "pages.devices.type.esense.name",
-        PolarDevice.DEVICE_TYPE: "pages.devices.type.polar.name",
-        MovesenseDevice.DEVICE_TYPE: "pages.devices.type.movesense.name",
-        // HealthService.DEVICE_TYPE: "pages.devices.type.health.name",
-      };
-
-  static Map<String, String> get deviceTypeDescription => {
-        Smartphone.DEVICE_TYPE: "pages.devices.type.smartphone.description",
-        WeatherService.DEVICE_TYPE: "pages.devices.type.weather.description",
-        AirQualityService.DEVICE_TYPE:
-            "pages.devices.type.air_quality.description",
-        LocationService.DEVICE_TYPE: "pages.devices.type.location.description",
-        ESenseDevice.DEVICE_TYPE: "pages.devices.type.esense.description",
-        PolarDevice.DEVICE_TYPE: "pages.devices.type.polar.description",
-        MovesenseDevice.DEVICE_TYPE: "pages.devices.type.movesense.description",
-        // HealthService.DEVICE_TYPE: "pages.devices.type.health.description",
-      };
-
-  static Map<String, Icon> get deviceTypeIcon => {
-        Smartphone.DEVICE_TYPE: const Icon(
-          Icons.phone_android,
-          size: 30,
-          color: CACHET.GREEN_1,
-        ),
-        WeatherService.DEVICE_TYPE: const Icon(
-          Icons.wb_cloudy,
-          color: CACHET.WHITE,
-        ),
-        AirQualityService.DEVICE_TYPE: const Icon(
-          Icons.air,
-          color: CACHET.LIGHT_BLUE_2,
-        ),
-        LocationService.DEVICE_TYPE: const Icon(
-          Icons.location_on,
-          color: CACHET.GREEN,
-        ),
-        ESenseDevice.DEVICE_TYPE: const Icon(
-          Icons.headphones,
-          size: 30,
-          color: CACHET.BLUE_1,
-        ),
-        PolarDevice.DEVICE_TYPE: const Icon(
-          Icons.monitor_heart,
-          size: 30,
-          color: CACHET.RED,
-        ),
-        MovesenseDevice.DEVICE_TYPE: const Icon(
-          Icons.circle,
-          size: 30,
-          color: CACHET.GREY_1,
-        ),
-        // HealthService.DEVICE_TYPE: const Icon(
-        //   Icons.favorite_rounded,
-        //   size: 30,
-        //   color: CACHET.RED_1,
-        // ),
-      };
-
-  static Map<DeviceStatus, dynamic> get deviceStatusIcon => {
-        DeviceStatus.initialized: "pages.devices.status.action.connect",
-        DeviceStatus.connecting: const Icon(Icons.bluetooth_searching_rounded,
-            color: CACHET.DARK_BLUE, size: 30),
-        DeviceStatus.connected: const Icon(Icons.bluetooth_rounded,
-            color: CACHET.DARK_BLUE, size: 30),
-        DeviceStatus.disconnected: "pages.devices.status.action.connect",
-        DeviceStatus.paired: "pages.devices.status.action.connect",
-        DeviceStatus.error:
-            const Icon(Icons.error_outline, color: CACHET.RED_1, size: 30),
-        DeviceStatus.unknown:
-            const Icon(Icons.error_outline, color: CACHET.RED_1, size: 30),
-      };
-
-  static Map<DeviceStatus, dynamic> get serviceStatusIcon => {
-        DeviceStatus.initialized: "pages.devices.status.action.connect",
-        DeviceStatus.connecting: const Icon(Icons.sensors_off_rounded,
-            color: CACHET.GREEN_1, size: 30),
-        DeviceStatus.connected:
-            const Icon(Icons.sensors_rounded, color: CACHET.GREEN_1, size: 30),
-        DeviceStatus.disconnected: "pages.devices.status.action.connect",
-        DeviceStatus.paired: "pages.devices.status.action.connect",
-        DeviceStatus.error:
-            const Icon(Icons.error_outline, color: CACHET.RED_1, size: 30),
-        DeviceStatus.unknown:
-            const Icon(Icons.error_outline, color: CACHET.RED_1, size: 30),
-      };
-
-  static Map<DeviceStatus, String> get deviceStatusText => {
-        DeviceStatus.connecting: "pages.devices.status.connecting",
-        DeviceStatus.connected: "pages.devices.status.connected",
-        DeviceStatus.disconnected: "pages.devices.status.disconnected",
-        DeviceStatus.paired: "pages.devices.status.paired",
-        DeviceStatus.error: "pages.devices.status.error",
-        DeviceStatus.initialized: "pages.devices.status.initialized",
-        DeviceStatus.unknown: "pages.devices.status.unknown",
-      };
-
-  static Map<String, String> get deviceConnectionInstructions => {
-        Smartphone.DEVICE_TYPE: "pages.devices.type.smartphone.instructions",
-        ESenseDevice.DEVICE_TYPE: "pages.devices.type.esense.instructions",
-        PolarDevice.DEVICE_TYPE: "pages.devices.type.polar.instructions",
-        MovesenseDevice.DEVICE_TYPE:
-            "pages.devices.type.movesense.instructions",
       };
 
   /// Map a selected device to the device in the protocol and connect to it.
@@ -229,3 +116,108 @@ class DeviceViewModel extends ViewModel {
     }
   }
 }
+
+const Map<String, String> _deviceTypeName = {
+  Smartphone.DEVICE_TYPE: "pages.devices.type.smartphone.name",
+  WeatherService.DEVICE_TYPE: "pages.devices.type.weather.name",
+  AirQualityService.DEVICE_TYPE: "pages.devices.type.air_quality.name",
+  LocationService.DEVICE_TYPE: "pages.devices.type.location.name",
+  ESenseDevice.DEVICE_TYPE: "pages.devices.type.esense.name",
+  PolarDevice.DEVICE_TYPE: "pages.devices.type.polar.name",
+  MovesenseDevice.DEVICE_TYPE: "pages.devices.type.movesense.name",
+  // HealthService.DEVICE_TYPE: "pages.devices.type.health.name",
+};
+
+const Map<String, String> _deviceTypeDescription = {
+  Smartphone.DEVICE_TYPE: "pages.devices.type.smartphone.description",
+  WeatherService.DEVICE_TYPE: "pages.devices.type.weather.description",
+  AirQualityService.DEVICE_TYPE: "pages.devices.type.air_quality.description",
+  LocationService.DEVICE_TYPE: "pages.devices.type.location.description",
+  ESenseDevice.DEVICE_TYPE: "pages.devices.type.esense.description",
+  PolarDevice.DEVICE_TYPE: "pages.devices.type.polar.description",
+  MovesenseDevice.DEVICE_TYPE: "pages.devices.type.movesense.description",
+  // HealthService.DEVICE_TYPE: "pages.devices.type.health.description",
+};
+
+const Map<String, Icon> _deviceTypeIcon = {
+  Smartphone.DEVICE_TYPE: Icon(
+    Icons.phone_android,
+    size: 30,
+    color: CACHET.GREEN_1,
+  ),
+  WeatherService.DEVICE_TYPE: Icon(
+    Icons.wb_cloudy,
+    color: CACHET.WHITE,
+  ),
+  AirQualityService.DEVICE_TYPE: Icon(
+    Icons.air,
+    color: CACHET.LIGHT_BLUE_2,
+  ),
+  LocationService.DEVICE_TYPE: Icon(
+    Icons.location_on,
+    color: CACHET.GREEN,
+  ),
+  ESenseDevice.DEVICE_TYPE: Icon(
+    Icons.headphones,
+    size: 30,
+    color: CACHET.BLUE_1,
+  ),
+  PolarDevice.DEVICE_TYPE: Icon(
+    Icons.monitor_heart,
+    size: 30,
+    color: CACHET.RED,
+  ),
+  MovesenseDevice.DEVICE_TYPE: Icon(
+    Icons.circle,
+    size: 30,
+    color: CACHET.GREY_1,
+  ),
+  // HealthService.DEVICE_TYPE: const Icon(
+  //   Icons.favorite_rounded,
+  //   size: 30,
+  //   color: CACHET.RED_1,
+  // ),
+};
+
+const Map<DeviceStatus, dynamic> _deviceStatusIcon = {
+  DeviceStatus.initialized: "pages.devices.status.action.connect",
+  DeviceStatus.connecting: Icon(Icons.bluetooth_searching_rounded,
+      color: CACHET.DARK_BLUE, size: 30),
+  DeviceStatus.connected:
+      Icon(Icons.bluetooth_rounded, color: CACHET.DARK_BLUE, size: 30),
+  DeviceStatus.disconnected: "pages.devices.status.action.connect",
+  DeviceStatus.paired: "pages.devices.status.action.connect",
+  DeviceStatus.error: Icon(Icons.error_outline, color: CACHET.RED_1, size: 30),
+  DeviceStatus.unknown:
+      Icon(Icons.error_outline, color: CACHET.RED_1, size: 30),
+};
+
+const Map<DeviceStatus, dynamic> _serviceStatusIcon = {
+  DeviceStatus.initialized: "pages.devices.status.action.connect",
+  DeviceStatus.connecting:
+      Icon(Icons.sensors_off_rounded, color: CACHET.GREEN_1, size: 30),
+  DeviceStatus.connected:
+      Icon(Icons.sensors_rounded, color: CACHET.GREEN_1, size: 30),
+  DeviceStatus.disconnected: "pages.devices.status.action.connect",
+  DeviceStatus.paired: "pages.devices.status.action.connect",
+  DeviceStatus.error: Icon(Icons.error_outline, color: CACHET.RED_1, size: 30),
+  DeviceStatus.unknown:
+      Icon(Icons.error_outline, color: CACHET.RED_1, size: 30),
+};
+
+const Map<DeviceStatus, String> _deviceStatusText = {
+  DeviceStatus.connecting: "pages.devices.status.connecting",
+  DeviceStatus.connected: "pages.devices.status.connected",
+  DeviceStatus.disconnected: "pages.devices.status.disconnected",
+  DeviceStatus.paired: "pages.devices.status.paired",
+  DeviceStatus.error: "pages.devices.status.error",
+  DeviceStatus.initialized: "pages.devices.status.initialized",
+  DeviceStatus.unknown: "pages.devices.status.unknown",
+};
+
+const Map<String, String> _deviceConnectionInstructions = {
+  Smartphone.DEVICE_TYPE: "pages.devices.type.smartphone.instructions",
+  ESenseDevice.DEVICE_TYPE: "pages.devices.type.esense.instructions",
+  PolarDevice.DEVICE_TYPE: "pages.devices.type.polar.instructions",
+  MovesenseDevice.DEVICE_TYPE: "pages.devices.type.movesense.instructions",
+};

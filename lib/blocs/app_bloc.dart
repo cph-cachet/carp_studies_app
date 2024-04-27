@@ -323,9 +323,13 @@ class StudyAppBLoC extends ChangeNotifier {
       ? Sensing().controller!.executor.probes
       : [];
 
-  /// Get a list of running devices
-  Iterable<DeviceViewModel> get runningDevices =>
-      Sensing().runningDevices!.map((device) => DeviceViewModel(device));
+  // /// The smartphone (primary device) manager.
+  // DeviceViewModel get smartphoneDevice =>
+  //     DeviceViewModel(Sensing().smartphoneDeviceManager);
+
+  /// The list of all devices in this deployment.
+  Iterable<DeviceViewModel> get deploymentDevices =>
+      Sensing().deploymentDevices!.map((device) => DeviceViewModel(device));
 
   /// Start sensing.
   Future<void> start() async {
@@ -344,11 +348,11 @@ class StudyAppBLoC extends ChangeNotifier {
     Sensing().controller?.dispose();
   }
 
-  /// Add a [Measurement] object to the stream of events.
+  /// Add a [Measurement] object to the stream of measurements.
   void addMeasurement(Measurement measurement) =>
       Sensing().controller!.executor.addMeasurement(measurement);
 
-  /// Add a error to the stream of events.
+  /// Add a error to the stream of measurements.
   void addError(Object error, [StackTrace? stacktrace]) =>
       Sensing().controller!.executor.addError(error, stacktrace);
 
@@ -365,10 +369,14 @@ class StudyAppBLoC extends ChangeNotifier {
   /// re-deployed on the phone, data from the previous deployment will be
   /// available.
   Future<void> leaveStudy() async {
-    _state = StudyAppState.initialized;
-    hasInformedConsentBeenAccepted = false;
-    await LocalSettings().eraseStudyIds();
+    // stop sensing and remove all deployment info
     await Sensing().removeStudy();
+    await LocalSettings().eraseStudyDeployment();
+
+    // dispose the UI data models
+    appViewModel.dispose();
+
+    _state = StudyAppState.initialized;
     notifyListeners();
   }
 
@@ -380,6 +388,5 @@ class StudyAppBLoC extends ChangeNotifier {
   Future<void> signOutAndLeaveStudy() async {
     await backend.signOut();
     await leaveStudy();
-    notifyListeners();
   }
 }

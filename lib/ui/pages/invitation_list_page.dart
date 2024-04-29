@@ -49,7 +49,7 @@ class InvitationListPage extends StatelessWidget {
                     ),
                   ),
                   centerTitle: true,
-                  pinned: true,
+                  pinned: false,
                   stretch: true,
                   stretchTriggerOffset: 20,
                   onStretchTrigger: () async => bloc.backend.getInvitations(),
@@ -96,38 +96,40 @@ class InvitationMaterial extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) => Material(
-        elevation: 8.0,
-        shape: RoundedRectangleBorder(
-          borderRadius:
-              BorderRadius.circular(12.0), // Adjust the radius as needed
-        ),
-        child: InkWell(
-          onTap: () {
-            context.push(
-                '${InvitationDetailsPage.route}/${invitation.participation.participantId}');
-          },
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Text(
-                  invitation.invitation.name,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20.0,
-                  ),
+  Widget build(BuildContext context) {
+    return Material(
+      elevation: 8.0,
+      shape: RoundedRectangleBorder(
+        borderRadius:
+            BorderRadius.circular(12.0), // Adjust the radius as needed
+      ),
+      child: InkWell(
+        onTap: () {
+          context.push(
+              '${InvitationDetailsPage.route}/${invitation.participation.participantId}');
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(
+                invitation.invitation.name,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20.0,
                 ),
-                Text(
-                  (invitation.invitation.description ?? ''),
-                  style: const TextStyle(fontSize: 16.0),
-                  maxLines: 3,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ],
-            ),
+              ),
+              Text(
+                (invitation.invitation.description ?? ''),
+                style: const TextStyle(fontSize: 16.0),
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ],
           ),
         ),
-      );
+      ),
+    );
+  }
 }

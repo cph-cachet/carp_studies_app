@@ -36,7 +36,8 @@ class InvitationListPage extends StatelessWidget {
           }
 
           return Padding(
-            padding: const EdgeInsets.only(bottom: 16.0, left: 16.0, right: 16.0),
+            padding:
+                const EdgeInsets.only(bottom: 16.0, left: 16.0, right: 16.0),
             child: CustomScrollView(
               slivers: [
                 SliverAppBar(
@@ -119,8 +120,7 @@ class InvitationMaterial extends StatelessWidget {
     return Material(
       elevation: 8.0,
       shape: RoundedRectangleBorder(
-        borderRadius:
-            BorderRadius.circular(12.0), 
+        borderRadius: BorderRadius.circular(12.0),
       ),
       child: InkWell(
         onTap: () {

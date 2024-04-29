@@ -72,8 +72,7 @@ class InvitationDetailsPage extends StatelessWidget {
                   child: Material(
                     elevation: 8.0,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(
-                          12.0),
+                      borderRadius: BorderRadius.circular(12.0),
                     ),
                     child: Padding(
                       padding: const EdgeInsets.only(

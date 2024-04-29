@@ -49,7 +49,6 @@ class InvitationListPage extends StatelessWidget {
                 ),
                 SliverToBoxAdapter(
                   child: IntrinsicHeight(
-                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     child: Stack(
                       children: [
                         Positioned(
@@ -118,11 +117,10 @@ class InvitationMaterial extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      // color: Theme.of(context).,
       elevation: 8.0,
       shape: RoundedRectangleBorder(
         borderRadius:
-            BorderRadius.circular(12.0), // Adjust the radius as needed
+            BorderRadius.circular(12.0), 
       ),
       child: InkWell(
         onTap: () {

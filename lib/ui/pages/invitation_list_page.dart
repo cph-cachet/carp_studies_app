@@ -36,32 +36,52 @@ class InvitationListPage extends StatelessWidget {
           }
 
           return Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.only(bottom: 16.0, left: 16.0, right: 16.0),
             child: CustomScrollView(
               slivers: [
                 SliverAppBar(
-                  title: Text(
-                    locale.translate('invitation.invitations'),
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 22.0,
-                    ),
-                  ),
+                  title: const CarpAppBar(),
                   centerTitle: true,
                   pinned: false,
                   stretch: true,
                   stretchTriggerOffset: 20,
                   onStretchTrigger: () async => bloc.backend.getInvitations(),
-                  leading: IconButton(
-                    icon: const Icon(Icons.arrow_back_ios),
-                    onPressed: () {
-                      if (context.canPop()) {
-                        context.pop();
-                      } else {
-                        context.go(LoginPage.route);
-                      }
-                    },
+                ),
+                SliverToBoxAdapter(
+                  child: IntrinsicHeight(
+                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    child: Stack(
+                      children: [
+                        Positioned(
+                          left: 0,
+                          child: IconButton(
+                            icon: const Icon(Icons.arrow_back_ios),
+                            onPressed: () {
+                              if (context.canPop()) {
+                                context.pop();
+                              } else {
+                                context.go(LoginPage.route);
+                              }
+                            },
+                          ),
+                        ),
+                        Container(
+                          padding: EdgeInsets.only(bottom: 10),
+                          child: Align(
+                            child: Center(
+                              child: Text(
+                                locale.translate('invitation.invitations'),
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 22.0,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 SliverToBoxAdapter(
@@ -98,6 +118,7 @@ class InvitationMaterial extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
+      // color: Theme.of(context).,
       elevation: 8.0,
       shape: RoundedRectangleBorder(
         borderRadius:

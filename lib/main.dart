@@ -78,6 +78,7 @@ part 'view_models/user_tasks.dart';
 part 'carp_study_app.dart';
 part 'ui/pages/informed_consent_page.dart';
 part 'ui/pages/home_page.dart';
+part 'ui/widgets/carp_app_bar_with_profile.dart';
 part 'ui/widgets/carp_app_bar.dart';
 part 'ui/carp_study_style.dart';
 part 'ui/colors.dart';

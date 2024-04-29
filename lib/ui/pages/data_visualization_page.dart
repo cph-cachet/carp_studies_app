@@ -21,7 +21,7 @@ class _DataVisualizationPageState extends State<DataVisualizationPage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const CarpAppBar(),
+            const CarpAppBarWithProfile(),
             Container(
               color: Theme.of(context).colorScheme.secondary,
               child: Padding(

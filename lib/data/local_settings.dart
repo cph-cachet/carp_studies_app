@@ -85,6 +85,7 @@ class LocalSettings {
   Future<void> eraseStudyDeployment() async {
     _studyId = null;
     _studyDeploymentId = null;
+    _deviceRoleName = null;
     _hasInformedConsentBeenAccepted = null;
 
     await Settings().preferences!.remove(studyIdKey);

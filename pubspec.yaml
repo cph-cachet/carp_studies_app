@@ -1,7 +1,7 @@
 name: carp_study_app
 description: The generic CARP study app.
 publish_to: "none"
-version: 2.0.0
+version: 2.1.0
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
@@ -12,8 +12,8 @@ dependencies:
     sdk: flutter
 
   carp_serializable: ^1.1.0
-  # carp_core: ^1.5.0
-  # carp_mobile_sensing: ^1.5.0
+  # carp_core: ^1.6.0
+  # carp_mobile_sensing: ^1.6.0
   carp_context_package: ^1.4.0
   carp_connectivity_package: ^1.3.0
   carp_survey_package: ^1.3.0
@@ -51,7 +51,7 @@ dependencies:
   flutter_blue_plus: ^1.15.5
   intl: ">=0.18.0 <0.20.0"
   permission_handler: ^11.0.1
-  connectivity_plus: ^5.0.2
+  connectivity_plus: ^6.0.0
   open_settings_plus: ^0.3.0
 
 # Overriding carp libraries to use the local copy
@@ -84,12 +84,13 @@ dependency_overrides:
   #   path: ../../packages/carp_movisens_package/
   # carp_health_package:
   #   path: ../carp/carp.sensing-flutter/packages/carp_health_package/
-  # carp_webservices:
-  #   path: ../carp/carp.sensing-flutter/backends/carp_webservices/
-  # carp_backend:
-  #   path: ../carp/carp.sensing-flutter/backends/carp_backend/
   # carp_movesense_package:
   #   path: ../carp/carp.sensing-flutter/packages/carp_movesense_package/
+
+  carp_webservices:
+    path: ../carp/carp.sensing-flutter/backends/carp_webservices/
+  carp_backend:
+    path: ../carp/carp.sensing-flutter/backends/carp_backend/
 
 dev_dependencies:
   test: any

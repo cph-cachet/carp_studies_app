@@ -168,6 +168,16 @@ class StudyAppBLoC extends ChangeNotifier {
     debug('$runtimeType initialized - deployment mode: ${deploymentMode.name}');
   }
 
+  /// Is the phone connected either via wifi or mobile network?
+  Future<bool> checkConnectivity() async {
+    final List<ConnectivityResult> results =
+        await (Connectivity().checkConnectivity());
+
+    return results.any((element) =>
+        element == ConnectivityResult.mobile ||
+        element == ConnectivityResult.wifi);
+  }
+
   /// Set the active study in the app based on an [invitation].
   ///
   /// If a [context] is provided, the translation for this study is re-loaded
@@ -374,7 +384,7 @@ class StudyAppBLoC extends ChangeNotifier {
     await LocalSettings().eraseStudyDeployment();
 
     // dispose the UI data models
-    appViewModel.dispose();
+    //appViewModel.dispose();
 
     _state = StudyAppState.initialized;
     notifyListeners();

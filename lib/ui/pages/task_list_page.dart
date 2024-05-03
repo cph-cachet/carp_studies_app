@@ -110,7 +110,12 @@ class TaskListPageState extends State<TaskListPage> {
                 const SizedBox(height: 5),
                 Text(_subtitle(userTask),
                     style: aboutCardSubtitleStyle.copyWith(
-                        color: Theme.of(context).primaryColor)),
+                        color: userTask.expiresIn != null &&
+                                userTask.expiresIn!.inHours < 24
+                            ? Theme.of(context)
+                                .extension<CarpColors>()!
+                                .warningColor
+                            : Theme.of(context).primaryColor)),
                 const SizedBox(height: 5),
                 Text(locale.translate(userTask.description)),
               ],

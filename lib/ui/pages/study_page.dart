@@ -65,7 +65,7 @@ class StudyPageState extends State<StudyPage> {
     timeago.setLocaleMessages('da', timeago.DaMessages());
     timeago.setLocaleMessages('es', timeago.EsMessages());
 
-    return StudiesCard(
+    return StudiesMaterial(
       child: InkWell(
         onTap: () {
           if (onTap != null) {

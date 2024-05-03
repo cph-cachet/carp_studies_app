@@ -89,7 +89,7 @@ class DeviceListPageState extends State<DeviceListPage> {
           (BuildContext context, int index) => ListenableBuilder(
               listenable: _smartphoneDevice[index],
               builder: (BuildContext context, Widget? widget) => Center(
-                      child: StudiesCard(
+                      child: StudiesMaterial(
                           child: _cardListBuilder(
                               _smartphoneDevice[index].icon!,
                               _smartphoneDevice[index].phoneInfo['name']!, (
@@ -208,7 +208,7 @@ class DeviceListPageState extends State<DeviceListPage> {
     T? initialData,
   ) =>
       Center(
-        child: StudiesCard(
+        child: StudiesMaterial(
           child: StreamBuilder<T>(
             stream: stream,
             initialData: initialData,

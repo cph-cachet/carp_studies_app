@@ -65,7 +65,7 @@ class InvitationDetailsPage extends StatelessWidget {
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.only(top: 16.0),
-                  child: StudiesCard(
+                  child: StudiesMaterial(
                     elevation: 2.0,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12.0),

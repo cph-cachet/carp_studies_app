@@ -19,7 +19,7 @@ class StudyCard extends StatelessWidget {
         '${locale.translate(studyPageModel.piAddress)}\n'
         '${locale.translate(studyPageModel.piEmail)}\n';
 
-    return StudiesCard(
+    return StudiesMaterial(
       clipBehavior: Clip.antiAliasWithSaveLayer,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,

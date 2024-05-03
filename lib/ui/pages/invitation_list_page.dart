@@ -120,7 +120,7 @@ class InvitationMaterial extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-      child: StudiesCard(
+      child: StudiesMaterial(
         elevation: 2.0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12.0),

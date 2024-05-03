@@ -15,7 +15,6 @@ class CarpAppBarWithProfile extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                    padding: EdgeInsets.only(left: 16),
                     child: CarpAppBar(),
                   ),
                   IconButton(

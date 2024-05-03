@@ -14,6 +14,7 @@ class CarpAppBar extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
+                    padding: EdgeInsets.only(left: 16),
                     child: Image.asset(
                       'assets/carp_logo.png',
                       fit: BoxFit.contain,

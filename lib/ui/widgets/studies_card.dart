@@ -21,12 +21,15 @@ class StudiesCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: elevation,
-      margin: margin,
-      shape: shape,
-      clipBehavior: clipBehavior,
-      child: child,
+    return Container(
+      padding: const EdgeInsets.only(bottom: 16.0, left: 16.0, right: 16.0),
+      child: Material(
+        elevation: elevation,
+        // margin: margin,
+        shape: shape,
+        clipBehavior: clipBehavior ?? Clip.none,
+        child: child,
+      ),
     );
   }
 }

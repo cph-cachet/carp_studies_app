@@ -17,17 +17,15 @@ class InvitationDetailsPage extends StatelessWidget {
     var invitation = model.getInvitation(invitationId);
 
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.secondary,
       appBar: AppBar(
-        title: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: const CarpAppBar(),
-        ),
+        title: const CarpAppBar(),
         automaticallyImplyLeading: false,
         centerTitle: true,
         elevation: 0.0,
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        padding: const EdgeInsets.all(16.0),
         child: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -37,7 +35,10 @@ class InvitationDetailsPage extends StatelessWidget {
                   children: [
                     Positioned(
                       left: 0,
+                      top: 0,
+                      bottom: 0,
                       child: IconButton(
+                        padding: EdgeInsets.zero,
                         icon: const Icon(Icons.arrow_back_ios),
                         onPressed: () {
                           if (context.canPop()) {
@@ -48,18 +49,13 @@ class InvitationDetailsPage extends StatelessWidget {
                         },
                       ),
                     ),
-                    Container(
-                      padding: EdgeInsets.only(bottom: 10),
-                      child: Align(
-                        child: Center(
-                          child: Text(
-                            locale.translate('invitation.invited_to_study'),
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 22.0,
-                            ),
-                          ),
+                    Center(
+                      child: Text(
+                        locale.translate('invitation.invited_to_study'),
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 22.0,
                         ),
                       ),
                     ),
@@ -68,9 +64,9 @@ class InvitationDetailsPage extends StatelessWidget {
               ),
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 16.0),
-                  child: Material(
-                    elevation: 8.0,
+                  padding: const EdgeInsets.only(top: 16.0),
+                  child: StudiesCard(
+                    elevation: 2.0,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12.0),
                     ),

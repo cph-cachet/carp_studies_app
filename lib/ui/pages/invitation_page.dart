@@ -25,7 +25,7 @@ class InvitationDetailsPage extends StatelessWidget {
         elevation: 0.0,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.symmetric(vertical: 8.0),
         child: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -34,17 +34,16 @@ class InvitationDetailsPage extends StatelessWidget {
                 child: Stack(
                   children: [
                     Positioned(
-                      left: 0,
+                      left: 8,
                       top: 0,
                       bottom: 0,
                       child: IconButton(
-                        padding: EdgeInsets.zero,
                         icon: const Icon(Icons.arrow_back_ios),
                         onPressed: () {
                           if (context.canPop()) {
                             context.pop();
                           } else {
-                            context.go(LoginPage.route);
+                            context.go(InvitationListPage.route);
                           }
                         },
                       ),

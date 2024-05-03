@@ -40,23 +40,23 @@ class InvitationListPage extends StatelessWidget {
               SliverAppBar(
                 title: const CarpAppBar(),
                 centerTitle: true,
-                pinned: false,
+                pinned: true,
                 stretch: true,
                 stretchTriggerOffset: 20,
+                scrolledUnderElevation: 0,
                 onStretchTrigger: () async => bloc.backend.getInvitations(),
               ),
               SliverToBoxAdapter(
                 child: Padding(
-                  padding: const EdgeInsets.all(16.0),
+                  padding: const EdgeInsets.symmetric(vertical: 16.0),
                   child: IntrinsicHeight(
                     child: Stack(
                       children: [
                         Positioned(
-                          left: 0,
+                          left: 8,
                           top: 0,
                           bottom: 0,
                           child: IconButton(
-                            padding: EdgeInsets.zero,
                             icon: const Icon(Icons.arrow_back_ios),
                             onPressed: () {
                               if (context.canPop()) {
@@ -118,38 +118,35 @@ class InvitationMaterial extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-      child: StudiesMaterial(
-        elevation: 2.0,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12.0),
-        ),
-        child: InkWell(
-          onTap: () {
-            context.push(
-                '${InvitationDetailsPage.route}/${invitation.participation.participantId}');
-          },
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Text(
-                  invitation.invitation.name,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20.0,
-                  ),
+    return StudiesMaterial(
+      elevation: 2.0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12.0),
+      ),
+      child: InkWell(
+        onTap: () {
+          context.push(
+              '${InvitationDetailsPage.route}/${invitation.participation.participantId}');
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(
+                invitation.invitation.name,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20.0,
                 ),
-                Text(
-                  (invitation.invitation.description ?? ''),
-                  style: const TextStyle(fontSize: 16.0),
-                  maxLines: 3,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ],
-            ),
+              ),
+              Text(
+                (invitation.invitation.description ?? ''),
+                style: const TextStyle(fontSize: 16.0),
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ],
           ),
         ),
       ),

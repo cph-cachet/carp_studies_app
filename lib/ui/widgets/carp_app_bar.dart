@@ -1,7 +1,8 @@
 part of carp_study_app;
 
 class CarpAppBar extends StatelessWidget {
-  const CarpAppBar({super.key});
+  final bool hasProfileIcon;
+  const CarpAppBar({super.key, this.hasProfileIcon = false});
 
   @override
   Widget build(BuildContext context) {
@@ -14,13 +15,25 @@ class CarpAppBar extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                    padding: EdgeInsets.only(left: 16),
+                    padding: EdgeInsets.only(left: 8),
                     child: Image.asset(
                       'assets/carp_logo.png',
                       fit: BoxFit.contain,
                       height: 16,
                     ),
                   ),
+                  if (hasProfileIcon)
+                    IconButton(
+                      icon: Icon(
+                        Icons.account_circle_outlined,
+                        color: Theme.of(context).primaryColor,
+                        size: 30,
+                      ),
+                      tooltip: 'Profile',
+                      onPressed: () {
+                        context.push(ProfilePage.route);
+                      },
+                    ),
                 ],
               ),
             ],

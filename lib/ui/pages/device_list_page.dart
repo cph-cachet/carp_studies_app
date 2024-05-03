@@ -54,7 +54,7 @@ class DeviceListPageState extends State<DeviceListPage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-              const CarpAppBarWithProfile(),
+              const CarpAppBar(hasProfileIcon: true),
               Container(
                   color: Theme.of(context).colorScheme.secondary,
                   child: Padding(

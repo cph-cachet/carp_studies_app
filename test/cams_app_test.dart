@@ -10,7 +10,7 @@ import 'package:carp_audio_package/media.dart';
 // import 'package:carp_communication_package/communication.dart';
 // import 'package:carp_apps_package/apps.dart';
 import 'package:carp_backend/carp_backend.dart';
-import 'package:research_package/model.dart';
+import 'package:research_package/research_package.dart';
 // import 'package:carp_webservices/carp_auth/carp_auth.dart';
 // import 'package:carp_webservices/carp_services/carp_services.dart';
 import 'package:carp_movesense_package/carp_movesense_package.dart';

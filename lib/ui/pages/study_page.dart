@@ -99,17 +99,7 @@ class StudyPageState extends State<StudyPage> {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: Text(
-                    '${locale.translate(message.type.toString().split('.').last.toLowerCase())} - ${timeago.format(
-                      DateTime.now().copyWithAdditional(
-                          years: -DateTime.now().year + message.timestamp.year,
-                          months:
-                              -DateTime.now().month + message.timestamp.month,
-                          days: -DateTime.now().day + message.timestamp.day,
-                          hours: -DateTime.now().hour + message.timestamp.hour,
-                          minutes: -DateTime.now().minute +
-                              message.timestamp.minute),
-                      locale: Localizations.localeOf(context).languageCode,
-                    )}',
+                    '${locale.translate(message.type.toString().split('.').last.toLowerCase())} - ${timeago.format(message.timestamp.toLocal())}',
                     style: aboutCardSubtitleStyle.copyWith(
                         color: Theme.of(context).primaryColor)),
               ),

@@ -69,6 +69,9 @@ class StudyAppBLoC extends ChangeNotifier {
   /// What kind of deployment are we running?
   DeploymentMode deploymentMode = DeploymentMode.production;
 
+  /// The localization (language)) of this app.
+  RPLocalizations? localization;
+
   /// The list of currently available messages.
   List<Message> get messages => _messages;
 
@@ -179,8 +182,8 @@ class StudyAppBLoC extends ChangeNotifier {
 
     // make sure that the app is configured with the study IDs in order to access
     // the correct resources (like translations etc.) on CAWS.
-    backend.app?.studyId = studyId;
-    backend.app?.studyDeploymentId = studyDeploymentId;
+    backend.app.studyId = studyId;
+    backend.app.studyDeploymentId = studyDeploymentId;
 
     notifyListeners();
 
@@ -261,7 +264,7 @@ class StudyAppBLoC extends ChangeNotifier {
   Future<void> refreshMessages() async {
     try {
       _messages = await messageManager.getMessages();
-      _messages.sort((m1, m2) => m1.timestamp.compareTo(m2.timestamp));
+      _messages.sort((m1, m2) => m2.timestamp.compareTo(m1.timestamp));
       info('Message list refreshed - count: ${_messages.length}');
     } catch (error) {
       warning('Error getting messages - $error');

@@ -67,9 +67,17 @@ class HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;
 
-    // Make sure to translate the user tasks in the study protocol before using
-    // them in the app's task list.
-    Sensing().translateStudyProtocol(locale);
+    // Save the localization for the app
+    bloc.localization = locale;
+
+    // Listen for user task notification clicked in the OS
+    AppTaskController().userTaskEvents.listen((userTask) {
+      if (userTask.state == UserTaskState.notified) {
+        debug('Notification for task id: ${userTask.id} was clicked.');
+        userTask.onStart();
+        if (userTask.hasWidget) context.push('/task/${userTask.id}');
+      }
+    });
 
     return Scaffold(
       body: SafeArea(

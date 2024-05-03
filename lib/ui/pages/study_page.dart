@@ -19,7 +19,10 @@ class StudyPageState extends State<StudyPage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const CarpAppBar(hasProfileIcon: true),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: const CarpAppBar(hasProfileIcon: true),
+            ),
             Flexible(
               child: StreamBuilder<int>(
                   stream: widget.model.messageStream,

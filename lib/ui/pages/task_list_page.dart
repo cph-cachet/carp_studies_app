@@ -19,7 +19,10 @@ class TaskListPageState extends State<TaskListPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            const CarpAppBar(hasProfileIcon: true),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: const CarpAppBar(hasProfileIcon: true),
+            ),
             Expanded(
               flex: 4,
               child: StreamBuilder<UserTask>(

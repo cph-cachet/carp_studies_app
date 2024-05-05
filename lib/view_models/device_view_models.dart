@@ -97,7 +97,7 @@ class DeviceViewModel extends ViewModel {
         ESenseDevice.DEVICE_TYPE: "pages.devices.type.esense.name",
         PolarDevice.DEVICE_TYPE: "pages.devices.type.polar.name",
         MovesenseDevice.DEVICE_TYPE: "pages.devices.type.movesense.name",
-        // HealthService.DEVICE_TYPE: "pages.devices.type.health.name",
+        HealthService.DEVICE_TYPE: "pages.devices.type.health.name",
       };
 
   static Map<String, String> get deviceTypeDescription => {
@@ -109,7 +109,7 @@ class DeviceViewModel extends ViewModel {
         ESenseDevice.DEVICE_TYPE: "pages.devices.type.esense.description",
         PolarDevice.DEVICE_TYPE: "pages.devices.type.polar.description",
         MovesenseDevice.DEVICE_TYPE: "pages.devices.type.movesense.description",
-        // HealthService.DEVICE_TYPE: "pages.devices.type.health.description",
+        HealthService.DEVICE_TYPE: "pages.devices.type.health.description",
       };
 
   static Map<String, Icon> get deviceTypeIcon => {
@@ -145,11 +145,11 @@ class DeviceViewModel extends ViewModel {
           size: 30,
           color: CACHET.GREY_1,
         ),
-        // HealthService.DEVICE_TYPE: const Icon(
-        //   Icons.favorite_rounded,
-        //   size: 30,
-        //   color: CACHET.RED_1,
-        // ),
+        HealthService.DEVICE_TYPE: const Icon(
+          Icons.favorite_rounded,
+          size: 30,
+          color: CACHET.RED_1,
+        ),
       };
 
   static Map<DeviceStatus, dynamic> get deviceStatusIcon => {

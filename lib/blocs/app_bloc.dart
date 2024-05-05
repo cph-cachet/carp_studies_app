@@ -205,10 +205,13 @@ class StudyAppBLoC extends ChangeNotifier {
     if (context != null) CarpStudyApp.reloadLocale(context);
   }
 
-  /// This methods is used to configure a study, including:
-  ///  * setting up messaging
+  /// This methods is used to configure the study deployment with
+  /// the id [studyDeploymentId].
+  ///
+  /// This includes:
   ///  * initialize sensing
   ///  * adding the CAMS study
+  ///  * setting up messaging
   ///  * initializing the data visualization pages
   Future<void> configureStudy() async {
     // early out if already configured
@@ -333,10 +336,6 @@ class StudyAppBLoC extends ChangeNotifier {
       ? Sensing().controller!.executor.probes
       : [];
 
-  // /// The smartphone (primary device) manager.
-  // DeviceViewModel get smartphoneDevice =>
-  //     DeviceViewModel(Sensing().smartphoneDeviceManager);
-
   /// The list of all devices in this deployment.
   Iterable<DeviceViewModel> get deploymentDevices =>
       Sensing().deploymentDevices!.map((device) => DeviceViewModel(device));
@@ -345,11 +344,11 @@ class StudyAppBLoC extends ChangeNotifier {
   Future<void> start() async {
     assert(Sensing().controller != null,
         'No Study Controller - the study has not been deployed.');
-    if (!Sensing().isRunning) Sensing().controller?.start(false);
+    if (!Sensing().isRunning) Sensing().controller?.start();
   }
 
   /// Stop sensing.
-  void stop() => Sensing().controller?.executor.stop();
+  void stop() => Sensing().controller?.stop();
 
   /// Dispose the entire sensing.
   @override

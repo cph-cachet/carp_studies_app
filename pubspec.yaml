@@ -12,15 +12,15 @@ dependencies:
     sdk: flutter
 
   carp_serializable: ^1.1.0
-  # carp_core: ^1.6.0
+  carp_core: ^1.6.0
   # carp_mobile_sensing: ^1.6.0
-  carp_context_package: ^1.4.0
+  # carp_context_package: ^1.5.0
   carp_connectivity_package: ^1.3.0
-  carp_survey_package: ^1.3.0
-  carp_audio_package: ^1.3.0
+  # carp_survey_package: ^1.3.0
+  # carp_audio_package: ^1.3.0
   carp_esense_package: ^1.3.0
   carp_polar_package: ^1.3.0
-  # Due to this conflict with the mdsfluttere plugin we can't use health at the moment
+  # Due to this conflict with the mdsflutter plugin we can't use health at the moment
   #  https://github.com/petri-lipponen-movesense/mdsflutter/issues/18
   # carp_health_package: ^2.7.0
   carp_movesense_package: ^1.4.0
@@ -60,20 +60,20 @@ dependency_overrides:
 
   # carp_serializable:
   #   path: ../carp/carp.sensing-flutter/carp_serializable/
-  carp_core:
-    path: ../carp/carp.sensing-flutter/carp_core/
+  # carp_core:
+  #   path: ../carp/carp.sensing-flutter/carp_core/
   carp_mobile_sensing:
     path: ../carp/carp.sensing-flutter/carp_mobile_sensing/
-  # carp_context_package:
-  #   path: ../carp/carp.sensing-flutter/packages/carp_context_package/
+  carp_context_package:
+    path: ../carp/carp.sensing-flutter/packages/carp_context_package/
   # carp_connectivity_package:
   #   path: ../../packages/carp_connectivity_package/
-  # carp_survey_package:
-  #   path: ../carp/carp.sensing-flutter/packages/carp_survey_package/
+  carp_survey_package:
+    path: ../carp/carp.sensing-flutter/packages/carp_survey_package/
   # carp_communication_package:
   #   path: ../../packages/carp_communication_package/
-  # carp_audio_package:
-  #   path: ../../packages/carp_audio_package/
+  carp_audio_package:
+    path: ../carp/carp.sensing-flutter/packages/carp_audio_package/
   # carp_apps_package:
   #   path: ../../packages/carp_apps_package/
   # carp_esense_package:
@@ -112,7 +112,6 @@ flutter_icons:
   ios: true
   remove_alpha_ios: true
   image_path: "assets/logo.png"
-  # image_path: "assets/app_icon.png"
 
 flutter:
   uses-material-design: true

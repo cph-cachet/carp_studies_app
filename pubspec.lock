@@ -29,10 +29,10 @@ packages:
     dependency: transitive
     description:
       name: archive
-      sha256: "0763b45fa9294197a2885c8567927e2830ade852e5c896fd4ab7e0e348d0f373"
+      sha256: ecf4273855368121b1caed0d10d4513c7241dfc813f7d3c8933b36622ae9b265
       url: "https://pub.dev"
     source: hosted
-    version: "3.5.0"
+    version: "3.5.1"
   args:
     dependency: transitive
     description:
@@ -210,13 +210,12 @@ packages:
     source: hosted
     version: "0.3.3"
   carp_audio_package:
-    dependency: "direct main"
+    dependency: "direct overridden"
     description:
-      name: carp_audio_package
-      sha256: "8a73f31ea26a8b209df5e5b07fe7fa5eedeb0b4310d29045521d97e40b8ed4b3"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.4.0"
+      path: "../carp/carp.sensing-flutter/packages/carp_audio_package"
+      relative: true
+    source: path
+    version: "1.5.0"
   carp_backend:
     dependency: "direct main"
     description:
@@ -233,19 +232,19 @@ packages:
     source: hosted
     version: "1.5.0"
   carp_context_package:
-    dependency: "direct main"
-    description:
-      name: carp_context_package
-      sha256: "6ab83ccfa13c41fc51ae0f6e1c418871c72d2160d2d082a4320c93ceee83d20c"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.5.0"
-  carp_core:
     dependency: "direct overridden"
     description:
-      path: "../carp/carp.sensing-flutter/carp_core"
+      path: "../carp/carp.sensing-flutter/packages/carp_context_package"
       relative: true
     source: path
+    version: "1.5.1"
+  carp_core:
+    dependency: "direct main"
+    description:
+      name: carp_core
+      sha256: "6b46a4f01a9f8addc6fabc51a35cf4d5815271595a46f12e30304d78c4719c6b"
+      url: "https://pub.dev"
+    source: hosted
     version: "1.6.0"
   carp_esense_package:
     dependency: "direct main"
@@ -287,13 +286,12 @@ packages:
     source: hosted
     version: "1.2.0"
   carp_survey_package:
-    dependency: "direct main"
+    dependency: "direct overridden"
     description:
-      name: carp_survey_package
-      sha256: "236839bc20701517b2b917bb650a5e11dc33760ed8fb2f4deaced80712950c9a"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.4.4"
+      path: "../carp/carp.sensing-flutter/packages/carp_survey_package"
+      relative: true
+    source: path
+    version: "1.5.0"
   carp_webservices:
     dependency: "direct main"
     description:
@@ -1277,10 +1275,10 @@ packages:
     dependency: "direct main"
     description:
       name: open_settings_plus
-      sha256: "9a95ced8890536b51ae48ed46c81fbf0552770218fadd860f85c5dd161a6a7b9"
+      sha256: "5f813700e62bc77db830e0225e09e77c6573c67784a4e7b00483f3a16341c081"
       url: "https://pub.dev"
     source: hosted
-    version: "0.3.2"
+    version: "0.3.3"
   openmhealth_schemas:
     dependency: transitive
     description:
@@ -1397,10 +1395,10 @@ packages:
     dependency: transitive
     description:
       name: permission_handler_android
-      sha256: "1acac6bae58144b442f11e66621c062aead9c99841093c38f5bcdcc24c1c3474"
+      sha256: "8bb852cd759488893805c3161d0b2b5db55db52f773dbb014420b304055ba2c5"
       url: "https://pub.dev"
     source: hosted
-    version: "12.0.5"
+    version: "12.0.6"
   permission_handler_apple:
     dependency: transitive
     description:
@@ -1762,10 +1760,10 @@ packages:
     dependency: transitive
     description:
       name: sqflite
-      sha256: "5ce2e1a15e822c3b4bfb5400455775e421da7098eed8adc8f26298ada7c9308c"
+      sha256: a43e5a27235518c03ca238e7b4732cf35eabe863a369ceba6cbefa537a66f16d
       url: "https://pub.dev"
     source: hosted
-    version: "2.3.3"
+    version: "2.3.3+1"
   sqflite_common:
     dependency: transitive
     description:

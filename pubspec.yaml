@@ -4,8 +4,8 @@ publish_to: "none"
 version: 2.1.0
 
 environment:
-  sdk: ">=3.0.0 <4.0.0"
-  flutter: ">=3.0.0"
+  sdk: ">=3.2.0 <4.0.0"
+  flutter: ">=3.16.0"
 
 dependencies:
   flutter:
@@ -13,11 +13,11 @@ dependencies:
 
   carp_serializable: ^1.1.0
   carp_core: ^1.6.0
-  # carp_mobile_sensing: ^1.6.0
-  # carp_context_package: ^1.5.0
+  carp_mobile_sensing: ^1.6.0
+  carp_context_package: ^1.6.0
   carp_connectivity_package: ^1.3.0
-  # carp_survey_package: ^1.3.0
-  # carp_audio_package: ^1.3.0
+  carp_survey_package: ^1.5.0
+  carp_audio_package: ^1.5.0
   carp_esense_package: ^1.3.0
   carp_polar_package: ^1.3.0
   # Due to this conflict with the mdsflutter plugin we can't use health at the moment
@@ -25,7 +25,7 @@ dependencies:
   # carp_health_package: ^2.7.0
   carp_movesense_package: ^1.4.0
 
-  carp_webservices: ^3.0.0
+  carp_webservices: ^3.1.0
   carp_backend: ^1.5.0
 
   research_package: ^1.5.0
@@ -62,18 +62,18 @@ dependency_overrides:
   #   path: ../carp/carp.sensing-flutter/carp_serializable/
   # carp_core:
   #   path: ../carp/carp.sensing-flutter/carp_core/
-  carp_mobile_sensing:
-    path: ../carp/carp.sensing-flutter/carp_mobile_sensing/
-  carp_context_package:
-    path: ../carp/carp.sensing-flutter/packages/carp_context_package/
+  # carp_mobile_sensing:
+  #   path: ../carp/carp.sensing-flutter/carp_mobile_sensing/
+  # carp_context_package:
+  #   path: ../carp/carp.sensing-flutter/packages/carp_context_package/
   # carp_connectivity_package:
   #   path: ../../packages/carp_connectivity_package/
-  carp_survey_package:
-    path: ../carp/carp.sensing-flutter/packages/carp_survey_package/
+  # carp_survey_package:
+  #   path: ../carp/carp.sensing-flutter/packages/carp_survey_package/
   # carp_communication_package:
   #   path: ../../packages/carp_communication_package/
-  carp_audio_package:
-    path: ../carp/carp.sensing-flutter/packages/carp_audio_package/
+  # carp_audio_package:
+  #   path: ../carp/carp.sensing-flutter/packages/carp_audio_package/
   # carp_apps_package:
   #   path: ../../packages/carp_apps_package/
   # carp_esense_package:
@@ -87,10 +87,10 @@ dependency_overrides:
   # carp_movesense_package:
   #   path: ../carp/carp.sensing-flutter/packages/carp_movesense_package/
 
-  carp_webservices:
-    path: ../carp/carp.sensing-flutter/backends/carp_webservices/
-  carp_backend:
-    path: ../carp/carp.sensing-flutter/backends/carp_backend/
+  # carp_webservices:
+  #   path: ../carp/carp.sensing-flutter/backends/carp_webservices/
+  # carp_backend:
+  #   path: ../carp/carp.sensing-flutter/backends/carp_backend/
 
 dev_dependencies:
   test: any

@@ -210,18 +210,20 @@ packages:
     source: hosted
     version: "0.3.3"
   carp_audio_package:
-    dependency: "direct overridden"
+    dependency: "direct main"
     description:
-      path: "../carp/carp.sensing-flutter/packages/carp_audio_package"
-      relative: true
-    source: path
+      name: carp_audio_package
+      sha256: "9115850844ad7afb108769c3ddd914c2677bb84677022857c08fb9845bee4cdf"
+      url: "https://pub.dev"
+    source: hosted
     version: "1.5.0"
   carp_backend:
     dependency: "direct main"
     description:
-      path: "../carp/carp.sensing-flutter/backends/carp_backend"
-      relative: true
-    source: path
+      name: carp_backend
+      sha256: "38ace2d18b94d44f05ea0c0c38c9ed23465c1825eb85d8011c780d34f58b87b8"
+      url: "https://pub.dev"
+    source: hosted
     version: "1.7.0"
   carp_connectivity_package:
     dependency: "direct main"
@@ -232,12 +234,13 @@ packages:
     source: hosted
     version: "1.5.0"
   carp_context_package:
-    dependency: "direct overridden"
+    dependency: "direct main"
     description:
-      path: "../carp/carp.sensing-flutter/packages/carp_context_package"
-      relative: true
-    source: path
-    version: "1.5.1"
+      name: carp_context_package
+      sha256: d92d43bf294c665849ed868456419e5b8000fdac226c4b2c6f7bb0a29ec4c444
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.6.0"
   carp_core:
     dependency: "direct main"
     description:
@@ -255,11 +258,12 @@ packages:
     source: hosted
     version: "1.4.0"
   carp_mobile_sensing:
-    dependency: "direct overridden"
+    dependency: "direct main"
     description:
-      path: "../carp/carp.sensing-flutter/carp_mobile_sensing"
-      relative: true
-    source: path
+      name: carp_mobile_sensing
+      sha256: "23ddc2d416ba20b4b08bc1e86451c5420a8c2e832e9327a42d0c5c8a348cbcd0"
+      url: "https://pub.dev"
+    source: hosted
     version: "1.6.0"
   carp_movesense_package:
     dependency: "direct main"
@@ -286,18 +290,20 @@ packages:
     source: hosted
     version: "1.2.0"
   carp_survey_package:
-    dependency: "direct overridden"
+    dependency: "direct main"
     description:
-      path: "../carp/carp.sensing-flutter/packages/carp_survey_package"
-      relative: true
-    source: path
+      name: carp_survey_package
+      sha256: df48d33ef7a3cb08470932c645a7293b98cbdce3bb1b12f1e290c1a2c60a42c0
+      url: "https://pub.dev"
+    source: hosted
     version: "1.5.0"
   carp_webservices:
     dependency: "direct main"
     description:
-      path: "../carp/carp.sensing-flutter/backends/carp_webservices"
-      relative: true
-    source: path
+      name: carp_webservices
+      sha256: f1b0b206dfc7f0bf291e77d90dbfb78315c42471b771ad5c7eb45090962cf9b1
+      url: "https://pub.dev"
+    source: hosted
     version: "3.1.0"
   characters:
     dependency: transitive
@@ -767,6 +773,54 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.2.0"
+  geolocator:
+    dependency: transitive
+    description:
+      name: geolocator
+      sha256: "694ec58afe97787b5b72b8a0ab78c1a9244811c3c10e72c4362ef3c0ceb005cd"
+      url: "https://pub.dev"
+    source: hosted
+    version: "11.0.0"
+  geolocator_android:
+    dependency: transitive
+    description:
+      name: geolocator_android
+      sha256: "80cd39a94100957431a6dd37cebd686f6d446bbc9a884d90c9a07b34fd28b923"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.5.5"
+  geolocator_apple:
+    dependency: transitive
+    description:
+      name: geolocator_apple
+      sha256: bc2aca02423ad429cb0556121f56e60360a2b7d694c8570301d06ea0c00732fd
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.3.7"
+  geolocator_platform_interface:
+    dependency: transitive
+    description:
+      name: geolocator_platform_interface
+      sha256: "009a21c4bc2761e58dccf07c24f219adaebe0ff707abdfd40b0a763d4003fab9"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.2.2"
+  geolocator_web:
+    dependency: transitive
+    description:
+      name: geolocator_web
+      sha256: "49d8f846ebeb5e2b6641fe477a7e97e5dd73f03cbfef3fd5c42177b7300fb0ed"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.0"
+  geolocator_windows:
+    dependency: transitive
+    description:
+      name: geolocator_windows
+      sha256: "53da08937d07c24b0d9952eb57a3b474e29aae2abf9dd717f7e1230995f13f0e"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.3"
   glob:
     dependency: transitive
     description:
@@ -999,30 +1053,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.4.3"
-  location:
-    dependency: transitive
-    description:
-      name: location
-      sha256: "2d88e4ffb464d0ca5510e7edd29723ab762c43479de39d2d19ed6194f5b6d624"
-      url: "https://pub.dev"
-    source: hosted
-    version: "6.0.1"
-  location_platform_interface:
-    dependency: transitive
-    description:
-      name: location_platform_interface
-      sha256: "2ecde6bb0f88032b0bbbde37e18975b4468711dd92619c2235cc0c0ee93b4b8e"
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.0.0"
-  location_web:
-    dependency: transitive
-    description:
-      name: location_web
-      sha256: "15ad7b4c8a9f55abee513373755e093a40c04d7e24fc1b4f89676fe99523d034"
-      url: "https://pub.dev"
-    source: hosted
-    version: "5.0.1"
   logger:
     dependency: transitive
     description:

@@ -49,7 +49,7 @@ class CarpBackend {
       );
 
   /// The CAWS app configuration.
-  late CarpApp _app = CarpApp(
+  late final CarpApp _app = CarpApp(
     name: "CAWS @ DTU",
     uri: uri,
     studyId: bloc.studyId,

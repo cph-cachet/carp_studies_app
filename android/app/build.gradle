@@ -67,6 +67,7 @@ android {
             keyAlias keyProperties.getProperty('keyAlias')
             keyPassword keyProperties.getProperty('keyPassword')
         }
+        debug {}
      }
 
     buildTypes {

@@ -33,7 +33,7 @@ platform :android do
 
   desc "Promote beta track to prod"
   lane :promote_to_production do
-    sh "flutter build appbundle -v --no-deferred-components"
+    sh "flutter build appbundle -v --no-deferred-components --release"
     upload_to_play_store(
       track: 'beta',
       track_promote_to: 'production',

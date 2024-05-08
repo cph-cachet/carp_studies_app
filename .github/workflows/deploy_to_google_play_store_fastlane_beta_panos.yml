@@ -4,7 +4,7 @@ run-name: ${{github.actor}} is pushing to branch and deploying to Google Store
 on:
     push:
         branches:
-        - panosfunk/google_store
+        - panosfunk/google-store-fastlane
 jobs:
     build:
         runs-on: ubuntu-latest

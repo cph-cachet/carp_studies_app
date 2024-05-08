@@ -37,7 +37,7 @@ jobs:
             uses: italankin/google-play-aab-uploader@1.3
             with: 
               package-name: dk.cachet.carp_studies_app
-              aab-path: 'app/build/outputs/bundle/release/app-release.aab'
+              aab-path: 'app/outputs/bundle/release/app-release.aab'
               key-json: '${{ secrets.PLAY_STORE_CONFIG_JSON}}'
       
 

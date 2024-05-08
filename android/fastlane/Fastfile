@@ -36,6 +36,11 @@ platform :android do
       track: 'beta',
       aab: '../build/app/outputs/bundle/release/app-release.aab',
     )
+    flutter_version_manager(
+      arguements: '-version',
+      yml: "../version.yml",
+      pubspec: "../../pubspec.yaml"
+    )
   end
 
   desc "Promote beta track to prod"

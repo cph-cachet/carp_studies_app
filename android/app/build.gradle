@@ -60,23 +60,23 @@ android {
     }
 
     // TODO - enable this when building for release
-    //  signingConfigs {
-    //     release {
-    //         storeFile file(keyProperties.getProperty('storeFile')) ? file(keyProperties.getProperty('storeFile')) : file('./upload-keystore.jks')
-    //         storePassword keyProperties.getProperty('storePassword')
-    //         keyAlias keyProperties.getProperty('keyAlias')
-    //         keyPassword keyProperties.getProperty('keyPassword')
-    //     }
-    //  }
+     signingConfigs {
+        release {
+            storeFile file(keyProperties.getProperty('storeFile')) ? file(keyProperties.getProperty('storeFile')) : file('./upload-keystore.jks')
+            storePassword keyProperties.getProperty('storePassword')
+            keyAlias keyProperties.getProperty('keyAlias')
+            keyPassword keyProperties.getProperty('keyPassword')
+        }
+     }
 
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
         }
         // TODO - enable this when building for release
-        // release {
-        //     signingConfig signingConfigs.release
-        // }
+        release {
+            signingConfig signingConfigs.release
+        }
     }
 }
 

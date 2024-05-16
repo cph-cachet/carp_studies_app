@@ -28,7 +28,7 @@ jobs:
             name: Install Flutter
             run: | 
               git clone https://github.com/flutter/flutter.git --depth 1 -b stable $FOLDER
-              cd $FOLDER
+              cd flutter
               git checkout v3.19.6
 
           - name: Add Flutter to PATH

@@ -14,7 +14,6 @@ class InvitationListPage extends StatelessWidget {
         future: bloc.backend.getInvitations(),
         builder: (context, snapshot) {
           Widget child;
-
           if (snapshot.hasData) {
             child = SliverFixedExtentList(
               itemExtent: 150,

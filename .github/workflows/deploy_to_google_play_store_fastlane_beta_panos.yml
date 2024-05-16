@@ -26,7 +26,10 @@ jobs:
 
           - if: ${{ steps.cache-flutter.outputs.cache-hit != 'true' }}
             name: Install Flutter
-            run: git clone https://github.com/flutter/flutter.git --depth 1 -b stable $FOLDER
+            run: | 
+              git clone https://github.com/flutter/flutter.git --depth 1 -b stable $FOLDER
+              cd $FOLDER
+              git checkout v3.19.6
 
           - name: Add Flutter to PATH
             run: echo "$GITHUB_WORKSPACE/flutter/bin" >> $GITHUB_PATH
@@ -45,7 +48,8 @@ jobs:
 
           - name: Configure Keystore
             run: |
-              echo "$PLAY_STORE_UPLOAD_KEY" | base64 --decode > upload-keystore.jks
+              pwd
+              echo "$PLAY_STORE_UPLOAD_KEY" | base64 --decode > app/upload-keystore.jks
               echo "$PLAY_STORE_CONFIG_JSON" > PLAY_STORE_CONFIG.json
               echo "keyPassword=$KEYSTORE_KEY_PASSWORD" >> key.properties
               echo "storePassword=$KEYSTORE_STORE_PASSWORD" >> key.properties

@@ -78,7 +78,6 @@ part 'view_models/user_tasks.dart';
 part 'carp_study_app.dart';
 part 'ui/pages/informed_consent_page.dart';
 part 'ui/pages/home_page.dart';
-part 'ui/widgets/carp_app_bar.dart';
 part 'ui/carp_study_style.dart';
 part 'ui/colors.dart';
 part 'ui/pages/data_visualization_page.dart';
@@ -104,6 +103,7 @@ part 'ui/pages/devices_page.connection_dialog.dart';
 part 'ui/pages/devices_page.disconnection_dialog.dart';
 part 'ui/pages/devices_page.list_title.dart';
 
+part 'ui/widgets/carp_app_bar.dart';
 part 'ui/widgets/study_card.dart';
 part 'ui/widgets/horizontal_bar.dart';
 part 'ui/widgets/location_usage_dialog.dart';

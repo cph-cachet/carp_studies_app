@@ -136,16 +136,17 @@ class InvitationMaterial extends StatelessWidget {
             children: [
               Text(
                 invitation.invitation.name,
+                maxLines: 1,
                 style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20.0,
-                ),
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20.0,
+                    overflow: TextOverflow.ellipsis),
               ),
               Text(
-                (invitation.invitation.description ?? ''),
-                style: const TextStyle(fontSize: 16.0),
-                maxLines: 3,
-                overflow: TextOverflow.ellipsis,
+                invitation.invitation.description ?? '',
+                maxLines: 2,
+                style: const TextStyle(
+                    fontSize: 16.0, overflow: TextOverflow.ellipsis),
               ),
             ],
           ),

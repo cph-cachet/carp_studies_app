@@ -80,22 +80,21 @@ class InvitationDetailsPage extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          Text(
-                            invitation.invitation.name,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 22.0,
-                            ),
-                          ),
-                          Scrollbar(
-                            thumbVisibility: true,
-                            radius: const Radius.circular(100),
+                          Expanded(
                             child: SingleChildScrollView(
-                              padding: const EdgeInsets.all(16.0),
-                              child: Text(
-                                invitation.invitation.description ?? '',
-                                style: const TextStyle(fontSize: 16.0),
-                              ),
+                              child: Text.rich(TextSpan(children: [
+                                TextSpan(
+                                  text: invitation.invitation.name,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 22.0,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: '\n${invitation.invitation.description ?? ''}',
+                                  style: const TextStyle(fontSize: 16.0),
+                                ),
+                              ])),
                             ),
                           ),
                         ],
@@ -104,6 +103,7 @@ class InvitationDetailsPage extends StatelessWidget {
                   ),
                 ),
               ),
+              // button to accept the invitation
               Container(
                 margin: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
                 height: 56,

@@ -82,19 +82,24 @@ class InvitationDetailsPage extends StatelessWidget {
                         children: [
                           Expanded(
                             child: SingleChildScrollView(
-                              child: Text.rich(TextSpan(children: [
+                              child: Text.rich(
                                 TextSpan(
-                                  text: invitation.invitation.name,
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 22.0,
-                                  ),
+                                  children: [
+                                    TextSpan(
+                                      text: invitation.invitation.name,
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 22.0,
+                                      ),
+                                    ),
+                                    TextSpan(
+                                      text:
+                                          '\n${invitation.invitation.description ?? ''}',
+                                      style: const TextStyle(fontSize: 16.0),
+                                    ),
+                                  ],
                                 ),
-                                TextSpan(
-                                  text: '\n${invitation.invitation.description ?? ''}',
-                                  style: const TextStyle(fontSize: 16.0),
-                                ),
-                              ])),
+                              ),
                             ),
                           ),
                         ],

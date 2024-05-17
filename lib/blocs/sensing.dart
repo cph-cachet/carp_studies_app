@@ -124,10 +124,15 @@ class Sensing {
     // protocol may still upload to CAWS
     DataManagerRegistry().register(CarpDataManagerFactory());
 
+    await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform);
+    await PushNotificationController().initialize();
+
     // Create and configure a client manager for this phone
     await SmartPhoneClientManager().configure(
       deploymentService: deploymentService,
       deviceController: DeviceController(),
+      notificationController: PushNotificationController(),
 
       // Need to ask for permissions all at once on Android.
       askForPermissions: Platform.isAndroid ? true : false,

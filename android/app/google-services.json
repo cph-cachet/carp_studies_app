@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "106781470733",
+    "project_id": "carp-test-20b92",
+    "storage_bucket": "carp-test-20b92.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:106781470733:android:7a4502b3e261a7b18a2544",
+        "android_client_info": {
+          "package_name": "dk.cachet.carp_study_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDHbU1elTKTPcrxjMEPrId_2l7Ddq21LCk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

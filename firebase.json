@@ -1,0 +1,30 @@
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "carp-test-20b92",
+          "appId": "1:106781470733:android:7a4502b3e261a7b18a2544",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "ios": {
+        "default": {
+          "projectId": "carp-test-20b92",
+          "appId": "1:106781470733:ios:96daa6e179f486318a2544",
+          "uploadDebugSymbols": false,
+          "fileOutput": "ios/Runner/GoogleService-Info.plist"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "carp-test-20b92",
+          "configurations": {
+            "android": "1:106781470733:android:7a4502b3e261a7b18a2544",
+            "ios": "1:106781470733:ios:96daa6e179f486318a2544"
+          }
+        }
+      }
+    }
+  }
+}

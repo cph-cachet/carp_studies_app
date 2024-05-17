@@ -44,4 +44,4 @@ jobs:
         run: flutter analyze --no-fatal-infos lib/ test/
 
       - name: Run tests
-        run: flutter test -v
+        run: flutter test

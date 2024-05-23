@@ -220,8 +220,6 @@ PLATFORMS
 
 DEPENDENCIES
   fastlane
-  fastlane-plugin-flutter_version_manager
-  git
 
 BUNDLED WITH
    2.4.14

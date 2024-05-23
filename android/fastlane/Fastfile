@@ -21,6 +21,31 @@ platform :android do
     gradle(task: "test")
   end
 
+
+  def get_version_code
+    version_code = 1
+    if File.exist?("version.yml")
+      File.foreach("version.yml") do |line|
+        version_code = line.split('=').last.to_i
+      end
+    end
+    version_code
+  end
+  
+  def update_version_code(version_code)
+    File.open("version.properties", "w") do |file|
+      file.puts "VERSION_CODE=#{version_code}"
+    end
+  end
+
+  lane :increment_version_code do
+    current_version_code = get_version_code
+    new_version_code = current_version_code + 1
+    update_version_code(new_version_code)
+
+    sh "sed -i '' 's/versionCode #{current_version_code}/versionCode #{new_version_code}/' app/build.gradle"
+  end
+
   desc "Submit a new beta build to Google Play"
   lane :beta do
     # TODO: Re-enable deferred components once https://github.com/flutter/gallery/issues/926 is fixed
@@ -32,6 +57,9 @@ platform :android do
     #   task: 'assemble',
     #   build_type: 'Release',
     # )
+   
+    increment_version_code
+    
     upload_to_play_store(
       track: 'beta',
       aab: '../build/app/outputs/bundle/release/app-release.aab',

@@ -19,7 +19,10 @@ class TaskListPageState extends State<TaskListPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            const CarpAppBar(),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: const CarpAppBar(hasProfileIcon: true),
+            ),
             Expanded(
               flex: 4,
               child: StreamBuilder<UserTask>(
@@ -95,7 +98,7 @@ class TaskListPageState extends State<TaskListPage> {
     RPLocalizations locale = RPLocalizations.of(context)!;
 
     return Center(
-      child: StudiesCard(
+      child: StudiesMaterial(
         child: ListTile(
             leading: CircleAvatar(
               backgroundColor: Theme.of(context).hoverColor,
@@ -174,7 +177,7 @@ class TaskListPageState extends State<TaskListPage> {
     return Center(
       child: Opacity(
         opacity: 0.6,
-        child: StudiesCard(
+        child: StudiesMaterial(
           child: ListTile(
             leading: const CircleAvatar(
               backgroundColor: CACHET.LIGHT_GREEN_1,
@@ -195,7 +198,7 @@ class TaskListPageState extends State<TaskListPage> {
     return Center(
       child: Opacity(
         opacity: 0.6,
-        child: StudiesCard(
+        child: StudiesMaterial(
           child: ListTile(
             leading: const CircleAvatar(
               backgroundColor: CACHET.LIGHT_GREY_1,

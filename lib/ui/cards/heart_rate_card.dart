@@ -49,7 +49,7 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
   Widget build(BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;
 
-    return StudiesCard(
+    return StudiesMaterial(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(

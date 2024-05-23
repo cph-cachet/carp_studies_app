@@ -18,7 +18,7 @@ class _SurveyCardState extends State<SurveyCard> {
       return const SizedBox();
     }
 
-    return StudiesCard(
+    return StudiesMaterial(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(

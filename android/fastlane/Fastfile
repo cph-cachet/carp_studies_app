@@ -36,21 +36,16 @@ platform :android do
       track: 'beta',
       aab: '../build/app/outputs/bundle/release/app-release.aab',
     )
-    flutter_version_manager(
-      arguements: '-version',
-      yml: "../version.yml",
-      pubspec: "../../pubspec.yaml"
-    )
   end
 
   desc "Promote beta track to prod"
   lane :promote_to_production do
-    sh "flutter build appbundle -v --no-deferred-components"
+    sh "flutter build appbundle --release --no-deferred-components --no-tree-shake-icons"
     upload_to_play_store(
       track: 'beta',
       track_promote_to: 'production',
       skip_upload_changelogs: true,
       aab: '../build/app/outputs/bundle/release/app-release.aab',
-      )
+    )
   end
 end

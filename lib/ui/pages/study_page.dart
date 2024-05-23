@@ -19,7 +19,10 @@ class StudyPageState extends State<StudyPage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const CarpAppBar(),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: const CarpAppBar(hasProfileIcon: true),
+            ),
             Flexible(
               child: StreamBuilder<int>(
                   stream: widget.model.messageStream,
@@ -65,7 +68,7 @@ class StudyPageState extends State<StudyPage> {
     timeago.setLocaleMessages('da', timeago.DaMessages());
     timeago.setLocaleMessages('es', timeago.EsMessages());
 
-    return StudiesCard(
+    return StudiesMaterial(
       child: InkWell(
         onTap: () {
           if (onTap != null) {

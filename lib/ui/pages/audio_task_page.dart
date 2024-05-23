@@ -213,7 +213,7 @@ class AudioTaskPageState extends State<AudioTaskPage> {
             //     ?
             Expanded(
               flex: 3,
-              child: StudiesCard(
+              child: StudiesMaterial(
                 child: Scrollbar(
                   child: SingleChildScrollView(
                     scrollDirection: Axis.vertical, //.horizontal

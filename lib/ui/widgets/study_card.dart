@@ -19,20 +19,12 @@ class StudyCard extends StatelessWidget {
         '${locale.translate(studyPageModel.piAddress)}\n'
         '${locale.translate(studyPageModel.piEmail)}\n';
 
-    return StudiesCard(
+    return StudiesMaterial(
       clipBehavior: Clip.antiAliasWithSaveLayer,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          // Row(children: [
-          //   Expanded(
-          //       child: Container(
-          //     height: MediaQuery.of(context).size.height * 0.1,
-          //     color: Color(0xFFF1F9FF),
-          //     child: Image.asset('assets/images/books.png', fit: BoxFit.fitHeight),
-          //   ))
-          // ]),
           ExpansionTile(
             title: Column(
               crossAxisAlignment: CrossAxisAlignment.center,

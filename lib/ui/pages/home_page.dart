@@ -80,6 +80,7 @@ class HomePageState extends State<HomePage> {
     });
 
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.secondary,
       body: SafeArea(
         child: widget.child,
       ),

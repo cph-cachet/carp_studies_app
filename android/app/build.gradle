@@ -5,7 +5,6 @@ plugins {
 }
 
 def localProperties = new Properties()
-// it is file('../local.propertieslocal.properties') for deploying using local terminal. file('./android/local.properties') for github actions.
 def localPropertiesFile = rootProject.file('local.properties')
 if (localPropertiesFile.exists()) {
     localPropertiesFile.withReader('UTF-8') { reader ->
@@ -15,21 +14,22 @@ if (localPropertiesFile.exists()) {
 
 def keyProperties = new Properties()
 def keyPropertiesFile = rootProject.file('key.properties')
+def signingConfigExists = false
+
 if (keyPropertiesFile.exists()) {
     keyPropertiesFile.withReader('UTF-8') { reader ->
         keyProperties.load(reader)
+        signingConfigExists = keyProperties.getProperty('storeFile') != null && file(keyProperties.getProperty('storeFile')).exists()
     }
 }
 
 def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
 if (flutterVersionCode == null) {
-    print("flutterVersionCode is null and going to be 1 wtf")
     flutterVersionCode = '1'
 }
 
 def flutterVersionName = localProperties.getProperty('flutter.versionName')
 if (flutterVersionName == null) {
-    print("flutterVersionName is null and going to be '1.0' wtf")
     flutterVersionName = '1.0'
 }
 
@@ -65,11 +65,14 @@ android {
     // TODO - enable this when building for release
      signingConfigs {
         release {
-            storeFile file(keyProperties.getProperty('storeFile')) ? file(keyProperties.getProperty('storeFile')) : file('./upload-keystore.jks')
-            storePassword keyProperties.getProperty('storePassword')
-            keyAlias keyProperties.getProperty('keyAlias')
-            keyPassword keyProperties.getProperty('keyPassword')
+            if (signingConfigExists) {
+                storeFile file(keyProperties.getProperty('storeFile')) ? file(keyProperties.getProperty('storeFile')) : file('./upload-keystore.jks')
+                storePassword keyProperties.getProperty('storePassword')
+                keyAlias keyProperties.getProperty('keyAlias')
+                keyPassword keyProperties.getProperty('keyPassword')
+            }
         }
+        debug {}
      }
 
     buildTypes {
@@ -78,7 +81,13 @@ android {
         }
         // TODO - enable this when building for release
         release {
-            signingConfig signingConfigs.release
+            if (signingConfigExists) {
+                logger.error('key.properties file found, signing with release build.')
+                signingConfig signingConfigs.release
+            } else {
+                logger.error('No key.properties file found, skipping signing of release build.')
+                signingConfig signingConfigs.debug
+            }
         }
     }
 }

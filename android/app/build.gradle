@@ -84,6 +84,10 @@ android {
             if (signingConfigExists) {
                 logger.error('key.properties file found, signing with release build.')
                 signingConfig signingConfigs.release
+                ndk {
+                    debugSymbolLevel 'FULL'
+                    debugSymbolLevel 'SYMBOL_TABLE'
+                }
             } else {
                 logger.error('No key.properties file found, skipping signing of release build.')
                 signingConfig signingConfigs.debug

@@ -18,7 +18,7 @@ class MediaCardWidgetState extends State<MediaCardWidget> {
       total += element.tasksDone;
     }
 
-    return StudiesCard(
+    return StudiesMaterial(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(

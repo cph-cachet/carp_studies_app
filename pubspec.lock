@@ -485,10 +485,10 @@ packages:
     dependency: transitive
     description:
       name: device_info_plus
-      sha256: "77f757b789ff68e4eaf9c56d1752309bd9f7ad557cb105b938a7f8eb89e59110"
+      sha256: eead12d1a1ed83d8283ab4c2f3fca23ac4082f29f25f29dff0f758f57d06ec91
       url: "https://pub.dev"
     source: hosted
-    version: "9.1.2"
+    version: "10.1.0"
   device_info_plus_platform_interface:
     dependency: transitive
     description:
@@ -1513,10 +1513,10 @@ packages:
     dependency: transitive
     description:
       name: polar
-      sha256: "72970632c208acbed0f05f436d8ade8be30d37326bfa4d1f485059af9a5669f5"
+      sha256: fbb3c1aee443b8b2ef4f69fbeec0b3ec619ab93d31cf463c6f4ebd9c13fe74ee
       url: "https://pub.dev"
     source: hosted
-    version: "7.1.0"
+    version: "7.2.0"
   pool:
     dependency: transitive
     description:

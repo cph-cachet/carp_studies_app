@@ -108,7 +108,7 @@ part 'ui/widgets/horizontal_bar.dart';
 part 'ui/widgets/location_usage_dialog.dart';
 part 'ui/widgets/charts_legend.dart';
 part 'ui/widgets/details_banner.dart';
-part 'ui/widgets/studies_card.dart';
+part 'ui/widgets/studies_material.dart';
 part 'ui/widgets/battery_icon.dart';
 part 'ui/widgets/logout_message.dart';
 part 'ui/widgets/dialog_title.dart';

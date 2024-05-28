@@ -19,7 +19,10 @@ class StudyPageState extends State<StudyPage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const CarpAppBar(),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: const CarpAppBar(hasProfileIcon: true),
+            ),
             Flexible(
               child: StreamBuilder<int>(
                   stream: widget.model.messageStream,
@@ -65,7 +68,7 @@ class StudyPageState extends State<StudyPage> {
     timeago.setLocaleMessages('da', timeago.DaMessages());
     timeago.setLocaleMessages('es', timeago.EsMessages());
 
-    return StudiesCard(
+    return StudiesMaterial(
       child: InkWell(
         onTap: () {
           if (onTap != null) {
@@ -99,17 +102,7 @@ class StudyPageState extends State<StudyPage> {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: Text(
-                    '${locale.translate(message.type.toString().split('.').last.toLowerCase())} - ${timeago.format(
-                      DateTime.now().copyWithAdditional(
-                          years: -DateTime.now().year + message.timestamp.year,
-                          months:
-                              -DateTime.now().month + message.timestamp.month,
-                          days: -DateTime.now().day + message.timestamp.day,
-                          hours: -DateTime.now().hour + message.timestamp.hour,
-                          minutes: -DateTime.now().minute +
-                              message.timestamp.minute),
-                      locale: Localizations.localeOf(context).languageCode,
-                    )}',
+                    '${locale.translate(message.type.toString().split('.').last.toLowerCase())} - ${timeago.format(message.timestamp.toLocal())}',
                     style: aboutCardSubtitleStyle.copyWith(
                         color: Theme.of(context).primaryColor)),
               ),

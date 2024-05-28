@@ -1,6 +1,37 @@
 part of carp_study_app;
 
+@immutable
+class CarpColors extends ThemeExtension<CarpColors> {
+  const CarpColors({
+    required this.warningColor,
+  });
+
+  final Color? warningColor;
+
+  @override
+  CarpColors copyWith({Color? warningColor}) {
+    return CarpColors(
+      warningColor: warningColor ?? this.warningColor,
+    );
+  }
+
+  @override
+  CarpColors lerp(CarpColors? other, double t) {
+    if (other is! CarpColors) {
+      return this;
+    }
+    return CarpColors(
+      warningColor: Color.lerp(warningColor, other.warningColor, t),
+    );
+  }
+}
+
 ThemeData carpStudyTheme = ThemeData.light().copyWith(
+  extensions: <ThemeExtension<dynamic>>[
+    CarpColors(
+      warningColor: Colors.orange[500],
+    )
+  ],
   primaryColor: const Color(0xFF206FA2),
   colorScheme: const ColorScheme.light().copyWith(
       secondary: const Color(0xFFFAFAFA),
@@ -52,6 +83,11 @@ ThemeData carpStudyTheme = ThemeData.light().copyWith(
 );
 
 ThemeData carpStudyDarkTheme = ThemeData.dark().copyWith(
+  extensions: <ThemeExtension<dynamic>>[
+    CarpColors(
+      warningColor: Colors.orange[700],
+    )
+  ],
   primaryColor: const Color(0xff81C7F3),
   colorScheme: const ColorScheme.dark().copyWith(
     secondary: const Color(0xff4C4C4C),

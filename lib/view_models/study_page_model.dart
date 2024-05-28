@@ -64,7 +64,7 @@ class StudyPageViewModel extends ViewModel {
         title: title,
         message: description,
         type: MessageType.announcement,
-        timestamp: DateTime.now(),
+        timestamp: bloc.studyStartTimestamp ?? DateTime.now(),
         image: 'assets/images/kids.png',
       );
 }

@@ -9,101 +9,149 @@ class InvitationListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.secondary,
       body: FutureBuilder<List<ActiveParticipationInvitation>>(
-          future: bloc.backend.getInvitations(),
-          builder: (context, snapshot) {
-            Widget child;
+        future: bloc.backend.getInvitations(),
+        builder: (context, snapshot) {
+          Widget child;
 
-            child = snapshot.hasData
-                ? child = SliverFixedExtentList(
-                    itemExtent: 150,
-                    delegate: SliverChildBuilderDelegate(
-                      (context, index) {
-                        return Container(
-                          margin: const EdgeInsets.only(top: 16.0),
-                          child: InvitationCard(
-                            invitation: snapshot.data![index],
-                          ),
-                        );
-                      },
-                      childCount: snapshot.data!.length,
+          if (snapshot.hasData) {
+            child = SliverFixedExtentList(
+              itemExtent: 150,
+              delegate: SliverChildBuilderDelegate(
+                (context, index) {
+                  return Container(
+                    child: InvitationMaterial(
+                      invitation: snapshot.data![index],
                     ),
-                  )
-                : const SliverToBoxAdapter(
-                    child: Center(child: CircularProgressIndicator()),
                   );
+                },
+                childCount: snapshot.data!.length,
+              ),
+            );
+          } else {
+            child = const SliverToBoxAdapter(
+              child: Center(child: CircularProgressIndicator()),
+            );
+          }
 
-            return CustomScrollView(
-              physics: const BouncingScrollPhysics(
-                  parent: AlwaysScrollableScrollPhysics()),
-              slivers: [
-                SliverAppBar(
-                  title: Text(
-                    locale.translate('invitation.invitations'),
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 28.0,
+          return CustomScrollView(
+            slivers: [
+              SliverAppBar(
+                backgroundColor: Theme.of(context).colorScheme.surfaceVariant,
+                title: const CarpAppBar(),
+                centerTitle: true,
+                pinned: true,
+                stretch: true,
+                stretchTriggerOffset: 20,
+                scrolledUnderElevation: 0,
+                onStretchTrigger: () async => bloc.backend.getInvitations(),
+              ),
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 16.0),
+                  child: IntrinsicHeight(
+                    child: Stack(
+                      children: [
+                        Positioned(
+                          left: 8,
+                          top: 0,
+                          bottom: 0,
+                          child: IconButton(
+                            icon: const Icon(Icons.arrow_back_ios),
+                            onPressed: () {
+                              if (context.canPop()) {
+                                context.pop();
+                              } else {
+                                context.go(LoginPage.route);
+                              }
+                            },
+                          ),
+                        ),
+                        Center(
+                          child: Text(
+                            locale.translate('invitation.invitations'),
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 22.0,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                  pinned: true,
-                  stretch: true,
-                  stretchTriggerOffset: 20,
-                  onStretchTrigger: () async => bloc.backend.getInvitations(),
-                  leading: IconButton(
-                    icon: const Icon(Icons.arrow_back),
-                    onPressed: () {
-                      if (context.canPop()) {
-                        context.pop();
-                      } else {
-                        context.go(LoginPage.route);
-                      }
-                    },
                   ),
                 ),
-                child,
-              ],
-            );
-          }),
+              ),
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                      bottom: 8.0, left: 16.0, right: 16.0),
+                  child: Container(
+                    padding: EdgeInsets.all(10.0),
+                    child: Text(
+                      locale.translate('invitation.subtitle'),
+                      textAlign: TextAlign.left,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14.0,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              child,
+            ],
+          );
+        },
+      ),
     );
   }
 }
 
-class InvitationCard extends StatelessWidget {
+class InvitationMaterial extends StatelessWidget {
   final ActiveParticipationInvitation invitation;
 
-  const InvitationCard({
+  const InvitationMaterial({
     super.key,
     required this.invitation,
   });
 
   @override
-  Widget build(BuildContext context) => Card(
-        child: InkWell(
-          onTap: () {
-            context.push(
-                '${InvitationDetailsPage.route}/${invitation.participation.participantId}');
-          },
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Text(
-                  invitation.invitation.name,
-                  style: const TextStyle(
+  Widget build(BuildContext context) {
+    return StudiesMaterial(
+      elevation: 2.0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12.0),
+      ),
+      child: InkWell(
+        onTap: () {
+          context.push(
+              '${InvitationDetailsPage.route}/${invitation.participation.participantId}');
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(
+                invitation.invitation.name,
+                maxLines: 1,
+                style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20.0,
-                  ),
-                ),
-                Text(
-                  (invitation.invitation.description ?? ''),
-                  style: const TextStyle(fontSize: 16.0),
-                  maxLines: 3,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ],
-            ),
+                    overflow: TextOverflow.ellipsis),
+              ),
+              Text(
+                invitation.invitation.description ?? '',
+                maxLines: 2,
+                style: const TextStyle(
+                    fontSize: 16.0, overflow: TextOverflow.ellipsis),
+              ),
+            ],
           ),
         ),
-      );
+      ),
+    );
+  }
 }

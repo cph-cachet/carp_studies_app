@@ -51,7 +51,6 @@ import 'package:carp_movesense_package/carp_movesense_package.dart';
 part 'blocs/app_bloc.dart';
 part 'blocs/util.dart';
 part 'blocs/sensing.dart';
-part 'blocs/check_connectivity.dart';
 
 part 'data/local_settings.dart';
 part 'data/carp_backend.dart';

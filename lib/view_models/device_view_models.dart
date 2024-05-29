@@ -147,7 +147,7 @@ const Map<String, Icon> _deviceTypeIcon = {
   ),
   WeatherService.DEVICE_TYPE: Icon(
     Icons.wb_cloudy,
-    color: CACHET.WHITE,
+    color: CACHET.BLUE_1,
   ),
   AirQualityService.DEVICE_TYPE: Icon(
     Icons.air,

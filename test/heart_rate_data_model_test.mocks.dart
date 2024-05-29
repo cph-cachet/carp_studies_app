@@ -603,9 +603,9 @@ class MockHeartRateCardViewModel extends _i1.Mock
       ) as _i6.Future<bool>);
 
   @override
-  _i6.Future<bool> delete() => (super.noSuchMethod(
+  _i6.Future<bool> dispose() => (super.noSuchMethod(
         Invocation.method(
-          #delete,
+          #dispose,
           [],
         ),
         returnValue: _i6.Future<bool>.value(false),
@@ -636,15 +636,6 @@ class MockHeartRateCardViewModel extends _i1.Mock
         Invocation.method(
           #removeListener,
           [listener],
-        ),
-        returnValueForMissingStub: null,
-      );
-
-  @override
-  void dispose() => super.noSuchMethod(
-        Invocation.method(
-          #dispose,
-          [],
         ),
         returnValueForMissingStub: null,
       );

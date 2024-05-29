@@ -62,11 +62,10 @@ android {
         multiDexEnabled true
     }
 
-    // TODO - enable this when building for release
      signingConfigs {
         release {
             if (signingConfigExists) {
-                storeFile file(keyProperties.getProperty('storeFile')) ? file(keyProperties.getProperty('storeFile')) : file('./upload-keystore.jks')
+                storeFile file(keyProperties.getProperty('storeFile'))
                 storePassword keyProperties.getProperty('storePassword')
                 keyAlias keyProperties.getProperty('keyAlias')
                 keyPassword keyProperties.getProperty('keyPassword')
@@ -79,17 +78,16 @@ android {
         debug {
             signingConfig signingConfigs.debug
         }
-        // TODO - enable this when building for release
         release {
             ndk {
                 debugSymbolLevel 'FULL'
                 debugSymbolLevel 'SYMBOL_TABLE'
             }
             if (signingConfigExists) {
-                logger.error('key.properties file found, signing with release build.')
+                logger.error('storeFile found, signing with release build.')
                 signingConfig signingConfigs.release
             } else {
-                logger.error('No key.properties file found, skipping signing of release build.')
+                logger.error('No storeFile found or null. Skipping signing of release build.')
                 signingConfig signingConfigs.debug
             }
         }

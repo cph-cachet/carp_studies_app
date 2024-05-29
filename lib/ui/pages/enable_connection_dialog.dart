@@ -55,8 +55,6 @@ class EnableInternetConnectionDialog extends StatelessWidget {
                         'assets/instructions/${Localizations.localeOf(context).languageCode}/enable_wifi_android.png'),
                   ),
                 ),
-
-                /// TODO: Localise this image, take a screenshot of the settings page in Danish
                 Padding(
                   padding: EdgeInsets.symmetric(vertical: 16.0),
                   child: Text(
@@ -131,8 +129,6 @@ class EnableInternetConnectionDialog extends StatelessWidget {
                         'assets/instructions/${Localizations.localeOf(context).languageCode}/enable_wifi_ios.png'),
                   ),
                 ),
-
-                /// TODO: Localise this image, take a screenshot of the settings page in Danish
                 Padding(
                   padding: EdgeInsets.symmetric(vertical: 16.0),
                   child: Column(children: [

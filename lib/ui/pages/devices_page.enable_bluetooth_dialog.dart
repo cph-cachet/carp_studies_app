@@ -44,7 +44,6 @@ class EnableBluetoothDialog extends StatelessWidget {
                   textAlign: TextAlign.justify,
                 ),
 
-                /// TODO: Localise this image, take a screenshot of the settings page in Danish
                 if (Platform.isAndroid || Platform.isIOS)
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: 16.0),

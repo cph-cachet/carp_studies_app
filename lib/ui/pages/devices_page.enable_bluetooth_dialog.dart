@@ -43,7 +43,6 @@ class EnableBluetoothDialog extends StatelessWidget {
                   style: aboutCardContentStyle,
                   textAlign: TextAlign.justify,
                 ),
-
                 if (Platform.isAndroid || Platform.isIOS)
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: 16.0),

@@ -59,6 +59,7 @@ jobs:
         run: |
           flutter --version
           pwd
+          echo ${{github.ref}}
           echo ${{github.ref.tag_name}}
           echo ${{github.ref.tags}}
           echo ${{github.ref.version}}

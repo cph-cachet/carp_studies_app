@@ -22,10 +22,10 @@ jobs:
         uses: gradle/gradle-build-action@v2
 
       - name: Grant execute permission for gradlew
-        run: chmod +x /.gradlew
+        run: chmod +x gradlew
 
       - name: Build with Gradle
-        run: ./gradlew assembleRelease
+        run: gradlew assembleRelease
 
       - name: Upload APK
         uses: actions/upload-artifact@v1
@@ -56,10 +56,10 @@ jobs:
           prerelease: false
 
 
-  upload-apk:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: AButler/upload-release-assets@v3.0
-        with:
-          files: "app/build/outputs/apk/release/app-release.apk"
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
+  # upload-apk:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: AButler/upload-release-assets@v3.0
+  #       with:
+  #         files: "app/build/outputs/apk/release/app-release.apk"
+  #         repo-token: ${{ secrets.GITHUB_TOKEN }}

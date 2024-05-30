@@ -61,7 +61,7 @@ jobs:
           pwd
           echo ${{github.ref}}
           echo ${{github.ref.tag_name}}
-          echo ${{github.ref.tags}}
+          echo ${{github.ref.tags[0]}}
           echo ${{github.ref.version}}
           
       - name: Build APK

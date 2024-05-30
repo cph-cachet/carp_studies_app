@@ -7,7 +7,7 @@ name: Create Release
 
 jobs:
   apk:
-    name: Generate APK
+    name: Create Release and Upload APK
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -25,16 +25,16 @@ jobs:
         run: |
           echo "Gradle installation directory"
           echo $GITHUB_WORKSPACE/.gradle
-          which gradle
+          which gradlew
           echo "Checking Gradle installation"
           ./gradlew --version
-          gradle --version
+          gradlew --version
 
       - name: Grant execute permission for gradlew
-        run: chmod +x ./gradlew
+        run: chmod +x gradlew
 
       - name: Build with Gradle
-        run: ./gradlew assembleRelease
+        run: gradlew assembleRelease
 
       - name: Upload APK
         uses: actions/upload-artifact@v1

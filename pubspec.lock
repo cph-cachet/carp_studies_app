@@ -257,6 +257,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.4.0"
+  carp_health_package:
+    dependency: "direct main"
+    description:
+      name: carp_health_package
+      sha256: "27a4ac0fc454039cc46f1aebbc5e227cbab4e8f4f6eed2d425d783d0e6acc4ea"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.9.4"
   carp_mobile_sensing:
     dependency: "direct main"
     description:
@@ -477,10 +485,10 @@ packages:
     dependency: transitive
     description:
       name: device_info_plus
-      sha256: eead12d1a1ed83d8283ab4c2f3fca23ac4082f29f25f29dff0f758f57d06ec91
+      sha256: "77f757b789ff68e4eaf9c56d1752309bd9f7ad557cb105b938a7f8eb89e59110"
       url: "https://pub.dev"
     source: hosted
-    version: "10.1.0"
+    version: "9.1.2"
   device_info_plus_platform_interface:
     dependency: transitive
     description:
@@ -861,6 +869,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.1"
+  health:
+    dependency: transitive
+    description:
+      name: health
+      sha256: "885104e4cdd1b6db5a04f85304cfb16d50bd1729124c0da11464f1d4c85b9d1c"
+      url: "https://pub.dev"
+    source: hosted
+    version: "9.0.1"
   html:
     dependency: transitive
     description:
@@ -1497,10 +1513,10 @@ packages:
     dependency: transitive
     description:
       name: polar
-      sha256: fbb3c1aee443b8b2ef4f69fbeec0b3ec619ab93d31cf463c6f4ebd9c13fe74ee
+      sha256: "72970632c208acbed0f05f436d8ade8be30d37326bfa4d1f485059af9a5669f5"
       url: "https://pub.dev"
     source: hosted
-    version: "7.2.0"
+    version: "7.1.0"
   pool:
     dependency: transitive
     description:
@@ -1537,10 +1553,10 @@ packages:
     dependency: transitive
     description:
       name: pubspec_parse
-      sha256: c63b2876e58e194e4b0828fcb080ad0e06d051cb607a6be51a9e084f47cb9367
+      sha256: c799b721d79eb6ee6fa56f00c04b472dcd44a30d258fac2174a6ec57302678f8
       url: "https://pub.dev"
     source: hosted
-    version: "1.2.3"
+    version: "1.3.0"
   recase:
     dependency: transitive
     description:

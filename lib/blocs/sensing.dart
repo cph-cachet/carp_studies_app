@@ -83,7 +83,7 @@ class Sensing {
     //SamplingPackageRegistry.register(CommunicationSamplingPackage());
     SamplingPackageRegistry().register(MediaSamplingPackage());
     SamplingPackageRegistry().register(SurveySamplingPackage());
-    // SamplingPackageRegistry().register(HealthSamplingPackage());
+    SamplingPackageRegistry().register(HealthSamplingPackage());
     SamplingPackageRegistry().register(ESenseSamplingPackage());
     SamplingPackageRegistry().register(PolarSamplingPackage());
     SamplingPackageRegistry().register(MovesenseSamplingPackage());

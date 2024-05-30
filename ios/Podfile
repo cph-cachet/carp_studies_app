@@ -28,8 +28,9 @@ require File.expand_path(File.join('packages', 'flutter_tools', 'bin', 'podhelpe
 flutter_ios_podfile_setup
 
 target 'Runner' do
-  # when using Movesense, do not use frameworks
-  # use_frameworks!
+  # undocumented flag in cocoapods to enable static linking
+  # this is needed so that we can use Movesense and dynamic frameworks together
+  use_frameworks! :linkage => :static
   use_modular_headers!
 
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))

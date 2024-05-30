@@ -125,7 +125,7 @@ const Map<String, String> _deviceTypeName = {
   ESenseDevice.DEVICE_TYPE: "pages.devices.type.esense.name",
   PolarDevice.DEVICE_TYPE: "pages.devices.type.polar.name",
   MovesenseDevice.DEVICE_TYPE: "pages.devices.type.movesense.name",
-  // HealthService.DEVICE_TYPE: "pages.devices.type.health.name",
+  HealthService.DEVICE_TYPE: "pages.devices.type.health.name",
 };
 
 const Map<String, String> _deviceTypeDescription = {
@@ -136,7 +136,7 @@ const Map<String, String> _deviceTypeDescription = {
   ESenseDevice.DEVICE_TYPE: "pages.devices.type.esense.description",
   PolarDevice.DEVICE_TYPE: "pages.devices.type.polar.description",
   MovesenseDevice.DEVICE_TYPE: "pages.devices.type.movesense.description",
-  // HealthService.DEVICE_TYPE: "pages.devices.type.health.description",
+  HealthService.DEVICE_TYPE: "pages.devices.type.health.description",
 };
 
 const Map<String, Icon> _deviceTypeIcon = {
@@ -147,7 +147,7 @@ const Map<String, Icon> _deviceTypeIcon = {
   ),
   WeatherService.DEVICE_TYPE: Icon(
     Icons.wb_cloudy,
-    color: CACHET.WHITE,
+    color: CACHET.BLUE_1,
   ),
   AirQualityService.DEVICE_TYPE: Icon(
     Icons.air,
@@ -172,11 +172,11 @@ const Map<String, Icon> _deviceTypeIcon = {
     size: 30,
     color: CACHET.GREY_1,
   ),
-  // HealthService.DEVICE_TYPE: const Icon(
-  //   Icons.favorite_rounded,
-  //   size: 30,
-  //   color: CACHET.RED_1,
-  // ),
+  HealthService.DEVICE_TYPE: Icon(
+    Icons.favorite_rounded,
+    size: 30,
+    color: CACHET.RED_1,
+  ),
 };
 
 const Map<DeviceStatus, dynamic> _deviceStatusIcon = {

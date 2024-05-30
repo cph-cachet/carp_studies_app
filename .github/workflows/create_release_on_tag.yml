@@ -23,6 +23,7 @@ jobs:
 
       - name: Verify Installation
         run: |
+          chmod +x gradlew
           echo "Gradle installation directory"
           echo $GITHUB_WORKSPACE/.gradle
           which gradlew

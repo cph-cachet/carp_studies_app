@@ -59,7 +59,10 @@ jobs:
         run: |
           flutter --version
           pwd
-      
+          echo ${{github.ref.tag_name}}
+          echo ${{github.ref.tags}}
+          echo ${{github.ref.version}}
+          
       - name: Build APK
         run: |
           flutter clean
@@ -74,5 +77,5 @@ jobs:
         with: 
           tag_name: ${{ github.ref }}
           asset_path: build/app/outputs/flutter-apk/app-release.apk
-          asset_name: carp-studies-app-${{ github.ref.tag_name }}.apk
+          asset_name: carp-studies-app-${{ github.ref.version }}.apk
           asset_content_type: application/vnd.android.package-archive

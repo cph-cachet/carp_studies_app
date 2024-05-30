@@ -1,0 +1,79 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+update_fastlane
+
+default_platform(:android)
+
+platform :android do
+  desc "Runs all the tests"
+  lane :test do
+    gradle(task: "test")
+  end
+
+
+  def get_version_code
+    version_code = 1
+    if File.exist?("version.yml")
+      File.foreach("version.yml") do |line|
+        version_code = line.split('=').last.to_i
+      end
+    end
+    version_code
+  end
+  
+  def update_version_code(version_code)
+    File.open("version.properties", "w") do |file|
+      file.puts "VERSION_CODE=#{version_code}"
+    end
+  end
+
+  lane :increment_version_code do
+    current_version_code = get_version_code
+    new_version_code = current_version_code + 1
+    update_version_code(new_version_code)
+
+    sh "sed -i '' 's/versionCode #{current_version_code}/versionCode #{new_version_code}/' app/build.gradle"
+  end
+
+  desc "Submit a new beta build to Google Play"
+  lane :beta do
+    # TODO: Re-enable deferred components once https://github.com/flutter/gallery/issues/926 is fixed
+    sh "flutter clean"
+    sh "flutter pub get"
+    sh "flutter pub upgrade"
+    sh "flutter build appbundle --release --no-deferred-components --no-tree-shake-icons"
+    # gradle(
+    #   task: 'assemble',
+    #   build_type: 'Release',
+    # )
+   
+    increment_version_code
+    
+    upload_to_play_store(
+      track: 'beta',
+      aab: '../build/app/outputs/bundle/release/app-release.aab',
+    )
+  end
+
+  desc "Promote beta track to prod"
+  lane :promote_to_production do
+    sh "flutter build appbundle --release --no-deferred-components --no-tree-shake-icons"
+    upload_to_play_store(
+      track: 'beta',
+      track_promote_to: 'production',
+      skip_upload_changelogs: true,
+      aab: '../build/app/outputs/bundle/release/app-release.aab',
+    )
+  end
+end

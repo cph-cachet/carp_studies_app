@@ -19,20 +19,37 @@ jobs:
           distribution: 'adopt' # See 'Supported distributions' for available options
           java-version: '17'
 
-      - name: Setup Gradle
-        uses: gradle/gradle-build-action@v2
-    
-      - name: Init gradle wrapper
-        run: gradle wrapper
-        working-directory: android
+      - name: Cache Flutter
+        id: cache-flutter
+        uses: actions/cache@v3
+        with:
+          path: |
+            flutter
+            ~/.pub-cache
+          key: flutter-${{ hashFiles('**/pubspec.lock') }}
 
-      - name: Grant execute permission for gradlew
-        run: chmod +x ./gradlew
-        working-directory: android
+      - if: ${{ steps.cache-flutter.outputs.cache-hit != 'true' }}
+        name: Install Flutter
+        run: git clone https://github.com/flutter/flutter.git --depth 1 -b 3.19.6 $FOLDER
 
-      - name: Build with Gradle
-        run: ./gradlew assembleRelease
-        working-directory: android
+      - name: Add Flutter to PATH
+        run: echo "$GITHUB_WORKSPACE/flutter/bin" >> $GITHUB_PATH
+
+      - if: ${{ steps.cache-flutter.outputs.cache-hit != 'true' }}
+        name: Install dependencies
+        run: flutter pub get
+
+      - name: Print Flutter Version
+        run: |
+          flutter --version
+          pwd
+      
+      - name: Build APK
+        run: |
+          sh "flutter clean"
+          sh "flutter pub get"
+          sh "flutter pub upgrade"
+          sh "flutter build appbundle --release --no-deferred-components --no-tree-shake-icons"
 
       - name: Upload APK
         uses: actions/upload-artifact@v1

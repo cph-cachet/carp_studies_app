@@ -21,21 +21,24 @@ jobs:
 
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
-      
+    
       - name: Init gradle wrapper
         run: gradle wrapper
+        working-directory: android
 
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
+        working-directory: android
 
       - name: Build with Gradle
         run: ./gradlew assembleRelease
+        working-directory: android
 
       - name: Upload APK
         uses: actions/upload-artifact@v1
         with:
           name: app-release
-          path: app/build/outputs/apk/release/app-release.apk
+          path: android/app/build/outputs/apk/release/app-release.apk
 
 
   create-release:

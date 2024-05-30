@@ -46,10 +46,10 @@ jobs:
       
       - name: Build APK
         run: |
-          sh "flutter clean"
-          sh "flutter pub get"
-          sh "flutter pub upgrade"
-          sh "flutter build appbundle --release --no-deferred-components --no-tree-shake-icons"
+          flutter clean
+          flutter pub get
+          flutter pub upgrade
+          flutter build appbundle --release --no-deferred-components --no-tree-shake-icons
 
       - name: Upload APK
         uses: actions/upload-artifact@v1

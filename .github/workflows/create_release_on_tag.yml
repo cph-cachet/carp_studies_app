@@ -49,7 +49,7 @@ jobs:
           flutter clean
           flutter pub get
           flutter pub upgrade
-          flutter build appbundle --release --no-deferred-components --no-tree-shake-icons
+          flutter build apk --release --no-deferred-components --no-tree-shake-icons
 
       - name: Upload APK
         uses: actions/upload-artifact@v1

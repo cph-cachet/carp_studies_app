@@ -14,6 +14,13 @@ abstract class ViewModel extends ChangeNotifier {
   void init(SmartphoneDeploymentController ctrl) {
     _controller = ctrl;
   }
+
+  /// Called when this view model is disposed and no longer used.
+  @override
+  @mustCallSuper
+  void dispose() {
+    super.dispose();
+  }
 }
 
 /// A serializable data model to be used in a [SerializableViewModel].
@@ -25,6 +32,9 @@ abstract class DataModel {
 
 /// An abstract view model which can serialize its [DataModel] across app restart.
 abstract class SerializableViewModel<D extends DataModel> extends ViewModel {
+  String? _filename;
+  Timer? _persistenceTimer;
+
   /// The current data model.
   ///
   /// The data model is either created using the [createModel] method or loaded
@@ -61,7 +71,8 @@ abstract class SerializableViewModel<D extends DataModel> extends ViewModel {
     });
 
     // save the data model on a regular basis.
-    Timer.periodic(const Duration(minutes: 3), (_) => save(model.toJson()));
+    _persistenceTimer =
+        Timer.periodic(const Duration(minutes: 3), (_) => save(model.toJson()));
 
     /// Check if we are running in a test environment.
     /// If so, do not listen to app lifecycle events.
@@ -77,8 +88,11 @@ abstract class SerializableViewModel<D extends DataModel> extends ViewModel {
 
   /// Current path and filename of the data.
   Future<String> get filename async {
-    String path = await LocalSettings().cacheBasePath ?? '';
-    return '$path/$runtimeType.json';
+    if (_filename == null) {
+      String path = await LocalSettings().cacheBasePath ?? '';
+      _filename = '$path/$runtimeType.json';
+    }
+    return _filename!;
   }
 
   /// Persistently save the [model].
@@ -98,17 +112,25 @@ abstract class SerializableViewModel<D extends DataModel> extends ViewModel {
 
   /// Permanently delete the [model].
   /// Returns true if successful, false otherwise.
-  Future<bool> delete() async {
+  bool delete() {
     bool success = true;
     try {
-      String name = (await filename);
-      debug("Deleting $runtimeType data from file '$name'.");
-      File(name).deleteSync();
+      if (_filename != null) {
+        debug("Deleting $runtimeType data from file '$_filename'.");
+        File(_filename!).deleteSync();
+      }
     } catch (exception) {
       success = false;
       warning('Failed to delete $runtimeType data - $exception');
     }
     return success;
+  }
+
+  @override
+  void dispose() {
+    _persistenceTimer?.cancel();
+    delete();
+    super.dispose();
   }
 
   /// Restore the [model] from persistent storage.
@@ -182,15 +204,29 @@ class CarpStudyAppViewModel extends ViewModel {
       _informedConsentViewModel;
 
   @override
-  // Future<void> init(SmartphoneDeploymentController ctrl) async {
   void init(SmartphoneDeploymentController ctrl) {
     super.init(ctrl);
-    _studyPageViewModel.init(ctrl);
     _taskListPageViewModel.init(ctrl);
-    _profilePageViewModel.init(ctrl);
+    _studyPageViewModel.init(ctrl);
+    _dataVisualizationPageViewModel.init(ctrl);
     _devicesPageViewModel.init(ctrl);
+
+    _profilePageViewModel.init(ctrl);
     _invitationsListViewModel.init(ctrl);
     _informedConsentViewModel.init(ctrl);
-    _dataVisualizationPageViewModel.init(ctrl);
+  }
+
+  @override
+  void dispose() {
+    _taskListPageViewModel.dispose();
+    _studyPageViewModel.dispose();
+    _dataVisualizationPageViewModel.dispose();
+    _devicesPageViewModel.dispose();
+
+    _profilePageViewModel.dispose();
+    _invitationsListViewModel.dispose();
+    _informedConsentViewModel.dispose();
+
+    super.dispose();
   }
 }

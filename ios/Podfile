@@ -47,5 +47,15 @@ post_install do |installer|
 end
   installer.pods_project.targets.each do |target|
     flutter_additional_ios_build_settings(target)
+
+    target.build_configurations.each do |config|
+      config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] ||= [
+        '$(inherited)',
+
+          # needed to request location permissions
+          # https://pub.dev/packages/permission_handler#setup
+         'PERMISSION_LOCATION=1'
+      ]
+    end
   end
 end

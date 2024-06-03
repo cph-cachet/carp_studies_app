@@ -54,7 +54,7 @@ post_install do |installer|
         # See https://pub.dev/packages/permission_handler#setup - under iOS setup
 
         # the app uses the following permissions:
-        'PERMISSION_LOCATION=1'
+        'PERMISSION_LOCATION=1',
         'PERMISSION_NOTIFICATIONS=1',
         'PERMISSION_SENSORS=1', # Core Motion sensors on iOS (pedometer)
         'PERMISSION_CAMERA=1',

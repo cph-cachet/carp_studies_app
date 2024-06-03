@@ -38,7 +38,7 @@ class LocationUsageDialog {
       actions: [
         ElevatedButton(
           onPressed: () {
-            Permission.locationAlways
+            Permission.locationWhenInUse
                 .request()
                 .then((value) => context.pop(true));
           },

@@ -29,10 +29,10 @@ packages:
     dependency: transitive
     description:
       name: archive
-      sha256: "6bd38d335f0954f5fad9c79e614604fbf03a0e5b975923dd001b6ea965ef5b4b"
+      sha256: cb6a278ef2dbb298455e1a713bda08524a175630ec643a242c399c932a0a1f7d
       url: "https://pub.dev"
     source: hosted
-    version: "3.6.0"
+    version: "3.6.1"
   args:
     dependency: transitive
     description:
@@ -269,10 +269,10 @@ packages:
     dependency: "direct main"
     description:
       name: carp_mobile_sensing
-      sha256: a214b84694dc56001744dc8a9b2826ddcace9b569df815b96f525ceedadea3a6
+      sha256: bd944eadb913bc61e9b03c80f0bdb845b209ad79d0c43656a0e39423c3f15378
       url: "https://pub.dev"
     source: hosted
-    version: "1.6.1"
+    version: "1.7.0"
   carp_movesense_package:
     dependency: "direct main"
     description:
@@ -309,10 +309,10 @@ packages:
     dependency: "direct main"
     description:
       name: carp_webservices
-      sha256: f1b0b206dfc7f0bf291e77d90dbfb78315c42471b771ad5c7eb45090962cf9b1
+      sha256: "552dccd100f06640e9214c2fde1c4ce4e30ce0eacc356011ac0692ca520de5cd"
       url: "https://pub.dev"
     source: hosted
-    version: "3.1.0"
+    version: "3.2.0"
   characters:
     dependency: transitive
     description:
@@ -517,10 +517,10 @@ packages:
     dependency: transitive
     description:
       name: exception_templates
-      sha256: e9303fd16ecdb845a14b397cb93476f807dd2b4706f5ee44f708dbc95c256c33
+      sha256: "517f7c770da690073663f867ee2057ae2f4ffb28edae9da9faa624aa29ac76eb"
       url: "https://pub.dev"
     source: hosted
-    version: "0.2.4"
+    version: "0.3.1"
   expandable:
     dependency: "direct main"
     description:
@@ -1017,10 +1017,10 @@ packages:
     dependency: transitive
     description:
       name: lazy_memo
-      sha256: ca4be412d65726f79a30ba6e40b7056f1dbefbb35ec42913365b3f3e86d49279
+      sha256: dcb30b4184a6d767e1d779d74ce784d752d38313b8fb4bad6b659ae7af4bb34d
       url: "https://pub.dev"
     source: hosted
-    version: "0.1.9"
+    version: "0.2.3"
   leak_tracker:
     dependency: transitive
     description:
@@ -1065,10 +1065,10 @@ packages:
     dependency: transitive
     description:
       name: list_operators
-      sha256: "25f630709110b04c51bc2d3f131c694d72d109cb3e653f84fc61d72b4179a51f"
+      sha256: "795b1a2b3fe689008907e92ddab0e965434dd1f02e7321cd65858d553c0740bf"
       url: "https://pub.dev"
     source: hosted
-    version: "0.4.3"
+    version: "0.5.0"
   logger:
     dependency: transitive
     description:
@@ -1601,10 +1601,10 @@ packages:
     dependency: transitive
     description:
       name: sample_statistics
-      sha256: "5c2f4111c0511ce5d4762580c2aa8b97d42e8ffe20da291279c913d6df8c1e10"
+      sha256: "115b076b61bd680975d620c02b47a3b56fa779d31eaac5d2b8896279d45f25a8"
       url: "https://pub.dev"
     source: hosted
-    version: "0.1.3"
+    version: "0.2.0"
   screen_state:
     dependency: transitive
     description:
@@ -1745,10 +1745,10 @@ packages:
     dependency: transitive
     description:
       name: simulated_annealing
-      sha256: "1eab3eb43fbd58d190f631d07fbc317105eb7775b0997d465844f04945d8b46c"
+      sha256: "5fac4326f446780a01fe0703a6be2d98dfca4a93d71e49c782f5574da22755c9"
       url: "https://pub.dev"
     source: hosted
-    version: "0.3.8"
+    version: "0.4.0"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -2110,10 +2110,10 @@ packages:
     dependency: transitive
     description:
       name: video_player_web
-      sha256: "41245cef5ef29c4585dbabcbcbe9b209e34376642c7576cabf11b4ad9289d6e4"
+      sha256: ff4d69a6614b03f055397c27a71c9d3ddea2b2a23d71b2ba0164f59ca32b8fe2
       url: "https://pub.dev"
     source: hosted
-    version: "2.3.0"
+    version: "2.3.1"
   vm_service:
     dependency: transitive
     description:

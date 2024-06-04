@@ -14,9 +14,12 @@ if (localPropertiesFile.exists()) {
 
 def keyProperties = new Properties()
 def keyPropertiesFile = rootProject.file('key.properties')
+def signingConfigExists = false
+
 if (keyPropertiesFile.exists()) {
     keyPropertiesFile.withReader('UTF-8') { reader ->
         keyProperties.load(reader)
+        signingConfigExists = keyProperties.getProperty('storeFile') != null && file(keyProperties.getProperty('storeFile')).exists()
     }
 }
 
@@ -59,24 +62,35 @@ android {
         multiDexEnabled true
     }
 
-    // TODO - enable this when building for release
-    //  signingConfigs {
-    //     release {
-    //         storeFile file(keyProperties.getProperty('storeFile')) ? file(keyProperties.getProperty('storeFile')) : file('./upload-keystore.jks')
-    //         storePassword keyProperties.getProperty('storePassword')
-    //         keyAlias keyProperties.getProperty('keyAlias')
-    //         keyPassword keyProperties.getProperty('keyPassword')
-    //     }
-    //  }
+     signingConfigs {
+        release {
+            if (signingConfigExists) {
+                storeFile file(keyProperties.getProperty('storeFile'))
+                storePassword keyProperties.getProperty('storePassword')
+                keyAlias keyProperties.getProperty('keyAlias')
+                keyPassword keyProperties.getProperty('keyPassword')
+            }
+        }
+        debug {}
+     }
 
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
         }
-        // TODO - enable this when building for release
-        // release {
-        //     signingConfig signingConfigs.release
-        // }
+        release {
+            ndk {
+                debugSymbolLevel 'FULL'
+                debugSymbolLevel 'SYMBOL_TABLE'
+            }
+            if (signingConfigExists) {
+                logger.error('storeFile found, signing with release build.')
+                signingConfig signingConfigs.release
+            } else {
+                logger.error('No storeFile found or null. Skipping signing of release build.')
+                signingConfig signingConfigs.debug
+            }
+        }
     }
 }
 

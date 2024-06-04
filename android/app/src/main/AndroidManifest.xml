@@ -65,7 +65,7 @@
     <uses-permission android:name="android.permission.CAMERA" />
 
     <!-- Permissions for Health Connect API -->
-    <!-- <uses-permission android:name="android.permission.health.READ_STEPS" />
+    <uses-permission android:name="android.permission.health.READ_STEPS" />
     <uses-permission android:name="android.permission.health.READ_WEIGHT" />
     <uses-permission android:name="android.permission.health.READ_HEIGHT" />
     <uses-permission android:name="android.permission.health.READ_HEART_RATE" />
@@ -85,7 +85,7 @@
     <uses-permission android:name="android.permission.health.READ_FLOORS_CLIMBED" />
     <uses-permission android:name="android.permission.health.READ_BASAL_METABOLIC_RATE" />
     <uses-permission android:name="android.permission.health.READ_RESPIRATORY_RATE" />
-    <uses-permission android:name="android.permission.health.READ_NUTRITION" /> -->
+    <uses-permission android:name="android.permission.health.READ_NUTRITION" />
 
     <!-- io.flutter.app.FlutterApplication is an android.app.Application that
          calls FlutterMain.startInitialization(this); in its onCreate method.

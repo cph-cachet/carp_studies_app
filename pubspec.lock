@@ -269,10 +269,10 @@ packages:
     dependency: "direct main"
     description:
       name: carp_mobile_sensing
-      sha256: bd944eadb913bc61e9b03c80f0bdb845b209ad79d0c43656a0e39423c3f15378
+      sha256: "8d371939d46e91bd96141fc558a1f35f64d81e3555176250efd39a25d0ca1d19"
       url: "https://pub.dev"
     source: hosted
-    version: "1.7.0"
+    version: "1.7.2"
   carp_movesense_package:
     dependency: "direct main"
     description:
@@ -719,26 +719,26 @@ packages:
     dependency: transitive
     description:
       name: flutter_sound
-      sha256: "090a4694b11ecc744c2010621c4ffc5fe7c3079d304ea014961a72c7b72cfe6c"
+      sha256: c5a8d14834803564d14ff4fca3a03fc204706bf27cda43f30cac0629c26436cc
       url: "https://pub.dev"
     source: hosted
-    version: "9.2.13"
+    version: "9.4.17"
   flutter_sound_platform_interface:
     dependency: transitive
     description:
       name: flutter_sound_platform_interface
-      sha256: "4537eaeb58a32748c42b621ad6116f7f4c6ee0a8d6ffaa501b165fe1c9df4753"
+      sha256: "3f8a6d069e5f5d02750e45638a610b960c23f41a84d3eaaf1c9c1e450ba29509"
       url: "https://pub.dev"
     source: hosted
-    version: "9.2.13"
+    version: "9.4.17"
   flutter_sound_web:
     dependency: transitive
     description:
       name: flutter_sound_web
-      sha256: ad4ca92671a1879e1f613e900bbbdb8170b20d57d1e4e6363018fe56b055594f
+      sha256: "1e3f7e9e4e31579a54bd74c5e4b9c7c5fae43f3e93ec7c020b0b0d453bc87397"
       url: "https://pub.dev"
     source: hosted
-    version: "9.2.13"
+    version: "9.4.17"
   flutter_svg:
     dependency: "direct main"
     description:
@@ -1073,10 +1073,10 @@ packages:
     dependency: transitive
     description:
       name: logger
-      sha256: "7ad7215c15420a102ec687bb320a7312afd449bac63bfb1c60d9787c27b9767f"
+      sha256: af05cc8714f356fd1f3888fb6741cbe9fbe25cdb6eedbab80e1a6db21047d4a4
       url: "https://pub.dev"
     source: hosted
-    version: "1.4.0"
+    version: "2.3.0"
   logging:
     dependency: transitive
     description:
@@ -1449,10 +1449,10 @@ packages:
     dependency: transitive
     description:
       name: permission_handler_apple
-      sha256: e9ad66020b89ff1b63908f247c2c6f931c6e62699b756ef8b3c4569350cd8662
+      sha256: e6f6d73b12438ef13e648c4ae56bd106ec60d17e90a59c4545db6781229082a0
       url: "https://pub.dev"
     source: hosted
-    version: "9.4.4"
+    version: "9.4.5"
   permission_handler_html:
     dependency: transitive
     description:
@@ -1974,10 +1974,10 @@ packages:
     dependency: "direct main"
     description:
       name: url_launcher
-      sha256: "6ce1e04375be4eed30548f10a315826fd933c1e493206eab82eed01f438c8d2e"
+      sha256: "21b704ce5fa560ea9f3b525b43601c678728ba46725bab9b01187b4831377ed3"
       url: "https://pub.dev"
     source: hosted
-    version: "6.2.6"
+    version: "6.3.0"
   url_launcher_android:
     dependency: transitive
     description:

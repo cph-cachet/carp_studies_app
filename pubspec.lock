@@ -578,10 +578,10 @@ packages:
     dependency: transitive
     description:
       name: flutter_activity_recognition
-      sha256: "8480bdae146a3f0a1f205ecdc223dfc22e7a0b9a4ac25a5da0469d6a5af46a27"
+      sha256: "2437368a9f0bf917abb22c98dc20bf72a96f2fce04c4442db0a32df863c67323"
       url: "https://pub.dev"
     source: hosted
-    version: "3.0.0"
+    version: "3.1.0"
   flutter_appauth:
     dependency: transitive
     description:
@@ -719,26 +719,26 @@ packages:
     dependency: transitive
     description:
       name: flutter_sound
-      sha256: c5a8d14834803564d14ff4fca3a03fc204706bf27cda43f30cac0629c26436cc
+      sha256: "22f13af5cacf48380318851997e4c29251fd0602a26fa6f07f7685c7e1e63699"
       url: "https://pub.dev"
     source: hosted
-    version: "9.4.17"
+    version: "9.4.18"
   flutter_sound_platform_interface:
     dependency: transitive
     description:
       name: flutter_sound_platform_interface
-      sha256: "3f8a6d069e5f5d02750e45638a610b960c23f41a84d3eaaf1c9c1e450ba29509"
+      sha256: "9637cad39c8d60e25ebdfc4fd06188976f43f577be4d8c51c3e4f086d58da30a"
       url: "https://pub.dev"
     source: hosted
-    version: "9.4.17"
+    version: "9.4.18"
   flutter_sound_web:
     dependency: transitive
     description:
       name: flutter_sound_web
-      sha256: "1e3f7e9e4e31579a54bd74c5e4b9c7c5fae43f3e93ec7c020b0b0d453bc87397"
+      sha256: "1a070a7114548e1b93b668843e65142dbb8f132ed6a2a0ad2d6a64e093039d25"
       url: "https://pub.dev"
     source: hosted
-    version: "9.4.17"
+    version: "9.4.18"
   flutter_svg:
     dependency: "direct main"
     description:

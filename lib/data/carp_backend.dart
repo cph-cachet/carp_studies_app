@@ -151,25 +151,36 @@ class CarpBackend {
     return invitations;
   }
 
-  /// Upload the result of an informed consent flow.
-  Future<ConsentDocument?> uploadInformedConsent(
-      RPTaskResult taskResult) async {
-    RPConsentSignatureResult signatureResult =
-        (taskResult.results["consentreviewstepID"] as RPConsentSignatureResult);
-    signatureResult.userID = username;
-    Map<String, dynamic> informedConsent = signatureResult.toJson();
-
-    ConsentDocument? document;
+  /// Upload the result of an informed consent flow. Returns the uploaded
+  /// consent document as retrieved from the server.
+  ///
+  /// Looks for the first instance of a [RPConsentSignatureResult] in [consent]
+  /// and uploads this.
+  Future<ConsentDocument?> uploadInformedConsent(RPTaskResult consent) async {
+    late RPConsentSignatureResult signedConsent;
     try {
-      document = await CarpService().createConsentDocument(informedConsent);
-      info(
-          'Informed consent document uploaded successfully - id: ${document.id}');
-      bloc.hasInformedConsentBeenAccepted = true;
-    } on Exception {
-      bloc.hasInformedConsentBeenAccepted = false;
-      warning('Informed consent upload failed for username: $username');
+      signedConsent = consent.results.values.firstWhere(
+        (result) => result is RPConsentSignatureResult,
+      ) as RPConsentSignatureResult;
+    } catch (_) {
+      warning(
+          '$runtimeType - No signed informed consent found to be uploaded.');
+      return null;
     }
 
-    return document;
+    signedConsent.userID = username;
+    Map<String, dynamic> json = signedConsent.toJson();
+
+    ConsentDocument? uploadedConsent;
+    try {
+      uploadedConsent = await CarpService().createConsentDocument(json);
+      info(
+          '$runtimeType - Informed consent document uploaded successfully - id: ${uploadedConsent.id}');
+    } on Exception {
+      warning(
+          '$runtimeType - Informed consent upload failed for username: $username');
+    }
+
+    return uploadedConsent;
   }
 }

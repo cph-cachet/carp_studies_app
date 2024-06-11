@@ -269,10 +269,10 @@ packages:
     dependency: "direct main"
     description:
       name: carp_mobile_sensing
-      sha256: "8d371939d46e91bd96141fc558a1f35f64d81e3555176250efd39a25d0ca1d19"
+      sha256: e7e902ffbca2af6d8651bd0494dde3ae1f2262ab129ab12a3865d56ecd04fba0
       url: "https://pub.dev"
     source: hosted
-    version: "1.7.2"
+    version: "1.8.0"
   carp_movesense_package:
     dependency: "direct main"
     description:
@@ -719,26 +719,26 @@ packages:
     dependency: transitive
     description:
       name: flutter_sound
-      sha256: "22f13af5cacf48380318851997e4c29251fd0602a26fa6f07f7685c7e1e63699"
+      sha256: "07734206e8ffad4fdb517128a0331f8e9dd7b92fa12234ea8d9d09ca764a3445"
       url: "https://pub.dev"
     source: hosted
-    version: "9.4.18"
+    version: "9.4.20"
   flutter_sound_platform_interface:
     dependency: transitive
     description:
       name: flutter_sound_platform_interface
-      sha256: "9637cad39c8d60e25ebdfc4fd06188976f43f577be4d8c51c3e4f086d58da30a"
+      sha256: "58cd12ea08131fb8d0c80097444f3814ee639638c8f78035abd8e1f998043b4e"
       url: "https://pub.dev"
     source: hosted
-    version: "9.4.18"
+    version: "9.4.20"
   flutter_sound_web:
     dependency: transitive
     description:
       name: flutter_sound_web
-      sha256: "1a070a7114548e1b93b668843e65142dbb8f132ed6a2a0ad2d6a64e093039d25"
+      sha256: "68c295694a9cf6e5a67abf0e738e58534741a2f28c7812c10b0e1d46efcd44f2"
       url: "https://pub.dev"
     source: hosted
-    version: "9.4.18"
+    version: "9.4.20"
   flutter_svg:
     dependency: "direct main"
     description:

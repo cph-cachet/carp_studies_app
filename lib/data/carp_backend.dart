@@ -58,7 +58,7 @@ class CarpBackend {
 
   CarpApp get app => _app;
 
-  // The authentication configuration
+  /// The authentication configuration
   CarpAuthProperties get authProperties => CarpAuthProperties(
         authURL: uri,
         clientId: 'studies-app',

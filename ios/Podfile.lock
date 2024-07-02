@@ -34,19 +34,19 @@ PODS:
     - Flutter
   - flutter_secure_storage (6.0.0):
     - Flutter
-  - flutter_sound (9.4.17):
+  - flutter_sound (9.6.0):
     - Flutter
-    - flutter_sound_core (= 9.4.17)
-  - flutter_sound_core (9.4.17)
+    - flutter_sound_core (= 9.6.0)
+  - flutter_sound_core (9.6.0)
   - flutter_timezone (0.0.1):
-    - Flutter
-  - geolocator_apple (1.2.0):
     - Flutter
   - health (1.0.4):
     - Flutter
   - just_audio (0.0.1):
     - Flutter
   - light (0.0.1):
+    - Flutter
+  - location (0.0.1):
     - Flutter
   - mdsflutter (0.0.1):
     - Flutter
@@ -110,10 +110,10 @@ DEPENDENCIES:
   - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
   - flutter_sound (from `.symlinks/plugins/flutter_sound/ios`)
   - flutter_timezone (from `.symlinks/plugins/flutter_timezone/ios`)
-  - geolocator_apple (from `.symlinks/plugins/geolocator_apple/ios`)
   - health (from `.symlinks/plugins/health/ios`)
   - just_audio (from `.symlinks/plugins/just_audio/ios`)
   - light (from `.symlinks/plugins/light/ios`)
+  - location (from `.symlinks/plugins/location/ios`)
   - mdsflutter (from `.symlinks/plugins/mdsflutter/ios`)
   - Movesense (from `https://bitbucket.org/movesense/movesense-mobile-lib/`)
   - network_info_plus (from `.symlinks/plugins/network_info_plus/ios`)
@@ -172,14 +172,14 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_sound/ios"
   flutter_timezone:
     :path: ".symlinks/plugins/flutter_timezone/ios"
-  geolocator_apple:
-    :path: ".symlinks/plugins/geolocator_apple/ios"
   health:
     :path: ".symlinks/plugins/health/ios"
   just_audio:
     :path: ".symlinks/plugins/just_audio/ios"
   light:
     :path: ".symlinks/plugins/light/ios"
+  location:
+    :path: ".symlinks/plugins/location/ios"
   mdsflutter:
     :path: ".symlinks/plugins/mdsflutter/ios"
   Movesense:
@@ -236,13 +236,13 @@ SPEC CHECKSUMS:
   flutter_blue_plus: 4837da7d00cf5d441fdd6635b3a57f936778ea96
   flutter_local_notifications: 4cde75091f6327eb8517fa068a0a5950212d2086
   flutter_secure_storage: d33dac7ae2ea08509be337e775f6b59f1ff45f12
-  flutter_sound: fbc83e9f79f42482eb414bc3d39267ea4a37a7f4
-  flutter_sound_core: f29684f1c6503599a8c560659036e2d851abc67f
+  flutter_sound: dde9a913063b65a27ba8fdc2039036b99b136c79
+  flutter_sound_core: 0c6eb9d5268adc70ff159b3d65fd3d98a82d3a27
   flutter_timezone: ffb07bdad3c6276af8dada0f11978d8a1f8a20bb
-  geolocator_apple: 6cbaf322953988e009e5ecb481f07efece75c450
   health: 5a380c0f6c4f619535845992993964293962e99e
   just_audio: baa7252489dbcf47a4c7cc9ca663e9661c99aafa
   light: 86af7a847d218a9a2376bc1c1ae40c3410441135
+  location: d5cf8598915965547c3f36761ae9cc4f4e87d22e
   mdsflutter: 841344e0d5781afbbddd13e057e1cb2e9d86e012
   Movesense: a1068c58b31d8032a13d69d0cb35ba6c444d2aae
   network_info_plus: 9d930145451916919786087c4173226363616071

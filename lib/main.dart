@@ -44,7 +44,7 @@ import 'package:carp_esense_package/esense.dart';
 import 'package:carp_polar_package/carp_polar_package.dart';
 import 'package:research_package/research_package.dart';
 import 'package:cognition_package/cognition_package.dart';
-// import 'package:carp_health_package/health_package.dart';
+import 'package:carp_health_package/health_package.dart';
 // import 'package:health/health.dart';
 import 'package:carp_movesense_package/carp_movesense_package.dart';
 
@@ -77,7 +77,6 @@ part 'view_models/user_tasks.dart';
 part 'carp_study_app.dart';
 part 'ui/pages/informed_consent_page.dart';
 part 'ui/pages/home_page.dart';
-part 'ui/widgets/carp_app_bar.dart';
 part 'ui/carp_study_style.dart';
 part 'ui/colors.dart';
 part 'ui/pages/data_visualization_page.dart';
@@ -103,6 +102,7 @@ part 'ui/pages/devices_page.connection_dialog.dart';
 part 'ui/pages/devices_page.disconnection_dialog.dart';
 part 'ui/pages/devices_page.list_title.dart';
 
+part 'ui/widgets/carp_app_bar.dart';
 part 'ui/widgets/study_card.dart';
 part 'ui/widgets/horizontal_bar.dart';
 part 'ui/widgets/location_usage_dialog.dart';

@@ -17,7 +17,7 @@
     "pages.task_list.task.hours_remaining": "hour remaining",
     "pages.task_list.task.hours_remaining_plural": "hours remaining",
     "pages.task_list.task.minutes_remaining": "minute remaining",
-    "pages.task_list.task.minutes_remaining_plural": "minute remaining",
+    "pages.task_list.task.minutes_remaining_plural": "minutes remaining",
     "pages.task_list.task.seconds_remaining": "second remaining",
     "pages.task_list.task.seconds_remaining_plural": "seconds remaining",
     "pages.task_list.no_tasks": "There are no tasks for you at the moment.\nPlease check again later.",

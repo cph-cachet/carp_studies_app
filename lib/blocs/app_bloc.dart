@@ -168,6 +168,16 @@ class StudyAppBLoC extends ChangeNotifier {
     debug('$runtimeType initialized - deployment mode: ${deploymentMode.name}');
   }
 
+  /// Is the phone connected either via wifi or mobile network?
+  Future<bool> checkConnectivity() async {
+    final List<ConnectivityResult> results =
+        await (Connectivity().checkConnectivity());
+
+    return results.any((element) =>
+        element == ConnectivityResult.mobile ||
+        element == ConnectivityResult.wifi);
+  }
+
   /// Set the active study in the app based on an [invitation].
   ///
   /// If a [context] is provided, the translation for this study is re-loaded
@@ -195,10 +205,13 @@ class StudyAppBLoC extends ChangeNotifier {
     if (context != null) CarpStudyApp.reloadLocale(context);
   }
 
-  /// This methods is used to configure a study, including:
-  ///  * setting up messaging
+  /// This methods is used to configure the study deployment with
+  /// the id [studyDeploymentId].
+  ///
+  /// This includes:
   ///  * initialize sensing
   ///  * adding the CAMS study
+  ///  * setting up messaging
   ///  * initializing the data visualization pages
   Future<void> configureStudy() async {
     // early out if already configured
@@ -323,19 +336,19 @@ class StudyAppBLoC extends ChangeNotifier {
       ? Sensing().controller!.executor.probes
       : [];
 
-  /// Get a list of running devices
-  Iterable<DeviceViewModel> get runningDevices =>
-      Sensing().runningDevices!.map((device) => DeviceViewModel(device));
+  /// The list of all devices in this deployment.
+  Iterable<DeviceViewModel> get deploymentDevices =>
+      Sensing().deploymentDevices!.map((device) => DeviceViewModel(device));
 
   /// Start sensing.
   Future<void> start() async {
     assert(Sensing().controller != null,
         'No Study Controller - the study has not been deployed.');
-    if (!Sensing().isRunning) Sensing().controller?.start(false);
+    if (!Sensing().isRunning) Sensing().controller?.start();
   }
 
   /// Stop sensing.
-  void stop() => Sensing().controller?.executor.stop();
+  void stop() => Sensing().controller?.stop();
 
   /// Dispose the entire sensing.
   @override
@@ -344,11 +357,11 @@ class StudyAppBLoC extends ChangeNotifier {
     Sensing().controller?.dispose();
   }
 
-  /// Add a [Measurement] object to the stream of events.
+  /// Add a [Measurement] object to the stream of measurements.
   void addMeasurement(Measurement measurement) =>
       Sensing().controller!.executor.addMeasurement(measurement);
 
-  /// Add a error to the stream of events.
+  /// Add a error to the stream of measurements.
   void addError(Object error, [StackTrace? stacktrace]) =>
       Sensing().controller!.executor.addError(error, stacktrace);
 
@@ -365,10 +378,14 @@ class StudyAppBLoC extends ChangeNotifier {
   /// re-deployed on the phone, data from the previous deployment will be
   /// available.
   Future<void> leaveStudy() async {
-    _state = StudyAppState.initialized;
-    hasInformedConsentBeenAccepted = false;
-    await LocalSettings().eraseStudyIds();
+    // stop sensing and remove all deployment info
     await Sensing().removeStudy();
+    await LocalSettings().eraseStudyDeployment();
+
+    // dispose the UI data models
+    //appViewModel.dispose();
+
+    _state = StudyAppState.initialized;
     notifyListeners();
   }
 
@@ -380,6 +397,5 @@ class StudyAppBLoC extends ChangeNotifier {
   Future<void> signOutAndLeaveStudy() async {
     await backend.signOut();
     await leaveStudy();
-    notifyListeners();
   }
 }

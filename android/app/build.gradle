@@ -62,7 +62,6 @@ android {
         multiDexEnabled true
     }
 
-    // TODO - enable this when building for release
      signingConfigs {
         release {
             if (signingConfigExists) {
@@ -79,13 +78,16 @@ android {
         debug {
             signingConfig signingConfigs.debug
         }
-        // TODO - enable this when building for release
         release {
+            ndk {
+                debugSymbolLevel 'FULL'
+                debugSymbolLevel 'SYMBOL_TABLE'
+            }
             if (signingConfigExists) {
-                logger.error('storeFile file found, signing with release build.')
+                logger.error('storeFile found, signing with release build.')
                 signingConfig signingConfigs.release
             } else {
-                logger.error('storeFile not found or null, skipping signing of release build.')
+                logger.error('No storeFile found or null. Skipping signing of release build.')
                 signingConfig signingConfigs.debug
             }
         }

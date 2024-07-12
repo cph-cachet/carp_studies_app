@@ -7,15 +7,18 @@ extension StringExtension on String {
 
 extension Humanize on Duration {
   String humanize(RPLocalizations locale) {
-    // Convert the difference into a human-readable format
+    // Convert the difference into a human-readable format and round up
     if (inSeconds < 60) {
       return _pluralize(inSeconds, locale, 'seconds');
     } else if (inMinutes < 60) {
-      return _pluralize(inMinutes, locale, 'minutes');
+      int roundedMinutes = (inSeconds / 60).round();
+      return _pluralize(roundedMinutes, locale, 'minutes');
     } else if (inHours < 24) {
-      return _pluralize(inHours, locale, 'hours');
+      int roundedHours = (inSeconds / 3600).round();
+      return _pluralize(roundedHours, locale, 'hours');
     } else {
-      return _pluralize(inDays, locale, 'days');
+      int roundedDays = (inSeconds / 86400).round();
+      return _pluralize(roundedDays, locale, 'days');
     }
   }
 

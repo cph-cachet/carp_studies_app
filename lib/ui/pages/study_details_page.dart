@@ -20,7 +20,6 @@ class StudyDetailsPage extends StatelessWidget {
 
     return Scaffold(
       body: Container(
-        //height: MediaQuery.of(context).size.height * 0.3,
         color: Theme.of(context).colorScheme.secondary,
         child: Padding(
           padding: const EdgeInsets.only(top: 35),

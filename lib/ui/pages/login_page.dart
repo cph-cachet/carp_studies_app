@@ -40,7 +40,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
             child: TextButton(
               onPressed: () async {
-                bool isConnected = await ConnectivityPlus().checkConnectivity();
+                bool isConnected = await bloc.checkConnectivity();
                 if (isConnected) {
                   await bloc.backend.authenticate();
                   if (context.mounted) context.go(CarpStudyAppState.homeRoute);

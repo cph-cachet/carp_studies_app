@@ -189,8 +189,7 @@ class ProfilePageState extends State<ProfilePage> {
                         style:
                             profileActionStyle.copyWith(color: CACHET.RED_1)),
                     onTap: () async {
-                      bool isConnected =
-                          await ConnectivityPlus().checkConnectivity();
+                      bool isConnected = await bloc.checkConnectivity();
                       if (isConnected) {
                         _showLogoutConfirmationDialog();
                       } else {

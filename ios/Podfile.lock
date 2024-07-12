@@ -225,7 +225,7 @@ SPEC CHECKSUMS:
   audio_session: 088d2483ebd1dc43f51d253d4a1c517d9a2e7207
   audio_streamer: af49e73eb66f71c4eeabb4bbcb05f122d03a6709
   battery_plus: 1ff2e16ba75af2a78387f65476057a390b47885e
-  camera_avfoundation: 759172d1a77ae7be0de08fc104cfb79738b8a59e
+  camera_avfoundation: dd002b0330f4981e1bbcb46ae9b62829237459a4
   connectivity_plus: ddd7f30999e1faaef5967c23d5b6d503d10434db
   device_info_plus: c6fb39579d0f423935b0c9ce7ee2f44b71b9fce6
   ESense: cbe103ad16c435424f2fd6f8b274f2468af84173

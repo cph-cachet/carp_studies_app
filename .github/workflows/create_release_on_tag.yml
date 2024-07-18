@@ -1,7 +1,7 @@
 on:
   push:
     tags:
-      - 'v2.0.0'
+      - 'v*'
 
 name: Create Release
 
@@ -30,7 +30,7 @@ jobs:
 
       - if: ${{ steps.cache-flutter.outputs.cache-hit != 'true' }}
         name: Install Flutter
-        run: git clone https://github.com/flutter/flutter.git --depth 1 -b 3.19.6 $FOLDER
+        run: git clone https://github.com/flutter/flutter.git --depth 1 -b stable $FOLDER
 
       - name: Add Flutter to PATH
         run: echo "$GITHUB_WORKSPACE/flutter/bin" >> $GITHUB_PATH

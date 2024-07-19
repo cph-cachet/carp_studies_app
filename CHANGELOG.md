@@ -1,3 +1,6 @@
+## 3.0.0
+- Changed bundleID (Apple) and applicationId (Google) to be dk.carp.studiesapp to remove depricated 'cachet'.
+
 ## 2.0.0
 
 - Update to latest version of Carp Mobile Sensing (1.5.0)

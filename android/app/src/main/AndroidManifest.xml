@@ -44,6 +44,7 @@
 
     <!-- The following permissions are used in the Context Package -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <!-- This permission is needed every time the ACCESS_FINE_LOCATION permission is requested to be compatible with Android 14 (API level 34) -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
 
@@ -63,7 +64,7 @@
     <uses-permission android:name="android.permission.CAMERA" />
 
     <!-- Permissions for Health Connect API -->
-    <uses-permission android:name="android.permission.health.READ_STEPS" />
+    <!-- <uses-permission android:name="android.permission.health.READ_STEPS" />
     <uses-permission android:name="android.permission.health.READ_WEIGHT" />
     <uses-permission android:name="android.permission.health.READ_HEIGHT" />
     <uses-permission android:name="android.permission.health.READ_HEART_RATE" />
@@ -83,7 +84,7 @@
     <uses-permission android:name="android.permission.health.READ_FLOORS_CLIMBED" />
     <uses-permission android:name="android.permission.health.READ_BASAL_METABOLIC_RATE" />
     <uses-permission android:name="android.permission.health.READ_RESPIRATORY_RATE" />
-    <uses-permission android:name="android.permission.health.READ_NUTRITION" />
+    <uses-permission android:name="android.permission.health.READ_NUTRITION" /> -->
 
     <!-- io.flutter.app.FlutterApplication is an android.app.Application that
          calls FlutterMain.startInitialization(this); in its onCreate method.

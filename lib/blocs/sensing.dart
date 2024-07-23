@@ -213,7 +213,4 @@ class Sensing {
     info(
         "$runtimeType - Study protocol translated to locale '${bloc.localization!.locale}'");
   }
-
-  Future<void> askForPermissions() async =>
-      await SmartPhoneClientManager().askForAllPermissions();
 }

@@ -213,10 +213,10 @@ packages:
     dependency: "direct main"
     description:
       name: carp_audio_package
-      sha256: "9115850844ad7afb108769c3ddd914c2677bb84677022857c08fb9845bee4cdf"
+      sha256: "99179053d0877713ddc7075fc35b73e8b2d5590bad8ee8e3946e134b4f65c784"
       url: "https://pub.dev"
     source: hosted
-    version: "1.5.0"
+    version: "1.6.0"
   carp_backend:
     dependency: "direct main"
     description:
@@ -229,18 +229,18 @@ packages:
     dependency: "direct main"
     description:
       name: carp_connectivity_package
-      sha256: e9e85477b558d4b882d389ba1a6a4b61b6c350d8f5f9ce6c488dabaf9e5cdc70
+      sha256: e2f01caa45679dacac8586f6897e68f72e5aa82c322e1178be35da673925f8fd
       url: "https://pub.dev"
     source: hosted
-    version: "1.5.0"
+    version: "1.6.0"
   carp_context_package:
     dependency: "direct main"
     description:
       name: carp_context_package
-      sha256: ee191aeb63cc15d500a5e2c7e6749b027ee8bed5ce79942c5bd2bfe0be60bf2b
+      sha256: "2832618f4eae5e8d167eb200515d6cf71417942383725746960e3a08550c6c5c"
       url: "https://pub.dev"
     source: hosted
-    version: "1.7.0"
+    version: "1.9.0"
   carp_core:
     dependency: "direct main"
     description:
@@ -253,42 +253,42 @@ packages:
     dependency: "direct main"
     description:
       name: carp_esense_package
-      sha256: adc274206efa3ddb77ee087969decfcdb6023ccf48d2928e68ba04abf37b0854
+      sha256: "7fe2a4dcb82de66361b944211d4fc51d682fa2c5a804e36471588b78c9168a96"
       url: "https://pub.dev"
     source: hosted
-    version: "1.4.0"
+    version: "1.5.0"
   carp_health_package:
     dependency: "direct main"
     description:
       name: carp_health_package
-      sha256: "27a4ac0fc454039cc46f1aebbc5e227cbab4e8f4f6eed2d425d783d0e6acc4ea"
+      sha256: "1485feebba78cfe210e09c92b413bb554593a6274864a30c842a86700d0967d0"
       url: "https://pub.dev"
     source: hosted
-    version: "2.9.4"
+    version: "2.10.0"
   carp_mobile_sensing:
     dependency: "direct main"
     description:
       name: carp_mobile_sensing
-      sha256: ed72c14133adf468283d09c84b51213f381694f3150243f1f1087075209e29ab
+      sha256: "386535ca7377694c3ea8c50b8f620f8fe67c048dda17907efb0a7b297be1f93e"
       url: "https://pub.dev"
     source: hosted
-    version: "1.8.2"
+    version: "1.9.0"
   carp_movesense_package:
     dependency: "direct main"
     description:
       name: carp_movesense_package
-      sha256: "822d9b400efb67a34326a1e698b92d15d24859ccd66624bb991209d5f5960bf2"
+      sha256: "741d73e729a17ca1b00d143f4aeba35d91ee8048da9bebddced360beae27c1fc"
       url: "https://pub.dev"
     source: hosted
-    version: "1.4.5"
+    version: "1.5.0"
   carp_polar_package:
     dependency: "direct main"
     description:
       name: carp_polar_package
-      sha256: "5c5fb376274446ea9e7c4aba7a42ca270e7595ba2d1d3f8271873bde710b3927"
+      sha256: aa463e1fa1eafa451814ab1412ae1b18fd6b212fe5fbecd20d4a07462f6b6f20
       url: "https://pub.dev"
     source: hosted
-    version: "1.4.2"
+    version: "1.5.0"
   carp_serializable:
     dependency: "direct main"
     description:
@@ -301,10 +301,10 @@ packages:
     dependency: "direct main"
     description:
       name: carp_survey_package
-      sha256: df48d33ef7a3cb08470932c645a7293b98cbdce3bb1b12f1e290c1a2c60a42c0
+      sha256: a007a3745bf1924d8593b19f8c6f0c11769b8f00353216b802307e1478c3572a
       url: "https://pub.dev"
     source: hosted
-    version: "1.5.0"
+    version: "1.6.0"
   carp_webservices:
     dependency: "direct main"
     description:
@@ -485,10 +485,10 @@ packages:
     dependency: transitive
     description:
       name: device_info_plus
-      sha256: "77f757b789ff68e4eaf9c56d1752309bd9f7ad557cb105b938a7f8eb89e59110"
+      sha256: eead12d1a1ed83d8283ab4c2f3fca23ac4082f29f25f29dff0f758f57d06ec91
       url: "https://pub.dev"
     source: hosted
-    version: "9.1.2"
+    version: "10.1.0"
   device_info_plus_platform_interface:
     dependency: transitive
     description:
@@ -825,10 +825,10 @@ packages:
     dependency: transitive
     description:
       name: health
-      sha256: "885104e4cdd1b6db5a04f85304cfb16d50bd1729124c0da11464f1d4c85b9d1c"
+      sha256: "9b3c5ddb1cb22020a2bb423b3c091c8b47806a38f80d350dfb11831000af2392"
       url: "https://pub.dev"
     source: hosted
-    version: "9.0.1"
+    version: "10.2.0"
   html:
     dependency: transitive
     description:
@@ -1017,26 +1017,26 @@ packages:
     dependency: transitive
     description:
       name: location
-      sha256: "37ffdadcd4b1498b769824f45ebb4de8ed46663a4a67ac27b33a590ee486579f"
+      sha256: "6463a242973bf247e3fb1c7722919521b98026978ee3b5177202e103a39c145e"
       url: "https://pub.dev"
     source: hosted
-    version: "6.0.2"
+    version: "7.0.0"
   location_platform_interface:
     dependency: transitive
     description:
       name: location_platform_interface
-      sha256: "2ecde6bb0f88032b0bbbde37e18975b4468711dd92619c2235cc0c0ee93b4b8e"
+      sha256: "1e535ccc8b4a9612de4e4319871136b45d2b5d1fb0c2a8bf99687242bf7ca5f7"
       url: "https://pub.dev"
     source: hosted
-    version: "4.0.0"
+    version: "5.0.0"
   location_web:
     dependency: transitive
     description:
       name: location_web
-      sha256: "49dda13d415c4603c5775a33fb22f575e0aa3f0ec2916644ddcd722db31ee884"
+      sha256: "613597b489beb396f658c6f4358dd383c5ed0a1402d95e287642a5f2d8171cb0"
       url: "https://pub.dev"
     source: hosted
-    version: "5.0.2"
+    version: "5.0.3"
   logger:
     dependency: transitive
     description:
@@ -1481,10 +1481,10 @@ packages:
     dependency: transitive
     description:
       name: polar
-      sha256: "72970632c208acbed0f05f436d8ade8be30d37326bfa4d1f485059af9a5669f5"
+      sha256: "3a9f6f9246ce879b573a6c1d92cf5bde92d634bc4bd8508bd7aa9c1c27181456"
       url: "https://pub.dev"
     source: hosted
-    version: "7.1.0"
+    version: "7.3.0"
   pool:
     dependency: transitive
     description:
@@ -1990,10 +1990,10 @@ packages:
     dependency: transitive
     description:
       name: url_launcher_windows
-      sha256: ecf9725510600aa2bb6d7ddabe16357691b6d2805f66216a97d1b881e21beff7
+      sha256: "49c10f879746271804767cb45551ec5592cdab00ee105c06dddde1a98f73b185"
       url: "https://pub.dev"
     source: hosted
-    version: "3.1.1"
+    version: "3.1.2"
   uuid:
     dependency: "direct overridden"
     description:

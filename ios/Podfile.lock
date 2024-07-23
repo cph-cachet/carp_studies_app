@@ -227,7 +227,7 @@ SPEC CHECKSUMS:
   battery_plus: 1ff2e16ba75af2a78387f65476057a390b47885e
   camera_avfoundation: dd002b0330f4981e1bbcb46ae9b62829237459a4
   connectivity_plus: ddd7f30999e1faaef5967c23d5b6d503d10434db
-  device_info_plus: c6fb39579d0f423935b0c9ce7ee2f44b71b9fce6
+  device_info_plus: 97af1d7e84681a90d0693e63169a5d50e0839a0d
   ESense: cbe103ad16c435424f2fd6f8b274f2468af84173
   esense_flutter: 8bfadfdefe7b51d6f78366e43b2b64ec9b6144b6
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
@@ -266,4 +266,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 637a852170391ffc67bb926aa9b5540c53ed8eaf
 
-COCOAPODS: 1.15.0
+COCOAPODS: 1.15.2

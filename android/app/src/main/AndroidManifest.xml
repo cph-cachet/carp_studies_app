@@ -15,6 +15,9 @@
     <uses-feature
         android:name="android.hardware.camera"
         android:required="false" />
+    <uses-feature
+        android:name=" android.hardware.microphone"
+        android:required="false" />
 
 
     <!-- The INTERNET permission is required for development. Specifically,
@@ -35,11 +38,9 @@
 
 
     <!-- The following permissions are used for CARP Mobile Sensing -->
-    <uses-permission
-        android:name="android.permission.PACKAGE_USAGE_STATS"
-        tools:ignore="ProtectedPermissions" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-        android:maxSdkVersion="32" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <!-- The following permissions are used in the Context Package -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -54,12 +55,9 @@
     <!-- for Android 10 (API 29 and later), use: -->
     <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" />
 
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-
     <!-- The following permissions are used in the flutter_local_notifications Package  -->
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <!-- The following permissions are used in the Media Package  -->
     <uses-permission android:name="android.permission.RECORD_AUDIO" />

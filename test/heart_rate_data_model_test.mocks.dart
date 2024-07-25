@@ -411,13 +411,15 @@ class MockSmartphoneDeploymentController extends _i1.Mock
       ) as _i6.Future<void>);
 
   @override
-  void start([bool? start = true]) => super.noSuchMethod(
+  _i6.Future<void> start([bool? start = true]) => (super.noSuchMethod(
         Invocation.method(
           #start,
-          [start],
+          [],
+          {#start: start},
         ),
-        returnValueForMissingStub: null,
-      );
+        returnValue: _i6.Future<void>.value(),
+        returnValueForMissingStub: _i6.Future<void>.value(),
+      ) as _i6.Future<void>);
 
   @override
   _i6.Future<void> stop() => (super.noSuchMethod(

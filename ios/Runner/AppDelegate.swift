@@ -8,7 +8,7 @@ import flutter_local_notifications
 //     }
 // }
 
-@UIApplicationMain
+@main
 @objc class AppDelegate: FlutterAppDelegate {
   override func application(
     _ application: UIApplication,

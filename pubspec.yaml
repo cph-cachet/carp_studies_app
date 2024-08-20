@@ -83,7 +83,7 @@ dependency_overrides:
   # carp_health_package:
   #   path: ../carp/carp.sensing-flutter/packages/carp_health_package/
   # carp_movesense_package:
-  #   path: ../carp/carp.sensing-flutter/packages/carp_movesense_package/
+  #   path: ../carp.sensing-flutter/packages/carp_movesense_package/
 
   # carp_webservices:
   #   path: ../carp/carp.sensing-flutter/backends/carp_webservices/

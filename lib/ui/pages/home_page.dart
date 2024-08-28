@@ -62,7 +62,10 @@ class HomePageState extends State<HomePage> {
     askForLocationPermissions(context)
         .then((_) => bloc.configureStudy().then((_) => bloc.start()));
 
-    _checkHealthConnectInstallation();
+    if (Platform.isAndroid) {
+      // Check if HealthConnect is installed
+      _checkHealthConnectInstallation();
+    }
   }
 
   Future<void> _checkHealthConnectInstallation() async {

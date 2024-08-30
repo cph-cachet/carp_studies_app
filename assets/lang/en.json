@@ -89,7 +89,7 @@
     "pages.about.study.website": "Website",
     "pages.about.study.privacy": "Privacy policy",
     "pages.about.install_health_connect.title": "Health Connect Required",
-    "pages.about.install_health_connect.description": "This app requires Health Connect to function properly. Would you like to install it?",
+    "pages.about.install_health_connect.description": "This app requires Health Connect to be installed. Would you like to install it?",
     "dialog.location.permission": "Permission Required",
     "dialog.location.allow": "Allow",
     "pages.ic.need_accept": "You need to accept the informed consent to participate in this study.",

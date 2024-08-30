@@ -1,7 +1,7 @@
 name: carp_study_app
 description: The generic CARP study app.
 publish_to: "none"
-version: 2.1.1+30
+version: 2.2.1+32
 
 environment:
   sdk: ">=3.2.0 <4.0.0"
@@ -51,6 +51,7 @@ dependencies:
   permission_handler: ^11.0.1
   connectivity_plus: ^6.0.0
   open_settings_plus: ^0.3.0
+  appcheck: ^1.5.2
 
 # Overriding carp libraries to use the local copy
 dependency_overrides:

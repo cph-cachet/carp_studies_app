@@ -55,6 +55,7 @@ class StudyAppBLoC extends ChangeNotifier {
   List<Message> _messages = [];
   final StreamController<int> _messageStreamController =
       StreamController.broadcast();
+  final String _healthConnectPackageName = 'com.google.android.apps.healthdata';
 
   /// The state of this BloC.
   StudyAppState get state => _state;
@@ -83,6 +84,8 @@ class StudyAppBLoC extends ChangeNotifier {
   final _scaffoldKey = GlobalKey<ScaffoldMessengerState>();
   GlobalKey<ScaffoldMessengerState> get scaffoldKey => _scaffoldKey;
   State? get scaffoldMessengerState => scaffoldKey.currentState;
+
+  String get healthConnectPackageName => _healthConnectPackageName;
 
   /// Create the BLoC for the app.
   StudyAppBLoC() : super() {
@@ -151,6 +154,10 @@ class StudyAppBLoC extends ChangeNotifier {
   /// The overall data model for this app
   CarpStudyAppViewModel get appViewModel => _appViewModel;
 
+  final appCheck = AppCheck();
+
+  List<AppInfo>? installedApps;
+
   /// Initialize this BLOC. Called before being used for anything.
   Future<void> initialize() async {
     if (isInitialized) return;
@@ -176,6 +183,19 @@ class StudyAppBLoC extends ChangeNotifier {
     return results.any((element) =>
         element == ConnectivityResult.mobile ||
         element == ConnectivityResult.wifi);
+  }
+
+  Future<bool> _isHealthConnectInstalled() async {
+    try {
+      final apps = await appCheck.getInstalledApps();
+      if (apps != null) {
+        return apps.any((app) => app.packageName == _healthConnectPackageName);
+      }
+    } catch (e) {
+      debug("Error checking Health Connect installation: $e");
+      return false;
+    }
+    return false;
   }
 
   /// Set the active study in the app based on an [invitation].

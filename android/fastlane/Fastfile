@@ -52,7 +52,7 @@ platform :android do
     else
       UI.user_error!("Version string format is incorrect")
     end
-    File.open(pubspec_path, 'w') { |f| f.write(pubspec_content.to_yaml) }
+    File.open('../..pubspect.yaml', 'w') { |f| f.write(pubspec_content.to_yaml) }
 
     sh "flutter build appbundle --release --no-deferred-components --no-tree-shake-icons"
     upload_to_play_store(

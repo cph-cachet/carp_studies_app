@@ -21,7 +21,7 @@ platform :android do
     gradle(task: "test")
   end
 
-  desc "Submit a new beta build to Google Play"
+  desc "Submit a new release build to Google Play's Beta track"
   lane :release do
     sh "flutter clean"
     sh "flutter pub get"
@@ -34,13 +34,15 @@ platform :android do
     )
   end
 
-  desc "Promote beta track to prod"
-  lane :promote_to_production do
+  desc "Promote internal track to closed"
+  lane :promote_internal_to_closed do
+    sh "flutter clean"
+    sh "flutter pub get"
+    sh "flutter pub upgrade"
     sh "flutter build appbundle --release --no-deferred-components --no-tree-shake-icons"
     upload_to_play_store(
-      track: 'beta',
-      track_promote_to: 'production',
-      skip_upload_changelogs: true,
+      track: 'internal',
+      track_promote_to: 'closed',
       aab: '../build/app/outputs/bundle/release/app-release.aab',
     )
   end

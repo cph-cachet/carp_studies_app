@@ -4,7 +4,8 @@ run-name: ${{github.actor}} is pushing to branch and deploying to Google Store
 on:
     push:
         branches:
-        - panosfunk/*
+        - master
+        - '**''
 jobs:
     build:
         runs-on: ubuntu-latest
@@ -59,13 +60,14 @@ jobs:
               PLAY_STORE_CONFIG_JSON: ${{secrets.PLAY_STORE_CONFIG_JSON}}
             working-directory: android
 
-      
-          # - run: fastlane release
-          #   env:
-          #     PLAY_STORE_JSON_KEY: PLAY_STORE_CONFIG.json
-          #   working-directory: android
+          - if: github.ref == 'refs/heads/master'
+            run: fastlane release
+            env:
+              PLAY_STORE_JSON_KEY: PLAY_STORE_CONFIG.json
+            working-directory: android
 
-          - run: fastlane promote_internal_to_closed
+          - if: github.ref != 'refs/heads/master' 
+            run: fastlane promote_internal_to_closed
             env:
               PLAY_STORE_JSON_KEY: PLAY_STORE_CONFIG.json
             working-directory: android

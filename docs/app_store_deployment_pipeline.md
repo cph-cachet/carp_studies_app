@@ -41,6 +41,7 @@ When action is run.
         push:
             branches:
             - master
+            - '**''
 
 This action checks-out your repository under $GITHUB_WORKSPACE, so your workflow can access it.
 
@@ -93,7 +94,7 @@ This action downloads a prebuilt ruby and adds it to the PATH.
         bundler-cache: true
         working-directory: android
 
-These commands create the `upload-keystore.jks`, `PLAY_STORE_CONFIG.json` and the `key.properties` files which are essensial for signing the app as the developer account `Copenhagen Research Platform @ DTU Health Tech`. These files contain variables saved as secrets in the Github repo.
+These commands create the `upload-keystore.jks`, `PLAY_STORE_CONFIG.json` and the `key.properties` files which are essential for signing the app as the developer account `Copenhagen Research Platform @ DTU Health Tech`. These files contain variables saved as secrets in the Github repo.
 
     - name: Configure Keystore
         run: |
@@ -111,21 +112,31 @@ These commands create the `upload-keystore.jks`, `PLAY_STORE_CONFIG.json` and th
         PLAY_STORE_CONFIG_JSON: ${{secrets.PLAY_STORE_CONFIG_JSON}}
         working-directory: android
 
-This command looks for a `Fastfile` which should be located under `android/fastlane/`
+These commands look for a `Fastfile` which should be located under `android/fastlane/`.
+If changes were pushed into master then `fastlane release` is called, otherwise `fastlane promote_internal_to_closed` is called, but that combination of test tracks can be changed to anything and is arbitrary.
 
-    - run: fastlane release
-        env:
-        PLAY_STORE_JSON_KEY: PLAY_STORE_CONFIG.json
-        working-directory: android
+        - if: github.ref == 'refs/heads/master'
+            run: fastlane release
+            env:
+              PLAY_STORE_JSON_KEY: PLAY_STORE_CONFIG.json
+            working-directory: android
+
+        - if: github.ref != 'refs/heads/master' 
+            run: fastlane promote_internal_to_closed
+            env:
+              PLAY_STORE_JSON_KEY: PLAY_STORE_CONFIG.json
+            working-directory: android
 
 
 
 ### Fastfile
 
 
+The first 3 commands are essential for creating a new clean flutter build. `flutter build appbundle --release` creates a new .aab file that is built in release mode. Deferred components are parts of an app that can be downloaded after the initial installation to reduce the initial download size. `--no-tree-shake-icons` is usually used when building for production.
 
-    # 
-    desc "Submit a new release build to Google Play's Beta track"
+Lastly upload_to_play_store() is a fastlane command. One of the tracks (production, open, closed, internal) is selected with the default being production (yikes) as well as the path location of the .aab created with the `flutter build appbundle --release --no-deferred-components --no-tree-shake-icons` command.
+
+    desc "Submit a new release build to Google Play's Production track"
     lane :release do
         sh "flutter clean"
         sh "flutter pub get"
@@ -133,7 +144,22 @@ This command looks for a `Fastfile` which should be located under `android/fastl
         sh "flutter build appbundle --release --no-deferred-components --no-tree-shake-icons"
 
         upload_to_play_store(
-        track: 'beta',
+            track: 'production',
+            aab: '../build/app/outputs/bundle/release/app-release.aab',
+        )
+    end
+
+Similarly we can upload to test tracks using the following commands. Here we upload a bundle to the internal testing track and also promote it to the closed testing track. 
+
+    desc "Promote internal track to closed"
+    lane :promote_internal_to_closed do
+        sh "flutter clean"
+        sh "flutter pub get"
+        sh "flutter pub upgrade"
+        sh "flutter build appbundle --release --no-deferred-components --no-tree-shake-icons"
+        upload_to_play_store(
+        track: 'internal',
+        track_promote_to: 'closed',
         aab: '../build/app/outputs/bundle/release/app-release.aab',
         )
     end

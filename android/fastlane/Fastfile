@@ -40,7 +40,8 @@ platform :android do
     sh "flutter pub get"
     sh "flutter pub upgrade"
 
-    pubspec_content = YAML.load_file("../pubspec.yaml")
+    sh "$(dirname $(dirname "$0"))"
+    pubspec_content = YAML.load_file('../pubspec.yaml')
     # current_version_code = google_play_track_version_codes(track: 'internal')
     version_string = pubspec_content['version']
     version_parts = version_string.split('+')

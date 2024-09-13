@@ -35,13 +35,13 @@ Name of the Github action and name of the run.
     name: Upload to Google Store
     run-name: ${{github.actor}} is pushing to branch and deploying to Google Store
 
-When action is run.
+Action is run when pushes are made to master or any other branch
 
     on:
         push:
             branches:
             - master
-            - '**''
+            - '**'
 
 This action checks-out your repository under $GITHUB_WORKSPACE, so your workflow can access it.
 
@@ -113,7 +113,7 @@ These commands create the `upload-keystore.jks`, `PLAY_STORE_CONFIG.json` and th
         working-directory: android
 
 These commands look for a `Fastfile` which should be located under `android/fastlane/`.
-If changes were pushed into master then `fastlane release` is called, otherwise `fastlane promote_internal_to_closed` is called, but that combination of test tracks can be changed to anything and is arbitrary.
+If changes were pushed into master then `fastlane release` is called, otherwise `fastlane promote_internal_to_closed` is called, but that combination of test tracks (internal, closed) can be changed to anything and is arbitrary.
 
         - if: github.ref == 'refs/heads/master'
             run: fastlane release
@@ -163,3 +163,20 @@ Similarly we can upload to test tracks using the following commands. Here we upl
         aab: '../build/app/outputs/bundle/release/app-release.aab',
         )
     end
+
+## TestFlight - iOS
+Navigate to [App Store Connect](https://appstoreconnect.apple.com/apps/1569798025/distribution/ios/version/inflight) (credentials for login in 1Password). 
+
+Under Xcode Cloud/Manage Workflows there are 4 workflows.
+- App Store 
+    Is triggered every time changes are made to master branch and the new app versioned is delivered to Public Testing users. A list of those users can be found under the `TestFlight` tab. 
+- Build
+    Is triggerd on changes on every branch and is one of the requirements needed to pass all tests on GitHub required to make a new PR to master branch.
+- Master TestFlight 
+    Is triggered every time changes are made to master branch and the new app version is delivered to Internal Testing users. A list of those users can be found under the `TestFlight` tab.
+- TestFlight
+    Is triggered every time changes are made to branches starting with `bardram/`, `Panosfunk/`, `SlimShadyIAm/`, `develop/` and is delivered to Internal Testing users.
+
+#### Distribution
+
+Under the Distribution tab a build is selected and can be added for review.

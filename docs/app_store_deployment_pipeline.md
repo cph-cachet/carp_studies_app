@@ -24,7 +24,7 @@ When creating a new app you have to upload the first bundle (.aab or .apk) file 
      Once you have created a new type of Release you will see the changes under **Publishing overview**.
    - If you have **Managed publishing on** then the changes will be sent for review automatically.
 
-## Fastlane & Github Actions
+## Fastlane && Github Actions
 
 Under the `.github` folder there is a yml file called `deploy_to_google_play_store_fastlane_release.yml`
 

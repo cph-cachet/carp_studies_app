@@ -40,19 +40,18 @@ platform :android do
     sh "flutter pub get"
     sh "flutter pub upgrade"
     
-    # This could be used to automatically increment the version code with some fixes. Doesn't work for now
-    # pubspec_content = YAML.load_file('../../pubspec.yaml')
-    # # current_version_code = google_play_track_version_codes(track: 'internal')
-    # version_string = pubspec_content['version']
-    # version_parts = version_string.split('+')
-    # if version_parts.size == 2
-    #   version_number = version_parts[1].to_i
-    #   new_version_number = version_number + 1
-    #   pubspec_content['version'] = "#{version_parts[0]}+#{new_version_number}"
-    # else
-    #   UI.user_error!("Version string format is incorrect")
-    # end
-    # File.open('../..pubspect.yaml', 'w') { |f| f.write(pubspec_content.to_yaml) }
+    pubspec_content = YAML.load_file('../../pubspec.yaml')
+    # current_version_code = google_play_track_version_codes(track: 'internal')
+    version_string = pubspec_content['version']
+    version_parts = version_string.split('+')
+    if version_parts.size == 2
+      version_number = version_parts[1].to_i
+      new_version_number = version_number + 1
+      pubspec_content['version'] = "#{version_parts[0]}+#{new_version_number}"
+    else
+      UI.user_error!("Version string format is incorrect")
+    end
+    File.open('../..pubspect.yaml', 'w') { |f| f.write(pubspec_content.to_yaml) }
 
     sh "flutter build appbundle --release --no-deferred-components --no-tree-shake-icons"
     upload_to_play_store(

@@ -20,7 +20,7 @@ part of carp_study_app;
 /// added to the [client].
 class Sensing {
   static final Sensing _instance = Sensing._();
-  StudyDeploymentStatus? _status;
+  // StudyDeploymentStatus? _status;
   SmartphoneDeploymentController? _controller;
   DeploymentService? deploymentService;
   Study? _study;
@@ -34,7 +34,7 @@ class Sensing {
   SmartphoneDeployment? get deployment => _controller?.deployment;
 
   /// The latest status of the study deployment.
-  StudyDeploymentStatus? get status => _status;
+  StudyDeploymentStatus? get status => _controller?.deploymentStatus;
 
   /// The role name of this device in the deployed study.
   String? get deviceRoleName => _study?.deviceRoleName;
@@ -113,15 +113,16 @@ class Sensing {
 
         // Deploy this protocol using the on-phone deployment service.
         // Reuse the study deployment id, if this is stored on the phone.
-        _status = await SmartphoneDeploymentService().createStudyDeployment(
+        final status =
+            await SmartphoneDeploymentService().createStudyDeployment(
           protocol!,
           [],
           bloc.studyDeploymentId,
         );
 
         // Save the correct deployment id on the phone for later use.
-        bloc.studyDeploymentId = _status?.studyDeploymentId;
-        bloc.deviceRoleName = _status?.primaryDeviceStatus?.device.roleName;
+        bloc.studyDeploymentId = status.studyDeploymentId;
+        bloc.deviceRoleName = status.primaryDeviceStatus?.device.roleName;
 
         break;
       case DeploymentMode.production:

@@ -12,7 +12,7 @@ WeeklyActivities _$WeeklyActivitiesFromJson(Map<String, dynamic> json) =>
         (k, e) => MapEntry(
             $enumDecode(_$ActivityTypeEnumMap, k),
             (e as Map<String, dynamic>).map(
-              (k, e) => MapEntry(int.parse(k), e as int),
+              (k, e) => MapEntry(int.parse(k), (e as num).toInt()),
             )),
       );
 
@@ -47,9 +47,9 @@ Map<String, dynamic> _$WeeklyMobilityToJson(WeeklyMobility instance) =>
 
 DailyMobility _$DailyMobilityFromJson(Map<String, dynamic> json) =>
     DailyMobility(
-      json['weekday'] as int,
-      json['places'] as int,
-      json['home_stay'] as int,
+      (json['weekday'] as num).toInt(),
+      (json['places'] as num).toInt(),
+      (json['home_stay'] as num).toInt(),
       (json['distance'] as num).toDouble(),
     );
 
@@ -63,7 +63,7 @@ Map<String, dynamic> _$DailyMobilityToJson(DailyMobility instance) =>
 
 WeeklySteps _$WeeklyStepsFromJson(Map<String, dynamic> json) => WeeklySteps()
   ..weeklySteps = (json['weekly_steps'] as Map<String, dynamic>).map(
-    (k, e) => MapEntry(int.parse(k), e as int),
+    (k, e) => MapEntry(int.parse(k), (e as num).toInt()),
   );
 
 Map<String, dynamic> _$WeeklyStepsToJson(WeeklySteps instance) =>

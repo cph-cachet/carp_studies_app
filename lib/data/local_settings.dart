@@ -1,7 +1,8 @@
 part of carp_study_app;
 
-/// A local settings manager. Works as a singleton - use `LocalSettings()`
-/// for accessing settings.
+/// A local settings manager.
+///
+/// Works as a singleton - use `LocalSettings()` for accessing settings.
 class LocalSettings {
   // Keys for storing in shared preferences
   static const String studyIdKey = 'study_id';
@@ -75,7 +76,7 @@ class LocalSettings {
   set deviceRoleName(String? name) {
     assert(
         name != null,
-        'Cannot set the study deployment id to null in Settings. '
+        'Cannot set the device role name id to null in Settings. '
         "Use the 'eraseStudyDeployment()' method to erase study deployment information.");
     _deviceRoleName = name;
     Settings().preferences?.setString(deviceRoleNameKey, name!);

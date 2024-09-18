@@ -15,20 +15,18 @@ When creating a new app you have to upload the first bundle (.aab or .apk) file 
 1. Go to [Google Play Console](https://play.google.com/console/u/0/developers/7586883457853191627/app-list).
 2. Select the app you created a bundle for.
 3. Select one of the releases (Production, Open Testing, Closed Testing, Internal Testing).
-4. - If you have not created a track for that release yet, press **New track** and once you have done that, create a release for that track.
-   - If you have created a track for that release, press **New Release**.
+4. If you have not created a track for that release yet, press **New track** and once you have done that, create a release for that track.
+5. If you have created a track for that release, press **New Release**.
      - Pick an app bundle to use from the library. (There you should see the aab or apk file you uploaded in the previous step).
      - Give a name for the release and save.
-5. - If you have **Managed publishing off** then you will have to manually **Send changes for review**.
+5. If you have **Managed publishing off** then you will have to manually **Send changes for review**.
      Check whether Managed publishing is turned off or on on the **Publishing overview** page.
      Once you have created a new type of Release you will see the changes under **Publishing overview**.
    - If you have **Managed publishing on** then the changes will be sent for review automatically.
 
-## Fastlane && Github Actions
+## Fastlane and Github Actions
 
 Under the `.github` folder there is a yml file called `deploy_to_google_play_store_fastlane_release.yml`
-
-#### deploy_to_google_play_store_fastlane_release.yml
 
 Name of the Github action and name of the run.
 
@@ -65,7 +63,6 @@ Caching flutter to improve run time.
             ~/.pub-cache
         key: flutter-${{ hashFiles('**/pubspec.lock') }}
 
-
 If the caching step fails then runs the following command:
 
     - if: ${{ steps.cache-flutter.outputs.cache-hit != 'true' }}
@@ -84,7 +81,6 @@ If the caching step fails then runs the following command:
         run: flutter pub get
 
 This action downloads a prebuilt ruby and adds it to the PATH.
-
 
     # Setup Ruby, Bundler, and Gemfile dependencies
     - name: Setup Fastlane
@@ -127,14 +123,11 @@ If changes were pushed into master then `fastlane release` is called, otherwise 
               PLAY_STORE_JSON_KEY: PLAY_STORE_CONFIG.json
             working-directory: android
 
-
-
 ### Fastfile
-
 
 The first 3 commands are essential for creating a new clean flutter build. `flutter build appbundle --release` creates a new .aab file that is built in release mode. Deferred components are parts of an app that can be downloaded after the initial installation to reduce the initial download size. `--no-tree-shake-icons` is usually used when building for production.
 
-Lastly upload_to_play_store() is a fastlane command. One of the tracks (production, open, closed, internal) is selected with the default being production (yikes) as well as the path location of the .aab created with the `flutter build appbundle --release --no-deferred-components --no-tree-shake-icons` command.
+Lastly `upload_to_play_store()` is a fastlane command. One of the tracks (production, open, closed, internal) is selected with the default being production (yikes) as well as the path location of the `.aab` created with the `flutter build appbundle --release --no-deferred-components --no-tree-shake-icons` command.
 
     desc "Submit a new release build to Google Play's Production track"
     lane :release do
@@ -149,7 +142,7 @@ Lastly upload_to_play_store() is a fastlane command. One of the tracks (producti
         )
     end
 
-Similarly we can upload to test tracks using the following commands. Here we upload a bundle to the internal testing track and also promote it to the closed testing track. 
+Similarly we can upload to test tracks using the following commands. Here we upload a bundle to the internal testing track and also promote it to the closed testing track.
 
     desc "Promote internal track to closed"
     lane :promote_internal_to_closed do
@@ -165,18 +158,16 @@ Similarly we can upload to test tracks using the following commands. Here we upl
     end
 
 ## TestFlight - iOS
-Navigate to [App Store Connect](https://appstoreconnect.apple.com/apps/1569798025/distribution/ios/version/inflight) (credentials for login in 1Password). 
+
+Navigate to [App Store Connect](https://appstoreconnect.apple.com/apps/1569798025/distribution/ios/version/inflight) (credentials for login in 1Password).
 
 Under Xcode Cloud/Manage Workflows there are 4 workflows.
-- App Store 
-    Is triggered every time changes are made to master branch and the new app versioned is delivered to Public Testing users. A list of those users can be found under the `TestFlight` tab. 
-- Build
-    Is triggerd on changes on every branch and is one of the requirements needed to pass all tests on GitHub required to make a new PR to master branch.
-- Master TestFlight 
-    Is triggered every time changes are made to master branch and the new app version is delivered to Internal Testing users. A list of those users can be found under the `TestFlight` tab.
-- TestFlight
-    Is triggered every time changes are made to branches starting with `bardram/`, `Panosfunk/`, `SlimShadyIAm/`, `develop/` and is delivered to Internal Testing users.
 
-#### Distribution
+- **App Store:** - Is triggered every time changes are made to the `master` branch and the new app versioned is delivered to Public Testing users. A list of those users can be found under the `TestFlight` tab.
+- **Build:** - Is triggered on changes on _every_ branch and is one of the requirements needed to pass all tests on GitHub required to make a new PR to master branch.
+- **Master TestFlight:** - Is triggered every time changes are made to the `master` branch and the new app version is delivered to Internal Testing users. A list of those users can be found under the `TestFlight` tab.
+- **TestFlight:** - Is triggered every time changes are made to branches starting with `bardram/`, `Panosfunk/`, `SlimShadyIAm/`, `develop/` and is delivered to Internal Testing users.
+
+### Distribution
 
 Under the Distribution tab a build is selected and can be added for review.

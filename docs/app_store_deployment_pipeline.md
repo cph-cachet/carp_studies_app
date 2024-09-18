@@ -151,9 +151,9 @@ Similarly we can upload to test tracks using the following commands. Here we upl
         sh "flutter pub upgrade"
         sh "flutter build appbundle --release --no-deferred-components --no-tree-shake-icons"
         upload_to_play_store(
-        track: 'internal',
-        track_promote_to: 'closed',
-        aab: '../build/app/outputs/bundle/release/app-release.aab',
+            track: 'internal',
+            track_promote_to: 'closed',
+            aab: '../build/app/outputs/bundle/release/app-release.aab',
         )
     end
 

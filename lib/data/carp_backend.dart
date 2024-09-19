@@ -128,11 +128,18 @@ class CarpBackend {
 
   /// The user name of the user, if authenticated.
   String? get username => user?.username;
+
+  /// The Oauth token of the user, if authenticated.
   OAuthToken? get oauthToken => user?.token;
 
-  /// The list of invitation for this user.
+  /// The participant of this study, if an invitation has been accepted.
+  Participant? get participant => LocalSettings().participant;
+
+  /// The list of invitations for this user.
+  /// Use [getInvitations] to get / refresh the list of invitations from CAWS.
   List<ActiveParticipationInvitation> invitations = [];
 
+  /// Get or refresh the list of [invitations] for this [user] from CAWS.
   Future<List<ActiveParticipationInvitation>> getInvitations() async {
     CarpParticipationService().configureFrom(CarpService());
 
@@ -166,6 +173,11 @@ class CarpBackend {
       warning('$runtimeType - No user authenticated.');
       return null;
     }
+    if (participant == null) {
+      warning(
+          '$runtimeType - No participant (no invitation has been accepted).');
+      return null;
+    }
 
     late RPConsentSignatureResult signedConsent;
     try {
@@ -193,12 +205,11 @@ class CarpBackend {
 
       final data = await participation.setParticipantData(
         {InformedConsentInput.type: uploadedConsent},
-        father,
+        participant?.participantRoleName,
       );
 
-      uploadedConsent = await CarpService().createConsentDocument(json);
       info(
-          '$runtimeType - Informed consent document uploaded successfully - id: ${uploadedConsent.id}');
+          '$runtimeType - Informed consent document uploaded successfully - deployment id: ${data.studyDeploymentId}');
     } on Exception {
       warning(
           '$runtimeType - Informed consent upload failed for username: $username');

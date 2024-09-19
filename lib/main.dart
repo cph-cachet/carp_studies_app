@@ -56,6 +56,7 @@ part 'data/local_settings.dart';
 part 'data/carp_backend.dart';
 part 'data/localization_loader.dart';
 part 'data/local_resource_manager.dart';
+part 'data/participant.dart';
 
 part 'view_models/view_model.dart';
 part 'view_models/tasklist_page_model.dart';

@@ -6,6 +6,35 @@ part of 'main.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
+Participant _$ParticipantFromJson(Map<String, dynamic> json) => Participant(
+      studyId: json['study_id'] as String?,
+      studyDeploymentId: json['study_deployment_id'] as String?,
+      deviceRoleName: json['device_role_name'] as String?,
+      participantId: json['participant_id'] as String?,
+      participantRoleName: json['participant_role_name'] as String?,
+      hasInformedConsentBeenAccepted:
+          json['has_informed_consent_been_accepted'] as bool? ?? false,
+    );
+
+Map<String, dynamic> _$ParticipantToJson(Participant instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('study_id', instance.studyId);
+  writeNotNull('study_deployment_id', instance.studyDeploymentId);
+  writeNotNull('device_role_name', instance.deviceRoleName);
+  writeNotNull('participant_role_name', instance.participantRoleName);
+  writeNotNull('participant_id', instance.participantId);
+  val['has_informed_consent_been_accepted'] =
+      instance.hasInformedConsentBeenAccepted;
+  return val;
+}
+
 WeeklyActivities _$WeeklyActivitiesFromJson(Map<String, dynamic> json) =>
     WeeklyActivities()
       ..activities = (json['activities'] as Map<String, dynamic>).map(

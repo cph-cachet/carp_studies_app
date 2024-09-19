@@ -124,20 +124,21 @@ class StudyAppBLoC extends ChangeNotifier {
   /// The id of the currently running study.
   /// Typical set based on an invitation.
   /// `null` if no deployment have been specified.
-  String? get studyId => LocalSettings().studyId;
-  set studyId(String? id) => LocalSettings().studyId = id;
+  String? get studyId => LocalSettings().participant?.studyId;
+  // set studyId(String? id) => LocalSettings().studyId = id;
 
   /// The id of the currently running study deployment.
   /// Typical set based on an invitation.
   /// `null` if no deployment have been specified.
-  String? get studyDeploymentId => LocalSettings().studyDeploymentId;
-  set studyDeploymentId(String? id) => LocalSettings().studyDeploymentId = id;
+  String? get studyDeploymentId =>
+      LocalSettings().participant?.studyDeploymentId;
+  // set studyDeploymentId(String? id) => LocalSettings().studyDeploymentId = id;
 
   /// The role name of the device in the currently running study deployment.
   /// Typical set based on an invitation.
   /// `null` if no deployment have been specified.
-  String? get deviceRoleName => LocalSettings().deviceRoleName;
-  set deviceRoleName(String? name) => LocalSettings().deviceRoleName = name;
+  String? get deviceRoleName => LocalSettings().participant?.deviceRoleName;
+  // set deviceRoleName(String? name) => LocalSettings().deviceRoleName = name;
 
   /// Has a study already been deployed on this phone?
   bool get hasStudyBeenDeployed => studyDeploymentId != null;
@@ -186,14 +187,13 @@ class StudyAppBLoC extends ChangeNotifier {
     ActiveParticipationInvitation invitation, [
     BuildContext? context,
   ]) {
-    studyId = invitation.studyId;
-    studyDeploymentId = invitation.studyDeploymentId;
-    deviceRoleName = invitation.assignedDevices?.first.device.roleName;
+    // create and save the participant info based on this invitation
+    var participant = Participant.fromParticipationInvitation(invitation);
+    LocalSettings().participant = participant;
 
     // make sure that the app is configured with the study IDs in order to access
     // the correct resources (like translations etc.) on CAWS.
-    backend.app.studyId = studyId;
-    backend.app.studyDeploymentId = studyDeploymentId;
+    CarpParticipationService().setInvitation(invitation);
 
     notifyListeners();
 
@@ -247,7 +247,7 @@ class StudyAppBLoC extends ChangeNotifier {
 
   /// Has the informed consent been shown to, and accepted by the user?
   bool get hasInformedConsentBeenAccepted =>
-      LocalSettings().hasInformedConsentBeenAccepted;
+      LocalSettings().participant?.hasInformedConsentBeenAccepted ?? false;
 
   /// Specify if the informed consent been handled.
   /// This entails that it has been:
@@ -255,7 +255,7 @@ class StudyAppBLoC extends ChangeNotifier {
   ///  * accepted by the user
   ///  * successfully uploaded to CARP
   set hasInformedConsentBeenAccepted(bool accepted) =>
-      LocalSettings().hasInformedConsentBeenAccepted = accepted;
+      LocalSettings().participant?.hasInformedConsentBeenAccepted = accepted;
 
   /// The informed consent has been accepted by the user.
   ///

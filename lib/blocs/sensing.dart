@@ -120,9 +120,12 @@ class Sensing {
           bloc.studyDeploymentId,
         );
 
-        // Save the correct deployment id on the phone for later use.
-        bloc.studyDeploymentId = status.studyDeploymentId;
-        bloc.deviceRoleName = status.primaryDeviceStatus?.device.roleName;
+        // Save the deployment info on the phone for later use.
+        var participant = Participant(
+          studyDeploymentId: status.studyDeploymentId,
+          deviceRoleName: status.primaryDeviceStatus?.device.roleName,
+        );
+        LocalSettings().participant = participant;
 
         break;
       case DeploymentMode.production:

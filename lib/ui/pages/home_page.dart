@@ -106,14 +106,14 @@ class HomePageState extends State<HomePage> {
         //unselectedItemColor: Theme.of(context).primaryColor.withOpacity(0.8),
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
+              icon: const Icon(Icons.announcement_outlined),
+              label: locale.translate('app_home.nav_bar_item.about'),
+              activeIcon: const Icon(Icons.announcement)),
+          BottomNavigationBarItem(
             icon: const Icon(Icons.playlist_add_check),
             label: locale.translate('app_home.nav_bar_item.tasks'),
             activeIcon: const Icon(Icons.playlist_add_check),
           ),
-          BottomNavigationBarItem(
-              icon: const Icon(Icons.announcement_outlined),
-              label: locale.translate('app_home.nav_bar_item.about'),
-              activeIcon: const Icon(Icons.announcement)),
           BottomNavigationBarItem(
               icon: const Icon(Icons.leaderboard_outlined),
               label: locale.translate('app_home.nav_bar_item.data'),
@@ -131,10 +131,10 @@ class HomePageState extends State<HomePage> {
 
   static int _calculateSelectedIndex(BuildContext context) {
     final String location = GoRouterState.of(context).matchedLocation;
-    if (location.startsWith(TaskListPage.route)) {
+    if (location.startsWith(StudyPage.route)) {
       return 0;
     }
-    if (location.startsWith(StudyPage.route)) {
+    if (location.startsWith(TaskListPage.route)) {
       return 1;
     }
     if (location.startsWith(DataVisualizationPage.route)) {
@@ -149,10 +149,10 @@ class HomePageState extends State<HomePage> {
   void _onItemTapped(int index, BuildContext context) {
     switch (index) {
       case 0:
-        context.go(TaskListPage.route);
+        context.go(StudyPage.route);
         break;
       case 1:
-        context.go(StudyPage.route);
+        context.go(TaskListPage.route);
         break;
       case 2:
         context.go(DataVisualizationPage.route);

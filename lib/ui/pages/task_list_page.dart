@@ -43,6 +43,18 @@ class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
 
 class TaskListPageState extends State<TaskListPage>
     with TickerProviderStateMixin {
+  late TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 2, vsync: this);
+
+    _tabController.addListener(() {
+      setState(() {});
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;
@@ -90,9 +102,11 @@ class TaskListPageState extends State<TaskListPage>
                             sliver: SliverPersistentHeader(
                               delegate: _SliverAppBarDelegate(
                                 TabBar(
+                                  controller: _tabController,
                                   labelPadding:
                                       // EdgeInsets.symmetric(vertical: 2),
-                                      const EdgeInsets.only(top: 1, bottom: 1, left: 8, right: 8),
+                                      const EdgeInsets.only(
+                                          top: 1, bottom: 1, left: 8, right: 8),
                                   dividerColor: Colors.transparent,
                                   indicator: ShapeDecoration(
                                     shape: RoundedRectangleBorder(
@@ -105,8 +119,8 @@ class TaskListPageState extends State<TaskListPage>
                                     Container(
                                       width: double.infinity,
                                       child: Tab(
-                                        text: locale
-                                            .translate('pages.task_list.pending'),
+                                        text: locale.translate(
+                                            'pages.task_list.pending'),
                                       ),
                                     ),
                                     Container(
@@ -124,38 +138,25 @@ class TaskListPageState extends State<TaskListPage>
                           ),
                           SliverList(
                             delegate: SliverChildBuilderDelegate(
-                                (BuildContext context, int index) {
-                              if (widget.model.tasks[index].availableForUser) {
-                                return _buildTaskCard(
-                                    context, widget.model.tasks[index]);
-                              } else {
+                              (BuildContext context, int index) {
+                                UserTask userTask = widget.model.tasks[index];
+                                // Filter tasks based on selected tab
+                                if (_tabController.index == 0) {
+                                  // Pending tasks
+                                  if (userTask.availableForUser) {
+                                    return _buildTaskCard(context, userTask);
+                                  }
+                                } else if (_tabController.index == 1) {
+                                  // Completed tasks
+                                  if (userTask.state == UserTaskState.done ||
+                                      userTask.state == UserTaskState.expired) {
+                                    return _buildExpiredTaskCard(context, userTask);
+                                  }
+                                }
                                 return const SizedBox.shrink();
-                              }
-                            }, childCount: widget.model.tasks.length),
-                          ),
-                          SliverList(
-                            delegate: SliverChildBuilderDelegate(
-                                (BuildContext context, int index) {
-                              if (widget.model.tasks[index].state ==
-                                  UserTaskState.done) {
-                                return _buildDoneTaskCard(
-                                    context, widget.model.tasks[index]);
-                              } else {
-                                return const SizedBox.shrink();
-                              }
-                            }, childCount: widget.model.tasks.length),
-                          ),
-                          SliverList(
-                            delegate: SliverChildBuilderDelegate(
-                                (BuildContext context, int index) {
-                              if (widget.model.tasks[index].state ==
-                                  UserTaskState.expired) {
-                                return _buildExpiredTaskCard(
-                                    context, widget.model.tasks[index]);
-                              } else {
-                                return const SizedBox.shrink();
-                              }
-                            }, childCount: widget.model.tasks.length),
+                              },
+                              childCount: widget.model.tasks.length,
+                            ),
                           ),
                         ],
                       );

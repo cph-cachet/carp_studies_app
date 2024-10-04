@@ -1,3 +1,6 @@
+## 2.2.2
+- Redesign of tasks page. Implemented a tab bar with Pending/Completed options to better categorize tasks.
+
 ## 2.2.1
 
 - Created github action script to create a release on pushing a tag on master.

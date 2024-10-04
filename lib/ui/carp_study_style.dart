@@ -4,14 +4,22 @@ part of carp_study_app;
 class CarpColors extends ThemeExtension<CarpColors> {
   const CarpColors({
     required this.warningColor,
+    required this.backgroundGray,
+    required this.tabBarBackground,
   });
 
   final Color? warningColor;
+  
+  final Color? backgroundGray;
+
+  final Color? tabBarBackground;
 
   @override
-  CarpColors copyWith({Color? warningColor}) {
+  CarpColors copyWith({Color? warningColor, Color? backgroundGray}) {
     return CarpColors(
       warningColor: warningColor ?? this.warningColor,
+      backgroundGray: backgroundGray ?? this.backgroundGray,
+      tabBarBackground: tabBarBackground ?? this.tabBarBackground,
     );
   }
 
@@ -22,6 +30,8 @@ class CarpColors extends ThemeExtension<CarpColors> {
     }
     return CarpColors(
       warningColor: Color.lerp(warningColor, other.warningColor, t),
+      backgroundGray: Color.lerp(backgroundGray, other.backgroundGray, t),
+      tabBarBackground: Color.lerp(tabBarBackground, other.tabBarBackground, t),
     );
   }
 }
@@ -30,6 +40,8 @@ ThemeData carpStudyTheme = ThemeData.light().copyWith(
   extensions: <ThemeExtension<dynamic>>[
     CarpColors(
       warningColor: Colors.orange[500],
+      backgroundGray: const Color.fromARGB(255, 242, 242, 247),
+      tabBarBackground: const Color.fromARGB(255, 227, 227, 228),
     )
   ],
   primaryColor: const Color(0xFF206FA2),
@@ -86,6 +98,8 @@ ThemeData carpStudyDarkTheme = ThemeData.dark().copyWith(
   extensions: <ThemeExtension<dynamic>>[
     CarpColors(
       warningColor: Colors.orange[700],
+      backgroundGray: const Color(0xf2f2f7),
+      tabBarBackground: const Color(0xe3e3e4),
     )
   ],
   primaryColor: const Color(0xff81C7F3),

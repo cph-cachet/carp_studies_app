@@ -49,7 +49,7 @@ class DeviceListPageState extends State<DeviceListPage> {
   Widget build(BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;
     return Scaffold(
-        backgroundColor: Theme.of(context).colorScheme.secondary,
+        backgroundColor: Theme.of(context).extension<CarpColors>()!.backgroundGray,
         body: SafeArea(
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,

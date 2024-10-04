@@ -9,86 +9,162 @@ class TaskListPage extends StatefulWidget {
   TaskListPageState createState() => TaskListPageState();
 }
 
-class TaskListPageState extends State<TaskListPage> {
+/// Custom SliverAppBarDelegate class
+class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
+  _SliverAppBarDelegate(this._tabBar);
+
+  final TabBar _tabBar;
+
+  @override
+  double get minExtent => _tabBar.preferredSize.height;
+
+  @override
+  double get maxExtent => _tabBar.preferredSize.height;
+
+  @override
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(4),
+        color: Theme.of(context).extension<CarpColors>()!.tabBarBackground,
+      ),
+      child: _tabBar,
+    );
+  }
+
+  @override
+  bool shouldRebuild(_SliverAppBarDelegate oldDelegate) {
+    return false;
+  }
+}
+
+class TaskListPageState extends State<TaskListPage>
+    with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;
-    return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.secondary,
-      body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: const CarpAppBar(hasProfileIcon: true),
-            ),
-            Expanded(
-              flex: 4,
-              child: StreamBuilder<UserTask>(
-                stream: widget.model.userTaskEvents,
-                builder: (context, snapshot) {
-                  if (widget.model.tasks.isEmpty) {
-                    return _noTasks(context);
-                  } else {
-                    return CustomScrollView(
-                      slivers: [
-                        ScoreboardCard(widget.model),
-                        SliverToBoxAdapter(
-                          child: Padding(
-                            padding: const EdgeInsets.all(16),
-                            child: Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                locale.translate('pages.task_list.title'),
-                                style: dataCardTitleStyle.copyWith(
-                                    color: Theme.of(context).primaryColor),
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        backgroundColor:
+            Theme.of(context).extension<CarpColors>()!.backgroundGray,
+        body: SafeArea(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: const CarpAppBar(hasProfileIcon: true),
+              ),
+              Expanded(
+                flex: 4,
+                child: StreamBuilder<UserTask>(
+                  stream: widget.model.userTaskEvents,
+                  builder: (context, snapshot) {
+                    if (widget.model.tasks.isEmpty) {
+                      return _noTasks(context);
+                    } else {
+                      return CustomScrollView(
+                        slivers: [
+                          SliverToBoxAdapter(
+                            child: Padding(
+                              padding: const EdgeInsets.all(16),
+                              child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  locale.translate('pages.task_list.title'),
+                                  style: dataCardTitleStyle.copyWith(
+                                      color: Theme.of(context).primaryColor,
+                                      fontWeight: FontWeight.bold),
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                        SliverList(
-                          delegate: SliverChildBuilderDelegate(
-                              (BuildContext context, int index) {
-                            if (widget.model.tasks[index].availableForUser) {
-                              return _buildTaskCard(
-                                  context, widget.model.tasks[index]);
-                            } else {
-                              return const SizedBox.shrink();
-                            }
-                          }, childCount: widget.model.tasks.length),
-                        ),
-                        SliverList(
-                          delegate: SliverChildBuilderDelegate(
-                              (BuildContext context, int index) {
-                            if (widget.model.tasks[index].state ==
-                                UserTaskState.done) {
-                              return _buildDoneTaskCard(
-                                  context, widget.model.tasks[index]);
-                            } else {
-                              return const SizedBox.shrink();
-                            }
-                          }, childCount: widget.model.tasks.length),
-                        ),
-                        SliverList(
-                          delegate: SliverChildBuilderDelegate(
-                              (BuildContext context, int index) {
-                            if (widget.model.tasks[index].state ==
-                                UserTaskState.expired) {
-                              return _buildExpiredTaskCard(
-                                  context, widget.model.tasks[index]);
-                            } else {
-                              return const SizedBox.shrink();
-                            }
-                          }, childCount: widget.model.tasks.length),
-                        ),
-                      ],
-                    );
-                  }
-                },
+                          ScoreboardCard(widget.model),
+                          SliverPadding(
+                            padding: const EdgeInsets.only(
+                                top: 16, bottom: 16, left: 64, right: 64),
+                            sliver: SliverPersistentHeader(
+                              delegate: _SliverAppBarDelegate(
+                                TabBar(
+                                  labelPadding:
+                                      // EdgeInsets.symmetric(vertical: 2),
+                                      const EdgeInsets.only(top: 1, bottom: 1, left: 8, right: 8),
+                                  dividerColor: Colors.transparent,
+                                  indicator: ShapeDecoration(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(4),
+                                    ),
+                                    color:
+                                        Theme.of(context).colorScheme.secondary,
+                                  ),
+                                  tabs: [
+                                    Container(
+                                      width: double.infinity,
+                                      child: Tab(
+                                        text: locale
+                                            .translate('pages.task_list.pending'),
+                                      ),
+                                    ),
+                                    Container(
+                                      width: double.infinity,
+                                      child: Tab(
+                                        text: locale.translate(
+                                            'pages.task_list.completed'),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              pinned: true,
+                            ),
+                          ),
+                          SliverList(
+                            delegate: SliverChildBuilderDelegate(
+                                (BuildContext context, int index) {
+                              if (widget.model.tasks[index].availableForUser) {
+                                return _buildTaskCard(
+                                    context, widget.model.tasks[index]);
+                              } else {
+                                return const SizedBox.shrink();
+                              }
+                            }, childCount: widget.model.tasks.length),
+                          ),
+                          SliverList(
+                            delegate: SliverChildBuilderDelegate(
+                                (BuildContext context, int index) {
+                              if (widget.model.tasks[index].state ==
+                                  UserTaskState.done) {
+                                return _buildDoneTaskCard(
+                                    context, widget.model.tasks[index]);
+                              } else {
+                                return const SizedBox.shrink();
+                              }
+                            }, childCount: widget.model.tasks.length),
+                          ),
+                          SliverList(
+                            delegate: SliverChildBuilderDelegate(
+                                (BuildContext context, int index) {
+                              if (widget.model.tasks[index].state ==
+                                  UserTaskState.expired) {
+                                return _buildExpiredTaskCard(
+                                    context, widget.model.tasks[index]);
+                              } else {
+                                return const SizedBox.shrink();
+                              }
+                            }, childCount: widget.model.tasks.length),
+                          ),
+                        ],
+                      );
+                    }
+                  },
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -9,7 +9,8 @@ class InvitationListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.secondary,
+      backgroundColor:
+          Theme.of(context).extension<CarpColors>()!.backgroundGray,
       body: FutureBuilder<List<ActiveParticipationInvitation>>(
         future: bloc.backend.getInvitations(),
         builder: (context, snapshot) {

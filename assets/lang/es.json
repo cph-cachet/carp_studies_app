@@ -4,6 +4,8 @@
     "app_home.nav_bar_item.data": "Datos",
     "app_home.nav_bar_item.devices": "Dispositivos",
     "pages.task_list.title": "MIS TAREAS",
+    "pages.task_list.pending": "Pendientes",
+    "pages.task_list.completed": "Completadas",
     "pages.task_list.task.time_to_complete": "min en completar",
     "pages.task_list.task.auto_complete": "Autocompletar",
     "pages.task_list.task.days_remaining": "día restante",

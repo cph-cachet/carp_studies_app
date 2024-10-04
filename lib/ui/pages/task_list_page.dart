@@ -150,7 +150,8 @@ class TaskListPageState extends State<TaskListPage>
                                   // Completed tasks
                                   if (userTask.state == UserTaskState.done ||
                                       userTask.state == UserTaskState.expired) {
-                                    return _buildExpiredTaskCard(context, userTask);
+                                    return _buildDoneTaskCard(
+                                        context, userTask);
                                   }
                                 }
                                 return const SizedBox.shrink();
@@ -174,40 +175,92 @@ class TaskListPageState extends State<TaskListPage>
   Widget _buildTaskCard(BuildContext context, UserTask userTask) {
     RPLocalizations locale = RPLocalizations.of(context)!;
 
+    // Determine the color for the line based on the title color
+    Color titleColor = Colors.red.withOpacity(0.7);
+
     return Center(
-      child: StudiesMaterial(
-        child: ListTile(
-            leading: CircleAvatar(
-              backgroundColor: Theme.of(context).hoverColor,
-              child: _taskTypeIcon(userTask),
+      child: GestureDetector(
+        child: StudiesMaterial(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: IntrinsicHeight(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Container(
+                    width: 4.0, // Width of the line
+                    color: titleColor, // Use the same color as the title
+                  ),
+                  const SizedBox(width: 8.0), // Space between line and content
+                  Expanded(
+                    // Allows the content to take remaining space
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            CircleAvatar(
+                              backgroundColor: Theme.of(context).hoverColor,
+                              child: _taskTypeIcon(userTask),
+                            ),
+                            Text(
+                              userTask.type,
+                              style: TextStyle(
+                                color: titleColor,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 8.0),
+                        Text(
+                          locale.translate(userTask.title),
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16.0,
+                          ),
+                        ),
+                        const SizedBox(height: 4.0),
+                        Text(
+                          locale.translate(userTask.description),
+                          style: TextStyle(
+                            color: Colors.black54,
+                          ),
+                        ),
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.access_time_rounded,
+                              color: Colors.grey,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 2.0),
+                              child: Text(
+                                _subtitle(userTask),
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 12.0,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
-            title: Text(locale.translate(userTask.title),
-                style: aboutCardTitleStyle.copyWith(
-                    color: Theme.of(context).primaryColor)),
-            subtitle: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 5),
-                Text(_subtitle(userTask),
-                    style: aboutCardSubtitleStyle.copyWith(
-                        color: userTask.expiresIn != null &&
-                                userTask.expiresIn!.inHours < 24
-                            ? Theme.of(context)
-                                .extension<CarpColors>()!
-                                .warningColor
-                            : Theme.of(context).primaryColor)),
-                const SizedBox(height: 5),
-                Text(locale.translate(userTask.description)),
-              ],
-            ),
-            onTap: () {
-              // only start if not already started, done, or expired
-              if (userTask.state == UserTaskState.enqueued ||
-                  userTask.state == UserTaskState.canceled) {
-                userTask.onStart();
-                if (userTask.hasWidget) context.push('/task/${userTask.id}');
-              }
-            }),
+          ),
+        ),
+        onTap: () {
+          // only start if not already started, done, or expired
+          if (userTask.state == UserTaskState.enqueued ||
+              userTask.state == UserTaskState.canceled) {
+            userTask.onStart();
+            if (userTask.hasWidget) context.push('/task/${userTask.id}');
+          }
+        },
       ),
     );
   }

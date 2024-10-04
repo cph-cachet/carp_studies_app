@@ -1,3 +1,30 @@
+## 2.2.1
+
+- Created github action script to create a release on pushing a tag on master.
+- Update permissions on Android, fix bug on informed consent upload.
+- Fixed gradle warnings
+- Bumping version to 2.2.0
+- On android, check if user has Google Health Connect installed dialog.
+
+## 2.1.0
+
+- fix of switchins studies in the study app
+- refactor of view model
+- improvements to translations (especially the Danish ones)
+- upgrade to fixes in the underlying CAMS (related to #283)
+- improvement to API docs
+
+- upgrade and refactor of connectivity_plus
+
+- Aligning iOS "marketing version" with Flutter pubspec version
+
+- upgrade to latest CAMS packages
+
+- upgrade to carp_backend 1.7.1
+
+- Delete gitignored files
+- Bumping version to 2.1.0
+
 ## 2.0.0
 
 - Update to latest version of Carp Mobile Sensing (1.5.0)

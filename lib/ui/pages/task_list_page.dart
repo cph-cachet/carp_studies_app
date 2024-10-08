@@ -26,9 +26,9 @@ class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
       BuildContext context, double shrinkOffset, bool overlapsContent) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(vertical: 8),
+      padding: const EdgeInsets.symmetric(vertical: 4),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(4),
+        borderRadius: BorderRadius.circular(8),
         color: Theme.of(context).extension<CarpColors>()!.tabBarBackground,
       ),
       child: _tabBar,
@@ -95,22 +95,25 @@ class TaskListPageState extends State<TaskListPage>
                               ),
                             ),
                           ),
-                          ScoreboardCard(widget.model),
                           SliverPadding(
                             padding: const EdgeInsets.only(
-                                top: 16, bottom: 16, left: 64, right: 64),
+                                top: 4, bottom: 6, left: 40, right: 40),
+                            sliver: ScoreboardCard(widget.model),
+                          ),
+                          SliverPadding(
+                            padding: const EdgeInsets.only(
+                                top: 6, bottom: 4, left: 64, right: 64),
                             sliver: SliverPersistentHeader(
                               delegate: _SliverAppBarDelegate(
                                 TabBar(
                                   controller: _tabController,
                                   labelPadding:
-                                      // EdgeInsets.symmetric(vertical: 2),
                                       const EdgeInsets.only(
-                                          top: 1, bottom: 1, left: 8, right: 8),
+                                          top: 4, bottom: 4, left: 4, right: 4),
                                   dividerColor: Colors.transparent,
                                   indicator: ShapeDecoration(
                                     shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(4),
+                                      borderRadius: BorderRadius.circular(8),
                                     ),
                                     color:
                                         Theme.of(context).colorScheme.secondary,
@@ -144,7 +147,7 @@ class TaskListPageState extends State<TaskListPage>
                                 if (_tabController.index == 0) {
                                   // Pending tasks
                                   if (userTask.availableForUser) {
-                                    return _buildTaskCard(context, userTask);
+                                    return _buildAvailableTaskCard(context, userTask);
                                   }
                                 } else if (_tabController.index == 1) {
                                   // Completed tasks
@@ -172,25 +175,21 @@ class TaskListPageState extends State<TaskListPage>
     );
   }
 
-  Widget _buildTaskCard(BuildContext context, UserTask userTask) {
+  Widget _buildAvailableTaskCard(BuildContext context, UserTask userTask) {
     RPLocalizations locale = RPLocalizations.of(context)!;
-
     // Determine the color for the line based on the title color
     Color titleColor = Colors.red.withOpacity(0.7);
 
     return Center(
       child: GestureDetector(
         child: StudiesMaterial(
+          hasBorder: true,
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: IntrinsicHeight(
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Container(
-                    width: 4.0, // Width of the line
-                    color: titleColor, // Use the same color as the title
-                  ),
                   const SizedBox(width: 8.0), // Space between line and content
                   Expanded(
                     // Allows the content to take remaining space
@@ -308,6 +307,7 @@ class TaskListPageState extends State<TaskListPage>
       child: Opacity(
         opacity: 0.6,
         child: StudiesMaterial(
+          hasBorder: true,
           child: ListTile(
             leading: const CircleAvatar(
               backgroundColor: CACHET.LIGHT_GREEN_1,
@@ -329,6 +329,7 @@ class TaskListPageState extends State<TaskListPage>
       child: Opacity(
         opacity: 0.6,
         child: StudiesMaterial(
+          hasBorder: true,
           child: ListTile(
             leading: const CircleAvatar(
               backgroundColor: CACHET.LIGHT_GREY_1,

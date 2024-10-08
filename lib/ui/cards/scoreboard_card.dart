@@ -94,8 +94,11 @@ class ScoreboardPersistentHeaderDelegate
     ];
 
     return Container(
-      color: Theme.of(context).colorScheme.secondary,
       height: height,
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.secondary,
+        borderRadius: BorderRadius.circular(8), // Rounded corners
+      ),
       child: StreamBuilder<UserTask>(
         stream: model.userTaskEvents,
         builder: (context, snapshot) {

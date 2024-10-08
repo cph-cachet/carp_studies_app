@@ -9,8 +9,8 @@ class Participant {
   String? studyId;
   String? studyDeploymentId;
   String? deviceRoleName;
-  String? participantRoleName;
   String? participantId;
+  String? participantRoleName;
   bool hasInformedConsentBeenAccepted = false;
 
   Participant({

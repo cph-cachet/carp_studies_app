@@ -28,8 +28,8 @@ Map<String, dynamic> _$ParticipantToJson(Participant instance) {
   writeNotNull('study_id', instance.studyId);
   writeNotNull('study_deployment_id', instance.studyDeploymentId);
   writeNotNull('device_role_name', instance.deviceRoleName);
-  writeNotNull('participant_role_name', instance.participantRoleName);
   writeNotNull('participant_id', instance.participantId);
+  writeNotNull('participant_role_name', instance.participantRoleName);
   val['has_informed_consent_been_accepted'] =
       instance.hasInformedConsentBeenAccepted;
   return val;

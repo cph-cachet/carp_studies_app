@@ -33,12 +33,14 @@ class StudiesMaterial extends StatelessWidget {
         clipBehavior: clipBehavior ?? Clip.hardEdge,
         child: Container(
           decoration: BoxDecoration(
-            border: hasBorder ? Border(
-              left: BorderSide(
-                color: titleColor, // Set the color of the vertical line
-                width: 4.0, // Set the thickness of the vertical line
-              ),
-            ): null,
+            border: hasBorder
+                ? Border(
+                    left: BorderSide(
+                      color: titleColor, // Set the color of the vertical line
+                      width: 4.0, // Set the thickness of the vertical line
+                    ),
+                  )
+                : null,
           ),
           child: child,
         ),

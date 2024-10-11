@@ -9,7 +9,7 @@ class CarpColors extends ThemeExtension<CarpColors> {
   });
 
   final Color? warningColor;
-  
+
   final Color? backgroundGray;
 
   final Color? tabBarBackground;

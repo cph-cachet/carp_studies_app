@@ -107,9 +107,8 @@ class TaskListPageState extends State<TaskListPage>
                               delegate: _SliverAppBarDelegate(
                                 TabBar(
                                   controller: _tabController,
-                                  labelPadding:
-                                      const EdgeInsets.only(
-                                          top: 4, bottom: 4, left: 4, right: 4),
+                                  labelPadding: const EdgeInsets.only(
+                                      top: 4, bottom: 4, left: 4, right: 4),
                                   dividerColor: Colors.transparent,
                                   indicator: ShapeDecoration(
                                     shape: RoundedRectangleBorder(
@@ -147,7 +146,8 @@ class TaskListPageState extends State<TaskListPage>
                                 if (_tabController.index == 0) {
                                   // Pending tasks
                                   if (userTask.availableForUser) {
-                                    return _buildAvailableTaskCard(context, userTask);
+                                    return _buildAvailableTaskCard(
+                                        context, userTask);
                                   }
                                 } else if (_tabController.index == 1) {
                                   // Completed tasks

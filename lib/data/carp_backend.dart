@@ -168,7 +168,7 @@ class CarpBackend {
       return null;
     }
 
-    signedConsent.userID = username;
+    signedConsent.userId = username;
     Map<String, dynamic> json = signedConsent.toJson();
 
     ConsentDocument? uploadedConsent;

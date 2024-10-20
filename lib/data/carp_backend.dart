@@ -134,8 +134,6 @@ class CarpBackend {
   /// Use [getInvitations] to get / refresh the list of invitations from CAWS.
   List<ActiveParticipationInvitation> invitations = [];
 
- 
-
   /// Get the list of active invitations for this user from the [CarpParticipationService].
 
   Future<List<ActiveParticipationInvitation>> getInvitations() async {
@@ -196,8 +194,7 @@ class CarpBackend {
       return null;
     }
 
-
-    signedConsent.userID = username;
+    signedConsent.userId = username;
     final json = toJsonString(signedConsent.toJson());
 
     final uploadedConsent = InformedConsentInput(
@@ -207,17 +204,13 @@ class CarpBackend {
       signatureImage: signedConsent.signature?.signatureImage ?? '',
     );
 
-
     try {
-      final participation = CarpParticipationService().participation();
-
-      final data = await participation.setParticipantData(
-        {InformedConsentInput.type: uploadedConsent},
-        participant?.participantRoleName,
-      );
+      await CarpParticipationService()
+          .participation()
+          .setInformedConsent(uploadedConsent);
 
       info(
-          '$runtimeType - Informed consent document uploaded successfully - deployment id: ${data.studyDeploymentId}');
+          '$runtimeType - Informed consent document uploaded successfully - deployment id: ${bloc.study?.studyDeploymentId}');
     } on Exception {
       warning(
           '$runtimeType - Informed consent upload failed for username: $username');

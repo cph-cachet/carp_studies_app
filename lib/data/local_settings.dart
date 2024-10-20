@@ -12,7 +12,6 @@ class LocalSettings {
   static const String studyKey = 'study';
   static const String informedConsentAcceptedKey = 'informed_consent_accepted';
 
-
   static final LocalSettings _instance = LocalSettings._();
   factory LocalSettings() => _instance;
   LocalSettings._() : super();
@@ -23,7 +22,6 @@ class LocalSettings {
 
   SmartphoneStudy? _study;
   bool? _hasInformedConsentBeenAccepted;
-
 
   /// The user saved on this device, if any.
   CarpUser? get user {
@@ -43,7 +41,6 @@ class LocalSettings {
         ? Settings().preferences!.setString(userKey, jsonEncode(user.toJson()))
         : Settings().preferences!.remove(userKey);
   }
-
 
   /// The participant saved on this device, if any.
   Participant? get participant {
@@ -65,7 +62,6 @@ class LocalSettings {
             .setString(participantKey, jsonEncode(participant.toJson()))
         : Settings().preferences!.remove(participantKey);
   }
-
 
   /// The study for the currently running study deployment.
   /// The study is cached locally on the phone.
@@ -91,15 +87,18 @@ class LocalSettings {
         );
   }
 
-
   /// The study deployment id for the currently running deployment.
   String? get studyDeploymentId => _study?.studyDeploymentId;
 
   /// Erase all study deployment information cached locally on this phone.
   Future<void> eraseStudyDeployment() async {
-
+    _study = null;
+    _hasInformedConsentBeenAccepted = null;
     _participant = null;
     await Settings().preferences!.remove(participantKey);
+
+    await Settings().preferences!.remove(studyKey);
+    await Settings().preferences!.remove(informedConsentAcceptedKey);
     debug('$runtimeType - study deployment erased.');
   }
 
@@ -107,14 +106,6 @@ class LocalSettings {
   Future<void> eraseAuthCredentials() async {
     _user = null;
     await Settings().preferences!.remove(userKey);
-  }
-
-    _study = null;
-    _hasInformedConsentBeenAccepted = null;
-
-    await Settings().preferences!.remove(studyKey);
-    await Settings().preferences!.remove(informedConsentAcceptedKey);
-    debug('$runtimeType - study deployment erased.');
   }
 
   // Need to create our own JSON serializers here, since SmartphoneStudy is not made serializable
@@ -136,7 +127,6 @@ class LocalSettings {
         participantRoleName: json['participantRoleName'] as String?,
       );
 
-
   Future<String?> get deploymentBasePath async => (studyDeploymentId == null)
       ? null
       : await Settings().getDeploymentBasePath(studyDeploymentId!);
@@ -144,7 +134,6 @@ class LocalSettings {
   Future<String?> get cacheBasePath async => (studyDeploymentId == null)
       ? null
       : await Settings().getCacheBasePath(studyDeploymentId!);
-
 
   /// Has the informed consent been shown to, and accepted by the user?
   bool get hasInformedConsentBeenAccepted => _hasInformedConsentBeenAccepted ??=
@@ -154,10 +143,4 @@ class LocalSettings {
     _hasInformedConsentBeenAccepted = accepted;
     Settings().preferences!.setBool(informedConsentAcceptedKey, accepted);
   }
-
-  Future<void> eraseAuthCredentials() async {
-    _user = null;
-    await Settings().preferences!.remove(userKey);
-  }
-
 }

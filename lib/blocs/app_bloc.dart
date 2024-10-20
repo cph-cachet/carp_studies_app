@@ -127,15 +127,11 @@ class StudyAppBLoC extends ChangeNotifier {
   /// The study running on this phone.
   /// Typical set based on an invitation.
   /// `null` if no deployment have been specified.
-
   SmartphoneStudy? get study => LocalSettings().study;
   set study(SmartphoneStudy? study) => LocalSettings().study = study;
 
- 
-
   /// Has a study been deployed on this phone?
   bool get hasStudyBeenDeployed => study != null;
-
 
   /// The deployment running on this phone.
   SmartphoneDeployment? get deployment => Sensing().controller?.deployment;
@@ -198,21 +194,15 @@ class StudyAppBLoC extends ChangeNotifier {
     ActiveParticipationInvitation invitation, [
     BuildContext? context,
   ]) {
-
     // create and save the participant info based on this invitation
     var participant = Participant.fromParticipationInvitation(invitation);
     LocalSettings().participant = participant;
-
-    // make sure that the app is configured with the study IDs in order to access
-    // the correct resources (like translations etc.) on CAWS.
-    CarpParticipationService().setInvitation(invitation);
 
     LocalSettings().study = SmartphoneStudy.fromInvitation(invitation);
 
     // make sure that the CAWS backend services are configured with the study
     // in order to access the correct resources (like translations etc.).
     backend.study = study!;
-
 
     notifyListeners();
 

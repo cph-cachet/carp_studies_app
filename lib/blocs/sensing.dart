@@ -120,7 +120,6 @@ class Sensing {
           bloc.study?.studyDeploymentId,
         );
 
-
         // Save the deployment info on the phone for later use.
         var participant = Participant(
           studyDeploymentId: status.studyDeploymentId,
@@ -130,10 +129,9 @@ class Sensing {
 
         // Save the study on the phone for later use.
         bloc.study = SmartphoneStudy(
-          studyDeploymentId: _status!.studyDeploymentId,
-          deviceRoleName: _status!.primaryDeviceStatus!.device.roleName,
+          studyDeploymentId: status.studyDeploymentId,
+          deviceRoleName: status.primaryDeviceStatus!.device.roleName,
         );
-
 
         break;
       case DeploymentMode.production:

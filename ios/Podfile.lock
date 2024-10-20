@@ -5,6 +5,8 @@ PODS:
   - AppAuth/Core (1.7.4)
   - AppAuth/ExternalUserAgent (1.7.4):
     - AppAuth/Core
+  - appcheck (1.0.3):
+    - Flutter
   - audio_session (0.0.1):
     - Flutter
   - audio_streamer (0.0.1):
@@ -95,6 +97,7 @@ PODS:
     - FlutterMacOS
 
 DEPENDENCIES:
+  - appcheck (from `.symlinks/plugins/appcheck/ios`)
   - audio_session (from `.symlinks/plugins/audio_session/ios`)
   - audio_streamer (from `.symlinks/plugins/audio_streamer/ios`)
   - battery_plus (from `.symlinks/plugins/battery_plus/ios`)
@@ -142,6 +145,8 @@ SPEC REPOS:
     - SwiftProtobuf
 
 EXTERNAL SOURCES:
+  appcheck:
+    :path: ".symlinks/plugins/appcheck/ios"
   audio_session:
     :path: ".symlinks/plugins/audio_session/ios"
   audio_streamer:
@@ -222,6 +227,7 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   AppAuth: 182c5b88630569df5acb672720534756c29b3358
+  appcheck: e1ab9d4e03736f03e0401554a134d1ed502d7629
   audio_session: 088d2483ebd1dc43f51d253d4a1c517d9a2e7207
   audio_streamer: af49e73eb66f71c4eeabb4bbcb05f122d03a6709
   battery_plus: 1ff2e16ba75af2a78387f65476057a390b47885e

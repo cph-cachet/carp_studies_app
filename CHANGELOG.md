@@ -1,19 +1,44 @@
+## 2.2.2
+
+- Upgrade to carp_serialization v. 2.0 & carp_mobile_sensing: 1.10.
+- Cleanup in pubspec.yaml
+
+## 2.2.1
+
+- Created github action script to create a release on pushing a tag on master.
+- Update permissions on Android, fix bug on informed consent upload.
+- Fixed gradle warnings
+- Bumping version to 2.2.0
+- On android, check if user has Google Health Connect installed dialog.
+
+## 2.1.0
+
+- fix of switching studies in the study app
+- refactor of view model
+- improvements to translations (especially the Danish ones)
+- upgrade to fixes in the underlying CAMS (related to #283)
+- improvement to API docs
+- upgrade and refactor of connectivity_plus
+- Aligning iOS "marketing version" with Flutter pubspec version
+- upgrade to latest CAMS packages
+- upgrade to carp_backend 1.7.1
+- Delete gitignored files
+- Bumping version to 2.1.0
+
 ## 2.0.0
 
 - Update to latest version of Carp Mobile Sensing (1.5.0)
 - Add support for connecting to Movesense devices, collecting HR data, visualizing HR data collected
-- Memove support for Apple HealthKit (temporily, due to conflict with Movesense integration)
+- Removed support for Apple HealthKit (temporily, due to conflict with Movesense integration)
 - Support for running app in local deployment mode in order to debug a protocol before uploading it to CAWS
 - Improve connection process with Bluetooth devices
 - Update URLs to point to new servers
 - Various bug fixes:
-
   - properly request permissions for `flutter_local_notifications`
   - fix some overflows, bugs, colors in UI
   - fix "Local environment" task duplication
   - fix crash related to theme
   - fix logging out/leave study dialogs appearing twice and not working.
-
 - redesigned camera preview
 - improve subtitles for task list
 

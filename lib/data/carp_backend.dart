@@ -49,12 +49,7 @@ class CarpBackend {
       );
 
   /// The CAWS app configuration.
-  late final CarpApp _app = CarpApp(
-    name: "CAWS @ DTU",
-    uri: uri,
-    studyId: bloc.studyId,
-    studyDeploymentId: bloc.studyDeploymentId,
-  );
+  late final CarpApp _app = CarpApp(name: "CAWS @ DTU", uri: uri);
 
   CarpApp get app => _app;
 
@@ -130,9 +125,11 @@ class CarpBackend {
   String? get username => user?.username;
   OAuthToken? get oauthToken => user?.token;
 
-  /// The list of invitation for this user.
+  /// The list of available invitation for this user.
+  /// Populated by calling [getInvitations].
   List<ActiveParticipationInvitation> invitations = [];
 
+  /// Get the list of active invitations for this user from the [CarpParticipationService].
   Future<List<ActiveParticipationInvitation>> getInvitations() async {
     CarpParticipationService().configureFrom(CarpService());
 
@@ -149,6 +146,14 @@ class CarpBackend {
         false);
 
     return invitations;
+  }
+
+  /// Set the [study] used on this phone.
+  set study(SmartphoneStudy study) {
+    CarpService().study = study;
+    CarpParticipationService().study = study;
+    CarpDeploymentService().study = study;
+    CarpDataStreamService().study = study;
   }
 
   /// Upload the result of an informed consent flow. Returns the uploaded

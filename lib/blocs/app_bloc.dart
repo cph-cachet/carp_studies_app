@@ -124,26 +124,32 @@ class StudyAppBLoC extends ChangeNotifier {
 
   CarpBackend get backend => _backend;
 
-  /// The id of the currently running study.
+  /// The study running on this phone.
   /// Typical set based on an invitation.
   /// `null` if no deployment have been specified.
-  String? get studyId => LocalSettings().studyId;
-  set studyId(String? id) => LocalSettings().studyId = id;
+  SmartphoneStudy? get study => LocalSettings().study;
+  set study(SmartphoneStudy? study) => LocalSettings().study = study;
 
-  /// The id of the currently running study deployment.
-  /// Typical set based on an invitation.
-  /// `null` if no deployment have been specified.
-  String? get studyDeploymentId => LocalSettings().studyDeploymentId;
-  set studyDeploymentId(String? id) => LocalSettings().studyDeploymentId = id;
+  // /// The id of the currently running study.
+  // /// Typical set based on an invitation.
+  // /// `null` if no deployment have been specified.
+  // String? get studyId => LocalSettings().studyId;
+  // set studyId(String? id) => LocalSettings().studyId = id;
 
-  /// The role name of the device in the currently running study deployment.
-  /// Typical set based on an invitation.
-  /// `null` if no deployment have been specified.
-  String? get deviceRoleName => LocalSettings().deviceRoleName;
-  set deviceRoleName(String? name) => LocalSettings().deviceRoleName = name;
+  // /// The id of the currently running study deployment.
+  // /// Typical set based on an invitation.
+  // /// `null` if no deployment have been specified.
+  // String? get studyDeploymentId => LocalSettings().studyDeploymentId;
+  // set studyDeploymentId(String? id) => LocalSettings().studyDeploymentId = id;
 
-  /// Has a study already been deployed on this phone?
-  bool get hasStudyBeenDeployed => studyDeploymentId != null;
+  // /// The role name of the device in the currently running study deployment.
+  // /// Typical set based on an invitation.
+  // /// `null` if no deployment have been specified.
+  // String? get deviceRoleName => LocalSettings().deviceRoleName;
+  // set deviceRoleName(String? name) => LocalSettings().deviceRoleName = name;
+
+  /// Has a study been deployed on this phone?
+  bool get hasStudyBeenDeployed => study != null;
 
   /// The deployment running on this phone.
   SmartphoneDeployment? get deployment => Sensing().controller?.deployment;
@@ -206,27 +212,23 @@ class StudyAppBLoC extends ChangeNotifier {
     ActiveParticipationInvitation invitation, [
     BuildContext? context,
   ]) {
-    studyId = invitation.studyId;
-    studyDeploymentId = invitation.studyDeploymentId;
-    deviceRoleName = invitation.assignedDevices?.first.device.roleName;
+    LocalSettings().study = SmartphoneStudy.fromInvitation(invitation);
 
-    // make sure that the app is configured with the study IDs in order to access
-    // the correct resources (like translations etc.) on CAWS.
-    backend.app.studyId = studyId;
-    backend.app.studyDeploymentId = studyDeploymentId;
+    // make sure that the CAWS backend services are configured with the study
+    // in order to access the correct resources (like translations etc.).
+    backend.study = study!;
 
     notifyListeners();
 
     info('Invitation received - '
-        'study id: ${bloc.studyId}, '
-        'deployment id: ${bloc.studyDeploymentId}, '
-        'role name: ${bloc.deviceRoleName}');
+        'study id: ${invitation.studyId}, '
+        'deployment id: ${invitation.studyDeploymentId}, '
+        'role name: ${invitation.deviceRoleName}');
 
     if (context != null) CarpStudyApp.reloadLocale(context);
   }
 
-  /// This methods is used to configure the study deployment with
-  /// the id [studyDeploymentId].
+  /// This methods is used to configure the [study] deployment.
   ///
   /// This includes:
   ///  * initialize sensing
@@ -241,6 +243,9 @@ class StudyAppBLoC extends ChangeNotifier {
 
     // set up and initialize sensing
     await Sensing().initialize();
+
+    // make sure that the CAWS backend services are configured with the study
+    backend.study = study!;
 
     // add the study and configure sensing
     await Sensing().addStudy();
@@ -309,9 +314,8 @@ class StudyAppBLoC extends ChangeNotifier {
   CarpUser? get user => backend.user;
 
   /// The username of the user running this study.
-  String get username => (user != null)
-      ? user!.username
-      : Sensing().controller!.deployment!.userId!;
+  /// Returns an empty string if no user logged in.
+  String? get username => user!.username;
 
   /// The name used for friendly greeting.
   /// Returns an empty string if no user logged in.

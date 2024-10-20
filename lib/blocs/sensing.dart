@@ -116,12 +116,14 @@ class Sensing {
         _status = await SmartphoneDeploymentService().createStudyDeployment(
           protocol!,
           [],
-          bloc.studyDeploymentId,
+          bloc.study?.studyDeploymentId,
         );
 
-        // Save the correct deployment id on the phone for later use.
-        bloc.studyDeploymentId = _status?.studyDeploymentId;
-        bloc.deviceRoleName = _status?.primaryDeviceStatus?.device.roleName;
+        // Save the study on the phone for later use.
+        bloc.study = SmartphoneStudy(
+          studyDeploymentId: _status!.studyDeploymentId,
+          deviceRoleName: _status!.primaryDeviceStatus!.device.roleName,
+        );
 
         break;
       case DeploymentMode.production:
@@ -155,14 +157,11 @@ class Sensing {
   Future<void> addStudy() async {
     assert(SmartPhoneClientManager().isConfigured,
         'The client manager is not yet configured. Call SmartPhoneClientManager().configure() before adding a study.');
-    assert(bloc.studyDeploymentId != null,
-        'No study deployment ID is provided. Cannot start deployment w/o an id.');
+    assert(bloc.study != null,
+        'No study is provided. Cannot start deployment w/o a study.');
 
-    // Define the study and add it to the client.
-    _study = await SmartPhoneClientManager().addStudy(
-      bloc.studyDeploymentId!,
-      bloc.deviceRoleName!,
-    );
+    // Add the study to the client.
+    _study = await SmartPhoneClientManager().addStudy(bloc.study!);
 
     // Get the study controller and try to deploy the study.
     //
@@ -170,7 +169,8 @@ class Sensing {
     // been cached locally and the local version will be used pr. default.
     // If not deployed before (i.e., cached) the study deployment will be
     // fetched from the deployment service.
-    _controller = SmartPhoneClientManager().getStudyRuntime(study!);
+    _controller =
+        SmartPhoneClientManager().getStudyRuntime(study!.studyDeploymentId);
     await controller?.tryDeployment(useCached: true);
 
     // Make sure to translate the user tasks in the study protocol before using
@@ -188,7 +188,9 @@ class Sensing {
   }
 
   Future<void> removeStudy() async {
-    if (study != null) await SmartPhoneClientManager().removeStudy(study!);
+    if (study != null) {
+      await SmartPhoneClientManager().removeStudy(study!.studyDeploymentId);
+    }
   }
 
   /// Translate the title and description of all AppTask in the study protocol

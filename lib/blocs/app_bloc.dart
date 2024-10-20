@@ -265,8 +265,11 @@ class StudyAppBLoC extends ChangeNotifier {
   ///  * shown to the user
   ///  * accepted by the user
   ///  * successfully uploaded to CARP
-  set hasInformedConsentBeenAccepted(bool accepted) =>
-      LocalSettings().participant?.hasInformedConsentBeenAccepted = accepted;
+  set hasInformedConsentBeenAccepted(bool accepted) {
+    var participant = LocalSettings().participant;
+    participant?.hasInformedConsentBeenAccepted = true;
+    LocalSettings().participant = participant;
+  }
 
   /// The informed consent has been accepted by the user.
   ///

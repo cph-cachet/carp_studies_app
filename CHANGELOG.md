@@ -1,7 +1,9 @@
 ## 2.2.2
 
-- Upgrade to carp_serialization v. 2.0 & carp_mobile_sensing: 1.10.
+- Upgrade to carp_serialization v. 2.0 & carp_mobile_sensing: 1.11
 - Cleanup in pubspec.yaml
+- Upload of informed consent as a input data type
+- Saving participant data on the phone across app restart
 
 ## 2.2.1
 

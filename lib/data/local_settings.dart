@@ -6,9 +6,7 @@ part of carp_study_app;
 class LocalSettings {
   // Keys for storing in shared preferences
   static const String userKey = 'user';
-
   static const String participantKey = 'participant';
-
   static const String studyKey = 'study';
   static const String informedConsentAcceptedKey = 'informed_consent_accepted';
 
@@ -108,25 +106,6 @@ class LocalSettings {
     await Settings().preferences!.remove(userKey);
   }
 
-  // Need to create our own JSON serializers here, since SmartphoneStudy is not made serializable
-  Map<String, dynamic> _$SmartphoneStudyToJson(SmartphoneStudy study) =>
-      <String, dynamic>{
-        'studyId': study.studyId,
-        'studyDeploymentId': study.studyDeploymentId,
-        'deviceRoleName': study.deviceRoleName,
-        'participantId': study.participantId,
-        'participantRoleName': study.participantRoleName,
-      };
-
-  SmartphoneStudy _$SmartphoneStudyFromJson(Map<String, dynamic> json) =>
-      SmartphoneStudy(
-        studyId: json['studyId'] as String?,
-        studyDeploymentId: json['studyDeploymentId'] as String,
-        deviceRoleName: json['deviceRoleName'] as String,
-        participantId: json['participantId'] as String?,
-        participantRoleName: json['participantRoleName'] as String?,
-      );
-
   Future<String?> get deploymentBasePath async => (studyDeploymentId == null)
       ? null
       : await Settings().getDeploymentBasePath(studyDeploymentId!);
@@ -144,3 +123,22 @@ class LocalSettings {
     Settings().preferences!.setBool(informedConsentAcceptedKey, accepted);
   }
 }
+
+// Need to create our own JSON serializers here, since SmartphoneStudy is not made serializable
+Map<String, dynamic> _$SmartphoneStudyToJson(SmartphoneStudy study) =>
+    <String, dynamic>{
+      'studyId': study.studyId,
+      'studyDeploymentId': study.studyDeploymentId,
+      'deviceRoleName': study.deviceRoleName,
+      'participantId': study.participantId,
+      'participantRoleName': study.participantRoleName,
+    };
+
+SmartphoneStudy _$SmartphoneStudyFromJson(Map<String, dynamic> json) =>
+    SmartphoneStudy(
+      studyId: json['studyId'] as String?,
+      studyDeploymentId: json['studyDeploymentId'] as String,
+      deviceRoleName: json['deviceRoleName'] as String,
+      participantId: json['participantId'] as String?,
+      participantRoleName: json['participantRoleName'] as String?,
+    );

@@ -1,7 +1,10 @@
 name: carp_study_app
 description: The generic CARP study app.
 publish_to: "none"
+
+
 version: 2.2.2+33
+
 
 environment:
   sdk: ">=3.2.0 <4.0.0"
@@ -10,6 +13,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+
 
   carp_serializable: ^2.0.0
   carp_core: ^1.8.0
@@ -25,6 +29,7 @@ dependencies:
 
   carp_webservices: ^3.5.0
   carp_backend: ^1.9.0
+
 
   research_package: ^1.7.0
   cognition_package: ^1.6.0

@@ -130,24 +130,6 @@ class StudyAppBLoC extends ChangeNotifier {
   SmartphoneStudy? get study => LocalSettings().study;
   set study(SmartphoneStudy? study) => LocalSettings().study = study;
 
-  // /// The id of the currently running study.
-  // /// Typical set based on an invitation.
-  // /// `null` if no deployment have been specified.
-  // String? get studyId => LocalSettings().studyId;
-  // set studyId(String? id) => LocalSettings().studyId = id;
-
-  // /// The id of the currently running study deployment.
-  // /// Typical set based on an invitation.
-  // /// `null` if no deployment have been specified.
-  // String? get studyDeploymentId => LocalSettings().studyDeploymentId;
-  // set studyDeploymentId(String? id) => LocalSettings().studyDeploymentId = id;
-
-  // /// The role name of the device in the currently running study deployment.
-  // /// Typical set based on an invitation.
-  // /// `null` if no deployment have been specified.
-  // String? get deviceRoleName => LocalSettings().deviceRoleName;
-  // set deviceRoleName(String? name) => LocalSettings().deviceRoleName = name;
-
   /// Has a study been deployed on this phone?
   bool get hasStudyBeenDeployed => study != null;
 
@@ -212,6 +194,10 @@ class StudyAppBLoC extends ChangeNotifier {
     ActiveParticipationInvitation invitation, [
     BuildContext? context,
   ]) {
+    // create and save the participant info based on this invitation
+    var participant = Participant.fromParticipationInvitation(invitation);
+    LocalSettings().participant = participant;
+
     LocalSettings().study = SmartphoneStudy.fromInvitation(invitation);
 
     // make sure that the CAWS backend services are configured with the study
@@ -272,7 +258,7 @@ class StudyAppBLoC extends ChangeNotifier {
 
   /// Has the informed consent been shown to, and accepted by the user?
   bool get hasInformedConsentBeenAccepted =>
-      LocalSettings().hasInformedConsentBeenAccepted;
+      LocalSettings().participant?.hasInformedConsentBeenAccepted ?? false;
 
   /// Specify if the informed consent been handled.
   /// This entails that it has been:
@@ -280,7 +266,7 @@ class StudyAppBLoC extends ChangeNotifier {
   ///  * accepted by the user
   ///  * successfully uploaded to CARP
   set hasInformedConsentBeenAccepted(bool accepted) =>
-      LocalSettings().hasInformedConsentBeenAccepted = accepted;
+      LocalSettings().participant?.hasInformedConsentBeenAccepted = accepted;
 
   /// The informed consent has been accepted by the user.
   ///

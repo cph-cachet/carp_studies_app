@@ -123,13 +123,19 @@ class CarpBackend {
 
   /// The user name of the user, if authenticated.
   String? get username => user?.username;
+
+  /// The Oauth token of the user, if authenticated.
   OAuthToken? get oauthToken => user?.token;
 
-  /// The list of available invitation for this user.
-  /// Populated by calling [getInvitations].
+  /// The participant of this study, if an invitation has been accepted.
+  Participant? get participant => LocalSettings().participant;
+
+  /// The list of invitations for this user.
+  /// Use [getInvitations] to get / refresh the list of invitations from CAWS.
   List<ActiveParticipationInvitation> invitations = [];
 
   /// Get the list of active invitations for this user from the [CarpParticipationService].
+
   Future<List<ActiveParticipationInvitation>> getInvitations() async {
     CarpParticipationService().configureFrom(CarpService());
 
@@ -140,6 +146,9 @@ class CarpBackend {
     // have a smartphone as a device in [ActiveParticipationInvitation.assignedDevices] list
     // (i.e. the invitation is for a smartphone).
     // This is done to avoid showing invitations for other devices (e.g. [WebBrowser]).
+    //
+    // TODO: Do we need to remove invitations which are not for this user?
+    //  - see https://github.com/cph-cachet/carp.core-kotlin/issues/482
     invitations.removeWhere((invitation) =>
         invitation.assignedDevices
             ?.any((device) => device.device is! Smartphone) ??
@@ -157,11 +166,23 @@ class CarpBackend {
   }
 
   /// Upload the result of an informed consent flow. Returns the uploaded
-  /// consent document as retrieved from the server.
+  /// consent document.
   ///
   /// Looks for the first instance of a [RPConsentSignatureResult] in [consent]
   /// and uploads this.
-  Future<ConsentDocument?> uploadInformedConsent(RPTaskResult consent) async {
+  Future<InformedConsentInput?> uploadInformedConsent(
+    RPTaskResult consent,
+  ) async {
+    if (user == null) {
+      warning('$runtimeType - No user authenticated.');
+      return null;
+    }
+    if (participant == null) {
+      warning(
+          '$runtimeType - No participant (no invitation has been accepted).');
+      return null;
+    }
+
     late RPConsentSignatureResult signedConsent;
     try {
       signedConsent = consent.results.values.firstWhere(
@@ -174,13 +195,22 @@ class CarpBackend {
     }
 
     signedConsent.userId = username;
-    Map<String, dynamic> json = signedConsent.toJson();
+    final json = toJsonString(signedConsent.toJson());
 
-    ConsentDocument? uploadedConsent;
+    final uploadedConsent = InformedConsentInput(
+      userId: user!.id,
+      name: user!.username,
+      consent: json,
+      signatureImage: signedConsent.signature?.signatureImage ?? '',
+    );
+
     try {
-      uploadedConsent = await CarpService().createConsentDocument(json);
+      await CarpParticipationService()
+          .participation()
+          .setInformedConsent(uploadedConsent);
+
       info(
-          '$runtimeType - Informed consent document uploaded successfully - id: ${uploadedConsent.id}');
+          '$runtimeType - Informed consent document uploaded successfully - deployment id: ${bloc.study?.studyDeploymentId}');
     } on Exception {
       warning(
           '$runtimeType - Informed consent upload failed for username: $username');

@@ -1,10 +1,12 @@
 part of carp_study_app;
 
-/// A local settings manager. Works as a singleton - use `LocalSettings()`
-/// for accessing settings.
+/// A local settings manager.
+///
+/// Works as a singleton - use `LocalSettings()` for accessing settings.
 class LocalSettings {
   // Keys for storing in shared preferences
   static const String userKey = 'user';
+  static const String participantKey = 'participant';
   static const String studyKey = 'study';
   static const String informedConsentAcceptedKey = 'informed_consent_accepted';
 
@@ -13,6 +15,9 @@ class LocalSettings {
   LocalSettings._() : super();
 
   CarpUser? _user;
+
+  Participant? _participant;
+
   SmartphoneStudy? _study;
   bool? _hasInformedConsentBeenAccepted;
 
@@ -33,6 +38,27 @@ class LocalSettings {
     (user != null)
         ? Settings().preferences!.setString(userKey, jsonEncode(user.toJson()))
         : Settings().preferences!.remove(userKey);
+  }
+
+  /// The participant saved on this device, if any.
+  Participant? get participant {
+    if (_participant == null) {
+      String? userString = Settings().preferences!.getString(participantKey);
+
+      _participant = (userString != null)
+          ? Participant.fromJson(jsonDecode(userString) as Map<String, dynamic>)
+          : null;
+    }
+    return _participant;
+  }
+
+  set participant(Participant? participant) {
+    _participant = participant;
+    (participant != null)
+        ? Settings()
+            .preferences!
+            .setString(participantKey, jsonEncode(participant.toJson()))
+        : Settings().preferences!.remove(participantKey);
   }
 
   /// The study for the currently running study deployment.
@@ -66,30 +92,19 @@ class LocalSettings {
   Future<void> eraseStudyDeployment() async {
     _study = null;
     _hasInformedConsentBeenAccepted = null;
+    _participant = null;
+    await Settings().preferences!.remove(participantKey);
 
     await Settings().preferences!.remove(studyKey);
     await Settings().preferences!.remove(informedConsentAcceptedKey);
     debug('$runtimeType - study deployment erased.');
   }
 
-  // Need to create our own JSON serializers here, since SmartphoneStudy is not made serializable
-  Map<String, dynamic> _$SmartphoneStudyToJson(SmartphoneStudy study) =>
-      <String, dynamic>{
-        'studyId': study.studyId,
-        'studyDeploymentId': study.studyDeploymentId,
-        'deviceRoleName': study.deviceRoleName,
-        'participantId': study.participantId,
-        'participantRoleName': study.participantRoleName,
-      };
-
-  SmartphoneStudy _$SmartphoneStudyFromJson(Map<String, dynamic> json) =>
-      SmartphoneStudy(
-        studyId: json['studyId'] as String?,
-        studyDeploymentId: json['studyDeploymentId'] as String,
-        deviceRoleName: json['deviceRoleName'] as String,
-        participantId: json['participantId'] as String?,
-        participantRoleName: json['participantRoleName'] as String?,
-      );
+  /// Erase all authentication information on this user from the phone.
+  Future<void> eraseAuthCredentials() async {
+    _user = null;
+    await Settings().preferences!.remove(userKey);
+  }
 
   Future<String?> get deploymentBasePath async => (studyDeploymentId == null)
       ? null
@@ -107,9 +122,23 @@ class LocalSettings {
     _hasInformedConsentBeenAccepted = accepted;
     Settings().preferences!.setBool(informedConsentAcceptedKey, accepted);
   }
-
-  Future<void> eraseAuthCredentials() async {
-    _user = null;
-    await Settings().preferences!.remove(userKey);
-  }
 }
+
+// Need to create our own JSON serializers here, since SmartphoneStudy is not made serializable
+Map<String, dynamic> _$SmartphoneStudyToJson(SmartphoneStudy study) =>
+    <String, dynamic>{
+      'studyId': study.studyId,
+      'studyDeploymentId': study.studyDeploymentId,
+      'deviceRoleName': study.deviceRoleName,
+      'participantId': study.participantId,
+      'participantRoleName': study.participantRoleName,
+    };
+
+SmartphoneStudy _$SmartphoneStudyFromJson(Map<String, dynamic> json) =>
+    SmartphoneStudy(
+      studyId: json['studyId'] as String?,
+      studyDeploymentId: json['studyDeploymentId'] as String,
+      deviceRoleName: json['deviceRoleName'] as String,
+      participantId: json['participantId'] as String?,
+      participantRoleName: json['participantRoleName'] as String?,
+    );

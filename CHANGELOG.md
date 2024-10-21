@@ -1,3 +1,9 @@
+## 2.2.3
+- Fixing login issue with going back to invitations list page
+- Updating changelog.md and pubspec.yaml
+- Bumping version code to 35
+- Fixing build error on ios - tests failing
+
 ## 2.2.2
 
 - Upgrade to carp_serialization v. 2.0 & carp_mobile_sensing: 1.11

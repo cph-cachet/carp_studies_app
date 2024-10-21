@@ -14,17 +14,6 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
-    _checkAuthentication();
-  }
-
-  void _checkAuthentication() async {
-    if (bloc.backend.isAuthenticated) {
-      if (!bloc.hasStudyBeenDeployed) {
-        context.go(InvitationListPage.route);
-      } else {
-        context.go(CarpStudyAppState.homeRoute);
-      }
-    }
   }
 
   @override

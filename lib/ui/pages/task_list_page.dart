@@ -178,7 +178,7 @@ class TaskListPageState extends State<TaskListPage>
   Widget _buildAvailableTaskCard(BuildContext context, UserTask userTask) {
     RPLocalizations locale = RPLocalizations.of(context)!;
     // Determine the color for the line based on the title color
-    Color titleColor = Colors.red.withOpacity(0.7);
+    Color taskTypeColor = Colors.red.withOpacity(0.7);
 
     return Center(
       child: GestureDetector(
@@ -190,7 +190,7 @@ class TaskListPageState extends State<TaskListPage>
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  const SizedBox(width: 8.0), // Space between line and content
+                  const SizedBox(width: 16.0), // Space between line and content
                   Expanded(
                     // Allows the content to take remaining space
                     child: Column(
@@ -205,10 +205,24 @@ class TaskListPageState extends State<TaskListPage>
                             Text(
                               userTask.type,
                               style: TextStyle(
-                                color: titleColor,
+                                color: taskTypeColor,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
+                            Spacer(),
+                            if (_timeRemainingSubtitle(userTask).isNotEmpty)
+                            Icon(
+                              Icons.access_time_rounded,
+                              color: Colors.grey,
+                            ),
+                            const SizedBox(height: 12.0),
+                            Text(
+                              _timeRemainingSubtitle(userTask),
+                              style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 12.0,
+                              ),
+                            )
                           ],
                         ),
                         const SizedBox(height: 8.0),
@@ -222,24 +236,15 @@ class TaskListPageState extends State<TaskListPage>
                         const SizedBox(height: 4.0),
                         Text(
                           locale.translate(userTask.description),
-                          style: TextStyle(
-                            color: Colors.black54,
-                          ),
                         ),
                         Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            Icon(
-                              Icons.access_time_rounded,
-                              color: Colors.grey,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 2.0),
-                              child: Text(
-                                _subtitle(userTask),
-                                style: TextStyle(
-                                  color: Colors.grey,
-                                  fontSize: 12.0,
-                                ),
+                            Text(
+                              _estimatedTimeSubtitle(userTask),
+                              style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 12.0,
                               ),
                             ),
                           ],
@@ -278,12 +283,23 @@ class TaskListPageState extends State<TaskListPage>
                   color: CACHET.ORANGE,
                 );
 
-  String _subtitle(UserTask userTask) {
+  String _estimatedTimeSubtitle(UserTask userTask) {
     RPLocalizations locale = RPLocalizations.of(context)!;
     String subtitle = (userTask.task.minutesToComplete != null)
-        ? '${userTask.task.minutesToComplete} ${locale.translate('pages.task_list.task.time_to_complete')}'
+        ? '${locale.translate('pages.task_list.task.estimated_time')} ${userTask.task.minutesToComplete} min'
         : locale.translate('pages.task_list.task.auto_complete');
 
+    if (userTask.expiresIn != null) {
+      if (userTask.expiresIn!.isNegative) {
+        userTask.onExpired();
+      }
+    }
+
+    return subtitle.isEmpty ? locale.translate(userTask.description) : subtitle;
+  }
+
+  String _timeRemainingSubtitle(UserTask userTask) {
+    RPLocalizations locale = RPLocalizations.of(context)!;
     String humanizedTimeRemaining = "";
     if (userTask.expiresIn != null) {
       if (userTask.expiresIn!.isNegative) {
@@ -293,11 +309,7 @@ class TaskListPageState extends State<TaskListPage>
       humanizedTimeRemaining = userTask.expiresIn!.humanize(locale);
     }
 
-    if (humanizedTimeRemaining.isNotEmpty) {
-      subtitle = "$subtitle - $humanizedTimeRemaining";
-    }
-
-    return subtitle.isEmpty ? locale.translate(userTask.description) : subtitle;
+    return humanizedTimeRemaining.isNotEmpty ? humanizedTimeRemaining : "";
   }
 
   Widget _buildDoneTaskCard(BuildContext context, UserTask userTask) {

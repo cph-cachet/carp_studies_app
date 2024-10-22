@@ -54,7 +54,7 @@
     "widgets.study_card.responsibles": "El investigador principal (PI) es ",
     "pages.profile.title": "Perfil",
     "pages.profile.username": "Usuario",
-    "pages.profile.name": "Nombre",
+    "pages.profile.full_name": "Nombre",
     "pages.profile.study_name": "Estudio",
     "pages.profile.study_deployment_id": "ID Estudio",
     "pages.profile.account_id": "Id Usuario",

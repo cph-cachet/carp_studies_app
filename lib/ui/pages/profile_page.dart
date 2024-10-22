@@ -56,31 +56,9 @@ class ProfilePageState extends State<ProfilePage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                            locale
-                                .translate('pages.profile.account_id')
-                                .toUpperCase(),
+                        Text(locale.translate('pages.profile.username'),
                             style: profileSectionStyle.copyWith(
-                                color: Theme.of(context).primaryColor)),
-                        Text(
-                          widget.model.userId,
-                          style: profileTitleStyle,
-                          textScaler: TextScaler.linear(0.75),
-                        ),
-                      ],
-                    ),
-                  ),
-                  ListTile(
-                    title: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                            locale
-                                .translate('pages.profile.username')
-                                .toUpperCase(),
-                            style: profileSectionStyle.copyWith(
-                                color: Theme.of(context).primaryColor)),
+                                color: CACHET.GREY_6)),
                         Text(widget.model.username, style: profileTitleStyle),
                       ],
                     ),
@@ -90,31 +68,14 @@ class ProfilePageState extends State<ProfilePage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                            locale
-                                .translate('pages.profile.name')
-                                .toUpperCase(),
+                        Text(locale.translate('pages.profile.account_id'),
                             style: profileSectionStyle.copyWith(
-                                color: Theme.of(context).primaryColor)),
-                        Text(widget.model.name, style: profileTitleStyle),
-                      ],
-                    ),
-                  ),
-                  ListTile(
-                    title: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
+                                color: CACHET.GREY_6)),
                         Text(
-                            locale
-                                .translate('pages.profile.study_deployment_id')
-                                .toUpperCase(),
-                            style: profileSectionStyle.copyWith(
-                                color: Theme.of(context).primaryColor)),
-                        Text(
-                          widget.model.studyDeploymentId,
+                          widget.model.userId,
                           style: profileTitleStyle,
-                          textScaler: TextScaler.linear(0.75),
+                          maxLines: 1,
+                          textScaler: TextScaler.linear(1),
                         ),
                       ],
                     ),
@@ -124,12 +85,55 @@ class ProfilePageState extends State<ProfilePage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        Text(locale.translate('pages.profile.full_name'),
+                            style: profileSectionStyle.copyWith(
+                                color: CACHET.GREY_6)),
+                        Text(widget.model.fullName, style: profileTitleStyle),
+                      ],
+                    ),
+                  ),
+                  ListTile(
+                    title: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(locale.translate('pages.profile.email'),
+                            style: profileSectionStyle.copyWith(
+                                color: CACHET.GREY_6)),
+                        Text(widget.model.email, style: profileTitleStyle),
+                      ],
+                    ),
+                  ),
+                  //
+                  //  BIG DIVIDER
+                  // 
+                  ListTile(
+                    title: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
                         Text(
                             locale
-                                .translate('pages.profile.study_name')
-                                .toUpperCase(),
+                                .translate('pages.profile.study_deployment_id'),
                             style: profileSectionStyle.copyWith(
-                                color: Theme.of(context).primaryColor)),
+                                color: CACHET.GREY_6)),
+                        Text(
+                          widget.model.studyDeploymentId,
+                          style: profileTitleStyle,
+                          maxLines: 1,
+                          textScaler: TextScaler.linear(1),
+                        ),
+                      ],
+                    ),
+                  ),
+                  ListTile(
+                    title: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(locale.translate('pages.profile.study_name'),
+                            style: profileSectionStyle.copyWith(
+                                color: CACHET.GREY_6)),
                         Text(
                             locale.translate(widget.model.studyDeploymentTitle),
                             style: profileTitleStyle),
@@ -137,11 +141,65 @@ class ProfilePageState extends State<ProfilePage> {
                     ),
                   ),
                   ListTile(
+                    title: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(locale.translate('pages.profile.participant_id'),
+                            style: profileSectionStyle.copyWith(
+                                color: CACHET.GREY_6)),
+                        Text(
+                          widget.model.participantId,
+                          style: profileTitleStyle,
+                          maxLines: 1,
+                          textScaler: TextScaler.linear(1),
+                        ),
+                      ],
+                    ),
+                  ),
+                  ListTile(
+                    title: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(locale.translate('pages.profile.participant_role'),
+                            style: profileSectionStyle.copyWith(
+                                color: CACHET.GREY_6)),
+                        Text(
+                          widget.model.participantRole,
+                          style: profileTitleStyle,
+                          maxLines: 1,
+                          textScaler: TextScaler.linear(1),
+                        ),
+                      ],
+                    ),
+                  ),
+                  ListTile(
+                    title: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(locale.translate('pages.profile.device_role'),
+                            style: profileSectionStyle.copyWith(
+                                color: CACHET.GREY_6)),
+                        Text(
+                          widget.model.deviceRole,
+                          style: profileTitleStyle,
+                          maxLines: 1,
+                          textScaler: TextScaler.linear(1),
+                        ),
+                      ],
+                    ),
+                  ),
+                  //
+                  //  BIG DIVIDER
+                  // 
+                  ListTile(
                     leading: Icon(Icons.mail_outline,
                         color: Theme.of(context).primaryColor),
                     title: Text(locale.translate('pages.profile.contact'),
                         style: profileActionStyle.copyWith(
-                            color: Theme.of(context).primaryColor)),
+                            color: CACHET.PROFILE_SECTION_TEXT)),
                     onTap: () async {
                       _sendEmailToContactResearcher(
                         locale.translate(widget.model.responsibleEmail),
@@ -154,7 +212,7 @@ class ProfilePageState extends State<ProfilePage> {
                         color: Theme.of(context).primaryColor),
                     title: Text(locale.translate('pages.profile.privacy'),
                         style: profileActionStyle.copyWith(
-                            color: Theme.of(context).primaryColor)),
+                            color: CACHET.PROFILE_SECTION_TEXT)),
                     onTap: () async {
                       try {
                         launchUrl(Uri.parse(CarpBackend.carpPrivacyUrl));
@@ -166,7 +224,7 @@ class ProfilePageState extends State<ProfilePage> {
                         color: Theme.of(context).primaryColor),
                     title: Text(locale.translate('pages.about.study.website'),
                         style: profileActionStyle.copyWith(
-                            color: Theme.of(context).primaryColor)),
+                            color: CACHET.PROFILE_SECTION_TEXT)),
                     onTap: () async {
                       try {
                         launchUrl(Uri.parse(CarpBackend.carpWebsiteUrl));
@@ -302,7 +360,8 @@ class SlidePageRoute extends PageRouteBuilder<Widget> {
             var begin = Offset(1.0, 0.0);
             var end = Offset.zero;
             var curve = Curves.easeInOut;
-            var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+            var tween =
+                Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
             var offsetAnimation = animation.drive(tween);
             return SlideTransition(
               position: offsetAnimation,

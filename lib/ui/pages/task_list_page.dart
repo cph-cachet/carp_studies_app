@@ -111,6 +111,8 @@ class TaskListPageState extends State<TaskListPage>
                                   controller: _tabController,
                                   labelPadding: const EdgeInsets.only(
                                       top: 4, bottom: 4, left: 4, right: 4),
+                                      labelColor: Colors.black,
+                                      unselectedLabelColor: Colors.black,
                                   dividerColor: Colors.transparent,
                                   indicator: ShapeDecoration(
                                     shape: RoundedRectangleBorder(

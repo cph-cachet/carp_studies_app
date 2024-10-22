@@ -95,14 +95,16 @@ class TaskListPageState extends State<TaskListPage>
                               ),
                             ),
                           ),
+                          // Scoreboard showing days in study and tasks completed
                           SliverPadding(
                             padding: const EdgeInsets.only(
                                 top: 4, bottom: 6, left: 40, right: 40),
                             sliver: ScoreboardCard(widget.model),
                           ),
+                          // Tab holder
                           SliverPadding(
                             padding: const EdgeInsets.only(
-                                top: 6, bottom: 4, left: 64, right: 64),
+                                top: 8, bottom: 24, left: 64, right: 64),
                             sliver: SliverPersistentHeader(
                               delegate: _SliverAppBarDelegate(
                                 TabBar(
@@ -142,18 +144,18 @@ class TaskListPageState extends State<TaskListPage>
                             delegate: SliverChildBuilderDelegate(
                               (BuildContext context, int index) {
                                 UserTask userTask = widget.model.tasks[index];
-                                // Filter tasks based on selected tab
                                 if (_tabController.index == 0) {
-                                  // Pending tasks
                                   if (userTask.availableForUser) {
                                     return _buildAvailableTaskCard(
                                         context, userTask);
                                   }
                                 } else if (_tabController.index == 1) {
-                                  // Completed tasks
-                                  if (userTask.state == UserTaskState.done ||
-                                      userTask.state == UserTaskState.expired) {
+                                  if (userTask.state == UserTaskState.done) {
                                     return _buildDoneTaskCard(
+                                        context, userTask);
+                                  } else if (userTask.state ==
+                                      UserTaskState.expired) {
+                                    return _buildExpiredTaskCard(
                                         context, userTask);
                                   }
                                 }
@@ -177,20 +179,24 @@ class TaskListPageState extends State<TaskListPage>
 
   Widget _buildAvailableTaskCard(BuildContext context, UserTask userTask) {
     RPLocalizations locale = RPLocalizations.of(context)!;
-    // Determine the color for the line based on the title color
-    Color taskTypeColor = Colors.red.withOpacity(0.7);
 
     return Center(
       child: GestureDetector(
         child: StudiesMaterial(
           hasBorder: true,
+          borderColor: taskTypeColors[userTask.type]!,
+          backgroundColor:
+              userTask.expiresIn != null && userTask.expiresIn!.inHours < 24
+                  ? CACHET.TASK_TO_EXPIRE_BACKGROUND
+                  : Colors.white,
+          elevation: 0,
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: IntrinsicHeight(
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  const SizedBox(width: 16.0), // Space between line and content
+                  const SizedBox(width: 12.0), // Space between line and content
                   Expanded(
                     // Allows the content to take remaining space
                     child: Column(
@@ -198,56 +204,74 @@ class TaskListPageState extends State<TaskListPage>
                       children: [
                         Row(
                           children: [
-                            CircleAvatar(
-                              backgroundColor: Theme.of(context).hoverColor,
-                              child: _taskTypeIcon(userTask),
-                            ),
-                            Text(
-                              userTask.type,
-                              style: TextStyle(
-                                color: taskTypeColor,
-                                fontWeight: FontWeight.bold,
+                            _taskTypeIcon(userTask),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 4.0),
+                              child: Text(
+                                userTask.type,
+                                style: TextStyle(
+                                  color: taskTypeColors[userTask.type],
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
                             Spacer(),
                             if (_timeRemainingSubtitle(userTask).isNotEmpty)
-                            Icon(
-                              Icons.access_time_rounded,
-                              color: Colors.grey,
-                            ),
-                            const SizedBox(height: 12.0),
+                              Icon(
+                                Icons.alarm,
+                                color: userTask.expiresIn != null &&
+                                        userTask.expiresIn!.inHours < 24
+                                    ? Theme.of(context)
+                                        .extension<CarpColors>()!
+                                        .warningColor
+                                    : Colors.grey,
+                              ),
+                            const SizedBox(width: 4.0),
                             Text(
                               _timeRemainingSubtitle(userTask),
                               style: TextStyle(
-                                color: Colors.grey,
+                                color: userTask.expiresIn != null &&
+                                        userTask.expiresIn!.inHours < 24
+                                    ? Theme.of(context)
+                                        .extension<CarpColors>()!
+                                        .warningColor
+                                    : Colors.grey,
                                 fontSize: 12.0,
                               ),
                             )
                           ],
                         ),
                         const SizedBox(height: 8.0),
-                        Text(
-                          locale.translate(userTask.title),
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16.0,
-                          ),
-                        ),
-                        const SizedBox(height: 4.0),
-                        Text(
-                          locale.translate(userTask.description),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Text(
-                              _estimatedTimeSubtitle(userTask),
-                              style: TextStyle(
-                                color: Colors.grey,
-                                fontSize: 12.0,
+                        Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                locale.translate(userTask.title),
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16.0,
+                                ),
                               ),
-                            ),
-                          ],
+                              const SizedBox(height: 4.0),
+                              Text(
+                                locale.translate(userTask.description),
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    _estimatedTimeSubtitle(userTask),
+                                    style: TextStyle(
+                                      color: Colors.grey,
+                                      fontSize: 12.0,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),
@@ -344,7 +368,7 @@ class TaskListPageState extends State<TaskListPage>
           hasBorder: true,
           child: ListTile(
             leading: const CircleAvatar(
-              backgroundColor: CACHET.LIGHT_GREY_1,
+              backgroundColor: CACHET.LIGHT_GREY,
               child: Icon(Icons.unpublished_outlined, color: CACHET.GREY_1),
             ),
             title: Text(locale.translate(userTask.title),
@@ -388,37 +412,48 @@ class TaskListPageState extends State<TaskListPage>
 
   static Map<String, Icon> taskTypeIcons = {
     SurveyUserTask.SURVEY_TYPE: const Icon(
-      Icons.description,
-      color: CACHET.ORANGE,
+      Icons.workspaces,
+      color: CACHET.TASK_BLUE,
     ),
     SurveyUserTask.COGNITIVE_ASSESSMENT_TYPE: const Icon(
-      Icons.face_retouching_natural,
-      color: CACHET.RED_2,
+      Icons.psychology,
+      color: CACHET.LIGHT_PURPLE,
     ),
     SurveyUserTask.AUDIO_TYPE: const Icon(
-      Icons.record_voice_over,
+      Icons.hearing,
       color: CACHET.GREEN,
     ),
     SurveyUserTask.VIDEO_TYPE: const Icon(
       Icons.videocam,
-      color: CACHET.BLUE_1,
+      color: CACHET.LIGHT_BLUE,
     ),
     SurveyUserTask.IMAGE_TYPE: const Icon(
-      Icons.camera_alt,
+      Icons.image,
       color: CACHET.YELLOW,
     ),
     SurveyUserTask.HEALTH_ASSESSMENT_TYPE: const Icon(
-      Icons.favorite_rounded,
+      Icons.favorite,
       color: CACHET.RED_1,
     ),
     BackgroundSensingUserTask.SENSING_TYPE: const Icon(
-      Icons.settings_input_antenna,
-      color: CACHET.BLUE,
+      Icons.sensors,
+      color: CACHET.LIGHT_BROWN,
     ),
     BackgroundSensingUserTask.ONE_TIME_SENSING_TYPE: const Icon(
       Icons.settings_input_component,
       color: CACHET.PURPLE,
     ),
+  };
+
+  static Map<String, Color> taskTypeColors = {
+    SurveyUserTask.SURVEY_TYPE: CACHET.TASK_BLUE,
+    SurveyUserTask.COGNITIVE_ASSESSMENT_TYPE: CACHET.LIGHT_PURPLE,
+    SurveyUserTask.AUDIO_TYPE: CACHET.GREEN,
+    SurveyUserTask.VIDEO_TYPE: CACHET.LIGHT_BLUE,
+    SurveyUserTask.IMAGE_TYPE: CACHET.YELLOW,
+    SurveyUserTask.HEALTH_ASSESSMENT_TYPE: CACHET.RED_1,
+    BackgroundSensingUserTask.SENSING_TYPE: CACHET.LIGHT_BROWN,
+    BackgroundSensingUserTask.ONE_TIME_SENSING_TYPE: CACHET.PURPLE,
   };
 
   static Map<String, Icon> measureTypeIcons = {
@@ -458,7 +493,7 @@ class TaskListPageState extends State<TaskListPage>
     //     Icon(Icons.cast_connected, size: 50, color: CACHET.GREEN),
     MediaSamplingPackage.AUDIO: const Icon(
       Icons.mic,
-      color: CACHET.ORANGE,
+      color: CACHET.GREEN,
     ),
     MediaSamplingPackage.NOISE: const Icon(
       Icons.hearing,
@@ -466,10 +501,10 @@ class TaskListPageState extends State<TaskListPage>
     ),
     MediaSamplingPackage.VIDEO: const Icon(
       Icons.videocam,
-      color: CACHET.YELLOW,
+      color: CACHET.LIGHT_BLUE,
     ),
     MediaSamplingPackage.IMAGE: const Icon(
-      Icons.camera_alt,
+      Icons.image,
       color: CACHET.YELLOW,
     ),
     // AppsSamplingPackage.APPS: Icon(Icons.apps, size: 50, color: CACHET.LIGHT_GREEN),
@@ -491,12 +526,12 @@ class TaskListPageState extends State<TaskListPage>
     //   color: CACHET.YELLOW,
     // ),
     ContextSamplingPackage.ACTIVITY: const Icon(
-      Icons.directions_bike,
+      Icons.local_fire_department,
       color: CACHET.ORANGE,
     ),
     ContextSamplingPackage.WEATHER: const Icon(
       Icons.cloud,
-      color: CACHET.LIGHT_BLUE_2,
+      color: CACHET.LIGHT_BLUE,
     ),
     ContextSamplingPackage.AIR_QUALITY: const Icon(
       Icons.air,
@@ -511,7 +546,7 @@ class TaskListPageState extends State<TaskListPage>
       color: CACHET.ORANGE,
     ),
     SurveySamplingPackage.SURVEY: const Icon(
-      Icons.description,
+      Icons.workspaces,
       color: CACHET.ORANGE,
     ),
   };

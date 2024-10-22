@@ -151,7 +151,7 @@ const Map<String, Icon> _deviceTypeIcon = {
   ),
   AirQualityService.DEVICE_TYPE: Icon(
     Icons.air,
-    color: CACHET.LIGHT_BLUE_2,
+    color: CACHET.LIGHT_BLUE,
   ),
   LocationService.DEVICE_TYPE: Icon(
     Icons.location_on,

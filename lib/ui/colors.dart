@@ -44,6 +44,7 @@ class CACHET {
   static const Color GREY_5 = Color.fromRGBO(112, 112, 112, 1.0);
   static const Color GREY_6 = Color.fromRGBO(132, 132, 132, 1.0);
 
+  static const Color DIVIDER = Color.fromRGBO(33, 33, 33, 0.08);
   static const Color PROFILE_SECTION_TEXT = Color.fromRGBO(44, 44, 46, 1.0);
 
   static Color pie =

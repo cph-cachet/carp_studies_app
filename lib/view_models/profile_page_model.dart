@@ -7,6 +7,7 @@ class ProfilePageViewModel extends ViewModel {
   String get lastName => bloc.user?.lastName ?? '';
   String get fullName => '$firstName $lastName';
   String get email => bloc.user?.email ?? '';
+  String get studyId => bloc.deployment?.studyId ?? '';
   String get studyDeploymentId => bloc.deployment?.studyDeploymentId ?? '';
   String get studyDeploymentTitle =>
       bloc.deployment?.studyDescription?.title ?? '';

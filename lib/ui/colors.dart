@@ -5,6 +5,7 @@ part of carp_study_app;
 class CACHET {
   static const Color BLUE = Color.fromRGBO(97, 195, 217, 1.0);
   static const Color TASK_BLUE = Color.fromRGBO(58, 130, 247, 1.0);
+  static const Color TASK_COMPLETED_BLUE = Color.fromRGBO(0, 99, 152, 1.0);
   static const Color TASK_TO_EXPIRE_BACKGROUND =
       Color.fromRGBO(255, 246, 231, 1.0);
 
@@ -42,6 +43,7 @@ class CACHET {
   static const Color GREY_3 = Color.fromRGBO(178, 178, 178, 1.0);
   static const Color GREY_4 = Color.fromRGBO(218, 218, 218, 1.0);
   static const Color GREY_5 = Color.fromRGBO(112, 112, 112, 1.0);
+  static const Color GREY_6 = Color.fromRGBO(132, 132, 132, 1.0);
 
   static Color pie =
       createMaterialColor(const Color.fromRGBO(225, 244, 250, 1));

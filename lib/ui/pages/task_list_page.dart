@@ -152,12 +152,8 @@ class TaskListPageState extends State<TaskListPage>
                                         context, userTask);
                                   }
                                 } else if (_tabController.index == 1) {
-                                  if (userTask.state == UserTaskState.done) {
-                                    return _buildDoneTaskCard(
-                                        context, userTask);
-                                  } else if (userTask.state ==
-                                      UserTaskState.expired) {
-                                    return _buildExpiredTaskCard(
+                                  if (userTask.state == UserTaskState.done || userTask.state == UserTaskState.expired) {
+                                    return _buildCompletedTaskCard(
                                         context, userTask);
                                   }
                                 }
@@ -298,16 +294,16 @@ class TaskListPageState extends State<TaskListPage>
   /// Get an icon for the [userTask] based on its type. If there is no icon for
   /// the type, use the 1st measure in the task as an icon. If there is no
   /// icon for the measure, use a default icon.
-  Icon _taskTypeIcon(UserTask userTask) =>
-      (taskTypeIcons[userTask.type] != null)
-          ? taskTypeIcons[userTask.type] as Icon
-          : (userTask.task.measures!.isNotEmpty &&
-                  measureTypeIcons[userTask.task.measures![0].type] != null)
-              ? measureTypeIcons[userTask.task.measures![0].type] as Icon
-              : const Icon(
-                  Icons.description_outlined,
-                  color: CACHET.ORANGE,
-                );
+  Icon _taskTypeIcon(UserTask userTask) {
+    Icon originalIcon = taskTypeIcons[userTask.type] as Icon;
+    if (taskTypeIcons[userTask.type] != null && userTask.availableForUser) {
+      return originalIcon;
+    } else if (taskTypeIcons[userTask.type] != null && userTask.state == UserTaskState.done) {
+      return Icon(originalIcon.icon, color: CACHET.TASK_COMPLETED_BLUE);
+    } else {
+      return Icon(originalIcon.icon, color: CACHET.GREY_6);
+    }
+  }
 
   String _estimatedTimeSubtitle(UserTask userTask) {
     RPLocalizations locale = RPLocalizations.of(context)!;
@@ -336,6 +332,101 @@ class TaskListPageState extends State<TaskListPage>
     }
 
     return humanizedTimeRemaining.isNotEmpty ? humanizedTimeRemaining : "";
+  }
+
+  Widget _buildCompletedTaskCard(BuildContext context, UserTask userTask) {
+    RPLocalizations locale = RPLocalizations.of(context)!;
+    return Center(
+      child: GestureDetector(
+        child: StudiesMaterial(
+          hasBorder: true,
+          borderColor: (userTask.state == UserTaskState.done)
+              ? CACHET.TASK_COMPLETED_BLUE
+              : CACHET.GREY_6,
+          backgroundColor:
+              userTask.expiresIn != null && userTask.expiresIn!.inHours < 24
+                  ? CACHET.TASK_TO_EXPIRE_BACKGROUND
+                  : Colors.white,
+          elevation: 0,
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: IntrinsicHeight(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const SizedBox(width: 12.0), // Space between line and content
+                  Expanded(
+                    // Allows the content to take remaining space
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            _taskTypeIcon(userTask),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 4.0),
+                              child: Text(
+                                userTask.type,
+                                style: TextStyle(
+                                  color: (userTask.state == UserTaskState.done)
+                                      ? CACHET.TASK_COMPLETED_BLUE
+                                      : CACHET.GREY_6,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                            Spacer(),
+                            if (_timeRemainingSubtitle(userTask).isNotEmpty)
+                              Icon(
+                                Icons.alarm,
+                                color: userTask.expiresIn != null &&
+                                        userTask.expiresIn!.inHours < 24
+                                    ? Theme.of(context)
+                                        .extension<CarpColors>()!
+                                        .warningColor
+                                    : Colors.grey,
+                              ),
+                            const SizedBox(width: 4.0),
+                            Text(
+                              'THIS SHOULD BE DATE EXPIRED/COMPLETED?',
+                              style: TextStyle(
+                                color: userTask.expiresIn != null &&
+                                        userTask.expiresIn!.inHours < 24
+                                    ? Theme.of(context)
+                                        .extension<CarpColors>()!
+                                        .warningColor
+                                    : Colors.grey,
+                                fontSize: 12.0,
+                              ),
+                            )
+                          ],
+                        ),
+                        const SizedBox(height: 8.0),
+                        Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                locale.translate(userTask.title),
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16.0,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 
   Widget _buildDoneTaskCard(BuildContext context, UserTask userTask) {

@@ -152,7 +152,8 @@ class TaskListPageState extends State<TaskListPage>
                                         context, userTask);
                                   }
                                 } else if (_tabController.index == 1) {
-                                  if (userTask.state == UserTaskState.done || userTask.state == UserTaskState.expired) {
+                                  if (userTask.state == UserTaskState.done ||
+                                      userTask.state == UserTaskState.expired) {
                                     return _buildCompletedTaskCard(
                                         context, userTask);
                                   }
@@ -298,7 +299,8 @@ class TaskListPageState extends State<TaskListPage>
     Icon originalIcon = taskTypeIcons[userTask.type] as Icon;
     if (taskTypeIcons[userTask.type] != null && userTask.availableForUser) {
       return originalIcon;
-    } else if (taskTypeIcons[userTask.type] != null && userTask.state == UserTaskState.done) {
+    } else if (taskTypeIcons[userTask.type] != null &&
+        userTask.state == UserTaskState.done) {
       return Icon(originalIcon.icon, color: CACHET.TASK_COMPLETED_BLUE);
     } else {
       return Icon(originalIcon.icon, color: CACHET.GREY_6);
@@ -343,10 +345,7 @@ class TaskListPageState extends State<TaskListPage>
           borderColor: (userTask.state == UserTaskState.done)
               ? CACHET.TASK_COMPLETED_BLUE
               : CACHET.GREY_6,
-          backgroundColor:
-              userTask.expiresIn != null && userTask.expiresIn!.inHours < 24
-                  ? CACHET.TASK_TO_EXPIRE_BACKGROUND
-                  : Colors.white,
+          backgroundColor: Colors.white,
           elevation: 0,
           child: Padding(
             padding: const EdgeInsets.all(16.0),
@@ -376,17 +375,6 @@ class TaskListPageState extends State<TaskListPage>
                               ),
                             ),
                             Spacer(),
-                            if (_timeRemainingSubtitle(userTask).isNotEmpty)
-                              Icon(
-                                Icons.alarm,
-                                color: userTask.expiresIn != null &&
-                                        userTask.expiresIn!.inHours < 24
-                                    ? Theme.of(context)
-                                        .extension<CarpColors>()!
-                                        .warningColor
-                                    : Colors.grey,
-                              ),
-                            const SizedBox(width: 4.0),
                             Text(
                               'THIS SHOULD BE DATE EXPIRED/COMPLETED?',
                               style: TextStyle(
@@ -423,50 +411,6 @@ class TaskListPageState extends State<TaskListPage>
                 ],
               ),
             ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildDoneTaskCard(BuildContext context, UserTask userTask) {
-    RPLocalizations locale = RPLocalizations.of(context)!;
-
-    return Center(
-      child: Opacity(
-        opacity: 0.6,
-        child: StudiesMaterial(
-          hasBorder: true,
-          child: ListTile(
-            leading: const CircleAvatar(
-              backgroundColor: CACHET.LIGHT_GREEN_1,
-              child: Icon(Icons.check_circle_outlined, color: CACHET.GREEN_1),
-            ),
-            title: Text(locale.translate(userTask.title),
-                style: aboutCardTitleStyle.copyWith(
-                    color: Theme.of(context).primaryColor)),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildExpiredTaskCard(BuildContext context, UserTask userTask) {
-    RPLocalizations locale = RPLocalizations.of(context)!;
-
-    return Center(
-      child: Opacity(
-        opacity: 0.6,
-        child: StudiesMaterial(
-          hasBorder: true,
-          child: ListTile(
-            leading: const CircleAvatar(
-              backgroundColor: CACHET.LIGHT_GREY,
-              child: Icon(Icons.unpublished_outlined, color: CACHET.GREY_1),
-            ),
-            title: Text(locale.translate(userTask.title),
-                style: aboutCardTitleStyle.copyWith(
-                    color: Theme.of(context).primaryColor)),
           ),
         ),
       ),

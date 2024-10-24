@@ -4,6 +4,11 @@ part of carp_study_app;
 
 class CACHET {
   static const Color BLUE = Color.fromRGBO(97, 195, 217, 1.0);
+  
+  static const Color DEPLOYMENT_BLUE = Color.fromRGBO(0, 99, 152, 1.0);
+  static const Color DEPLOYMENT_GREEN = Color.fromRGBO(0, 163, 0, 1.0);
+  static const Color DEPLOYMENT_GREY = Color.fromRGBO(118, 119, 122, 1.0);
+
   static const Color RED = Color.fromRGBO(213, 11, 51, 1.0);
   static const Color WHITE = Color.fromRGBO(255, 255, 255, 1.0);
   static const Color BLACK = Color.fromRGBO(1, 1, 1, 1.0);
@@ -23,6 +28,7 @@ class CACHET {
   static const Color GREY_3 = Color.fromRGBO(178, 178, 178, 1.0);
   static const Color GREY_4 = Color.fromRGBO(218, 218, 218, 1.0);
   static const Color GREY_5 = Color.fromRGBO(112, 112, 112, 1.0);
+  static const Color GREY_6 = Color.fromRGBO(242, 242, 247, 1.0);
 
   static const Color BLUE_1 = Color.fromRGBO(33, 146, 201, 1);
   static const Color BLUE_2 = Color.fromRGBO(130, 206, 233, 1);

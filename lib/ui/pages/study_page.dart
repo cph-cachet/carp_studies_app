@@ -13,7 +13,7 @@ class StudyPageState extends State<StudyPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.secondary,
+      backgroundColor: CACHET.GREY_6,
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -42,6 +42,9 @@ class StudyPageState extends State<StudyPage> {
                                 context.push(StudyDetailsPage.route);
                               },
                             );
+                          }
+                          if (index == 1) {
+                            return _studyStatusCard();
                           }
 
                           return _aboutStudyCard(
@@ -128,6 +131,56 @@ class StudyPageState extends State<StudyPage> {
       ),
     );
   }
+
+  Widget _studyStatusCard() {
+    return Card(
+      margin: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16),
+      color: CACHET.GREY_6,
+      child: Container(
+        decoration: BoxDecoration(
+            border: Border.all(
+              color: Colors.black,
+              width: 1.0,
+            ),
+            borderRadius: BorderRadius.circular(16.0)),
+        child: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CircleAvatar(
+                    radius: 24,
+                    backgroundColor: Theme.of(context).primaryColor,
+                    child: Icon(
+                      Icons.check,
+                      color: Colors.white,
+                      size: 30,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: Text('Study Status',
+                        style: aboutCardTitleStyle.copyWith(
+                            color: Theme.of(context).primaryColor)),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  static Map<StudyDeploymentStatusTypes, Color> studyStatusColors = {
+    StudyDeploymentStatusTypes.Invited: CACHET.BLUE_1,
+    StudyDeploymentStatusTypes.DeployingDevices: CACHET.DEPLOYMENT_BLUE,
+    StudyDeploymentStatusTypes.DeploymentReady: CACHET.DEPLOYMENT_GREEN,
+    StudyDeploymentStatusTypes.Stopped: CACHET.DEPLOYMENT_GREY,
+  };
 }
 
 extension CopyWithAdditional on DateTime {

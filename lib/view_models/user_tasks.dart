@@ -52,7 +52,7 @@ class AudioUserTask extends UserTask {
   void onRecordStart() {
     ongoingRecordingDuration = recordingDuration;
     state = UserTaskState.started;
-    executor.start();
+    backgroundTaskExecutor.start();
 
     _timer = Timer.periodic(const Duration(seconds: 1), (_) {
       _countDownController.add(--ongoingRecordingDuration);
@@ -61,7 +61,7 @@ class AudioUserTask extends UserTask {
         _timer?.cancel();
         _countDownController.close();
 
-        executor.stop();
+        backgroundTaskExecutor.stop();
         super.onDone();
       }
     });
@@ -72,7 +72,7 @@ class AudioUserTask extends UserTask {
     _timer?.cancel();
     _countDownController.close();
 
-    executor.stop();
+    backgroundTaskExecutor.stop();
     super.onDone();
   }
 }
@@ -100,14 +100,14 @@ class VideoUserTask extends UserTask {
     _startRecordingTime = DateTime.now();
     _endRecordingTime = DateTime.now();
 
-    executor.start();
+    backgroundTaskExecutor.start();
   }
 
   /// Callback when video recording is started.
   void onRecordStart() {
     debug('$runtimeType - onRecordStart()');
     _startRecordingTime = DateTime.now();
-    executor.start();
+    backgroundTaskExecutor.start();
   }
 
   /// Callback when video recording is stopped.
@@ -135,7 +135,7 @@ class VideoUserTask extends UserTask {
       // ... and add it to the sensing controller
       bloc.addMeasurement(Measurement.fromData(media));
     }
-    executor.stop();
+    backgroundTaskExecutor.stop();
     super.onDone();
   }
 }

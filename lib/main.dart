@@ -27,6 +27,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:open_settings_plus/open_settings_plus.dart';
 import 'package:open_settings_plus/core/open_settings_plus.dart';
+import 'package:appcheck/appcheck.dart';
 
 // the CARP packages
 import 'package:carp_serializable/carp_serializable.dart';
@@ -56,6 +57,7 @@ part 'data/local_settings.dart';
 part 'data/carp_backend.dart';
 part 'data/localization_loader.dart';
 part 'data/local_resource_manager.dart';
+part 'data/participant.dart';
 
 part 'view_models/view_model.dart';
 part 'view_models/tasklist_page_model.dart';
@@ -77,6 +79,7 @@ part 'view_models/user_tasks.dart';
 part 'carp_study_app.dart';
 part 'ui/pages/informed_consent_page.dart';
 part 'ui/pages/home_page.dart';
+part 'ui/pages/home_page.install_health_connect_dialog.dart';
 part 'ui/carp_study_style.dart';
 part 'ui/colors.dart';
 part 'ui/pages/data_visualization_page.dart';

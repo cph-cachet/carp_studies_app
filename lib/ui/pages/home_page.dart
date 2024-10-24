@@ -61,6 +61,22 @@ class HomePageState extends State<HomePage> {
     //  - starting sensing
     askForLocationPermissions(context)
         .then((_) => bloc.configureStudy().then((_) => bloc.start()));
+
+    if (Platform.isAndroid) {
+      // Check if HealthConnect is installed
+      _checkHealthConnectInstallation();
+    }
+  }
+
+  Future<void> _checkHealthConnectInstallation() async {
+    bool isInstalled = await bloc._isHealthConnectInstalled();
+    if (!isInstalled) {
+      showDialog<void>(
+        context: context,
+        barrierDismissible: true,
+        builder: (context) => InstallHealthConnectDialog(context),
+      );
+    }
   }
 
   @override

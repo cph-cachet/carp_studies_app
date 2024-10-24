@@ -55,6 +55,7 @@ class StudyAppBLoC extends ChangeNotifier {
   List<Message> _messages = [];
   final StreamController<int> _messageStreamController =
       StreamController.broadcast();
+  final String _healthConnectPackageName = 'com.google.android.apps.healthdata';
 
   /// The state of this BloC.
   StudyAppState get state => _state;
@@ -83,6 +84,8 @@ class StudyAppBLoC extends ChangeNotifier {
   final _scaffoldKey = GlobalKey<ScaffoldMessengerState>();
   GlobalKey<ScaffoldMessengerState> get scaffoldKey => _scaffoldKey;
   State? get scaffoldMessengerState => scaffoldKey.currentState;
+
+  String get healthConnectPackageName => _healthConnectPackageName;
 
   /// Create the BLoC for the app.
   StudyAppBLoC() : super() {
@@ -121,26 +124,14 @@ class StudyAppBLoC extends ChangeNotifier {
 
   CarpBackend get backend => _backend;
 
-  /// The id of the currently running study.
+  /// The study running on this phone.
   /// Typical set based on an invitation.
   /// `null` if no deployment have been specified.
-  String? get studyId => LocalSettings().studyId;
-  set studyId(String? id) => LocalSettings().studyId = id;
+  SmartphoneStudy? get study => LocalSettings().study;
+  set study(SmartphoneStudy? study) => LocalSettings().study = study;
 
-  /// The id of the currently running study deployment.
-  /// Typical set based on an invitation.
-  /// `null` if no deployment have been specified.
-  String? get studyDeploymentId => LocalSettings().studyDeploymentId;
-  set studyDeploymentId(String? id) => LocalSettings().studyDeploymentId = id;
-
-  /// The role name of the device in the currently running study deployment.
-  /// Typical set based on an invitation.
-  /// `null` if no deployment have been specified.
-  String? get deviceRoleName => LocalSettings().deviceRoleName;
-  set deviceRoleName(String? name) => LocalSettings().deviceRoleName = name;
-
-  /// Has a study already been deployed on this phone?
-  bool get hasStudyBeenDeployed => studyDeploymentId != null;
+  /// Has a study been deployed on this phone?
+  bool get hasStudyBeenDeployed => study != null;
 
   /// The deployment running on this phone.
   SmartphoneDeployment? get deployment => Sensing().controller?.deployment;
@@ -150,6 +141,10 @@ class StudyAppBLoC extends ChangeNotifier {
 
   /// The overall data model for this app
   CarpStudyAppViewModel get appViewModel => _appViewModel;
+
+  final appCheck = AppCheck();
+
+  List<AppInfo>? installedApps;
 
   /// Initialize this BLOC. Called before being used for anything.
   Future<void> initialize() async {
@@ -178,6 +173,19 @@ class StudyAppBLoC extends ChangeNotifier {
         element == ConnectivityResult.wifi);
   }
 
+  Future<bool> _isHealthConnectInstalled() async {
+    try {
+      final apps = await appCheck.getInstalledApps();
+      if (apps != null) {
+        return apps.any((app) => app.packageName == _healthConnectPackageName);
+      }
+    } catch (e) {
+      debug("Error checking Health Connect installation: $e");
+      return false;
+    }
+    return false;
+  }
+
   /// Set the active study in the app based on an [invitation].
   ///
   /// If a [context] is provided, the translation for this study is re-loaded
@@ -186,27 +194,27 @@ class StudyAppBLoC extends ChangeNotifier {
     ActiveParticipationInvitation invitation, [
     BuildContext? context,
   ]) {
-    studyId = invitation.studyId;
-    studyDeploymentId = invitation.studyDeploymentId;
-    deviceRoleName = invitation.assignedDevices?.first.device.roleName;
+    // create and save the participant info based on this invitation
+    var participant = Participant.fromParticipationInvitation(invitation);
+    LocalSettings().participant = participant;
 
-    // make sure that the app is configured with the study IDs in order to access
-    // the correct resources (like translations etc.) on CAWS.
-    backend.app.studyId = studyId;
-    backend.app.studyDeploymentId = studyDeploymentId;
+    LocalSettings().study = SmartphoneStudy.fromInvitation(invitation);
+
+    // make sure that the CAWS backend services are configured with the study
+    // in order to access the correct resources (like translations etc.).
+    backend.study = study!;
 
     notifyListeners();
 
     info('Invitation received - '
-        'study id: ${bloc.studyId}, '
-        'deployment id: ${bloc.studyDeploymentId}, '
-        'role name: ${bloc.deviceRoleName}');
+        'study id: ${invitation.studyId}, '
+        'deployment id: ${invitation.studyDeploymentId}, '
+        'role name: ${invitation.deviceRoleName}');
 
     if (context != null) CarpStudyApp.reloadLocale(context);
   }
 
-  /// This methods is used to configure the study deployment with
-  /// the id [studyDeploymentId].
+  /// This methods is used to configure the [study] deployment.
   ///
   /// This includes:
   ///  * initialize sensing
@@ -221,6 +229,9 @@ class StudyAppBLoC extends ChangeNotifier {
 
     // set up and initialize sensing
     await Sensing().initialize();
+
+    // make sure that the CAWS backend services are configured with the study
+    backend.study = study!;
 
     // add the study and configure sensing
     await Sensing().addStudy();
@@ -247,15 +258,18 @@ class StudyAppBLoC extends ChangeNotifier {
 
   /// Has the informed consent been shown to, and accepted by the user?
   bool get hasInformedConsentBeenAccepted =>
-      LocalSettings().hasInformedConsentBeenAccepted;
+      LocalSettings().participant?.hasInformedConsentBeenAccepted ?? false;
 
   /// Specify if the informed consent been handled.
   /// This entails that it has been:
   ///  * shown to the user
   ///  * accepted by the user
   ///  * successfully uploaded to CARP
-  set hasInformedConsentBeenAccepted(bool accepted) =>
-      LocalSettings().hasInformedConsentBeenAccepted = accepted;
+  set hasInformedConsentBeenAccepted(bool accepted) {
+    var participant = LocalSettings().participant;
+    participant?.hasInformedConsentBeenAccepted = true;
+    LocalSettings().participant = participant;
+  }
 
   /// The informed consent has been accepted by the user.
   ///
@@ -289,9 +303,8 @@ class StudyAppBLoC extends ChangeNotifier {
   CarpUser? get user => backend.user;
 
   /// The username of the user running this study.
-  String get username => (user != null)
-      ? user!.username
-      : Sensing().controller!.deployment!.userId!;
+  /// Returns an empty string if no user logged in.
+  String? get username => user!.username;
 
   /// The name used for friendly greeting.
   /// Returns an empty string if no user logged in.

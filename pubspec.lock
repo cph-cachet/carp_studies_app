@@ -314,10 +314,10 @@ packages:
     dependency: "direct main"
     description:
       name: carp_survey_package
-      sha256: "8a081e98b210611167461ca985feba6aea3752426e8a6db628961354dee992aa"
+      sha256: e2791da0dd836e9a3ddd653b0491f52be7a8c76abac4e88a5137e71f4eae94de
       url: "https://pub.dev"
     source: hosted
-    version: "1.8.0"
+    version: "1.8.1"
   carp_webservices:
     dependency: "direct main"
     description:
@@ -378,10 +378,10 @@ packages:
     dependency: "direct main"
     description:
       name: cognition_package
-      sha256: "1d88fe49aa6f3676356adcad27a2ff12e82bb0a12678efb27e0068ce1ec48a94"
+      sha256: f021ca2328e548ef6792951d3b760b11dc4df658dedc8848105fbeb4dc74df32
       url: "https://pub.dev"
     source: hosted
-    version: "1.6.1"
+    version: "1.6.2"
   collection:
     dependency: transitive
     description:
@@ -1566,10 +1566,10 @@ packages:
     dependency: "direct main"
     description:
       name: research_package
-      sha256: "78b49707171a6bc2a7582797e1c6928882c4a9e484509ee835887406fe63051d"
+      sha256: e0d3dd0611f6b8ca69cc4693fc7256a6f923e25300f8a2da45aee6b7b3f14194
       url: "https://pub.dev"
     source: hosted
-    version: "1.7.0"
+    version: "1.7.2"
   retry:
     dependency: transitive
     description:
@@ -2091,10 +2091,11 @@ packages:
     dependency: transitive
     description:
       name: video_player_android
-      sha256: "2800d68d6d5b4c22da62453568ed68e63c35bea524d4fa42062e53d6bb591433"
+      sha256: "641fc7221cfb3f25dd761d30cbe733046a3a4932fee09962adb80fd7d11fc663"
       url: "https://pub.dev"
     source: hosted
-    version: "2.7.13"
+    version: "2.7.15"
+
   video_player_avfoundation:
     dependency: transitive
     description:
@@ -2123,10 +2124,10 @@ packages:
     dependency: transitive
     description:
       name: vm_service
-      sha256: f652077d0bdf60abe4c1f6377448e8655008eef28f128bc023f7b5e8dfeb48fc
+      sha256: "5c5f338a667b4c644744b661f309fb8080bb94b18a7e91ef1dbd343bed00ed6d"
       url: "https://pub.dev"
     source: hosted
-    version: "14.2.4"
+    version: "14.2.5"
   watcher:
     dependency: transitive
     description:

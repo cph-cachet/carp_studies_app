@@ -55,8 +55,6 @@ dependencies:
 
 # Overriding carp libraries to use the local copy
 # dependency_overrides:
-  # uuid: ^4.3.3
-
   # carp_serializable:
   #   path: ../carp/carp.sensing-flutter/carp_serializable/
   # carp_core:

@@ -1,4 +1,5 @@
 PODS:
+  - Alamofire (5.8.1)
   - AppAuth (1.7.4):
     - AppAuth/Core (= 1.7.4)
     - AppAuth/ExternalUserAgent (= 1.7.4)
@@ -54,7 +55,7 @@ PODS:
     - Flutter
     - Movesense
     - SwiftProtobuf
-  - Movesense (3.15.0)
+  - Movesense (3.27.0)
   - network_info_plus (0.0.1):
     - Flutter
   - oidc_ios (0.0.1):
@@ -74,27 +75,30 @@ PODS:
     - Flutter
   - polar (0.0.1):
     - Flutter
-    - PolarBleSdk (~> 5.5.0)
-  - PolarBleSdk (5.5.0):
+    - PolarBleSdk (~> 5.7.0)
+  - PolarBleSdk (5.7.0):
+    - Alamofire (~> 5.8.1)
     - RxSwift (~> 6.5.0)
     - SwiftProtobuf (~> 1.0)
+    - Zip (~> 2.1.2)
   - RxSwift (6.5.0)
-  - screen_state (0.0.1):
+  - screen_state (1.0.0):
     - Flutter
   - sensors_plus (0.0.1):
     - Flutter
   - shared_preferences_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
-  - sqflite (0.0.3):
+  - sqflite_darwin (0.0.4):
     - Flutter
     - FlutterMacOS
-  - SwiftProtobuf (1.26.0)
+  - SwiftProtobuf (1.28.2)
   - url_launcher_ios (0.0.1):
     - Flutter
   - video_player_avfoundation (0.0.1):
     - Flutter
     - FlutterMacOS
+  - Zip (2.1.2)
 
 DEPENDENCIES:
   - appcheck (from `.symlinks/plugins/appcheck/ios`)
@@ -131,18 +135,20 @@ DEPENDENCIES:
   - screen_state (from `.symlinks/plugins/screen_state/ios`)
   - sensors_plus (from `.symlinks/plugins/sensors_plus/ios`)
   - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
-  - sqflite (from `.symlinks/plugins/sqflite/darwin`)
+  - sqflite_darwin (from `.symlinks/plugins/sqflite_darwin/darwin`)
   - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
   - video_player_avfoundation (from `.symlinks/plugins/video_player_avfoundation/darwin`)
 
 SPEC REPOS:
   trunk:
+    - Alamofire
     - AppAuth
     - ESense
     - flutter_sound_core
     - PolarBleSdk
     - RxSwift
     - SwiftProtobuf
+    - Zip
 
 EXTERNAL SOURCES:
   appcheck:
@@ -213,8 +219,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/sensors_plus/ios"
   shared_preferences_foundation:
     :path: ".symlinks/plugins/shared_preferences_foundation/darwin"
-  sqflite:
-    :path: ".symlinks/plugins/sqflite/darwin"
+  sqflite_darwin:
+    :path: ".symlinks/plugins/sqflite_darwin/darwin"
   url_launcher_ios:
     :path: ".symlinks/plugins/url_launcher_ios/ios"
   video_player_avfoundation:
@@ -222,17 +228,18 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   Movesense:
-    :commit: c7cc4933823553d2ad3f67db458c507a633ab33d
+    :commit: c5a784a22b053660b4037ba8f43b8562113c21e5
     :git: https://bitbucket.org/movesense/movesense-mobile-lib/
 
 SPEC CHECKSUMS:
+  Alamofire: 3ca42e259043ee0dc5c0cdd76c4bc568b8e42af7
   AppAuth: 182c5b88630569df5acb672720534756c29b3358
   appcheck: e1ab9d4e03736f03e0401554a134d1ed502d7629
   audio_session: 088d2483ebd1dc43f51d253d4a1c517d9a2e7207
   audio_streamer: af49e73eb66f71c4eeabb4bbcb05f122d03a6709
   battery_plus: 1ff2e16ba75af2a78387f65476057a390b47885e
   camera_avfoundation: dd002b0330f4981e1bbcb46ae9b62829237459a4
-  connectivity_plus: ddd7f30999e1faaef5967c23d5b6d503d10434db
+  connectivity_plus: 4c41c08fc6d7c91f63bc7aec70ffe3730b04f563
   device_info_plus: 97af1d7e84681a90d0693e63169a5d50e0839a0d
   ESense: cbe103ad16c435424f2fd6f8b274f2468af84173
   esense_flutter: 8bfadfdefe7b51d6f78366e43b2b64ec9b6144b6
@@ -245,30 +252,31 @@ SPEC CHECKSUMS:
   flutter_sound: dde9a913063b65a27ba8fdc2039036b99b136c79
   flutter_sound_core: 0c6eb9d5268adc70ff159b3d65fd3d98a82d3a27
   flutter_timezone: ffb07bdad3c6276af8dada0f11978d8a1f8a20bb
-  health: 5a380c0f6c4f619535845992993964293962e99e
+  health: 5d10c4296a95f6be50a8131d47d3cb3ad640bdf5
   just_audio: baa7252489dbcf47a4c7cc9ca663e9661c99aafa
   light: 86af7a847d218a9a2376bc1c1ae40c3410441135
   location: d5cf8598915965547c3f36761ae9cc4f4e87d22e
   mdsflutter: 841344e0d5781afbbddd13e057e1cb2e9d86e012
-  Movesense: a1068c58b31d8032a13d69d0cb35ba6c444d2aae
-  network_info_plus: 9d930145451916919786087c4173226363616071
+  Movesense: 5ee7f342042aff32d24924b7f3fe4f2e86532522
+  network_info_plus: 6613d9d7cdeb0e6f366ed4dbe4b3c51c52d567a9
   oidc_ios: e80c00b7089ae7cdc45ab9ed636fdaed3e01e6a1
   open_settings: 9628e736cb2738fd1dc84159565755c214478158
   open_settings_plus: 4bd848866fea2becc124581d868a6164cf768831
-  package_info_plus: 58f0028419748fad15bf008b270aaa8e54380b1c
+  package_info_plus: c0502532a26c7662a62a356cebe2692ec5fe4ec4
   path_provider_foundation: 2b6b4c569c0fb62ec74538f866245ac84301af46
   pedometer: 381969883680ade42559782cc41a3bbd453d8234
   permission_handler_apple: 9878588469a2b0d0fc1e048d9f43605f92e6cec2
-  polar: 8efdf64c1b4e0034e8fa3b1d12b64e5b27a877f1
-  PolarBleSdk: 2551160f3dcba0207723fc466a275e2d3aeda01f
+  polar: 72c115bddd9aef3e3cc3eaba1196ecd99c59b8b6
+  PolarBleSdk: e3df6f62b6ed34701d2e1d74ebe24fd8245062ca
   RxSwift: 5710a9e6b17f3c3d6e40d6e559b9fa1e813b2ef8
-  screen_state: a7ae251997e97f3f001839df09b57313b0ddef18
-  sensors_plus: 18a9b346c43e157da17d2c8e99def703f9efb9d8
+  screen_state: a300ec05ec5606e1cdac06d5533f15ea5dd7c822
+  sensors_plus: 7229095999f30740798f0eeef5cd120357a8f4f2
   shared_preferences_foundation: fcdcbc04712aee1108ac7fda236f363274528f78
-  sqflite: 673a0e54cc04b7d6dba8d24fb8095b31c3a99eec
-  SwiftProtobuf: 5e8349171e7c2f88f5b9e683cb3cb79d1dc780b3
+  sqflite_darwin: a553b1fd6fe66f53bbb0fe5b4f5bab93f08d7a13
+  SwiftProtobuf: 4dbaffec76a39a8dc5da23b40af1a5dc01a4c02d
   url_launcher_ios: 5334b05cef931de560670eeae103fd3e431ac3fe
   video_player_avfoundation: 7c6c11d8470e1675df7397027218274b6d2360b3
+  Zip: b3fef584b147b6e582b2256a9815c897d60ddc67
 
 PODFILE CHECKSUM: 637a852170391ffc67bb926aa9b5540c53ed8eaf
 

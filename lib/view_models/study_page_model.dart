@@ -9,6 +9,7 @@ class StudyPageViewModel extends ViewModel {
   String get purpose => bloc.deployment?.studyDescription?.purpose ?? '';
   Image get image => Image.asset('assets/images/study.png');
   String? get userID => bloc.deployment?.participantId;
+  String get studyDeploymentId => bloc.deployment?.studyDeploymentId ?? '';
   String get studyDescriptionUrl =>
       bloc.deployment?.studyDescription?.studyDescriptionUrl ?? '';
   String get privacyPolicyUrl =>

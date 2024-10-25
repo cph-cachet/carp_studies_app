@@ -349,6 +349,8 @@ class StudyAppBLoC extends ChangeNotifier {
       ? Sensing().controller!.executor.probes
       : [];
 
+  DeploymentService get deploymentService => Sensing().deploymentService!;
+
   /// The list of all devices in this deployment.
   Iterable<DeviceViewModel> get deploymentDevices =>
       Sensing().deploymentDevices!.map((device) => DeviceViewModel(device));

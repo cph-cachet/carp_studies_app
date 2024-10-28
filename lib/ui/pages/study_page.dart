@@ -220,7 +220,6 @@ class StudyPageState extends State<StudyPage> {
     // Initialization the language of the tiemago package
     timeago.setLocaleMessages('da', timeago.DaMessages());
     timeago.setLocaleMessages('es', timeago.EsMessages());
-    print('Subtitle: ${message}');
 
     return StudiesMaterial(
       child: InkWell(
@@ -243,7 +242,7 @@ class StudyPageState extends State<StudyPage> {
                     height: 150.0,
                     color: Theme.of(context)
                         .colorScheme
-                        .secondary, //Color(0xFFF1F9FF),
+                        .secondary,
                     child: widget.model.getMessageImage(message.image),
                   ),
                 ),
@@ -273,13 +272,6 @@ class StudyPageState extends State<StudyPage> {
                   ),
                 ],
               ),
-              // Padding(
-              //   padding: const EdgeInsets.symmetric(vertical: 8.0),
-              //   child: Text(
-              //       '${locale.translate(message.type.toString().split('.').last.toLowerCase())} - ${timeago.format(message.timestamp.toLocal())}',
-              //       style: aboutCardSubtitleStyle.copyWith(
-              //           color: Theme.of(context).primaryColor)),
-              // ),
               Padding(
                 padding: const EdgeInsets.only(bottom: 12.0),
                 child: Row(

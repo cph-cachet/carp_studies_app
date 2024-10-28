@@ -280,15 +280,29 @@ class StudyPageState extends State<StudyPage> {
               //       style: aboutCardSubtitleStyle.copyWith(
               //           color: Theme.of(context).primaryColor)),
               // ),
-              if (message.subTitle != null && message.subTitle!.isNotEmpty)
-                Row(
+              Padding(
+                padding: const EdgeInsets.only(bottom: 12.0),
+                child: Row(
                   children: [
-                    Expanded(
-                        child: Text(locale.translate(message.subTitle!),
-                            style: aboutCardContentStyle.copyWith(
-                                color: Theme.of(context).primaryColor))),
+                    if (message.subTitle != null &&
+                        message.subTitle!.isNotEmpty)
+                      Expanded(
+                        child: Text(
+                          locale.translate(message.subTitle!),
+                          style: aboutCardContentStyle.copyWith(
+                              color: Theme.of(context).primaryColor),
+                        ),
+                      ),
+                    Spacer(),
+                    Text(
+                      timeago.format(message.timestamp.toLocal()),
+                      style: aboutCardTimeAgoStyle.copyWith(
+                        color: CACHET.GREY_7,
+                      ),
+                    )
                   ],
                 ),
+              ),
               if (message.message != null && message.message!.isNotEmpty)
                 Row(
                   children: [

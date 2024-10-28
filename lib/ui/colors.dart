@@ -22,13 +22,15 @@ class CACHET {
   static const Color CYAN = Color.fromRGBO(79, 100, 50, 1.0);
   static const Color LIGHT_PURPLE = Color.fromRGBO(145, 133, 190, 1.0);
   static const Color PURPLE = Color.fromRGBO(102, 36, 131, 1.0);
-  static const Color GREY_1 = Color.fromRGBO(100, 99, 99, 1.0);
   static const Color LIGHT_GREY_1 = Color.fromRGBO(100, 99, 99, .2);
+  
+  static const Color GREY_1 = Color.fromRGBO(100, 99, 99, 1.0);
   static const Color GREY_2 = Color.fromRGBO(146, 146, 146, 1.0);
   static const Color GREY_3 = Color.fromRGBO(178, 178, 178, 1.0);
   static const Color GREY_4 = Color.fromRGBO(218, 218, 218, 1.0);
   static const Color GREY_5 = Color.fromRGBO(112, 112, 112, 1.0);
   static const Color GREY_6 = Color.fromRGBO(242, 242, 247, 1.0);
+  static const Color GREY_7 = Color.fromRGBO(132, 132, 132, 1.0);
 
   static const Color BLUE_1 = Color.fromRGBO(33, 146, 201, 1);
   static const Color BLUE_2 = Color.fromRGBO(130, 206, 233, 1);

@@ -189,7 +189,10 @@ TextStyle profileSectionStyle = const TextStyle(
     fontSize: 12, fontWeight: FontWeight.w400, letterSpacing: 2);
 
 TextStyle aboutCardContentStyle =
-    const TextStyle(fontSize: 16, fontWeight: FontWeight.w400);
+    const TextStyle(fontSize: 16, fontWeight: FontWeight.w400).apply(fontFamily: 'MuseoSans');
+
+TextStyle aboutCardTimeAgoStyle =
+    const TextStyle(fontSize: 10, fontWeight: FontWeight.w600).apply(fontFamily: 'MuseoSans');
 
 TextStyle sectionTitleStyle =
     const TextStyle(fontSize: 18, fontWeight: FontWeight.w700);

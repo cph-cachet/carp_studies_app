@@ -226,10 +226,10 @@ packages:
     dependency: "direct main"
     description:
       name: carp_audio_package
-      sha256: "49c6ce45287d4d922d52bad1c998e2239c637dc1fb3b1a335282acca106da8e8"
+      sha256: "3d6e3eccd58d4deabab5e1fc687e2d8205b92b489faeeecc33175d923895760e"
       url: "https://pub.dev"
     source: hosted
-    version: "1.7.0"
+    version: "1.7.1"
   carp_backend:
     dependency: "direct main"
     description:
@@ -282,10 +282,10 @@ packages:
     dependency: "direct main"
     description:
       name: carp_mobile_sensing
-      sha256: b7fcae43c84363f834f5f9143094720e4655c49614e438fa17d05d79c08a8a58
+      sha256: "58fdc4d7a4b9a6d2484fcc08153610971efe90992a03da874a77c8b33f164165"
       url: "https://pub.dev"
     source: hosted
-    version: "1.11.2"
+    version: "1.11.3"
   carp_movesense_package:
     dependency: "direct main"
     description:
@@ -1358,10 +1358,10 @@ packages:
     dependency: transitive
     description:
       name: path_parsing
-      sha256: e3e67b1629e6f7e8100b367d3db6ba6af4b1f0bb80f64db18ef1fbabd2fa9ccf
+      sha256: "45f7d6bba1128761de5540f39d5ca000ea8a1f22f06b76b61094a60a2997bd0e"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.1"
+    version: "1.0.2"
   path_provider:
     dependency: "direct main"
     description:
@@ -2091,11 +2091,10 @@ packages:
     dependency: transitive
     description:
       name: video_player_android
-      sha256: "641fc7221cfb3f25dd761d30cbe733046a3a4932fee09962adb80fd7d11fc663"
+      sha256: "391e092ba4abe2f93b3e625bd6b6a6ec7d7414279462c1c0ee42b5ab8d0a0898"
       url: "https://pub.dev"
     source: hosted
-    version: "2.7.15"
-
+    version: "2.7.16"
   video_player_avfoundation:
     dependency: transitive
     description:
@@ -2116,10 +2115,10 @@ packages:
     dependency: transitive
     description:
       name: video_player_web
-      sha256: "6dcdd298136523eaf7dfc31abaf0dfba9aa8a8dbc96670e87e9d42b6f2caf774"
+      sha256: "881b375a934d8ebf868c7fb1423b2bfaa393a0a265fa3f733079a86536064a10"
       url: "https://pub.dev"
     source: hosted
-    version: "2.3.2"
+    version: "2.3.3"
   vm_service:
     dependency: transitive
     description:
@@ -2180,10 +2179,10 @@ packages:
     dependency: transitive
     description:
       name: win32
-      sha256: e1d0cc62e65dc2561f5071fcbccecf58ff20c344f8f3dc7d4922df372a11df1f
+      sha256: "10169d3934549017f0ae278ccb07f828f9d6ea21573bab0fb77b0e1ef0fce454"
       url: "https://pub.dev"
     source: hosted
-    version: "5.7.1"
+    version: "5.7.2"
   win32_registry:
     dependency: transitive
     description:

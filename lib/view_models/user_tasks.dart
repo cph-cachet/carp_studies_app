@@ -11,20 +11,14 @@ class AppUserTaskFactory implements UserTaskFactory {
   ];
 
   @override
-  UserTask create(AppTaskExecutor executor) {
-    switch (executor.task.type) {
-      case SurveyUserTask.AUDIO_TYPE:
-        return AudioUserTask(executor);
-      case SurveyUserTask.VIDEO_TYPE:
-        return VideoUserTask(executor);
-      case SurveyUserTask.IMAGE_TYPE:
-        return VideoUserTask(executor);
-      case SurveyUserTask.HEALTH_ASSESSMENT_TYPE:
-        return OneTimeBackgroundSensingUserTask(executor);
-      default:
-        return BackgroundSensingUserTask(executor);
-    }
-  }
+  UserTask create(AppTaskExecutor executor) => switch (executor.task.type) {
+        SurveyUserTask.AUDIO_TYPE => AudioUserTask(executor),
+        SurveyUserTask.VIDEO_TYPE => VideoUserTask(executor),
+        SurveyUserTask.IMAGE_TYPE => VideoUserTask(executor),
+        SurveyUserTask.HEALTH_ASSESSMENT_TYPE =>
+          OneTimeBackgroundSensingUserTask(executor),
+        _ => BackgroundSensingUserTask(executor),
+      };
 }
 
 /// A user task handling audio recordings.
@@ -132,17 +126,25 @@ class VideoUserTask extends UserTask {
   void onSave() {
     debug('$runtimeType - onSave(), file: ${_file?.path}');
     if (_file != null) {
-      // create the media measurement directly here...
-      Media media = Media(
-          filename: _file!.path,
-          startRecordingTime: _startRecordingTime!,
-          endRecordingTime: _endRecordingTime,
-          mediaType: _mediaType)
-        ..filename = _file!.path.split("/").last
-        ..path = _file!.path;
+      // create the media measurement ...
+      MediaData? media = switch (_mediaType) {
+        MediaType.image => ImageMedia(
+            filename: _file!.path,
+            startRecordingTime: _startRecordingTime!,
+            endRecordingTime: _endRecordingTime)
+          ..filename = _file!.path.split("/").last
+          ..path = _file!.path,
+        MediaType.video => VideoMedia(
+            filename: _file!.path,
+            startRecordingTime: _startRecordingTime!,
+            endRecordingTime: _endRecordingTime)
+          ..filename = _file!.path.split("/").last
+          ..path = _file!.path,
+        _ => null,
+      };
 
       // ... and add it to the sensing controller
-      bloc.addMeasurement(Measurement.fromData(media));
+      if (media != null) bloc.addMeasurement(Measurement.fromData(media));
     }
     backgroundTaskExecutor.stop();
     super.onDone();

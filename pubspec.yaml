@@ -24,7 +24,7 @@ dependencies:
   carp_movesense_package: ^1.6.0
 
   carp_webservices: ^3.5.0
-  carp_backend: ^1.9.0
+  carp_backend: ^1.9.1
 
   research_package: ^1.7.2
   cognition_package: ^1.6.1

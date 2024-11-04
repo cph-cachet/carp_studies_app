@@ -370,13 +370,13 @@ class StudyAppBLoC extends ChangeNotifier {
     Sensing().controller?.dispose();
   }
 
-  /// Add a [Measurement] object to the stream of measurements.
+  /// Add [measurement] to the stream of collected measurements.
   void addMeasurement(Measurement measurement) =>
-      Sensing().controller!.executor.addMeasurement(measurement);
+      Sensing().controller?.executor.addMeasurement(measurement);
 
-  /// Add a error to the stream of measurements.
+  /// Add [error] to the stream of measurements.
   void addError(Object error, [StackTrace? stacktrace]) =>
-      Sensing().controller!.executor.addError(error, stacktrace);
+      Sensing().controller?.executor.addError(error, stacktrace);
 
   /// Leave the study deployed on this phone.
   ///

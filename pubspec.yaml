@@ -16,7 +16,7 @@ dependencies:
   carp_mobile_sensing: ^1.11.4
   carp_context_package: ^1.10.0
   carp_connectivity_package: ^1.7.0
-  carp_survey_package: ^1.8.1
+  carp_survey_package: ^1.8.2
   carp_audio_package: ^1.8.0
   carp_esense_package: ^1.6.0
   carp_polar_package: ^1.6.0

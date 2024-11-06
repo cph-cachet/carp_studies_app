@@ -54,10 +54,10 @@ platform :android do
     # end
     # File.open('../..pubspect.yaml', 'w') { |f| f.write(pubspec_content.to_yaml) }
 
-    sh "flutter build appbundle --release --no-deferred-components --no-tree-shake-icons"
+    sh "flutter build appbundle --debug --no-deferred-components --no-tree-shake-icons --dart-define='deployment-mode=dev'"
     upload_to_play_store(
       track: 'internal',
-      aab: '../build/app/outputs/bundle/release/app-release.aab',
+      aab: '../build/app/outputs/bundle/debug/app-release.aab',
     )
   end
 end

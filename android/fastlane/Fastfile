@@ -57,7 +57,7 @@ platform :android do
     sh "flutter build appbundle --release --no-deferred-components --no-tree-shake-icons --dart-define='deployment-mode=dev'"
     upload_to_play_store(
       track: 'internal',
-      aab: '../build/app/outputs/bundle/debug/app-release.aab',
+      aab: '../build/app/outputs/bundle/release/app-release.aab',
     )
   end
 end

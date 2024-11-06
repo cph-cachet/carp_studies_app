@@ -67,7 +67,7 @@ jobs:
             working-directory: android
 
           - if: github.ref != 'refs/heads/master' 
-            run: fastlane promote_internal_to_closed
+            run: fastlane internal
             env:
               PLAY_STORE_JSON_KEY: PLAY_STORE_CONFIG.json
             working-directory: android

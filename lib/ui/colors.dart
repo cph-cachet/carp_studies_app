@@ -7,7 +7,7 @@ class CACHET {
   static const Color TASK_BLUE = Color.fromRGBO(58, 130, 247, 1.0);
   static const Color TASK_COMPLETED_BLUE = Color.fromRGBO(0, 99, 152, 1.0);
   static const Color TASK_TO_EXPIRE_BACKGROUND =
-      Color.fromRGBO(255, 246, 231, 1.0);
+      Color(0x1aFFA600);
 
   static const Color RED = Color.fromRGBO(213, 11, 51, 1.0);
   static const Color WHITE = Color.fromRGBO(255, 255, 255, 1.0);

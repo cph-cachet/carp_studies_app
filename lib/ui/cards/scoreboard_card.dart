@@ -53,16 +53,35 @@ class ScoreboardPersistentHeaderDelegate
 
     double offsetForShrink = 50;
 
+    List<Widget> childrenDays = [
+      Text(model.daysInStudy.toString(),
+          style: scoreNumberStyle.copyWith(
+              fontSize: calculateScrollAwareSizing(shrinkOffset,
+                  scoreNumberStyleSmall.fontSize!, scoreNumberStyle.fontSize!),
+              color: Theme.of(context).extension<CarpColors>()!.grey900)),
+      if (shrinkOffset < offsetForShrink)
+        Text(locale.translate('cards.scoreboard.days'),
+            style: scoreTextStyle.copyWith(
+                color: Theme.of(context).extension<CarpColors>()!.grey900)),
+      if (shrinkOffset > offsetForShrink)
+        Padding(
+          padding: const EdgeInsets.only(left: 8.0),
+          child: Text(locale.translate('cards.scoreboard.days-short'),
+              style: scoreTextStyle.copyWith(
+                  color: Theme.of(context).extension<CarpColors>()!.grey900)),
+        )
+    ];
+
     List<Widget> childrenTasks = [
       Text(model.taskCompleted.toString(),
           style: scoreNumberStyle.copyWith(
               fontSize: calculateScrollAwareSizing(shrinkOffset,
                   scoreNumberStyleSmall.fontSize!, scoreNumberStyle.fontSize!),
-              color: Theme.of(context).primaryColor)),
+              color: Theme.of(context).extension<CarpColors>()!.grey900)),
       if (shrinkOffset < offsetForShrink)
         Text(locale.translate('cards.scoreboard.tasks'),
-            style:
-                scoreTextStyle.copyWith(color: Theme.of(context).primaryColor)),
+            style: scoreTextStyle.copyWith(
+                color: Theme.of(context).extension<CarpColors>()!.grey900)),
       if (shrinkOffset > offsetForShrink)
         Expanded(
           flex: 0,
@@ -70,33 +89,15 @@ class ScoreboardPersistentHeaderDelegate
             padding: const EdgeInsets.only(left: 8.0),
             child: Text(locale.translate('cards.scoreboard.tasks-short'),
                 style: scoreTextStyle.copyWith(
-                    color: Theme.of(context).primaryColor)),
+                    color: Theme.of(context).extension<CarpColors>()!.grey900)),
           ),
-        )
-    ];
-    List<Widget> childrenDays = [
-      Text(model.daysInStudy.toString(),
-          style: scoreNumberStyle.copyWith(
-              fontSize: calculateScrollAwareSizing(shrinkOffset,
-                  scoreNumberStyleSmall.fontSize!, scoreNumberStyle.fontSize!),
-              color: Theme.of(context).primaryColor)),
-      if (shrinkOffset < offsetForShrink)
-        Text(locale.translate('cards.scoreboard.days'),
-            style:
-                scoreTextStyle.copyWith(color: Theme.of(context).primaryColor)),
-      if (shrinkOffset > offsetForShrink)
-        Padding(
-          padding: const EdgeInsets.only(left: 8.0),
-          child: Text(locale.translate('cards.scoreboard.days-short'),
-              style: scoreTextStyle.copyWith(
-                  color: Theme.of(context).primaryColor)),
         )
     ];
 
     return Container(
       height: height,
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.secondary,
+        color: Theme.of(context).extension<CarpColors>()!.white,
         borderRadius: BorderRadius.circular(8), // Rounded corners
       ),
       child: StreamBuilder<UserTask>(

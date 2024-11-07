@@ -34,8 +34,8 @@ platform :android do
     )
   end
 
-  desc "Promote internal track to closed"
-  lane :promote_internal_to_closed do
+  desc "Upload to internal testing track"
+  lane :internal do
     sh "flutter clean"
     sh "flutter pub get"
     sh "flutter pub upgrade"
@@ -54,7 +54,7 @@ platform :android do
     # end
     # File.open('../..pubspect.yaml', 'w') { |f| f.write(pubspec_content.to_yaml) }
 
-    sh "flutter build appbundle --release --no-deferred-components --no-tree-shake-icons"
+    sh "flutter build appbundle --release --no-deferred-components --no-tree-shake-icons --dart-define='deployment-mode=dev'"
     upload_to_play_store(
       track: 'internal',
       aab: '../build/app/outputs/bundle/release/app-release.aab',

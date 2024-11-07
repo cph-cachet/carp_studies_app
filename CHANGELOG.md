@@ -1,8 +1,10 @@
 ## 2.2.3
+
 - Fixing login issue with going back to invitations list page
 - Updating changelog.md and pubspec.yaml
 - Bumping version code to 35
 - Fixing build error on ios - tests failing
+- Fix of bug in uploading surveys (issue [#342](https://github.com/cph-cachet/carp_studies_app/issues/342))
 
 ## 2.2.2
 

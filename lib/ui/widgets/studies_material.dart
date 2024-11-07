@@ -8,6 +8,8 @@ class StudiesMaterial extends StatelessWidget {
   final ShapeBorder shape;
   final Clip? clipBehavior;
   final bool hasBorder;
+  final Color backgroundColor;
+  final Color borderColor;
 
   const StudiesMaterial({
     super.key,
@@ -19,15 +21,16 @@ class StudiesMaterial extends StatelessWidget {
     ),
     this.clipBehavior,
     this.hasBorder = false,
+    this.backgroundColor = Colors.white,
+    this.borderColor = Colors.black,
   });
 
   @override
   Widget build(BuildContext context) {
-    // Determine the color for the line based on the title color
-    Color titleColor = Colors.red.withOpacity(0.7);
     return Container(
       padding: const EdgeInsets.only(bottom: 16.0, left: 16.0, right: 16.0),
       child: Material(
+        color: backgroundColor,
         elevation: elevation,
         shape: shape,
         clipBehavior: clipBehavior ?? Clip.hardEdge,
@@ -36,8 +39,8 @@ class StudiesMaterial extends StatelessWidget {
             border: hasBorder
                 ? Border(
                     left: BorderSide(
-                      color: titleColor, // Set the color of the vertical line
-                      width: 4.0, // Set the thickness of the vertical line
+                      color: borderColor,
+                      width: 4.0,
                     ),
                   )
                 : null,

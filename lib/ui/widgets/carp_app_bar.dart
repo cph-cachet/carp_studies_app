@@ -31,7 +31,10 @@ class CarpAppBar extends StatelessWidget {
                       ),
                       tooltip: 'Profile',
                       onPressed: () {
-                        context.push(ProfilePage.route);
+                        Navigator.push(
+                            context,
+                            SlidePageRoute(
+                                ProfilePage(ProfilePageViewModel())));
                       },
                     ),
                 ],

@@ -6,6 +6,18 @@ class CarpColors extends ThemeExtension<CarpColors> {
     required this.warningColor,
     required this.backgroundGray,
     required this.tabBarBackground,
+    required this.white,
+    required this.grey50,
+    required this.grey100,
+    required this.grey200,
+    required this.grey300,
+    required this.grey400,
+    required this.grey500,
+    required this.grey600,
+    required this.grey700,
+    required this.grey800,
+    required this.grey900,
+    required this.grey950,
   });
 
   final Color? warningColor;
@@ -14,12 +26,53 @@ class CarpColors extends ThemeExtension<CarpColors> {
 
   final Color? tabBarBackground;
 
+  final Color? white;
+
+  final Color? grey50;
+  final Color? grey100;
+  final Color? grey200;
+  final Color? grey300;
+  final Color? grey400;
+  final Color? grey500;
+  final Color? grey600;
+  final Color? grey700;
+  final Color? grey800;
+  final Color? grey900;
+  final Color? grey950;
+
   @override
-  CarpColors copyWith({Color? warningColor, Color? backgroundGray}) {
+  CarpColors copyWith(
+      {Color? warningColor,
+      Color? backgroundGray,
+      Color? tabBarBackground,
+      Color? white,
+      Color? grey50,
+      Color? grey100,
+      Color? grey200,
+      Color? grey300,
+      Color? grey400,
+      Color? grey500,
+      Color? grey600,
+      Color? grey700,
+      Color? grey800,
+      Color? grey900,
+      Color? grey950}) {
     return CarpColors(
       warningColor: warningColor ?? this.warningColor,
       backgroundGray: backgroundGray ?? this.backgroundGray,
       tabBarBackground: tabBarBackground ?? this.tabBarBackground,
+      white: white ?? this.white,
+      grey50: grey50 ?? this.grey50,
+      grey100: grey100 ?? this.grey100,
+      grey200: grey200 ?? this.grey200,
+      grey300: grey300 ?? this.grey300,
+      grey400: grey400 ?? this.grey400,
+      grey500: grey500 ?? this.grey500,
+      grey600: grey600 ?? this.grey600,
+      grey700: grey700 ?? this.grey700,
+      grey800: grey800 ?? this.grey800,
+      grey900: grey900 ?? this.grey900,
+      grey950: grey950 ?? this.grey950,
     );
   }
 
@@ -32,6 +85,18 @@ class CarpColors extends ThemeExtension<CarpColors> {
       warningColor: Color.lerp(warningColor, other.warningColor, t),
       backgroundGray: Color.lerp(backgroundGray, other.backgroundGray, t),
       tabBarBackground: Color.lerp(tabBarBackground, other.tabBarBackground, t),
+      white: Color.lerp(white, other.white, t),
+      grey50: Color.lerp(grey50, other.grey50, t),
+      grey100: Color.lerp(grey100, other.grey100, t),
+      grey200: Color.lerp(grey200, other.grey200, t),
+      grey300: Color.lerp(grey300, other.grey300, t),
+      grey400: Color.lerp(grey400, other.grey400, t),
+      grey500: Color.lerp(grey500, other.grey500, t),
+      grey600: Color.lerp(grey600, other.grey600, t),
+      grey700: Color.lerp(grey700, other.grey700, t),
+      grey800: Color.lerp(grey800, other.grey800, t),
+      grey900: Color.lerp(grey900, other.grey900, t),
+      grey950: Color.lerp(grey950, other.grey950, t),
     );
   }
 }
@@ -40,11 +105,23 @@ ThemeData carpStudyTheme = ThemeData.light().copyWith(
   extensions: <ThemeExtension<dynamic>>[
     CarpColors(
       warningColor: Colors.orange[500],
-      backgroundGray: const Color.fromARGB(255, 242, 242, 247),
+      backgroundGray: const Color(0xfff2f2f7),
       tabBarBackground: const Color.fromARGB(255, 227, 227, 228),
+      white: const Color(0xffFFFFFF),
+      grey50: const Color(0xffFCFCFF),
+      grey100: const Color(0xffF2F2F7),
+      grey200: const Color(0xffE5E5EA),
+      grey300: const Color(0xffD1D1D6),
+      grey400: const Color(0xffBABABA),
+      grey500: const Color(0xff9B9B9B),
+      grey600: const Color(0xff848484),
+      grey700: const Color(0xff3A3A3C),
+      grey800: const Color(0xff2C2C2E),
+      grey900: const Color(0xff1C1C1E),
+      grey950: const Color(0xff0E0E0E),
     )
   ],
-  primaryColor: const Color(0xFF206FA2),
+  primaryColor: const Color(0xff006398),
   colorScheme: const ColorScheme.light().copyWith(
       secondary: const Color(0xFFFAFAFA),
       primary: const Color(0xFF206FA2),
@@ -98,11 +175,23 @@ ThemeData carpStudyDarkTheme = ThemeData.dark().copyWith(
   extensions: <ThemeExtension<dynamic>>[
     CarpColors(
       warningColor: Colors.orange[700],
-      backgroundGray: const Color(0xf2f2f7),
-      tabBarBackground: const Color(0xe3e3e4),
+      backgroundGray: const Color(0xff0e0e0e),
+      tabBarBackground: const Color(0xffe3e3e4),
+      white: const Color(0xff1C1C1E),
+      grey50: const Color(0xff3A3A3C),
+      grey100: const Color(0xff0E0E0E),
+      grey200: const Color(0xff2C2C2E),
+      grey300: const Color(0xff3A3A3C),
+      grey400: const Color(0xff9B9B9B),
+      grey500: const Color(0xffBABABA),
+      grey600: const Color(0xffBABABA),
+      grey700: const Color(0xffD1D1D6),
+      grey800: const Color(0xffF2F2F7),
+      grey900: const Color(0xffF2F2F7),
+      grey950: const Color(0xff0E0E0E),
     )
   ],
-  primaryColor: const Color(0xff81C7F3),
+  primaryColor: const Color(0xff0379ff),
   colorScheme: const ColorScheme.dark().copyWith(
     secondary: const Color(0xff4C4C4C),
     primary: const Color(0xff81C7F3),
@@ -174,7 +263,7 @@ TextStyle scoreNumberStyleSmall = const TextStyle(
     color: Color.fromRGBO(32, 111, 162, 1));
 
 TextStyle scoreTextStyle = const TextStyle(
-    fontSize: 12, fontWeight: FontWeight.w700, color: Color(0xff77A8C8));
+    fontSize: 12, fontWeight: FontWeight.w700);
 
 TextStyle aboutCardTitleStyle =
     const TextStyle(fontSize: 20, fontWeight: FontWeight.w700);

@@ -13,6 +13,7 @@
     "pages.task_list.pending": "Pending",
     "pages.task_list.completed": "Completed",
     "pages.task_list.task.time_to_complete": "min to complete",
+    "pages.task_list.task.estimated_time": "Estimated time:",
     "pages.task_list.task.auto_complete": "Completes automatically",
     "pages.task_list.task.days_remaining": "day remaining",
     "pages.task_list.task.days_remaining_plural": "days remaining",

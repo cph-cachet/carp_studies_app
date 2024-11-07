@@ -9,6 +9,11 @@ class CACHET {
   static const Color TASK_TO_EXPIRE_BACKGROUND =
       Color(0x1aFFA600);
 
+  static const Color DEPLOYMENT_DEPLOYING = Color(0xff006398);
+  static const Color DEPLOYMENT_RUNNING = Color(0xff67CE67);
+  static const Color DEPLOYMENT_STOPPED = Color(0xfdf848484);
+  static const Color DEPLOYMENT_INVITED = Color(0xffDF7801);
+
   static const Color RED = Color.fromRGBO(213, 11, 51, 1.0);
   static const Color WHITE = Color.fromRGBO(255, 255, 255, 1.0);
   static const Color BLACK = Color.fromRGBO(1, 1, 1, 1.0);

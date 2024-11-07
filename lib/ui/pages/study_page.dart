@@ -13,7 +13,7 @@ class StudyPageState extends State<StudyPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: CACHET.GREY_6,
+      backgroundColor: Theme.of(context).extension<CarpColors>()!.grey50,
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -34,7 +34,8 @@ class StudyPageState extends State<StudyPage> {
                           widget.model.studyDeploymentId);
                     },
                     child: ListView.builder(
-                      itemCount: bloc.messages.length + 1,
+                      // This is +2 bc the first two cards are the study card and the study status card
+                      itemCount: bloc.messages.length + 2,
                       itemBuilder: (context, index) {
                         if (index == 0) {
                           return _studyCard(
@@ -48,6 +49,7 @@ class StudyPageState extends State<StudyPage> {
                         if (index == 1) {
                           return _studyStatusCard();
                         }
+                        // This is -2 bc the first two cards are the study card and the study status card and we don't want to show them in the list
                         return _announcementCard(
                             context, bloc.messages[index - 2]);
                       },
@@ -74,6 +76,7 @@ class StudyPageState extends State<StudyPage> {
     timeago.setLocaleMessages('es', timeago.EsMessages());
 
     return StudiesMaterial(
+      backgroundColor: Theme.of(context).extension<CarpColors>()!.grey50!,
       child: InkWell(
         onTap: () {
           if (onTap != null) {
@@ -116,7 +119,7 @@ class StudyPageState extends State<StudyPage> {
                   Expanded(
                       child: Text(locale.translate(message.subTitle!),
                           style: aboutCardContentStyle.copyWith(
-                              color: Theme.of(context).primaryColor))),
+                              color: Theme.of(context).extension<CarpColors>()!.grey700))),
                 ]),
               if (message.message != null && message.message!.isNotEmpty)
                 Row(children: [
@@ -153,7 +156,7 @@ class StudyPageState extends State<StudyPage> {
 
         return Card(
           margin: const EdgeInsets.all(16.0),
-          color: CACHET.GREY_6,
+          color: Theme.of(context).extension<CarpColors>()!.grey50,
           child: Container(
             decoration: BoxDecoration(
                 border: Border.all(
@@ -179,7 +182,7 @@ class StudyPageState extends State<StudyPage> {
                             Text(
                               deploymentStatus.toString().split('.').last,
                               style: aboutCardTitleStyle.copyWith(
-                                  color: Theme.of(context).primaryColor),
+                                  color: studyStatusColors[deploymentStatus]),
                             ),
                           ],
                         ),
@@ -188,7 +191,7 @@ class StudyPageState extends State<StudyPage> {
                             padding: const EdgeInsets.only(left: 16.0),
                             child: Text('This is random text.',
                                 style: aboutCardSubtitleStyle.copyWith(
-                                    color: Theme.of(context).primaryColor)),
+                                    color: Theme.of(context).extension<CarpColors>()!.grey900)),
                           ),
                         ),
                       ],
@@ -204,10 +207,10 @@ class StudyPageState extends State<StudyPage> {
   }
 
   static Map<StudyDeploymentStatusTypes, Color> studyStatusColors = {
-    StudyDeploymentStatusTypes.Invited: CACHET.BLUE_1,
-    StudyDeploymentStatusTypes.DeployingDevices: CACHET.DEPLOYMENT_BLUE,
-    StudyDeploymentStatusTypes.DeploymentReady: CACHET.DEPLOYMENT_GREEN,
-    StudyDeploymentStatusTypes.Stopped: CACHET.DEPLOYMENT_GREY,
+    StudyDeploymentStatusTypes.Invited: CACHET.DEPLOYMENT_INVITED,
+    StudyDeploymentStatusTypes.DeployingDevices: CACHET.DEPLOYMENT_DEPLOYING,
+    StudyDeploymentStatusTypes.DeploymentReady: CACHET.DEPLOYMENT_RUNNING,
+    StudyDeploymentStatusTypes.Stopped: CACHET.DEPLOYMENT_STOPPED,
   };
 
   Widget _announcementCard(
@@ -222,6 +225,7 @@ class StudyPageState extends State<StudyPage> {
     timeago.setLocaleMessages('es', timeago.EsMessages());
 
     return StudiesMaterial(
+      backgroundColor: Theme.of(context).extension<CarpColors>()!.grey50!,
       child: InkWell(
         onTap: () {
           if (onTap != null) {
@@ -240,9 +244,7 @@ class StudyPageState extends State<StudyPage> {
                 Center(
                   child: Container(
                     height: 150.0,
-                    color: Theme.of(context)
-                        .colorScheme
-                        .secondary,
+                    color: Theme.of(context).colorScheme.secondary,
                     child: widget.model.getMessageImage(message.image),
                   ),
                 ),
@@ -256,7 +258,7 @@ class StudyPageState extends State<StudyPage> {
                   ),
                   Spacer(),
                   Material(
-                    color: CACHET.DEPLOYMENT_BLUE,
+                    color: CACHET.DEPLOYMENT_DEPLOYING,
                     borderRadius: BorderRadius.circular(100.0),
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -289,7 +291,8 @@ class StudyPageState extends State<StudyPage> {
                     Text(
                       timeago.format(message.timestamp.toLocal()),
                       style: aboutCardTimeAgoStyle.copyWith(
-                        color: CACHET.GREY_7,
+                        color:
+                            Theme.of(context).extension<CarpColors>()!.grey600,
                       ),
                     )
                   ],

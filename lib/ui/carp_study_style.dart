@@ -266,7 +266,7 @@ TextStyle scoreTextStyle = const TextStyle(
     fontSize: 12, fontWeight: FontWeight.w700);
 
 TextStyle aboutCardTitleStyle =
-    const TextStyle(fontSize: 20, fontWeight: FontWeight.w700);
+    const TextStyle(fontSize: 20, fontWeight: FontWeight.w700).apply(fontFamily: 'MuseoSans');
 
 TextStyle aboutCardInfoStyle =
     const TextStyle(fontSize: 14, fontStyle: FontStyle.italic);

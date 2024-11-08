@@ -615,10 +615,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_blue_plus
-      sha256: "45ccee4a838f321c301b6130fbf3de28f07a2d6334a69eb5e13b6f83683080e0"
+      sha256: "04738c4cfba78c0961142b831027417888a74606d7b793beaf1baefa280e2022"
       url: "https://pub.dev"
     source: hosted
-    version: "1.33.6"
+    version: "1.34.2"
   flutter_launcher_icons:
     dependency: "direct main"
     description:
@@ -756,10 +756,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_svg
-      sha256: de82e6bf958cec7190fbc1c5298282c851228e35ae2b14e2b103e7f777818c64
+      sha256: "578bd8c508144fdaffd4f77b8ef2d8c523602275cd697cc3db284dbd762ef4ce"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.13"
+    version: "2.0.14"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -1142,10 +1142,10 @@ packages:
     dependency: transitive
     description:
       name: network_info_plus
-      sha256: "89bad7bf9614e78716f0f86c905fe2a850dbdcc00c377968d5260c49c2c6f2eb"
+      sha256: bf9e39e523e9951d741868dc33ac386b0bc24301e9b7c8a7d60dbc34879150a8
       url: "https://pub.dev"
     source: hosted
-    version: "6.1.0"
+    version: "6.1.1"
   network_info_plus_platform_interface:
     dependency: transitive
     description:
@@ -1334,10 +1334,10 @@ packages:
     dependency: transitive
     description:
       name: package_info_plus
-      sha256: df3eb3e0aed5c1107bb0fdb80a8e82e778114958b1c5ac5644fb1ac9cae8a998
+      sha256: da8d9ac8c4b1df253d1a328b7bf01ae77ef132833479ab40763334db13b91cce
       url: "https://pub.dev"
     source: hosted
-    version: "8.1.0"
+    version: "8.1.1"
   package_info_plus_platform_interface:
     dependency: transitive
     description:
@@ -1787,10 +1787,10 @@ packages:
     dependency: transitive
     description:
       name: sqflite
-      sha256: "79a297dc3cc137e758c6a4baf83342b039e5a6d2436fcdf3f96a00adaaf2ad62"
+      sha256: "2d7299468485dca85efeeadf5d38986909c5eb0cd71fd3db2c2f000e6c9454bb"
       url: "https://pub.dev"
     source: hosted
-    version: "2.4.0"
+    version: "2.4.1"
   sqflite_android:
     dependency: transitive
     description:
@@ -1811,10 +1811,10 @@ packages:
     dependency: transitive
     description:
       name: sqflite_darwin
-      sha256: "769733dddf94622d5541c73e4ddc6aa7b252d865285914b6fcd54a63c4b4f027"
+      sha256: "96a698e2bc82bd770a4d6aab00b42396a7c63d9e33513a56945cbccb594c2474"
       url: "https://pub.dev"
     source: hosted
-    version: "2.4.1-1"
+    version: "2.4.1"
   sqflite_platform_interface:
     dependency: transitive
     description:

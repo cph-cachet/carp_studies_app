@@ -23,6 +23,9 @@ class StudyPageViewModel extends ViewModel {
       bloc.deployment?.responsible?.affiliation ??
       'Copenhagen Center for Health Technology';
 
+  String get participantRole => bloc.deployment?.participantRoleName ?? '';
+  String get deviceRole => bloc.deployment?.deviceRoleName ?? '';
+
   /// The stream of messages (count)
   Stream<int> get messageStream => bloc.messageStream;
 

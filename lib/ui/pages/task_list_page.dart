@@ -89,9 +89,7 @@ class TaskListPageState extends State<TaskListPage>
                                 child: Text(
                                   locale.translate('pages.task_list.title'),
                                   style: dataCardTitleStyle.copyWith(
-                                      color: Theme.of(context)
-                                          .extension<CarpColors>()!
-                                          .grey900,
+                                      color: Theme.of(context).primaryColor,
                                       fontWeight: FontWeight.bold),
                                 ),
                               ),

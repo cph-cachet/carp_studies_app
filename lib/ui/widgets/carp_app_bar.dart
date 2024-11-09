@@ -25,7 +25,7 @@ class CarpAppBar extends StatelessWidget {
                   if (hasProfileIcon)
                     IconButton(
                       icon: Icon(
-                        Icons.account_circle_outlined,
+                        Icons.account_circle,
                         color: Theme.of(context).primaryColor,
                         size: 30,
                       ),

@@ -3,6 +3,7 @@ part of carp_study_app;
 @immutable
 class CarpColors extends ThemeExtension<CarpColors> {
   const CarpColors({
+    required this.primary,
     required this.warningColor,
     required this.backgroundGray,
     required this.tabBarBackground,
@@ -19,6 +20,8 @@ class CarpColors extends ThemeExtension<CarpColors> {
     required this.grey900,
     required this.grey950,
   });
+
+  final Color? primary;
 
   final Color? warningColor;
 
@@ -42,7 +45,8 @@ class CarpColors extends ThemeExtension<CarpColors> {
 
   @override
   CarpColors copyWith(
-      {Color? warningColor,
+      {Color? primary,
+      Color? warningColor,
       Color? backgroundGray,
       Color? tabBarBackground,
       Color? white,
@@ -58,6 +62,7 @@ class CarpColors extends ThemeExtension<CarpColors> {
       Color? grey900,
       Color? grey950}) {
     return CarpColors(
+      primary: primary ?? this.primary,
       warningColor: warningColor ?? this.warningColor,
       backgroundGray: backgroundGray ?? this.backgroundGray,
       tabBarBackground: tabBarBackground ?? this.tabBarBackground,
@@ -82,6 +87,7 @@ class CarpColors extends ThemeExtension<CarpColors> {
       return this;
     }
     return CarpColors(
+      primary: Color.lerp(primary, other.primary, t),
       warningColor: Color.lerp(warningColor, other.warningColor, t),
       backgroundGray: Color.lerp(backgroundGray, other.backgroundGray, t),
       tabBarBackground: Color.lerp(tabBarBackground, other.tabBarBackground, t),
@@ -104,6 +110,7 @@ class CarpColors extends ThemeExtension<CarpColors> {
 ThemeData carpStudyTheme = ThemeData.light().copyWith(
   extensions: <ThemeExtension<dynamic>>[
     CarpColors(
+      primary: const Color(0xff006398),
       warningColor: Colors.orange[500],
       backgroundGray: const Color(0xfff2f2f7),
       tabBarBackground: const Color.fromARGB(255, 227, 227, 228),
@@ -174,6 +181,7 @@ ThemeData carpStudyTheme = ThemeData.light().copyWith(
 ThemeData carpStudyDarkTheme = ThemeData.dark().copyWith(
   extensions: <ThemeExtension<dynamic>>[
     CarpColors(
+      primary: const Color(0xff24B2FF),
       warningColor: Colors.orange[700],
       backgroundGray: const Color(0xff0e0e0e),
       tabBarBackground: const Color(0xffe3e3e4),
@@ -249,6 +257,12 @@ TextStyle studyTitleStyle = const TextStyle(
     fontWeight: FontWeight.w600,
     color: Color.fromRGBO(32, 111, 162, 1));
 
+TextStyle studyDetailsInfoTitle =
+    const TextStyle(fontSize: 16, fontWeight: FontWeight.w700);
+
+TextStyle studyDetailsInfoMessage =
+    const TextStyle(fontSize: 12, fontWeight: FontWeight.w700);
+
 TextStyle readMoreStudyStyle =
     const TextStyle(fontSize: 12, fontWeight: FontWeight.w700);
 
@@ -265,8 +279,13 @@ TextStyle scoreNumberStyleSmall = const TextStyle(
 TextStyle scoreTextStyle =
     const TextStyle(fontSize: 12, fontWeight: FontWeight.w700);
 
+TextStyle aboutStudyCardTitleStyle =
+    const TextStyle(fontSize: 24, fontWeight: FontWeight.w700)
+        .apply(fontFamily: 'MuseoSans');
+
 TextStyle aboutCardTitleStyle =
-    const TextStyle(fontSize: 20, fontWeight: FontWeight.w700);
+    const TextStyle(fontSize: 20, fontWeight: FontWeight.w700)
+        .apply(fontFamily: 'MuseoSans');
 
 TextStyle aboutCardInfoStyle =
     const TextStyle(fontSize: 14, fontStyle: FontStyle.italic);
@@ -278,7 +297,12 @@ TextStyle profileSectionStyle = const TextStyle(
     fontSize: 12, fontWeight: FontWeight.w400, letterSpacing: 2);
 
 TextStyle aboutCardContentStyle =
-    const TextStyle(fontSize: 16, fontWeight: FontWeight.w400);
+    const TextStyle(fontSize: 16, fontWeight: FontWeight.w400)
+        .apply(fontFamily: 'MuseoSans');
+
+TextStyle aboutCardTimeAgoStyle =
+    const TextStyle(fontSize: 10, fontWeight: FontWeight.w600)
+        .apply(fontFamily: 'MuseoSans');
 
 TextStyle sectionTitleStyle =
     const TextStyle(fontSize: 18, fontWeight: FontWeight.w700);

@@ -262,8 +262,8 @@ TextStyle scoreNumberStyleSmall = const TextStyle(
     fontWeight: FontWeight.w800,
     color: Color.fromRGBO(32, 111, 162, 1));
 
-TextStyle scoreTextStyle = const TextStyle(
-    fontSize: 12, fontWeight: FontWeight.w700);
+TextStyle scoreTextStyle =
+    const TextStyle(fontSize: 12, fontWeight: FontWeight.w700);
 
 TextStyle aboutCardTitleStyle =
     const TextStyle(fontSize: 20, fontWeight: FontWeight.w700);

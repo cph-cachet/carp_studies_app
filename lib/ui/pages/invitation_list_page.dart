@@ -39,7 +39,7 @@ class InvitationListPage extends StatelessWidget {
           return CustomScrollView(
             slivers: [
               SliverAppBar(
-                backgroundColor: Theme.of(context).colorScheme.surfaceVariant,
+                backgroundColor: Theme.of(context).extension<CarpColors>()!.backgroundGray,
                 title: const CarpAppBar(),
                 centerTitle: true,
                 pinned: true,
@@ -121,7 +121,8 @@ class InvitationMaterial extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StudiesMaterial(
-      elevation: 2.0,
+      backgroundColor: Theme.of(context).extension<CarpColors>()!.white!,
+      elevation: 0.0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12.0),
       ),
@@ -138,16 +139,17 @@ class InvitationMaterial extends StatelessWidget {
               Text(
                 invitation.invitation.name,
                 maxLines: 1,
-                style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20.0,
+                style: studyTitleStyle.copyWith(
+                    color: CACHET.TASK_COMPLETED_BLUE,
                     overflow: TextOverflow.ellipsis),
               ),
               Text(
                 invitation.invitation.description ?? '',
                 maxLines: 2,
-                style: const TextStyle(
-                    fontSize: 16.0, overflow: TextOverflow.ellipsis),
+                style: studyDetailsInfoTitle.copyWith(
+                  color: Theme.of(context).extension<CarpColors>()!.grey900,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
             ],
           ),

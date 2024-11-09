@@ -281,6 +281,10 @@ TextStyle scoreNumberStyleSmall = const TextStyle(
 TextStyle scoreTextStyle =
     const TextStyle(fontSize: 12, fontWeight: FontWeight.w700);
 
+TextStyle aboutStudyCardTitleStyle =
+    const TextStyle(fontSize: 24, fontWeight: FontWeight.w700)
+        .apply(fontFamily: 'MuseoSans');
+
 TextStyle aboutCardTitleStyle =
     const TextStyle(fontSize: 20, fontWeight: FontWeight.w700)
         .apply(fontFamily: 'MuseoSans');

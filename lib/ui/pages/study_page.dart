@@ -106,32 +106,32 @@ class StudyPageState extends State<StudyPage> {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: Text(locale.translate(message.title!),
-                    style: aboutCardTitleStyle.copyWith(
-                        color: Theme.of(context).primaryColor)),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: Text(
-                    '${locale.translate(message.type.toString().split('.').last.toLowerCase())} - ${timeago.format(message.timestamp.toLocal())}',
-                    style: aboutCardSubtitleStyle.copyWith(
-                        color: Theme.of(context).primaryColor)),
+                    style: aboutStudyCardTitleStyle.copyWith(
+                        color: Theme.of(context)
+                            .extension<CarpColors>()!
+                            .primary)),
               ),
               if (message.subTitle != null && message.subTitle!.isNotEmpty)
                 Row(children: [
                   Expanded(
-                      child: Text(locale.translate(message.subTitle!),
-                          style: aboutCardContentStyle.copyWith(
-                              color: Theme.of(context)
-                                  .extension<CarpColors>()!
-                                  .grey700))),
+                    child: Text(
+                      locale.translate(message.subTitle!),
+                      style: aboutCardContentStyle.copyWith(
+                        color:
+                            Theme.of(context).extension<CarpColors>()!.grey700,
+                      ),
+                    ),
+                  ),
                 ]),
               if (message.message != null && message.message!.isNotEmpty)
                 Row(children: [
                   Expanded(
                       child: Text(
                     "${locale.translate(message.message!).substring(0, (message.message!.length > 150) ? 150 : null)}...",
-                    style: aboutCardContentStyle,
-                    textAlign: TextAlign.justify,
+                    style: aboutCardContentStyle.copyWith(
+                        color:
+                            Theme.of(context).extension<CarpColors>()!.grey900),
+                    textAlign: TextAlign.start,
                   )),
                 ]),
             ],
@@ -178,15 +178,23 @@ class StudyPageState extends State<StudyPage> {
                       children: [
                         Column(
                           children: [
-                            CircleAvatar(
-                              radius: 20,
-                              backgroundColor:
-                                  studyStatusColors[deploymentStatus],
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 6.0, vertical: 4),
+                              child: CircleAvatar(
+                                radius: 18,
+                                backgroundColor:
+                                    studyStatusColors[deploymentStatus],
+                              ),
                             ),
-                            Text(
-                              deploymentStatus.toString().split('.').last,
-                              style: aboutCardTitleStyle.copyWith(
-                                  color: studyStatusColors[deploymentStatus]),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 6.0),
+                              child: Text(
+                                deploymentStatus.toString().split('.').last,
+                                style: aboutCardSubtitleStyle.copyWith(
+                                    color: studyStatusColors[deploymentStatus]),
+                              ),
                             ),
                           ],
                         ),

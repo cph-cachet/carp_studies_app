@@ -38,9 +38,12 @@ class MessageDetailsPage extends StatelessWidget {
               Row(
                 children: [
                   IconButton(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 26, vertical: 16),
-                    icon: const Icon(Icons.arrow_back_ios),
+                    padding: const EdgeInsets.only(
+                        left: 26, right: 10, top: 16, bottom: 16),
+                    icon: Icon(
+                      Icons.arrow_back_ios,
+                      color: Theme.of(context).extension<CarpColors>()!.grey600,
+                    ),
                     onPressed: () {
                       if (context.canPop()) {
                         context.pop();
@@ -49,6 +52,21 @@ class MessageDetailsPage extends StatelessWidget {
                       }
                     },
                   ),
+                  Material(
+                    color: CACHET.DEPLOYMENT_DEPLOYING,
+                    borderRadius: BorderRadius.circular(100.0),
+                    child: Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Text(
+                          locale.translate(message.type
+                              .toString()
+                              .split('.')
+                              .last
+                              .toLowerCase()),
+                          style: aboutCardSubtitleStyle.copyWith(
+                              color: Colors.white)),
+                    ),
+                  ),
                 ],
               ),
               Flexible(
@@ -56,32 +74,10 @@ class MessageDetailsPage extends StatelessWidget {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
                   children: [
-                    Row(
-                      children: [
-                        Material(
-                          color: CACHET.DEPLOYMENT_DEPLOYING,
-                          borderRadius: BorderRadius.circular(100.0),
-                          child: Padding(
-                            padding: const EdgeInsets.all(12.0),
-                            child: Text(
-                                locale.translate(message.type
-                                    .toString()
-                                    .split('.')
-                                    .last
-                                    .toLowerCase()),
-                                style: aboutCardSubtitleStyle.copyWith(
-                                    color: Colors.white)),
-                          ),
-                        ),
-                        Spacer(),
-                      ],
-                    ),
                     Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 10.0, vertical: 6.0),
-                      child: Text(
-                          '${locale.translate(message.type.toString().split('.').last.toLowerCase())} - ${timeago.format(DateTime.now().copyWithAdditional(years: -DateTime.now().year + message.timestamp.year, months: -DateTime.now().month + message.timestamp.month, days: -DateTime.now().day + message.timestamp.day, hours: -DateTime.now().hour + message.timestamp.hour, minutes: -DateTime.now().minute + message.timestamp.minute), locale: Localizations.localeOf(context).languageCode)}',
-                          style: aboutCardSubtitleStyle.copyWith(
+                      padding: const EdgeInsets.symmetric(vertical: 10.0),
+                      child: Text(locale.translate(message.title!),
+                          style: aboutCardTitleStyle.copyWith(
                               color: Theme.of(context)
                                   .extension<CarpColors>()!
                                   .grey900)),
@@ -134,33 +130,6 @@ class MessageDetailsPage extends StatelessWidget {
                   ],
                 ),
               ),
-              if (message.url != null && message.url!.isNotEmpty)
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 30),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: InkWell(
-                      onTap: () async {
-                        try {
-                          await launchUrl(Uri.parse(message.url!));
-                        } catch (error) {
-                          warning(
-                              "Could not launch message URL - '${message.url!}'");
-                        }
-                      },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.public_outlined,
-                              color: Theme.of(context).primaryColor),
-                          Text(locale.translate('pages.about.study.website'),
-                              style: aboutCardSubtitleStyle.copyWith(
-                                  color: Theme.of(context).primaryColor)),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
             ],
           ),
         ),

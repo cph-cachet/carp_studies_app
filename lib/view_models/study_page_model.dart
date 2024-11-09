@@ -7,8 +7,13 @@ class StudyPageViewModel extends ViewModel {
   String get description =>
       bloc.deployment?.studyDescription?.description ?? '';
   String get purpose => bloc.deployment?.studyDescription?.purpose ?? '';
-  Image get image => Image.asset('assets/images/study.png');
+  Image get image => Image.asset('assets/images/exercise.png');
   String? get userID => bloc.deployment?.participantId;
+  String get studyDeploymentId => bloc.deployment?.studyDeploymentId ?? '';
+  String get responsibleName =>
+      bloc.deployment?.studyDescription?.responsible?.name ?? '';
+  String get responsibleEmail =>
+      bloc.deployment?.studyDescription?.responsible?.email ?? '';
   String get studyDescriptionUrl =>
       bloc.deployment?.studyDescription?.studyDescriptionUrl ?? '';
   String get privacyPolicyUrl =>
@@ -21,6 +26,9 @@ class StudyPageViewModel extends ViewModel {
   String get piAffiliation =>
       bloc.deployment?.responsible?.affiliation ??
       'Copenhagen Center for Health Technology';
+
+  String get participantRole => bloc.deployment?.participantRoleName ?? '';
+  String get deviceRole => bloc.deployment?.deviceRoleName ?? '';
 
   /// The stream of messages (count)
   Stream<int> get messageStream => bloc.messageStream;

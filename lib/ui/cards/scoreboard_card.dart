@@ -13,7 +13,7 @@ class ScoreboardCardState extends State<ScoreboardCard> {
     RPLocalizations locale = RPLocalizations.of(context)!;
 
     return SliverPersistentHeader(
-      pinned: true,
+      pinned: false,
       delegate: ScoreboardPersistentHeaderDelegate(
         model: widget.model,
         locale: locale,
@@ -26,7 +26,7 @@ class ScoreboardCardState extends State<ScoreboardCard> {
 
 /// Make a [SliverPersistentHeaderDelegate] to use in a [SliverPersistentHeader] widget, that can be used in a [CustomScrollView].
 /// This is used in the [StudyPage] to make the header of the page.
-/// The delegate should retract from 110px to 60px when scrolling down.
+/// The delegate should retract from 110px to 40px when scrolling down.
 /// The animation should be simple and linear. A stretched header does not do anything.
 class ScoreboardPersistentHeaderDelegate
     extends SliverPersistentHeaderDelegate {
@@ -53,16 +53,35 @@ class ScoreboardPersistentHeaderDelegate
 
     double offsetForShrink = 50;
 
+    List<Widget> childrenDays = [
+      Text(model.daysInStudy.toString(),
+          style: scoreNumberStyle.copyWith(
+              fontSize: calculateScrollAwareSizing(shrinkOffset,
+                  scoreNumberStyleSmall.fontSize!, scoreNumberStyle.fontSize!),
+              color: Theme.of(context).extension<CarpColors>()!.grey900)),
+      if (shrinkOffset < offsetForShrink)
+        Text(locale.translate('cards.scoreboard.days'),
+            style: scoreTextStyle.copyWith(
+                color: Theme.of(context).extension<CarpColors>()!.grey900)),
+      if (shrinkOffset > offsetForShrink)
+        Padding(
+          padding: const EdgeInsets.only(left: 8.0),
+          child: Text(locale.translate('cards.scoreboard.days-short'),
+              style: scoreTextStyle.copyWith(
+                  color: Theme.of(context).extension<CarpColors>()!.grey900)),
+        )
+    ];
+
     List<Widget> childrenTasks = [
       Text(model.taskCompleted.toString(),
           style: scoreNumberStyle.copyWith(
               fontSize: calculateScrollAwareSizing(shrinkOffset,
                   scoreNumberStyleSmall.fontSize!, scoreNumberStyle.fontSize!),
-              color: Theme.of(context).primaryColor)),
+              color: Theme.of(context).extension<CarpColors>()!.grey900)),
       if (shrinkOffset < offsetForShrink)
         Text(locale.translate('cards.scoreboard.tasks'),
-            style:
-                scoreTextStyle.copyWith(color: Theme.of(context).primaryColor)),
+            style: scoreTextStyle.copyWith(
+                color: Theme.of(context).extension<CarpColors>()!.grey900)),
       if (shrinkOffset > offsetForShrink)
         Expanded(
           flex: 0,
@@ -70,32 +89,17 @@ class ScoreboardPersistentHeaderDelegate
             padding: const EdgeInsets.only(left: 8.0),
             child: Text(locale.translate('cards.scoreboard.tasks-short'),
                 style: scoreTextStyle.copyWith(
-                    color: Theme.of(context).primaryColor)),
+                    color: Theme.of(context).extension<CarpColors>()!.grey900)),
           ),
-        )
-    ];
-    List<Widget> childrenDays = [
-      Text(model.daysInStudy.toString(),
-          style: scoreNumberStyle.copyWith(
-              fontSize: calculateScrollAwareSizing(shrinkOffset,
-                  scoreNumberStyleSmall.fontSize!, scoreNumberStyle.fontSize!),
-              color: Theme.of(context).primaryColor)),
-      if (shrinkOffset < offsetForShrink)
-        Text(locale.translate('cards.scoreboard.days'),
-            style:
-                scoreTextStyle.copyWith(color: Theme.of(context).primaryColor)),
-      if (shrinkOffset > offsetForShrink)
-        Padding(
-          padding: const EdgeInsets.only(left: 8.0),
-          child: Text(locale.translate('cards.scoreboard.days-short'),
-              style: scoreTextStyle.copyWith(
-                  color: Theme.of(context).primaryColor)),
         )
     ];
 
     return Container(
-      color: Theme.of(context).colorScheme.secondary,
       height: height,
+      decoration: BoxDecoration(
+        color: Theme.of(context).extension<CarpColors>()!.white,
+        borderRadius: BorderRadius.circular(8), // Rounded corners
+      ),
       child: StreamBuilder<UserTask>(
         stream: model.userTaskEvents,
         builder: (context, snapshot) {

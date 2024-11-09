@@ -68,7 +68,8 @@ class TaskListPageState extends State<TaskListPage>
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 8.0, horizontal: 18),
                 child: const CarpAppBar(hasProfileIcon: true),
               ),
               Expanded(
@@ -83,7 +84,8 @@ class TaskListPageState extends State<TaskListPage>
                         slivers: [
                           SliverToBoxAdapter(
                             child: Padding(
-                              padding: const EdgeInsets.all(16),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 24, vertical: 16),
                               child: Align(
                                 alignment: Alignment.centerLeft,
                                 child: Text(

@@ -22,7 +22,7 @@ class StudyPageState extends State<StudyPage> {
           children: [
             Padding(
               padding:
-                  const EdgeInsets.symmetric(vertical: 8.0, horizontal: 18),
+                  const EdgeInsets.symmetric(vertical: 8.0, horizontal: 10),
               child: const CarpAppBar(hasProfileIcon: true),
             ),
             Flexible(

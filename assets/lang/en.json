@@ -73,7 +73,7 @@
     "widgets.study_card.title": "The title of the study is",
     "widgets.study_card.purpose": "The purpose of this study is",
     "widgets.study_card.responsibles": "The Principle Investigator (PI) is",
-    "title": "Profile",
+    "pages.profile.title": "Profile",
     "pages.profile.username": "Username",
     "pages.profile.account_id": "Account Id",
     "pages.profile.full_name": "Full Name",

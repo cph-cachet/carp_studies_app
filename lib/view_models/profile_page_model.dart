@@ -7,15 +7,21 @@ class ProfilePageViewModel extends ViewModel {
   String get lastName => bloc.user?.lastName ?? '';
   String get fullName => '$firstName $lastName';
   String get email => bloc.user?.email ?? '';
+
   String get studyId => bloc.deployment?.studyId ?? '';
   String get studyDeploymentId => bloc.deployment?.studyDeploymentId ?? '';
   String get studyDeploymentTitle =>
       bloc.deployment?.studyDescription?.title ?? '';
-  String get participantId => 'PARTICIPANT ID. THIS IS MISSING';
-  String get participantRole => 'PARTICIPANT ROLE. THIS IS MISSING';
-  String get deviceRole => 'DEVICE ROLE. THIS IS MISSING';
+  String get participantId => bloc.deployment?.participantId ?? '';
+  String get participantRole => bloc.deployment?.participantRoleName ?? '';
+  String get deviceRole => bloc.deployment?.deviceRoleName ?? '';
+
   String get responsibleEmail =>
-      bloc.deployment?.responsible?.email ?? 'cachet@dtu.dk';
+      bloc.deployment?.studyDescription?.responsible?.email ?? '';
+  String get privacyPolicyUrl =>
+      bloc.deployment?.studyDescription?.privacyPolicyUrl ?? '';
+  String get studyDescriptionUrl =>
+      bloc.deployment?.studyDescription?.studyDescriptionUrl ?? '';
 
   ProfilePageViewModel();
 }

@@ -188,7 +188,7 @@ class ProfilePageState extends State<ProfilePage> {
           children: ListTile.divideTiles(
             context: context,
             tiles: children,
-            color: CACHET.DIVIDER,
+            color: Theme.of(context).extension<CarpColors>()!.grey300,
           ).toList(),
         ),
       ),
@@ -203,7 +203,7 @@ class ProfilePageState extends State<ProfilePage> {
         subtitle,
         style: profileTitleStyle,
         maxLines: 1,
-        textScaler: TextScaler.linear(1),
+        textScaler: TextScaler.linear(0.9),
       ),
     );
   }
@@ -218,8 +218,8 @@ class ProfilePageState extends State<ProfilePage> {
     return ListTile(
       leading: leading,
       title: Text(title,
-          style:
-              profileActionStyle.copyWith(color: CACHET.PROFILE_SECTION_TEXT)),
+          style: profileActionStyle.copyWith(
+              color: Theme.of(context).extension<CarpColors>()!.grey900)),
       trailing: trailing,
       onTap: onTap,
       contentPadding: EdgeInsets.symmetric(vertical: 4, horizontal: 16),

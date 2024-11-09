@@ -104,34 +104,38 @@ class Sensing {
 
     switch (bloc.deploymentMode) {
       case DeploymentMode.local:
+        // We can run the app in local mode to debug a local protocol stored in
+        // assets/carp/resources/protocol.json
+        //
+        // However, when running locally we need to first deploy the protocol
+        // in the local SmartphoneDeploymentService
         // Use the local, phone-based deployment service.
         deploymentService = SmartphoneDeploymentService();
 
-        // Get the protocol from the local study protocol manager.
-        // Note that the study id is not used since it always returns the same protocol.
-        var protocol = await LocalResourceManager().getStudyProtocol('');
+        // // Get the protocol from the local study protocol manager.
+        // // Note that the study id is not used since it always returns the same protocol.
+        // var protocol = await LocalResourceManager().getStudyProtocol('');
 
-        // Deploy this protocol using the on-phone deployment service.
-        // Reuse the study deployment id, if this is stored on the phone.
-        final status =
-            await SmartphoneDeploymentService().createStudyDeployment(
-          protocol!,
-          [],
-          bloc.study?.studyDeploymentId,
-        );
+        // // Deploy this protocol using the on-phone deployment service.
+        // // Reuse the study deployment id, if this is stored on the phone.
+        // final status =
+        //     await SmartphoneDeploymentService().createStudyDeployment(
+        //   protocol!,
+        //   [],
+        //   bloc.study?.studyDeploymentId,
+        // );
 
-        // Save the deployment info on the phone for later use.
-        var participant = Participant(
-          studyDeploymentId: status.studyDeploymentId,
-          deviceRoleName: status.primaryDeviceStatus?.device.roleName,
-        );
-        LocalSettings().participant = participant;
+        // // Save the participant and study on the phone for use across app restart.
+        // var participant = Participant(
+        //   studyDeploymentId: status.studyDeploymentId,
+        //   deviceRoleName: status.primaryDeviceStatus?.device.roleName,
+        // );
+        // LocalSettings().participant = participant;
 
-        // Save the study on the phone for later use.
-        bloc.study = SmartphoneStudy(
-          studyDeploymentId: status.studyDeploymentId,
-          deviceRoleName: status.primaryDeviceStatus!.device.roleName,
-        );
+        // bloc.study = SmartphoneStudy(
+        //   studyDeploymentId: status.studyDeploymentId,
+        //   deviceRoleName: status.primaryDeviceStatus!.device.roleName,
+        // );
 
         break;
       case DeploymentMode.production:
@@ -192,7 +196,7 @@ class Sensing {
     controller?.measurements
         .listen((measurement) => debugPrint(toJsonString(measurement)));
 
-    info('$runtimeType study added: $studyDeploymentId');
+    info('$runtimeType - Study added, deployment id: $studyDeploymentId');
   }
 
   Future<void> removeStudy() async {

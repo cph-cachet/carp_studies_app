@@ -102,12 +102,13 @@ class HomePageState extends State<HomePage> {
         child: widget.child,
       ),
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Theme.of(context).extension<CarpColors>()!.white,
         type: BottomNavigationBarType.fixed,
         selectedItemColor: Theme.of(context).extension<CarpColors>()!.primary,
         //unselectedItemColor: Theme.of(context).primaryColor.withOpacity(0.8),
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-              icon: const Icon(Icons.announcement_outlined),
+              icon: const Icon(Icons.announcement),
               label: locale.translate('app_home.nav_bar_item.about'),
               activeIcon: const Icon(Icons.announcement)),
           BottomNavigationBarItem(
@@ -116,11 +117,11 @@ class HomePageState extends State<HomePage> {
             activeIcon: const Icon(Icons.playlist_add_check),
           ),
           BottomNavigationBarItem(
-              icon: const Icon(Icons.leaderboard_outlined),
+              icon: const Icon(Icons.leaderboard),
               label: locale.translate('app_home.nav_bar_item.data'),
               activeIcon: const Icon(Icons.leaderboard)),
           BottomNavigationBarItem(
-              icon: const Icon(Icons.devices_other_outlined),
+              icon: const Icon(Icons.devices_other),
               label: locale.translate('app_home.nav_bar_item.devices'),
               activeIcon: const Icon(Icons.devices_other)),
         ],

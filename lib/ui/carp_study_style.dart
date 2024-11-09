@@ -293,9 +293,6 @@ TextStyle aboutCardInfoStyle =
 TextStyle aboutCardSubtitleStyle =
     const TextStyle(fontSize: 16, fontWeight: FontWeight.w600);
 
-TextStyle profileSectionStyle = const TextStyle(
-    fontSize: 12, fontWeight: FontWeight.w400, letterSpacing: 2);
-
 TextStyle aboutCardContentStyle =
     const TextStyle(fontSize: 16, fontWeight: FontWeight.w400)
         .apply(fontFamily: 'MuseoSans');
@@ -331,10 +328,19 @@ TextStyle audioDescriptionStyle =
 TextStyle audioInstructionStyle =
     const TextStyle(fontSize: 16, fontWeight: FontWeight.w400);
 
-TextStyle profileTitleStyle =
-    const TextStyle(fontSize: 20, fontWeight: FontWeight.w400);
-TextStyle profileActionStyle =
-    const TextStyle(fontSize: 20, fontWeight: FontWeight.w400);
+TextStyle profileSectionStyle = TextStyle(
+    fontSize: 12,
+    fontWeight: FontWeight.w600,
+    fontStyle: GoogleFonts.museoModernoTextTheme().bodyMedium!.fontStyle);
+
+TextStyle profileTitleStyle = TextStyle(
+    fontSize: 14,
+    fontWeight: FontWeight.w600,
+    fontStyle: GoogleFonts.museoModernoTextTheme().bodyMedium!.fontStyle);
+TextStyle profileActionStyle = TextStyle(
+    fontSize: 16,
+    fontWeight: FontWeight.w600,
+    fontStyle: GoogleFonts.museoModernoTextTheme().bodyMedium!.fontStyle);
 
 TextStyle timerStyle =
     const TextStyle(fontSize: 36, fontWeight: FontWeight.w600);

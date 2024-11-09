@@ -6,8 +6,7 @@ class CACHET {
   static const Color BLUE = Color.fromRGBO(97, 195, 217, 1.0);
   static const Color TASK_BLUE = Color.fromRGBO(58, 130, 247, 1.0);
   static const Color TASK_COMPLETED_BLUE = Color.fromRGBO(0, 99, 152, 1.0);
-  static const Color TASK_TO_EXPIRE_BACKGROUND =
-      Color(0x1aFFA600);
+  static const Color TASK_TO_EXPIRE_BACKGROUND = Color(0x1aFFA600);
 
   static const Color DEPLOYMENT_DEPLOYING = Color(0xff006398);
   static const Color DEPLOYMENT_RUNNING = Color(0xff67CE67);

@@ -179,8 +179,8 @@ class StudyPageState extends State<StudyPage> {
                         Column(
                           children: [
                             Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 6.0, vertical: 4),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 6.0, vertical: 4),
                               child: CircleAvatar(
                                 radius: 18,
                                 backgroundColor:

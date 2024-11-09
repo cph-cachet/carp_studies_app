@@ -257,13 +257,11 @@ TextStyle studyTitleStyle = const TextStyle(
     fontWeight: FontWeight.w600,
     color: Color.fromRGBO(32, 111, 162, 1));
 
-TextStyle studyDetailsInfoTitle = const TextStyle(
-    fontSize: 16,
-    fontWeight: FontWeight.w700);
+TextStyle studyDetailsInfoTitle =
+    const TextStyle(fontSize: 16, fontWeight: FontWeight.w700);
 
-TextStyle studyDetailsInfoMessage = const TextStyle(
-    fontSize: 12,
-    fontWeight: FontWeight.w700);
+TextStyle studyDetailsInfoMessage =
+    const TextStyle(fontSize: 12, fontWeight: FontWeight.w700);
 
 TextStyle readMoreStudyStyle =
     const TextStyle(fontSize: 12, fontWeight: FontWeight.w700);

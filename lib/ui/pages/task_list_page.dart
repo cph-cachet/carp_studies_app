@@ -89,7 +89,9 @@ class TaskListPageState extends State<TaskListPage>
                                 child: Text(
                                   locale.translate('pages.task_list.title'),
                                   style: dataCardTitleStyle.copyWith(
-                                      color: Theme.of(context).primaryColor,
+                                      color: Theme.of(context)
+                                          .extension<CarpColors>()!
+                                          .grey900,
                                       fontWeight: FontWeight.bold),
                                 ),
                               ),
@@ -111,15 +113,20 @@ class TaskListPageState extends State<TaskListPage>
                                   controller: _tabController,
                                   labelPadding: const EdgeInsets.only(
                                       top: 4, bottom: 4, left: 4, right: 4),
-                                  labelColor: Theme.of(context).extension<CarpColors>()!.grey900,
-                                  unselectedLabelColor: Theme.of(context).extension<CarpColors>()!.grey900,
+                                  labelColor: Theme.of(context)
+                                      .extension<CarpColors>()!
+                                      .grey900,
+                                  unselectedLabelColor: Theme.of(context)
+                                      .extension<CarpColors>()!
+                                      .grey900,
                                   dividerColor: Colors.transparent,
                                   indicator: ShapeDecoration(
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(8),
                                     ),
-                                    color:
-                                        Theme.of(context).extension<CarpColors>()!.white,
+                                    color: Theme.of(context)
+                                        .extension<CarpColors>()!
+                                        .white,
                                   ),
                                   tabs: [
                                     Container(
@@ -303,7 +310,8 @@ class TaskListPageState extends State<TaskListPage>
         userTask.state == UserTaskState.done) {
       return Icon(originalIcon.icon, color: CACHET.TASK_COMPLETED_BLUE);
     } else {
-      return Icon(originalIcon.icon, color: Theme.of(context).extension<CarpColors>()!.grey600);
+      return Icon(originalIcon.icon,
+          color: Theme.of(context).extension<CarpColors>()!.grey600);
     }
   }
 

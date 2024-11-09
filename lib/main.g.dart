@@ -7,13 +7,13 @@ part of 'main.dart';
 // **************************************************************************
 
 Participant _$ParticipantFromJson(Map<String, dynamic> json) => Participant(
-      studyId: json['study_id'] as String?,
-      studyDeploymentId: json['study_deployment_id'] as String?,
-      deviceRoleName: json['device_role_name'] as String?,
-      participantId: json['participant_id'] as String?,
-      participantRoleName: json['participant_role_name'] as String?,
+      studyId: json['studyId'] as String?,
+      studyDeploymentId: json['studyDeploymentId'] as String?,
+      deviceRoleName: json['deviceRoleName'] as String?,
+      participantId: json['participantId'] as String?,
+      participantRoleName: json['participantRoleName'] as String?,
       hasInformedConsentBeenAccepted:
-          json['has_informed_consent_been_accepted'] as bool? ?? false,
+          json['hasInformedConsentBeenAccepted'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$ParticipantToJson(Participant instance) {
@@ -25,12 +25,12 @@ Map<String, dynamic> _$ParticipantToJson(Participant instance) {
     }
   }
 
-  writeNotNull('study_id', instance.studyId);
-  writeNotNull('study_deployment_id', instance.studyDeploymentId);
-  writeNotNull('device_role_name', instance.deviceRoleName);
-  writeNotNull('participant_id', instance.participantId);
-  writeNotNull('participant_role_name', instance.participantRoleName);
-  val['has_informed_consent_been_accepted'] =
+  writeNotNull('studyId', instance.studyId);
+  writeNotNull('studyDeploymentId', instance.studyDeploymentId);
+  writeNotNull('deviceRoleName', instance.deviceRoleName);
+  writeNotNull('participantId', instance.participantId);
+  writeNotNull('participantRoleName', instance.participantRoleName);
+  val['hasInformedConsentBeenAccepted'] =
       instance.hasInformedConsentBeenAccepted;
   return val;
 }
@@ -63,14 +63,14 @@ const _$ActivityTypeEnumMap = {
 
 WeeklyMobility _$WeeklyMobilityFromJson(Map<String, dynamic> json) =>
     WeeklyMobility()
-      ..weekMobility = (json['week_mobility'] as Map<String, dynamic>).map(
+      ..weekMobility = (json['weekMobility'] as Map<String, dynamic>).map(
         (k, e) => MapEntry(
             int.parse(k), DailyMobility.fromJson(e as Map<String, dynamic>)),
       );
 
 Map<String, dynamic> _$WeeklyMobilityToJson(WeeklyMobility instance) =>
     <String, dynamic>{
-      'week_mobility':
+      'weekMobility':
           instance.weekMobility.map((k, e) => MapEntry(k.toString(), e)),
     };
 
@@ -78,7 +78,7 @@ DailyMobility _$DailyMobilityFromJson(Map<String, dynamic> json) =>
     DailyMobility(
       (json['weekday'] as num).toInt(),
       (json['places'] as num).toInt(),
-      (json['home_stay'] as num).toInt(),
+      (json['homeStay'] as num).toInt(),
       (json['distance'] as num).toDouble(),
     );
 
@@ -86,37 +86,36 @@ Map<String, dynamic> _$DailyMobilityToJson(DailyMobility instance) =>
     <String, dynamic>{
       'weekday': instance.weekday,
       'places': instance.places,
-      'home_stay': instance.homeStay,
+      'homeStay': instance.homeStay,
       'distance': instance.distance,
     };
 
 WeeklySteps _$WeeklyStepsFromJson(Map<String, dynamic> json) => WeeklySteps()
-  ..weeklySteps = (json['weekly_steps'] as Map<String, dynamic>).map(
+  ..weeklySteps = (json['weeklySteps'] as Map<String, dynamic>).map(
     (k, e) => MapEntry(int.parse(k), (e as num).toInt()),
   );
 
 Map<String, dynamic> _$WeeklyStepsToJson(WeeklySteps instance) =>
     <String, dynamic>{
-      'weekly_steps':
+      'weeklySteps':
           instance.weeklySteps.map((k, e) => MapEntry(k.toString(), e)),
     };
 
 HourlyHeartRate _$HourlyHeartRateFromJson(Map<String, dynamic> json) =>
     HourlyHeartRate()
-      ..hourlyHeartRate =
-          (json['hourly_heart_rate'] as Map<String, dynamic>).map(
+      ..hourlyHeartRate = (json['hourlyHeartRate'] as Map<String, dynamic>).map(
         (k, e) => MapEntry(int.parse(k),
             HeartRateMinMaxPrHour.fromJson(e as Map<String, dynamic>)),
       )
-      ..lastUpdated = DateTime.parse(json['last_updated'] as String)
-      ..maxHeartRate = (json['max_heart_rate'] as num?)?.toDouble()
-      ..minHeartRate = (json['min_heart_rate'] as num?)?.toDouble();
+      ..lastUpdated = DateTime.parse(json['lastUpdated'] as String)
+      ..maxHeartRate = (json['maxHeartRate'] as num?)?.toDouble()
+      ..minHeartRate = (json['minHeartRate'] as num?)?.toDouble();
 
 Map<String, dynamic> _$HourlyHeartRateToJson(HourlyHeartRate instance) {
   final val = <String, dynamic>{
-    'hourly_heart_rate':
+    'hourlyHeartRate':
         instance.hourlyHeartRate.map((k, e) => MapEntry(k.toString(), e)),
-    'last_updated': instance.lastUpdated.toIso8601String(),
+    'lastUpdated': instance.lastUpdated.toIso8601String(),
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -125,8 +124,8 @@ Map<String, dynamic> _$HourlyHeartRateToJson(HourlyHeartRate instance) {
     }
   }
 
-  writeNotNull('max_heart_rate', instance.maxHeartRate);
-  writeNotNull('min_heart_rate', instance.minHeartRate);
+  writeNotNull('maxHeartRate', instance.maxHeartRate);
+  writeNotNull('minHeartRate', instance.minHeartRate);
   return val;
 }
 

@@ -43,7 +43,7 @@ class ActivityCardViewModel extends SerializableViewModel<WeeklyActivities> {
 }
 
 /// Weekly activities in minutes organized by type.
-@JsonSerializable(fieldRename: FieldRename.snake, includeIfNull: false)
+@JsonSerializable(includeIfNull: false)
 class WeeklyActivities extends DataModel {
   /// A map of activities organized first by type and then by day of week.
   ///

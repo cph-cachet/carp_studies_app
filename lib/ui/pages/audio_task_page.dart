@@ -28,8 +28,10 @@ class AudioTaskPageState extends State<AudioTaskPage> {
       body: SafeArea(
         child: PopScope(
           canPop: true,
-          onPopInvoked: (didPop) async =>
-              _showCancelConfirmationDialog() as FutureOr<bool>,
+          // onPopInvokedWithResult: (didPop, result) =>
+          //     _showCancelConfirmationDialog(),
+          // onPopInvoked: (didPop) async =>
+          //     _showCancelConfirmationDialog() as FutureOr<bool>,
           child: Scaffold(
             body: Container(
               padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -311,7 +313,7 @@ class AudioTaskPageState extends State<AudioTaskPage> {
                         radius: 30,
                         backgroundColor: CACHET.GREEN_1,
                         child: IconButton(
-                          onPressed: () => Navigator.pop(context),
+                          onPressed: () => Navigator.of(context).pop(),
                           padding: const EdgeInsets.all(0),
                           icon: const Icon(Icons.check_circle_outline,
                               color: Colors.white, size: 30),

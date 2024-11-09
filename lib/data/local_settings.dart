@@ -1,24 +1,25 @@
 part of carp_study_app;
 
-/// A local settings manager. Works as a singleton - use `LocalSettings()`
-/// for accessing settings.
+/// A local settings manager.
+///
+/// Works as a singleton - use `LocalSettings()` for accessing settings.
 class LocalSettings {
   // Keys for storing in shared preferences
-  static const String studyIdKey = 'study_id';
-  static const String studyDeploymentIdKey = 'study_deployment_id';
-  static const String deviceRoleNameKey = 'role_name';
   static const String userKey = 'user';
+  static const String participantKey = 'participant';
+  static const String studyKey = 'study';
   static const String informedConsentAcceptedKey = 'informed_consent_accepted';
 
   static final LocalSettings _instance = LocalSettings._();
   factory LocalSettings() => _instance;
   LocalSettings._() : super();
 
-  String? _studyId;
-  String? _studyDeploymentId;
-  String? _deviceRoleName;
-  bool? _hasInformedConsentBeenAccepted;
   CarpUser? _user;
+
+  Participant? _participant;
+
+  SmartphoneStudy? _study;
+  bool? _hasInformedConsentBeenAccepted;
 
   /// The user saved on this device, if any.
   CarpUser? get user {
@@ -39,60 +40,70 @@ class LocalSettings {
         : Settings().preferences!.remove(userKey);
   }
 
-  String? get studyId =>
-      (_studyId ??= Settings().preferences!.getString(studyIdKey));
+  /// The participant saved on this device, if any.
+  Participant? get participant {
+    if (_participant == null) {
+      String? userString = Settings().preferences!.getString(participantKey);
 
-  set studyId(String? id) {
-    _studyId = id;
-    Settings().preferences!.setString(studyIdKey, id!);
+      _participant = (userString != null)
+          ? Participant.fromJson(jsonDecode(userString) as Map<String, dynamic>)
+          : null;
+    }
+    return _participant;
+  }
+
+  set participant(Participant? participant) {
+    _participant = participant;
+    (participant != null)
+        ? Settings()
+            .preferences!
+            .setString(participantKey, jsonEncode(participant.toJson()))
+        : Settings().preferences!.remove(participantKey);
+  }
+
+  /// The study for the currently running study deployment.
+  /// The study is cached locally on the phone.
+  /// Returns `null` if no study is deployed (yet).
+  SmartphoneStudy? get study {
+    if (_study != null) return _study;
+    var jsonString = Settings().preferences?.getString(studyKey);
+    return _study = (jsonString == null)
+        ? null
+        : _$SmartphoneStudyFromJson(
+            json.decode(jsonString) as Map<String, dynamic>);
+  }
+
+  set study(SmartphoneStudy? study) {
+    assert(
+        study != null,
+        'Cannot set the study to null in Settings. '
+        "Use the 'eraseStudyDeployment()' method to erase study deployment information.");
+    _study = study;
+    Settings().preferences?.setString(
+          studyKey,
+          json.encode(_$SmartphoneStudyToJson(study!)),
+        );
   }
 
   /// The study deployment id for the currently running deployment.
-  /// Returns the deployment id cached locally on the phone (if available).
-  /// Returns `null` if no study is deployed (yet).
-  String? get studyDeploymentId => (_studyDeploymentId ??=
-      Settings().preferences?.getString(studyDeploymentIdKey));
-
-  /// Set the study deployment id for the currently running deployment.
-  /// This study deployment id will be cached locally on the phone.
-  set studyDeploymentId(String? id) {
-    assert(
-        id != null,
-        'Cannot set the study deployment id to null in Settings. '
-        "Use the 'eraseStudyDeployment()' method to erase study deployment information.");
-    _studyDeploymentId = id;
-    Settings().preferences?.setString(studyDeploymentIdKey, id!);
-  }
-
-  /// The device role name for the currently running deployment.
-  /// Returns the role name cached locally on the phone (if available).
-  /// Returns `null` if no study is deployed (yet).
-  String? get deviceRoleName => (_deviceRoleName ??=
-      Settings().preferences?.getString(deviceRoleNameKey));
-
-  /// Set the device role name for the currently running deployment.
-  /// This name will be cached locally on the phone.
-  set deviceRoleName(String? name) {
-    assert(
-        name != null,
-        'Cannot set the study deployment id to null in Settings. '
-        "Use the 'eraseStudyDeployment()' method to erase study deployment information.");
-    _deviceRoleName = name;
-    Settings().preferences?.setString(deviceRoleNameKey, name!);
-  }
+  String? get studyDeploymentId => _study?.studyDeploymentId;
 
   /// Erase all study deployment information cached locally on this phone.
   Future<void> eraseStudyDeployment() async {
-    _studyId = null;
-    _studyDeploymentId = null;
-    _deviceRoleName = null;
+    _study = null;
     _hasInformedConsentBeenAccepted = null;
+    _participant = null;
+    await Settings().preferences!.remove(participantKey);
 
-    await Settings().preferences!.remove(studyIdKey);
-    await Settings().preferences!.remove(studyDeploymentIdKey);
-    await Settings().preferences!.remove(deviceRoleNameKey);
+    await Settings().preferences!.remove(studyKey);
     await Settings().preferences!.remove(informedConsentAcceptedKey);
     debug('$runtimeType - study deployment erased.');
+  }
+
+  /// Erase all authentication information on this user from the phone.
+  Future<void> eraseAuthCredentials() async {
+    _user = null;
+    await Settings().preferences!.remove(userKey);
   }
 
   Future<String?> get deploymentBasePath async => (studyDeploymentId == null)
@@ -107,14 +118,27 @@ class LocalSettings {
   bool get hasInformedConsentBeenAccepted => _hasInformedConsentBeenAccepted ??=
       Settings().preferences!.getBool(informedConsentAcceptedKey) ?? false;
 
-  /// Specify if the informed consent has been handled.
   set hasInformedConsentBeenAccepted(bool accepted) {
     _hasInformedConsentBeenAccepted = accepted;
     Settings().preferences!.setBool(informedConsentAcceptedKey, accepted);
   }
-
-  Future<void> eraseAuthCredentials() async {
-    _user = null;
-    await Settings().preferences!.remove(userKey);
-  }
 }
+
+// Need to create our own JSON serializers here, since SmartphoneStudy is not made serializable
+Map<String, dynamic> _$SmartphoneStudyToJson(SmartphoneStudy study) =>
+    <String, dynamic>{
+      'studyId': study.studyId,
+      'studyDeploymentId': study.studyDeploymentId,
+      'deviceRoleName': study.deviceRoleName,
+      'participantId': study.participantId,
+      'participantRoleName': study.participantRoleName,
+    };
+
+SmartphoneStudy _$SmartphoneStudyFromJson(Map<String, dynamic> json) =>
+    SmartphoneStudy(
+      studyId: json['studyId'] as String?,
+      studyDeploymentId: json['studyDeploymentId'] as String,
+      deviceRoleName: json['deviceRoleName'] as String,
+      participantId: json['participantId'] as String?,
+      participantRoleName: json['participantRoleName'] as String?,
+    );

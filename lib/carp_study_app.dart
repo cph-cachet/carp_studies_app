@@ -157,7 +157,7 @@ class CarpStudyAppState extends State<CarpStudyApp> {
       GoRoute(
         path: InvitationListPage.route,
         parentNavigatorKey: _rootNavigatorKey,
-        redirect: (context, state) => bloc.studyId != null
+        redirect: (context, state) => bloc.study != null
             ? InformedConsentPage.route
             : (bloc.user == null ? LoginPage.route : null),
         builder: (context, state) => InvitationListPage(

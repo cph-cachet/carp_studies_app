@@ -34,8 +34,12 @@ class CameraPageState extends State<CameraPage> {
 
   Future<void> initializeCamera() async {
     cameras = await availableCameras();
-    _cameraController = CameraController(cameras![0], ResolutionPreset.max,
-        imageFormatGroup: ImageFormatGroup.yuv420, enableAudio: true);
+    _cameraController = CameraController(
+      cameras![0],
+      ResolutionPreset.max,
+      imageFormatGroup: ImageFormatGroup.yuv420,
+      enableAudio: true,
+    );
     cameraInit = _cameraController.initialize();
     setState(() {});
   }
@@ -43,8 +47,11 @@ class CameraPageState extends State<CameraPage> {
   void toggleCamera() async {
     int newCameraIndex = isFrontCamera ? 0 : 1;
     _cameraController = CameraController(
-        cameras![newCameraIndex], ResolutionPreset.max,
-        imageFormatGroup: ImageFormatGroup.yuv420, enableAudio: true);
+      cameras![newCameraIndex],
+      ResolutionPreset.max,
+      imageFormatGroup: ImageFormatGroup.yuv420,
+      enableAudio: true,
+    );
     await _cameraController.initialize();
     setState(() {
       isFrontCamera = !isFrontCamera;

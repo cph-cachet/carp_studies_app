@@ -11,28 +11,27 @@ class AppUserTaskFactory implements UserTaskFactory {
   ];
 
   @override
-  UserTask create(AppTaskExecutor executor) {
-    switch (executor.task.type) {
-      case SurveyUserTask.AUDIO_TYPE:
-        return AudioUserTask(executor);
-      case SurveyUserTask.VIDEO_TYPE:
-        return VideoUserTask(executor);
-      case SurveyUserTask.IMAGE_TYPE:
-        return VideoUserTask(executor);
-      case SurveyUserTask.HEALTH_ASSESSMENT_TYPE:
-        return OneTimeBackgroundSensingUserTask(executor);
-      default:
-        return BackgroundSensingUserTask(executor);
-    }
-  }
+  UserTask create(AppTaskExecutor executor) => switch (executor.task.type) {
+        SurveyUserTask.AUDIO_TYPE => AudioUserTask(executor),
+        SurveyUserTask.VIDEO_TYPE => VideoUserTask(executor),
+        SurveyUserTask.IMAGE_TYPE => VideoUserTask(executor),
+        SurveyUserTask.HEALTH_ASSESSMENT_TYPE =>
+          OneTimeBackgroundSensingUserTask(executor),
+        _ => BackgroundSensingUserTask(executor),
+      };
 }
 
 /// A user task handling audio recordings.
-/// When started, creates a [AudioTaskPage] and shows it to the user.
+///
+/// The [widget] returns an [AudioTaskPage] that can be shown on the UI.
+///
+/// When the recording is started (calling the [onRecordStart] method),
+/// the background task collecting sensor measures is started.
 class AudioUserTask extends UserTask {
   final StreamController<int> _countDownController =
       StreamController.broadcast();
   Stream<int>? get countDownEvents => _countDownController.stream;
+  Timer? _timer;
 
   /// Total duration of audio recording in seconds.
   int recordingDuration = 60;
@@ -46,13 +45,17 @@ class AudioUserTask extends UserTask {
         : 60;
   }
 
-  Timer? _timer;
+  @override
+  bool get hasWidget => true;
+
+  @override
+  Widget? get widget => AudioTaskPage(audioUserTask: this);
 
   /// Callback when recording is to start.
   void onRecordStart() {
     ongoingRecordingDuration = recordingDuration;
     state = UserTaskState.started;
-    executor.start();
+    backgroundTaskExecutor.start();
 
     _timer = Timer.periodic(const Duration(seconds: 1), (_) {
       _countDownController.add(--ongoingRecordingDuration);
@@ -61,7 +64,7 @@ class AudioUserTask extends UserTask {
         _timer?.cancel();
         _countDownController.close();
 
-        executor.stop();
+        backgroundTaskExecutor.stop();
         super.onDone();
       }
     });
@@ -72,7 +75,7 @@ class AudioUserTask extends UserTask {
     _timer?.cancel();
     _countDownController.close();
 
-    executor.stop();
+    backgroundTaskExecutor.stop();
     super.onDone();
   }
 }
@@ -80,7 +83,9 @@ class AudioUserTask extends UserTask {
 /// A user task handling video and image recordings.
 /// When started, creates a [CameraTaskPage].
 class VideoUserTask extends UserTask {
-  VideoUserTask(super.executor);
+  DateTime? _startRecordingTime, _endRecordingTime;
+  XFile? _file;
+  MediaType _mediaType = MediaType.image;
 
   @override
   bool get hasWidget => true;
@@ -88,9 +93,7 @@ class VideoUserTask extends UserTask {
   @override
   Widget? get widget => CameraTaskPage(mediaUserTask: this);
 
-  DateTime? _startRecordingTime, _endRecordingTime;
-  XFile? _file;
-  MediaType _mediaType = MediaType.image;
+  VideoUserTask(super.executor);
 
   /// Callback when a picture is captured.
   void onPictureCapture(XFile image) {
@@ -100,14 +103,14 @@ class VideoUserTask extends UserTask {
     _startRecordingTime = DateTime.now();
     _endRecordingTime = DateTime.now();
 
-    executor.start();
+    backgroundTaskExecutor.start();
   }
 
   /// Callback when video recording is started.
   void onRecordStart() {
     debug('$runtimeType - onRecordStart()');
     _startRecordingTime = DateTime.now();
-    executor.start();
+    backgroundTaskExecutor.start();
   }
 
   /// Callback when video recording is stopped.
@@ -123,19 +126,27 @@ class VideoUserTask extends UserTask {
   void onSave() {
     debug('$runtimeType - onSave(), file: ${_file?.path}');
     if (_file != null) {
-      // create the media measurement directly here...
-      Media media = Media(
-          filename: _file!.path,
-          startRecordingTime: _startRecordingTime!,
-          endRecordingTime: _endRecordingTime,
-          mediaType: _mediaType)
-        ..filename = _file!.path.split("/").last
-        ..path = _file!.path;
+      // create the media measurement ...
+      MediaData? media = switch (_mediaType) {
+        MediaType.image => ImageMedia(
+            filename: _file!.path,
+            startRecordingTime: _startRecordingTime!,
+            endRecordingTime: _endRecordingTime)
+          ..filename = _file!.path.split("/").last
+          ..path = _file!.path,
+        MediaType.video => VideoMedia(
+            filename: _file!.path,
+            startRecordingTime: _startRecordingTime!,
+            endRecordingTime: _endRecordingTime)
+          ..filename = _file!.path.split("/").last
+          ..path = _file!.path,
+        _ => null,
+      };
 
       // ... and add it to the sensing controller
-      bloc.addMeasurement(Measurement.fromData(media));
+      if (media != null) bloc.addMeasurement(Measurement.fromData(media));
     }
-    executor.stop();
+    backgroundTaskExecutor.stop();
     super.onDone();
   }
 }

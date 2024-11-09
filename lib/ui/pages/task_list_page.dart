@@ -29,7 +29,7 @@ class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
       padding: const EdgeInsets.symmetric(vertical: 4),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
-        color: Theme.of(context).extension<CarpColors>()!.tabBarBackground,
+        color: Theme.of(context).extension<CarpColors>()!.grey200,
       ),
       child: _tabBar,
     );
@@ -111,15 +111,20 @@ class TaskListPageState extends State<TaskListPage>
                                   controller: _tabController,
                                   labelPadding: const EdgeInsets.only(
                                       top: 4, bottom: 4, left: 4, right: 4),
-                                  labelColor: Colors.black,
-                                  unselectedLabelColor: Colors.black,
+                                  labelColor: Theme.of(context)
+                                      .extension<CarpColors>()!
+                                      .grey900,
+                                  unselectedLabelColor: Theme.of(context)
+                                      .extension<CarpColors>()!
+                                      .grey900,
                                   dividerColor: Colors.transparent,
                                   indicator: ShapeDecoration(
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(8),
                                     ),
-                                    color:
-                                        Theme.of(context).colorScheme.secondary,
+                                    color: Theme.of(context)
+                                        .extension<CarpColors>()!
+                                        .white,
                                   ),
                                   tabs: [
                                     Container(
@@ -152,12 +157,9 @@ class TaskListPageState extends State<TaskListPage>
                                         context, userTask);
                                   }
                                 } else if (_tabController.index == 1) {
-                                  if (userTask.state == UserTaskState.done) {
-                                    return _buildDoneTaskCard(
-                                        context, userTask);
-                                  } else if (userTask.state ==
-                                      UserTaskState.expired) {
-                                    return _buildExpiredTaskCard(
+                                  if (userTask.state == UserTaskState.done ||
+                                      userTask.state == UserTaskState.expired) {
+                                    return _buildCompletedTaskCard(
                                         context, userTask);
                                   }
                                 }
@@ -190,7 +192,7 @@ class TaskListPageState extends State<TaskListPage>
           backgroundColor:
               userTask.expiresIn != null && userTask.expiresIn!.inHours < 24
                   ? CACHET.TASK_TO_EXPIRE_BACKGROUND
-                  : Colors.white,
+                  : Theme.of(context).extension<CarpColors>()!.grey50!,
           elevation: 0,
           child: Padding(
             padding: const EdgeInsets.all(16.0),
@@ -298,16 +300,18 @@ class TaskListPageState extends State<TaskListPage>
   /// Get an icon for the [userTask] based on its type. If there is no icon for
   /// the type, use the 1st measure in the task as an icon. If there is no
   /// icon for the measure, use a default icon.
-  Icon _taskTypeIcon(UserTask userTask) =>
-      (taskTypeIcons[userTask.type] != null)
-          ? taskTypeIcons[userTask.type] as Icon
-          : (userTask.task.measures!.isNotEmpty &&
-                  measureTypeIcons[userTask.task.measures![0].type] != null)
-              ? measureTypeIcons[userTask.task.measures![0].type] as Icon
-              : const Icon(
-                  Icons.description_outlined,
-                  color: CACHET.ORANGE,
-                );
+  Icon _taskTypeIcon(UserTask userTask) {
+    Icon originalIcon = taskTypeIcons[userTask.type] as Icon;
+    if (taskTypeIcons[userTask.type] != null && userTask.availableForUser) {
+      return originalIcon;
+    } else if (taskTypeIcons[userTask.type] != null &&
+        userTask.state == UserTaskState.done) {
+      return Icon(originalIcon.icon, color: CACHET.TASK_COMPLETED_BLUE);
+    } else {
+      return Icon(originalIcon.icon,
+          color: Theme.of(context).extension<CarpColors>()!.grey600);
+    }
+  }
 
   String _estimatedTimeSubtitle(UserTask userTask) {
     RPLocalizations locale = RPLocalizations.of(context)!;
@@ -338,44 +342,81 @@ class TaskListPageState extends State<TaskListPage>
     return humanizedTimeRemaining.isNotEmpty ? humanizedTimeRemaining : "";
   }
 
-  Widget _buildDoneTaskCard(BuildContext context, UserTask userTask) {
+  Widget _buildCompletedTaskCard(BuildContext context, UserTask userTask) {
     RPLocalizations locale = RPLocalizations.of(context)!;
-
     return Center(
-      child: Opacity(
-        opacity: 0.6,
+      child: GestureDetector(
         child: StudiesMaterial(
+          backgroundColor: Theme.of(context).extension<CarpColors>()!.grey50!,
           hasBorder: true,
-          child: ListTile(
-            leading: const CircleAvatar(
-              backgroundColor: CACHET.LIGHT_GREEN_1,
-              child: Icon(Icons.check_circle_outlined, color: CACHET.GREEN_1),
+          elevation: 0,
+          borderColor: (userTask.state == UserTaskState.done)
+              ? CACHET.TASK_COMPLETED_BLUE
+              : CACHET.GREY_6,
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: IntrinsicHeight(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const SizedBox(width: 12.0), // Space between line and content
+                  Expanded(
+                    // Allows the content to take remaining space
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            _taskTypeIcon(userTask),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 4.0),
+                              child: Text(
+                                userTask.type,
+                                style: TextStyle(
+                                  color: (userTask.state == UserTaskState.done)
+                                      ? CACHET.TASK_COMPLETED_BLUE
+                                      : CACHET.GREY_6,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                            Spacer(),
+                            Text(
+                              'THIS SHOULD BE DATE EXPIRED/COMPLETED?',
+                              style: TextStyle(
+                                color: userTask.expiresIn != null &&
+                                        userTask.expiresIn!.inHours < 24
+                                    ? Theme.of(context)
+                                        .extension<CarpColors>()!
+                                        .warningColor
+                                    : Colors.grey,
+                                fontSize: 12.0,
+                              ),
+                            )
+                          ],
+                        ),
+                        const SizedBox(height: 8.0),
+                        Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                locale.translate(userTask.title),
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16.0,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
-            title: Text(locale.translate(userTask.title),
-                style: aboutCardTitleStyle.copyWith(
-                    color: Theme.of(context).primaryColor)),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildExpiredTaskCard(BuildContext context, UserTask userTask) {
-    RPLocalizations locale = RPLocalizations.of(context)!;
-
-    return Center(
-      child: Opacity(
-        opacity: 0.6,
-        child: StudiesMaterial(
-          hasBorder: true,
-          child: ListTile(
-            leading: const CircleAvatar(
-              backgroundColor: CACHET.LIGHT_GREY,
-              child: Icon(Icons.unpublished_outlined, color: CACHET.GREY_1),
-            ),
-            title: Text(locale.translate(userTask.title),
-                style: aboutCardTitleStyle.copyWith(
-                    color: Theme.of(context).primaryColor)),
           ),
         ),
       ),

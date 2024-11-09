@@ -386,15 +386,58 @@ class MockSmartphoneDeploymentController extends _i1.Mock
       ) as _i7.Future<void>);
 
   @override
-  _i6.Future<void> start([bool? start = true]) => (super.noSuchMethod(
+  _i7.Future<_i3.StudyStatus> tryDeployment({bool? useCached = true}) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #tryDeployment,
+          [],
+          {#useCached: useCached},
+        ),
+        returnValue: _i7.Future<_i3.StudyStatus>.value(
+            _i3.StudyStatus.DeploymentNotStarted),
+        returnValueForMissingStub: _i7.Future<_i3.StudyStatus>.value(
+            _i3.StudyStatus.DeploymentNotStarted),
+      ) as _i7.Future<_i3.StudyStatus>);
+
+  @override
+  _i7.Future<bool> saveDeployment() => (super.noSuchMethod(
+        Invocation.method(
+          #saveDeployment,
+          [],
+        ),
+        returnValue: _i7.Future<bool>.value(false),
+        returnValueForMissingStub: _i7.Future<bool>.value(false),
+      ) as _i7.Future<bool>);
+
+  @override
+  _i7.Future<bool> restoreDeployment() => (super.noSuchMethod(
+        Invocation.method(
+          #restoreDeployment,
+          [],
+        ),
+        returnValue: _i7.Future<bool>.value(false),
+        returnValueForMissingStub: _i7.Future<bool>.value(false),
+      ) as _i7.Future<bool>);
+
+  @override
+  _i7.Future<void> eraseDeployment() => (super.noSuchMethod(
+        Invocation.method(
+          #eraseDeployment,
+          [],
+        ),
+        returnValue: _i7.Future<void>.value(),
+        returnValueForMissingStub: _i7.Future<void>.value(),
+      ) as _i7.Future<void>);
+
+  @override
+  _i7.Future<void> start([bool? start = true]) => (super.noSuchMethod(
         Invocation.method(
           #start,
-          [],
-          {#start: start},
+          [start],
         ),
-        returnValue: _i6.Future<void>.value(),
-        returnValueForMissingStub: _i6.Future<void>.value(),
-      ) as _i6.Future<void>);
+        returnValue: _i7.Future<void>.value(),
+        returnValueForMissingStub: _i7.Future<void>.value(),
+      ) as _i7.Future<void>);
 
   @override
   _i7.Future<void> stop() => (super.noSuchMethod(

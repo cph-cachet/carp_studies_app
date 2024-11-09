@@ -1,8 +1,8 @@
 part of carp_study_app;
 
 class ProfilePageViewModel extends ViewModel {
+  String get userId => bloc.user?.id ?? bloc.deployment?.participantId ?? '';
   String get username => bloc.user?.username ?? '';
-  String get userId => bloc.user?.id ?? bloc.deployment?.userId ?? '';
   String get firstName => bloc.user?.firstName ?? '';
   String get lastName => bloc.user?.lastName ?? '';
   String get fullName => '$firstName $lastName';

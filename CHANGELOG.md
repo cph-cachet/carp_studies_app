@@ -1,5 +1,17 @@
+## 2.2.3
+
+- Fixing login issue with going back to invitations list page
+- Updating changelog.md and pubspec.yaml
+- Bumping version code to 35
+- Fixing build error on ios - tests failing
+- Fix of bug in uploading surveys (issue [#342](https://github.com/cph-cachet/carp_studies_app/issues/342))
+
 ## 2.2.2
-- Redesign of tasks page. Implemented a tab bar with Pending/Completed options to better categorize tasks.
+
+- Upgrade to carp_serialization v. 2.0 & carp_mobile_sensing: 1.11
+- Cleanup in pubspec.yaml
+- Upload of informed consent as a input data type
+- Saving participant data on the phone across app restart
 
 ## 2.2.1
 
@@ -11,20 +23,15 @@
 
 ## 2.1.0
 
-- fix of switchins studies in the study app
+- fix of switching studies in the study app
 - refactor of view model
 - improvements to translations (especially the Danish ones)
 - upgrade to fixes in the underlying CAMS (related to #283)
 - improvement to API docs
-
 - upgrade and refactor of connectivity_plus
-
 - Aligning iOS "marketing version" with Flutter pubspec version
-
 - upgrade to latest CAMS packages
-
 - upgrade to carp_backend 1.7.1
-
 - Delete gitignored files
 - Bumping version to 2.1.0
 
@@ -32,18 +39,16 @@
 
 - Update to latest version of Carp Mobile Sensing (1.5.0)
 - Add support for connecting to Movesense devices, collecting HR data, visualizing HR data collected
-- Memove support for Apple HealthKit (temporily, due to conflict with Movesense integration)
+- Removed support for Apple HealthKit (temporily, due to conflict with Movesense integration)
 - Support for running app in local deployment mode in order to debug a protocol before uploading it to CAWS
 - Improve connection process with Bluetooth devices
 - Update URLs to point to new servers
 - Various bug fixes:
-
   - properly request permissions for `flutter_local_notifications`
   - fix some overflows, bugs, colors in UI
   - fix "Local environment" task duplication
   - fix crash related to theme
   - fix logging out/leave study dialogs appearing twice and not working.
-
 - redesigned camera preview
 - improve subtitles for task list
 

@@ -20,10 +20,14 @@ part of carp_study_app;
 /// added to the [client].
 class Sensing {
   static final Sensing _instance = Sensing._();
-  // StudyDeploymentStatus? _status;
   SmartphoneDeploymentController? _controller;
-  DeploymentService? deploymentService;
   Study? _study;
+
+  /// The deployment service used in this app.
+  DeploymentService get deploymentService =>
+      bloc.deploymentMode == DeploymentMode.local
+          ? SmartphoneDeploymentService()
+          : CarpDeploymentService();
 
   /// The study running on this phone.
   /// Only available after [addStudy] is called.
@@ -54,12 +58,12 @@ class Sensing {
   List<Probe> get runningProbes =>
       (_controller != null) ? _controller!.executor.probes : [];
 
-  // /// The smartphone (primary device) manager.
-  // SmartphoneDeviceManager get smartphoneDeviceManager =>
-  //     SmartPhoneClientManager().deviceController.smartphoneDeviceManager;
-
-  /// The list of devices in the current deployment.
-  List<DeviceManager>? get deploymentDevices => deployment != null
+  /// The list of all device managers used in the current deployment.
+  ///
+  /// Note that not all available devices on this phone may be used in the
+  /// current deployment. Hence, this method returns the list of device managers
+  /// used in the current deployment.
+  List<DeviceManager> get deploymentDevices => deployment != null
       ? SmartPhoneClientManager()
           .deviceController
           .devices
@@ -68,6 +72,10 @@ class Sensing {
               .any((element) => element.type == manager.type))
           .toList()
       : [];
+
+  /// The smartphone (primary device) manager.
+  SmartphoneDeviceManager get smartphoneDeviceManager =>
+      SmartPhoneClientManager().deviceController.smartphoneDeviceManager;
 
   /// The list of connected devices.
   List<DeviceManager>? get connectedDevices =>
@@ -101,52 +109,6 @@ class Sensing {
 
     // Set up the devices available on this phone
     DeviceController().registerAllAvailableDevices();
-
-    switch (bloc.deploymentMode) {
-      case DeploymentMode.local:
-        // We can run the app in local mode to debug a local protocol stored in
-        // assets/carp/resources/protocol.json
-        //
-        // However, when running locally we need to first deploy the protocol
-        // in the local SmartphoneDeploymentService
-        // Use the local, phone-based deployment service.
-        deploymentService = SmartphoneDeploymentService();
-
-        // // Get the protocol from the local study protocol manager.
-        // // Note that the study id is not used since it always returns the same protocol.
-        // var protocol = await LocalResourceManager().getStudyProtocol('');
-
-        // // Deploy this protocol using the on-phone deployment service.
-        // // Reuse the study deployment id, if this is stored on the phone.
-        // final status =
-        //     await SmartphoneDeploymentService().createStudyDeployment(
-        //   protocol!,
-        //   [],
-        //   bloc.study?.studyDeploymentId,
-        // );
-
-        // // Save the participant and study on the phone for use across app restart.
-        // var participant = Participant(
-        //   studyDeploymentId: status.studyDeploymentId,
-        //   deviceRoleName: status.primaryDeviceStatus?.device.roleName,
-        // );
-        // LocalSettings().participant = participant;
-
-        // bloc.study = SmartphoneStudy(
-        //   studyDeploymentId: status.studyDeploymentId,
-        //   deviceRoleName: status.primaryDeviceStatus!.device.roleName,
-        // );
-
-        break;
-      case DeploymentMode.production:
-      case DeploymentMode.test:
-      case DeploymentMode.dev:
-        // Use the CARP deployment service which can download a protocol from CAWS
-        CarpDeploymentService().configureFrom(CarpService());
-        deploymentService = CarpDeploymentService();
-
-        break;
-    }
 
     // Register the CARP data manager for uploading data back to CAWS.
     // This is needed in both LOCAL and CARP deployments, since a local study

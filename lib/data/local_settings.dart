@@ -1,9 +1,19 @@
 part of carp_study_app;
 
-/// A local settings manager.
+/// A local settings manager to store settings across app restart.
+///
+/// Settings include:
+///
+///  * [user] - the authentication information on a user
+///  * [participant] - the information on a participant in the current [study]
+///  * [study] - the study running on the phone
 ///
 /// Works as a singleton - use `LocalSettings()` for accessing settings.
 class LocalSettings {
+  /// The package name of Google Health Connect.
+  /// See https://developer.android.com/health-and-fitness/guides/health-connect/develop/get-started#get-client
+  static const healthConnectPackageName = 'com.google.android.apps.healthdata';
+
   // Keys for storing in shared preferences
   static const String userKey = 'user';
   static const String participantKey = 'participant';

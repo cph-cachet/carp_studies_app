@@ -69,7 +69,7 @@ class HomePageState extends State<HomePage> {
   }
 
   Future<void> _checkHealthConnectInstallation() async {
-    bool isInstalled = await bloc._isHealthConnectInstalled();
+    bool isInstalled = await bloc.isHealthInstalled();
     if (!isInstalled) {
       showDialog<void>(
         context: context,

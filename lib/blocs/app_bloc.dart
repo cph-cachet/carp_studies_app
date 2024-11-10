@@ -55,7 +55,6 @@ class StudyAppBLoC extends ChangeNotifier {
   List<Message> _messages = [];
   final StreamController<int> _messageStreamController =
       StreamController.broadcast();
-  final String _healthConnectPackageName = 'com.google.android.apps.healthdata';
 
   /// The state of this BloC.
   StudyAppState get state => _state;
@@ -84,8 +83,6 @@ class StudyAppBLoC extends ChangeNotifier {
   final _scaffoldKey = GlobalKey<ScaffoldMessengerState>();
   GlobalKey<ScaffoldMessengerState> get scaffoldKey => _scaffoldKey;
   State? get scaffoldMessengerState => scaffoldKey.currentState;
-
-  String get healthConnectPackageName => _healthConnectPackageName;
 
   /// Create the BLoC for the app.
   StudyAppBLoC() : super() {
@@ -171,7 +168,7 @@ class StudyAppBLoC extends ChangeNotifier {
     debug('$runtimeType initialized - deployment mode: ${deploymentMode.name}');
   }
 
-  /// Is the phone connected either via wifi or mobile network?
+  /// Is the phone connected to the internet either via wifi or mobile network?
   Future<bool> checkConnectivity() async {
     final List<ConnectivityResult> results =
         await (Connectivity().checkConnectivity());
@@ -181,17 +178,21 @@ class StudyAppBLoC extends ChangeNotifier {
         element == ConnectivityResult.wifi);
   }
 
-  Future<bool> _isHealthConnectInstalled() async {
+  /// Check if the Health database is installed on this phone.
+  ///
+  /// Always returns true on iOS, since Health is part of the OS and hence always installed.
+  /// On Android, returns true if Google Health Connect is installed, false otherwise.
+  Future<bool> isHealthInstalled() async {
+    if (Platform.isIOS) return true;
+
     try {
-      final apps = await appCheck.getInstalledApps();
-      if (apps != null) {
-        return apps.any((app) => app.packageName == _healthConnectPackageName);
-      }
+      final apps = await appCheck.getInstalledApps() ?? [];
+      return apps.any(
+          (app) => app.packageName == LocalSettings.healthConnectPackageName);
     } catch (e) {
-      debug("Error checking Health Connect installation: $e");
+      debug("$runtimeType - Error checking Health Connect installation: $e");
       return false;
     }
-    return false;
   }
 
   /// Deploy the local protocol if running in local mode.
@@ -200,7 +201,7 @@ class StudyAppBLoC extends ChangeNotifier {
   /// assets/carp/resources/protocol.json
   ///
   /// This method will deploy the protocol in the local SmartphoneDeploymentService
-  /// which later will be used for deployment.
+  /// which later will be used for deployment. See [Sensing.deploymentService].
   Future<void> deployLocalProtocol() async {
     if (deploymentMode != DeploymentMode.local) return;
 

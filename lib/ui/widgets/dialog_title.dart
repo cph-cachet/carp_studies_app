@@ -3,8 +3,10 @@ part of carp_study_app;
 class DialogTitle extends StatelessWidget {
   final String title;
   final String? deviceName;
+  final String? titleEnd;
 
-  const DialogTitle({super.key, required this.title, this.deviceName});
+  const DialogTitle(
+      {super.key, required this.title, this.deviceName, this.titleEnd});
 
   @override
   Widget build(BuildContext context) {
@@ -37,12 +39,13 @@ class DialogTitle extends StatelessWidget {
               children: [
                 Flexible(
                   child: Text(
-                    (deviceName != null
+                    locale.translate(
+                          title,
+                        ) +
+                        (deviceName != null
                             ? "${locale.translate(deviceName!)} "
                             : "") +
-                        locale.translate(
-                          title,
-                        ),
+                        (titleEnd != null ? ' ${locale.translate(titleEnd!)}' : ""),
                     style: sectionTitleStyle.copyWith(
                       color: Theme.of(context).primaryColor,
                     ),

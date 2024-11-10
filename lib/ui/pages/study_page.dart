@@ -164,7 +164,7 @@ class StudyPageState extends State<StudyPage> {
           child: Container(
             decoration: BoxDecoration(
                 border: Border.all(
-                  color: CACHET.LIGHT_2,
+                  color: Theme.of(context).extension<CarpColors>()!.grey600!,
                   width: 1.0,
                 ),
                 borderRadius: BorderRadius.circular(16.0)),

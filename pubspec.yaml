@@ -13,7 +13,7 @@ dependencies:
 
   carp_serializable: ^2.0.0
   carp_core: ^1.8.0
-  # carp_mobile_sensing: ^1.11.4
+  carp_mobile_sensing: ^1.11.4
   carp_context_package: ^1.10.0
   carp_connectivity_package: ^1.7.0
   carp_survey_package: ^1.8.2
@@ -21,10 +21,10 @@ dependencies:
   carp_esense_package: ^1.6.0
   carp_polar_package: ^1.6.0
   carp_health_package: ^2.11.0
-  # carp_movesense_package: ^1.6.0
+  carp_movesense_package: ^1.6.0
 
   carp_webservices: ^3.5.0
-  # carp_backend: ^1.9.1
+  carp_backend: ^1.9.1
 
   research_package: ^1.7.2
   cognition_package: ^1.6.1
@@ -59,8 +59,8 @@ dependency_overrides:
   #   path: ../carp/carp.sensing-flutter/carp_serializable/
   # carp_core:
   #   path: ../carp/carp.sensing-flutter/carp_core/
-  carp_mobile_sensing:
-    path: ../carp/carp.sensing-flutter/carp_mobile_sensing/
+  # carp_mobile_sensing:
+  #   path: ../carp/carp.sensing-flutter/carp_mobile_sensing/
   # carp_context_package:
   #   path: ../carp/carp.sensing-flutter/packages/carp_context_package/
   # carp_connectivity_package:
@@ -81,13 +81,13 @@ dependency_overrides:
   #   path: ../../packages/carp_movisens_package/
   # carp_health_package:
   #   path: ../carp/carp.sensing-flutter/packages/carp_health_package/
-  carp_movesense_package:
-    path: ../carp/carp.sensing-flutter/packages/carp_movesense_package/
+  # carp_movesense_package:
+  #   path: ../carp/carp.sensing-flutter/packages/carp_movesense_package/
 
   # carp_webservices:
   #   path: ../carp/carp.sensing-flutter/backends/carp_webservices/
-  carp_backend:
-    path: ../carp/carp.sensing-flutter/backends/carp_backend/
+  # carp_backend:
+  #   path: ../carp/carp.sensing-flutter/backends/carp_backend/
 
   # research_package: 
   #   path: ../research.package/

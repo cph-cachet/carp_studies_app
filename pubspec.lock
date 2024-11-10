@@ -231,12 +231,13 @@ packages:
     source: hosted
     version: "1.8.0"
   carp_backend:
-    dependency: "direct overridden"
+    dependency: "direct main"
     description:
-      path: "../carp/carp.sensing-flutter/backends/carp_backend"
-      relative: true
-    source: path
-    version: "1.9.2"
+      name: carp_backend
+      sha256: ede39b1d5565e04121c1b854af1b655f0f8455260d87fb1313945bad70732ea3
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.9.1"
   carp_connectivity_package:
     dependency: "direct main"
     description:
@@ -278,18 +279,20 @@ packages:
     source: hosted
     version: "2.11.0"
   carp_mobile_sensing:
-    dependency: "direct overridden"
+    dependency: "direct main"
     description:
-      path: "../carp/carp.sensing-flutter/carp_mobile_sensing"
-      relative: true
-    source: path
+      name: carp_mobile_sensing
+      sha256: "58ae9957ea20c69c00793841c2e277fe242f5e71f5ce4286affd2a9612212ce9"
+      url: "https://pub.dev"
+    source: hosted
     version: "1.11.4"
   carp_movesense_package:
-    dependency: "direct overridden"
+    dependency: "direct main"
     description:
-      path: "../carp/carp.sensing-flutter/packages/carp_movesense_package"
-      relative: true
-    source: path
+      name: carp_movesense_package
+      sha256: "558144a984fef1eb3d1c9863db5cb5bc9380ec34011141647841217df46ed5a3"
+      url: "https://pub.dev"
+    source: hosted
     version: "1.6.0"
   carp_polar_package:
     dependency: "direct main"

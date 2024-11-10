@@ -4,7 +4,7 @@ part of carp_study_app;
 ///
 /// This class is populated based on a study invitation and is saved across app
 /// (re)start on the phone.
-@JsonSerializable(fieldRename: FieldRename.snake, includeIfNull: false)
+@JsonSerializable(includeIfNull: false)
 class Participant {
   String? studyId;
   String? studyDeploymentId;

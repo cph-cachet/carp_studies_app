@@ -154,10 +154,18 @@ class StudyAppBLoC extends ChangeNotifier {
     await Settings().init();
     await localizationManager.initialize();
 
+    Sensing();
+
     // Initialize and use the CAWS backend if not in local deployment mode
     if (deploymentMode != DeploymentMode.local) {
       await backend.initialize();
     }
+
+    // Deploy the local protocol if running in local mode
+    if (deploymentMode == DeploymentMode.local) {
+      await deployLocalProtocol();
+    }
+
     _state = StudyAppState.initialized;
     notifyListeners();
     debug('$runtimeType initialized - deployment mode: ${deploymentMode.name}');
@@ -184,6 +192,46 @@ class StudyAppBLoC extends ChangeNotifier {
       return false;
     }
     return false;
+  }
+
+  /// Deploy the local protocol if running in local mode.
+  ///
+  /// We can run the app in local mode to debug a local protocol stored in
+  /// assets/carp/resources/protocol.json
+  ///
+  /// This method will deploy the protocol in the local SmartphoneDeploymentService
+  /// which later will be used for deployment.
+  Future<void> deployLocalProtocol() async {
+    if (deploymentMode != DeploymentMode.local) return;
+
+    if (hasStudyBeenDeployed) {
+      info('Running in local deployment mode. Note that the local protocol has '
+          'already been deployed and the cached version will be loaded and used. '
+          'If you want to reload a modified protocol, delete the app with the '
+          'cached protocol from the phone before running it.');
+    } else {
+      debug('$runtimeType - deploying local protocol');
+
+      // Get the protocol from the local study protocol manager.
+      // Note that the study id is not used since it always returns the same protocol.
+      var protocol = await LocalResourceManager().getStudyProtocol('');
+
+      // Deploy this protocol using the on-phone deployment service.
+      final status =
+          await SmartphoneDeploymentService().createStudyDeployment(protocol!);
+
+      // Save the participant and study on the phone for use across app restart.
+      var participant = Participant(
+        studyDeploymentId: status.studyDeploymentId,
+        deviceRoleName: status.primaryDeviceStatus?.device.roleName,
+      );
+      LocalSettings().participant = participant;
+
+      bloc.study = SmartphoneStudy(
+        studyDeploymentId: status.studyDeploymentId,
+        deviceRoleName: status.primaryDeviceStatus!.device.roleName,
+      );
+    }
   }
 
   /// Set the active study in the app based on an [invitation].
@@ -248,7 +296,7 @@ class StudyAppBLoC extends ChangeNotifier {
       },
     );
 
-    info('$runtimeType - Study configuration done.');
+    info('Study configuration done.');
     notifyListeners();
     _state = StudyAppState.configured;
   }
@@ -256,25 +304,21 @@ class StudyAppBLoC extends ChangeNotifier {
   /// Does this app use location permissions?
   bool get usingLocationPermissions => true;
 
-  /// Has the informed consent been shown to, and accepted by the user?
+  /// Has the informed consent been accepted by the user?
   bool get hasInformedConsentBeenAccepted =>
       LocalSettings().participant?.hasInformedConsentBeenAccepted ?? false;
 
-  /// Specify if the informed consent been handled.
-  /// This entails that it has been:
-  ///  * shown to the user
-  ///  * accepted by the user
-  ///  * successfully uploaded to CARP
   set hasInformedConsentBeenAccepted(bool accepted) {
     var participant = LocalSettings().participant;
     participant?.hasInformedConsentBeenAccepted = true;
     LocalSettings().participant = participant;
   }
 
-  /// The informed consent has been accepted by the user.
+  /// Mark the informed consent as accepted by the user based on the
+  /// [informedConsentResult].
   ///
   /// This entails that it has been shown to the user and accepted by the user.
-  /// Will upload it to CAWS.
+  /// Will upload it to CAWS (if not running in local deployment mode).
   Future<void> informedConsentHasBeenAccepted(
     RPTaskResult informedConsentResult,
   ) async {

@@ -89,7 +89,6 @@ class HomePageState extends State<HomePage> {
     // Listen for user task notification clicked in the OS
     AppTaskController().userTaskEvents.listen((userTask) {
       if (userTask.state == UserTaskState.notified) {
-        debug('Notification for task id: ${userTask.id} was clicked.');
         userTask.onStart();
         if (userTask.hasWidget) context.push('/task/${userTask.id}');
       }

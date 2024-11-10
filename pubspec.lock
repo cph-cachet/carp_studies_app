@@ -234,10 +234,10 @@ packages:
     dependency: "direct main"
     description:
       name: carp_backend
-      sha256: ede39b1d5565e04121c1b854af1b655f0f8455260d87fb1313945bad70732ea3
+      sha256: "2eac83c8da08c643e57e2bb92247eabf45501517c0938af976d4bc902e61ff59"
       url: "https://pub.dev"
     source: hosted
-    version: "1.9.1"
+    version: "1.9.2"
   carp_connectivity_package:
     dependency: "direct main"
     description:
@@ -282,18 +282,18 @@ packages:
     dependency: "direct main"
     description:
       name: carp_mobile_sensing
-      sha256: "58ae9957ea20c69c00793841c2e277fe242f5e71f5ce4286affd2a9612212ce9"
+      sha256: f14a7e77b78c30c9c850396a5848a308e373c836e323597efc760af9c5553395
       url: "https://pub.dev"
     source: hosted
-    version: "1.11.4"
+    version: "1.11.5"
   carp_movesense_package:
     dependency: "direct main"
     description:
       name: carp_movesense_package
-      sha256: "558144a984fef1eb3d1c9863db5cb5bc9380ec34011141647841217df46ed5a3"
+      sha256: "60e4df997a645c916ea07982125bc8763816804bad81c0643ac299b8eab8d365"
       url: "https://pub.dev"
     source: hosted
-    version: "1.6.0"
+    version: "1.7.0"
   carp_polar_package:
     dependency: "direct main"
     description:

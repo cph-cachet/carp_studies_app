@@ -14,7 +14,7 @@ class HomePage extends StatefulWidget {
 class HomePageState extends State<HomePage> {
   /// Ask for location permissions.
   ///
-  /// The method opens the [LocationUsageDialog] if location permissions are
+  /// The method opens the [LocationPermissionPage] if location permissions are
   /// needed and not yet granted.
   ///
   /// Android requires the app to show a modal window explaining "why" the app
@@ -42,7 +42,8 @@ class HomePageState extends State<HomePage> {
                     child: child,
                   ),
                 ),
-            pageBuilder: (context, anim1, anim2) => LocationUsageDialog().build(
+            pageBuilder: (context, anim1, anim2) =>
+                LocationPermissionPage().build(
                   context,
                   "pages.location.info",
                 ));

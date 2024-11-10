@@ -69,7 +69,7 @@ class InvitationDetailsPage extends StatelessWidget {
                 child: StudiesMaterial(
                   backgroundColor:
                       Theme.of(context).extension<CarpColors>()!.white!,
-                  elevation: 0.0,
+                  elevation: 2.0,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12.0),
                   ),
@@ -102,7 +102,7 @@ class InvitationDetailsPage extends StatelessWidget {
                   child: StudiesMaterial(
                     backgroundColor:
                         Theme.of(context).extension<CarpColors>()!.white!,
-                    elevation: 0.0,
+                    elevation: 2.0,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12.0),
                     ),
@@ -123,9 +123,12 @@ class InvitationDetailsPage extends StatelessWidget {
                                   children: [
                                     TextSpan(
                                       text: invitation.invitation.name,
-                                      style: const TextStyle(
+                                      style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 22.0,
+                                        color: Theme.of(context)
+                                            .extension<CarpColors>()!
+                                            .primary,
                                       ),
                                     ),
                                     TextSpan(

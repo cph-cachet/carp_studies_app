@@ -290,10 +290,10 @@ packages:
     dependency: "direct main"
     description:
       name: carp_movesense_package
-      sha256: "60e4df997a645c916ea07982125bc8763816804bad81c0643ac299b8eab8d365"
+      sha256: "2ca40c7f62f6d0371690530ce066cd84c2a6011a2cf09b2df3910a2518f4a75d"
       url: "https://pub.dev"
     source: hosted
-    version: "1.7.0"
+    version: "1.7.1"
   carp_polar_package:
     dependency: "direct main"
     description:
@@ -426,10 +426,10 @@ packages:
     dependency: transitive
     description:
       name: coverage
-      sha256: "88b0fddbe4c92910fefc09cc0248f5e7f0cd23e450ded4c28f16ab8ee8f83268"
+      sha256: "4b03e11f6d5b8f6e5bb5e9f7889a56fe6c5cbe942da5378ea4d4d7f73ef9dfe5"
       url: "https://pub.dev"
     source: hosted
-    version: "1.10.0"
+    version: "1.11.0"
   cron:
     dependency: transitive
     description:
@@ -806,10 +806,10 @@ packages:
     dependency: "direct main"
     description:
       name: go_router
-      sha256: ce89c5a993ca5eea74535f798478502c30a625ecb10a1de4d7fef5cd1bcac2a4
+      sha256: "8ae664a70174163b9f65ea68dd8673e29db8f9095de7b5cd00e167c621f4fef5"
       url: "https://pub.dev"
     source: hosted
-    version: "14.4.1"
+    version: "14.6.0"
   google_fonts:
     dependency: "direct main"
     description:
@@ -2003,10 +2003,10 @@ packages:
     dependency: transitive
     description:
       name: url_launcher_linux
-      sha256: e2b9622b4007f97f504cd64c0128309dfb978ae66adbe944125ed9e1750f06af
+      sha256: "4e9ba368772369e3e08f231d2301b4ef72b9ff87c31192ef471b380ef29a4935"
       url: "https://pub.dev"
     source: hosted
-    version: "3.2.0"
+    version: "3.2.1"
   url_launcher_macos:
     dependency: transitive
     description:

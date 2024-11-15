@@ -21,7 +21,7 @@ dependencies:
   carp_esense_package: ^1.6.0
   carp_polar_package: ^1.6.0
   carp_health_package: ^2.11.0
-  carp_movesense_package: ^1.7.0
+  carp_movesense_package: ^1.7.1
 
   carp_webservices: ^3.5.0
   carp_backend: ^1.9.2

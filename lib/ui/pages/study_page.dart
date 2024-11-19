@@ -31,9 +31,11 @@ class StudyPageState extends State<StudyPage> {
                 builder: (context, AsyncSnapshot<int> snapshot) {
                   return RefreshIndicator(
                     onRefresh: () async {
-                      await bloc.refreshMessages();
-                      await bloc.deploymentService.getStudyDeploymentStatus(
-                          widget.model.studyDeploymentId);
+                      await Future.wait([
+                        bloc.refreshMessages(),
+                        bloc.deploymentService.getStudyDeploymentStatus(
+                            widget.model.studyDeploymentId),
+                      ]);
                     },
                     child: ListView.builder(
                       // This is +2 bc the first two cards are the study card and the study status card

@@ -108,6 +108,7 @@ class TaskListPageState extends State<TaskListPage>
                             padding: const EdgeInsets.only(
                                 top: 8, bottom: 24, left: 64, right: 64),
                             sliver: SliverPersistentHeader(
+                              pinned: true,
                               delegate: _SliverAppBarDelegate(
                                 TabBar(
                                   controller: _tabController,
@@ -146,7 +147,6 @@ class TaskListPageState extends State<TaskListPage>
                                   ],
                                 ),
                               ),
-                              pinned: true,
                             ),
                           ),
                           SliverList(

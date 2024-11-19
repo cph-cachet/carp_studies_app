@@ -77,11 +77,11 @@ class ScoreboardPersistentHeaderDelegate
           style: scoreNumberStyle.copyWith(
               fontSize: calculateScrollAwareSizing(shrinkOffset,
                   scoreNumberStyleSmall.fontSize!, scoreNumberStyle.fontSize!),
-              color: Theme.of(context).extension<CarpColors>()!.grey900)),
+              color: Theme.of(context).extension<CarpColors>()!.primary)),
       if (shrinkOffset < offsetForShrink)
         Text(locale.translate('cards.scoreboard.tasks'),
             style: scoreTextStyle.copyWith(
-                color: Theme.of(context).extension<CarpColors>()!.grey900)),
+                color: Theme.of(context).extension<CarpColors>()!.primary)),
       if (shrinkOffset > offsetForShrink)
         Expanded(
           flex: 0,
@@ -89,7 +89,7 @@ class ScoreboardPersistentHeaderDelegate
             padding: const EdgeInsets.only(left: 8.0),
             child: Text(locale.translate('cards.scoreboard.tasks-short'),
                 style: scoreTextStyle.copyWith(
-                    color: Theme.of(context).extension<CarpColors>()!.grey900)),
+                    color: Theme.of(context).extension<CarpColors>()!.primary)),
           ),
         )
     ];

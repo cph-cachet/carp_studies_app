@@ -396,7 +396,7 @@ class StudyAppBLoC extends ChangeNotifier {
 
   /// The list of all devices in this deployment.
   Iterable<DeviceViewModel> get deploymentDevices =>
-      Sensing().deploymentDevices!.map((device) => DeviceViewModel(device));
+      Sensing().deploymentDevices.map((device) => DeviceViewModel(device));
 
   /// Start sensing.
   Future<void> start() async {

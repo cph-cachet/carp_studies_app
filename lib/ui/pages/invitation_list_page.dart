@@ -38,7 +38,8 @@ class InvitationListPage extends StatelessWidget {
           return CustomScrollView(
             slivers: [
               SliverAppBar(
-                backgroundColor: Theme.of(context).colorScheme.surfaceVariant,
+                backgroundColor:
+                    Theme.of(context).colorScheme.surfaceContainerHighest,
                 title: const CarpAppBar(),
                 centerTitle: true,
                 pinned: true,

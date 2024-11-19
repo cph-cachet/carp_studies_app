@@ -44,8 +44,8 @@ class LocationUsageDialog {
           },
           style: ButtonStyle(
             backgroundColor:
-                MaterialStateProperty.all(Theme.of(context).primaryColor),
-            foregroundColor: MaterialStateProperty.all(
+                WidgetStateProperty.all(Theme.of(context).primaryColor),
+            foregroundColor: WidgetStateProperty.all(
                 Theme.of(context).colorScheme.onPrimary),
           ),
           child: Text(

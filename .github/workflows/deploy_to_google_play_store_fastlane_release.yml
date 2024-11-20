@@ -5,7 +5,7 @@ on:
     push:
         branches:
         - master
-        - '**'
+        - test
 jobs:
     build:
         runs-on: ubuntu-latest
@@ -66,8 +66,8 @@ jobs:
               PLAY_STORE_JSON_KEY: PLAY_STORE_CONFIG.json
             working-directory: android
 
-          - if: github.ref != 'refs/heads/master' 
-            run: fastlane internal
+          - if: github.ref == 'refs/heads/test'
+            run: fastlane test
             env:
               PLAY_STORE_JSON_KEY: PLAY_STORE_CONFIG.json
             working-directory: android

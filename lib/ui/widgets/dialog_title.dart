@@ -43,7 +43,7 @@ class DialogTitle extends StatelessWidget {
                           title,
                         ) +
                         (deviceName != null
-                            ? "${locale.translate(deviceName!)} "
+                            ? " ${locale.translate(deviceName!)} "
                             : "") +
                         (titleEnd != null
                             ? ' ${locale.translate(titleEnd!)}'

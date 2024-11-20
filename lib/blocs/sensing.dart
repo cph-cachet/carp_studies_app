@@ -20,7 +20,7 @@ part of carp_study_app;
 /// added to the [client].
 class Sensing {
   static final Sensing _instance = Sensing._();
-  // StudyDeploymentStatus? _status;
+  StudyDeploymentStatus? _status;
   SmartphoneDeploymentController? _controller;
   DeploymentService? deploymentService;
   Study? _study;
@@ -200,6 +200,19 @@ class Sensing {
       await SmartPhoneClientManager().removeStudy(study!.studyDeploymentId);
     }
   }
+
+  /// Get the last known status for the current study deployment.
+  /// Use [getStudyDeploymentStatus] to refresh the status from CAWS.
+  /// Returns null if the study is not yet deployed on this phone.
+  StudyDeploymentStatus? get studyDeploymentStatus => _status;
+
+  /// Get the status for the current study deployment.
+  /// Returns null if the study is not yet deployed on this phone.
+  Future<StudyDeploymentStatus?> getStudyDeploymentStatus() async =>
+      studyDeploymentId != null
+          ? _status = await deploymentService
+              ?.getStudyDeploymentStatus(studyDeploymentId!)
+          : null;
 
   /// Translate the title and description of all AppTask in the study protocol
   /// of the current master deployment.

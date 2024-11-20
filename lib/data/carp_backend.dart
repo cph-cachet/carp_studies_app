@@ -135,7 +135,6 @@ class CarpBackend {
   List<ActiveParticipationInvitation> invitations = [];
 
   /// Get the list of active invitations for this user from the [CarpParticipationService].
-
   Future<List<ActiveParticipationInvitation>> getInvitations() async {
     CarpParticipationService().configureFrom(CarpService());
 

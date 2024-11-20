@@ -234,10 +234,10 @@ packages:
     dependency: "direct main"
     description:
       name: carp_backend
-      sha256: "2eac83c8da08c643e57e2bb92247eabf45501517c0938af976d4bc902e61ff59"
+      sha256: "0d05b53ccd5b9e26d95fdc9014abfea2e5ca5a564e3b09ba7997bf56db7a1513"
       url: "https://pub.dev"
     source: hosted
-    version: "1.9.2"
+    version: "1.9.3"
   carp_connectivity_package:
     dependency: "direct main"
     description:
@@ -578,10 +578,10 @@ packages:
     dependency: "direct main"
     description:
       name: fl_chart
-      sha256: "94307bef3a324a0d329d3ab77b2f0c6e5ed739185ffc029ed28c0f9b019ea7ef"
+      sha256: "974ea2a8096b612d233d07f475aa91111708e4de99d26f448aa756d46da7f19e"
       url: "https://pub.dev"
     source: hosted
-    version: "0.69.0"
+    version: "0.69.1"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -615,10 +615,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_blue_plus
-      sha256: "160ddacb839b244f86e96fbee7e9a823e5caf1b046ccf1f0a7901f9d5aa39eb9"
+      sha256: d2ac9fac56c4b3b08eb68752380e2d45e64c61db629b70e61bb36c95cb65d431
       url: "https://pub.dev"
     source: hosted
-    version: "1.34.4"
+    version: "1.34.5"
   flutter_launcher_icons:
     dependency: "direct main"
     description:
@@ -668,10 +668,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_markdown
-      sha256: f0e599ba89c9946c8e051780f0ec99aba4ba15895e0380a7ab68f420046fc44e
+      sha256: "999a4e3cb3e1532a971c86d6c73a480264f6a687959d4887cb4e2990821827e4"
       url: "https://pub.dev"
     source: hosted
-    version: "0.7.4+1"
+    version: "0.7.4+2"
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:
@@ -926,10 +926,10 @@ packages:
     dependency: "direct dev"
     description:
       name: json_serializable
-      sha256: ea1432d167339ea9b5bb153f0571d0039607a873d6e04e0117af043f14a1fd4b
+      sha256: c2fcb3920cf2b6ae6845954186420fca40bc0a8abcc84903b7801f17d7050d7c
       url: "https://pub.dev"
     source: hosted
-    version: "6.8.0"
+    version: "6.9.0"
   just_audio:
     dependency: transitive
     description:
@@ -1446,10 +1446,10 @@ packages:
     dependency: transitive
     description:
       name: permission_handler_html
-      sha256: "6b9cb54b7135073841a35513fba39e598b421702d5f4d92319992fd6eb5532a9"
+      sha256: "38f000e83355abb3392140f6bc3030660cfaef189e1f87824facb76300b4ff24"
       url: "https://pub.dev"
     source: hosted
-    version: "0.1.3+4"
+    version: "0.1.3+5"
   permission_handler_platform_interface:
     dependency: transitive
     description:

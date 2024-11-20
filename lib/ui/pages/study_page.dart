@@ -145,8 +145,7 @@ class StudyPageState extends State<StudyPage> {
 
   Widget _studyStatusCard() {
     return FutureBuilder<StudyDeploymentStatus?>(
-      future: bloc.deploymentService
-          .getStudyDeploymentStatus(widget.model.studyDeploymentId),
+      future: bloc.getStudyDeploymentStatus(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Spacer();

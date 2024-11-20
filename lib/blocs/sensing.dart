@@ -20,6 +20,7 @@ part of carp_study_app;
 /// added to the [client].
 class Sensing {
   static final Sensing _instance = Sensing._();
+  StudyDeploymentStatus? _status;
   SmartphoneDeploymentController? _controller;
   Study? _study;
 
@@ -177,7 +178,7 @@ class Sensing {
   Future<StudyDeploymentStatus?> getStudyDeploymentStatus() async =>
       studyDeploymentId != null
           ? _status = await deploymentService
-              ?.getStudyDeploymentStatus(studyDeploymentId!)
+              .getStudyDeploymentStatus(studyDeploymentId!)
           : null;
 
   /// Translate the title and description of all AppTask in the study protocol

@@ -114,6 +114,7 @@ part 'ui/widgets/studies_material.dart';
 part 'ui/widgets/battery_icon.dart';
 part 'ui/widgets/logout_message.dart';
 part 'ui/widgets/dialog_title.dart';
+part 'ui/widgets/location_usage_dialog.dart';
 
 part 'ui/cards/steps_card.dart';
 part 'ui/cards/heart_rate_card.dart';

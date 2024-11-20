@@ -55,7 +55,6 @@ class StudyAppBLoC extends ChangeNotifier {
   List<Message> _messages = [];
   final StreamController<int> _messageStreamController =
       StreamController.broadcast();
-  final String _healthConnectPackageName = 'com.google.android.apps.healthdata';
 
   /// The state of this BloC.
   StudyAppState get state => _state;
@@ -84,8 +83,6 @@ class StudyAppBLoC extends ChangeNotifier {
   final _scaffoldKey = GlobalKey<ScaffoldMessengerState>();
   GlobalKey<ScaffoldMessengerState> get scaffoldKey => _scaffoldKey;
   State? get scaffoldMessengerState => scaffoldKey.currentState;
-
-  String get healthConnectPackageName => _healthConnectPackageName;
 
   /// Create the BLoC for the app.
   StudyAppBLoC() : super() {
@@ -159,16 +156,24 @@ class StudyAppBLoC extends ChangeNotifier {
     await Settings().init();
     await localizationManager.initialize();
 
+    Sensing();
+
     // Initialize and use the CAWS backend if not in local deployment mode
     if (deploymentMode != DeploymentMode.local) {
       await backend.initialize();
     }
+
+    // Deploy the local protocol if running in local mode
+    if (deploymentMode == DeploymentMode.local) {
+      await deployLocalProtocol();
+    }
+
     _state = StudyAppState.initialized;
     notifyListeners();
     debug('$runtimeType initialized - deployment mode: ${deploymentMode.name}');
   }
 
-  /// Is the phone connected either via wifi or mobile network?
+  /// Is the phone connected to the internet either via wifi or mobile network?
   Future<bool> checkConnectivity() async {
     final List<ConnectivityResult> results =
         await (Connectivity().checkConnectivity());
@@ -178,17 +183,61 @@ class StudyAppBLoC extends ChangeNotifier {
         element == ConnectivityResult.wifi);
   }
 
-  Future<bool> _isHealthConnectInstalled() async {
+  /// Check if the Health database is installed on this phone.
+  ///
+  /// Always returns true on iOS, since Health is part of the OS and hence always installed.
+  /// On Android, returns true if Google Health Connect is installed, false otherwise.
+  Future<bool> isHealthInstalled() async {
+    if (Platform.isIOS) return true;
+
     try {
-      final apps = await appCheck.getInstalledApps();
-      if (apps != null) {
-        return apps.any((app) => app.packageName == _healthConnectPackageName);
-      }
+      final apps = await appCheck.getInstalledApps() ?? [];
+      return apps.any(
+          (app) => app.packageName == LocalSettings.healthConnectPackageName);
     } catch (e) {
-      debug("Error checking Health Connect installation: $e");
+      debug("$runtimeType - Error checking Health Connect installation: $e");
       return false;
     }
-    return false;
+  }
+
+  /// Deploy the local protocol if running in local mode.
+  ///
+  /// We can run the app in local mode to debug a local protocol stored in
+  /// assets/carp/resources/protocol.json
+  ///
+  /// This method will deploy the protocol in the local SmartphoneDeploymentService
+  /// which later will be used for deployment. See [Sensing.deploymentService].
+  Future<void> deployLocalProtocol() async {
+    if (deploymentMode != DeploymentMode.local) return;
+
+    if (hasStudyBeenDeployed) {
+      info('Running in local deployment mode. Note that the local protocol has '
+          'already been deployed and the cached version will be loaded and used. '
+          'If you want to reload a modified protocol, delete the app with the '
+          'cached protocol from the phone before running it.');
+    } else {
+      debug('$runtimeType - deploying local protocol');
+
+      // Get the protocol from the local study protocol manager.
+      // Note that the study id is not used since it always returns the same protocol.
+      var protocol = await LocalResourceManager().getStudyProtocol('');
+
+      // Deploy this protocol using the on-phone deployment service.
+      final status =
+          await SmartphoneDeploymentService().createStudyDeployment(protocol!);
+
+      // Save the participant and study on the phone for use across app restart.
+      var participant = Participant(
+        studyDeploymentId: status.studyDeploymentId,
+        deviceRoleName: status.primaryDeviceStatus?.device.roleName,
+      );
+      LocalSettings().participant = participant;
+
+      bloc.study = SmartphoneStudy(
+        studyDeploymentId: status.studyDeploymentId,
+        deviceRoleName: status.primaryDeviceStatus!.device.roleName,
+      );
+    }
   }
 
   /// Set the active study in the app based on an [invitation].
@@ -253,7 +302,7 @@ class StudyAppBLoC extends ChangeNotifier {
       },
     );
 
-    info('$runtimeType - Study configuration done.');
+    info('Study configuration done.');
     notifyListeners();
     _state = StudyAppState.configured;
   }
@@ -261,25 +310,21 @@ class StudyAppBLoC extends ChangeNotifier {
   /// Does this app use location permissions?
   bool get usingLocationPermissions => true;
 
-  /// Has the informed consent been shown to, and accepted by the user?
+  /// Has the informed consent been accepted by the user?
   bool get hasInformedConsentBeenAccepted =>
       LocalSettings().participant?.hasInformedConsentBeenAccepted ?? false;
 
-  /// Specify if the informed consent been handled.
-  /// This entails that it has been:
-  ///  * shown to the user
-  ///  * accepted by the user
-  ///  * successfully uploaded to CARP
   set hasInformedConsentBeenAccepted(bool accepted) {
     var participant = LocalSettings().participant;
     participant?.hasInformedConsentBeenAccepted = true;
     LocalSettings().participant = participant;
   }
 
-  /// The informed consent has been accepted by the user.
+  /// Mark the informed consent as accepted by the user based on the
+  /// [informedConsentResult].
   ///
   /// This entails that it has been shown to the user and accepted by the user.
-  /// Will upload it to CAWS.
+  /// Will upload it to CAWS (if not running in local deployment mode).
   Future<void> informedConsentHasBeenAccepted(
     RPTaskResult informedConsentResult,
   ) async {
@@ -358,7 +403,7 @@ class StudyAppBLoC extends ChangeNotifier {
 
   /// The list of all devices in this deployment.
   Iterable<DeviceViewModel> get deploymentDevices =>
-      Sensing().deploymentDevices!.map((device) => DeviceViewModel(device));
+      Sensing().deploymentDevices.map((device) => DeviceViewModel(device));
 
   /// Start sensing.
   Future<void> start() async {

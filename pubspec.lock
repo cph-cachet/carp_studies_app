@@ -234,10 +234,10 @@ packages:
     dependency: "direct main"
     description:
       name: carp_backend
-      sha256: "0d05b53ccd5b9e26d95fdc9014abfea2e5ca5a564e3b09ba7997bf56db7a1513"
+      sha256: "2eac83c8da08c643e57e2bb92247eabf45501517c0938af976d4bc902e61ff59"
       url: "https://pub.dev"
     source: hosted
-    version: "1.9.3"
+    version: "1.9.2"
   carp_connectivity_package:
     dependency: "direct main"
     description:
@@ -615,10 +615,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_blue_plus
-      sha256: d2ac9fac56c4b3b08eb68752380e2d45e64c61db629b70e61bb36c95cb65d431
+      sha256: "160ddacb839b244f86e96fbee7e9a823e5caf1b046ccf1f0a7901f9d5aa39eb9"
       url: "https://pub.dev"
     source: hosted
-    version: "1.34.5"
+    version: "1.34.4"
   flutter_launcher_icons:
     dependency: "direct main"
     description:

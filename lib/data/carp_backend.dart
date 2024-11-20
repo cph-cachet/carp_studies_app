@@ -88,6 +88,7 @@ class CarpBackend {
     }
 
     CarpParticipationService().configureFrom(CarpService());
+    CarpDeploymentService().configureFrom(CarpService());
 
     info('$runtimeType initialized - app: $app');
   }
@@ -96,7 +97,6 @@ class CarpBackend {
   Future<CarpUser> authenticate() async {
     user = await CarpAuthService().authenticate();
     info('$runtimeType - User authenticated - user: $user');
-    debug(toJsonString(user));
     return user!;
   }
 
@@ -104,7 +104,6 @@ class CarpBackend {
   Future<CarpUser> refresh() async {
     user = await CarpAuthService().refresh();
     info('$runtimeType - User authenticated via refresh - user: $user');
-    debug(toJsonString(user));
     return user!;
   }
 
@@ -208,8 +207,8 @@ class CarpBackend {
           .participation()
           .setInformedConsent(uploadedConsent);
 
-      info(
-          '$runtimeType - Informed consent document uploaded successfully - deployment id: ${bloc.study?.studyDeploymentId}');
+      info('$runtimeType - Informed consent document uploaded successfully for '
+          'deployment id: ${bloc.study?.studyDeploymentId}');
     } on Exception {
       warning(
           '$runtimeType - Informed consent upload failed for username: $username');

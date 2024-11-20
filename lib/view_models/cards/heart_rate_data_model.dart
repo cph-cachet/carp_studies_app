@@ -52,7 +52,7 @@ class HeartRateCardViewModel extends SerializableViewModel<HourlyHeartRate> {
   }
 }
 
-@JsonSerializable(fieldRename: FieldRename.snake, includeIfNull: false)
+@JsonSerializable(includeIfNull: false)
 class HourlyHeartRate extends DataModel {
   /// A map of heart rate values for each hour of the day.
   ///
@@ -136,7 +136,7 @@ class HourlyHeartRate extends DataModel {
   Map<String, dynamic> toJson() => _$HourlyHeartRateToJson(this);
 }
 
-@JsonSerializable(fieldRename: FieldRename.snake, includeIfNull: false)
+@JsonSerializable(includeIfNull: false)
 class HeartRateMinMaxPrHour {
   double? min;
   double? max;

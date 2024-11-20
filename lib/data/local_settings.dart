@@ -1,27 +1,36 @@
 part of carp_study_app;
 
-/// A local settings manager.
+/// A local settings manager to store settings across app restart.
+///
+/// Settings include:
+///
+///  * [user] - the authentication information on a user
+///  * [participant] - the information on a participant in the current [study]
+///  * [study] - the study running on the phone
 ///
 /// Works as a singleton - use `LocalSettings()` for accessing settings.
 class LocalSettings {
+  /// The package name of Google Health Connect.
+  /// See https://developer.android.com/health-and-fitness/guides/health-connect/develop/get-started#get-client
+  static const healthConnectPackageName = 'com.google.android.apps.healthdata';
+
   // Keys for storing in shared preferences
   static const String userKey = 'user';
   static const String participantKey = 'participant';
   static const String studyKey = 'study';
-  static const String informedConsentAcceptedKey = 'informed_consent_accepted';
+
+  CarpUser? _user;
+  Participant? _participant;
+  SmartphoneStudy? _study;
 
   static final LocalSettings _instance = LocalSettings._();
   factory LocalSettings() => _instance;
   LocalSettings._() : super();
 
-  CarpUser? _user;
-
-  Participant? _participant;
-
-  SmartphoneStudy? _study;
-  bool? _hasInformedConsentBeenAccepted;
-
-  /// The user saved on this device, if any.
+  /// The user cached on this device, if any.
+  ///
+  /// The [user] is the user authenticated to the CAWS backend and stores
+  /// authentication information and access tokens.
   CarpUser? get user {
     if (_user == null) {
       String? userString = Settings().preferences!.getString(userKey);
@@ -35,16 +44,24 @@ class LocalSettings {
 
   set user(CarpUser? user) {
     _user = user;
-    (user != null)
-        ? Settings().preferences!.setString(userKey, jsonEncode(user.toJson()))
-        : Settings().preferences!.remove(userKey);
+    if (user != null) {
+      Settings().preferences!.setString(userKey, jsonEncode(user.toJson()));
+    } else {
+      Settings().preferences!.remove(userKey);
+    }
   }
 
-  /// The participant saved on this device, if any.
+  /// The participant cached on this device, if any.
+  ///
+  /// The [participant] is the participant who is participating in a CARP study
+  /// with a specific study deployment id, and who plays a certain role in this
+  /// study by using a specific device.
+  ///
+  /// The [participant] is typically set based on an invitation set in the
+  /// [StudyAppBLoC.setStudyInvitation] method.
   Participant? get participant {
     if (_participant == null) {
       String? userString = Settings().preferences!.getString(participantKey);
-
       _participant = (userString != null)
           ? Participant.fromJson(jsonDecode(userString) as Map<String, dynamic>)
           : null;
@@ -54,11 +71,13 @@ class LocalSettings {
 
   set participant(Participant? participant) {
     _participant = participant;
-    (participant != null)
-        ? Settings()
-            .preferences!
-            .setString(participantKey, jsonEncode(participant.toJson()))
-        : Settings().preferences!.remove(participantKey);
+    if (participant != null) {
+      Settings()
+          .preferences!
+          .setString(participantKey, jsonEncode(participant.toJson()));
+    } else {
+      Settings().preferences!.remove(participantKey);
+    }
   }
 
   /// The study for the currently running study deployment.
@@ -88,15 +107,14 @@ class LocalSettings {
   /// The study deployment id for the currently running deployment.
   String? get studyDeploymentId => _study?.studyDeploymentId;
 
-  /// Erase all study deployment information cached locally on this phone.
+  /// Erase all [study] information including the [participant] cached
+  /// locally on this phone.
   Future<void> eraseStudyDeployment() async {
     _study = null;
-    _hasInformedConsentBeenAccepted = null;
     _participant = null;
     await Settings().preferences!.remove(participantKey);
 
     await Settings().preferences!.remove(studyKey);
-    await Settings().preferences!.remove(informedConsentAcceptedKey);
     debug('$runtimeType - study deployment erased.');
   }
 
@@ -113,15 +131,6 @@ class LocalSettings {
   Future<String?> get cacheBasePath async => (studyDeploymentId == null)
       ? null
       : await Settings().getCacheBasePath(studyDeploymentId!);
-
-  /// Has the informed consent been shown to, and accepted by the user?
-  bool get hasInformedConsentBeenAccepted => _hasInformedConsentBeenAccepted ??=
-      Settings().preferences!.getBool(informedConsentAcceptedKey) ?? false;
-
-  set hasInformedConsentBeenAccepted(bool accepted) {
-    _hasInformedConsentBeenAccepted = accepted;
-    Settings().preferences!.setBool(informedConsentAcceptedKey, accepted);
-  }
 }
 
 // Need to create our own JSON serializers here, since SmartphoneStudy is not made serializable

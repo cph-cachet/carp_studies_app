@@ -45,7 +45,9 @@ class DialogTitle extends StatelessWidget {
                         (deviceName != null
                             ? "${locale.translate(deviceName!)} "
                             : "") +
-                        (titleEnd != null ? ' ${locale.translate(titleEnd!)}' : ""),
+                        (titleEnd != null
+                            ? ' ${locale.translate(titleEnd!)}'
+                            : ""),
                     style: sectionTitleStyle.copyWith(
                       color: Theme.of(context).primaryColor,
                     ),

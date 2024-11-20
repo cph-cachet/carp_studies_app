@@ -148,7 +148,7 @@
     "pages.devices.connection.step.start.1": "Vælg den",
     "pages.devices.connection.step.start.2": "enhed, du vil forbinde til, og tryk 'Næste'.",
     "pages.devices.connection.step.start.3": "Hvis enheden ikke er på listen, sørg for at den er opladet og tændt. Læse mere under 'Instruktioner'.",
-    "pages.devices.connection.step.confirm.title": "er forbundet!",
+    "pages.devices.connection.step.confirm.title": "Forbundet til",
     "pages.devices.connection.step.confirm.1": "",
     "pages.devices.connection.step.confirm.2": "enheden er nu forbundet til telefonen og vil blive anvendt til data opsamling i studiet.",
     "widgets.logoutmessage.title": "Log ud",

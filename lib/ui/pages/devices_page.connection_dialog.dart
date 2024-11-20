@@ -100,8 +100,8 @@ class _ConnectionDialogState extends State<ConnectionDialog> {
       CurrentStep.instructions: [
         buildTranslatedButton("pages.devices.connection.settings", () {
           Platform.isAndroid
-          ? OpenSettingsPlusAndroid().bluetooth()
-          : OpenSettingsPlusIOS().bluetooth(); 
+              ? OpenSettingsPlusAndroid().bluetooth()
+              : OpenSettingsPlusIOS().bluetooth();
         }, true),
         buildTranslatedButton("pages.devices.connection.ok", () {
           setState(() => currentStep = CurrentStep.scan);

@@ -51,8 +51,10 @@ class _ConnectionDialogState extends State<ConnectionDialog> {
       CurrentStep.scan: const DialogTitle(
         title: "pages.devices.connection.step.start.title",
       ),
-      CurrentStep.instructions: const DialogTitle(
+      CurrentStep.instructions: DialogTitle(
         title: "pages.devices.connection.step.how_to.title",
+        deviceName: selectedDevice?.platformName,
+        titleEnd: "pages.devices.connection.step.how_to.device",
       ),
       CurrentStep.done: DialogTitle(
         title: "pages.devices.connection.step.confirm.title",
@@ -97,7 +99,9 @@ class _ConnectionDialogState extends State<ConnectionDialog> {
       ],
       CurrentStep.instructions: [
         buildTranslatedButton("pages.devices.connection.settings", () {
-          OpenSettingsPlusIOS().bluetooth();
+          Platform.isAndroid
+          ? OpenSettingsPlusAndroid().bluetooth()
+          : OpenSettingsPlusIOS().bluetooth(); 
         }, true),
         buildTranslatedButton("pages.devices.connection.ok", () {
           setState(() => currentStep = CurrentStep.scan);

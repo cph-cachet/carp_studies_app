@@ -20,10 +20,14 @@ part of carp_study_app;
 /// added to the [client].
 class Sensing {
   static final Sensing _instance = Sensing._();
-  StudyDeploymentStatus? _status;
   SmartphoneDeploymentController? _controller;
-  DeploymentService? deploymentService;
   Study? _study;
+
+  /// The deployment service used in this app.
+  DeploymentService get deploymentService =>
+      bloc.deploymentMode == DeploymentMode.local
+          ? SmartphoneDeploymentService()
+          : CarpDeploymentService();
 
   /// The study running on this phone.
   /// Only available after [addStudy] is called.
@@ -34,7 +38,7 @@ class Sensing {
   SmartphoneDeployment? get deployment => _controller?.deployment;
 
   /// The latest status of the study deployment.
-  StudyDeploymentStatus? get status => _status;
+  StudyDeploymentStatus? get status => _controller?.deploymentStatus;
 
   /// The role name of this device in the deployed study.
   String? get deviceRoleName => _study?.deviceRoleName;
@@ -54,12 +58,12 @@ class Sensing {
   List<Probe> get runningProbes =>
       (_controller != null) ? _controller!.executor.probes : [];
 
-  // /// The smartphone (primary device) manager.
-  // SmartphoneDeviceManager get smartphoneDeviceManager =>
-  //     SmartPhoneClientManager().deviceController.smartphoneDeviceManager;
-
-  /// The list of devices in the current deployment.
-  List<DeviceManager>? get deploymentDevices => deployment != null
+  /// The list of all device managers used in the current deployment.
+  ///
+  /// Note that not all available devices on this phone may be used in the
+  /// current deployment. Hence, this method returns the list of device managers
+  /// used in the current deployment.
+  List<DeviceManager> get deploymentDevices => deployment != null
       ? SmartPhoneClientManager()
           .deviceController
           .devices
@@ -68,6 +72,10 @@ class Sensing {
               .any((element) => element.type == manager.type))
           .toList()
       : [];
+
+  /// The smartphone (primary device) manager.
+  SmartphoneDeviceManager get smartphoneDeviceManager =>
+      SmartPhoneClientManager().deviceController.smartphoneDeviceManager;
 
   /// The list of connected devices.
   List<DeviceManager>? get connectedDevices =>
@@ -102,38 +110,6 @@ class Sensing {
     // Set up the devices available on this phone
     DeviceController().registerAllAvailableDevices();
 
-    switch (bloc.deploymentMode) {
-      case DeploymentMode.local:
-        // Use the local, phone-based deployment service.
-        deploymentService = SmartphoneDeploymentService();
-
-        // Get the protocol from the local study protocol manager.
-        // Note that the study id is not used since it always returns the same protocol.
-        var protocol = await LocalResourceManager().getStudyProtocol('');
-
-        // Deploy this protocol using the on-phone deployment service.
-        // Reuse the study deployment id, if this is stored on the phone.
-        _status = await SmartphoneDeploymentService().createStudyDeployment(
-          protocol!,
-          [],
-          bloc.studyDeploymentId,
-        );
-
-        // Save the correct deployment id on the phone for later use.
-        bloc.studyDeploymentId = _status?.studyDeploymentId;
-        bloc.deviceRoleName = _status?.primaryDeviceStatus?.device.roleName;
-
-        break;
-      case DeploymentMode.production:
-      case DeploymentMode.test:
-      case DeploymentMode.dev:
-        // Use the CARP deployment service which can download a protocol from CAWS
-        CarpDeploymentService().configureFrom(CarpService());
-        deploymentService = CarpDeploymentService();
-
-        break;
-    }
-
     // Register the CARP data manager for uploading data back to CAWS.
     // This is needed in both LOCAL and CARP deployments, since a local study
     // protocol may still upload to CAWS
@@ -155,14 +131,11 @@ class Sensing {
   Future<void> addStudy() async {
     assert(SmartPhoneClientManager().isConfigured,
         'The client manager is not yet configured. Call SmartPhoneClientManager().configure() before adding a study.');
-    assert(bloc.studyDeploymentId != null,
-        'No study deployment ID is provided. Cannot start deployment w/o an id.');
+    assert(bloc.study != null,
+        'No study is provided. Cannot start deployment w/o a study.');
 
-    // Define the study and add it to the client.
-    _study = await SmartPhoneClientManager().addStudy(
-      bloc.studyDeploymentId!,
-      bloc.deviceRoleName!,
-    );
+    // Add the study to the client.
+    _study = await SmartPhoneClientManager().addStudy(bloc.study!);
 
     // Get the study controller and try to deploy the study.
     //
@@ -170,7 +143,8 @@ class Sensing {
     // been cached locally and the local version will be used pr. default.
     // If not deployed before (i.e., cached) the study deployment will be
     // fetched from the deployment service.
-    _controller = SmartPhoneClientManager().getStudyRuntime(study!);
+    _controller =
+        SmartPhoneClientManager().getStudyRuntime(study!.studyDeploymentId);
     await controller?.tryDeployment(useCached: true);
 
     // Make sure to translate the user tasks in the study protocol before using
@@ -184,11 +158,13 @@ class Sensing {
     controller?.measurements
         .listen((measurement) => debugPrint(toJsonString(measurement)));
 
-    info('$runtimeType study added: $studyDeploymentId');
+    info('$runtimeType - Study added, deployment id: $studyDeploymentId');
   }
 
   Future<void> removeStudy() async {
-    if (study != null) await SmartPhoneClientManager().removeStudy(study!);
+    if (study != null) {
+      await SmartPhoneClientManager().removeStudy(study!.studyDeploymentId);
+    }
   }
 
   /// Translate the title and description of all AppTask in the study protocol

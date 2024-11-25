@@ -61,6 +61,22 @@ class HomePageState extends State<HomePage> {
     //  - starting sensing
     askForLocationPermissions(context)
         .then((_) => bloc.configureStudy().then((_) => bloc.start()));
+
+    if (Platform.isAndroid) {
+      // Check if HealthConnect is installed
+      _checkHealthConnectInstallation();
+    }
+  }
+
+  Future<void> _checkHealthConnectInstallation() async {
+    bool isInstalled = await bloc.isHealthInstalled();
+    if (!isInstalled) {
+      showDialog<void>(
+        context: context,
+        barrierDismissible: true,
+        builder: (context) => InstallHealthConnectDialog(context),
+      );
+    }
   }
 
   @override
@@ -73,7 +89,6 @@ class HomePageState extends State<HomePage> {
     // Listen for user task notification clicked in the OS
     AppTaskController().userTaskEvents.listen((userTask) {
       if (userTask.state == UserTaskState.notified) {
-        debug('Notification for task id: ${userTask.id} was clicked.');
         userTask.onStart();
         if (userTask.hasWidget) context.push('/task/${userTask.id}');
       }

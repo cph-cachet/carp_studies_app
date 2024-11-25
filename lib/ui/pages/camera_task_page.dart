@@ -16,8 +16,8 @@ class CameraTaskPageState extends State<CameraTaskPage> {
   @override
   Widget build(BuildContext context) => PopScope(
         canPop: true,
-        onPopInvoked: (didPop) async =>
-            _showCancelConfirmationDialog() as FutureOr<bool>,
+        // onPopInvoked: (didPop) async =>
+        //     _showCancelConfirmationDialog() as FutureOr<bool>,
         child: Scaffold(
           body: Container(
               padding: const EdgeInsets.symmetric(horizontal: 15),

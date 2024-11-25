@@ -49,12 +49,7 @@ class CarpBackend {
       );
 
   /// The CAWS app configuration.
-  late final CarpApp _app = CarpApp(
-    name: "CAWS @ DTU",
-    uri: uri,
-    studyId: bloc.studyId,
-    studyDeploymentId: bloc.studyDeploymentId,
-  );
+  late final CarpApp _app = CarpApp(name: "CAWS @ DTU", uri: uri);
 
   CarpApp get app => _app;
 
@@ -93,6 +88,7 @@ class CarpBackend {
     }
 
     CarpParticipationService().configureFrom(CarpService());
+    CarpDeploymentService().configureFrom(CarpService());
 
     info('$runtimeType initialized - app: $app');
   }
@@ -101,7 +97,6 @@ class CarpBackend {
   Future<CarpUser> authenticate() async {
     user = await CarpAuthService().authenticate();
     info('$runtimeType - User authenticated - user: $user');
-    debug(toJsonString(user));
     return user!;
   }
 
@@ -109,7 +104,6 @@ class CarpBackend {
   Future<CarpUser> refresh() async {
     user = await CarpAuthService().refresh();
     info('$runtimeType - User authenticated via refresh - user: $user');
-    debug(toJsonString(user));
     return user!;
   }
 
@@ -128,11 +122,18 @@ class CarpBackend {
 
   /// The user name of the user, if authenticated.
   String? get username => user?.username;
+
+  /// The Oauth token of the user, if authenticated.
   OAuthToken? get oauthToken => user?.token;
 
-  /// The list of invitation for this user.
+  /// The participant of this study, if an invitation has been accepted.
+  Participant? get participant => LocalSettings().participant;
+
+  /// The list of invitations for this user.
+  /// Use [getInvitations] to get / refresh the list of invitations from CAWS.
   List<ActiveParticipationInvitation> invitations = [];
 
+  /// Get the list of active invitations for this user from the [CarpParticipationService].
   Future<List<ActiveParticipationInvitation>> getInvitations() async {
     CarpParticipationService().configureFrom(CarpService());
 
@@ -143,6 +144,9 @@ class CarpBackend {
     // have a smartphone as a device in [ActiveParticipationInvitation.assignedDevices] list
     // (i.e. the invitation is for a smartphone).
     // This is done to avoid showing invitations for other devices (e.g. [WebBrowser]).
+    //
+    // TODO: Do we need to remove invitations which are not for this user?
+    //  - see https://github.com/cph-cachet/carp.core-kotlin/issues/482
     invitations.removeWhere((invitation) =>
         invitation.assignedDevices
             ?.any((device) => device.device is! Smartphone) ??
@@ -151,12 +155,32 @@ class CarpBackend {
     return invitations;
   }
 
+  /// Set the [study] used on this phone.
+  set study(SmartphoneStudy study) {
+    CarpService().study = study;
+    CarpParticipationService().study = study;
+    CarpDeploymentService().study = study;
+    CarpDataStreamService().study = study;
+  }
+
   /// Upload the result of an informed consent flow. Returns the uploaded
-  /// consent document as retrieved from the server.
+  /// consent document.
   ///
   /// Looks for the first instance of a [RPConsentSignatureResult] in [consent]
   /// and uploads this.
-  Future<ConsentDocument?> uploadInformedConsent(RPTaskResult consent) async {
+  Future<InformedConsentInput?> uploadInformedConsent(
+    RPTaskResult consent,
+  ) async {
+    if (user == null) {
+      warning('$runtimeType - No user authenticated.');
+      return null;
+    }
+    if (participant == null) {
+      warning(
+          '$runtimeType - No participant (no invitation has been accepted).');
+      return null;
+    }
+
     late RPConsentSignatureResult signedConsent;
     try {
       signedConsent = consent.results.values.firstWhere(
@@ -168,14 +192,23 @@ class CarpBackend {
       return null;
     }
 
-    signedConsent.userID = username;
-    Map<String, dynamic> json = signedConsent.toJson();
+    signedConsent.userId = username;
+    final json = toJsonString(signedConsent.toJson());
 
-    ConsentDocument? uploadedConsent;
+    final uploadedConsent = InformedConsentInput(
+      userId: user!.id,
+      name: user!.username,
+      consent: json,
+      signatureImage: signedConsent.signature?.signatureImage ?? '',
+    );
+
     try {
-      uploadedConsent = await CarpService().createConsentDocument(json);
-      info(
-          '$runtimeType - Informed consent document uploaded successfully - id: ${uploadedConsent.id}');
+      await CarpParticipationService()
+          .participation()
+          .setInformedConsent(uploadedConsent);
+
+      info('$runtimeType - Informed consent document uploaded successfully for '
+          'deployment id: ${bloc.study?.studyDeploymentId}');
     } on Exception {
       warning(
           '$runtimeType - Informed consent upload failed for username: $username');

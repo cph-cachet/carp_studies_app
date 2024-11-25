@@ -36,7 +36,8 @@ class CarpStudyAppState extends State<CarpStudyApp> {
         builder: (BuildContext context, GoRouterState state, Widget child) =>
             HomePage(child: child),
         routes: [
-          // This is the root route, handling the onboarding. Checks if;
+          // This is the root route, handling the onboarding.
+          // The flow of logic is:
           //  - do we run locally and need authentication
           //  - the user is authenticated, if not show login page
           //  - a study is deployed, if not show list of invitations for the user
@@ -157,7 +158,7 @@ class CarpStudyAppState extends State<CarpStudyApp> {
       GoRoute(
         path: InvitationListPage.route,
         parentNavigatorKey: _rootNavigatorKey,
-        redirect: (context, state) => bloc.studyId != null
+        redirect: (context, state) => bloc.study != null
             ? InformedConsentPage.route
             : (bloc.user == null ? LoginPage.route : null),
         builder: (context, state) => InvitationListPage(

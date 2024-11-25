@@ -34,7 +34,7 @@ class StepsCardViewModel extends SerializableViewModel<WeeklySteps> {
 }
 
 /// Weekly steps organized by the day of the week.
-@JsonSerializable(fieldRename: FieldRename.snake, includeIfNull: false)
+@JsonSerializable(includeIfNull: false)
 class WeeklySteps extends DataModel {
   /// A map of weekly steps organized by the day of the week.
   ///

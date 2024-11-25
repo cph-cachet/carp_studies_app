@@ -30,7 +30,7 @@ class MobilityCardViewModel extends SerializableViewModel<WeeklyMobility> {
 ///
 /// All organized pr week day. In accordance with Dart [DateTime] a week
 /// starts with Monday, which has the value 1.
-@JsonSerializable(fieldRename: FieldRename.snake, includeIfNull: false)
+@JsonSerializable(includeIfNull: false)
 class WeeklyMobility extends DataModel {
   /// A map of weekly data organized by the day of the week.
   Map<int, DailyMobility> weekMobility = {};
@@ -62,7 +62,7 @@ class WeeklyMobility extends DataModel {
 }
 
 /// Mobility features for a weekday.
-@JsonSerializable(fieldRename: FieldRename.snake, includeIfNull: false)
+@JsonSerializable(includeIfNull: false)
 class DailyMobility extends DailyMeasure {
   final int places;
   final int homeStay;

@@ -16,11 +16,7 @@ update_fastlane
 default_platform(:android)
 
 platform :android do
-  desc "Runs all the tests"
-  lane :test do
-    gradle(task: "test")
-  end
-
+  
   desc "Submit a new release build to Google Play's Production track"
   lane :release do
     sh "flutter clean"

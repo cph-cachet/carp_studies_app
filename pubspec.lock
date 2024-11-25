@@ -290,16 +290,17 @@ packages:
     dependency: "direct main"
     description:
       name: carp_movesense_package
-      sha256: "2ca40c7f62f6d0371690530ce066cd84c2a6011a2cf09b2df3910a2518f4a75d"
+      sha256: "2ce8b7808c0217ddb6f573ab765c505c6b5a6137ba43875c676cdb9fc1e4bf75"
       url: "https://pub.dev"
     source: hosted
-    version: "1.7.1"
+    version: "1.7.2"
   carp_polar_package:
     dependency: "direct main"
     description:
-      path: "../carp/carp.sensing-flutter/packages/carp_polar_package"
-      relative: true
-    source: path
+      name: carp_polar_package
+      sha256: fa5c45f902f42ec7c1c91337eb57146ee9f425c40f6b35bdb8210fa452c9acdd
+      url: "https://pub.dev"
+    source: hosted
     version: "1.6.1"
   carp_serializable:
     dependency: "direct main"

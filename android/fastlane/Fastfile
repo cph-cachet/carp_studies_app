@@ -19,15 +19,22 @@ platform :android do
   
   desc "Submit a new release build to Google Play's Production track"
   lane :release do
-    sh "flutter clean"
-    sh "flutter pub get"
-    sh "flutter pub upgrade"
-    sh "flutter build appbundle --release --no-deferred-components --no-tree-shake-icons"
+    current_version_code = google_play_track_version_codes(track: 'internal')
+    pubspec_content = YAML.load_file('../../pubspec.yaml')
+    version_string = pubspec_content['version']
+    version_parts = version_string.split('+')
+    if version_parts.size == 2
+      version_number = version_parts[1].to_i
+      if version_number >= current_version_code
+        sh "flutter clean"
+        sh "flutter pub get"
+        sh "flutter pub upgrade"
+        sh "flutter build appbundle --release --no-deferred-components --no-tree-shake-icons"
 
-    upload_to_play_store(
-      track: 'production',
-      aab: '../build/app/outputs/bundle/release/app-release.aab',
-    )
+        upload_to_play_store(
+          track: 'production',
+          aab: '../build/app/outputs/bundle/release/app-release.aab',
+        )
   end
 
   desc "Upload to internal testing track"

@@ -1,7 +1,7 @@
 name: carp_study_app
 description: The generic CARP study app.
 publish_to: "none"
-version: 2.2.3+41
+version: 3.0.0+44
 
 environment:
   sdk: ">=3.2.0 <4.0.0"
@@ -19,9 +19,9 @@ dependencies:
   carp_survey_package: ^1.8.2
   carp_audio_package: ^1.8.0
   carp_esense_package: ^1.6.0
-  carp_polar_package: ^1.6.0
+  carp_polar_package: ^1.6.1
   carp_health_package: ^2.11.0
-  carp_movesense_package: ^1.7.1
+  carp_movesense_package: ^1.7.2
 
   carp_webservices: ^3.5.0
   carp_backend: ^1.9.2

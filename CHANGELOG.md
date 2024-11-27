@@ -1,3 +1,9 @@
+## 3.0.0
+
+- Changes of camelCase to snake_case in the research package make the app backwards incompatible.
+- Fix of bluetooth connection dialog for android.
+- Fix of local deployment mode.
+
 ## 2.2.3
 
 - Fixing login issue with going back to invitations list page

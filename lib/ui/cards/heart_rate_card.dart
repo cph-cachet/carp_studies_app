@@ -220,7 +220,7 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
                     ),
                   ),
                   TextSpan(
-                    text: "\n${rod.fromY.toInt()} - ${rod.toY.toInt()}",
+                    text: "\n${rod.fromY.toInt()}-${rod.toY.toInt()}",
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 30,
@@ -290,10 +290,9 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
                 dashArray: [3, 2]),
             verticalInterval: 1 / 24,
             checkToShowVerticalLine: (value) {
-              if (value == 1 / 4) return true;
-              if (value == 12 / 24) return true;
-              if (value == 18 / 24) return true;
-              if (value == 24 / 24) return true;
+              if ((value * 24).round() == 6) return true;
+              if ((value * 24).round() == 12) return true;
+              if ((value * 24).round() == 18) return true;
               return false;
             }),
         borderData: FlBorderData(

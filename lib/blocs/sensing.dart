@@ -20,6 +20,7 @@ part of carp_study_app;
 /// added to the [client].
 class Sensing {
   static final Sensing _instance = Sensing._();
+  StudyDeploymentStatus? _status;
   SmartphoneDeploymentController? _controller;
   Study? _study;
 

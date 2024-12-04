@@ -224,7 +224,7 @@ class StudyPageState extends State<StudyPage> {
   static Map<StudyDeploymentStatusTypes, Color> studyStatusColors = {
     StudyDeploymentStatusTypes.Invited: CACHET.DEPLOYMENT_INVITED,
     StudyDeploymentStatusTypes.DeployingDevices: CACHET.DEPLOYMENT_DEPLOYING,
-    StudyDeploymentStatusTypes.DeploymentReady: CACHET.DEPLOYMENT_RUNNING,
+    StudyDeploymentStatusTypes.Running: CACHET.DEPLOYMENT_RUNNING,
     StudyDeploymentStatusTypes.Stopped: CACHET.DEPLOYMENT_STOPPED,
   };
 

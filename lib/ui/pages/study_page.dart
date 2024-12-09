@@ -162,6 +162,9 @@ class StudyPageState extends State<StudyPage> {
         return Card(
           margin: const EdgeInsets.all(16.0),
           color: Theme.of(context).extension<CarpColors>()!.grey50,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16.0),
+          ),
           child: Container(
             decoration: BoxDecoration(
                 border: Border.all(

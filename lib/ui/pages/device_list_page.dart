@@ -49,87 +49,118 @@ class DeviceListPageState extends State<DeviceListPage> {
   Widget build(BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;
     return Scaffold(
-        backgroundColor:
-            Theme.of(context).extension<CarpColors>()!.backgroundGray,
-        body: SafeArea(
-            child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: const CarpAppBar(hasProfileIcon: true),
+      backgroundColor:
+          Theme.of(context).extension<CarpColors>()!.backgroundGray,
+      body: SafeArea(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(vertical: 8.0, horizontal: 10),
+              child: const CarpAppBar(hasProfileIcon: true),
+            ),
+            Container(
+              color: Colors.transparent,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(locale.translate("pages.devices.message"),
+                          style: aboutCardSubtitleStyle),
+                      const SizedBox(height: 15),
+                    ],
+                  ),
+                ),
               ),
-              Container(
-                  color: Theme.of(context).colorScheme.secondary,
-                  child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(locale.translate("pages.devices.message"),
-                                    style: aboutCardSubtitleStyle),
-                                const SizedBox(height: 15),
-                              ])))),
-              Expanded(
-                  flex: 4,
-                  child: CustomScrollView(slivers: [
-                    ..._smartphoneDeviceList(locale),
-                    if (_hardwareDevices.isNotEmpty)
-                      ..._hardwareDevicesList(locale),
-                    if (_onlineServices.isNotEmpty)
-                      ..._onlineServicesList(locale),
-                  ]))
-            ])));
+            ),
+            Expanded(
+              flex: 4,
+              child: CustomScrollView(
+                slivers: [
+                  ..._smartphoneDeviceList(locale),
+                  if (_hardwareDevices.isNotEmpty)
+                    ..._hardwareDevicesList(locale),
+                  if (_onlineServices.isNotEmpty)
+                    ..._onlineServicesList(locale),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   /// The list of smartphones - which is a list with only one smartphone.
   List<Widget> _smartphoneDeviceList(RPLocalizations locale) => [
         DevicesPageListTitle(locale: locale, type: DevicesPageTypes.phone),
         SliverList(
-            delegate: SliverChildBuilderDelegate(
-          (BuildContext context, int index) => ListenableBuilder(
+          delegate: SliverChildBuilderDelegate(
+            childCount: _smartphoneDevice.length,
+            (BuildContext context, int index) => ListenableBuilder(
               listenable: _smartphoneDevice[index],
               builder: (BuildContext context, Widget? widget) => Center(
-                      child: StudiesMaterial(
-                          child: _cardListBuilder(
-                              _smartphoneDevice[index].icon!,
-                              _smartphoneDevice[index].phoneInfo['name']!, (
-                    "${_smartphoneDevice[index].phoneInfo["model"]!} - ${_smartphoneDevice[index].phoneInfo["version"]!}",
-                    _smartphoneDevice[index].batteryLevel ?? 0,
-                  ))))),
-          childCount: _smartphoneDevice.length,
-        )),
+                child: StudiesMaterial(
+                  backgroundColor:
+                      Theme.of(context).extension<CarpColors>()!.grey50!,
+                  child: _cardListBuilder(
+                    _smartphoneDevice[index].icon!,
+                    _smartphoneDevice[index].phoneInfo['name']!,
+                    (
+                      "${_smartphoneDevice[index].phoneInfo["model"]!} - ${_smartphoneDevice[index].phoneInfo["version"]!}",
+                      _smartphoneDevice[index].batteryLevel ?? 0,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
       ];
 
   /// The list of connected hardware devices (like a Polar sensor)
   List<Widget> _hardwareDevicesList(RPLocalizations locale) => [
         DevicesPageListTitle(locale: locale, type: DevicesPageTypes.devices),
         SliverList(
-          delegate:
-              SliverChildBuilderDelegate((BuildContext context, int index) {
-            DeviceViewModel device = _hardwareDevices[index];
-            return _devicesPageCardStream(
+          delegate: SliverChildBuilderDelegate(
+            childCount: _hardwareDevices.length,
+            (BuildContext context, int index) {
+              DeviceViewModel device = _hardwareDevices[index];
+              return _devicesPageCardStream(
                 device.statusEvents,
+                DeviceStatus.unknown,
                 () => _cardListBuilder(
-                    device.icon!,
-                    locale.translate(device.typeName),
-                    (device.name, device.batteryLevel ?? 0),
-                    enableFeedback: true,
-                    onTap: () async => await _hardwareDeviceClicked(device),
-                    trailing: device.getDeviceStatusIcon is String
-                        ? Text(
-                            locale
-                                .translate(device.getDeviceStatusIcon as String)
-                                .toUpperCase(),
-                            style: aboutCardTitleStyle.copyWith(
-                                color: Theme.of(context).primaryColor))
-                        : device.getDeviceStatusIcon as Icon),
-                DeviceStatus.unknown);
-          }, childCount: _hardwareDevices.length),
+                  device.icon!,
+                  locale.translate(device.typeName),
+                  (device.name, device.batteryLevel ?? 0),
+                  enableFeedback: true,
+                  onTap: () async => await _hardwareDeviceClicked(device),
+                  trailing: device.getDeviceStatusIcon is Icon
+                      ? device.getDeviceStatusIcon as Icon
+                      : Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 8),
+                          decoration: BoxDecoration(
+                              color: CACHET.DEPLOYMENT_DEPLOYING,
+                              borderRadius: BorderRadius.circular(100)),
+                          child: Text(
+                              locale
+                                  .translate(
+                                      device.getDeviceStatusIcon as String)
+                                  .toUpperCase(),
+                              style: aboutCardTitleStyle.copyWith(
+                                  color: Colors.white)),
+                        ),
+                ),
+              );
+            },
+          ),
         ),
       ];
 
@@ -138,29 +169,29 @@ class DeviceListPageState extends State<DeviceListPage> {
         DevicesPageListTitle(locale: locale, type: DevicesPageTypes.services),
         SliverList(
           delegate: SliverChildBuilderDelegate(
+            childCount: _onlineServices.length,
             (BuildContext context, int index) {
               DeviceViewModel service = _onlineServices[index];
               return _devicesPageCardStream(
-                  service.statusEvents,
-                  () => _cardListBuilder(
-                        service.icon!,
-                        locale.translate(service.typeName),
-                        null,
-                        trailing: service.getServiceStatusIcon is String
-                            ? Text(
-                                locale
-                                    .translate(
-                                        service.getServiceStatusIcon as String)
-                                    .toUpperCase(),
-                                style: aboutCardTitleStyle.copyWith(
-                                    color: Theme.of(context).primaryColor))
-                            : service.getServiceStatusIcon as Icon,
-                        isThreeLine: false,
-                        onTap: () async => await _onlineServiceClicked(service),
-                      ),
-                  DeviceStatus.unknown);
+                service.statusEvents,
+                DeviceStatus.unknown,
+                () => _cardListBuilder(
+                  service.icon!,
+                  locale.translate(service.typeName),
+                  null,
+                  trailing: service.getServiceStatusIcon is String
+                      ? Text(
+                          locale
+                              .translate(service.getServiceStatusIcon as String)
+                              .toUpperCase(),
+                          style: aboutCardTitleStyle.copyWith(
+                              color: CACHET.DEPLOYMENT_DEPLOYING))
+                      : service.getServiceStatusIcon as Icon,
+                  isThreeLine: false,
+                  onTap: () async => await _onlineServiceClicked(service),
+                ),
+              );
             },
-            childCount: _onlineServices.length,
           ),
         ),
       ];
@@ -179,6 +210,7 @@ class DeviceListPageState extends State<DeviceListPage> {
         isThreeLine: isThreeLine,
         leading: Column(
           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [leading],
         ),
         title: Column(
@@ -194,12 +226,14 @@ class DeviceListPageState extends State<DeviceListPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(subtitle.$1),
-                  BatteryPercentage(batteryLevel: subtitle.$2),
+                  if (trailing is Icon)
+                    BatteryPercentage(batteryLevel: subtitle.$2),
                 ],
               )
             : null,
         trailing: Column(
           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             if (trailing != null) trailing,
           ],
@@ -209,11 +243,12 @@ class DeviceListPageState extends State<DeviceListPage> {
 
   Widget _devicesPageCardStream<T>(
     Stream<T> stream,
-    Widget Function() childBuilder,
     T? initialData,
+    Widget Function() childBuilder,
   ) =>
       Center(
         child: StudiesMaterial(
+          backgroundColor: Theme.of(context).extension<CarpColors>()!.grey50!,
           child: StreamBuilder<T>(
             stream: stream,
             initialData: initialData,

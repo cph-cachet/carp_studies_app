@@ -17,7 +17,6 @@
     "pages.task_list.task.seconds_remaining": "segundo restante",
     "pages.task_list.task.seconds_remaining_plural": "segundos restantes",
     "pages.task_list.no_tasks": "No tienes tareas pendientes.\n Vuelve a comprobar más tarde.",
-    "pages.data_viz.hello": "Hola",
     "pages.data_viz.thanks": "Gracias por participar en este estudio. Este es un resumen de tu contribución en el estudio.",
     "pages.data_viz.no_data": "Sin datos para mostrar",
     "cards.scoreboard.days": "Dias en el estudio",

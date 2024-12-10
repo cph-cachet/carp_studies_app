@@ -90,9 +90,12 @@ class TaskListPageState extends State<TaskListPage>
                                 alignment: Alignment.centerLeft,
                                 child: Text(
                                   locale.translate('pages.task_list.title'),
-                                  style: dataCardTitleStyle.copyWith(
-                                      color: Theme.of(context).primaryColor,
-                                      fontWeight: FontWeight.bold),
+                                  style: aboutStudyCardTitleStyle.copyWith(
+                                    color: Theme.of(context)
+                                        .extension<CarpColors>()!
+                                        .grey900,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ),
                             ),

@@ -2,12 +2,6 @@ part of carp_study_app;
 
 class HeartRateCardWidget extends StatefulWidget {
   final HeartRateCardViewModel model;
-  static const colors = [
-    Color.fromARGB(255, 243, 54, 32),
-    Color.fromARGB(255, 179, 179, 181),
-    Color.fromARGB(70, 0, 0, 0),
-  ];
-
   const HeartRateCardWidget(this.model, {super.key});
 
   factory HeartRateCardWidget.withSampleData(HeartRateCardViewModel model) =>
@@ -57,10 +51,6 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
             StreamBuilder(
               stream: widget.model.heartRateStream,
               builder: (context, AsyncSnapshot<double> snapshot) {
-                // animationController.duration = Duration(
-                //     milliseconds: 1000 ~/
-                //         (((widget.model.currentHeartRate ?? 0) + 1) / 60));
-
                 return Column(
                   children: [
                     ChartsLegend(
@@ -69,7 +59,7 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
                             color: Theme.of(context).primaryColor),
                         heroTag: 'HeartRate-card',
                         values: const [],
-                        colors: HeartRateCardWidget.colors),
+                        colors: [CACHET.HEART_RATE_RED]),
                     getDailyRange,
                     SizedBox(
                       height: 240,
@@ -174,7 +164,7 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
                             .animate(animationController),
                         child: Icon(
                           Icons.favorite_outline_rounded,
-                          color: HeartRateCardWidget.colors[0],
+                          color: CACHET.HEART_RATE_RED,
                           size: 32,
                         ),
                       ),
@@ -182,7 +172,7 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
                     Text(
                       locale.translate('cards.heartrate.bpm'),
                       style: hrVisualisationTextStyle(
-                          fontSize: 20, color: HeartRateCardWidget.colors[0]),
+                          fontSize: 20, color: CACHET.HEART_RATE_RED),
                     ),
                   ],
                 ),
@@ -364,7 +354,7 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
                   BarChartRodData(
                     fromY: value.value.min,
                     toY: value.value.max ?? 0,
-                    color: HeartRateCardWidget.colors[0],
+                    color: CACHET.HEART_RATE_RED,
                     width: 6,
                   ),
                 ],

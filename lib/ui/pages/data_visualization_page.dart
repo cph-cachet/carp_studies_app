@@ -28,7 +28,7 @@ class _DataVisualizationPageState extends State<DataVisualizationPage> {
               child: const CarpAppBar(hasProfileIcon: true),
             ),
             Container(
-              color: Theme.of(context).colorScheme.secondary,
+              color: Colors.transparent,
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15),
                 child: Align(
@@ -37,15 +37,13 @@ class _DataVisualizationPageState extends State<DataVisualizationPage> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        '${locale.translate('pages.data_viz.hello')} ${bloc.friendlyUsername}'
-                            .toUpperCase(),
-                        style: dataCardTitleStyle.copyWith(
-                            color: Theme.of(context).primaryColor),
-                      ),
-                      Text(locale.translate('pages.data_viz.thanks'),
-                          style: aboutCardSubtitleStyle),
-                      const SizedBox(height: 15),
+                      Text(locale.translate('pages.data_viz.title'),
+                          style: aboutStudyCardTitleStyle.copyWith(
+                            color: Theme.of(context)
+                                .extension<CarpColors>()!
+                                .grey900,
+                            fontWeight: FontWeight.bold,
+                          )),
                     ],
                   ),
                 ),
@@ -57,7 +55,19 @@ class _DataVisualizationPageState extends State<DataVisualizationPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: _dataVizCards,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 15, vertical: 24.0),
+                      child: Text(locale.translate('pages.data_viz.thanks'),
+                          style: aboutCardSubtitleStyle.copyWith(
+                            color: Theme.of(context)
+                                .extension<CarpColors>()!
+                                .grey600,
+                          )),
+                    ),
+                    ..._dataVizCards,
+                  ],
                 ),
               ),
             )

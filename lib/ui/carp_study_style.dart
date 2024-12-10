@@ -254,8 +254,7 @@ ThemeData carpStudyDarkTheme = ThemeData.dark().copyWith(
 
 TextStyle studyTitleStyle = const TextStyle(
     fontSize: 24,
-    fontWeight: FontWeight.w600,
-    color: Color.fromRGBO(32, 111, 162, 1));
+    fontWeight: FontWeight.w600);
 
 TextStyle studyDetailsInfoTitle =
     const TextStyle(fontSize: 16, fontWeight: FontWeight.w700);

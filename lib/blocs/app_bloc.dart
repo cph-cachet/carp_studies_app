@@ -155,7 +155,9 @@ class StudyAppBLoC extends ChangeNotifier {
 
     // Initialize and use the CAWS backend if not in local deployment mode
     if (deploymentMode != DeploymentMode.local) {
-      await backend.initialize();
+      if (await checkConnectivity()) {
+        await backend.initialize();
+      }
     }
 
     // Deploy the local protocol if running in local mode

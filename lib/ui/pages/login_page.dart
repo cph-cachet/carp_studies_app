@@ -47,6 +47,7 @@ class _LoginPageState extends State<LoginPage> {
               onPressed: () async {
                 bool isConnected = await bloc.checkConnectivity();
                 if (isConnected) {
+                  await bloc.backend.initialize();
                   await bloc.backend.authenticate();
                   if (context.mounted) context.go(CarpStudyAppState.homeRoute);
                 } else {
@@ -54,7 +55,11 @@ class _LoginPageState extends State<LoginPage> {
                     context: context,
                     builder: (context) => PopScope(
                       onPopInvokedWithResult: (didPop, result) async {
-                        Navigator.of(context).pop();
+                        WidgetsBinding.instance.addPostFrameCallback((_) async {
+                          if (didPop && result == true) {
+                            Navigator.of(context).pop();
+                          }
+                        });
                       },
                       child: EnableInternetConnectionDialog(),
                     ),

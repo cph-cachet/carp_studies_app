@@ -239,7 +239,7 @@ SPEC CHECKSUMS:
   audio_streamer: af49e73eb66f71c4eeabb4bbcb05f122d03a6709
   battery_plus: 1ff2e16ba75af2a78387f65476057a390b47885e
   camera_avfoundation: dd002b0330f4981e1bbcb46ae9b62829237459a4
-  connectivity_plus: 4c41c08fc6d7c91f63bc7aec70ffe3730b04f563
+  connectivity_plus: 18382e7311ba19efcaee94442b23b32507b20695
   device_info_plus: 97af1d7e84681a90d0693e63169a5d50e0839a0d
   ESense: cbe103ad16c435424f2fd6f8b274f2468af84173
   esense_flutter: 8bfadfdefe7b51d6f78366e43b2b64ec9b6144b6
@@ -280,4 +280,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 637a852170391ffc67bb926aa9b5540c53ed8eaf
 
-COCOAPODS: 1.15.2
+COCOAPODS: 1.16.2

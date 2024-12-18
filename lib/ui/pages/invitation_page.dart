@@ -19,7 +19,7 @@ class InvitationDetailsPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.secondary,
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.surfaceVariant,
+        backgroundColor: Theme.of(context).colorScheme.surfaceContainerHigh,
         title: const CarpAppBar(),
         automaticallyImplyLeading: false,
         centerTitle: true,

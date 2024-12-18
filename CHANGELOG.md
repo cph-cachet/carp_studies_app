@@ -1,3 +1,8 @@
+## 3.1.0
+
+- Fix of login exception in webservice with non nullable name field
+- Fix of vanishing tasks in research package
+
 ## 3.0.0
 
 - Changes of camelCase to snake_case in the research package make the app backwards incompatible.

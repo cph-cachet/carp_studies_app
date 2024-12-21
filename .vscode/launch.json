@@ -42,7 +42,7 @@
     },
     {
       // used for release in app stores
-      "name": "carp-studies-app (production mode)",
+      "name": "carp-studies-app (production + debug mode)",
       "request": "launch",
       "type": "dart",
       "toolArgs": [
@@ -51,7 +51,7 @@
         "--dart-define",
         "debug-level=info"
       ],
-      "flutterMode": "release"
+      "flutterMode": "debug"
     }
   ]
 }

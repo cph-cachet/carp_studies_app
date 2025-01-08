@@ -1,0 +1,135 @@
+name: 🐞 Bug fix
+description: Create a report to help us improve any bug you may experience.
+title: "[Bug]: "
+labels: ["bugfix"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        # Bug Report Form
+        Thank you for taking the time to report a bug. Please provide as much detail as possible to help us investigate and resolve the issue quickly.
+        
+        **Note:** Fields marked with an asterisk (*) are required.
+
+  - type: input
+    id: app-version
+    attributes:
+      label: App Version
+      description: Which version of the app are you currently using?
+      placeholder: "e.g. 1.5"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Platform
+      description: Which platform(s) are you experiencing the issue on?
+      multiple: true
+      options:
+        - iOS
+        - Android
+        - Web
+        - Desktop
+        - Both iOS and Android
+    validations:
+      required: true
+
+  - type: input
+    id: device-model
+    attributes:
+      label: Device Model
+      description: What is the specific device model you're using?
+      placeholder: "e.g., iPhone 12 Pro, Samsung Galaxy S21"
+    validations:
+      required: true
+
+  - type: input
+    id: os-version
+    attributes:
+      label: Operating System Version
+      description: What OS version is your device running?
+      placeholder: "e.g., iOS 15.1, Android 12"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: deployment-mode
+    attributes:
+      label: App Deployment Mode
+      description: How was the app deployed to your device?
+      options:
+        - Production (App Store/Play Store)
+        - TestFlight/Beta
+        - Development (Local)
+        - Other (specify in additional info)
+    validations:
+      required: true
+
+  - type: textarea
+    id: bug-description
+    attributes:
+      label: Bug Description
+      description: Provide a clear and concise description of what the bug is.
+      placeholder: "Describe what's happening..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction-steps
+    attributes:
+      label: Steps to Reproduce
+      description: How can we reproduce this issue? Be specific and detailed.
+      value: |
+        1. Go to '...'
+        2. Click on '...'
+        3. Scroll down to '...'
+        4. Observe the error
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: Expected Behavior
+      description: What did you expect to happen?
+      placeholder: "Describe what you expected..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual-behavior
+    attributes:
+      label: Actual Behavior
+      description: What actually happened?
+      placeholder: "Describe what you observed instead..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant Debug Logs
+      description: Please copy and paste any relevant log output. This will be automatically formatted into code.
+      render: shell
+      placeholder: |
+        [Paste your logs here]
+        The text will be automatically formatted into code.
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots
+      description: If applicable, add screenshots to help explain your problem.
+      placeholder: |
+        Drag and drop your images here.
+        You can also provide a brief description of each screenshot.
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional Context
+      description: Add any other context about the problem here (environment details, potential causes, solutions tried)
+      placeholder: "Any additional information that might help us investigate..."

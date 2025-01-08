@@ -15,7 +15,7 @@
       "flutterMode": "debug"
     },
     {
-      // used for debug deployment using the dev CAWS instance
+      // used for debug deployment using the DEV CAWS instance
       "name": "carp-studies-app (dev mode)",
       "request": "launch",
       "type": "dart",
@@ -28,7 +28,7 @@
       "flutterMode": "debug"
     },
     {
-      // used for debug deployment using the test CAWS instance
+      // used for debug deployment using the TEST CAWS instance
       "name": "carp-studies-app (test mode)",
       "request": "launch",
       "type": "dart",
@@ -41,7 +41,7 @@
       "flutterMode": "debug"
     },
     {
-      // used for release in app stores
+      // used for release in app stores using COMPUTEROME CAWS instance
       "name": "carp-studies-app (production mode)",
       "request": "launch",
       "type": "dart",
@@ -51,7 +51,7 @@
         "--dart-define",
         "debug-level=info"
       ],
-      "flutterMode": "release"
+      "flutterMode": "debug"
     }
   ]
 }

@@ -1,3 +1,4 @@
+// ignore: unnecessary_library_name
 library carp_study_app;
 
 import 'dart:async';

@@ -11,3 +11,4 @@ GeneratedPluginRegistrant.java
 key.properties
 upload-keystore.jks
 PLAY_STORE_CONFIG.json
+app/release

@@ -157,14 +157,12 @@ class EnableInternetConnectionDialog extends StatelessWidget {
             children: [
               TextButton(
                 onPressed: () {
-                  Navigator.of(context).pop();
                   OpenSettingsPlusIOS().wifi();
                 },
                 child: Text(locale.translate('pages.enable_connection.wifi')),
               ),
               TextButton(
                 onPressed: () {
-                  Navigator.of(context).pop();
                   OpenSettingsPlusIOS().cellular();
                 },
                 child: Text(locale.translate('pages.enable_connection.data')),

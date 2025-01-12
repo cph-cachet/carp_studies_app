@@ -94,10 +94,14 @@ class CarpBackend {
   }
 
   /// Authenticate using a web view.
-  Future<CarpUser> authenticate() async {
-    user = await CarpAuthService().authenticate();
-    info('$runtimeType - User authenticated - user: $user');
-    return user!;
+  Future<void> authenticate() async {
+    try {
+      user = await CarpAuthService().authenticate();
+      info('$runtimeType - User authenticated - user: $user');
+    } catch (error) {
+      user = null;
+      warning('$runtimeType - Error authenticating user - $error');
+    }
   }
 
   /// Refresh authentication token based on the refresh token.

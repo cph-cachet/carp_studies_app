@@ -1,3 +1,9 @@
+## 3.2.1
+
+- Fix Bug: App crashes when a notification is fired on app start-up #378
+- Fix Bug: App can't start when Computerome server is not available #379
+- Fix Exception thrown when app starts without internet connection #368
+
 ## 3.1.0
 
 - Fix of login exception in webservice with non nullable name field

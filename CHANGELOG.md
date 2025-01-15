@@ -1,3 +1,7 @@
+## 3.3.0
+
+- Fixing movesense connectivity exception that crashed the app on release mode by adding proguards rules that prevent the movesense package from getting obfuscated
+
 ## 3.2.1
 
 - Fix Bug: App crashes when a notification is fired on app start-up #378

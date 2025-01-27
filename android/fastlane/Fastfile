@@ -40,7 +40,6 @@ platform :android do
     upload_to_play_store(
       track: 'internal',
       aab: '../build/app/outputs/bundle/release/app-release.aab',
-      # metadata_path: './metadata/android/en-GB/changelogs'
     )
   end
 end

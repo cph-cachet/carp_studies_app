@@ -12,8 +12,6 @@ PODS:
     - Flutter
   - audio_streamer (0.0.1):
     - Flutter
-  - audioplayers_darwin (0.0.1):
-    - Flutter
   - battery_plus (1.0.0):
     - Flutter
   - camera_avfoundation (0.0.1):
@@ -33,8 +31,9 @@ PODS:
   - flutter_appauth (0.0.1):
     - AppAuth (= 1.7.4)
     - Flutter
-  - flutter_blue_plus_ios (0.0.1):
+  - flutter_blue_plus_darwin (0.0.2):
     - Flutter
+    - FlutterMacOS
   - flutter_local_notifications (0.0.1):
     - Flutter
   - flutter_secure_storage (6.0.0):
@@ -106,7 +105,6 @@ DEPENDENCIES:
   - appcheck (from `.symlinks/plugins/appcheck/ios`)
   - audio_session (from `.symlinks/plugins/audio_session/ios`)
   - audio_streamer (from `.symlinks/plugins/audio_streamer/ios`)
-  - audioplayers_darwin (from `.symlinks/plugins/audioplayers_darwin/ios`)
   - battery_plus (from `.symlinks/plugins/battery_plus/ios`)
   - camera_avfoundation (from `.symlinks/plugins/camera_avfoundation/ios`)
   - connectivity_plus (from `.symlinks/plugins/connectivity_plus/darwin`)
@@ -115,7 +113,7 @@ DEPENDENCIES:
   - Flutter (from `Flutter`)
   - flutter_activity_recognition (from `.symlinks/plugins/flutter_activity_recognition/ios`)
   - flutter_appauth (from `.symlinks/plugins/flutter_appauth/ios`)
-  - flutter_blue_plus_ios (from `.symlinks/plugins/flutter_blue_plus_ios/ios`)
+  - flutter_blue_plus_darwin (from `.symlinks/plugins/flutter_blue_plus_darwin/darwin`)
   - flutter_local_notifications (from `.symlinks/plugins/flutter_local_notifications/ios`)
   - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
   - flutter_sound (from `.symlinks/plugins/flutter_sound/ios`)
@@ -160,8 +158,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/audio_session/ios"
   audio_streamer:
     :path: ".symlinks/plugins/audio_streamer/ios"
-  audioplayers_darwin:
-    :path: ".symlinks/plugins/audioplayers_darwin/ios"
   battery_plus:
     :path: ".symlinks/plugins/battery_plus/ios"
   camera_avfoundation:
@@ -178,8 +174,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_activity_recognition/ios"
   flutter_appauth:
     :path: ".symlinks/plugins/flutter_appauth/ios"
-  flutter_blue_plus_ios:
-    :path: ".symlinks/plugins/flutter_blue_plus_ios/ios"
+  flutter_blue_plus_darwin:
+    :path: ".symlinks/plugins/flutter_blue_plus_darwin/darwin"
   flutter_local_notifications:
     :path: ".symlinks/plugins/flutter_local_notifications/ios"
   flutter_secure_storage:
@@ -240,9 +236,8 @@ SPEC CHECKSUMS:
   Alamofire: 3ca42e259043ee0dc5c0cdd76c4bc568b8e42af7
   AppAuth: 182c5b88630569df5acb672720534756c29b3358
   appcheck: e1ab9d4e03736f03e0401554a134d1ed502d7629
-  audio_session: 088d2483ebd1dc43f51d253d4a1c517d9a2e7207
+  audio_session: 32a33910dd5bb35d54297e4b50006481071f196b
   audio_streamer: af49e73eb66f71c4eeabb4bbcb05f122d03a6709
-  audioplayers_darwin: 877d9a4d06331c5c374595e46e16453ac7eafa40
   battery_plus: 1ff2e16ba75af2a78387f65476057a390b47885e
   camera_avfoundation: dd002b0330f4981e1bbcb46ae9b62829237459a4
   connectivity_plus: 18382e7311ba19efcaee94442b23b32507b20695
@@ -252,7 +247,7 @@ SPEC CHECKSUMS:
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   flutter_activity_recognition: 5c3b026997742b01e82424ef257db9640822ad77
   flutter_appauth: 1ce438877bc111c5d8f42da47729909290624886
-  flutter_blue_plus_ios: f386838850d88ac003ea3cf535b07fa3141931a7
+  flutter_blue_plus_darwin: 3ea4ec9133b377febcc8a70b28cd2d2dc9242bd9
   flutter_local_notifications: 4cde75091f6327eb8517fa068a0a5950212d2086
   flutter_secure_storage: d33dac7ae2ea08509be337e775f6b59f1ff45f12
   flutter_sound: dde9a913063b65a27ba8fdc2039036b99b136c79

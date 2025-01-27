@@ -41,7 +41,7 @@ jobs:
             uses: ruby/setup-ruby@v1
             with:
               ruby-version: '3.3'
-              bundler-cache: true
+              bundler-cache: false
               working-directory: android
 
           - name: Extract last commit message
@@ -55,6 +55,7 @@ jobs:
             id: extract-version
             run: |
               # Navigate to the root directory (if not already there)
+              pwd
               cd $GITHUB_WORKSPACE
     
               # Extract version name and version code from pubspec.yaml

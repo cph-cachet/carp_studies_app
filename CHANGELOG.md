@@ -1,3 +1,18 @@
+## 3.3.0
+
+- Fixing movesense connectivity exception that crashed the app on release mode by adding proguards rules that prevent the movesense package from getting obfuscated
+
+## 3.2.1
+
+- Fix Bug: App crashes when a notification is fired on app start-up #378
+- Fix Bug: App can't start when Computerome server is not available #379
+- Fix Exception thrown when app starts without internet connection #368
+
+## 3.1.0
+
+- Fix of login exception in webservice with non nullable name field
+- Fix of vanishing tasks in research package
+
 ## 3.0.0
 
 - Changes of camelCase to snake_case in the research package make the app backwards incompatible.

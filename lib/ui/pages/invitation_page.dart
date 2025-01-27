@@ -20,8 +20,7 @@ class InvitationDetailsPage extends StatelessWidget {
       backgroundColor:
           Theme.of(context).extension<CarpColors>()!.backgroundGray,
       appBar: AppBar(
-        backgroundColor:
-            Theme.of(context).extension<CarpColors>()!.backgroundGray,
+        backgroundColor: Theme.of(context).colorScheme.surfaceContainerHigh,
         title: const CarpAppBar(),
         automaticallyImplyLeading: false,
         centerTitle: true,

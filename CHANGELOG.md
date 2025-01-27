@@ -1,3 +1,8 @@
+## 3.3.1
+
+- Updating version code
+- Providing changelog file for fastlane to give to Google Play
+
 ## 3.3.0
 
 - Fixing movesense connectivity exception that crashed the app on release mode by adding proguards rules that prevent the movesense package from getting obfuscated

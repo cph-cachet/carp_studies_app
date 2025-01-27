@@ -70,7 +70,7 @@ jobs:
           - name: Create or update changelog file
             run: |
               pwd
-              mkdir -p changelogs
+              mkdir -p ./android/fastlane/metadata/android/en-GB/changelogs
               echo "${{ env.commit_message }}" > "changelogs/${{ env.version_code }}.txt"
 
           - name: Configure Keystore

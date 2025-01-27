@@ -71,7 +71,7 @@ jobs:
             run: |
               pwd
               mkdir -p ./android/fastlane/metadata/android/en-GB/changelogs
-              echo "${{ env.commit_message }}" > "changelogs/${{ env.version_code }}.txt"
+              echo "${{ env.commit_message }}" > "./android/fastlane/metadata/android/en-GB/changelogs/${{ env.version_code }}.txt"
 
           - name: Configure Keystore
             run: |

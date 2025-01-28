@@ -144,6 +144,7 @@ class StudyPageState extends State<StudyPage> {
   }
 
   Widget _studyStatusCard() {
+    RPLocalizations locale = RPLocalizations.of(context)!;
     return FutureBuilder<StudyDeploymentStatus?>(
       future: bloc.getStudyDeploymentStatus(),
       builder: (context, snapshot) {
@@ -205,7 +206,9 @@ class StudyPageState extends State<StudyPage> {
                         Expanded(
                           child: Padding(
                             padding: const EdgeInsets.only(left: 16.0),
-                            child: Text('This is random text.',
+                            child: Text(
+                                locale.translate(
+                                    studyStatusText[deploymentStatus]!),
                                 style: aboutCardSubtitleStyle.copyWith(
                                     color: Theme.of(context)
                                         .extension<CarpColors>()!
@@ -229,6 +232,14 @@ class StudyPageState extends State<StudyPage> {
     StudyDeploymentStatusTypes.DeployingDevices: CACHET.DEPLOYMENT_DEPLOYING,
     StudyDeploymentStatusTypes.Running: CACHET.DEPLOYMENT_RUNNING,
     StudyDeploymentStatusTypes.Stopped: CACHET.DEPLOYMENT_STOPPED,
+  };
+
+  static Map<StudyDeploymentStatusTypes, String> studyStatusText = {
+    StudyDeploymentStatusTypes.Invited: 'pages.about.status.invited.message',
+    StudyDeploymentStatusTypes.DeployingDevices:
+        'pages.about.status.deploying_devices.message',
+    StudyDeploymentStatusTypes.Running: 'pages.about.status.running.message',
+    StudyDeploymentStatusTypes.Stopped: 'pages.about.status.stopped.message',
   };
 
   Widget _announcementCard(

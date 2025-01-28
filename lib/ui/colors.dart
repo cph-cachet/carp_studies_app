@@ -31,7 +31,7 @@ class CACHET {
   static const Color LIGHT_BLUE = Color.fromRGBO(129, 207, 250, 1.0);
   static const Color LIGHT_BROWN = Color.fromRGBO(161, 97, 106, 1.0);
 
-  static const Color DARK_BLUE = Color.fromRGBO(23, 57, 108, 1.0);
+  static const Color DARK_BLUE = ui.Color.fromRGBO(50, 96, 164, 1);
 
   static const Color BLUE_1 = Color.fromRGBO(33, 146, 201, 1);
   static const Color BLUE_2 = Color.fromRGBO(130, 206, 233, 1);

@@ -64,6 +64,30 @@ class DeviceListPageState extends State<DeviceListPage> {
             Container(
               color: Colors.transparent,
               child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        locale.translate('pages.devices.title'),
+                        style: aboutStudyCardTitleStyle.copyWith(
+                          color: Theme.of(context)
+                              .extension<CarpColors>()!
+                              .grey900,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              color: Colors.transparent,
+              child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Align(
                   alignment: Alignment.centerLeft,
@@ -72,7 +96,11 @@ class DeviceListPageState extends State<DeviceListPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(locale.translate("pages.devices.message"),
-                          style: aboutCardSubtitleStyle),
+                          style: aboutCardSubtitleStyle.copyWith(
+                            color: Theme.of(context)
+                                .extension<CarpColors>()!
+                                .grey600,
+                          )),
                       const SizedBox(height: 15),
                     ],
                   ),
@@ -110,9 +138,9 @@ class DeviceListPageState extends State<DeviceListPage> {
                   backgroundColor:
                       Theme.of(context).extension<CarpColors>()!.grey50!,
                   child: _cardListBuilder(
-                    _smartphoneDevice[index].icon!,
-                    _smartphoneDevice[index].phoneInfo['name']!,
-                    (
+                    leading: _smartphoneDevice[index].icon!,
+                    title: _smartphoneDevice[index].phoneInfo['name']!,
+                    subtitle: (
                       "${_smartphoneDevice[index].phoneInfo["model"]!} - ${_smartphoneDevice[index].phoneInfo["version"]!}",
                       _smartphoneDevice[index].batteryLevel ?? 0,
                     ),
@@ -136,10 +164,10 @@ class DeviceListPageState extends State<DeviceListPage> {
                 device.statusEvents,
                 DeviceStatus.unknown,
                 () => _cardListBuilder(
-                  device.icon!,
-                  locale.translate(device.typeName),
-                  (device.name, device.batteryLevel ?? 0),
                   enableFeedback: true,
+                  leading: device.icon!,
+                  title: locale.translate(device.typeName),
+                  subtitle: (device.name, device.batteryLevel ?? 0),
                   onTap: () async => await _hardwareDeviceClicked(device),
                   trailing: device.getDeviceStatusIcon is Icon
                       ? device.getDeviceStatusIcon as Icon
@@ -176,9 +204,10 @@ class DeviceListPageState extends State<DeviceListPage> {
                 service.statusEvents,
                 DeviceStatus.unknown,
                 () => _cardListBuilder(
-                  service.icon!,
-                  locale.translate(service.typeName),
-                  null,
+                  leading: service.icon!,
+                  title: locale.translate(service.typeName),
+                  subtitle: null,
+                  onTap: () async => await _onlineServiceClicked(service),
                   trailing: service.getServiceStatusIcon is String
                       ? Text(
                           locale
@@ -187,8 +216,6 @@ class DeviceListPageState extends State<DeviceListPage> {
                           style: aboutCardTitleStyle.copyWith(
                               color: CACHET.DEPLOYMENT_DEPLOYING))
                       : service.getServiceStatusIcon as Icon,
-                  isThreeLine: false,
-                  onTap: () async => await _onlineServiceClicked(service),
                 ),
               );
             },
@@ -196,38 +223,38 @@ class DeviceListPageState extends State<DeviceListPage> {
         ),
       ];
 
-  Widget _cardListBuilder(
-    Icon leading,
-    String title,
-    (String, int)? subtitle, {
-    Widget? trailing,
-    void Function()? onTap,
+  Widget _cardListBuilder({
     bool enableFeedback = false,
-    bool isThreeLine = true,
+    Icon? leading,
+    String? title,
+    (String, int)? subtitle,
+    void Function()? onTap,
+    Widget? trailing,
   }) =>
       ListTile(
+        contentPadding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
         enableFeedback: enableFeedback,
-        isThreeLine: isThreeLine,
         leading: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: [leading],
+          children: [leading!],
         ),
-        title: Column(
+        title: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Text(title),
+            Text(title!),
+            SizedBox(width: 12),
+            if (trailing is Icon && subtitle != null)
+              BatteryPercentage(batteryLevel: subtitle.$2),
           ],
         ),
-        subtitle: subtitle != null
+        subtitle: subtitle != null && subtitle.$1.isNotEmpty
             ? Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(subtitle.$1),
-                  if (trailing is Icon)
-                    BatteryPercentage(batteryLevel: subtitle.$2),
                 ],
               )
             : null,

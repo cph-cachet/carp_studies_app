@@ -19,6 +19,7 @@ class StudyProgressCardWidgetState extends State<StudyProgressCardWidget> {
 
     widget.model.updateProgress();
     return StudiesMaterial(
+      backgroundColor: Theme.of(context).extension<CarpColors>()!.white!,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: StreamBuilder(
@@ -37,27 +38,139 @@ class StudyProgressCardWidgetState extends State<StudyProgressCardWidget> {
                   ),
                 ),
                 SizedBox(
-                    height: 160,
-                    child: LayoutBuilder(builder:
+                  height: 130,
+                  child: LayoutBuilder(
+                    builder:
                         (BuildContext context, BoxConstraints constraints) {
-                      return HorizontalBar(
-                        parentWidth: constraints.maxWidth,
-                        names: widget.model.progress
-                            .map((progress) => locale.translate(progress.state))
-                            .toList(),
-                        values: widget.model.progress
-                            .map((progress) => progress.value)
-                            .toList(),
-                        colors: widget.colors,
-                        order: OrderType.none,
-                        labelOrientation: LabelOrientation.horizontal,
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 8.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: List.generate(
+                                widget.model.progress.length,
+                                (index) => Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 4.0),
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        widget.model.progress[index].value
+                                            .toString(),
+                                        style: TextStyle(
+                                          fontSize: 22,
+                                          fontWeight: FontWeight.bold,
+                                          color: widget.colors[index],
+                                        ),
+                                      ),
+                                      const SizedBox(width: 4),
+                                      Text(
+                                        locale.translate(
+                                            widget.model.progress[index].state),
+                                        style: const TextStyle(
+                                            fontSize: 16),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          // Circular Progress Representation
+                          Padding(
+                            padding: const EdgeInsets.only(right: 24.0),
+                            child: SizedBox(
+                              width: 104,
+                              height: 104,
+                              child: CustomPaint(
+                                painter: TaskProgressPainter(
+                                  values: widget.model.progress
+                                      .map((p) => p.value)
+                                      .toList(),
+                                  colors: widget.colors,
+                                  faintColors: widget.colors
+                                      .map((c) => c.withOpacity(0.1))
+                                      .toList(),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       );
-                    })),
+                    },
+                  ),
+                ),
               ],
             );
           },
         ),
       ),
     );
+  }
+}
+
+class TaskProgressPainter extends CustomPainter {
+  final List<int> values;
+  final List<Color> colors;
+  final List<Color> faintColors;
+  final double pi = 3.141592;
+
+  TaskProgressPainter(
+      {required this.values, required this.colors, required this.faintColors});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final double centerX = size.width / 2;
+    final double centerY = size.height / 2;
+    final Offset center = Offset(centerX, centerY);
+    final double maxRadius = size.width / 2;
+    final double ringWidth = maxRadius / 3;
+
+    int totalTasks = values.reduce((a, b) => a + b);
+    if (totalTasks == 0) return;
+
+    List<double> percentages = values.map((v) => v / totalTasks).toList();
+
+    for (int i = 0; i < 3; i++) {
+      double radius = maxRadius - (i * ringWidth);
+      double sweepAngle = pi * percentages[i];
+      Paint paintFill = Paint()
+        ..color = colors[i]
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = ringWidth
+        ..strokeCap = StrokeCap.round;
+
+      Paint paintBackground = Paint()
+        ..color = faintColors[i]
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = ringWidth
+        ..strokeCap = StrokeCap.round;
+
+      // draw the arc as a percentage of the full circle
+      canvas.drawArc(
+        Rect.fromCircle(center: center, radius: radius),
+        pi / 2,
+        sweepAngle > 0 ? sweepAngle : pi * (percentages[i] + 0.01),
+        false,
+        paintFill,
+      );
+
+      // draw a full circle as a background with a faint color
+      canvas.drawArc(
+        Rect.fromCircle(center: center, radius: radius),
+        0,
+        2 * pi,
+        false,
+        paintBackground,
+      );
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    return true;
   }
 }

@@ -19,6 +19,7 @@ class MediaCardWidgetState extends State<MediaCardWidget> {
     }
 
     return StudiesMaterial(
+      backgroundColor: Theme.of(context).extension<CarpColors>()!.white!,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(

@@ -216,6 +216,7 @@ class AudioTaskPageState extends State<AudioTaskPage> {
             Expanded(
               flex: 3,
               child: StudiesMaterial(
+                backgroundColor: Theme.of(context).extension<CarpColors>()!.white!,
                 child: Scrollbar(
                   child: SingleChildScrollView(
                     scrollDirection: Axis.vertical, //.horizontal

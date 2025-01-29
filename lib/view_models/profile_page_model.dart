@@ -22,6 +22,8 @@ class ProfilePageViewModel extends ViewModel {
       bloc.deployment?.studyDescription?.privacyPolicyUrl ?? '';
   String get studyDescriptionUrl =>
       bloc.deployment?.studyDescription?.studyDescriptionUrl ?? '';
+  String get deviceID => DeviceInfo().deviceID ?? '';
+  String get currentServer => bloc.backend.uri.toString();
 
   ProfilePageViewModel();
 }

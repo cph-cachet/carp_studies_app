@@ -48,6 +48,7 @@ PODS:
     - Flutter
   - just_audio (0.0.1):
     - Flutter
+    - FlutterMacOS
   - light (0.0.1):
     - Flutter
   - location (0.0.1):
@@ -119,7 +120,7 @@ DEPENDENCIES:
   - flutter_sound (from `.symlinks/plugins/flutter_sound/ios`)
   - flutter_timezone (from `.symlinks/plugins/flutter_timezone/ios`)
   - health (from `.symlinks/plugins/health/ios`)
-  - just_audio (from `.symlinks/plugins/just_audio/ios`)
+  - just_audio (from `.symlinks/plugins/just_audio/darwin`)
   - light (from `.symlinks/plugins/light/ios`)
   - location (from `.symlinks/plugins/location/ios`)
   - mdsflutter (from `.symlinks/plugins/mdsflutter/ios`)
@@ -187,7 +188,7 @@ EXTERNAL SOURCES:
   health:
     :path: ".symlinks/plugins/health/ios"
   just_audio:
-    :path: ".symlinks/plugins/just_audio/ios"
+    :path: ".symlinks/plugins/just_audio/darwin"
   light:
     :path: ".symlinks/plugins/light/ios"
   location:
@@ -254,7 +255,7 @@ SPEC CHECKSUMS:
   flutter_sound_core: 0c6eb9d5268adc70ff159b3d65fd3d98a82d3a27
   flutter_timezone: ffb07bdad3c6276af8dada0f11978d8a1f8a20bb
   health: 5d10c4296a95f6be50a8131d47d3cb3ad640bdf5
-  just_audio: baa7252489dbcf47a4c7cc9ca663e9661c99aafa
+  just_audio: a42c63806f16995daf5b219ae1d679deb76e6a79
   light: 86af7a847d218a9a2376bc1c1ae40c3410441135
   location: d5cf8598915965547c3f36761ae9cc4f4e87d22e
   mdsflutter: 841344e0d5781afbbddd13e057e1cb2e9d86e012

@@ -10,6 +10,17 @@ class ProfilePage extends StatefulWidget {
 }
 
 class ProfilePageState extends State<ProfilePage> {
+  String appName = '';
+  String packageName = '';
+  String appVersion = '';
+  String buildNumber = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _loadPackageInfo();
+  }
+
   @override
   Widget build(BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;
@@ -102,6 +113,24 @@ class ProfilePageState extends State<ProfilePage> {
                       ),
                     ],
                   ),
+                  _buildSectionCard(context, [
+                    _buildListTile(
+                      locale.translate('pages.profile.app_version'),
+                      appVersion,
+                    ),
+                    _buildListTile(
+                      locale.translate('pages.profile.app_version_code'),
+                      buildNumber,
+                    ),
+                    _buildListTile(
+                      locale.translate('pages.profile.server_name'),
+                      widget.model.currentServer,
+                    ),
+                    _buildListTile(
+                      locale.translate('pages.profile.device_id'),
+                      widget.model.deviceID,
+                    ),
+                  ]),
                   _buildSectionCard(
                     context,
                     [
@@ -224,6 +253,16 @@ class ProfilePageState extends State<ProfilePage> {
       onTap: onTap,
       contentPadding: EdgeInsets.symmetric(vertical: 4, horizontal: 16),
     );
+  }
+
+  Future<void> _loadPackageInfo() async {
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    setState(() {
+      appName = packageInfo.appName;
+      packageName = packageInfo.packageName;
+      appVersion = packageInfo.version;
+      buildNumber = packageInfo.buildNumber;
+    });
   }
 
   /// Sends and email to the researcher with the name of the study + user id

@@ -52,6 +52,7 @@ dependencies:
   connectivity_plus: ^6.0.0
   open_settings_plus: ^0.3.0
   appcheck: ^1.5.2
+  package_info_plus: ^8.1.4
 
 dependency_overrides:
   camera_android_camerax: 0.6.10+1

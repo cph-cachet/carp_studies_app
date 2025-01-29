@@ -1,7 +1,7 @@
 name: carp_study_app
 description: The generic CARP study app.
 publish_to: "none"
-version: 3.3.0+50
+version: 3.3.1+53
 
 environment:
   sdk: ">=3.2.0 <4.0.0"
@@ -91,6 +91,7 @@ dependency_overrides:
   #   path: ../carp/carp.sensing-flutter/backends/carp_backend/
   # research_package: 
   #   path: ../research.package/
+
 
 
 dev_dependencies:

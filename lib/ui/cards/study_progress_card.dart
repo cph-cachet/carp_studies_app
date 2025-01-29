@@ -70,8 +70,7 @@ class StudyProgressCardWidgetState extends State<StudyProgressCardWidget> {
                                       Text(
                                         locale.translate(
                                             widget.model.progress[index].state),
-                                        style: const TextStyle(
-                                            fontSize: 16),
+                                        style: const TextStyle(fontSize: 16),
                                       ),
                                     ],
                                   ),
@@ -81,7 +80,7 @@ class StudyProgressCardWidgetState extends State<StudyProgressCardWidget> {
                           ),
                           // Circular Progress Representation
                           Padding(
-                            padding: const EdgeInsets.only(right: 24.0),
+                            padding: const EdgeInsets.only(bottom: 18, right: 24.0),
                             child: SizedBox(
                               width: 104,
                               height: 104,
@@ -92,7 +91,7 @@ class StudyProgressCardWidgetState extends State<StudyProgressCardWidget> {
                                       .toList(),
                                   colors: widget.colors,
                                   faintColors: widget.colors
-                                      .map((c) => c.withOpacity(0.1))
+                                      .map((c) => c.withOpacity(0.2))
                                       .toList(),
                                 ),
                               ),
@@ -133,6 +132,12 @@ class TaskProgressPainter extends CustomPainter {
     if (totalTasks == 0) return;
 
     List<double> percentages = values.map((v) => v / totalTasks).toList();
+
+    Paint blackCircle = Paint()
+      ..color = Colors.black
+      ..style = PaintingStyle.fill;
+
+    canvas.drawCircle(center, maxRadius + ringWidth, blackCircle);
 
     for (int i = 0; i < 3; i++) {
       double radius = maxRadius - (i * ringWidth);

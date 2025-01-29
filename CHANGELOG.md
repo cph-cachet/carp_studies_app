@@ -1,3 +1,7 @@
+# 3.3.2
+
+- Changing Marketing Version value from $(FLUTTER_BUILD_NUMBER) to $(FLUTTER_BUILD_NAME) for ios.
+
 ## 3.3.1
 
 - Updating version code

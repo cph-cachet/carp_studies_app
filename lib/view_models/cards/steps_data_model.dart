@@ -12,6 +12,25 @@ class StepsCardViewModel extends SerializableViewModel<WeeklySteps> {
   /// The list of steps.
   List<DailySteps> get steps => model.steps;
 
+  final DateTime _startOfWeek =
+      DateTime.now().subtract(Duration(days: DateTime.now().weekday - 1));
+  final DateTime _endOfWeek = DateTime.now()
+      .subtract(Duration(days: DateTime.now().weekday - 1))
+      .add(Duration(days: 6));
+
+  String get startOfWeek => DateFormat('dd').format(_startOfWeek);
+
+  String get endOfWeek => DateFormat('dd').format(_endOfWeek);
+
+  String get currentMonth =>
+      DateFormat('MMM').format(DateTime(_startOfWeek.month));
+
+  String get nextMonth =>
+      DateFormat('MMM').format(DateTime(_startOfWeek.year, _startOfWeek.month + 1, 1));
+
+  String get currentYear =>
+      DateFormat('yyyy').format(DateTime(DateTime.now().year));
+
   /// Stream of pedometer (step) [DataPoint] measures.
   Stream<Measurement>? get pedometerEvents => controller?.measurements
       .where((dataPoint) => dataPoint.data is StepCount);

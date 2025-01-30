@@ -138,8 +138,8 @@ class _MobilityCardState extends State<MobilityCard> {
           color: widget.colors[1].withOpacity(isTouched ? 0.8 : 1),
           width: 16,
           borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(8),
-            topRight: Radius.circular(8),
+            topLeft: Radius.circular(4),
+            topRight: Radius.circular(4),
           ),
         ),
         BarChartRodData(
@@ -147,8 +147,8 @@ class _MobilityCardState extends State<MobilityCard> {
           color: widget.colors[0].withOpacity(isTouched ? 0.8 : 1),
           width: 16,
           borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(8),
-            topRight: Radius.circular(8),
+            topLeft: Radius.circular(4),
+            topRight: Radius.circular(4),
           ),
         ),
       ],

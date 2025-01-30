@@ -6,7 +6,7 @@ class StudyProgressCardWidget extends StatefulWidget {
   final List<Color> colors;
   const StudyProgressCardWidget(this.model,
       {super.key,
-      this.colors = const [CACHET.BLUE_1, CACHET.BLUE_3, CACHET.RED_1]});
+      this.colors = const [CACHET.BLUE_1, CACHET.RED_1, CACHET.GREY_6]});
 
   @override
   StudyProgressCardWidgetState createState() => StudyProgressCardWidgetState();
@@ -141,7 +141,7 @@ class TaskProgressPainter extends CustomPainter {
 
     for (int i = 0; i < 3; i++) {
       double radius = maxRadius - (i * ringWidth);
-      double sweepAngle = pi * percentages[i];
+      double sweepAngle = 2 * pi * percentages[i];
       Paint paintFill = Paint()
         ..color = colors[i]
         ..style = PaintingStyle.stroke

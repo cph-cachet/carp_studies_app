@@ -252,9 +252,8 @@ ThemeData carpStudyDarkTheme = ThemeData.dark().copyWith(
   ),
 );
 
-TextStyle studyTitleStyle = const TextStyle(
-    fontSize: 24,
-    fontWeight: FontWeight.w600);
+TextStyle studyTitleStyle =
+    const TextStyle(fontSize: 24, fontWeight: FontWeight.w600);
 
 TextStyle studyDetailsInfoTitle =
     const TextStyle(fontSize: 16, fontWeight: FontWeight.w700);
@@ -311,6 +310,7 @@ TextStyle welcomeMessageStyle = const TextStyle(
 
 TextStyle studyDescriptionStyle =
     const TextStyle(fontSize: 12, fontWeight: FontWeight.w300);
+    
 TextStyle dataCardTitleStyle = const TextStyle(
     fontSize: 16, fontWeight: FontWeight.w400, letterSpacing: 1);
 TextStyle measuresStyle =
@@ -326,6 +326,11 @@ TextStyle audioDescriptionStyle =
     const TextStyle(fontSize: 14, fontWeight: FontWeight.w400);
 TextStyle audioInstructionStyle =
     const TextStyle(fontSize: 16, fontWeight: FontWeight.w400);
+
+TextStyle dataVizCardTitleNumber =
+    const TextStyle(fontSize: 28, fontWeight: FontWeight.w700);
+TextStyle dataVizCardTitleText =
+    const TextStyle(fontSize: 12, fontWeight: FontWeight.w700);
 
 TextStyle profileSectionStyle = TextStyle(
     fontSize: 12,

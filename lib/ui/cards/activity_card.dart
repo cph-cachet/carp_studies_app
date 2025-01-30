@@ -192,8 +192,8 @@ class ActivityCardState extends State<ActivityCard> {
           color: widget.colors[2].withOpacity(isTouched ? 0.8 : 1),
           width: 32,
           borderRadius: BorderRadius.only(
-            topLeft: const Radius.circular(8),
-            topRight: const Radius.circular(8),
+            topLeft: const Radius.circular(4),
+            topRight: const Radius.circular(4),
             bottomLeft: Radius.circular(roundness),
             bottomRight: Radius.circular(roundness),
           ),

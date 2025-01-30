@@ -10,6 +10,25 @@ class MobilityCardViewModel extends SerializableViewModel<WeeklyMobility> {
   Stream<Measurement>? get mobilityEvents => controller?.measurements
       .where((measurement) => measurement.data is Mobility);
 
+  final DateTime _startOfWeek =
+      DateTime.now().subtract(Duration(days: DateTime.now().weekday - 1));
+  final DateTime _endOfWeek = DateTime.now()
+      .subtract(Duration(days: DateTime.now().weekday - 1))
+      .add(Duration(days: 6));
+
+  String get startOfWeek => DateFormat('dd').format(_startOfWeek);
+
+  String get endOfWeek => DateFormat('dd').format(_endOfWeek);
+
+  String get currentMonth =>
+      DateFormat('MMM').format(DateTime(_startOfWeek.month));
+
+  String get nextMonth => DateFormat('MMM')
+      .format(DateTime(_startOfWeek.year, _startOfWeek.month + 1, 1));
+
+  String get currentYear =>
+      DateFormat('yyyy').format(DateTime(DateTime.now().year));
+
   MobilityCardViewModel();
   @override
   void init(SmartphoneDeploymentController ctrl) {

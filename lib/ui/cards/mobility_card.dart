@@ -6,7 +6,7 @@ class MobilityCard extends StatefulWidget {
   final MobilityCardViewModel model;
   const MobilityCard(this.model,
       {super.key,
-      this.colors = const [CACHET.BLUE_1, CACHET.BLUE_2, CACHET.BLUE_3]});
+      this.colors = const [CACHET.CAQUI, CACHET.ORANGE, CACHET.BLUE_3]});
 
   @override
   State<MobilityCard> createState() => _MobilityCardState();
@@ -35,16 +35,36 @@ class _MobilityCardState extends State<MobilityCard> {
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-            ChartsLegend(
-              title: locale.translate('cards.mobility.title'),
-              iconAssetName: Icon(Icons.emoji_transportation,
-                  color: Theme.of(context).primaryColor),
-              heroTag: 'mobility-card',
-              values: [
-                '$_homestay ${locale.translate('cards.mobility.homestay')}',
-                '$_places ${locale.translate('cards.mobility.places')}',
+            Row(
+              children: [
+                Text(
+                  '$_homestay%',
+                  style: dataVizCardTitleNumber.copyWith(
+                    color: widget.colors[0],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 4.0),
+                  child: Text(
+                    locale.translate('cards.mobility.homestay'),
+                    style: dataVizCardTitleText.copyWith(
+                      color:
+                          Theme.of(context).extension<CarpColors>()!.grey900!,
+                    ),
+                  ),
+                ),
               ],
-              colors: widget.colors,
+            ),
+            Row(
+              children: [
+                Text(
+                  "${widget.model.currentMonth} ${widget.model.startOfWeek} - ${int.parse(widget.model.endOfWeek) < int.parse(widget.model.startOfWeek) ? widget.model.nextMonth : widget.model.currentMonth} ${widget.model.endOfWeek}, ${widget.model.currentYear}",
+                  style: dataVizCardTitleText.copyWith(
+                    color: Theme.of(context).extension<CarpColors>()!.grey600,
+                  ),
+                ),
+                Spacer(),
+              ],
             ),
             SizedBox(
               height: 160,
@@ -55,6 +75,35 @@ class _MobilityCardState extends State<MobilityCard> {
                   return barCharts;
                 },
               ),
+            ),
+            // Column(
+            //   children: [
+
+            //   ]
+            // ),
+            Column(
+              children: [
+                Row(
+                  children: [
+                    Text(
+                      '$_places',
+                      style: dataVizCardBottomNumber.copyWith(
+                        color: widget.colors[0],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: Text(
+                        locale.translate('cards.mobility.places'),
+                        style: dataVizCardBottomText.copyWith(
+                            color: Theme.of(context)
+                                .extension<CarpColors>()!
+                                .grey800),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ),
           ],
         ),
@@ -135,7 +184,7 @@ class _MobilityCardState extends State<MobilityCard> {
       barRods: [
         BarChartRodData(
           toY: places.toDouble(),
-          color: widget.colors[1].withOpacity(isTouched ? 0.8 : 1),
+          color: widget.colors[0].withOpacity(isTouched ? 0.8 : 1),
           width: 16,
           borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(4),
@@ -144,7 +193,7 @@ class _MobilityCardState extends State<MobilityCard> {
         ),
         BarChartRodData(
           toY: homestay.toDouble(),
-          color: widget.colors[0].withOpacity(isTouched ? 0.8 : 1),
+          color: widget.colors[1].withOpacity(isTouched ? 0.8 : 1),
           width: 16,
           borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(4),

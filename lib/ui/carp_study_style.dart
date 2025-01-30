@@ -331,6 +331,10 @@ TextStyle dataVizCardTitleNumber =
     const TextStyle(fontSize: 28, fontWeight: FontWeight.w700);
 TextStyle dataVizCardTitleText =
     const TextStyle(fontSize: 12, fontWeight: FontWeight.w700);
+TextStyle dataVizCardBottomNumber =
+    const TextStyle(fontSize: 22, fontWeight: FontWeight.w700);
+TextStyle dataVizCardBottomText =
+    const TextStyle(fontSize: 12, fontWeight: FontWeight.w700);
 
 TextStyle profileSectionStyle = TextStyle(
     fontSize: 12,

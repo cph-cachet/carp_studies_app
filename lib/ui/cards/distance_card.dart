@@ -39,61 +39,37 @@ class _DistanceCardState extends State<DistanceCard> {
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 10.0),
-              child: Text(
-                  locale.translate('cards.distance.title').toUpperCase(),
-                  style: dataCardTitleStyle),
-            ),
-            // UI that shows the average distance over the week, in the style of Apple Health
-            Padding(
-              padding: const EdgeInsets.all(10),
-              child: Column(
-                children: [
-                  // Text saying "Average distance" in the style of Apple Health
-                  Row(
-                    children: [
-                      Text(
-                        locale
-                            .translate('cards.distance.average')
-                            .toUpperCase(),
-                        style: TextStyle(
-                          color: Colors.grey.withOpacity(0.8),
-                          fontSize: 12,
-                        ),
-                      ),
-                    ],
+            Row(
+              children: [
+                Text(
+                  _distance,
+                  style: dataVizCardTitleNumber.copyWith(
+                    color: Theme.of(context).extension<CarpColors>()!.grey900!,
                   ),
-
-                  Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 4.0),
-                        child: Text(
-                          _distance,
-                          style: TextStyle(
-                            color:
-                                Theme.of(context).textTheme.bodyLarge?.color ??
-                                    Colors.black,
-                            fontSize: 18,
-                          ),
-                        ),
-                      ),
-                      Text(
-                        ' km',
-                        style: TextStyle(
-                          color: Colors.grey.withOpacity(0.8),
-                          fontSize: 16,
-                        ),
-                      ),
-                    ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 4.0),
+                  child: Text(
+                    'km',
+                    style: dataVizCardTitleText.copyWith(
+                      color: Theme.of(context).extension<CarpColors>()!.grey600,
+                    ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-
+            Row(
+              children: [
+                Text(
+                  "${widget.model.currentMonth} ${widget.model.startOfWeek} - ${int.parse(widget.model.endOfWeek) < int.parse(widget.model.startOfWeek) ? widget.model.nextMonth : widget.model.currentMonth} ${widget.model.endOfWeek}, ${widget.model.currentYear}",
+                  style: dataVizCardTitleText.copyWith(
+                    color: Theme.of(context).extension<CarpColors>()!.grey600,
+                  ),
+                ),
+                Spacer(),
+              ],
+            ),
             SizedBox(
               height: 160,
               width: MediaQuery.of(context).size.width * 0.9,
@@ -108,8 +84,9 @@ class _DistanceCardState extends State<DistanceCard> {
     );
   }
 
-  LineChart get barCharts {
-    return LineChart(LineChartData(
+  BarChart get barCharts {
+    return BarChart(BarChartData(
+      alignment: BarChartAlignment.spaceAround,
       titlesData: FlTitlesData(
         bottomTitles: AxisTitles(
           sideTitles: SideTitles(
@@ -128,51 +105,18 @@ class _DistanceCardState extends State<DistanceCard> {
         ),
         topTitles: const AxisTitles(),
       ),
-      lineTouchData: LineTouchData(
-        enabled: true,
-        touchTooltipData: LineTouchTooltipData(
-          fitInsideHorizontally: true,
-          tooltipRoundedRadius: 8,
-          getTooltipItems: (touchedSpots) {
-            return touchedSpots.map((LineBarSpot touchedSpot) {
-              final textStyle = activityVisualisationTextStyle(
-                color: Colors.black,
-                fontSize: 12,
-              );
-              return LineTooltipItem('${touchedSpot.y.toInt()} km', textStyle);
-            }).toList();
-          },
-        ),
+      barTouchData: BarTouchData(
+        enabled: false,
+        touchCallback: (p0, p1) {
+          setState(() {
+            touchedIndex =
+                (p1?.spot?.touchedBarGroupIndex ?? DateTime.now().weekday - 1) +
+                    1;
+          });
+        },
       ),
-      lineBarsData: [
-        LineChartBarData(
-          spots: lineChartsGroups,
-          barWidth: 8,
-          isCurved: true,
-          curveSmoothness: 0.25,
-          dotData: FlDotData(
-            show: true,
-            getDotPainter: (spot, percent, barData, index) =>
-                FlDotCirclePainter(
-              radius: 4,
-              color: widget.colors[0].withOpacity(0.5),
-              strokeWidth: 0,
-            ),
-          ),
-          color: widget.colors[1],
-          isStrokeCapRound: true,
-        ),
-        LineChartBarData(
-          spots: const [
-            FlSpot(0.5, 0),
-            FlSpot(7.5, 0),
-          ],
-          barWidth: 0,
-          dotData: const FlDotData(
-            show: false,
-          ),
-        )
-      ],
+      groupsSpace: 4,
+      barGroups: barChartsGroups,
       maxY: (maxValue) * 1.2,
       gridData: FlGridData(
         show: true,
@@ -195,15 +139,33 @@ class _DistanceCardState extends State<DistanceCard> {
     ));
   }
 
-  List<FlSpot> get lineChartsGroups {
+  List<BarChartGroupData> get barChartsGroups {
     return widget.model.weekData.entries
-        .map((e) => generateSpotData(e.key, e.value.distance))
+        .map((e) => generateGroupData(e.key, e.value.distance))
         .toList();
   }
 
-  FlSpot generateSpotData(int x, double y) {
-    maxValue = max(maxValue, y);
-    return FlSpot(x.toDouble(), y);
+  BarChartGroupData generateGroupData(int x, double step) {
+    bool isTouched = touchedIndex == x;
+    maxValue = max(maxValue, step);
+    if (isTouched) {
+      _distance = step.toString();
+    }
+
+    return BarChartGroupData(
+      x: x,
+      barRods: [
+        BarChartRodData(
+          toY: step.toDouble(),
+          color: widget.colors[0].withOpacity(isTouched ? 0.8 : 1),
+          width: 32,
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(4),
+            topRight: Radius.circular(4),
+          ),
+        ),
+      ],
+    );
   }
 
   TextStyle activityVisualisationTextStyle(
@@ -217,11 +179,12 @@ class _DistanceCardState extends State<DistanceCard> {
   }
 
   Widget rightTitles(double value, TitleMeta meta) {
-    final text =
-        value.toInt() % meta.appliedInterval == 0 ? '${value.toInt()}' : '';
+    final text = value.toInt() % meta.appliedInterval == 0
+        ? value.toInt().toString()
+        : '';
 
     final style = activityVisualisationTextStyle(
-      color: Colors.grey.withOpacity(0.8),
+      color: Colors.grey.withOpacity(0.6),
       fontSize: 14,
     );
     return SideTitleWidget(
@@ -237,7 +200,6 @@ class _DistanceCardState extends State<DistanceCard> {
   Widget bottomTitles(double value, TitleMeta meta) {
     const style = TextStyle(fontSize: 10);
     String text;
-    if (value > 7 || value < 1) return Container();
     switch (value.toInt()) {
       case 1:
         text = 'Mon';

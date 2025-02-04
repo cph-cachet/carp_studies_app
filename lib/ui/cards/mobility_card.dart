@@ -76,11 +76,6 @@ class _MobilityCardState extends State<MobilityCard> {
                 },
               ),
             ),
-            // Column(
-            //   children: [
-
-            //   ]
-            // ),
             Column(
               children: [
                 Row(

@@ -80,7 +80,8 @@ class StudyProgressCardWidgetState extends State<StudyProgressCardWidget> {
                           ),
                           // Circular Progress Representation
                           Padding(
-                            padding: const EdgeInsets.only(bottom: 18, right: 24.0),
+                            padding:
+                                const EdgeInsets.only(bottom: 18, right: 24.0),
                             child: SizedBox(
                               width: 104,
                               height: 104,
@@ -137,10 +138,12 @@ class TaskProgressPainter extends CustomPainter {
       ..color = Colors.black
       ..style = PaintingStyle.fill;
 
-    canvas.drawCircle(center, maxRadius + ringWidth, blackCircle);
+    // this -2 is to match the ring width of the other rings
+    canvas.drawCircle(center, maxRadius + ringWidth - 2, blackCircle);
 
     for (int i = 0; i < 3; i++) {
-      double radius = maxRadius - (i * ringWidth);
+      // i * 2 is the space between the rings
+      double radius = maxRadius - (i * ringWidth) - i * 2;
       double sweepAngle = 2 * pi * percentages[i];
       Paint paintFill = Paint()
         ..color = colors[i]

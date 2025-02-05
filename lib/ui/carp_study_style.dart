@@ -167,8 +167,7 @@ ThemeData carpStudyTheme = ThemeData.light().copyWith(
             fontWeight: FontWeight.w500, fontSize: 16.0, color: Colors.white),
       )
       .apply(
-        fontFamily: 'MuseoSans',
-        // bodyColor: Color.fromRGBO(112, 112, 112, 1),
+        fontFamily: 'OpenSans',
       ),
   pageTransitionsTheme: const PageTransitionsTheme(
     builders: <TargetPlatform, PageTransitionsBuilder>{
@@ -241,7 +240,7 @@ ThemeData carpStudyDarkTheme = ThemeData.dark().copyWith(
             color: Colors.grey.shade800),
       )
       .apply(
-        fontFamily: 'MuseoSans',
+        fontFamily: 'OpenSans',
         // bodyColor: Colors.grey.shade50,
       ),
   pageTransitionsTheme: const PageTransitionsTheme(
@@ -279,11 +278,11 @@ TextStyle scoreTextStyle =
 
 TextStyle aboutStudyCardTitleStyle =
     const TextStyle(fontSize: 24, fontWeight: FontWeight.w700)
-        .apply(fontFamily: 'MuseoSans');
+        .apply(fontFamily: 'OpenSans');
 
 TextStyle aboutCardTitleStyle =
     const TextStyle(fontSize: 20, fontWeight: FontWeight.w700)
-        .apply(fontFamily: 'MuseoSans');
+        .apply(fontFamily: 'OpenSans');
 
 TextStyle aboutCardInfoStyle =
     const TextStyle(fontSize: 14, fontStyle: FontStyle.italic);
@@ -293,11 +292,11 @@ TextStyle aboutCardSubtitleStyle =
 
 TextStyle aboutCardContentStyle =
     const TextStyle(fontSize: 16, fontWeight: FontWeight.w400)
-        .apply(fontFamily: 'MuseoSans');
+        .apply(fontFamily: 'OpenSans');
 
 TextStyle aboutCardTimeAgoStyle =
     const TextStyle(fontSize: 10, fontWeight: FontWeight.w600)
-        .apply(fontFamily: 'MuseoSans');
+        .apply(fontFamily: 'OpenSans');
 
 TextStyle sectionTitleStyle =
     const TextStyle(fontSize: 18, fontWeight: FontWeight.w700);
@@ -310,7 +309,7 @@ TextStyle welcomeMessageStyle = const TextStyle(
 
 TextStyle studyDescriptionStyle =
     const TextStyle(fontSize: 12, fontWeight: FontWeight.w300);
-    
+
 TextStyle dataCardTitleStyle = const TextStyle(
     fontSize: 16, fontWeight: FontWeight.w400, letterSpacing: 1);
 TextStyle measuresStyle =
@@ -335,6 +334,12 @@ TextStyle dataVizCardBottomNumber =
     const TextStyle(fontSize: 22, fontWeight: FontWeight.w700);
 TextStyle dataVizCardBottomText =
     const TextStyle(fontSize: 12, fontWeight: FontWeight.w700);
+
+TextStyle healthServiceConnectTitleStyle =
+    const TextStyle(fontSize: 24, fontWeight: FontWeight.w700);
+
+TextStyle healthServiceConnectMessageStyle =
+    const TextStyle(fontSize: 22, fontWeight: FontWeight.w700);
 
 TextStyle profileSectionStyle = TextStyle(
     fontSize: 12,

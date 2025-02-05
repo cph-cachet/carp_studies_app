@@ -106,6 +106,7 @@ part 'ui/pages/devices_page.enable_bluetooth_dialog.dart';
 part 'ui/pages/devices_page.connection_dialog.dart';
 part 'ui/pages/devices_page.disconnection_dialog.dart';
 part 'ui/pages/devices_page.list_title.dart';
+part 'ui/pages/devices_page.health_service_connect.dart';
 
 part 'ui/widgets/carp_app_bar.dart';
 part 'ui/widgets/horizontal_bar.dart';

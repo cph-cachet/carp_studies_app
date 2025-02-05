@@ -168,6 +168,14 @@
 
                 <data android:scheme="carp-studies" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".PermissionsRationaleActivity"
+            android:exported="true">
+            <!-- Deep linking -->
+            <meta-data
+                android:name="flutter_deeplinking_enabled"
+                android:value="true" />
 
             <!-- Intention to show Permissions screen for Health Connect API -->
             <intent-filter>
@@ -178,7 +186,7 @@
         <activity-alias
             android:name="ViewPermissionUsageActivity"
             android:exported="true"
-            android:targetActivity=".MainActivity"
+            android:targetActivity=".PermissionsRationaleActivity"
             android:permission="android.permission.START_VIEW_PERMISSION_USAGE">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW_PERMISSION_USAGE" />

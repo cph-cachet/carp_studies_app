@@ -335,6 +335,12 @@ TextStyle dataVizCardBottomNumber =
 TextStyle dataVizCardBottomText =
     const TextStyle(fontSize: 12, fontWeight: FontWeight.w700);
 
+TextStyle deviceTitle =
+    const TextStyle(fontSize: 16, fontWeight: FontWeight.w700);
+
+TextStyle deviceSubtitle =
+    const TextStyle(fontSize: 12, fontWeight: FontWeight.w700);
+
 TextStyle healthServiceConnectTitleStyle =
     const TextStyle(fontSize: 24, fontWeight: FontWeight.w700);
 

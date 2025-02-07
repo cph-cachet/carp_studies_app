@@ -139,11 +139,12 @@ class DeviceListPageState extends State<DeviceListPage> {
                       Theme.of(context).extension<CarpColors>()!.grey50!,
                   child: _cardListBuilder(
                     leading: _smartphoneDevice[index].icon!,
-                    title: _smartphoneDevice[index].phoneInfo['name']!,
-                    subtitle: (
-                      "${_smartphoneDevice[index].phoneInfo["model"]!} - ${_smartphoneDevice[index].phoneInfo["version"]!}",
-                      _smartphoneDevice[index].batteryLevel ?? 0,
+                    title: (
+                      "${_smartphoneDevice[index].phoneInfo["model"]!} "
+                          "- ${_smartphoneDevice[index].phoneInfo["version"]!}",
+                      _smartphoneDevice[index].batteryLevel ?? 0
                     ),
+                    subtitle: _smartphoneDevice[index].phoneInfo['name']!,
                   ),
                 ),
               ),
@@ -166,8 +167,11 @@ class DeviceListPageState extends State<DeviceListPage> {
                 () => _cardListBuilder(
                   enableFeedback: true,
                   leading: device.icon!,
-                  title: locale.translate(device.typeName),
-                  subtitle: (device.name, device.batteryLevel ?? 0),
+                  title: (
+                    locale.translate(device.typeName),
+                    device.batteryLevel ?? 0
+                  ),
+                  subtitle: device.name,
                   onTap: () async => await _hardwareDeviceClicked(device),
                   trailing: device.getDeviceStatusIcon is Icon
                       ? device.getDeviceStatusIcon as Icon
@@ -205,7 +209,7 @@ class DeviceListPageState extends State<DeviceListPage> {
                 DeviceStatus.unknown,
                 () => _cardListBuilder(
                   leading: service.icon!,
-                  title: locale.translate(service.typeName),
+                  title: (locale.translate(service.typeName), null),
                   subtitle: null,
                   onTap: () async => await _onlineServiceClicked(service),
                   trailing: service.getServiceStatusIcon is String
@@ -226,8 +230,8 @@ class DeviceListPageState extends State<DeviceListPage> {
   Widget _cardListBuilder({
     bool enableFeedback = false,
     Icon? leading,
-    String? title,
-    (String, int)? subtitle,
+    (String, int?)? title,
+    String? subtitle,
     void Function()? onTap,
     Widget? trailing,
   }) =>
@@ -239,22 +243,35 @@ class DeviceListPageState extends State<DeviceListPage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [leading!],
         ),
-        title: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Text(title!),
-            SizedBox(width: 12),
-            if (trailing is Icon && subtitle != null)
-              BatteryPercentage(batteryLevel: subtitle.$2),
-          ],
+        title: SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text(
+                title!.$1,
+                style: deviceTitle.copyWith(
+                  color: Theme.of(context).extension<CarpColors>()!.grey900,
+                ),
+              ),
+              SizedBox(width: 6),
+              if (title.$2 != null && title.$2! > 0)
+                BatteryPercentage(batteryLevel: title.$2 ?? 0),
+            ],
+          ),
         ),
-        subtitle: subtitle != null && subtitle.$1.isNotEmpty
+        subtitle: subtitle != null && subtitle.isNotEmpty
             ? Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(subtitle.$1),
+                  Text(
+                    subtitle,
+                    style: deviceSubtitle.copyWith(
+                      color: Theme.of(context).extension<CarpColors>()!.grey700,
+                    ),
+                  ),
                 ],
               )
             : null,
@@ -295,7 +312,8 @@ class DeviceListPageState extends State<DeviceListPage> {
         print('Requesting health permissions');
         Navigator.push(
           context,
-          MaterialPageRoute<void>(builder: (context) => HealthServiceConnectPage1()),
+          MaterialPageRoute<void>(
+              builder: (context) => HealthServiceConnectPage1()),
         );
       } else {
         await service.deviceManager.requestPermissions();

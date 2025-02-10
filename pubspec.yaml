@@ -20,7 +20,7 @@ dependencies:
   carp_audio_package: ^1.8.0
   carp_esense_package: ^1.6.0
   carp_polar_package: ^1.6.1
-  carp_health_package: ^2.11.0
+  carp_health_package: ^3.0.0
   carp_movesense_package: ^1.7.2
 
   carp_webservices: ^3.5.0
@@ -71,8 +71,8 @@ dependency_overrides:
   #   path: ../carp/carp.sensing-flutter/packages/carp_survey_package/
   # carp_communication_package:
   #   path: ../../packages/carp_communication_package/
-  # carp_audio_package:
-  #   path: ../carp/carp.sensing-flutter/packages/carp_audio_package/
+  carp_audio_package:
+    path: ../carp/carp.sensing-flutter/packages/carp_audio_package/
   # carp_apps_package:
   #   path: ../../packages/carp_apps_package/
   # carp_esense_package:

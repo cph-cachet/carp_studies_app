@@ -16,24 +16,17 @@ Participant _$ParticipantFromJson(Map<String, dynamic> json) => Participant(
           json['hasInformedConsentBeenAccepted'] as bool? ?? false,
     );
 
-Map<String, dynamic> _$ParticipantToJson(Participant instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('studyId', instance.studyId);
-  writeNotNull('studyDeploymentId', instance.studyDeploymentId);
-  writeNotNull('deviceRoleName', instance.deviceRoleName);
-  writeNotNull('participantId', instance.participantId);
-  writeNotNull('participantRoleName', instance.participantRoleName);
-  val['hasInformedConsentBeenAccepted'] =
-      instance.hasInformedConsentBeenAccepted;
-  return val;
-}
+Map<String, dynamic> _$ParticipantToJson(Participant instance) =>
+    <String, dynamic>{
+      if (instance.studyId case final value?) 'studyId': value,
+      if (instance.studyDeploymentId case final value?)
+        'studyDeploymentId': value,
+      if (instance.deviceRoleName case final value?) 'deviceRoleName': value,
+      if (instance.participantId case final value?) 'participantId': value,
+      if (instance.participantRoleName case final value?)
+        'participantRoleName': value,
+      'hasInformedConsentBeenAccepted': instance.hasInformedConsentBeenAccepted,
+    };
 
 WeeklyActivities _$WeeklyActivitiesFromJson(Map<String, dynamic> json) =>
     WeeklyActivities()
@@ -111,23 +104,14 @@ HourlyHeartRate _$HourlyHeartRateFromJson(Map<String, dynamic> json) =>
       ..maxHeartRate = (json['maxHeartRate'] as num?)?.toDouble()
       ..minHeartRate = (json['minHeartRate'] as num?)?.toDouble();
 
-Map<String, dynamic> _$HourlyHeartRateToJson(HourlyHeartRate instance) {
-  final val = <String, dynamic>{
-    'hourlyHeartRate':
-        instance.hourlyHeartRate.map((k, e) => MapEntry(k.toString(), e)),
-    'lastUpdated': instance.lastUpdated.toIso8601String(),
-  };
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('maxHeartRate', instance.maxHeartRate);
-  writeNotNull('minHeartRate', instance.minHeartRate);
-  return val;
-}
+Map<String, dynamic> _$HourlyHeartRateToJson(HourlyHeartRate instance) =>
+    <String, dynamic>{
+      'hourlyHeartRate':
+          instance.hourlyHeartRate.map((k, e) => MapEntry(k.toString(), e)),
+      'lastUpdated': instance.lastUpdated.toIso8601String(),
+      if (instance.maxHeartRate case final value?) 'maxHeartRate': value,
+      if (instance.minHeartRate case final value?) 'minHeartRate': value,
+    };
 
 HeartRateMinMaxPrHour _$HeartRateMinMaxPrHourFromJson(
         Map<String, dynamic> json) =>
@@ -137,16 +121,8 @@ HeartRateMinMaxPrHour _$HeartRateMinMaxPrHourFromJson(
     );
 
 Map<String, dynamic> _$HeartRateMinMaxPrHourToJson(
-    HeartRateMinMaxPrHour instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('min', instance.min);
-  writeNotNull('max', instance.max);
-  return val;
-}
+        HeartRateMinMaxPrHour instance) =>
+    <String, dynamic>{
+      if (instance.min case final value?) 'min': value,
+      if (instance.max case final value?) 'max': value,
+    };

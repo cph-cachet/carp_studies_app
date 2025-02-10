@@ -233,10 +233,9 @@ packages:
   carp_audio_package:
     dependency: "direct main"
     description:
-      name: carp_audio_package
-      sha256: e4487d4f24d850f44cd2c857bb03c6a336ee1d4a6ef70153024d17917ea8d8d5
-      url: "https://pub.dev"
-    source: hosted
+      path: "../carp/carp.sensing-flutter/packages/carp_audio_package"
+      relative: true
+    source: path
     version: "1.8.0"
   carp_backend:
     dependency: "direct main"

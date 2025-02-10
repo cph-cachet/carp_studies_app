@@ -37,8 +37,6 @@ class StudyPageViewModel extends ViewModel {
         return const Icon(Icons.description);
       case MessageType.news:
         return const Icon(Icons.create_new_folder);
-      default:
-        return const Icon(Icons.new_releases);
     }
   }
 

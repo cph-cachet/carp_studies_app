@@ -71,8 +71,8 @@ dependency_overrides:
   #   path: ../carp/carp.sensing-flutter/packages/carp_survey_package/
   # carp_communication_package:
   #   path: ../../packages/carp_communication_package/
-  # carp_audio_package:
-  #   path: ../carp/carp.sensing-flutter/packages/carp_audio_package/
+  carp_audio_package:
+    path: ../carp/carp.sensing-flutter/packages/carp_audio_package/
   # carp_apps_package:
   #   path: ../../packages/carp_apps_package/
   # carp_esense_package:

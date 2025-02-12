@@ -479,10 +479,6 @@ class TaskListPageState extends State<TaskListPage>
       Icons.image,
       color: CACHET.YELLOW,
     ),
-    SurveyUserTask.HEALTH_ASSESSMENT_TYPE: const Icon(
-      Icons.favorite,
-      color: CACHET.RED_1,
-    ),
     BackgroundSensingUserTask.SENSING_TYPE: const Icon(
       Icons.sensors,
       color: CACHET.LIGHT_BROWN,
@@ -499,7 +495,6 @@ class TaskListPageState extends State<TaskListPage>
     SurveyUserTask.AUDIO_TYPE: CACHET.GREEN,
     SurveyUserTask.VIDEO_TYPE: CACHET.LIGHT_BLUE,
     SurveyUserTask.IMAGE_TYPE: CACHET.YELLOW,
-    SurveyUserTask.HEALTH_ASSESSMENT_TYPE: CACHET.RED_1,
     BackgroundSensingUserTask.SENSING_TYPE: CACHET.LIGHT_BROWN,
     BackgroundSensingUserTask.ONE_TIME_SENSING_TYPE: CACHET.PURPLE,
   };

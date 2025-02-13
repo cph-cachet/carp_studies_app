@@ -52,16 +52,59 @@ class HealthServiceConnectPage2 extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 20),
-                      Text(
-                        "${locale.translate("pages.devices.type.health.instructions.page2.part1")} "
-                        "${Platform.isAndroid ? locale.translate("pages.devices.type.health.instructions.page2.android.allow_all") : locale.translate("pages.devices.type.health.instructions.page2.ios.allow_all")} "
-                        "${locale.translate("pages.devices.type.health.instructions.page2.part2")}? "
-                        "${locale.translate("pages.devices.type.health.instructions.page2.allow")} "
-                        "${Platform.isAndroid ? locale.translate("pages.devices.type.health.instructions.page2.part3.android") : locale.translate("pages.devices.type.health.instructions.page2.part3.android")}",
-                        style: healthServiceConnectMessageStyle.copyWith(
-                            color: Theme.of(context)
-                                .extension<CarpColors>()!
-                                .grey900),
+                      Text.rich(
+                        TextSpan(
+                          children: [
+                            TextSpan(
+                              text:
+                                  "${locale.translate("pages.devices.type.health.instructions.page2.part1")} ",
+                              style: healthServiceConnectMessageStyle.copyWith(
+                                color: Theme.of(context)
+                                    .extension<CarpColors>()!
+                                    .grey900,
+                              ),
+                            ),
+                            TextSpan(
+                              text:
+                                  "${Platform.isAndroid ? locale.translate("pages.devices.type.health.instructions.page2.android.allow_all") : locale.translate("pages.devices.type.health.instructions.page2.ios.turn_on_all")} ",
+                              style: healthServiceConnectMessageStyle.copyWith(
+                                color: Theme.of(context)
+                                    .extension<CarpColors>()!
+                                    .primary, // Change to desired color
+                              ),
+                            ),
+                            TextSpan(
+                              text:
+                                  "${locale.translate("pages.devices.type.health.instructions.page2.part2")} ",
+                              style: healthServiceConnectMessageStyle.copyWith(
+                                color: Theme.of(context)
+                                    .extension<CarpColors>()!
+                                    .grey900,
+                              ),
+                            ),
+                            TextSpan(
+                              text:
+                                  "${locale.translate("pages.devices.type.health.instructions.page2.allow")} ",
+                              style: healthServiceConnectMessageStyle.copyWith(
+                                color: Theme.of(context)
+                                    .extension<CarpColors>()!
+                                    .primary, // Change to desired color
+                              ),
+                            ),
+                            TextSpan(
+                              text: Platform.isAndroid
+                                  ? locale.translate(
+                                      "pages.devices.type.health.instructions.page2.part3.android")
+                                  : locale.translate(
+                                      "pages.devices.type.health.instructions.page2.part3.ios"),
+                              style: healthServiceConnectMessageStyle.copyWith(
+                                color: Theme.of(context)
+                                    .extension<CarpColors>()!
+                                    .grey900,
+                              ),
+                            ),
+                          ],
+                        ),
                         textAlign: TextAlign.center,
                       ),
                       const SizedBox(height: 30),

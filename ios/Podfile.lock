@@ -18,7 +18,6 @@ PODS:
     - Flutter
   - connectivity_plus (0.0.1):
     - Flutter
-    - FlutterMacOS
   - device_info_plus (0.0.1):
     - Flutter
   - ESense (0.1.3)
@@ -44,7 +43,7 @@ PODS:
   - flutter_sound_core (9.6.0)
   - flutter_timezone (0.0.1):
     - Flutter
-  - health (1.0.4):
+  - health (12.0.0):
     - Flutter
   - just_audio (0.0.1):
     - Flutter
@@ -108,7 +107,7 @@ DEPENDENCIES:
   - audio_streamer (from `.symlinks/plugins/audio_streamer/ios`)
   - battery_plus (from `.symlinks/plugins/battery_plus/ios`)
   - camera_avfoundation (from `.symlinks/plugins/camera_avfoundation/ios`)
-  - connectivity_plus (from `.symlinks/plugins/connectivity_plus/darwin`)
+  - connectivity_plus (from `.symlinks/plugins/connectivity_plus/ios`)
   - device_info_plus (from `.symlinks/plugins/device_info_plus/ios`)
   - esense_flutter (from `.symlinks/plugins/esense_flutter/ios`)
   - Flutter (from `Flutter`)
@@ -164,7 +163,7 @@ EXTERNAL SOURCES:
   camera_avfoundation:
     :path: ".symlinks/plugins/camera_avfoundation/ios"
   connectivity_plus:
-    :path: ".symlinks/plugins/connectivity_plus/darwin"
+    :path: ".symlinks/plugins/connectivity_plus/ios"
   device_info_plus:
     :path: ".symlinks/plugins/device_info_plus/ios"
   esense_flutter:
@@ -241,7 +240,7 @@ SPEC CHECKSUMS:
   audio_streamer: af49e73eb66f71c4eeabb4bbcb05f122d03a6709
   battery_plus: 1ff2e16ba75af2a78387f65476057a390b47885e
   camera_avfoundation: dd002b0330f4981e1bbcb46ae9b62829237459a4
-  connectivity_plus: 18382e7311ba19efcaee94442b23b32507b20695
+  connectivity_plus: 2a701ffec2c0ae28a48cf7540e279787e77c447d
   device_info_plus: 97af1d7e84681a90d0693e63169a5d50e0839a0d
   ESense: cbe103ad16c435424f2fd6f8b274f2468af84173
   esense_flutter: 8bfadfdefe7b51d6f78366e43b2b64ec9b6144b6
@@ -254,7 +253,7 @@ SPEC CHECKSUMS:
   flutter_sound: dde9a913063b65a27ba8fdc2039036b99b136c79
   flutter_sound_core: 0c6eb9d5268adc70ff159b3d65fd3d98a82d3a27
   flutter_timezone: ffb07bdad3c6276af8dada0f11978d8a1f8a20bb
-  health: 5d10c4296a95f6be50a8131d47d3cb3ad640bdf5
+  health: 698730a6f6e702d9ec8a77d107813471032499a4
   just_audio: a42c63806f16995daf5b219ae1d679deb76e6a79
   light: 86af7a847d218a9a2376bc1c1ae40c3410441135
   location: d5cf8598915965547c3f36761ae9cc4f4e87d22e

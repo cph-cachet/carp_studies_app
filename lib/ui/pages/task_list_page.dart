@@ -264,10 +264,10 @@ class TaskListPageState extends State<TaskListPage> {
       Icons.camera_alt,
       color: CACHET.YELLOW,
     ),
-    // SurveyUserTask.HEALTH_ASSESSMENT_TYPE: const Icon(
-    //   Icons.favorite_rounded,
-    //   color: CACHET.RED_1,
-    // ),
+    HealthUserTask.HEALTH_ASSESSMENT_TYPE: const Icon(
+      Icons.favorite_rounded,
+      color: CACHET.RED_1,
+    ),
     BackgroundSensingUserTask.SENSING_TYPE: const Icon(
       Icons.settings_input_antenna,
       color: CACHET.BLUE,

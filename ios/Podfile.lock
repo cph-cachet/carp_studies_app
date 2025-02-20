@@ -229,7 +229,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   Movesense:
-    :commit: c5a784a22b053660b4037ba8f43b8562113c21e5
+    :commit: b9c0c4b08e353ecabe3999338e1b876db971bdfb
     :git: https://bitbucket.org/movesense/movesense-mobile-lib/
 
 SPEC CHECKSUMS:

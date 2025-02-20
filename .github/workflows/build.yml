@@ -26,26 +26,12 @@ jobs:
 
           key: flutter-${{ hashFiles('**/pubspec.lock') }}
 
-      - if: ${{ steps.cache-flutter.outputs.cache-hit != 'true' }}
-        name: Install Flutter
-        run: |
-          git clone https://github.com/flutter/flutter.git --depth 1 -b 3.29.0 $FOLDER
+      - name: Setup Flutter SDK
+        uses: flutter-actions/setup-flutter@v4
+        with:
+          channel: stable
+          version: 3.29.0
 
-      # - name: Setup Flutter SDK
-      #   uses: flutter-actions/setup-flutter@v4
-      #   with:
-      #     channel: stable
-      #     version: 3.29.0
-
-      # - name: Add Flutter to PATH
-      #   run: echo "$GITHUB_WORKSPACE/flutter/bin" >> $GITHUB_PATH
-
-      # - name: Debug git branches
-      #   run: |
-      #     git branch -r
-      #     flutter --version
-
-      # - if: ${{ steps.cache-flutter.outputs.cache-hit != 'true' }}
       - name: Install dependencies
         run: flutter pub get
 

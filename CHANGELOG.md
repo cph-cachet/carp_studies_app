@@ -1,3 +1,7 @@
+## 3.4.1
+
+- Flutter stable branch was no longer stable and therefore github actions were failing. Reverted back to older version of flutter inside the scripts.
+
 ## 3.4.0
 
 - Fixing ios marketing name

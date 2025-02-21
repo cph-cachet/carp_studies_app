@@ -6,7 +6,7 @@ cd $CI_PRIMARY_REPOSITORY_PATH
 set -ex
 
 # Install Flutter using git.
-git clone https://github.com/flutter/flutter.git --depth 1 -b stable $HOME/flutter
+git clone https://github.com/flutter/flutter.git --depth 1 -b 3.24.5 $HOME/flutter
 export PATH="$PATH:$HOME/flutter/bin"
 echo "Flutter version: $(flutter --version)"
 

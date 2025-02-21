@@ -1,4 +1,10 @@
-# 3.3.2
+## 3.4.0
+
+- Fixing ios marketing name
+- Providing link (by making PermissionsRationaleActivity) for Google Health Connect Privacy Policy
+- Fixing issue for ios only running on test mode locally due to override of dart_defines
+
+## 3.3.2
 
 - Changing Marketing Version value from $(FLUTTER_BUILD_NUMBER) to $(FLUTTER_BUILD_NAME) for ios.
 

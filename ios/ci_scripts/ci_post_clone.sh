@@ -3,6 +3,8 @@
 # Change working directory to the root of your cloned repo.
 cd $CI_PRIMARY_REPOSITORY_PATH
 
+set -ex
+
 # Install Flutter using git.
 curl -sL https://github.com/flutter-actions/setup-flutter/releases/download/v4.0.0/setup-flutter.sh | bash
 export PATH="$PATH:$HOME/flutter/bin"

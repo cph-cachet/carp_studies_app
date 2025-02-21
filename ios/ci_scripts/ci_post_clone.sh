@@ -5,6 +5,9 @@ cd $CI_PRIMARY_REPOSITORY_PATH
 
 # Install Flutter using git.
 git clone https://github.com/flutter/flutter.git --depth 1 -b stable $HOME/flutter
+cd $HOME/flutter
+git fetch --tags
+git checkout 3.29.0
 export PATH="$PATH:$HOME/flutter/bin"
 
 # Install Flutter artifacts for iOS (--ios), or macOS (--macos) platforms.

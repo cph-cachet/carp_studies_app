@@ -35,7 +35,7 @@ platform :android do
     sh "flutter clean"
     sh "flutter pub get"
     sh "flutter pub upgrade"
-    sh "cat pubspec.lock"
+    sh "cat ../pubspec.lock"
     sh "flutter build appbundle --release --no-deferred-components --no-tree-shake-icons --dart-define='deployment-mode=test'"
 
     upload_to_play_store(

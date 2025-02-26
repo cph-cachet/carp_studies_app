@@ -7,7 +7,6 @@ class AppUserTaskFactory implements UserTaskFactory {
     SurveyUserTask.AUDIO_TYPE,
     SurveyUserTask.VIDEO_TYPE,
     SurveyUserTask.IMAGE_TYPE,
-    SurveyUserTask.HEALTH_ASSESSMENT_TYPE,
   ];
 
   @override
@@ -15,8 +14,6 @@ class AppUserTaskFactory implements UserTaskFactory {
         SurveyUserTask.AUDIO_TYPE => AudioUserTask(executor),
         SurveyUserTask.VIDEO_TYPE => VideoUserTask(executor),
         SurveyUserTask.IMAGE_TYPE => VideoUserTask(executor),
-        SurveyUserTask.HEALTH_ASSESSMENT_TYPE =>
-          OneTimeBackgroundSensingUserTask(executor),
         _ => BackgroundSensingUserTask(executor),
       };
 }

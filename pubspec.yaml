@@ -57,6 +57,9 @@ dependency_overrides:
   camera_android_camerax: 0.6.10+1
 
   # Overriding carp libraries to use the local copy, if needed
+  camera_android_camerax: 0.6.10+1
+
+  # Overriding carp libraries to use the local copy, if needed
   # carp_serializable:
   #   path: ../carp/carp.sensing-flutter/carp_serializable/
   # carp_core:
@@ -91,6 +94,8 @@ dependency_overrides:
   #   path: ../carp/carp.sensing-flutter/backends/carp_backend/
   # research_package: 
   #   path: ../research.package/
+
+
 
 
 

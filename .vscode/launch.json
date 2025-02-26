@@ -49,7 +49,7 @@
         "--dart-define",
         "deployment-mode=production",
         "--dart-define",
-        "debug-level=info"
+        "debug-level=debug"
       ],
       "flutterMode": "debug"
     }

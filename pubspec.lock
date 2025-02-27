@@ -242,10 +242,10 @@ packages:
     dependency: "direct main"
     description:
       name: carp_backend
-      sha256: "3c630529ef17058149b74031afa4a5cb0453840e3ff25e7381e67bf19ebe9769"
+      sha256: "44322383b04b360977c7325f20dae9f83033a37123b9520a7c593dd169fdf37c"
       url: "https://pub.dev"
     source: hosted
-    version: "1.9.4"
+    version: "1.9.5"
   carp_connectivity_package:
     dependency: "direct main"
     description:
@@ -854,10 +854,10 @@ packages:
     dependency: "direct main"
     description:
       name: go_router
-      sha256: "04539267a740931c6d4479a10d466717ca5901c6fdfd3fcda09391bbb8ebd651"
+      sha256: f02fd7d2a4dc512fec615529824fdd217fecb3a3d3de68360293a551f21634b3
       url: "https://pub.dev"
     source: hosted
-    version: "14.8.0"
+    version: "14.8.1"
   google_fonts:
     dependency: "direct main"
     description:

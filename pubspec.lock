@@ -258,10 +258,10 @@ packages:
     dependency: "direct main"
     description:
       name: carp_context_package
-      sha256: "52d5db2278d84a1ba4e9a4a7e92768ecb62c1919056a8609124e68ce1ac0de49"
+      sha256: "2453f01b176c95c42643d0f67b2a39d2ae5696583d339bb34d828b5a881c9be7"
       url: "https://pub.dev"
     source: hosted
-    version: "1.10.1"
+    version: "1.11.1"
   carp_core:
     dependency: "direct main"
     description:
@@ -721,7 +721,7 @@ packages:
     source: hosted
     version: "0.7.6+2"
   flutter_plugin_android_lifecycle:
-    dependency: transitive
+    dependency: "direct overridden"
     description:
       name: flutter_plugin_android_lifecycle
       sha256: "615a505aef59b151b46bbeef55b36ce2b6ed299d160c51d84281946f0aa0ce0e"

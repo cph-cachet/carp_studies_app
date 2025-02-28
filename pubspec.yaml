@@ -1,7 +1,7 @@
 name: carp_study_app
 description: The generic CARP study app.
 publish_to: "none"
-version: 3.4.1+58
+version: 3.4.1+59
 
 environment:
   sdk: ">=3.2.0 <4.0.0"
@@ -55,6 +55,7 @@ dependencies:
 
 dependency_overrides:
   camera_android_camerax: 0.6.10+1
+  flutter_plugin_android_lifecycle: 2.0.24
 
   # Overriding carp libraries to use the local copy, if needed
   # carp_serializable:

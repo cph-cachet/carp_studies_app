@@ -1,3 +1,22 @@
+## 3.4.1
+
+- Flutter stable branch was no longer stable and therefore github actions were failing. Reverted back to older version of flutter inside the scripts.
+
+## 3.4.0
+
+- Fixing ios marketing name
+- Providing link (by making PermissionsRationaleActivity) for Google Health Connect Privacy Policy
+- Fixing issue for ios only running on test mode locally due to override of dart_defines
+
+## 3.3.2
+
+- Changing Marketing Version value from $(FLUTTER_BUILD_NUMBER) to $(FLUTTER_BUILD_NAME) for ios.
+
+## 3.3.1
+
+- Updating version code
+- Providing changelog file for fastlane to give to Google Play
+
 ## 3.3.0
 
 - Fixing movesense connectivity exception that crashed the app on release mode by adding proguards rules that prevent the movesense package from getting obfuscated

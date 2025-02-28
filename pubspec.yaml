@@ -1,7 +1,7 @@
 name: carp_study_app
 description: The generic CARP study app.
 publish_to: "none"
-version: 3.3.0+50
+version: 3.4.1+59
 
 environment:
   sdk: ">=3.2.0 <4.0.0"
@@ -20,7 +20,7 @@ dependencies:
   carp_audio_package: ^1.8.0
   carp_esense_package: ^1.6.0
   carp_polar_package: ^1.6.1
-  carp_health_package: ^2.11.0
+  carp_health_package: ^3.0.0
   carp_movesense_package: ^1.7.2
 
   carp_webservices: ^3.5.0
@@ -55,6 +55,7 @@ dependencies:
 
 dependency_overrides:
   camera_android_camerax: 0.6.10+1
+  flutter_plugin_android_lifecycle: 2.0.24
 
   # Overriding carp libraries to use the local copy, if needed
   # carp_serializable:
@@ -91,6 +92,8 @@ dependency_overrides:
   #   path: ../carp/carp.sensing-flutter/backends/carp_backend/
   # research_package: 
   #   path: ../research.package/
+
+
 
 
 

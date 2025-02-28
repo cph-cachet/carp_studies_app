@@ -2,7 +2,7 @@
   "version": "0.2.0",
   "configurations": [
     {
-      // used for local debug deployment using files in the /assets/carp folder
+      // used for local debug mode using files in the /assets/carp folder
       "name": "LOCAL - carp-studies-app",
       "request": "launch",
       "type": "dart",
@@ -15,7 +15,7 @@
       "flutterMode": "debug"
     },
     {
-      // used for debug deployment using the DEV CAWS instance
+      // used for debug mode using the DEV CAWS instance
       "name": "DEV - carp-studies-app",
       "request": "launch",
       "type": "dart",
@@ -28,7 +28,7 @@
       "flutterMode": "debug"
     },
     {
-      // used for debug deployment using the TEST CAWS instance
+      // used for debug mode using the TEST CAWS instance
       "name": "TEST - carp-studies-app",
       "request": "launch",
       "type": "dart",
@@ -43,13 +43,15 @@
     {
       // used for debug mode using COMPUTEROME CAWS instance
       "name": "PROD - carp-studies-app",
+      // used for debug mode using COMPUTEROME CAWS instance
+      "name": "PROD - carp-studies-app",
       "request": "launch",
       "type": "dart",
       "toolArgs": [
         "--dart-define",
         "deployment-mode=production",
         "--dart-define",
-        "debug-level=info"
+        "debug-level=debug"
       ],
       "flutterMode": "debug"
     }

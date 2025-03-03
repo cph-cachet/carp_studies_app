@@ -41,7 +41,7 @@
       "flutterMode": "debug"
     },
     {
-      // used for debug mode using COMPUTEROME CAWS instance
+      // used for debug mode using COMPUTEROME PROD instance
       "name": "PROD - carp-studies-app",
       "request": "launch",
       "type": "dart",

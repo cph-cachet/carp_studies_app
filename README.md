@@ -28,6 +28,8 @@ Local mode is intended for designing and debugging a study protocol, informed co
 
 > **Note:** Since the app buffers the protocol locally on the phone, you need to delete the app and its data on the phone when changing or updating the protocol.
 
+Data is stored locally on the phone in the SQLite database.
+
 ### CAWS Deployment
 
 When using CAWS, deployment mode can be set to either `dev`, `test`, or `production`. In all of these cases, the app will try to authenticate to CAWS and download all resources - study protocol, informed consent, translations, and messages - from CAWS. These resources should be added to CAWS before use, and each participant should be added to a study and deployed, before it can be downloaded to the app.

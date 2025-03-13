@@ -174,7 +174,7 @@ class _MobilityCardState extends State<MobilityCard> {
       fontSize: 14,
     );
     return SideTitleWidget(
-      axisSide: AxisSide.right,
+      meta: meta,
       space: 16,
       child: Text(
         text,
@@ -193,7 +193,7 @@ class _MobilityCardState extends State<MobilityCard> {
       fontSize: 14,
     );
     return SideTitleWidget(
-      axisSide: AxisSide.right,
+      meta: meta,
       space: 16,
       child: Text(
         text,
@@ -231,7 +231,7 @@ class _MobilityCardState extends State<MobilityCard> {
         text = '';
     }
     return SideTitleWidget(
-      axisSide: meta.axisSide,
+      meta: meta,
       child: Text(text, style: style),
     );
   }

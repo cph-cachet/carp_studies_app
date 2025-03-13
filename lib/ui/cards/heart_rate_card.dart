@@ -331,7 +331,7 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
     }
 
     return SideTitleWidget(
-      axisSide: AxisSide.right,
+      meta: meta,
       space: 0,
       child: Text(
         text,
@@ -349,7 +349,7 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
       fontSize: 14,
     );
     return SideTitleWidget(
-      axisSide: AxisSide.right,
+      meta: meta,
       child: Text(
         text,
         style: style,

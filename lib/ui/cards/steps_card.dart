@@ -163,7 +163,7 @@ class StepsCardWidgetState extends State<StepsCardWidget> {
       fontSize: 14,
     );
     return SideTitleWidget(
-      axisSide: AxisSide.right,
+      meta: meta,
       space: 16,
       child: Text(
         text,
@@ -201,7 +201,7 @@ class StepsCardWidgetState extends State<StepsCardWidget> {
         text = '';
     }
     return SideTitleWidget(
-      axisSide: meta.axisSide,
+      meta: meta,
       child: Text(text, style: style),
     );
   }

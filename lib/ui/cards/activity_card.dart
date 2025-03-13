@@ -221,7 +221,7 @@ class ActivityCardState extends State<ActivityCard> {
       fontSize: 14,
     );
     return SideTitleWidget(
-      axisSide: AxisSide.right,
+      meta: meta,
       space: 16,
       child: Text(
         text,
@@ -259,7 +259,7 @@ class ActivityCardState extends State<ActivityCard> {
         text = '';
     }
     return SideTitleWidget(
-      axisSide: meta.axisSide,
+      meta: meta,
       child: Text(text, style: style),
     );
   }

@@ -8,7 +8,7 @@ Read more about the [CARP Studies app](https://carp.cachet.dk/carp-studies-app/)
 
 ## Deployment Mode
 
-This study app can run in two basic modes - using CAWS or locally. Deployment mode is set using the environment variable `deployment-mode` file. In Flutter environment variables are set by specifying the `--dart-define` option in flutter run. For example;
+This study app can run in two basic modes - using an server instance of CAWS or locally. Deployment mode is set using the environment variable `deployment-mode` file. In Flutter environment variables are set by specifying the `--dart-define` option in flutter run. For example;
 
 ```shell
 flutter run --dart-define="deployment-mode=local" --dart-define="debug-level=debug"
@@ -28,6 +28,14 @@ Local mode is intended for designing and debugging a study protocol, informed co
 
 > **Note:** Since the app buffers the protocol locally on the phone, you need to delete the app and its data on the phone when changing or updating the protocol.
 
+In local mode, all data is stored in the local SQLite database.
+
 ### CAWS Deployment
 
-When using CAWS, deployment mode can be set to either `dev`, `test`, or `production`. In all of these cases, the app will try to authenticate to CAWS and download all resources - study protocol, informed consent, translations, and messages - from CAWS. These resources should be added to CAWS before use, and each participant should be added to a study and deployed, before it can be downloaded to the app.
+When using CAWS, deployment mode can be set to either `localhost`, `dev`, `test`, or `production`. In all of these cases, the app will try to authenticate to CAWS and download all resources - study protocol, informed consent, translations, and messages - from CAWS. These resources should be added to CAWS before use, and each participant should be added to a study and deployed, before it can be downloaded to the app.
+
+In the `localhost` configuration you need to also specify a hostname of the CAWS instance, like this;
+
+```shell
+flutter run --dart-define="deployment-mode=localhost" --dart-define="hostname=127.0.0.1:8080" --dart-define="debug-level=debug"
+```

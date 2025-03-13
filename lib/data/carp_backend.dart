@@ -13,11 +13,7 @@ class CarpBackend {
   static const String carpWebsiteUrl = "https://carp.cachet.dk";
 
   /// The URIs of the CARP Web Service (CAWS) host for each [DeploymentMode].
-  static const Map<DeploymentMode, String> uris = {
-    DeploymentMode.dev: 'dev.carp.dk',
-    DeploymentMode.test: 'test.carp.dk',
-    DeploymentMode.production: 'carp.computerome.dk',
-  };
+  Map<DeploymentMode, String> uris = {};
 
   static final CarpBackend _instance = CarpBackend._();
   factory CarpBackend() => _instance;
@@ -26,6 +22,11 @@ class CarpBackend {
     CarpMobileSensing.ensureInitialized();
     ResearchPackage.ensureInitialized();
     CognitionPackage.ensureInitialized();
+
+    // populate the URIs based on known deployment mode
+    uris[DeploymentMode.dev] = 'dev.carp.dk';
+    uris[DeploymentMode.test] = 'test.carp.dk';
+    uris[DeploymentMode.production] = 'carp.computerome.dk';
   }
 
   /// The URI of the CAWS server - depending on deployment mode.

@@ -20,6 +20,9 @@ enum DeploymentMode {
   /// Use a local study protocol & deployment and store data locally on the phone.
   local,
 
+  /// Use a CAWS server hosted on a local host to get the study deployment and store data.
+  localhost,
+
   /// Use the CAWS production server to get the study deployment and store data.
   production,
 
@@ -69,6 +72,9 @@ class StudyAppBLoC extends ChangeNotifier {
   /// What kind of deployment are we running?
   DeploymentMode deploymentMode = DeploymentMode.production;
 
+  /// The host name (full URL) of the CAWS server.
+  // String hostname = 'localhost';
+
   /// The localization (language)) of this app.
   RPLocalizations? localization;
 
@@ -91,12 +97,18 @@ class StudyAppBLoC extends ChangeNotifier {
     deploymentMode =
         DeploymentMode.values.where((element) => element.name == dep).first;
 
+    const hostname =
+        String.fromEnvironment('hostname', defaultValue: 'localhost');
+    print('$runtimeType - hostname: $hostname');
+    CarpBackend().uris[DeploymentMode.localhost] = hostname;
+
     const deb = String.fromEnvironment('debug-level', defaultValue: 'info');
     debugLevel =
         DebugLevel.values.where((element) => element.name == deb).first;
 
     info('$runtimeType created. '
         'DeploymentMode: ${deploymentMode.name}, '
+        'Hostname: ${CarpBackend().uris[deploymentMode]}, '
         'DebugLevel: ${debugLevel.name}');
   }
 

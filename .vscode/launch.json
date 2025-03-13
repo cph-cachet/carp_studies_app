@@ -16,14 +16,14 @@
     },
     {
       // used for debug mode using a LOCAL HOST CAWS instance
-      "name": "LOCAL HOST - carp-studies-app",
+      "name": "LOCAL HOST - 100.101.207.41",
       "request": "launch",
       "type": "dart",
       "toolArgs": [
         "--dart-define",
         "deployment-mode=localhost",
         "--dart-define",
-        "hostname=100.101.207.41:8080",
+        "hostname=100.101.207.41",
         "--dart-define",
         "debug-level=debug"
       ],

@@ -101,7 +101,7 @@ class _MobilityCardState extends State<MobilityCard> {
         drawHorizontalLine: true,
         getDrawingHorizontalLine: (value) {
           return FlLine(
-            color: Colors.grey.withOpacity(0.3),
+            color: Colors.grey.withValues(alpha: 0.3),
             strokeWidth: 1,
           );
         },
@@ -110,7 +110,7 @@ class _MobilityCardState extends State<MobilityCard> {
         show: true,
         border: Border.all(
           width: 1,
-          color: Colors.grey.withOpacity(0.2),
+          color: Colors.grey.withValues(alpha: 0.2),
         ),
       ),
     ));
@@ -134,7 +134,7 @@ class _MobilityCardState extends State<MobilityCard> {
       barRods: [
         BarChartRodData(
           toY: places.toDouble(),
-          color: widget.colors[1].withOpacity(isTouched ? 0.8 : 1),
+          color: widget.colors[1].withValues(alpha: isTouched ? 0.8 : 1),
           width: 16,
           borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(8),
@@ -143,7 +143,7 @@ class _MobilityCardState extends State<MobilityCard> {
         ),
         BarChartRodData(
           toY: homestay.toDouble(),
-          color: widget.colors[0].withOpacity(isTouched ? 0.8 : 1),
+          color: widget.colors[0].withValues(alpha: isTouched ? 0.8 : 1),
           width: 16,
           borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(8),
@@ -170,11 +170,11 @@ class _MobilityCardState extends State<MobilityCard> {
         : '';
 
     final style = activityVisualisationTextStyle(
-      color: Colors.grey.withOpacity(0.6),
+      color: Colors.grey.withValues(alpha: 0.6),
       fontSize: 14,
     );
     return SideTitleWidget(
-      axisSide: AxisSide.right,
+      meta: meta,
       space: 16,
       child: Text(
         text,
@@ -189,11 +189,11 @@ class _MobilityCardState extends State<MobilityCard> {
         : '';
 
     final style = activityVisualisationTextStyle(
-      color: Colors.grey.withOpacity(0.6),
+      color: Colors.grey.withValues(alpha: 0.6),
       fontSize: 14,
     );
     return SideTitleWidget(
-      axisSide: AxisSide.right,
+      meta: meta,
       space: 16,
       child: Text(
         text,
@@ -231,7 +231,7 @@ class _MobilityCardState extends State<MobilityCard> {
         text = '';
     }
     return SideTitleWidget(
-      axisSide: meta.axisSide,
+      meta: meta,
       child: Text(text, style: style),
     );
   }

@@ -775,26 +775,26 @@ packages:
     dependency: transitive
     description:
       name: flutter_sound
-      sha256: "3249b02fdd44cb7cd20295299db1dba15270af067c5310c300d85d9b5bd01845"
+      sha256: e3a12461a3a9a91f945b6dbbfa88748f05434856bcad26a7c4bc7e51616b32cc
       url: "https://pub.dev"
     source: hosted
-    version: "9.25.7"
+    version: "9.25.9"
   flutter_sound_platform_interface:
     dependency: transitive
     description:
       name: flutter_sound_platform_interface
-      sha256: b6d2b64184313909eb896bf345b7a78de1cb9bea7cbeb4930cad515abf79a323
+      sha256: d43d605c490b65a8692fe74db83dd39ddc02608e3100c29667da9155789b505f
       url: "https://pub.dev"
     source: hosted
-    version: "9.25.7"
+    version: "9.25.9"
   flutter_sound_web:
     dependency: transitive
     description:
       name: flutter_sound_web
-      sha256: "1f64ffcde068256c5c3ccc84bb1f305b7f7b8a2425b429a19c91bb35ba0c8c59"
+      sha256: "4e96668229c0a4b1109776d0754a59107867ac741fdd55475a0447bf3c286930"
       url: "https://pub.dev"
     source: hosted
-    version: "9.25.7"
+    version: "9.25.9"
   flutter_svg:
     dependency: "direct main"
     description:
@@ -1128,10 +1128,12 @@ packages:
   mdsflutter:
     dependency: "direct overridden"
     description:
-      path: "../mdsflutter"
-      relative: true
-    source: path
-    version: "2.3.0"
+      path: "."
+      ref: master
+      resolved-ref: "43de7810257605d841bc6ff8ced886cbd746f1a6"
+      url: "https://github.com/Panosfunk/mdsflutter.git"
+    source: git
+    version: "2.2.0"
   meta:
     dependency: transitive
     description:

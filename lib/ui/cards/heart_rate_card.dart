@@ -117,7 +117,7 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
                 ? ''
                 : locale.translate('cards.heartrate.bpm'),
             style: hrVisualisationTextStyle(
-              color: Colors.grey.withOpacity(0.8),
+              color: Colors.grey.withValues(alpha: 0.8),
               fontSize: 20,
             ),
           ),
@@ -280,12 +280,12 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
             drawVerticalLine: true,
             drawHorizontalLine: true,
             getDrawingHorizontalLine: (value) => FlLine(
-                  color: Colors.grey.withOpacity(0.2),
+                  color: Colors.grey.withValues(alpha: 0.2),
                   strokeWidth: 1,
                 ),
             checkToShowHorizontalLine: (value) => value % 100 == 0,
             getDrawingVerticalLine: (value) => FlLine(
-                color: Colors.grey.withOpacity(0.2),
+                color: Colors.grey.withValues(alpha: 0.2),
                 strokeWidth: 1,
                 dashArray: [3, 2]),
             verticalInterval: 1 / 24,
@@ -300,7 +300,7 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
           show: true,
           border: Border.all(
             width: 1,
-            color: Colors.grey.withOpacity(0.2),
+            color: Colors.grey.withValues(alpha: 0.2),
           ),
         ),
         groupsSpace: 4,
@@ -313,7 +313,7 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
 
   Widget bottomTitles(double value, TitleMeta meta) {
     final style = TextStyle(
-      color: Colors.grey.withOpacity(0.6),
+      color: Colors.grey.withValues(alpha: 0.6),
       fontSize: 14,
       fontWeight: FontWeight.bold,
     );
@@ -331,7 +331,7 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
     }
 
     return SideTitleWidget(
-      axisSide: AxisSide.right,
+      meta: meta,
       space: 0,
       child: Text(
         text,
@@ -345,11 +345,11 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
         ? value.toInt().toString()
         : '';
     final style = hrVisualisationTextStyle(
-      color: Colors.grey.withOpacity(0.6),
+      color: Colors.grey.withValues(alpha: 0.6),
       fontSize: 14,
     );
     return SideTitleWidget(
-      axisSide: AxisSide.right,
+      meta: meta,
       child: Text(
         text,
         style: style,

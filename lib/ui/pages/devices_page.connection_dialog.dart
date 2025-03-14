@@ -161,8 +161,9 @@ class _ConnectionDialogState extends State<ConnectionDialog> {
                       (bluetoothDevice) => ListTile(
                         selected: bluetoothDevice.key == selected,
                         title: Text(bluetoothDevice.value.device.platformName),
-                        selectedTileColor:
-                            Theme.of(context).primaryColor.withOpacity(0.2),
+                        selectedTileColor: Theme.of(context)
+                            .primaryColor
+                            .withValues(alpha: 0.2),
                         onTap: () {
                           selectedDevice = bluetoothDevice.value.device;
                           setState(() {

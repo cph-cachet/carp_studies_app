@@ -44,7 +44,7 @@ class HomePageState extends State<HomePage> {
                 ),
             pageBuilder: (context, anim1, anim2) => LocationUsageDialog().build(
                   context,
-                  "pages.location.info",
+                  "dialog.location.info",
                 ));
         await LocationManager().requestPermission();
       }
@@ -102,7 +102,6 @@ class HomePageState extends State<HomePage> {
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         selectedItemColor: Theme.of(context).primaryColor,
-        //unselectedItemColor: Theme.of(context).primaryColor.withOpacity(0.8),
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: const Icon(Icons.playlist_add_check),

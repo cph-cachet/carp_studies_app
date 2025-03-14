@@ -44,7 +44,7 @@ class HomePageState extends State<HomePage> {
                 ),
             pageBuilder: (context, anim1, anim2) => LocationUsageDialog().build(
                   context,
-                  "pages.location.info",
+                  "dialog.location.info",
                 ));
         await LocationManager().requestPermission();
       }

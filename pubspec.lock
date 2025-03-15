@@ -1130,10 +1130,10 @@ packages:
     description:
       path: "."
       ref: master
-      resolved-ref: "43de7810257605d841bc6ff8ced886cbd746f1a6"
+      resolved-ref: c7d12bee49bf47ea73db98cb3293e07f39e1055d
       url: "https://github.com/Panosfunk/mdsflutter.git"
     source: git
-    version: "2.2.0"
+    version: "2.3.0"
   meta:
     dependency: transitive
     description:

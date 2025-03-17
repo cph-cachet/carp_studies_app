@@ -54,6 +54,7 @@ dependencies:
 
 dependency_overrides:
   camera_android_camerax: 0.6.10+1
+  flutter_plugin_android_lifecycle: 2.0.24
 
   mdsflutter:
     git:

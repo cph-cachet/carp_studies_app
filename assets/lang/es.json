@@ -40,7 +40,6 @@
     "cards.mobility.places": "lugares",
     "cards.steps.title": "Numero de pasos",
     "cards.steps.steps": "pasos",
-    "pages.location.info": "Esta aplicación recopila datos de ubicación.\n\nLe solicitamos que habilite el servicio de ubicación en el teléfono permitiendo el seguimiento de la ubicación 'Siempre'. El servicio de ubicación mantendrá la aplicación ejecutándose en segundo plano, lo que nos ayuda a recopilar los datos.\n\nUtilizamos los datos de ubicación en nuestro análisis de datos posterior. Para calcular cuánto tiempo pasas en casa, por ejemplo.",
     "pages.audio_task.play": "Por favor, presiona el botón de abajo cuando estés listo. ",
     "pages.audio_task.recording": "Grabando...",
     "pages.audio_task.recording_completed": "Grabación completada. Presiona el botón verde para guardar la grabación.\n\nSi deseas repetir la grabación, presiona el botón izquierdo.",

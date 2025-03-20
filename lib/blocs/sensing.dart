@@ -191,7 +191,9 @@ class Sensing {
 
     // Fast out, if not configured or no protocol
     if (controller?.status != StudyStatus.Deployed ||
-        controller?.deployment == null) return;
+        controller?.deployment == null) {
+      return;
+    }
 
     for (var task in controller!.deployment!.tasks) {
       if (task is AppTask) {

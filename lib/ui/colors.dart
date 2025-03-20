@@ -84,7 +84,7 @@ class CACHET {
 MaterialColor createMaterialColor(Color color) {
   var strengths = <double>[.05];
   var swatch = <int?, Color>{};
-  final int r = color.red, g = color.green, b = color.blue;
+  final int r = color.r as int, g = color.g as int, b = color.b as int;
 
   for (int i = 1; i < 10; i++) {
     strengths.add(0.1 * i);
@@ -98,5 +98,5 @@ MaterialColor createMaterialColor(Color color) {
       1,
     );
   }
-  return MaterialColor(color.value, swatch as Map<int, Color>);
+  return MaterialColor(color.toARGB32(), swatch as Map<int, Color>);
 }

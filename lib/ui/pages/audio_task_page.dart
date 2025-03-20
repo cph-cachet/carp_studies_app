@@ -77,7 +77,7 @@ class AudioTaskPageState extends State<AudioTaskPage> {
                               ? Theme.of(context).primaryColor
                               : Theme.of(context)
                                   .primaryColor
-                                  .withOpacity(0.5)),
+                                  .withValues(alpha: 0.5)),
                     );
                   },
                 ).toList(),

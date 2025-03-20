@@ -326,6 +326,9 @@ TextStyle audioDescriptionStyle =
 TextStyle audioInstructionStyle =
     const TextStyle(fontSize: 16, fontWeight: FontWeight.w400);
 
+TextStyle heartRateNumberStyle =
+    const TextStyle(fontSize: 28, fontWeight: FontWeight.w700);
+
 TextStyle dataVizCardTitleNumber =
     const TextStyle(fontSize: 28, fontWeight: FontWeight.w700);
 TextStyle dataVizCardTitleText =

@@ -74,7 +74,7 @@
     "pages.about.study.website": "Página web",
     "pages.about.study.privacy": "Política de privacidad",
     "dialog.location.permission": "Permiso Requerido",
-    "dialog.location.allow": "Permitir",
+    "dialog.location.continue": "Continuar",
     "pages.ic.need_accept": "Necesitas acceptar el consentimiento para participar en el estudio.",
     "pages.ic.go_to_ic": "Volver al consentimiento",
     "pages.devices.message": "Aquí puedess encontrar todos los dispositivos y servicios que se usan en tu estudio.",

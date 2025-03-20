@@ -49,7 +49,7 @@ class LocationUsageDialog {
                 Theme.of(context).colorScheme.onPrimary),
           ),
           child: Text(
-            locale.translate("dialog.location.allow"),
+            locale.translate("dialog.location.continue"),
           ),
         ),
       ],

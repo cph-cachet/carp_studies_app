@@ -117,7 +117,7 @@
   "pages.about.install_health_connect.description": "This app requires Google Health Connect to be installed. Would you like to install it?",
   "dialog.location.permission": "Permission Required",
   "dialog.location.location_data": "Location Data",
-  "dialog.location.allow": "Allow",
+  "dialog.location.continue": "Continue",
   "pages.ic.need_accept": "You need to accept the informed consent to participate in this study.",
   "pages.ic.go_to_ic": "Back to informed consent",
   "pages.devices.title": "Devices",

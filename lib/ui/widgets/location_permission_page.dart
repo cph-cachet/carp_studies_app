@@ -114,7 +114,7 @@ class LocationPermissionPage {
                         .then((value) => context.pop(true));
                   },
                   child: Text(
-                    locale.translate("dialog.location.allow"),
+                    locale.translate("dialog.location.continue"),
                     style:
                         const TextStyle(color: Color(0xffffffff), fontSize: 22),
                     textAlign: TextAlign.center,

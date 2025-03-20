@@ -387,7 +387,10 @@ class TaskListPageState extends State<TaskListPage>
                             ),
                             Spacer(),
                             Text(
-                              'THIS SHOULD BE DATE EXPIRED/COMPLETED?',
+                              userTask.doneTime != null
+                                  ? DateFormat('MMMM dd yyyy')
+                                      .format(userTask.doneTime!)
+                                  : 'Done time null',
                               style: TextStyle(
                                 color: userTask.expiresIn != null &&
                                         userTask.expiresIn!.inHours < 24
@@ -499,6 +502,7 @@ class TaskListPageState extends State<TaskListPage>
     SurveyUserTask.AUDIO_TYPE: CACHET.GREEN,
     SurveyUserTask.VIDEO_TYPE: CACHET.LIGHT_BLUE,
     SurveyUserTask.IMAGE_TYPE: CACHET.YELLOW,
+    HealthUserTask.HEALTH_ASSESSMENT_TYPE: CACHET.RED_1,
     BackgroundSensingUserTask.SENSING_TYPE: CACHET.LIGHT_BROWN,
     BackgroundSensingUserTask.ONE_TIME_SENSING_TYPE: CACHET.PURPLE,
   };

@@ -312,6 +312,8 @@ TextStyle studyDescriptionStyle =
 
 TextStyle dataCardTitleStyle = const TextStyle(
     fontSize: 16, fontWeight: FontWeight.w400, letterSpacing: 1);
+TextStyle dataCardRightTitleStyle =
+    const TextStyle(fontSize: 14, letterSpacing: 1);
 TextStyle measuresStyle =
     const TextStyle(fontSize: 18, fontWeight: FontWeight.w400);
 TextStyle legendStyle =

@@ -148,11 +148,8 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
                         ),
                       ),
                     ),
-                    Text(
-                      locale.translate('cards.heartrate.bpm'),
-                      style: hrVisualisationTextStyle(
-                          fontSize: 20, color: CACHET.HEART_RATE_RED),
-                    ),
+                    Text(locale.translate('cards.heartrate.bpm'),
+                        style: heartRateNumberStyle),
                   ],
                 ),
               ),

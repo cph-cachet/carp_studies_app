@@ -134,7 +134,7 @@ class _DistanceCardState extends State<DistanceCard> {
           tooltipRoundedRadius: 8,
           getTooltipItems: (touchedSpots) {
             return touchedSpots.map((LineBarSpot touchedSpot) {
-              final textStyle = activityVisualisationTextStyle(
+              final textStyle = dataCardRightTitleStyle.copyWith(
                 color: Colors.black,
                 fontSize: 12,
               );
@@ -205,30 +205,17 @@ class _DistanceCardState extends State<DistanceCard> {
     return FlSpot(x.toDouble(), y);
   }
 
-  TextStyle activityVisualisationTextStyle(
-      {double? fontSize, Color? color, List<ui.FontFeature>? fontFeatures}) {
-    return GoogleFonts.barlow(
-      fontSize: fontSize,
-      fontWeight: FontWeight.w600,
-      color: color,
-      fontFeatures: fontFeatures,
-    );
-  }
-
   Widget rightTitles(double value, TitleMeta meta) {
-    final text =
-        value.toInt() % meta.appliedInterval == 0 ? '${value.toInt()}' : '';
-
-    final style = activityVisualisationTextStyle(
-      color: Colors.grey.withValues(alpha: 0.8),
-      fontSize: 14,
-    );
     return SideTitleWidget(
       meta: meta,
       space: 16,
       child: Text(
-        text,
-        style: style,
+        value.toInt() % meta.appliedInterval == 0
+            ? value.toInt().toString()
+            : '',
+        style: dataCardRightTitleStyle.copyWith(
+          color: Theme.of(context).extension<CarpColors>()!.grey600,
+        ),
       ),
     );
   }

@@ -138,7 +138,7 @@ class ActivityCardState extends State<ActivityCard> {
           drawHorizontalLine: true,
           getDrawingHorizontalLine: (value) {
             return FlLine(
-              color: Colors.grey.withOpacity(0.3),
+              color: Colors.grey.withValues(alpha: 0.3),
               strokeWidth: 1,
             );
           },
@@ -147,7 +147,7 @@ class ActivityCardState extends State<ActivityCard> {
           show: true,
           border: Border.all(
             width: 1,
-            color: Colors.grey.withOpacity(0.2),
+            color: Colors.grey.withValues(alpha: 0.2),
           ),
         ),
       ),
@@ -176,19 +176,19 @@ class ActivityCardState extends State<ActivityCard> {
         BarChartRodData(
             fromY: 0,
             toY: walking + 0,
-            color: widget.colors[0].withOpacity(isTouched ? 0.8 : 1),
+            color: widget.colors[0].withValues(alpha: isTouched ? 0.8 : 1),
             width: 32,
             borderRadius: BorderRadius.all(Radius.circular(roundness))),
         BarChartRodData(
             fromY: walking + betweenSpace,
             toY: walking + betweenSpace + running,
-            color: widget.colors[1].withOpacity(isTouched ? 0.8 : 1),
+            color: widget.colors[1].withValues(alpha: isTouched ? 0.8 : 1),
             width: 32,
             borderRadius: BorderRadius.all(Radius.circular(roundness))),
         BarChartRodData(
           fromY: walking + betweenSpace + running + betweenSpace,
           toY: walking + betweenSpace + running + betweenSpace + cycling,
-          color: widget.colors[2].withOpacity(isTouched ? 0.8 : 1),
+          color: widget.colors[2].withValues(alpha: isTouched ? 0.8 : 1),
           width: 32,
           borderRadius: BorderRadius.only(
             topLeft: const Radius.circular(8),
@@ -201,31 +201,17 @@ class ActivityCardState extends State<ActivityCard> {
     );
   }
 
-  TextStyle activityVisualisationTextStyle(
-      {double? fontSize, Color? color, List<ui.FontFeature>? fontFeatures}) {
-    return GoogleFonts.barlow(
-      fontSize: fontSize,
-      fontWeight: FontWeight.w600,
-      color: color,
-      fontFeatures: fontFeatures,
-    );
-  }
-
   Widget rightTitles(double value, TitleMeta meta) {
-    final text = value.toInt() % meta.appliedInterval == 0
-        ? value.toInt().toString()
-        : '';
-
-    final style = activityVisualisationTextStyle(
-      color: Colors.grey.withOpacity(0.6),
-      fontSize: 14,
-    );
     return SideTitleWidget(
-      axisSide: AxisSide.right,
+      meta: meta,
       space: 16,
       child: Text(
-        text,
-        style: style,
+        value.toInt() % meta.appliedInterval == 0
+            ? value.toInt().toString()
+            : '',
+        style: dataCardRightTitleStyle.copyWith(
+          color: Theme.of(context).extension<CarpColors>()!.grey600,
+        ),
       ),
     );
   }
@@ -259,7 +245,7 @@ class ActivityCardState extends State<ActivityCard> {
         text = '';
     }
     return SideTitleWidget(
-      axisSide: meta.axisSide,
+      meta: meta,
       child: Text(text, style: style),
     );
   }

@@ -59,7 +59,7 @@ class _DistanceCardState extends State<DistanceCard> {
                             .translate('cards.distance.average')
                             .toUpperCase(),
                         style: TextStyle(
-                          color: Colors.grey.withOpacity(0.8),
+                          color: Colors.grey.withValues(alpha: 0.8),
                           fontSize: 12,
                         ),
                       ),
@@ -83,7 +83,7 @@ class _DistanceCardState extends State<DistanceCard> {
                       Text(
                         ' km',
                         style: TextStyle(
-                          color: Colors.grey.withOpacity(0.8),
+                          color: Colors.grey.withValues(alpha: 0.8),
                           fontSize: 16,
                         ),
                       ),
@@ -134,7 +134,7 @@ class _DistanceCardState extends State<DistanceCard> {
           tooltipRoundedRadius: 8,
           getTooltipItems: (touchedSpots) {
             return touchedSpots.map((LineBarSpot touchedSpot) {
-              final textStyle = activityVisualisationTextStyle(
+              final textStyle = dataCardRightTitleStyle.copyWith(
                 color: Colors.black,
                 fontSize: 12,
               );
@@ -154,7 +154,7 @@ class _DistanceCardState extends State<DistanceCard> {
             getDotPainter: (spot, percent, barData, index) =>
                 FlDotCirclePainter(
               radius: 4,
-              color: widget.colors[0].withOpacity(0.5),
+              color: widget.colors[0].withValues(alpha: 0.5),
               strokeWidth: 0,
             ),
           ),
@@ -179,7 +179,7 @@ class _DistanceCardState extends State<DistanceCard> {
         drawHorizontalLine: true,
         getDrawingHorizontalLine: (value) {
           return FlLine(
-            color: Colors.grey.withOpacity(0.3),
+            color: Colors.grey.withValues(alpha: 0.3),
             strokeWidth: 1,
           );
         },
@@ -188,7 +188,7 @@ class _DistanceCardState extends State<DistanceCard> {
         show: true,
         border: Border.all(
           width: 1,
-          color: Colors.grey.withOpacity(0.2),
+          color: Colors.grey.withValues(alpha: 0.2),
         ),
       ),
     ));
@@ -205,30 +205,17 @@ class _DistanceCardState extends State<DistanceCard> {
     return FlSpot(x.toDouble(), y);
   }
 
-  TextStyle activityVisualisationTextStyle(
-      {double? fontSize, Color? color, List<ui.FontFeature>? fontFeatures}) {
-    return GoogleFonts.barlow(
-      fontSize: fontSize,
-      fontWeight: FontWeight.w600,
-      color: color,
-      fontFeatures: fontFeatures,
-    );
-  }
-
   Widget rightTitles(double value, TitleMeta meta) {
-    final text =
-        value.toInt() % meta.appliedInterval == 0 ? '${value.toInt()}' : '';
-
-    final style = activityVisualisationTextStyle(
-      color: Colors.grey.withOpacity(0.8),
-      fontSize: 14,
-    );
     return SideTitleWidget(
-      axisSide: AxisSide.right,
+      meta: meta,
       space: 16,
       child: Text(
-        text,
-        style: style,
+        value.toInt() % meta.appliedInterval == 0
+            ? value.toInt().toString()
+            : '',
+        style: dataCardRightTitleStyle.copyWith(
+          color: Theme.of(context).extension<CarpColors>()!.grey600,
+        ),
       ),
     );
   }
@@ -263,7 +250,7 @@ class _DistanceCardState extends State<DistanceCard> {
         text = '';
     }
     return SideTitleWidget(
-      axisSide: meta.axisSide,
+      meta: meta,
       child: Text(text, style: style),
     );
   }

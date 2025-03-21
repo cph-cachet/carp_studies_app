@@ -1,3 +1,14 @@
+## 3.5.0
+
+- upgraded flutter version from 3.24.5 to 3.29.1 (latest stable)
+- upgraded gradle from 7.x to 8.13 (latest version)
+- upgraded compileSdkVersion from 34 to flutter.compileSdkVersion (35 - latest version)
+- updated package versions
+- updated github actions and ios scripts to use flutter stable instead of 3.24.5
+- removed unnecessary google permissions
+- removed depricated function calls and code warnings
+- changed location dialog button text from 'Allow' to 'Continue' to comply with App Store feedback
+
 ## 3.4.1
 
 - Flutter stable branch was no longer stable and therefore github actions were failing. Reverted back to older version of flutter inside the scripts.

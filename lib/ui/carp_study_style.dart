@@ -4,14 +4,17 @@ part of carp_study_app;
 class CarpColors extends ThemeExtension<CarpColors> {
   const CarpColors({
     required this.warningColor,
+    required this.grey600,
   });
 
   final Color? warningColor;
+  final Color? grey600;
 
   @override
   CarpColors copyWith({Color? warningColor}) {
     return CarpColors(
       warningColor: warningColor ?? this.warningColor,
+      grey600: grey600 ?? this.grey600,
     );
   }
 
@@ -22,6 +25,7 @@ class CarpColors extends ThemeExtension<CarpColors> {
     }
     return CarpColors(
       warningColor: Color.lerp(warningColor, other.warningColor, t),
+      grey600: Color.lerp(grey600, other.grey600, t),
     );
   }
 }
@@ -30,6 +34,7 @@ ThemeData carpStudyTheme = ThemeData.light().copyWith(
   extensions: <ThemeExtension<dynamic>>[
     CarpColors(
       warningColor: Colors.orange[500],
+      grey600: const Color(0xff848484),
     )
   ],
   primaryColor: const Color(0xFF206FA2),
@@ -86,6 +91,7 @@ ThemeData carpStudyDarkTheme = ThemeData.dark().copyWith(
   extensions: <ThemeExtension<dynamic>>[
     CarpColors(
       warningColor: Colors.orange[700],
+      grey600: const Color(0xffBABABA),
     )
   ],
   primaryColor: const Color(0xff81C7F3),
@@ -190,6 +196,10 @@ TextStyle studyDescriptionStyle =
     const TextStyle(fontSize: 12, fontWeight: FontWeight.w300);
 TextStyle dataCardTitleStyle = const TextStyle(
     fontSize: 16, fontWeight: FontWeight.w400, letterSpacing: 1);
+
+TextStyle dataCardRightTitleStyle =
+    const TextStyle(fontSize: 14, letterSpacing: 1);
+
 TextStyle measuresStyle =
     const TextStyle(fontSize: 18, fontWeight: FontWeight.w400);
 TextStyle legendStyle =
@@ -203,6 +213,9 @@ TextStyle audioDescriptionStyle =
     const TextStyle(fontSize: 14, fontWeight: FontWeight.w400);
 TextStyle audioInstructionStyle =
     const TextStyle(fontSize: 16, fontWeight: FontWeight.w400);
+
+TextStyle heartRateNumberStyle =
+    const TextStyle(fontSize: 28, fontWeight: FontWeight.w700);
 
 TextStyle profileTitleStyle =
     const TextStyle(fontSize: 20, fontWeight: FontWeight.w400);

@@ -50,17 +50,27 @@ class DisplayPicturePageState extends State<DisplayPicturePage> {
           children: [
             const SizedBox(height: 35),
             Row(
-              mainAxisAlignment: MainAxisAlignment.end,
               children: [
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 8.0, horizontal: 10),
+                  child: const CarpAppBar(
+                    hasProfileIcon: false,
+                  ),
+                ),
+                Spacer(),
                 IconButton(
-                    onPressed: () {
-                      _showCancelConfirmationDialog();
-                    },
-                    icon: Icon(Icons.close,
-                        color: Theme.of(context).primaryColor, size: 30))
+                  color: Theme.of(context).extension<CarpColors>()!.grey900!,
+                  onPressed: () {
+                    _showCancelConfirmationDialog();
+                  },
+                  icon: const Icon(
+                    Icons.close,
+                    size: 30,
+                  ),
+                ),
               ],
             ),
-            //SizedBox(height: 35),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: ClipRRect(
@@ -81,91 +91,63 @@ class DisplayPicturePageState extends State<DisplayPicturePage> {
             ),
             const SizedBox(height: 40),
             Padding(
-                padding: const EdgeInsets.only(bottom: 30, left: 10, right: 10),
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(locale.translate('pages.audio_task.done'),
-                          style: audioTitleStyle),
-                      const SizedBox(height: 40),
-                      Text(
-                          locale.translate(
-                              'pages.audio_task.recording_completed'),
-                          style: audioContentStyle),
-                      const SizedBox(height: 20),
-                      Align(
-                        alignment: FractionalOffset.bottomCenter,
-                        child: Padding(
-                          padding: const EdgeInsets.only(bottom: 30.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const SizedBox(width: 30),
-                              IconButton(
-                                onPressed: () => Navigator.of(context).pop(),
-                                padding: const EdgeInsets.all(0),
-                                icon: const Icon(Icons.replay,
-                                    size: 25, color: CACHET.GREY_5),
-                              ),
-                              const SizedBox(width: 20),
-                              CircleAvatar(
-                                radius: 30,
-                                backgroundColor: CACHET.GREEN_1,
-                                child: IconButton(
-                                  onPressed: () {
-                                    widget.videoUserTask.onSave();
-                                    Navigator.of(context).pop();
-                                    Navigator.of(context).pop();
-                                    Navigator.of(context).pop();
-                                  },
-                                  padding: const EdgeInsets.all(0),
-                                  icon: const Icon(Icons.check_circle_outline,
-                                      color: Colors.white, size: 30),
-                                ),
-                              ),
-                              const SizedBox(width: 50),
-                              const SizedBox(width: 30),
-                            ],
+              padding: const EdgeInsets.only(bottom: 30, left: 10, right: 10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Text(locale.translate('pages.audio_task.done'),
+                        style: audioTitleStyle),
+                  ),
+                  const SizedBox(height: 40),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Text(
+                      locale.translate('pages.audio_task.recording_completed'),
+                      style: audioContentStyle,
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  Align(
+                    alignment: FractionalOffset.bottomCenter,
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 30.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const SizedBox(width: 30),
+                          IconButton(
+                            onPressed: () => Navigator.of(context).pop(),
+                            padding: const EdgeInsets.all(0),
+                            icon: const Icon(Icons.replay,
+                                size: 25, color: CACHET.GREY_5),
                           ),
-                        ),
+                          const SizedBox(width: 20),
+                          CircleAvatar(
+                            radius: 30,
+                            backgroundColor: CACHET.GREEN_1,
+                            child: IconButton(
+                              onPressed: () {
+                                widget.videoUserTask.onSave();
+                                Navigator.of(context).pop();
+                                Navigator.of(context).pop();
+                                Navigator.of(context).pop();
+                              },
+                              padding: const EdgeInsets.all(0),
+                              icon: const Icon(Icons.check_circle_outline,
+                                  color: Colors.white, size: 30),
+                            ),
+                          ),
+                          const SizedBox(width: 50),
+                          const SizedBox(width: 30),
+                        ],
                       ),
-                    ])
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.spaceAround,
-                //   children: [
-                //     TextButton.icon(
-                //       icon: Icon(Icons.replay, color: Colors.white),
-                //       label: Text("RETAKE"),
-                //       onPressed: () {
-                //         Navigator.of(context).pop();
-                //       },
-                //       style: TextButton.styleFrom(
-                //         primary: Colors.white,
-                //         side: BorderSide(color: Colors.white),
-                //       ),
-                //     ),
-                //     SizedBox(width: 10),
-                //     TextButton(
-                //       child: Text("SAVE"),
-                //       onPressed: () {
-                //         widget.videoUserTask.onSave();
-
-                //         widget.videoUserTask.onDone(context);
-                //         Navigator.of(context).pop();
-                //         Navigator.of(context).pop();
-                //         Navigator.of(context).pop();
-
-                //         // TODO: connect with video task
-                //         //widget.videoUserTask.file = widget.file;
-                //       },
-                //       style: TextButton.styleFrom(
-                //         primary: Theme.of(context).primaryColor,
-                //         backgroundColor: Colors.white,
-                //       ),
-                //     ),
-                //   ],
-                // ),
-                ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),
@@ -175,7 +157,6 @@ class DisplayPicturePageState extends State<DisplayPicturePage> {
   // Taken from RP
   Future<void> _showCancelConfirmationDialog() {
     RPLocalizations locale = RPLocalizations.of(context)!;
-
     return showDialog(
       context: context,
       barrierDismissible: false,
@@ -190,10 +171,6 @@ class DisplayPicturePageState extends State<DisplayPicturePage> {
             TextButton(
               child: Text(locale.translate("YES")),
               onPressed: () {
-                // widget.videoUserTask.(context);
-                // Calling the onCancel method with which the developer can for e.g. save the result on the device.
-                // Only call it if it's not null
-                //widget.onCancel?.call(_taskResult);
                 // Popup dismiss
                 Navigator.of(context).pop();
                 // Exit the Ordered Task

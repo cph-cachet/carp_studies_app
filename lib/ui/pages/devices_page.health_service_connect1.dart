@@ -88,8 +88,9 @@ class HealthServiceConnectPage1 extends StatelessWidget {
                               );
                             },
                             style: ElevatedButton.styleFrom(
-                              backgroundColor:
-                                  Theme.of(context).colorScheme.primary,
+                              backgroundColor: Theme.of(context)
+                                  .extension<CarpColors>()!
+                                  .primary,
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 30, vertical: 12),
                             ),

@@ -330,6 +330,11 @@ TextStyle audioInstructionStyle =
 
 TextStyle heartRateNumberStyle =
     const TextStyle(fontSize: 28, fontWeight: FontWeight.w700);
+TextStyle heartRateBPMTextStyle =
+    const TextStyle(fontSize: 10, fontWeight: FontWeight.w700);
+
+TextStyle surveysCardTotalTextStyle =
+    const TextStyle(fontSize: 24, fontWeight: FontWeight.w700);
 
 TextStyle dataVizCardTitleNumber =
     const TextStyle(fontSize: 28, fontWeight: FontWeight.w700);

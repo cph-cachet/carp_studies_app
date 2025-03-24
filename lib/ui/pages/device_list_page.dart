@@ -213,12 +213,21 @@ class DeviceListPageState extends State<DeviceListPage> {
                   subtitle: null,
                   onTap: () async => await _onlineServiceClicked(service),
                   trailing: service.getServiceStatusIcon is String
-                      ? Text(
-                          locale
-                              .translate(service.getServiceStatusIcon as String)
-                              .toUpperCase(),
-                          style: aboutCardTitleStyle.copyWith(
-                              color: CACHET.DEPLOYMENT_DEPLOYING))
+                      ? Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 8),
+                          decoration: BoxDecoration(
+                              color: CACHET.DEPLOYMENT_DEPLOYING,
+                              borderRadius: BorderRadius.circular(100)),
+                          child: Text(
+                            locale
+                                .translate(
+                                    service.getServiceStatusIcon as String)
+                                .toUpperCase(),
+                            style: aboutCardTitleStyle.copyWith(
+                                color: Colors.white),
+                          ),
+                        )
                       : service.getServiceStatusIcon as Icon,
                 ),
               );

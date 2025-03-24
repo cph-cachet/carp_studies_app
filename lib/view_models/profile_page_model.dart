@@ -17,9 +17,10 @@ class ProfilePageViewModel extends ViewModel {
   String get deviceRole => bloc.deployment?.deviceRoleName ?? '';
 
   String get responsibleEmail =>
-      bloc.deployment?.studyDescription?.responsible?.email ?? '';
+      bloc.deployment?.studyDescription?.responsible?.email ?? 'study@carp.dk';
   String get privacyPolicyUrl =>
-      bloc.deployment?.studyDescription?.privacyPolicyUrl ?? '';
+      bloc.deployment?.studyDescription?.privacyPolicyUrl ??
+      'https://carp.dk/privacy-policy-app/';
   String get studyDescriptionUrl =>
       bloc.deployment?.studyDescription?.studyDescriptionUrl ?? '';
   String get deviceID => DeviceInfo().deviceID ?? '';

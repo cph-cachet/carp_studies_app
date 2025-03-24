@@ -194,13 +194,19 @@ class TaskListPageState extends State<TaskListPage>
         child: StudiesMaterial(
           hasBorder: true,
           borderColor: taskTypeColors[userTask.type]!,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.horizontal(
+              left: Radius.circular(2.0),
+              right: Radius.circular(8.0),
+            ),
+          ),
           backgroundColor:
               userTask.expiresIn != null && userTask.expiresIn!.inHours < 24
                   ? CACHET.TASK_TO_EXPIRE_BACKGROUND
                   : Theme.of(context).extension<CarpColors>()!.grey50!,
           elevation: 0,
           child: Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.symmetric(vertical: 16),
             child: IntrinsicHeight(
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -355,11 +361,17 @@ class TaskListPageState extends State<TaskListPage>
           backgroundColor: Theme.of(context).extension<CarpColors>()!.grey50!,
           hasBorder: true,
           elevation: 0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.horizontal(
+              left: Radius.circular(2.0),
+              right: Radius.circular(8.0),
+            ),
+          ),
           borderColor: (userTask.state == UserTaskState.done)
               ? CACHET.TASK_COMPLETED_BLUE
               : CACHET.GREY_6,
           child: Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.only(top: 16, bottom: 16, right: 16),
             child: IntrinsicHeight(
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.stretch,

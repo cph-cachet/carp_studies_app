@@ -45,6 +45,7 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
 
     return StudiesMaterial(
       backgroundColor: Theme.of(context).extension<CarpColors>()!.white!,
+      elevation: 0,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
@@ -54,13 +55,6 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
               builder: (context, AsyncSnapshot<double> snapshot) {
                 return Column(
                   children: [
-                    ChartsLegend(
-                        title: locale.translate('cards.heartrate.title'),
-                        iconAssetName: Icon(Icons.monitor_heart,
-                            color: Theme.of(context).primaryColor),
-                        heroTag: 'HeartRate-card',
-                        values: const [],
-                        colors: [CACHET.HEART_RATE_RED]),
                     getDailyRange,
                     SizedBox(
                       height: 240,
@@ -90,20 +84,21 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         Container(
-          margin: const EdgeInsets.only(left: 8, right: 2),
+          margin: const EdgeInsets.only(left: 8, right: 2, bottom: 4),
           child: Text(
-              min == null || max == null
-                  ? '-'
-                  : '${(min.toInt())} - ${(max.toInt())}',
-              style: heartRateNumberStyle),
+            min == null || max == null
+                ? '-'
+                : '${(min.toInt())} - ${(max.toInt())}',
+            style: heartRateNumberStyle,
+          ),
         ),
         Padding(
-          padding: const EdgeInsets.only(bottom: 4.0),
+          padding: const EdgeInsets.only(bottom: 4),
           child: Text(
             min == null || max == null
                 ? ''
                 : locale.translate('cards.heartrate.bpm'),
-            style: heartRateNumberStyle,
+            style: heartRateBPMTextStyle,
           ),
         ),
       ],
@@ -123,7 +118,7 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Container(
-                margin: const EdgeInsets.only(left: 8),
+                margin: const EdgeInsets.only(left: 8, bottom: 8),
                 child: currentHeartRate != null
                     ? Text(
                         currentHeartRate.toStringAsFixed(0),
@@ -132,7 +127,7 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
                     : Text('-', style: heartRateNumberStyle),
               ),
               Padding(
-                padding: const EdgeInsets.only(bottom: 8.0),
+                padding: const EdgeInsets.only(bottom: 8),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -142,14 +137,14 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
                         scale: Tween<double>(begin: 1, end: 1)
                             .animate(animationController),
                         child: Icon(
-                          Icons.favorite_outline_rounded,
+                          Icons.favorite,
                           color: CACHET.HEART_RATE_RED,
-                          size: 32,
+                          size: 10,
                         ),
                       ),
                     ),
                     Text(locale.translate('cards.heartrate.bpm'),
-                        style: heartRateNumberStyle),
+                        style: heartRateBPMTextStyle),
                   ],
                 ),
               ),
@@ -311,7 +306,9 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
       meta: meta,
       child: Text(
         text,
-        style: heartRateNumberStyle,
+        style: dataCardRightTitleStyle.copyWith(
+          color: Theme.of(context).extension<CarpColors>()!.grey600,
+        ),
       ),
     );
   }

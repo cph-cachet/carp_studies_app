@@ -9,15 +9,6 @@ class StudyDetailsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;
 
-    String studyDescription() => '${locale.translate(model.description)}\n\n'
-        '${locale.translate('widgets.study_card.title')}: "${locale.translate(model.title)}".\n'
-        '${locale.translate('widgets.study_card.purpose')}: "${locale.translate(model.purpose)}".\n\n'
-        '${locale.translate('widgets.study_card.responsibles')}:\n'
-        '${locale.translate(model.piName)}, ${locale.translate(model.piTitle)}\n\n'
-        '${locale.translate(model.piAffiliation)}\n'
-        '${locale.translate(model.piAddress)}\n'
-        '${locale.translate(model.piEmail)}\n';
-
     return Scaffold(
       backgroundColor:
           Theme.of(context).extension<CarpColors>()!.backgroundGray,
@@ -79,7 +70,6 @@ class StudyDetailsPage extends StatelessWidget {
                             ));
                       }),
                     ),
-                    // DetailsBanner(model.title, './assets/images/kids.png'),
                     _buildSectionCard(
                       context,
                       [
@@ -162,7 +152,6 @@ class StudyDetailsPage extends StatelessWidget {
                                       .grey700),
                             ),
                           ),
-                          // 8
                           Text(
                             locale.translate(
                                 'widgets.study_card.participant_role'),
@@ -249,80 +238,9 @@ class StudyDetailsPage extends StatelessWidget {
                         ],
                       ),
                     ),
-
-                    // Padding(
-                    //   padding: const EdgeInsets.all(16),
-                    //   child: Column(
-                    //     children: [
-                    //       Text(locale.translate(model.piAffiliation),
-                    //           style: aboutCardSubtitleStyle.copyWith(
-                    //               color: Theme.of(context).primaryColor)),
-                    //       Text(
-                    //         studyDescription(),
-                    //         style: aboutCardContentStyle,
-                    //         textAlign: TextAlign.justify,
-                    //       ),
-                    //     ],
-                    //   ),
-                    // ),
                   ],
                 ),
               ),
-
-              // BIIIIG
-              //
-              //
-              // COMMENT
-              // Padding(
-              //   padding: const EdgeInsets.only(bottom: 30, top: 20),
-              //   child: Row(
-              //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              //     children: [
-              //       InkWell(
-              //         onTap: () async {
-              //           String url = locale.translate(model.privacyPolicyUrl);
-              //           try {
-              //             await launchUrl(Uri.parse(url));
-              //           } catch (error) {
-              //             warning(
-              //                 "Could not launch privacy policy URL - '$url'");
-              //           }
-              //         },
-              //         child: Row(
-              //           children: [
-              //             Icon(Icons.policy_outlined,
-              //                 color: Theme.of(context).primaryColor),
-              //             Text(locale.translate('pages.about.study.privacy'),
-              //                 style: aboutCardSubtitleStyle.copyWith(
-              //                     color: Theme.of(context).primaryColor))
-              //           ],
-              //         ),
-              //       ),
-              //       const SizedBox(width: 15),
-              //       InkWell(
-              //         onTap: () async {
-              //           String url =
-              //               locale.translate(model.studyDescriptionUrl);
-              //           try {
-              //             await launchUrl(Uri.parse(url));
-              //           } catch (error) {
-              //             warning(
-              //                 "Could not launch study description URL - '$url'");
-              //           }
-              //         },
-              //         child: Row(
-              //           children: [
-              //             Icon(Icons.public_outlined,
-              //                 color: Theme.of(context).primaryColor),
-              //             Text(locale.translate('pages.about.study.website'),
-              //                 style: aboutCardSubtitleStyle.copyWith(
-              //                     color: Theme.of(context).primaryColor)),
-              //           ],
-              //         ),
-              //       ),
-              //     ],
-              //   ),
-              // ),
             ],
           ),
         ),

@@ -110,10 +110,7 @@ class _SurveyCardState extends State<SurveyCard> {
               .colors[widget.model.tasksTable.keys.toList().indexOf(entry.key)],
           value: entry.value.toDouble(),
           title: '${entry.value}',
-          // radius: 50,
           showTitle: false,
-          // titleStyle: dataCardTitleStyle.copyWith(
-          //     color: Theme.of(context).primaryColor),
         );
       },
     ).toList();

@@ -32,8 +32,6 @@ class _DistanceCardState extends State<DistanceCard> {
 
   @override
   Widget build(BuildContext context) {
-    RPLocalizations locale = RPLocalizations.of(context)!;
-
     return StudiesMaterial(
       backgroundColor: Theme.of(context).extension<CarpColors>()!.white!,
       elevation: 0,
@@ -158,7 +156,7 @@ class _DistanceCardState extends State<DistanceCard> {
       barRods: [
         BarChartRodData(
           toY: step.toDouble(),
-          color: widget.colors[0].withOpacity(isTouched ? 0.8 : 1),
+          color: widget.colors[0].withValues(alpha: isTouched ? 0.8 : 1),
           width: 32,
           borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(4),

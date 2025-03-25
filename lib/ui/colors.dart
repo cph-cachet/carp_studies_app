@@ -69,15 +69,6 @@ class CACHET {
     Color(0xFF6FB4E9),
     Color(0xFFA379CE),
     Color(0xFFCA2366),
-
-    //
-    // Color(0xFF82CEE9),
-    // Color(0xFFB00020),
-    // Color(0xFF1282B0),
-    // Color(0xFF630A1A),
-    // Color(0xFF054863),
-    // Color(0xFFB8566A),
-    // Color(0xFFC3E2EB)
   ];
 }
 

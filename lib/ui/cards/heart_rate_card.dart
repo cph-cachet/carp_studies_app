@@ -41,8 +41,6 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
 
   @override
   Widget build(BuildContext context) {
-    RPLocalizations locale = RPLocalizations.of(context)!;
-
     return StudiesMaterial(
       backgroundColor: Theme.of(context).extension<CarpColors>()!.white!,
       elevation: 0,

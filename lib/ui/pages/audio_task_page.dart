@@ -28,10 +28,6 @@ class AudioTaskPageState extends State<AudioTaskPage> {
       body: SafeArea(
         child: PopScope(
           canPop: true,
-          // onPopInvokedWithResult: (didPop, result) =>
-          //     _showCancelConfirmationDialog(),
-          // onPopInvoked: (didPop) async =>
-          //     _showCancelConfirmationDialog() as FutureOr<bool>,
           child: Scaffold(
             body: Container(
               padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -185,7 +181,6 @@ class AudioTaskPageState extends State<AudioTaskPage> {
   Widget _stepTwo() {
     RPLocalizations locale = RPLocalizations.of(context)!;
 
-    // TODO: split the instructions in the model instead of here
     return StreamBuilder<UserTaskState>(
       stream: widget.audioUserTask!.stateEvents,
       initialData: UserTaskState.enqueued,
@@ -204,15 +199,6 @@ class AudioTaskPageState extends State<AudioTaskPage> {
             Text(locale.translate("pages.audio_task.recording"),
                 style: audioTitleStyle),
             const SizedBox(height: 10),
-            // If instructions are too long, create scrollable card for the extra instructions
-            // TODO - the layout method below is prone to be creating problems / exceptions....
-            //  - if, for example, the widget.audioUserTask.instructions is a key (with no \n\n)
-            //  - or if there is no \n\n
-            // IMO we need another solution, which does not rely on assuming \n\n to be in the text
-            // Text(locale.translate(widget.audioUserTask!.instructions).split('\n\n')[0], style: audioContentStyle),
-            // SizedBox(height: 10),
-            // widget.audioUserTask!.instructions.split('\n\n').length >= 1
-            //     ?
             Expanded(
               flex: 3,
               child: StudiesMaterial(
@@ -229,9 +215,7 @@ class AudioTaskPageState extends State<AudioTaskPage> {
                   ),
                 ),
               ),
-            )
-            // : SizedBox.shrink(),
-            ,
+            ),
             const SizedBox(height: 5),
             Expanded(
               flex: 2,

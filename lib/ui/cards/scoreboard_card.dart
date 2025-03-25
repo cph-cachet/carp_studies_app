@@ -24,7 +24,8 @@ class ScoreboardCardState extends State<ScoreboardCard> {
   }
 }
 
-/// Make a [SliverPersistentHeaderDelegate] to use in a [SliverPersistentHeader] widget, that can be used in a [CustomScrollView].
+/// Make a [SliverPersistentHeaderDelegate] to use in a [SliverPersistentHeader] widget, 
+/// that can be used in a [CustomScrollView].
 /// This is used in the [StudyPage] to make the header of the page.
 /// The delegate should retract from 110px to 40px when scrolling down.
 /// The animation should be simple and linear. A stretched header does not do anything.
@@ -44,8 +45,6 @@ class ScoreboardPersistentHeaderDelegate
     required this.locale,
   });
 
-  /// The header should should be 110px when not scrolling, and 60px when scrolling.
-  /// The numbers should become smaller when scrolling down, by using the scoreNumberStyleSmall instead of scoreNumberStyle.
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {

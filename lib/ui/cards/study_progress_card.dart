@@ -94,7 +94,7 @@ class StudyProgressCardWidgetState extends State<StudyProgressCardWidget> {
                                       .toList(),
                                   colors: widget.colors,
                                   faintColors: widget.colors
-                                      .map((c) => c.withOpacity(0.2))
+                                      .map((c) => c.withValues(alpha: 0.2))
                                       .toList(),
                                 ),
                               ),

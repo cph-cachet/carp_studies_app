@@ -144,13 +144,6 @@ class CarpBackend {
     invitations =
         await CarpParticipationService().getActiveParticipationInvitations();
 
-    // Filter the invitations to only include those that
-    // have a smartphone as a device in [ActiveParticipationInvitation.assignedDevices] list
-    // (i.e. the invitation is for a smartphone).
-    // This is done to avoid showing invitations for other devices (e.g. [WebBrowser]).
-    //
-    // TODO: Do we need to remove invitations which are not for this user?
-    //  - see https://github.com/cph-cachet/carp.core-kotlin/issues/482
     invitations.removeWhere((invitation) =>
         invitation.assignedDevices
             ?.any((device) => device.device is! Smartphone) ??

@@ -100,7 +100,7 @@ class CameraTaskPageState extends State<CameraTaskPage> {
                         onPressed: () {
                           Navigator.pop(context);
                         },
-                        child: const Text("Cancel"),
+                        child: Text(locale.translate("Cancel")),
                       ),
                       ElevatedButton(
                         onPressed: () => Navigator.push(
@@ -120,8 +120,8 @@ class CameraTaskPageState extends State<CameraTaskPage> {
                             vertical: 12,
                           ),
                         ),
-                        child: const Text(
-                          "Next",
+                        child: Text(
+                          locale.translate("next"),
                           style: TextStyle(
                             color: Colors.white,
                           ),

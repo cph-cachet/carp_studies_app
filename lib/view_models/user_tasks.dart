@@ -75,6 +75,14 @@ class AudioUserTask extends UserTask {
     backgroundTaskExecutor.stop();
     super.onDone();
   }
+
+  void onRecordReset() {
+    state = UserTaskState.enqueued;
+    _timer?.cancel();
+    _countDownController.close();
+
+    backgroundTaskExecutor.stop();
+  }
 }
 
 /// A user task handling video and image recordings.

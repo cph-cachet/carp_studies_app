@@ -94,7 +94,7 @@ class HealthServiceConnectPage1 extends StatelessWidget {
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 30, vertical: 12),
                             ),
-                            child: const Text("Next",
+                            child: Text(locale.translate("Next"),
                                 style: TextStyle(
                                   color: Colors.white,
                                 )),

@@ -17,7 +17,8 @@ class StudyPageViewModel extends ViewModel {
   String get studyDescriptionUrl =>
       bloc.deployment?.studyDescription?.studyDescriptionUrl ?? '';
   String get privacyPolicyUrl =>
-      bloc.deployment?.studyDescription?.privacyPolicyUrl ?? '';
+      bloc.deployment?.studyDescription?.privacyPolicyUrl ??
+      'https://carp.dk/privacy-policy-app/';
 
   String get piTitle => bloc.deployment?.responsible?.title ?? '';
   String get piName => bloc.deployment?.responsible?.name ?? '';

@@ -151,11 +151,17 @@ class StudyPageState extends State<StudyPage> {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Spacer();
         } else if (snapshot.hasError) {
-          return Text(
-              'Error: ${snapshot.error}'); // Show an error message if the future fails
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 22),
+            child: Text('Error: ${snapshot.error}'),
+          ); // Show an error message if the future fails
         } else if (!snapshot.hasData || snapshot.data == null) {
-          return Text(
-              'No deployment status available'); // Handle the case where data is null
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 22),
+            child: Center(
+              child: CircularProgressIndicator(),
+            ),
+          ); // Handle the case where data is null
         }
 
         final deploymentStatus = snapshot.data!.status;

@@ -73,6 +73,7 @@
     "pages.about.study.website": "Página web",
     "pages.about.study.privacy": "Política de privacidad",
     "dialog.location.permission": "Permiso Requerido",
+    "dialog.location.info": "Esta aplicación recopila datos de ubicación. Le pedimos que active el servicio de ubicación en su teléfono activando el seguimiento de ubicación 'Siempre'. El servicio de ubicación mantendrá la aplicación ejecutándose en segundo plano, lo que nos ayuda a recopilar los datos. Utilizamos los datos de ubicación en nuestros análisis posteriores para estudiar patrones de movilidad, como el tiempo que pasa en casa.",
     "dialog.location.continue": "Continuar",
     "pages.ic.need_accept": "Necesitas acceptar el consentimiento para participar en el estudio.",
     "pages.ic.go_to_ic": "Volver al consentimiento",

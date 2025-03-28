@@ -1,3 +1,8 @@
+## 3.5.1
+
+- new media for App Store
+- supporting iOS version 13.0 now
+
 ## 3.5.0
 
 - upgraded flutter version from 3.24.5 to 3.29.1 (latest stable)

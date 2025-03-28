@@ -46,7 +46,6 @@ class HomePageState extends State<HomePage> {
                 LocationPermissionPage().build(
                   context,
                   "dialog.location.info",
-                  "dialog.location.info",
                 ));
         await LocationManager().requestPermission();
       }

@@ -32,7 +32,7 @@ class ActivityCardViewModel extends SerializableViewModel<WeeklyActivities> {
 
   String get currentYear =>
       DateFormat('yyyy').format(DateTime(DateTime.now().year));
-      
+
   @override
   void init(SmartphoneDeploymentController ctrl) {
     super.init(ctrl);

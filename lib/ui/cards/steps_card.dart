@@ -164,7 +164,7 @@ class StepsCardWidgetState extends State<StepsCardWidget> {
       ],
     );
   }
-  
+
   Widget rightTitles(double value, TitleMeta meta) {
     return SideTitleWidget(
       meta: meta,

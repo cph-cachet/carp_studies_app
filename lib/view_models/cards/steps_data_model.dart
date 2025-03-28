@@ -25,8 +25,8 @@ class StepsCardViewModel extends SerializableViewModel<WeeklySteps> {
   String get currentMonth =>
       DateFormat('MMM').format(DateTime(_startOfWeek.month));
 
-  String get nextMonth =>
-      DateFormat('MMM').format(DateTime(_startOfWeek.year, _startOfWeek.month + 1, 1));
+  String get nextMonth => DateFormat('MMM')
+      .format(DateTime(_startOfWeek.year, _startOfWeek.month + 1, 1));
 
   String get currentYear =>
       DateFormat('yyyy').format(DateTime(DateTime.now().year));

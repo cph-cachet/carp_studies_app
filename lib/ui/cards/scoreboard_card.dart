@@ -24,7 +24,7 @@ class ScoreboardCardState extends State<ScoreboardCard> {
   }
 }
 
-/// Make a [SliverPersistentHeaderDelegate] to use in a [SliverPersistentHeader] widget, 
+/// Make a [SliverPersistentHeaderDelegate] to use in a [SliverPersistentHeader] widget,
 /// that can be used in a [CustomScrollView].
 /// This is used in the [StudyPage] to make the header of the page.
 /// The delegate should retract from 110px to 40px when scrolling down.

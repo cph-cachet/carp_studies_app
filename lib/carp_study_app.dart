@@ -187,11 +187,6 @@ class CarpStudyAppState extends State<CarpStudyApp> {
         Locale('da'),
         Locale('es'),
       ],
-      // add our rpLocalizationsDelegate to the list of delegates
-      // localizationsDelegates:
-      //     FlutterLocalization.instance.localizationsDelegates.toSet()
-      //       ..add(rpLocalizationsDelegate),
-
       localizationsDelegates: [
         // Research Package translations
         rpLocalizationsDelegate,

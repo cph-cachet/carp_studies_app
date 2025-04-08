@@ -261,10 +261,10 @@ packages:
     dependency: "direct main"
     description:
       name: carp_core
-      sha256: c4e59ff66a1823be49f57fdbe7e02300b9c6e889d52625abeafe338f1ecae601
+      sha256: ee89a1ef51dc3df7379b10f93d0d836111c7e681688b8365ff296ddcf2ae0f95
       url: "https://pub.dev"
     source: hosted
-    version: "1.8.5"
+    version: "1.8.6"
   carp_esense_package:
     dependency: "direct main"
     description:
@@ -285,10 +285,10 @@ packages:
     dependency: "direct main"
     description:
       name: carp_mobile_sensing
-      sha256: ee550aa39025980c86a4f956a6f4ef9369b2fc546d509456457f374a05d50585
+      sha256: b7631e52bff0b7e448492de02678a2c6227315ef8752080b1d1657510cbda5ec
       url: "https://pub.dev"
     source: hosted
-    version: "1.12.3"
+    version: "1.12.4"
   carp_movesense_package:
     dependency: "direct main"
     description:
@@ -1138,7 +1138,7 @@ packages:
     description:
       path: "."
       ref: master
-      resolved-ref: c7d12bee49bf47ea73db98cb3293e07f39e1055d
+      resolved-ref: "0cf8f2a27701202f1fba127ed68e4da556ac0be3"
       url: "https://github.com/Panosfunk/mdsflutter.git"
     source: git
     version: "2.3.0"
@@ -1554,10 +1554,10 @@ packages:
     dependency: transitive
     description:
       name: protobuf
-      sha256: "01dd9bd0fa02548bf2ceee13545d4a0ec6046459d847b6b061d8a27237108a08"
+      sha256: "68645b24e0716782e58948f8467fd42a880f255096a821f9e7d0ec625b00c84d"
       url: "https://pub.dev"
     source: hosted
-    version: "2.1.0"
+    version: "3.1.0"
   pub_semver:
     dependency: transitive
     description:

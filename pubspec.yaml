@@ -54,6 +54,7 @@ dependencies:
   appcheck: ^1.5.2
 
 dependency_overrides:
+  flutter_sound: 9.26.0
   camera_android_camerax: 0.6.10+1
 
   mdsflutter:

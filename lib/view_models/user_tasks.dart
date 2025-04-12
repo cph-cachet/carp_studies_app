@@ -54,15 +54,23 @@ class AudioUserTask extends UserTask {
     state = UserTaskState.started;
     backgroundTaskExecutor.start();
 
+    // Listen for the recorded audio measurement and add it as a result - #482
+    try {
+      backgroundTaskExecutor.measurements
+          .firstWhere((measurement) => measurement.data is AudioMedia)
+          .then((measurement) => super.onDone(result: measurement.data));
+    } catch (e) {
+      super.onDone();
+    }
+
+    // Start the countdown timer
     _timer = Timer.periodic(const Duration(seconds: 1), (_) {
       _countDownController.add(--ongoingRecordingDuration);
 
       if (ongoingRecordingDuration <= 0) {
         _timer?.cancel();
         _countDownController.close();
-
         backgroundTaskExecutor.stop();
-        super.onDone();
       }
     });
   }
@@ -121,10 +129,14 @@ class VideoUserTask extends UserTask {
   /// Callback when the recorded image/video is to be "saved", i.e. committed to
   /// the data stream.
   void onSave() {
+    MediaData? media;
+
     debug('$runtimeType - onSave(), file: ${_file?.path}');
+    backgroundTaskExecutor.stop();
+
     if (_file != null) {
       // create the media measurement ...
-      MediaData? media = switch (_mediaType) {
+      media = switch (_mediaType) {
         MediaType.image => ImageMedia(
             filename: _file!.path,
             startRecordingTime: _startRecordingTime!,
@@ -143,7 +155,6 @@ class VideoUserTask extends UserTask {
       // ... and add it to the sensing controller
       if (media != null) bloc.addMeasurement(Measurement.fromData(media));
     }
-    backgroundTaskExecutor.stop();
-    super.onDone();
+    super.onDone(result: media);
   }
 }

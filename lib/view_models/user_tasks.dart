@@ -29,11 +29,6 @@ class AudioUserTask extends UserTask {
   Stream<int>? get countDownEvents => _countDownController?.stream;
   Timer? _timer;
 
-  /// The audio recording data.
-  /// This is set when the recording is stopped and the data is
-  /// added to the [backgroundTaskExecutor] as a measurement.
-  AudioMedia? _data;
-
   /// Total duration of audio recording in seconds.
   int recordingDuration = 60;
 

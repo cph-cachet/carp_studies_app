@@ -282,12 +282,11 @@ packages:
     source: hosted
     version: "3.1.0"
   carp_mobile_sensing:
-    dependency: "direct main"
+    dependency: "direct overridden"
     description:
-      name: carp_mobile_sensing
-      sha256: b7631e52bff0b7e448492de02678a2c6227315ef8752080b1d1657510cbda5ec
-      url: "https://pub.dev"
-    source: hosted
+      path: "../carp/carp.sensing-flutter/carp_mobile_sensing"
+      relative: true
+    source: path
     version: "1.12.4"
   carp_movesense_package:
     dependency: "direct main"

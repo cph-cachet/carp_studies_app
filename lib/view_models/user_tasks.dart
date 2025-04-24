@@ -25,10 +25,14 @@ class AppUserTaskFactory implements UserTaskFactory {
 /// When the recording is started (calling the [onRecordStart] method),
 /// the background task collecting sensor measures is started.
 class AudioUserTask extends UserTask {
-  final StreamController<int> _countDownController =
-      StreamController.broadcast();
-  Stream<int>? get countDownEvents => _countDownController.stream;
+  StreamController<int>? _countDownController;
+  Stream<int>? get countDownEvents => _countDownController?.stream;
   Timer? _timer;
+
+  /// The audio recording data.
+  /// This is set when the recording is stopped and the data is
+  /// added to the [backgroundTaskExecutor] as a measurement.
+  AudioMedia? _data;
 
   /// Total duration of audio recording in seconds.
   int recordingDuration = 60;
@@ -48,8 +52,9 @@ class AudioUserTask extends UserTask {
   @override
   Widget? get widget => AudioTaskPage(audioUserTask: this);
 
-  /// Callback when recording is to start.
+  /// Callback when recording is to (re)start.
   void onRecordStart() {
+    _countDownController = StreamController.broadcast();
     ongoingRecordingDuration = recordingDuration;
     state = UserTaskState.started;
     backgroundTaskExecutor.start();
@@ -59,29 +64,24 @@ class AudioUserTask extends UserTask {
       backgroundTaskExecutor.measurements
           .firstWhere((measurement) => measurement.data is AudioMedia)
           .then((measurement) => super.onDone(result: measurement.data));
-    } catch (e) {
+    } catch (_) {
       super.onDone();
     }
 
-    // Start the countdown timer
+    // Start the countdown timer and stop the recording when [recordingDuration] is reached
     _timer = Timer.periodic(const Duration(seconds: 1), (_) {
-      _countDownController.add(--ongoingRecordingDuration);
+      _countDownController?.add(--ongoingRecordingDuration);
 
-      if (ongoingRecordingDuration <= 0) {
-        _timer?.cancel();
-        _countDownController.close();
-        backgroundTaskExecutor.stop();
-      }
+      if (ongoingRecordingDuration <= 0) onRecordStop();
     });
   }
 
   /// Callback when recording is to stop.
   void onRecordStop() {
     _timer?.cancel();
-    _countDownController.close();
+    _countDownController?.close();
 
     backgroundTaskExecutor.stop();
-    super.onDone();
   }
 }
 
@@ -131,7 +131,6 @@ class VideoUserTask extends UserTask {
   void onSave() {
     MediaData? media;
 
-    debug('$runtimeType - onSave(), file: ${_file?.path}');
     backgroundTaskExecutor.stop();
 
     if (_file != null) {

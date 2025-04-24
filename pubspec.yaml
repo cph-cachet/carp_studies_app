@@ -56,6 +56,7 @@ dependencies:
 dependency_overrides:
   flutter_sound: 9.26.0
   camera_android_camerax: 0.6.10+1
+  polar: 7.5.1
 
   mdsflutter:
     git:

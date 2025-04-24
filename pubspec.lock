@@ -1535,13 +1535,13 @@ packages:
     source: hosted
     version: "3.9.1"
   polar:
-    dependency: transitive
+    dependency: "direct overridden"
     description:
       name: polar
-      sha256: "703e13b2c0646d2327c3ef7e83ed09ed5f01f6de14d8813d9b62951db1f1357f"
+      sha256: "011fdfe7e2e09975096388b3d306496485399ecc984637da5a855e72d2514ea2"
       url: "https://pub.dev"
     source: hosted
-    version: "7.6.0"
+    version: "7.5.1"
   pool:
     dependency: transitive
     description:

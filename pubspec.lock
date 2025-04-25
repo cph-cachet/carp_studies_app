@@ -194,13 +194,13 @@ packages:
     source: hosted
     version: "0.11.1"
   camera_android_camerax:
-    dependency: "direct overridden"
+    dependency: "direct main"
     description:
       name: camera_android_camerax
-      sha256: "2985b8e5fca62709ebb2150962b1dae0444ba0a112be888ccf21e8371a1406d9"
+      sha256: f0dcbce91623f75030840609de9b64d0d73f86df279c6e9588c1501245a05eb2
       url: "https://pub.dev"
     source: hosted
-    version: "0.6.10+1"
+    version: "0.6.15+2"
   camera_avfoundation:
     dependency: transitive
     description:
@@ -732,7 +732,7 @@ packages:
     source: hosted
     version: "0.7.7"
   flutter_plugin_android_lifecycle:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: flutter_plugin_android_lifecycle
       sha256: f948e346c12f8d5480d2825e03de228d0eb8c3a737e4cdaa122267b89c022b5e
@@ -788,7 +788,7 @@ packages:
     source: hosted
     version: "3.1.2"
   flutter_sound:
-    dependency: "direct overridden"
+    dependency: transitive
     description:
       name: flutter_sound
       sha256: ef89477f6e8ce2fa395158ebc4a8b11982e3ada440b4021c06fd97a4e771554b
@@ -1144,11 +1144,10 @@ packages:
   mdsflutter:
     dependency: "direct main"
     description:
-      path: "."
-      ref: master
-      resolved-ref: "0cf8f2a27701202f1fba127ed68e4da556ac0be3"
-      url: "https://github.com/Panosfunk/mdsflutter.git"
-    source: git
+      name: mdsflutter
+      sha256: "32e31196ef02e4425e0745037993e548b12e8ec8231c5b27f239aba6426f8436"
+      url: "https://pub.dev"
+    source: hosted
     version: "2.3.0"
   meta:
     dependency: transitive

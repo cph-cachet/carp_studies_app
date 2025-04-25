@@ -77,6 +77,7 @@ class AudioUserTask extends UserTask {
     backgroundTaskExecutor.stop();
   }
 
+  /// Callback when recording is to start.
   void onRecordReset() {
     state = UserTaskState.enqueued;
     _timer?.cancel();

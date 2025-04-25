@@ -238,7 +238,7 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
           rightTitles: AxisTitles(
             sideTitles: SideTitles(
               showTitles: true,
-              reservedSize: 40,
+              reservedSize: 48,
               getTitlesWidget: rightTitles,
             ),
           ),
@@ -324,6 +324,7 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
         style: dataCardRightTitleStyle.copyWith(
           color: Theme.of(context).extension<CarpColors>()!.grey600,
         ),
+        maxLines: 1,
       ),
     );
   }

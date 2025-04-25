@@ -229,10 +229,10 @@ packages:
     dependency: "direct main"
     description:
       name: carp_audio_package
-      sha256: "4e6e41bd171e7dad24f2968e8bda11050a595e64fae338a36f896fafae6256a0"
+      sha256: cdcc18d011c34b1e29ada818596e6b628669705609a490c3d71d704b18e4cc9e
       url: "https://pub.dev"
     source: hosted
-    version: "1.10.1"
+    version: "1.10.3"
   carp_backend:
     dependency: "direct main"
     description:

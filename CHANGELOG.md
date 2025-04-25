@@ -1,6 +1,8 @@
 ## 4.0.0
 
 - Total redesign of the app
+- Upgrading Java 1.8 to 17
+- Upgrading Kotlin 1.8 to 17
 
 ## 3.5.1
 

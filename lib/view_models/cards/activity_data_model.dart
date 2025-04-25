@@ -25,7 +25,7 @@ class ActivityCardViewModel extends SerializableViewModel<WeeklyActivities> {
   String get endOfWeek => DateFormat('dd').format(_endOfWeek);
 
   String get currentMonth =>
-      DateFormat('MMM').format(DateTime(_startOfWeek.month));
+      DateFormat('MMM').format(DateTime(_startOfWeek.year, _startOfWeek.month));
 
   String get nextMonth => DateFormat('MMM')
       .format(DateTime(_startOfWeek.year, _startOfWeek.month + 1, 1));

@@ -138,7 +138,6 @@ class CameraTaskPageState extends State<CameraTaskPage> {
     );
   }
 
-// Taken from RP
   Future<void> _showCancelConfirmationDialog() {
     RPLocalizations locale = RPLocalizations.of(context)!;
 

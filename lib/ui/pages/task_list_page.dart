@@ -301,7 +301,11 @@ class TaskListPageState extends State<TaskListPage>
           if (userTask.state == UserTaskState.enqueued ||
               userTask.state == UserTaskState.canceled) {
             userTask.onStart();
-            if (userTask.hasWidget) context.push('/task/${userTask.id}');
+            if (userTask.hasWidget) {
+              context.push('/task/${userTask.id}');
+            } else {
+              Timer(const Duration(seconds: 10), () => userTask.onDone());
+            }
           }
         },
       ),
@@ -502,10 +506,10 @@ class TaskListPageState extends State<TaskListPage>
       Icons.sensors,
       color: CACHET.LIGHT_BROWN,
     ),
-    BackgroundSensingUserTask.ONE_TIME_SENSING_TYPE: const Icon(
-      Icons.settings_input_component,
-      color: CACHET.PURPLE,
-    ),
+    // BackgroundSensingUserTask.ONE_TIME_SENSING_TYPE: const Icon(
+    //   Icons.settings_input_component,
+    //   color: CACHET.PURPLE,
+    // ),
   };
 
   static Map<String, Color> taskTypeColors = {
@@ -516,7 +520,7 @@ class TaskListPageState extends State<TaskListPage>
     SurveyUserTask.IMAGE_TYPE: CACHET.YELLOW,
     HealthUserTask.HEALTH_ASSESSMENT_TYPE: CACHET.RED_1,
     BackgroundSensingUserTask.SENSING_TYPE: CACHET.LIGHT_BROWN,
-    BackgroundSensingUserTask.ONE_TIME_SENSING_TYPE: CACHET.PURPLE,
+    // BackgroundSensingUserTask.ONE_TIME_SENSING_TYPE: CACHET.PURPLE,
   };
 
   static Map<String, Icon> measureTypeIcons = {

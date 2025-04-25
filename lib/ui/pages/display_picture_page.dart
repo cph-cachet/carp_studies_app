@@ -154,7 +154,6 @@ class DisplayPicturePageState extends State<DisplayPicturePage> {
     );
   }
 
-  // Taken from RP
   Future<void> _showCancelConfirmationDialog() {
     RPLocalizations locale = RPLocalizations.of(context)!;
     return showDialog(

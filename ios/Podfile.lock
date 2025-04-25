@@ -37,10 +37,10 @@ PODS:
     - Flutter
   - flutter_secure_storage (6.0.0):
     - Flutter
-  - flutter_sound (9.26.0):
+  - flutter_sound (9.28.0):
     - Flutter
-    - flutter_sound_core (= 9.26.0)
-  - flutter_sound_core (9.26.0)
+    - flutter_sound_core (= 9.28.0)
+  - flutter_sound_core (9.28.0)
   - flutter_timezone (0.0.1):
     - Flutter
   - health (12.1.0):
@@ -229,7 +229,7 @@ SPEC CHECKSUMS:
   audio_session: 19e9480dbdd4e5f6c4543826b2e8b0e4ab6145fe
   audio_streamer: af49e73eb66f71c4eeabb4bbcb05f122d03a6709
   battery_plus: 34f72fa2afeeea83bbae306c72a25828d3ec727a
-  camera_avfoundation: dd002b0330f4981e1bbcb46ae9b62829237459a4
+  camera_avfoundation: adb0207d868b2d873e895371d88448399ab78d87
   connectivity_plus: 2a701ffec2c0ae28a48cf7540e279787e77c447d
   device_info_plus: bf2e3232933866d73fe290f2942f2156cdd10342
   ESense: cbe103ad16c435424f2fd6f8b274f2468af84173
@@ -237,11 +237,11 @@ SPEC CHECKSUMS:
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   flutter_activity_recognition: 5c3b026997742b01e82424ef257db9640822ad77
   flutter_appauth: 1ce438877bc111c5d8f42da47729909290624886
-  flutter_blue_plus_darwin: 3ea4ec9133b377febcc8a70b28cd2d2dc9242bd9
-  flutter_local_notifications: df98d66e515e1ca797af436137b4459b160ad8c9
+  flutter_blue_plus_darwin: 904ed52825285a15f60e9d90312337a09f11a785
+  flutter_local_notifications: ff50f8405aaa0ccdc7dcfb9022ca192e8ad9688f
   flutter_secure_storage: d33dac7ae2ea08509be337e775f6b59f1ff45f12
-  flutter_sound: 39446c16b0111b4926ff261c5c4d601bc1d5d661
-  flutter_sound_core: 938c91404747d79bf14a0c85b90a5d95ed7ed5c4
+  flutter_sound: 82aba29055d6feba684d08906e0623217b87bcd3
+  flutter_sound_core: 427465f72d07ab8c3edbe8ffdde709ddacd3763c
   flutter_timezone: ac3da59ac941ff1c98a2e1f0293420e020120282
   health: a421b1627a55d3200cc1661cbfbd068439b09938
   just_audio: a42c63806f16995daf5b219ae1d679deb76e6a79
@@ -267,6 +267,6 @@ SPEC CHECKSUMS:
   video_player_avfoundation: 7c6c11d8470e1675df7397027218274b6d2360b3
   Zip: b3fef584b147b6e582b2256a9815c897d60ddc67
 
-PODFILE CHECKSUM: 60353eed6e483cfd08869a45398cc2a4cbbe1318
+PODFILE CHECKSUM: 637a852170391ffc67bb926aa9b5540c53ed8eaf
 
 COCOAPODS: 1.16.2

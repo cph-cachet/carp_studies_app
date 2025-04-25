@@ -25,9 +25,8 @@ class AppUserTaskFactory implements UserTaskFactory {
 /// When the recording is started (calling the [onRecordStart] method),
 /// the background task collecting sensor measures is started.
 class AudioUserTask extends UserTask {
-  final StreamController<int> _countDownController =
-      StreamController.broadcast();
-  Stream<int>? get countDownEvents => _countDownController.stream;
+  StreamController<int>? _countDownController = StreamController.broadcast();
+  Stream<int>? get countDownEvents => _countDownController?.stream;
   Timer? _timer;
 
   /// Total duration of audio recording in seconds.
@@ -50,36 +49,38 @@ class AudioUserTask extends UserTask {
 
   /// Callback when recording is to start.
   void onRecordStart() {
+    _countDownController = StreamController.broadcast();
     ongoingRecordingDuration = recordingDuration;
     state = UserTaskState.started;
     backgroundTaskExecutor.start();
 
+    try {
+      backgroundTaskExecutor.measurements
+          .firstWhere((measurement) => measurement.data is AudioMedia)
+          .then((measurement) => super.onDone(result: measurement.data));
+    } catch (_) {
+      super.onDone();
+    }
+
+    // Start the countdown timer and stop the recording when [recordingDuration] is reached
     _timer = Timer.periodic(const Duration(seconds: 1), (_) {
-      _countDownController.add(--ongoingRecordingDuration);
+      _countDownController?.add(--ongoingRecordingDuration);
 
-      if (ongoingRecordingDuration <= 0) {
-        _timer?.cancel();
-        _countDownController.close();
-
-        backgroundTaskExecutor.stop();
-        super.onDone();
-      }
+      if (ongoingRecordingDuration <= 0) onRecordStop();
     });
   }
 
   /// Callback when recording is to stop.
   void onRecordStop() {
     _timer?.cancel();
-    _countDownController.close();
-
+    _countDownController?.close();
     backgroundTaskExecutor.stop();
-    super.onDone();
   }
 
   void onRecordReset() {
     state = UserTaskState.enqueued;
     _timer?.cancel();
-    _countDownController.close();
+    _countDownController?.close();
 
     backgroundTaskExecutor.stop();
   }
@@ -129,10 +130,11 @@ class VideoUserTask extends UserTask {
   /// Callback when the recorded image/video is to be "saved", i.e. committed to
   /// the data stream.
   void onSave() {
-    debug('$runtimeType - onSave(), file: ${_file?.path}');
+    MediaData? media;
+    backgroundTaskExecutor.stop();
     if (_file != null) {
       // create the media measurement ...
-      MediaData? media = switch (_mediaType) {
+      media = switch (_mediaType) {
         MediaType.image => ImageMedia(
             filename: _file!.path,
             startRecordingTime: _startRecordingTime!,
@@ -151,7 +153,6 @@ class VideoUserTask extends UserTask {
       // ... and add it to the sensing controller
       if (media != null) bloc.addMeasurement(Measurement.fromData(media));
     }
-    backgroundTaskExecutor.stop();
-    super.onDone();
+    super.onDone(result: media);
   }
 }

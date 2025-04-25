@@ -115,7 +115,6 @@ class AudioTaskPageState extends State<AudioTaskPage> {
     );
   }
 
-  // Taken from RP
   Future<void> _showCancelConfirmationDialog() {
     RPLocalizations locale = RPLocalizations.of(context)!;
 

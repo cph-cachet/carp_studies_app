@@ -25,7 +25,7 @@ class AppUserTaskFactory implements UserTaskFactory {
 /// When the recording is started (calling the [onRecordStart] method),
 /// the background task collecting sensor measures is started.
 class AudioUserTask extends UserTask {
-  StreamController<int>? _countDownController = StreamController.broadcast();
+  StreamController<int>? _countDownController;
   Stream<int>? get countDownEvents => _countDownController?.stream;
   Timer? _timer;
 

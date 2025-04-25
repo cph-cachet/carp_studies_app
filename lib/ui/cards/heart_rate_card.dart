@@ -314,17 +314,13 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
   }
 
   Widget rightTitles(double value, TitleMeta meta) {
-    final text = value.toInt() % meta.appliedInterval == 0
-        ? value.toInt().toString()
-        : '';
-    final style = hrVisualisationTextStyle(
-      color: Colors.grey.withValues(alpha: 0.6),
-      fontSize: 14,
-    );
     return SideTitleWidget(
       meta: meta,
+      space: 16,
       child: Text(
-        text,
+        value.toInt() % meta.appliedInterval == 0
+            ? value.toInt().toString()
+            : '',
         style: dataCardRightTitleStyle.copyWith(
           color: Theme.of(context).extension<CarpColors>()!.grey600,
         ),

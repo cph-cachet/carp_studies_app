@@ -168,19 +168,16 @@ class _DistanceCardState extends State<DistanceCard> {
   }
 
   Widget rightTitles(double value, TitleMeta meta) {
-    final text =
-        value.toInt() % meta.appliedInterval == 0 ? '${value.toInt()}' : '';
-
-    final style = activityVisualisationTextStyle(
-      color: Colors.grey.withValues(alpha: 0.8),
-      fontSize: 14,
-    );
     return SideTitleWidget(
       meta: meta,
       space: 16,
       child: Text(
-        text,
-        style: style,
+        value.toInt() % meta.appliedInterval == 0
+            ? value.toInt().toString()
+            : '',
+        style: dataCardRightTitleStyle.copyWith(
+          color: Theme.of(context).extension<CarpColors>()!.grey600,
+        ),
       ),
     );
   }

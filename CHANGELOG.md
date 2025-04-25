@@ -1,3 +1,7 @@
+## 4.0.0
+
+- Total redesign of the app
+
 ## 3.5.1
 
 - new media for App Store

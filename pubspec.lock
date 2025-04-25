@@ -194,13 +194,13 @@ packages:
     source: hosted
     version: "0.11.1"
   camera_android_camerax:
-    dependency: "direct main"
+    dependency: "direct overridden"
     description:
       name: camera_android_camerax
-      sha256: f0dcbce91623f75030840609de9b64d0d73f86df279c6e9588c1501245a05eb2
+      sha256: "2985b8e5fca62709ebb2150962b1dae0444ba0a112be888ccf21e8371a1406d9"
       url: "https://pub.dev"
     source: hosted
-    version: "0.6.15+2"
+    version: "0.6.10+1"
   camera_avfoundation:
     dependency: transitive
     description:
@@ -229,10 +229,10 @@ packages:
     dependency: "direct main"
     description:
       name: carp_audio_package
-      sha256: cdcc18d011c34b1e29ada818596e6b628669705609a490c3d71d704b18e4cc9e
+      sha256: "4e6e41bd171e7dad24f2968e8bda11050a595e64fae338a36f896fafae6256a0"
       url: "https://pub.dev"
     source: hosted
-    version: "1.10.3"
+    version: "1.10.1"
   carp_backend:
     dependency: "direct main"
     description:
@@ -732,7 +732,7 @@ packages:
     source: hosted
     version: "0.7.7"
   flutter_plugin_android_lifecycle:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: flutter_plugin_android_lifecycle
       sha256: f948e346c12f8d5480d2825e03de228d0eb8c3a737e4cdaa122267b89c022b5e
@@ -788,7 +788,7 @@ packages:
     source: hosted
     version: "3.1.2"
   flutter_sound:
-    dependency: transitive
+    dependency: "direct overridden"
     description:
       name: flutter_sound
       sha256: ef89477f6e8ce2fa395158ebc4a8b11982e3ada440b4021c06fd97a4e771554b
@@ -1144,10 +1144,11 @@ packages:
   mdsflutter:
     dependency: "direct main"
     description:
-      name: mdsflutter
-      sha256: "32e31196ef02e4425e0745037993e548b12e8ec8231c5b27f239aba6426f8436"
-      url: "https://pub.dev"
-    source: hosted
+      path: "."
+      ref: master
+      resolved-ref: "0cf8f2a27701202f1fba127ed68e4da556ac0be3"
+      url: "https://github.com/Panosfunk/mdsflutter.git"
+    source: git
     version: "2.3.0"
   meta:
     dependency: transitive

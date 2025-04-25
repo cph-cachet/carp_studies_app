@@ -13,7 +13,7 @@ dependencies:
 
   carp_serializable: ^2.0.0
   carp_core: ^1.8.0
-  carp_mobile_sensing: ^1.12.1
+  carp_mobile_sensing: ^1.12.5
   carp_context_package: ^1.10.0
   carp_connectivity_package: ^1.7.0
   carp_survey_package: ^1.8.2
@@ -41,12 +41,13 @@ dependencies:
 
   flutter_localizations:
     sdk: flutter
+  intl: any 
+
   fl_chart: ^0.70.2
   google_fonts: ^6.1.0
   go_router: ^14.0.0
   flutter_svg: ^2.0.4
   flutter_blue_plus: ^1.15.5
-  intl: ">=0.18.0 <0.20.0"
   permission_handler: ^11.0.1
   connectivity_plus: ^6.0.0
   open_settings_plus: ^0.4.0

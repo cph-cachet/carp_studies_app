@@ -307,7 +307,7 @@ class ActivityCardState extends State<ActivityCard> {
     );
   }
 
-Widget rightTitles(double value, TitleMeta meta) {
+  Widget rightTitles(double value, TitleMeta meta) {
     return SideTitleWidget(
       meta: meta,
       space: 16,

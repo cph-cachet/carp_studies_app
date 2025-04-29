@@ -13,7 +13,7 @@ dependencies:
 
   carp_serializable: ^2.0.0
   carp_core: ^1.8.0
-  carp_mobile_sensing: ^1.12.5
+  carp_mobile_sensing: ^1.12.6
   carp_context_package: ^1.10.0
   carp_connectivity_package: ^1.7.0
   carp_survey_package: ^1.8.2
@@ -98,9 +98,6 @@ dependency_overrides:
   #   path: ../carp/carp.sensing-flutter/backends/carp_backend/
   # research_package: 
   #   path: ../research.package/
-
-
-
 
 
 dev_dependencies:

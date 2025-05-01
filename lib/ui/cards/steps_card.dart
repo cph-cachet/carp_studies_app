@@ -165,16 +165,6 @@ class StepsCardWidgetState extends State<StepsCardWidget> {
     );
   }
 
-  TextStyle activityVisualisationTextStyle(
-      {double? fontSize, Color? color, List<ui.FontFeature>? fontFeatures}) {
-    return GoogleFonts.barlow(
-      fontSize: fontSize,
-      fontWeight: FontWeight.w600,
-      color: color,
-      fontFeatures: fontFeatures,
-    );
-  }
-
   Widget rightTitles(double value, TitleMeta meta) {
     return SideTitleWidget(
       meta: meta,

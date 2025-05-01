@@ -106,16 +106,6 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
     );
   }
 
-  TextStyle hrVisualisationTextStyle(
-      {double? fontSize, Color? color, List<ui.FontFeature>? fontFeatures}) {
-    return GoogleFonts.barlow(
-      fontSize: fontSize,
-      fontWeight: FontWeight.w600,
-      color: color,
-      fontFeatures: fontFeatures,
-    );
-  }
-
   Stack get currentHeartRateWidget {
     RPLocalizations locale = RPLocalizations.of(context)!;
 
@@ -222,9 +212,7 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
                     ),
                   ),
                 ],
-                hrVisualisationTextStyle(
-                  fontSize: 20,
-                ),
+                heartRateNumberStyle,
               );
             },
           ),

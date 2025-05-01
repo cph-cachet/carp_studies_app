@@ -59,7 +59,7 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
                       child: barCharts,
                     ),
                     SizedBox(
-                      height: 80,
+                      height: 50,
                       child: currentHeartRateWidget,
                     )
                   ],
@@ -82,7 +82,7 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         Container(
-          margin: const EdgeInsets.only(left: 8, right: 2, bottom: 4),
+          margin: const EdgeInsets.only(left: 8, right: 4, bottom: 4),
           child: Text(
             min == null || max == null
                 ? '-'
@@ -91,12 +91,15 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
           ),
         ),
         Padding(
-          padding: const EdgeInsets.only(bottom: 4),
+          padding: const EdgeInsets.only(bottom: 10),
           child: Text(
             min == null || max == null
                 ? ''
                 : locale.translate('cards.heartrate.bpm'),
-            style: heartRateBPMTextStyle,
+            style: heartRateBPMTextStyle.copyWith(
+              fontSize: 12,
+              color: Theme.of(context).extension<CarpColors>()!.grey600,
+            ),
           ),
         ),
       ],
@@ -118,11 +121,6 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
 
     final currentHeartRate = widget.model.currentHeartRate;
 
-    final heartRateTextStyle = hrVisualisationTextStyle(
-      fontSize: 80,
-      fontFeatures: [const ui.FontFeature.tabularFigures()],
-    );
-
     return Stack(
       children: [
         Positioned(
@@ -131,16 +129,16 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Container(
-                margin: const EdgeInsets.only(left: 8, bottom: 8),
+                margin: const EdgeInsets.only(left: 8, bottom: 8, right: 4),
                 child: currentHeartRate != null
                     ? Text(
                         currentHeartRate.toStringAsFixed(0),
-                        style: heartRateTextStyle,
+                        style: heartRateNumberStyle,
                       )
-                    : Text('-', style: heartRateTextStyle),
+                    : Text('-', style: heartRateNumberStyle),
               ),
               Padding(
-                padding: const EdgeInsets.only(bottom: 8),
+                padding: const EdgeInsets.only(bottom: 14),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -156,8 +154,13 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
                         ),
                       ),
                     ),
-                    Text(locale.translate('cards.heartrate.bpm'),
-                        style: heartRateBPMTextStyle),
+                    Text(
+                      locale.translate('cards.heartrate.bpm'),
+                      style: heartRateBPMTextStyle.copyWith(
+                        color:
+                            Theme.of(context).extension<CarpColors>()!.grey600,
+                      ),
+                    ),
                   ],
                 ),
               ),

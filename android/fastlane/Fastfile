@@ -19,7 +19,7 @@ platform :android do
   
   desc "Submit a new release build to Google Play's Production track"
   lane :release do
-    current_version_code = google_play_track_version_codes(track: 'internal')
+    current_version_code = google_play_track_version_codes(track: 'procuction').first.to_i
     pubspec_content = YAML.load_file('../../pubspec.yaml')
     version_string = pubspec_content['version']
     version_parts = version_string.split('+')
@@ -43,7 +43,7 @@ platform :android do
 
   desc "Upload to internal testing track"
   lane :test do
-    current_version_code = google_play_track_version_codes(track: 'internal')
+    current_version_code = google_play_track_version_codes(track: 'internal').first.to_i
     pubspec_content = YAML.load_file('../../pubspec.yaml')
     version_string = pubspec_content['version']
     version_parts = version_string.split('+')

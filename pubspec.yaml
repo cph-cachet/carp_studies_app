@@ -52,16 +52,12 @@ dependencies:
   connectivity_plus: ^6.0.0
   open_settings_plus: ^0.4.0
   appcheck: ^1.5.2
+  flutter_plugin_android_lifecycle: ^2.0.24
+  camera_android_camerax: ^0.6.10+1
+  mdsflutter: ^2.3.0
 
 dependency_overrides:
-  flutter_sound: 9.26.0
-  camera_android_camerax: 0.6.10+1
   polar: 7.5.1
-
-  mdsflutter:
-    git:
-      url: https://github.com/Panosfunk/mdsflutter.git
-      ref: master
       
   # Overriding carp libraries to use the local copy, if needed
   # carp_serializable:

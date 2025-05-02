@@ -9,39 +9,39 @@ class AudioTaskPage extends StatefulWidget {
 }
 
 class AudioTaskPageState extends State<AudioTaskPage> {
-  int get _currentStep {
-    switch (widget.audioUserTask!.state) {
-      case UserTaskState.started:
-        return 1;
-      case UserTaskState.done:
-        return 2;
-      default:
-        return 0;
-    }
-  }
-
   List<int> steps = [0, 1, 2];
 
+  int get _currentStep => switch (widget.audioUserTask!.state) {
+        UserTaskState.started => 1,
+        UserTaskState.done => 2,
+        _ => 0
+      };
+
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: PopScope(
-          canPop: true,
-          // onPopInvokedWithResult: (didPop, result) =>
-          //     _showCancelConfirmationDialog(),
-          // onPopInvoked: (didPop) async =>
-          //     _showCancelConfirmationDialog() as FutureOr<bool>,
-          child: Scaffold(
-            body: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
-              child: _stepSelector(),
+  Widget build(BuildContext context) => Scaffold(
+        body: SafeArea(
+          child: PopScope(
+            canPop: true,
+            child: Scaffold(
+              body: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                child: _stepSelector(),
+              ),
             ),
           ),
         ),
-      ),
-    );
-  }
+      );
+
+  Widget _stepSelector() => StreamBuilder<UserTaskState>(
+      stream: widget.audioUserTask!.stateEvents,
+      initialData: UserTaskState.enqueued,
+      builder: (context, AsyncSnapshot<UserTaskState> snapshot) =>
+          switch (snapshot.data) {
+            UserTaskState.enqueued => _stepOne(),
+            UserTaskState.started => _stepTwo(),
+            UserTaskState.done => _stepThree(),
+            _ => const SizedBox.shrink(),
+          });
 
   Widget _header() {
     RPLocalizations locale = RPLocalizations.of(context)!;
@@ -93,24 +93,6 @@ class AudioTaskPageState extends State<AudioTaskPage> {
         ),
       ],
     );
-  }
-
-  Widget _stepSelector() {
-    return StreamBuilder<UserTaskState>(
-        stream: widget.audioUserTask!.stateEvents,
-        initialData: UserTaskState.enqueued,
-        builder: (context, AsyncSnapshot<UserTaskState> snapshot) {
-          switch (snapshot.data) {
-            case UserTaskState.enqueued:
-              return _stepOne();
-            case UserTaskState.started:
-              return _stepTwo();
-            case UserTaskState.done:
-              return _stepThree();
-            default:
-              return const SizedBox.shrink();
-          }
-        });
   }
 
   Widget _stepOne() {
@@ -165,8 +147,7 @@ class AudioTaskPageState extends State<AudioTaskPage> {
                               color: Theme.of(context).primaryColor),
                         ),
                         onTap: () {
-                          widget.audioUserTask!.onDone();
-                          //widget.audioUserTask!.onCancel(context);
+                          widget.audioUserTask?.onCancel();
                           Navigator.of(context).pop();
                         },
                       ),
@@ -304,7 +285,7 @@ class AudioTaskPageState extends State<AudioTaskPage> {
                     children: [
                       const SizedBox(width: 30),
                       IconButton(
-                        onPressed: () => widget.audioUserTask!.onRecordStart(),
+                        onPressed: () => widget.audioUserTask?.onRecordStart(),
                         padding: const EdgeInsets.all(0),
                         icon: const Icon(Icons.replay,
                             size: 25, color: CACHET.GREY_5),
@@ -332,7 +313,6 @@ class AudioTaskPageState extends State<AudioTaskPage> {
     );
   }
 
-  // Taken from RP
   Future<void> _showCancelConfirmationDialog() {
     RPLocalizations locale = RPLocalizations.of(context)!;
 

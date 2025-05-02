@@ -101,10 +101,14 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
         Container(
           margin: const EdgeInsets.only(left: 8, right: 2),
           child: Text(
-              min == null || max == null
-                  ? '-'
-                  : '${(min.toInt())} - ${(max.toInt())}',
-              style: heartRateNumberStyle),
+            min == null || max == null
+                // ? locale.translate('cards.no_data')
+                ? '-'
+                : '${(min.toInt())} - ${(max.toInt())}',
+            style: hrVisualisationTextStyle(
+              fontSize: 40,
+            ),
+          ),
         ),
         Padding(
           padding: const EdgeInsets.only(bottom: 4.0),
@@ -112,10 +116,23 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
             min == null || max == null
                 ? ''
                 : locale.translate('cards.heartrate.bpm'),
-            style: heartRateNumberStyle,
+            style: hrVisualisationTextStyle(
+              color: Colors.grey.withValues(alpha: 0.8),
+              fontSize: 20,
+            ),
           ),
         ),
       ],
+    );
+  }
+
+  TextStyle hrVisualisationTextStyle(
+      {double? fontSize, Color? color, List<ui.FontFeature>? fontFeatures}) {
+    return GoogleFonts.barlow(
+      fontSize: fontSize,
+      fontWeight: FontWeight.w600,
+      color: color,
+      fontFeatures: fontFeatures,
     );
   }
 
@@ -123,6 +140,11 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
     RPLocalizations locale = RPLocalizations.of(context)!;
 
     final currentHeartRate = widget.model.currentHeartRate;
+
+    final heartRateTextStyle = hrVisualisationTextStyle(
+      fontSize: 80,
+      fontFeatures: [const ui.FontFeature.tabularFigures()],
+    );
 
     return Stack(
       children: [
@@ -136,9 +158,9 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
                 child: currentHeartRate != null
                     ? Text(
                         currentHeartRate.toStringAsFixed(0),
-                        style: heartRateNumberStyle,
+                        style: heartRateTextStyle,
                       )
-                    : Text('-', style: heartRateNumberStyle),
+                    : Text('-', style: heartRateTextStyle),
               ),
               Padding(
                 padding: const EdgeInsets.only(bottom: 8.0),
@@ -157,8 +179,11 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
                         ),
                       ),
                     ),
-                    Text(locale.translate('cards.heartrate.bpm'),
-                        style: heartRateNumberStyle),
+                    Text(
+                      locale.translate('cards.heartrate.bpm'),
+                      style: hrVisualisationTextStyle(
+                          fontSize: 20, color: HeartRateCardWidget.colors[0]),
+                    ),
                   ],
                 ),
               ),
@@ -220,7 +245,9 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
                     ),
                   ),
                 ],
-                heartRateNumberStyle,
+                hrVisualisationTextStyle(
+                  fontSize: 20,
+                ),
               );
             },
           ),
@@ -317,11 +344,15 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
     final text = value.toInt() % meta.appliedInterval == 0
         ? value.toInt().toString()
         : '';
+    final style = hrVisualisationTextStyle(
+      color: Colors.grey.withValues(alpha: 0.6),
+      fontSize: 14,
+    );
     return SideTitleWidget(
       meta: meta,
       child: Text(
         text,
-        style: heartRateNumberStyle,
+        style: style,
       ),
     );
   }

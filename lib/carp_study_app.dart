@@ -187,7 +187,6 @@ class CarpStudyAppState extends State<CarpStudyApp> {
         Locale('da'),
         Locale('es'),
       ],
-      // These delegates make sure that localization for the phone language is loaded
       localizationsDelegates: [
         // Research Package translations
         rpLocalizationsDelegate,

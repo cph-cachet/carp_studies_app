@@ -201,17 +201,31 @@ class ActivityCardState extends State<ActivityCard> {
     );
   }
 
+  TextStyle activityVisualisationTextStyle(
+      {double? fontSize, Color? color, List<ui.FontFeature>? fontFeatures}) {
+    return GoogleFonts.barlow(
+      fontSize: fontSize,
+      fontWeight: FontWeight.w600,
+      color: color,
+      fontFeatures: fontFeatures,
+    );
+  }
+
   Widget rightTitles(double value, TitleMeta meta) {
+    final text = value.toInt() % meta.appliedInterval == 0
+        ? value.toInt().toString()
+        : '';
+
+    final style = activityVisualisationTextStyle(
+      color: Colors.grey.withValues(alpha: 0.6),
+      fontSize: 14,
+    );
     return SideTitleWidget(
       meta: meta,
       space: 16,
       child: Text(
-        value.toInt() % meta.appliedInterval == 0
-            ? value.toInt().toString()
-            : '',
-        style: dataCardRightTitleStyle.copyWith(
-          color: Theme.of(context).extension<CarpColors>()!.grey600,
-        ),
+        text,
+        style: style,
       ),
     );
   }

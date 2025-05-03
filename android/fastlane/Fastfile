@@ -26,7 +26,6 @@ platform :android do
     if version_parts.size == 2
       version_number = version_parts[1].to_i
       if version_number > current_version_code
-        sh "flutter clean"
         sh "flutter pub get"
         sh "flutter pub upgrade"
         sh "flutter build appbundle --release --no-deferred-components --no-tree-shake-icons"
@@ -50,9 +49,8 @@ platform :android do
     if version_parts.size == 2
       version_number = version_parts[1].to_i
       if version_number > current_version_code
-        sh "flutter clean"
-        sh "flutter pub get"
-        sh "flutter pub upgrade"
+        # sh "flutter pub get"
+        # sh "flutter pub upgrade"
         sh "flutter build appbundle --release --no-deferred-components --no-tree-shake-icons --dart-define='deployment-mode=test'"
 
         upload_to_play_store(

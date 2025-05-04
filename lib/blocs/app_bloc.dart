@@ -202,6 +202,14 @@ class StudyAppBLoC extends ChangeNotifier {
     }
   }
 
+  Future<bool?> getAppHasUpdate() async {
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    AppVersionResult result = await AppVersionUpdate.checkForUpdates(
+      playStoreId: packageInfo.packageName,
+    );
+    return result.canUpdate;
+  }
+
   /// Deploy the local protocol if running in local mode.
   ///
   /// We can run the app in local mode to debug a local protocol stored in

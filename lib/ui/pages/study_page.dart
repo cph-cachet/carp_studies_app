@@ -38,10 +38,13 @@ class StudyPageState extends State<StudyPage> {
                       ]);
                     },
                     child: ListView.builder(
-                      // This is +2 bc the first two cards are the study card and the study status card
-                      itemCount: bloc.messages.length + 2,
+                      // This is +3 bc the first two cards are the study card and the study status card
+                      itemCount: bloc.messages.length + 3,
                       itemBuilder: (context, index) {
                         if (index == 0) {
+                          return _hasUpdateCard();
+                        }
+                        if (index == 1) {
                           return _studyCard(
                             context,
                             widget.model.studyDescriptionMessage,
@@ -50,12 +53,12 @@ class StudyPageState extends State<StudyPage> {
                             },
                           );
                         }
-                        if (index == 1) {
+                        if (index == 2) {
                           return _studyStatusCard();
                         }
-                        // This is -2 bc the first two cards are the study card and the study status card and we don't want to show them in the list
+                        // This is -3 bc the first two cards are the study card and the study status card and we don't want to show them in the list
                         return _announcementCard(
-                            context, bloc.messages[index - 2]);
+                            context, bloc.messages[index - 3]);
                       },
                     ),
                   );
@@ -66,6 +69,75 @@ class StudyPageState extends State<StudyPage> {
         ),
       ),
     );
+  }
+
+  Widget _hasUpdateCard() {
+    RPLocalizations locale = RPLocalizations.of(context)!;
+    return FutureBuilder<bool?>(
+        future: bloc.getAppHasUpdate(),
+        builder: (context, snapshot) {
+          if (snapshot.data == true) {
+            return Card(
+              elevation: 10,
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 22),
+                child: Container(
+                  decoration: BoxDecoration(
+                      border: Border.all(
+                        color:
+                            Theme.of(context).extension<CarpColors>()!.grey600!,
+                        width: 1.0,
+                      ),
+                      borderRadius: BorderRadius.circular(16.0)),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 16.0),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              locale.translate('pages.about.app_update'),
+                              style: aboutCardSubtitleStyle.copyWith(
+                                color: Theme.of(context)
+                                    .extension<CarpColors>()!
+                                    .grey900,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 16),
+                          child: ElevatedButton(
+                            onPressed: () async {
+                              _redirectToUpdatePlayStore();
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: CACHET.DEPLOYMENT_DEPLOYING,
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 30,
+                                vertical: 12,
+                              ),
+                            ),
+                            child: Text(
+                              locale.translate("get"),
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            );
+          } else {
+            return SizedBox.shrink();
+          }
+        });
   }
 
   Widget _studyCard(
@@ -141,6 +213,18 @@ class StudyPageState extends State<StudyPage> {
         ),
       ),
     );
+  }
+
+  void _redirectToUpdatePlayStore() async {
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    final Uri url = Uri.parse(
+        'https://play.google.com/store/apps/details?id=${packageInfo.packageName}');
+    var canLaunch = await canLaunchUrl(url);
+    if (canLaunch) {
+      await launchUrl(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 
   Widget _studyStatusCard() {

@@ -7,6 +7,7 @@ import 'dart:convert';
 import 'dart:ui' as ui;
 import 'dart:io';
 
+import 'package:app_version_update/data/models/app_version_result.dart';
 import 'package:async/async.dart';
 
 import 'package:flutter/material.dart';
@@ -30,6 +31,7 @@ import 'package:open_settings_plus/open_settings_plus.dart';
 import 'package:open_settings_plus/core/open_settings_plus.dart';
 import 'package:appcheck/appcheck.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:app_version_update/app_version_update.dart';
 
 // the CARP packages
 import 'package:carp_serializable/carp_serializable.dart';

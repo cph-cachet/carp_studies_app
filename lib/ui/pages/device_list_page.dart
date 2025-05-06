@@ -318,7 +318,6 @@ class DeviceListPageState extends State<DeviceListPage> {
 
     if (!(await service.deviceManager.hasPermissions())) {
       if (service.type == HealthService.DEVICE_TYPE) {
-        print('Requesting health permissions');
         Navigator.push(
           context,
           MaterialPageRoute<void>(

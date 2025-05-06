@@ -203,10 +203,14 @@ class StudyAppBLoC extends ChangeNotifier {
   }
 
   Future<bool?> getAppHasUpdate() async {
+    print("AM I EVEN IN HERE");
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    print("AM I EVEN IN HERE $packageInfo");
     AppVersionResult result = await AppVersionUpdate.checkForUpdates(
       playStoreId: packageInfo.packageName,
+      appleId: '1569798025',
     );
+    print('canupdate: ${result.canUpdate},');
     return result.canUpdate;
   }
 

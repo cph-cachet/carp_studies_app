@@ -111,7 +111,7 @@ class StudyPageState extends State<StudyPage> {
                           padding: const EdgeInsets.only(right: 16),
                           child: ElevatedButton(
                             onPressed: () async {
-                              _redirectToUpdatePlayStore();
+                              _redirectToUpdateStore();
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: CACHET.DEPLOYMENT_DEPLOYING,
@@ -215,10 +215,17 @@ class StudyPageState extends State<StudyPage> {
     );
   }
 
-  void _redirectToUpdatePlayStore() async {
+  void _redirectToUpdateStore() async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
-    final Uri url = Uri.parse(
-        'https://play.google.com/store/apps/details?id=${packageInfo.packageName}');
+    Uri url;
+    if (Platform.isAndroid) {
+      url = Uri.parse(
+          'https://play.google.com/store/apps/details?id=${packageInfo.packageName}');
+    } else if (Platform.isIOS) {
+      url = Uri.parse('https://apps.apple.com/app/id1569798025');
+    } else {
+      throw 'Unsupported platform';
+    }
     var canLaunch = await canLaunchUrl(url);
     if (canLaunch) {
       await launchUrl(url);

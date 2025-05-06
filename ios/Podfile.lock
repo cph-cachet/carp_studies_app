@@ -43,7 +43,7 @@ PODS:
   - flutter_sound_core (9.28.0)
   - flutter_timezone (0.0.1):
     - Flutter
-  - health (12.1.0):
+  - health (12.2.0):
     - Flutter
   - just_audio (0.0.1):
     - Flutter
@@ -243,7 +243,7 @@ SPEC CHECKSUMS:
   flutter_sound: 82aba29055d6feba684d08906e0623217b87bcd3
   flutter_sound_core: 427465f72d07ab8c3edbe8ffdde709ddacd3763c
   flutter_timezone: ac3da59ac941ff1c98a2e1f0293420e020120282
-  health: a421b1627a55d3200cc1661cbfbd068439b09938
+  health: e739f88e8030f47660f93bf7af2ae775b01766dd
   just_audio: a42c63806f16995daf5b219ae1d679deb76e6a79
   location: d5cf8598915965547c3f36761ae9cc4f4e87d22e
   mdsflutter: 841344e0d5781afbbddd13e057e1cb2e9d86e012
@@ -267,7 +267,6 @@ SPEC CHECKSUMS:
   video_player_avfoundation: 7c6c11d8470e1675df7397027218274b6d2360b3
   Zip: b3fef584b147b6e582b2256a9815c897d60ddc67
 
-PODFILE CHECKSUM: 637a852170391ffc67bb926aa9b5540c53ed8eaf
 PODFILE CHECKSUM: 637a852170391ffc67bb926aa9b5540c53ed8eaf
 
 COCOAPODS: 1.16.2

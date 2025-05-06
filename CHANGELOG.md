@@ -6,6 +6,8 @@
 
 ## 3.5.1
 
+- new media for App Store
+- supporting iOS version 13.0 now
 - minor changes
 
 ## 3.5.0

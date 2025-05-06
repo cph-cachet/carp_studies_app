@@ -110,8 +110,8 @@ dev_dependencies:
 #  1. import the 'flutter_launcher_icons' package above
 #  2. add the 'flutter_icons:' section below
 #  3. run 'flutter pub get'
-#  3. run 'flutter pub run flutter_launcher_icons:main'
-flutter_icons:
+#  3. run 'dart run flutter_launcher_icons:main'
+flutter_launcher_icons:
   android: true
   ios: true
   remove_alpha_ios: true

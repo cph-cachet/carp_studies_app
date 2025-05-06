@@ -2,7 +2,7 @@
 
 - fix of #425 for audio task
 - upgrade to CAMS 1.12.6
-- temp fix of #427 
+- temp fix of #427
 
 ## 3.5.1
 

@@ -340,7 +340,7 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
       ),
     );
   }
-  
+
   List<BarChartGroupData> getHeartRateBars() =>
       widget.model.hourlyHeartRate.entries
           .map((value) => BarChartGroupData(

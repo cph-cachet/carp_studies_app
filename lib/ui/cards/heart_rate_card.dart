@@ -249,7 +249,7 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
           rightTitles: AxisTitles(
             sideTitles: SideTitles(
               showTitles: true,
-              reservedSize: 40,
+              reservedSize: 48,
               getTitlesWidget: rightTitles,
             ),
           ),

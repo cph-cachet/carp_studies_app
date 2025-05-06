@@ -105,7 +105,7 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
                 // ? locale.translate('cards.no_data')
                 ? '-'
                 : '${(min.toInt())} - ${(max.toInt())}',
-            style: hrVisualisationTextStyle(
+            style: heartRateNumberStyle.copyWith(
               fontSize: 40,
             ),
           ),
@@ -116,9 +116,9 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
             min == null || max == null
                 ? ''
                 : locale.translate('cards.heartrate.bpm'),
-            style: hrVisualisationTextStyle(
-              color: Colors.grey.withValues(alpha: 0.8),
-              fontSize: 20,
+            style: heartRateNumberStyle.copyWith(
+              fontSize: 12,
+              color: Theme.of(context).extension<CarpColors>()!.grey600,
             ),
           ),
         ),
@@ -126,25 +126,10 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
     );
   }
 
-  TextStyle hrVisualisationTextStyle(
-      {double? fontSize, Color? color, List<ui.FontFeature>? fontFeatures}) {
-    return GoogleFonts.barlow(
-      fontSize: fontSize,
-      fontWeight: FontWeight.w600,
-      color: color,
-      fontFeatures: fontFeatures,
-    );
-  }
-
   Stack get currentHeartRateWidget {
     RPLocalizations locale = RPLocalizations.of(context)!;
 
     final currentHeartRate = widget.model.currentHeartRate;
-
-    final heartRateTextStyle = hrVisualisationTextStyle(
-      fontSize: 80,
-      fontFeatures: [const ui.FontFeature.tabularFigures()],
-    );
 
     return Stack(
       children: [
@@ -158,9 +143,9 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
                 child: currentHeartRate != null
                     ? Text(
                         currentHeartRate.toStringAsFixed(0),
-                        style: heartRateTextStyle,
+                        style: heartRateNumberStyle,
                       )
-                    : Text('-', style: heartRateTextStyle),
+                    : Text('-', style: heartRateNumberStyle),
               ),
               Padding(
                 padding: const EdgeInsets.only(bottom: 8.0),
@@ -181,8 +166,10 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
                     ),
                     Text(
                       locale.translate('cards.heartrate.bpm'),
-                      style: hrVisualisationTextStyle(
-                          fontSize: 20, color: HeartRateCardWidget.colors[0]),
+                      style: heartRateNumberStyle.copyWith(
+                        color:
+                            Theme.of(context).extension<CarpColors>()!.grey600,
+                      ),
                     ),
                   ],
                 ),
@@ -245,9 +232,7 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
                     ),
                   ),
                 ],
-                hrVisualisationTextStyle(
-                  fontSize: 20,
-                ),
+                heartRateNumberStyle,
               );
             },
           ),
@@ -341,22 +326,21 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
   }
 
   Widget rightTitles(double value, TitleMeta meta) {
-    final text = value.toInt() % meta.appliedInterval == 0
-        ? value.toInt().toString()
-        : '';
-    final style = hrVisualisationTextStyle(
-      color: Colors.grey.withValues(alpha: 0.6),
-      fontSize: 14,
-    );
     return SideTitleWidget(
       meta: meta,
+      space: 16,
       child: Text(
-        text,
-        style: style,
+        value.toInt() % meta.appliedInterval == 0
+            ? value.toInt().toString()
+            : '',
+        style: dataCardRightTitleStyle.copyWith(
+          color: Theme.of(context).extension<CarpColors>()!.grey600,
+        ),
+        maxLines: 1,
       ),
     );
   }
-
+  
   List<BarChartGroupData> getHeartRateBars() =>
       widget.model.hourlyHeartRate.entries
           .map((value) => BarChartGroupData(

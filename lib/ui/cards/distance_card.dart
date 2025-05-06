@@ -134,7 +134,7 @@ class _DistanceCardState extends State<DistanceCard> {
           tooltipRoundedRadius: 8,
           getTooltipItems: (touchedSpots) {
             return touchedSpots.map((LineBarSpot touchedSpot) {
-              final textStyle = activityVisualisationTextStyle(
+              final textStyle = dataCardRightTitleStyle.copyWith(
                 color: Colors.black,
                 fontSize: 12,
               );

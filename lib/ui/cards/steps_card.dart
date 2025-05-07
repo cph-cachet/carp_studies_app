@@ -154,6 +154,7 @@ class StepsCardWidgetState extends State<StepsCardWidget> {
         style: dataCardRightTitleStyle.copyWith(
           color: Theme.of(context).extension<CarpColors>()!.grey600,
         ),
+        maxLines: 1,
       ),
     );
   }

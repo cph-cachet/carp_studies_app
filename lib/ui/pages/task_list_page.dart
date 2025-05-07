@@ -124,11 +124,19 @@ class TaskListPageState extends State<TaskListPage> {
               ],
             ),
             onTap: () {
-              // only start if not already started, done, or expired
+              // Only start if not already started, done, or expired
               if (userTask.state == UserTaskState.enqueued ||
                   userTask.state == UserTaskState.canceled) {
+                // Mark the task as started.
                 userTask.onStart();
-                if (userTask.hasWidget) context.push('/task/${userTask.id}');
+                // Show the task UI?
+                if (userTask.hasWidget) {
+                  context.push('/task/${userTask.id}');
+                } else {
+                  // A non-UI sensing task that collects sensor data.
+                  // Automatically stops after 10 seconds.
+                  Timer(const Duration(seconds: 10), () => userTask.onDone());
+                }
               }
             }),
       ),
@@ -271,10 +279,6 @@ class TaskListPageState extends State<TaskListPage> {
     BackgroundSensingUserTask.SENSING_TYPE: const Icon(
       Icons.settings_input_antenna,
       color: CACHET.BLUE,
-    ),
-    BackgroundSensingUserTask.ONE_TIME_SENSING_TYPE: const Icon(
-      Icons.settings_input_component,
-      color: CACHET.PURPLE,
     ),
   };
 

@@ -1,7 +1,7 @@
 name: carp_study_app
 description: The generic CARP study app.
 publish_to: "none"
-version: 3.5.1+68
+version: 3.5.2-test+74
 
 environment:
   sdk: ">=3.2.0 <4.0.0"
@@ -13,7 +13,7 @@ dependencies:
 
   carp_serializable: ^2.0.0
   carp_core: ^1.8.0
-  carp_mobile_sensing: ^1.12.1
+  carp_mobile_sensing: ^1.12.6
   carp_context_package: ^1.10.0
   carp_connectivity_package: ^1.7.0
   carp_survey_package: ^1.8.2
@@ -41,27 +41,24 @@ dependencies:
 
   flutter_localizations:
     sdk: flutter
+  intl: any 
+
   fl_chart: ^0.70.2
   google_fonts: ^6.1.0
   go_router: ^14.0.0
   flutter_svg: ^2.0.4
   flutter_blue_plus: ^1.15.5
-  intl: ">=0.18.0 <0.20.0"
   permission_handler: ^11.0.1
   connectivity_plus: ^6.0.0
   open_settings_plus: ^0.4.0
   appcheck: ^1.5.2
   flutter_plugin_android_lifecycle: ^2.0.24
   camera_android_camerax: ^0.6.10+1
+  mdsflutter: ^2.3.0
 
 dependency_overrides:
-  # camera_android_camerax: 0.6.10+1
-  # flutter_plugin_android_lifecycle: 2.0.24
-
-  mdsflutter:
-    git:
-      url: https://github.com/Panosfunk/mdsflutter.git
-      ref: master
+  polar: 7.5.1
+      
   # Overriding carp libraries to use the local copy, if needed
   # carp_serializable:
   #   path: ../carp/carp.sensing-flutter/carp_serializable/
@@ -99,9 +96,6 @@ dependency_overrides:
   #   path: ../research.package/
 
 
-
-
-
 dev_dependencies:
   test: any
   json_serializable: any
@@ -116,8 +110,8 @@ dev_dependencies:
 #  1. import the 'flutter_launcher_icons' package above
 #  2. add the 'flutter_icons:' section below
 #  3. run 'flutter pub get'
-#  3. run 'flutter pub run flutter_launcher_icons:main'
-flutter_icons:
+#  3. run 'dart run flutter_launcher_icons:main'
+flutter_launcher_icons:
   android: true
   ios: true
   remove_alpha_ios: true

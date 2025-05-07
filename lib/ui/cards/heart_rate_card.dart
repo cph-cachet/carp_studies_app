@@ -101,10 +101,14 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
         Container(
           margin: const EdgeInsets.only(left: 8, right: 2),
           child: Text(
-              min == null || max == null
-                  ? '-'
-                  : '${(min.toInt())} - ${(max.toInt())}',
-              style: heartRateNumberStyle),
+            min == null || max == null
+                // ? locale.translate('cards.no_data')
+                ? '-'
+                : '${(min.toInt())} - ${(max.toInt())}',
+            style: heartRateNumberStyle.copyWith(
+              fontSize: 40,
+            ),
+          ),
         ),
         Padding(
           padding: const EdgeInsets.only(bottom: 4.0),
@@ -112,7 +116,10 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
             min == null || max == null
                 ? ''
                 : locale.translate('cards.heartrate.bpm'),
-            style: heartRateNumberStyle,
+            style: heartRateNumberStyle.copyWith(
+              fontSize: 12,
+              color: Theme.of(context).extension<CarpColors>()!.grey600,
+            ),
           ),
         ),
       ],
@@ -157,8 +164,13 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
                         ),
                       ),
                     ),
-                    Text(locale.translate('cards.heartrate.bpm'),
-                        style: heartRateNumberStyle),
+                    Text(
+                      locale.translate('cards.heartrate.bpm'),
+                      style: heartRateNumberStyle.copyWith(
+                        color:
+                            Theme.of(context).extension<CarpColors>()!.grey600,
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -237,7 +249,7 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
           rightTitles: AxisTitles(
             sideTitles: SideTitles(
               showTitles: true,
-              reservedSize: 40,
+              reservedSize: 48,
               getTitlesWidget: rightTitles,
             ),
           ),
@@ -314,14 +326,17 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
   }
 
   Widget rightTitles(double value, TitleMeta meta) {
-    final text = value.toInt() % meta.appliedInterval == 0
-        ? value.toInt().toString()
-        : '';
     return SideTitleWidget(
       meta: meta,
+      space: 16,
       child: Text(
-        text,
-        style: heartRateNumberStyle,
+        value.toInt() % meta.appliedInterval == 0
+            ? value.toInt().toString()
+            : '',
+        style: dataCardRightTitleStyle.copyWith(
+          color: Theme.of(context).extension<CarpColors>()!.grey600,
+        ),
+        maxLines: 1,
       ),
     );
   }

@@ -165,6 +165,7 @@ class _MobilityCardState extends State<MobilityCard> {
         style: dataCardRightTitleStyle.copyWith(
           color: Theme.of(context).extension<CarpColors>()!.grey600,
         ),
+        maxLines: 1,
       ),
     );
   }
@@ -180,6 +181,7 @@ class _MobilityCardState extends State<MobilityCard> {
         style: dataCardRightTitleStyle.copyWith(
           color: Theme.of(context).extension<CarpColors>()!.grey600,
         ),
+        maxLines: 1,
       ),
     );
   }

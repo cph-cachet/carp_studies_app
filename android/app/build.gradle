@@ -79,9 +79,9 @@ android {
             signingConfig signingConfigs.debug
         }
         release {
-            minifyEnabled false
-            shrinkResources false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            minifyEnabled true
+            shrinkResources true
+            // proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             ndk {
                 debugSymbolLevel 'FULL'
                 debugSymbolLevel 'SYMBOL_TABLE'

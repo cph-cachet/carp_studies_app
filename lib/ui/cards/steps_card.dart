@@ -6,7 +6,7 @@ class StepsCardWidget extends StatefulWidget {
   final StepsCardViewModel model;
   const StepsCardWidget(this.model,
       {super.key,
-      this.colors = const [CACHET.BLUE_1, CACHET.BLUE_2, CACHET.BLUE_3]});
+      this.colors = const [CACHET.ORANGE, CACHET.BLUE_2, CACHET.BLUE_3]});
 
   @override
   StepsCardWidgetState createState() => StepsCardWidgetState();
@@ -29,19 +29,41 @@ class StepsCardWidgetState extends State<StepsCardWidget> {
     RPLocalizations locale = RPLocalizations.of(context)!;
 
     return StudiesMaterial(
+      backgroundColor: Theme.of(context).extension<CarpColors>()!.white!,
+      elevation: 0,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-            ChartsLegend(
-              title: locale.translate('cards.steps.title'),
-              iconAssetName: Icon(Icons.directions_walk,
-                  color: Theme.of(context).primaryColor),
-              heroTag: 'steps-card',
-              values: [
-                '$_step ${locale.translate('cards.steps.steps')}',
+            Row(
+              children: [
+                Text(
+                  '$_step',
+                  style: dataVizCardTitleNumber.copyWith(
+                    color: Theme.of(context).extension<CarpColors>()!.grey900!,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 4.0),
+                  child: Text(
+                    locale.translate('cards.steps.steps'),
+                    style: dataVizCardTitleText.copyWith(
+                      color: Theme.of(context).extension<CarpColors>()!.grey600,
+                    ),
+                  ),
+                ),
               ],
-              colors: widget.colors,
+            ),
+            Row(
+              children: [
+                Text(
+                  "${widget.model.currentMonth} ${widget.model.startOfWeek} - ${int.parse(widget.model.endOfWeek) < int.parse(widget.model.startOfWeek) ? widget.model.nextMonth : widget.model.currentMonth} ${widget.model.endOfWeek}, ${widget.model.currentYear}",
+                  style: dataVizCardTitleText.copyWith(
+                    color: Theme.of(context).extension<CarpColors>()!.grey600,
+                  ),
+                ),
+                Spacer(),
+              ],
             ),
             SizedBox(
               height: 160,
@@ -135,39 +157,25 @@ class StepsCardWidgetState extends State<StepsCardWidget> {
           color: widget.colors[1].withValues(alpha: isTouched ? 0.8 : 1),
           width: 32,
           borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(8),
-            topRight: Radius.circular(8),
+            topLeft: Radius.circular(4),
+            topRight: Radius.circular(4),
           ),
         ),
       ],
     );
   }
 
-  TextStyle activityVisualisationTextStyle(
-      {double? fontSize, Color? color, List<ui.FontFeature>? fontFeatures}) {
-    return GoogleFonts.barlow(
-      fontSize: fontSize,
-      fontWeight: FontWeight.w600,
-      color: color,
-      fontFeatures: fontFeatures,
-    );
-  }
-
   Widget rightTitles(double value, TitleMeta meta) {
-    final text = value.toInt() % meta.appliedInterval == 0
-        ? value.toInt().toString()
-        : '';
-
-    final style = activityVisualisationTextStyle(
-      color: Colors.grey.withValues(alpha: 0.6),
-      fontSize: 14,
-    );
     return SideTitleWidget(
       meta: meta,
       space: 16,
       child: Text(
-        text,
-        style: style,
+        value.toInt() % meta.appliedInterval == 0
+            ? value.toInt().toString()
+            : '',
+        style: dataCardRightTitleStyle.copyWith(
+          color: Theme.of(context).extension<CarpColors>()!.grey600,
+        ),
       ),
     );
   }

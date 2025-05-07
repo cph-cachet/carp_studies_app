@@ -151,7 +151,7 @@ const Map<String, Icon> _deviceTypeIcon = {
   ),
   AirQualityService.DEVICE_TYPE: Icon(
     Icons.air,
-    color: CACHET.LIGHT_BLUE_2,
+    color: CACHET.LIGHT_BLUE,
   ),
   LocationService.DEVICE_TYPE: Icon(
     Icons.location_on,
@@ -184,7 +184,7 @@ const Map<DeviceStatus, dynamic> _deviceStatusIcon = {
   DeviceStatus.connecting: Icon(Icons.bluetooth_searching_rounded,
       color: CACHET.DARK_BLUE, size: 30),
   DeviceStatus.connected:
-      Icon(Icons.bluetooth_rounded, color: CACHET.DARK_BLUE, size: 30),
+      Icon(Icons.bluetooth_rounded, color: CACHET.GREEN_1, size: 30),
   DeviceStatus.disconnected: "pages.devices.status.action.connect",
   DeviceStatus.paired: "pages.devices.status.action.connect",
   DeviceStatus.error: Icon(Icons.error_outline, color: CACHET.RED_1, size: 30),

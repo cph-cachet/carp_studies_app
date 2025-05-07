@@ -129,9 +129,6 @@ class CarpStudyAppState extends State<CarpStudyApp> {
       GoRoute(
         path: InformedConsentPage.route,
         parentNavigatorKey: _rootNavigatorKey,
-        // redirect: (context, state) => bloc.hasInformedConsentBeenAccepted
-        //     ? firstRoute
-        //     : (bloc.studyId == null ? InvitationListPage.route : null),
         builder: (context, state) => InformedConsentPage(
           model: bloc.appViewModel.informedConsentViewModel,
         ),

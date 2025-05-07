@@ -5,7 +5,7 @@ class ActivityCard extends StatefulWidget {
   final List<Color> colors;
   const ActivityCard(this.model,
       {super.key,
-      this.colors = const [CACHET.BLUE_1, CACHET.BLUE_2, CACHET.BLUE_3]});
+      this.colors = const [CACHET.CAQUI, CACHET.OCEAN, CACHET.BLUE_2]});
 
   @override
   State<StatefulWidget> createState() => ActivityCardState();
@@ -63,21 +63,41 @@ class ActivityCardState extends State<ActivityCard> {
     RPLocalizations locale = RPLocalizations.of(context)!;
 
     return StudiesMaterial(
+      backgroundColor: Theme.of(context).extension<CarpColors>()!.white!,
+      elevation: 0,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-            ChartsLegend(
-              title: locale.translate('cards.activity.title'),
-              iconAssetName: Icon(Icons.fitness_center,
-                  color: Theme.of(context).colorScheme.primary),
-              heroTag: 'activity-card',
-              values: [
-                '$_walk ${locale.translate('cards.activity.walking')}',
-                '$_run ${locale.translate('cards.activity.running')}',
-                '$_cycle ${locale.translate('cards.activity.cycling')}'
+            Row(
+              children: [
+                Text(
+                  '${_walk! + _run! + _cycle!}',
+                  style: dataVizCardTitleNumber.copyWith(
+                    color: Theme.of(context).extension<CarpColors>()!.grey900!,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 4.0),
+                  child: Text(
+                    locale.translate('cards.activity.total.min'),
+                    style: dataVizCardTitleText.copyWith(
+                      color: Theme.of(context).extension<CarpColors>()!.grey600,
+                    ),
+                  ),
+                ),
               ],
-              colors: widget.colors,
+            ),
+            Row(
+              children: [
+                Text(
+                  "${widget.model.currentMonth} ${widget.model.startOfWeek} - ${int.parse(widget.model.endOfWeek) < int.parse(widget.model.startOfWeek) ? widget.model.nextMonth : widget.model.currentMonth} ${widget.model.endOfWeek}, ${widget.model.currentYear}",
+                  style: dataVizCardTitleText.copyWith(
+                    color: Theme.of(context).extension<CarpColors>()!.grey600,
+                  ),
+                ),
+                Spacer(),
+              ],
             ),
             SizedBox(
               height: 160,
@@ -88,6 +108,82 @@ class ActivityCardState extends State<ActivityCard> {
                   return barCharts;
                 },
               ),
+            ),
+            Column(
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: Row(
+                        children: [
+                          Text(
+                            '$_walk',
+                            style: dataVizCardBottomNumber.copyWith(
+                              color: widget.colors[0],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(4.0),
+                            child: Text(
+                              locale.translate('cards.activity.walking'),
+                              style: dataVizCardBottomText.copyWith(
+                                  color: Theme.of(context)
+                                      .extension<CarpColors>()!
+                                      .grey800),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 8.0),
+                            child: Text(
+                              '$_run',
+                              style: dataVizCardBottomNumber.copyWith(
+                                color: widget.colors[1],
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(4.0),
+                            child: Text(
+                              locale.translate('cards.activity.running'),
+                              style: dataVizCardBottomText.copyWith(
+                                  color: Theme.of(context)
+                                      .extension<CarpColors>()!
+                                      .grey800),
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+                Row(
+                  children: [
+                    Text(
+                      '$_cycle',
+                      style: dataVizCardBottomNumber.copyWith(
+                        color: widget.colors[2],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 4.0),
+                      child: Text(
+                        locale.translate('cards.activity.cycling'),
+                        style: dataVizCardBottomText.copyWith(
+                          color: Theme.of(context)
+                              .extension<CarpColors>()!
+                              .grey800,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ),
           ],
         ),
@@ -191,8 +287,8 @@ class ActivityCardState extends State<ActivityCard> {
           color: widget.colors[2].withValues(alpha: isTouched ? 0.8 : 1),
           width: 32,
           borderRadius: BorderRadius.only(
-            topLeft: const Radius.circular(8),
-            topRight: const Radius.circular(8),
+            topLeft: const Radius.circular(4),
+            topRight: const Radius.circular(4),
             bottomLeft: Radius.circular(roundness),
             bottomRight: Radius.circular(roundness),
           ),
@@ -201,31 +297,17 @@ class ActivityCardState extends State<ActivityCard> {
     );
   }
 
-  TextStyle activityVisualisationTextStyle(
-      {double? fontSize, Color? color, List<ui.FontFeature>? fontFeatures}) {
-    return GoogleFonts.barlow(
-      fontSize: fontSize,
-      fontWeight: FontWeight.w600,
-      color: color,
-      fontFeatures: fontFeatures,
-    );
-  }
-
   Widget rightTitles(double value, TitleMeta meta) {
-    final text = value.toInt() % meta.appliedInterval == 0
-        ? value.toInt().toString()
-        : '';
-
-    final style = activityVisualisationTextStyle(
-      color: Colors.grey.withValues(alpha: 0.6),
-      fontSize: 14,
-    );
     return SideTitleWidget(
       meta: meta,
       space: 16,
       child: Text(
-        text,
-        style: style,
+        value.toInt() % meta.appliedInterval == 0
+            ? value.toInt().toString()
+            : '',
+        style: dataCardRightTitleStyle.copyWith(
+          color: Theme.of(context).extension<CarpColors>()!.grey600,
+        ),
       ),
     );
   }

@@ -7,6 +7,7 @@ import 'dart:convert';
 import 'dart:ui' as ui;
 import 'dart:io';
 
+import 'package:app_version_update/data/models/app_version_result.dart';
 import 'package:async/async.dart';
 
 import 'package:flutter/material.dart';
@@ -29,6 +30,8 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:open_settings_plus/open_settings_plus.dart';
 import 'package:open_settings_plus/core/open_settings_plus.dart';
 import 'package:appcheck/appcheck.dart';
+import 'package:package_info_plus/package_info_plus.dart';
+import 'package:app_version_update/app_version_update.dart';
 
 // the CARP packages
 import 'package:carp_serializable/carp_serializable.dart';
@@ -88,6 +91,7 @@ part 'ui/pages/study_page.dart';
 part 'ui/pages/task_list_page.dart';
 part 'ui/pages/profile_page.dart';
 part 'ui/pages/audio_task_page.dart';
+part 'ui/pages/audio_page.dart';
 part 'ui/pages/study_details_page.dart';
 part 'ui/pages/message_details_page.dart';
 part 'ui/pages/invitation_page.dart';
@@ -105,17 +109,19 @@ part 'ui/pages/devices_page.enable_bluetooth_dialog.dart';
 part 'ui/pages/devices_page.connection_dialog.dart';
 part 'ui/pages/devices_page.disconnection_dialog.dart';
 part 'ui/pages/devices_page.list_title.dart';
+part 'ui/pages/devices_page.health_service_connect1.dart';
+part 'ui/pages/devices_page.health_service_connect2.dart';
 
 part 'ui/widgets/carp_app_bar.dart';
-part 'ui/widgets/study_card.dart';
 part 'ui/widgets/horizontal_bar.dart';
-part 'ui/widgets/location_usage_dialog.dart';
+part 'ui/widgets/location_permission_page.dart';
 part 'ui/widgets/charts_legend.dart';
 part 'ui/widgets/details_banner.dart';
 part 'ui/widgets/studies_material.dart';
 part 'ui/widgets/battery_icon.dart';
 part 'ui/widgets/logout_message.dart';
 part 'ui/widgets/dialog_title.dart';
+part 'ui/widgets/location_usage_dialog.dart';
 
 part 'ui/cards/steps_card.dart';
 part 'ui/cards/heart_rate_card.dart';

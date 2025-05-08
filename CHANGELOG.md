@@ -1,3 +1,15 @@
+## 3.5.2
+
+- fix of #425 for audio task
+- upgrade to CAMS 1.12.6
+- temp fix of #427
+
+## 3.5.1
+
+- new media for App Store
+- supporting iOS version 13.0 now
+- minor changes
+
 ## 3.5.0
 
 - upgraded flutter version from 3.24.5 to 3.29.1 (latest stable)

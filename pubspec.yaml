@@ -1,7 +1,7 @@
 name: carp_study_app
 description: The generic CARP study app.
 publish_to: "none"
-version: 3.5.0+62
+version: 3.5.2+76
 
 environment:
   sdk: ">=3.2.0 <4.0.0"
@@ -52,16 +52,12 @@ dependencies:
   connectivity_plus: ^6.0.0
   open_settings_plus: ^0.4.0
   appcheck: ^1.5.2
+  flutter_plugin_android_lifecycle: ^2.0.24
+  camera_android_camerax: ^0.6.10+1
+  mdsflutter: ^2.3.0
 
 dependency_overrides:
-  flutter_sound: 9.26.0
-  camera_android_camerax: 0.6.10+1
   polar: 7.5.1
-
-  mdsflutter:
-    git:
-      url: https://github.com/Panosfunk/mdsflutter.git
-      ref: master
       
   # Overriding carp libraries to use the local copy, if needed
   # carp_serializable:
@@ -114,8 +110,8 @@ dev_dependencies:
 #  1. import the 'flutter_launcher_icons' package above
 #  2. add the 'flutter_icons:' section below
 #  3. run 'flutter pub get'
-#  3. run 'flutter pub run flutter_launcher_icons:main'
-flutter_icons:
+#  3. run 'dart run flutter_launcher_icons:main'
+flutter_launcher_icons:
   android: true
   ios: true
   remove_alpha_ios: true

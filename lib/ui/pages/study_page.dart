@@ -77,59 +77,55 @@ class StudyPageState extends State<StudyPage> {
         future: bloc.getAppHasUpdate(),
         builder: (context, snapshot) {
           if (snapshot.data == true) {
-            return Card(
+            return StudiesMaterial(
               elevation: 10,
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 22),
-                child: Container(
-                  decoration: BoxDecoration(
-                      border: Border.all(
-                        color:
-                            Theme.of(context).extension<CarpColors>()!.grey600!,
-                        width: 1.0,
-                      ),
-                      borderRadius: BorderRadius.circular(16.0)),
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 16.0),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              locale.translate('pages.about.app_update'),
-                              style: aboutCardSubtitleStyle.copyWith(
-                                color: Theme.of(context)
-                                    .extension<CarpColors>()!
-                                    .grey900,
-                              ),
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(right: 16),
-                          child: ElevatedButton(
-                            onPressed: () async {
-                              _redirectToUpdateStore();
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: CACHET.DEPLOYMENT_DEPLOYING,
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 30,
-                                vertical: 12,
-                              ),
-                            ),
-                            child: Text(
-                              locale.translate("get"),
-                              style: TextStyle(
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
+              child: Container(
+                decoration: BoxDecoration(
+                    border: Border.all(
+                      color:
+                          Theme.of(context).extension<CarpColors>()!.grey600!,
+                      width: 1.0,
                     ),
+                    borderRadius: BorderRadius.circular(16.0)),
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 16.0),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            locale.translate('pages.about.app_update'),
+                            style: aboutCardSubtitleStyle.copyWith(
+                              color: Theme.of(context)
+                                  .extension<CarpColors>()!
+                                  .grey900,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 16),
+                        child: ElevatedButton(
+                          onPressed: () async {
+                            _redirectToUpdateStore();
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: CACHET.DEPLOYMENT_DEPLOYING,
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 30,
+                              vertical: 12,
+                            ),
+                          ),
+                          child: Text(
+                            locale.translate("get"),
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),

@@ -20,10 +20,6 @@ PODS:
     - Flutter
   - device_info_plus (0.0.1):
     - Flutter
-  - ESense (0.1.3)
-  - esense_flutter (0.2.0):
-    - ESense
-    - Flutter
   - Flutter (1.0.0)
   - flutter_activity_recognition (0.0.1):
     - Flutter
@@ -105,7 +101,6 @@ DEPENDENCIES:
   - camera_avfoundation (from `.symlinks/plugins/camera_avfoundation/ios`)
   - connectivity_plus (from `.symlinks/plugins/connectivity_plus/ios`)
   - device_info_plus (from `.symlinks/plugins/device_info_plus/ios`)
-  - esense_flutter (from `.symlinks/plugins/esense_flutter/ios`)
   - Flutter (from `Flutter`)
   - flutter_activity_recognition (from `.symlinks/plugins/flutter_activity_recognition/ios`)
   - flutter_appauth (from `.symlinks/plugins/flutter_appauth/ios`)
@@ -138,7 +133,6 @@ SPEC REPOS:
   trunk:
     - Alamofire
     - AppAuth
-    - ESense
     - flutter_sound_core
     - PolarBleSdk
     - RxSwift
@@ -160,8 +154,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/connectivity_plus/ios"
   device_info_plus:
     :path: ".symlinks/plugins/device_info_plus/ios"
-  esense_flutter:
-    :path: ".symlinks/plugins/esense_flutter/ios"
   Flutter:
     :path: Flutter
   flutter_activity_recognition:
@@ -225,46 +217,44 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   Alamofire: 3ca42e259043ee0dc5c0cdd76c4bc568b8e42af7
   AppAuth: 182c5b88630569df5acb672720534756c29b3358
-  appcheck: 3a298b7b76bd61517fe8f2fa6b7a8ba328afb736
-  audio_session: 19e9480dbdd4e5f6c4543826b2e8b0e4ab6145fe
-  audio_streamer: af49e73eb66f71c4eeabb4bbcb05f122d03a6709
-  battery_plus: 34f72fa2afeeea83bbae306c72a25828d3ec727a
-  camera_avfoundation: adb0207d868b2d873e895371d88448399ab78d87
-  connectivity_plus: 2a701ffec2c0ae28a48cf7540e279787e77c447d
-  device_info_plus: bf2e3232933866d73fe290f2942f2156cdd10342
-  ESense: cbe103ad16c435424f2fd6f8b274f2468af84173
-  esense_flutter: 8bfadfdefe7b51d6f78366e43b2b64ec9b6144b6
+  appcheck: 3c94d0ffc94bd639938cac7427d5b13df2795404
+  audio_session: 9bb7f6c970f21241b19f5a3658097ae459681ba0
+  audio_streamer: 2e472b9f81cec5e381c4cf7667afa3055dcb45a4
+  battery_plus: b42253f6d2dde71712f8c36fef456d99121c5977
+  camera_avfoundation: be3be85408cd4126f250386828e9b1dfa40ab436
+  connectivity_plus: cb623214f4e1f6ef8fe7403d580fdad517d2f7dd
+  device_info_plus: 21fcca2080fbcd348be798aa36c3e5ed849eefbe
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
-  flutter_activity_recognition: 5c3b026997742b01e82424ef257db9640822ad77
-  flutter_appauth: 1ce438877bc111c5d8f42da47729909290624886
-  flutter_blue_plus_darwin: 904ed52825285a15f60e9d90312337a09f11a785
-  flutter_local_notifications: ff50f8405aaa0ccdc7dcfb9022ca192e8ad9688f
-  flutter_secure_storage: d33dac7ae2ea08509be337e775f6b59f1ff45f12
-  flutter_sound: 82aba29055d6feba684d08906e0623217b87bcd3
+  flutter_activity_recognition: 52dfad4c1e9cec99f0841b3ed0efcc9d424b3deb
+  flutter_appauth: b951036a3b715d9e38fe5c0e2eb9aded58383984
+  flutter_blue_plus_darwin: 20a08bfeaa0f7804d524858d3d8744bcc1b6dbc3
+  flutter_local_notifications: a5a732f069baa862e728d839dd2ebb904737effb
+  flutter_secure_storage: 1ed9476fba7e7a782b22888f956cce43e2c62f13
+  flutter_sound: b9236a5875299aaa4cef1690afd2f01d52a3f890
   flutter_sound_core: 427465f72d07ab8c3edbe8ffdde709ddacd3763c
-  flutter_timezone: ac3da59ac941ff1c98a2e1f0293420e020120282
-  health: e739f88e8030f47660f93bf7af2ae775b01766dd
-  just_audio: a42c63806f16995daf5b219ae1d679deb76e6a79
-  location: d5cf8598915965547c3f36761ae9cc4f4e87d22e
-  mdsflutter: 841344e0d5781afbbddd13e057e1cb2e9d86e012
+  flutter_timezone: 7c838e17ffd4645d261e87037e5bebf6d38fe544
+  health: 5f06d2b77cede1909be85dcd588570668caa5be2
+  just_audio: 4e391f57b79cad2b0674030a00453ca5ce817eed
+  location: 155caecf9da4f280ab5fe4a55f94ceccfab838f8
+  mdsflutter: bd3c0b3335d50947d1a192cf70f930e0fb04a766
   Movesense: 5ee7f342042aff32d24924b7f3fe4f2e86532522
-  network_info_plus: 6613d9d7cdeb0e6f366ed4dbe4b3c51c52d567a9
-  oidc_ios: e80c00b7089ae7cdc45ab9ed636fdaed3e01e6a1
-  open_settings_plus: 4bd848866fea2becc124581d868a6164cf768831
-  package_info_plus: c0502532a26c7662a62a356cebe2692ec5fe4ec4
-  path_provider_foundation: 2b6b4c569c0fb62ec74538f866245ac84301af46
-  pedometer: 381969883680ade42559782cc41a3bbd453d8234
-  permission_handler_apple: 9878588469a2b0d0fc1e048d9f43605f92e6cec2
-  polar: 72c115bddd9aef3e3cc3eaba1196ecd99c59b8b6
+  network_info_plus: cf61925ab5205dce05a4f0895989afdb6aade5fc
+  oidc_ios: 16966cad509ce6850ca4ca1216c5138bef2a8726
+  open_settings_plus: d19f91e8a04649358a51c19b484ce2e637149d70
+  package_info_plus: af8e2ca6888548050f16fa2f1938db7b5a5df499
+  path_provider_foundation: 080d55be775b7414fd5a5ef3ac137b97b097e564
+  pedometer: 1c5eaab0c6bce8eb7651f7095553b5081c9d06ed
+  permission_handler_apple: 4ed2196e43d0651e8ff7ca3483a069d469701f2d
+  polar: bc78b0a6fce15cad0a88ad8eb831fa76f709df7b
   PolarBleSdk: e3df6f62b6ed34701d2e1d74ebe24fd8245062ca
   RxSwift: 5710a9e6b17f3c3d6e40d6e559b9fa1e813b2ef8
-  screen_state: a300ec05ec5606e1cdac06d5533f15ea5dd7c822
-  sensors_plus: 7229095999f30740798f0eeef5cd120357a8f4f2
-  shared_preferences_foundation: fcdcbc04712aee1108ac7fda236f363274528f78
-  sqflite_darwin: 5a7236e3b501866c1c9befc6771dfd73ffb8702d
+  screen_state: 52d6e997d31bddba6417c60d9cdd22effd0320a7
+  sensors_plus: 6a11ed0c2e1d0bd0b20b4029d3bad27d96e0c65b
+  shared_preferences_foundation: 9e1978ff2562383bd5676f64ec4e9aa8fa06a6f7
+  sqflite_darwin: 20b2a3a3b70e43edae938624ce550a3cbf66a3d0
   SwiftProtobuf: b7aa08087e2ab6d162862d143020091254095f69
-  url_launcher_ios: 5334b05cef931de560670eeae103fd3e431ac3fe
-  video_player_avfoundation: 7c6c11d8470e1675df7397027218274b6d2360b3
+  url_launcher_ios: 694010445543906933d732453a59da0a173ae33d
+  video_player_avfoundation: 2cef49524dd1f16c5300b9cd6efd9611ce03639b
   Zip: b3fef584b147b6e582b2256a9815c897d60ddc67
 
 PODFILE CHECKSUM: 637a852170391ffc67bb926aa9b5540c53ed8eaf

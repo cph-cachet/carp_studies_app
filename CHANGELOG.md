@@ -3,6 +3,11 @@
 - Total redesign of the app
 - Upgrading Java 1.8 to 17
 - Upgrading Kotlin 1.8 to 17
+- Removing esense package
+- In app updates for iOS and Android
+- Fastfile now writes -test suffix for test branch
+- Fastfile now caches gradle and is faster
+
 
 ## 3.5.1
 

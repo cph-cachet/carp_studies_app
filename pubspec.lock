@@ -21,10 +21,10 @@ packages:
     dependency: transitive
     description:
       name: analyzer
-      sha256: "13c1e6c6fd460522ea840abec3f677cc226f5fec7872c04ad7b425517ccf54f7"
+      sha256: "904ae5bb474d32c38fb9482e2d925d5454cda04ddd0e55d2e6826bc72f6ba8c0"
       url: "https://pub.dev"
     source: hosted
-    version: "7.4.4"
+    version: "7.4.5"
   app_version_update:
     dependency: "direct main"
     description:
@@ -205,10 +205,10 @@ packages:
     dependency: "direct main"
     description:
       name: camera_android_camerax
-      sha256: f0dcbce91623f75030840609de9b64d0d73f86df279c6e9588c1501245a05eb2
+      sha256: ea7e40bd63afb8f55058e48ec529ce96562be9d08393f79631a06f781161fd0d
       url: "https://pub.dev"
     source: hosted
-    version: "0.6.15+2"
+    version: "0.6.16"
   camera_avfoundation:
     dependency: transitive
     description:
@@ -273,14 +273,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.8.6"
-  carp_esense_package:
-    dependency: "direct main"
-    description:
-      name: carp_esense_package
-      sha256: "02f9567e17af573c044a0f8f3ae1b6165cdba081a1d50f3778d92d4496eebb07"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.6.1"
   carp_health_package:
     dependency: "direct main"
     description:
@@ -537,14 +529,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.7"
-  esense_flutter:
-    dependency: transitive
-    description:
-      name: esense_flutter
-      sha256: fb8e20a7f81c74a58e4884c6c458004dc35ec7043399d73224e22f8a6263a1dc
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.2.0"
   exception_templates:
     dependency: transitive
     description:
@@ -735,10 +719,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_markdown
-      sha256: "634622a3a826d67cb05c0e3e576d1812c430fa98404e95b60b131775c73d76ec"
+      sha256: "08fb8315236099ff8e90cb87bb2b935e0a724a3af1623000a9cec930468e0f27"
       url: "https://pub.dev"
     source: hosted
-    version: "0.7.7"
+    version: "0.7.7+1"
   flutter_plugin_android_lifecycle:
     dependency: "direct main"
     description:
@@ -2134,10 +2118,10 @@ packages:
     dependency: transitive
     description:
       name: video_player_android
-      sha256: ae7d4f1b41e3ac6d24dd9b9d5d6831b52d74a61bdd90a7a6262a33d8bb97c29a
+      sha256: "1f4e8e0e02403452d699ef7cf73fe9936fac8f6f0605303d111d71acb375d1bc"
       url: "https://pub.dev"
     source: hosted
-    version: "2.8.2"
+    version: "2.8.3"
   video_player_avfoundation:
     dependency: transitive
     description:
@@ -2198,10 +2182,10 @@ packages:
     dependency: transitive
     description:
       name: web_socket
-      sha256: bfe6f435f6ec49cb6c01da1e275ae4228719e59a6b067048c51e72d9d63bcc4b
+      sha256: "34d64019aa8e36bf9842ac014bb5d2f5586ca73df5e4d9bf5c936975cae6982c"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.0"
+    version: "1.0.1"
   web_socket_channel:
     dependency: transitive
     description:

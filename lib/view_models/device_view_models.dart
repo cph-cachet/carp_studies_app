@@ -122,7 +122,6 @@ const Map<String, String> _deviceTypeName = {
   WeatherService.DEVICE_TYPE: "pages.devices.type.weather.name",
   AirQualityService.DEVICE_TYPE: "pages.devices.type.air_quality.name",
   LocationService.DEVICE_TYPE: "pages.devices.type.location.name",
-  ESenseDevice.DEVICE_TYPE: "pages.devices.type.esense.name",
   PolarDevice.DEVICE_TYPE: "pages.devices.type.polar.name",
   MovesenseDevice.DEVICE_TYPE: "pages.devices.type.movesense.name",
   HealthService.DEVICE_TYPE: "pages.devices.type.health.name",
@@ -133,7 +132,6 @@ const Map<String, String> _deviceTypeDescription = {
   WeatherService.DEVICE_TYPE: "pages.devices.type.weather.description",
   AirQualityService.DEVICE_TYPE: "pages.devices.type.air_quality.description",
   LocationService.DEVICE_TYPE: "pages.devices.type.location.description",
-  ESenseDevice.DEVICE_TYPE: "pages.devices.type.esense.description",
   PolarDevice.DEVICE_TYPE: "pages.devices.type.polar.description",
   MovesenseDevice.DEVICE_TYPE: "pages.devices.type.movesense.description",
   HealthService.DEVICE_TYPE: "pages.devices.type.health.description",
@@ -156,11 +154,6 @@ const Map<String, Icon> _deviceTypeIcon = {
   LocationService.DEVICE_TYPE: Icon(
     Icons.location_on,
     color: CACHET.GREEN,
-  ),
-  ESenseDevice.DEVICE_TYPE: Icon(
-    Icons.headphones,
-    size: 30,
-    color: CACHET.BLUE_1,
   ),
   PolarDevice.DEVICE_TYPE: Icon(
     Icons.monitor_heart,
@@ -217,7 +210,6 @@ const Map<DeviceStatus, String> _deviceStatusText = {
 
 const Map<String, String> _deviceConnectionInstructions = {
   Smartphone.DEVICE_TYPE: "pages.devices.type.smartphone.instructions",
-  ESenseDevice.DEVICE_TYPE: "pages.devices.type.esense.instructions",
   PolarDevice.DEVICE_TYPE: "pages.devices.type.polar.instructions",
   MovesenseDevice.DEVICE_TYPE: "pages.devices.type.movesense.instructions",
 };

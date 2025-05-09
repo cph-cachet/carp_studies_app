@@ -4,6 +4,7 @@ import 'package:carp_survey_package/survey.dart';
 import 'package:cognition_package/model.dart';
 
 import 'package:carp_connectivity_package/connectivity.dart';
+// import 'package:carp_esense_package/esense.dart';
 import 'package:carp_context_package/carp_context_package.dart';
 import 'package:carp_audio_package/media.dart';
 // import 'package:carp_communication_package/communication.dart';
@@ -32,6 +33,7 @@ void main() {
     SamplingPackageRegistry().register(MediaSamplingPackage());
     // SamplingPackageRegistry().register(CommunicationSamplingPackage());
     // SamplingPackageRegistry().register(AppsSamplingPackage());
+    // SamplingPackageRegistry().register(ESenseSamplingPackage());
     SamplingPackageRegistry().register(PolarSamplingPackage());
     SamplingPackageRegistry().register(MovesenseSamplingPackage());
     SamplingPackageRegistry().register(SurveySamplingPackage());

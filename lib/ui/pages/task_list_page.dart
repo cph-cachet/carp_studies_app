@@ -219,7 +219,10 @@ class TaskListPageState extends State<TaskListPage>
                       children: [
                         Row(
                           children: [
-                            _taskTypeIcon(userTask),
+                            if (userTask.state == UserTaskState.started)
+                              CircularProgressIndicator(),
+                            if (userTask.state != UserTaskState.started)
+                              _taskTypeIcon(userTask),
                             Padding(
                               padding: const EdgeInsets.only(left: 4.0),
                               child: Text(
@@ -315,17 +318,35 @@ class TaskListPageState extends State<TaskListPage>
   /// Get an icon for the [userTask] based on its type. If there is no icon for
   /// the type, use the 1st measure in the task as an icon. If there is no
   /// icon for the measure, use a default icon.
-  Icon _taskTypeIcon(UserTask userTask) {
+  Widget _taskTypeIcon(UserTask userTask) {
     Icon originalIcon = taskTypeIcons[userTask.type] as Icon;
-    if (taskTypeIcons[userTask.type] != null && userTask.availableForUser) {
-      return originalIcon;
-    } else if (taskTypeIcons[userTask.type] != null &&
-        userTask.state == UserTaskState.done) {
-      return Icon(originalIcon.icon, color: CACHET.TASK_COMPLETED_BLUE);
-    } else {
-      return Icon(originalIcon.icon,
-          color: Theme.of(context).extension<CarpColors>()!.grey600);
-    }
+    return StreamBuilder(
+      stream: userTask.stateEvents,
+      initialData: UserTaskState.enqueued,
+      builder: (context, snapshot) {
+        if (taskTypeIcons[userTask.type] != null && userTask.availableForUser) {
+          return originalIcon;
+        } else if (taskTypeIcons[userTask.type] != null &&
+            userTask.state == UserTaskState.started) {
+          return Padding(
+            padding: const EdgeInsets.all(4),
+            child: SizedBox(
+              child: CircularProgressIndicator(
+                strokeWidth: 3,
+              ),
+              height: 14,
+              width: 14,
+            ),
+          );
+        } else if (taskTypeIcons[userTask.type] != null &&
+            userTask.state == UserTaskState.done) {
+          return Icon(originalIcon.icon, color: CACHET.TASK_COMPLETED_BLUE);
+        } else {
+          return Icon(originalIcon.icon,
+              color: Theme.of(context).extension<CarpColors>()!.grey600);
+        }
+      },
+    );
   }
 
   String _estimatedTimeSubtitle(UserTask userTask) {

@@ -7,6 +7,7 @@
 - In app updates for iOS and Android
 - Fastfile now writes -test suffix for test branch
 - Fastfile now caches gradle and is faster
+- Adding UI feedback for background autocompleting tasks
 
 
 ## 3.5.1

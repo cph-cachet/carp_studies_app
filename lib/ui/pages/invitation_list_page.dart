@@ -15,7 +15,6 @@ class InvitationListPage extends StatelessWidget {
         future: bloc.backend.getInvitations(),
         builder: (context, snapshot) {
           Widget child;
-
           if (snapshot.hasData) {
             child = SliverFixedExtentList(
               itemExtent: 150,
@@ -121,6 +120,7 @@ class InvitationMaterial extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    RPLocalizations locale = RPLocalizations.of(context)!;
     return StudiesMaterial(
       backgroundColor: Theme.of(context).extension<CarpColors>()!.white!,
       elevation: 0.0,
@@ -143,6 +143,24 @@ class InvitationMaterial extends StatelessWidget {
                 style: studyTitleStyle.copyWith(
                     color: CACHET.TASK_COMPLETED_BLUE,
                     overflow: TextOverflow.ellipsis),
+              ),
+              Text.rich(
+                TextSpan(
+                  children: [
+                    TextSpan(
+                      text: locale.translate('invitation_list.roles_in_the_study.description'),
+                      style: studyDetailsInfoTitle.copyWith(
+                        color: Theme.of(context).extension<CarpColors>()!.grey900,
+                      ),
+                    ),
+                    TextSpan(
+                      text: invitation.participantRoleName,
+                      style: studyDetailsInfoTitle.copyWith(
+                        color: Theme.of(context).extension<CarpColors>()!.grey900,
+                      ),
+                    ),
+                  ],
+                ),
               ),
               Text(
                 invitation.invitation.description ?? '',

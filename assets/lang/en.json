@@ -15,6 +15,7 @@
   "invitation.invited_to_study": "Study Invitation",
   "invitation.roles_in_the_study.title": "Roles in the Study",
   "invitation.roles_in_the_study.description": "As a participant, you and this device will play the role(s) as",
+  "invitation_list.roles_in_the_study.description": "Role in the Study: ",
   "invitation.accept_invite": "Accept",
   "pages.location.info": "This app collects location data.\n\nWe ask you to enable the location service on the phone by allowing tracking of location 'Always'. The location service will keep the app running in the background, which helps us collect the data.\n\nWe use the location data in our subsequent data analysis. in order to calculate how much time you spend at home, for example.",
   "login.failed_login": "It seems you do not have access to this study. Contact your researcher to get access.",

@@ -150,13 +150,15 @@ class InvitationMaterial extends StatelessWidget {
                     TextSpan(
                       text: locale.translate('invitation_list.roles_in_the_study.description'),
                       style: studyDetailsInfoTitle.copyWith(
-                        color: Theme.of(context).extension<CarpColors>()!.grey900,
+                        color: Theme.of(context).extension<CarpColors>()!.grey600,
+                        fontSize: 12,
                       ),
                     ),
                     TextSpan(
                       text: invitation.participantRoleName,
                       style: studyDetailsInfoTitle.copyWith(
-                        color: Theme.of(context).extension<CarpColors>()!.grey900,
+                        color: Theme.of(context).extension<CarpColors>()!.grey600,
+                        fontSize: 12,
                       ),
                     ),
                   ],

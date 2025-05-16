@@ -353,19 +353,12 @@ TextStyle healthServiceConnectTitleStyle =
 TextStyle healthServiceConnectMessageStyle =
     const TextStyle(fontSize: 22, fontWeight: FontWeight.w700);
 
-TextStyle profileSectionStyle = TextStyle(
-    fontSize: 12,
-    fontWeight: FontWeight.w600,
-    fontStyle: GoogleFonts.museoModernoTextTheme().bodyMedium!.fontStyle);
-
-TextStyle profileTitleStyle = TextStyle(
-    fontSize: 14,
-    fontWeight: FontWeight.w600,
-    fontStyle: GoogleFonts.museoModernoTextTheme().bodyMedium!.fontStyle);
-TextStyle profileActionStyle = TextStyle(
-    fontSize: 16,
-    fontWeight: FontWeight.w600,
-    fontStyle: GoogleFonts.museoModernoTextTheme().bodyMedium!.fontStyle);
+TextStyle profileSectionStyle =
+    TextStyle(fontSize: 12, fontWeight: FontWeight.w600);
+TextStyle profileTitleStyle =
+    TextStyle(fontSize: 14, fontWeight: FontWeight.w600);
+TextStyle profileActionStyle =
+    TextStyle(fontSize: 16, fontWeight: FontWeight.w600);
 
 TextStyle timerStyle =
     const TextStyle(fontSize: 36, fontWeight: FontWeight.w600);

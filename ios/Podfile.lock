@@ -34,11 +34,15 @@ PODS:
   - flutter_secure_storage (6.0.0):
     - Flutter
   - flutter_sound (9.28.0):
+  - flutter_sound (9.28.0):
     - Flutter
+    - flutter_sound_core (= 9.28.0)
+  - flutter_sound_core (9.28.0)
     - flutter_sound_core (= 9.28.0)
   - flutter_sound_core (9.28.0)
   - flutter_timezone (0.0.1):
     - Flutter
+  - health (12.2.0):
   - health (12.2.0):
     - Flutter
   - just_audio (0.0.1):

@@ -15,7 +15,7 @@ dependencies:
 
   carp_serializable: ^2.0.0
   carp_core: ^1.8.0
-  carp_mobile_sensing: ^1.12.5
+  carp_mobile_sensing: ^1.12.6
   carp_context_package: ^1.10.0
   carp_connectivity_package: ^1.7.0
   carp_survey_package: ^1.8.2
@@ -99,9 +99,6 @@ dependency_overrides:
   #   path: ../research.package/
 
 
-
-
-
 dev_dependencies:
   test: any
   json_serializable: any
@@ -116,8 +113,8 @@ dev_dependencies:
 #  1. import the 'flutter_launcher_icons' package above
 #  2. add the 'flutter_icons:' section below
 #  3. run 'flutter pub get'
-#  3. run 'flutter pub run flutter_launcher_icons:main'
-flutter_icons:
+#  3. run 'dart run flutter_launcher_icons:main'
+flutter_launcher_icons:
   android: true
   ios: true
   remove_alpha_ios: true

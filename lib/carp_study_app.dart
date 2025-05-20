@@ -207,6 +207,7 @@ class CarpStudyAppState extends State<CarpStudyApp> {
       },
       theme: carpStudyTheme,
       darkTheme: carpStudyDarkTheme,
+      debugShowCheckedModeBanner: false,
       routerConfig: _router,
     );
   }

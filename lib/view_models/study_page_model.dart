@@ -20,7 +20,7 @@ class StudyPageViewModel extends ViewModel {
   String get piEmail => bloc.deployment?.responsible?.email ?? '';
   String get piAffiliation =>
       bloc.deployment?.responsible?.affiliation ??
-      'Copenhagen Center for Health Technology';
+      'Department of Health Technology, Technical University of Denmark';
 
   /// The stream of messages (count)
   Stream<int> get messageStream => bloc.messageStream;

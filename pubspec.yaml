@@ -12,18 +12,18 @@ dependencies:
     sdk: flutter
 
   carp_serializable: ^2.0.0
-  carp_core: ^1.8.0
-  carp_mobile_sensing: ^1.12.6
+  carp_core: ^1.9.0
+  carp_mobile_sensing: ^1.13.0
   carp_context_package: ^1.10.0
   carp_connectivity_package: ^1.7.0
   carp_survey_package: ^1.8.2
   carp_audio_package: ^1.10.0
   carp_esense_package: ^1.6.0
   carp_polar_package: ^1.6.1
-  carp_health_package: ^3.0.0
+  carp_health_package: ^3.2.0
   carp_movesense_package: ^1.7.2
 
-  carp_webservices: ^3.6.0
+  carp_webservices: ^3.7.0
   carp_backend: ^1.9.2
 
   research_package: ^1.7.2

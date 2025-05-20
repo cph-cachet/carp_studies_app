@@ -6,6 +6,7 @@ final _shellNavigatorKey = GlobalKey<NavigatorState>();
 class CarpStudyApp extends StatefulWidget {
   const CarpStudyApp({super.key});
 
+  /// Reload language translations and re-build the entire app.
   static void reloadLocale(BuildContext context) async {
     CarpStudyAppState? state =
         context.findAncestorStateOfType<CarpStudyAppState>();

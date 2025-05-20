@@ -158,6 +158,7 @@ class CarpBackend {
 
   /// Set the [study] used on this phone.
   set study(SmartphoneStudy study) {
+    info('Setting (new) study in CAWS services - study: $study');
     CarpService().study = study;
     CarpParticipationService().study = study;
     CarpDeploymentService().study = study;

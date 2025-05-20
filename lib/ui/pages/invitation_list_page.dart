@@ -46,7 +46,8 @@ class InvitationListPage extends StatelessWidget {
                 stretch: true,
                 stretchTriggerOffset: 20,
                 scrolledUnderElevation: 0,
-                onStretchTrigger: () async => bloc.backend.getInvitations(),
+                // onStretchTrigger: () async => bloc.backend.getInvitations(),
+                onStretchTrigger: () async => bloc.backend.invitations,
               ),
               SliverToBoxAdapter(
                 child: Padding(

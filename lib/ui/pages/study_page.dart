@@ -64,7 +64,7 @@ class StudyPageState extends State<StudyPage> {
   }) {
     RPLocalizations locale = RPLocalizations.of(context)!;
 
-    // Initialization the language of the tiemago package
+    // Initialization the language of the timeago package
     timeago.setLocaleMessages('da', timeago.DaMessages());
     timeago.setLocaleMessages('es', timeago.EsMessages());
 

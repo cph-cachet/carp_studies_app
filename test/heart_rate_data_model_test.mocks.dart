@@ -614,10 +614,28 @@ class MockHeartRateCardViewModel extends _i1.Mock
       );
 
   @override
-  _i7.Future<bool> save(Map<String, dynamic>? json) => (super.noSuchMethod(
+  void clear() => super.noSuchMethod(
+        Invocation.method(
+          #clear,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void dispose() => super.noSuchMethod(
+        Invocation.method(
+          #dispose,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  _i7.Future<bool> save() => (super.noSuchMethod(
         Invocation.method(
           #save,
-          [json],
+          [],
         ),
         returnValue: _i7.Future<bool>.value(false),
         returnValueForMissingStub: _i7.Future<bool>.value(false),
@@ -632,15 +650,6 @@ class MockHeartRateCardViewModel extends _i1.Mock
         returnValue: false,
         returnValueForMissingStub: false,
       ) as bool);
-
-  @override
-  void dispose() => super.noSuchMethod(
-        Invocation.method(
-          #dispose,
-          [],
-        ),
-        returnValueForMissingStub: null,
-      );
 
   @override
   _i7.Future<_i4.HourlyHeartRate?> restore() => (super.noSuchMethod(

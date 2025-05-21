@@ -27,7 +27,7 @@ dependencies:
   carp_webservices: ^3.6.0
   carp_backend: ^1.9.2
 
-  research_package: ^1.7.2
+  research_package: ^2.0.0
   cognition_package: ^1.6.1
 
   flutter_launcher_icons: ^0.14.0

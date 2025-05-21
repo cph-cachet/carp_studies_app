@@ -78,6 +78,7 @@ class StudyPageState extends State<StudyPage> {
         builder: (context, snapshot) {
           if (snapshot.data == true) {
             return StudiesMaterial(
+              backgroundColor: Theme.of(context).extension<CarpColors>()!.grey50!,
               elevation: 10,
               child: Container(
                 decoration: BoxDecoration(

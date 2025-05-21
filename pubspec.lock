@@ -245,10 +245,10 @@ packages:
     dependency: "direct main"
     description:
       name: carp_backend
-      sha256: "4cf4842a9e40338b0b531fad146a3e778b8087947ba7ac382b92d653e2a3e3e7"
+      sha256: f92462c41a38cf85cf0b5f602126b123f60a96dcccfda3d2751dcdf0b650feec
       url: "https://pub.dev"
     source: hosted
-    version: "1.10.0"
+    version: "1.11.0"
   carp_connectivity_package:
     dependency: "direct main"
     description:
@@ -317,10 +317,10 @@ packages:
     dependency: "direct main"
     description:
       name: carp_survey_package
-      sha256: "1d2870fb55a78590f80ed4f5fbb8526fa733a6e866c37cebb982dcb78f6b6fd6"
+      sha256: "25c055e2267ace486beff4e31bf13eab7d6806f413a54020f74297b6d62fe6b7"
       url: "https://pub.dev"
     source: hosted
-    version: "1.8.6"
+    version: "1.9.1"
   carp_webservices:
     dependency: "direct main"
     description:
@@ -389,10 +389,10 @@ packages:
     dependency: "direct main"
     description:
       name: cognition_package
-      sha256: f021ca2328e548ef6792951d3b760b11dc4df658dedc8848105fbeb4dc74df32
+      sha256: "6b2245066f3857a354b3d88844f46c026e5d82b3d7bd905ac7387f15c974e0ce"
       url: "https://pub.dev"
     source: hosted
-    version: "1.6.2"
+    version: "1.7.0"
   collection:
     dependency: transitive
     description:
@@ -485,10 +485,10 @@ packages:
     dependency: transitive
     description:
       name: dart_style
-      sha256: "27eb0ae77836989a3bc541ce55595e8ceee0992807f14511552a898ddd0d88ac"
+      sha256: "5b236382b47ee411741447c1f1e111459c941ea1b3f2b540dde54c210a3662af"
       url: "https://pub.dev"
     source: hosted
-    version: "3.0.1"
+    version: "3.1.0"
   data_serializer:
     dependency: transitive
     description:
@@ -1577,10 +1577,10 @@ packages:
     dependency: "direct main"
     description:
       name: research_package
-      sha256: "9978e7532915dfcf328ad4a5508dfd65ae7351810b4bfc2a80f064e649b882ad"
+      sha256: "7ea8410bbac8cb71a3d2806c0918c79948efaaf4afa56b88e43360b80fdfc8d8"
       url: "https://pub.dev"
     source: hosted
-    version: "1.8.0"
+    version: "2.0.1"
   retry:
     dependency: transitive
     description:

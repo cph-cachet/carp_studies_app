@@ -15,6 +15,10 @@ abstract class ViewModel extends ChangeNotifier {
     _controller = ctrl;
   }
 
+  /// Called when this view model is to clear its state (e.g., cached data).
+  @mustCallSuper
+  void clear() {}
+
   /// Called when this view model is disposed and no longer used.
   @override
   @mustCallSuper
@@ -71,35 +75,47 @@ abstract class SerializableViewModel<D extends DataModel> extends ViewModel {
     });
 
     // save the data model on a regular basis.
-    _persistenceTimer =
-        Timer.periodic(const Duration(minutes: 3), (_) => save(model.toJson()));
+    Timer.periodic(const Duration(minutes: 3), (_) => save());
 
     /// Check if we are running in a test environment.
     /// If so, do not listen to app lifecycle events.
     /// [AppLifecycleListener] is not supported in a test environment.
     if (!Platform.environment.containsKey('FLUTTER_TEST')) {
-      AppLifecycleListener(
-        onHide: () async {
-          await save(model.toJson());
-        },
-      );
+      AppLifecycleListener(onHide: () async => await save());
     }
+  }
+
+  @override
+  void clear() {
+    super.clear();
+    _filename = null;
+    _persistenceTimer?.cancel();
+    _persistenceTimer = null;
+    save();
+  }
+
+  @override
+  void dispose() {
+    _filename = null;
+    _persistenceTimer?.cancel();
+    _persistenceTimer = null;
+
+    save().then((_) => super.dispose());
   }
 
   /// Current path and filename of the data.
   Future<String> get filename async {
-    if (_filename == null) {
-      String path = await LocalSettings().cacheBasePath ?? '';
-      _filename = '$path/$runtimeType.json';
-    }
+    String path = await LocalSettings().cacheBasePath ?? '';
+    _filename = '$path/$runtimeType.json';
     return _filename!;
   }
 
   /// Persistently save the [model].
   /// Returns true if successful, false otherwise.
-  Future<bool> save(Map<String, dynamic> json) async {
+  Future<bool> save() async {
     bool success = true;
     try {
+      var json = model.toJson();
       String name = (await filename);
       debug("Saving $runtimeType data to file '$name'.");
       File(name).writeAsStringSync(jsonEncode(json));
@@ -124,13 +140,6 @@ abstract class SerializableViewModel<D extends DataModel> extends ViewModel {
       warning('Failed to delete $runtimeType data - $exception');
     }
     return success;
-  }
-
-  @override
-  void dispose() {
-    _persistenceTimer?.cancel();
-    delete();
-    super.dispose();
   }
 
   /// Restore the [model] from persistent storage.
@@ -214,6 +223,20 @@ class CarpStudyAppViewModel extends ViewModel {
     _profilePageViewModel.init(ctrl);
     _invitationsListViewModel.init(ctrl);
     _informedConsentViewModel.init(ctrl);
+  }
+
+  @override
+  void clear() {
+    _taskListPageViewModel.clear();
+    _studyPageViewModel.clear();
+    _dataVisualizationPageViewModel.clear();
+    _devicesPageViewModel.clear();
+
+    _profilePageViewModel.clear();
+    _invitationsListViewModel.clear();
+    _informedConsentViewModel.clear();
+
+    super.clear();
   }
 
   @override

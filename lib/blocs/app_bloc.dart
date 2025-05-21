@@ -154,7 +154,7 @@ class StudyAppBLoC extends ChangeNotifier {
 
     Settings().debugLevel = debugLevel;
     await Settings().init();
-    await localizationManager.initialize();
+    CarpResourceManager().initialize();
 
     Sensing();
 
@@ -270,12 +270,12 @@ class StudyAppBLoC extends ChangeNotifier {
     // in order to access the correct resources (like translations etc.).
     backend.study = study!;
 
+    // And the re-initialize the resource manager.
+    CarpResourceManager().initialize();
+
     notifyListeners();
 
-    info('Invitation received - '
-        'study id: ${invitation.studyId}, '
-        'deployment id: ${invitation.studyDeploymentId}, '
-        'role name: ${invitation.deviceRoleName}');
+    info('Invitation received - study: $study');
 
     if (context != null) CarpStudyApp.reloadLocale(context);
   }
@@ -306,13 +306,11 @@ class StudyAppBLoC extends ChangeNotifier {
     appViewModel.init(Sensing().controller!);
 
     // set up the messaging part
-    messageManager.initialize().then(
-      (_) {
-        refreshMessages();
-        // refresh the list of messages on a regular basis
-        Timer.periodic(const Duration(minutes: 30), (_) => refreshMessages());
-      },
-    );
+    messageManager.initialize();
+    refreshMessages();
+
+    // refresh the list of messages on a regular basis
+    Timer.periodic(const Duration(minutes: 30), (_) => refreshMessages());
 
     info('Study configuration done.');
     notifyListeners();
@@ -321,6 +319,10 @@ class StudyAppBLoC extends ChangeNotifier {
 
   /// Does this app use location permissions?
   bool get usingLocationPermissions => true;
+
+  /// Get the informed consent for this study.
+  Future<RPOrderedTask?> getInformedConsent({bool refresh = false}) =>
+      informedConsentManager.getInformedConsent(refresh: refresh);
 
   /// Has the informed consent been accepted by the user?
   bool get hasInformedConsentBeenAccepted =>
@@ -455,12 +457,14 @@ class StudyAppBLoC extends ChangeNotifier {
   /// re-deployed on the phone, data from the previous deployment will be
   /// available.
   Future<void> leaveStudy() async {
+    debug('$runtimeType --------- LEAVING STUDY ------------');
+
+    // save and clear the UI data models
+    appViewModel.clear();
+
     // stop sensing and remove all deployment info
     await Sensing().removeStudy();
     await LocalSettings().eraseStudyDeployment();
-
-    // dispose the UI data models
-    //appViewModel.dispose();
 
     _state = StudyAppState.initialized;
     notifyListeners();

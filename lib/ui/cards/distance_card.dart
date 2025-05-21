@@ -178,12 +178,6 @@ class _DistanceCardState extends State<DistanceCard> {
         style: dataCardRightTitleStyle.copyWith(
           color: Theme.of(context).extension<CarpColors>()!.grey600,
         ),
-        value.toInt() % meta.appliedInterval == 0
-            ? value.toInt().toString()
-            : '',
-        style: dataCardRightTitleStyle.copyWith(
-          color: Theme.of(context).extension<CarpColors>()!.grey600,
-        ),
       ),
     );
   }

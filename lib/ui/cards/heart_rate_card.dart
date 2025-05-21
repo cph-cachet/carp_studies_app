@@ -124,9 +124,7 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
                     ? Text(
                         currentHeartRate.toStringAsFixed(0),
                         style: heartRateNumberStyle,
-                        style: heartRateNumberStyle,
                       )
-                    : Text('-', style: heartRateNumberStyle),
                     : Text('-', style: heartRateNumberStyle),
               ),
               Padding(
@@ -215,7 +213,6 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
                   ),
                 ],
                 heartRateNumberStyle,
-                heartRateNumberStyle,
               );
             },
           ),
@@ -232,7 +229,6 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
           rightTitles: AxisTitles(
             sideTitles: SideTitles(
               showTitles: true,
-              reservedSize: 48,
               reservedSize: 48,
               getTitlesWidget: rightTitles,
             ),
@@ -312,15 +308,7 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
     return SideTitleWidget(
       meta: meta,
       space: 16,
-      space: 16,
       child: Text(
-        value.toInt() % meta.appliedInterval == 0
-            ? value.toInt().toString()
-            : '',
-        style: dataCardRightTitleStyle.copyWith(
-          color: Theme.of(context).extension<CarpColors>()!.grey600,
-        ),
-        maxLines: 1,
         value.toInt() % meta.appliedInterval == 0
             ? value.toInt().toString()
             : '',

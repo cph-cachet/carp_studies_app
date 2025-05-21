@@ -26,7 +26,7 @@ class StudyPageViewModel extends ViewModel {
   String get piEmail => bloc.deployment?.responsible?.email ?? '';
   String get piAffiliation =>
       bloc.deployment?.responsible?.affiliation ??
-      'Copenhagen Center for Health Technology';
+      'Department of Health Technology, Technical University of Denmark';
 
   String get participantRole => bloc.deployment?.participantRoleName ?? '';
   String get deviceRole => bloc.deployment?.deviceRoleName ?? '';

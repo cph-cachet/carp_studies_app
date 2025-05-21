@@ -38,7 +38,7 @@ class LocalResourceManager
   }
 
   @override
-  Future<void> initialize() async {}
+  void initialize() {}
 
   // INFORMED CONSENT
 
@@ -46,7 +46,7 @@ class LocalResourceManager
   RPOrderedTask? get informedConsent => _informedConsent;
 
   @override
-  Future<RPOrderedTask?> getInformedConsent() async {
+  Future<RPOrderedTask?> getInformedConsent({bool refresh = false}) async {
     if (_informedConsent == null) {
       try {
         var jsonString =
@@ -77,7 +77,10 @@ class LocalResourceManager
   // LOCALIZATION
 
   @override
-  Future<Map<String, String>> getLocalizations(Locale locale) async {
+  Future<Map<String, String>> getLocalizations(
+    Locale locale, {
+    bool refresh = false,
+  }) async {
     if (_translations == null) {
       var path = '$basePath/lang/${locale.languageCode}.json';
       var jsonString = await rootBundle.loadString(path);

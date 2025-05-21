@@ -64,6 +64,22 @@ class DataVisualizationPageViewModel extends ViewModel {
   }
 
   @override
+  void clear() {
+    _activityCardDataModel.clear();
+    _stepsCardDataModel.clear();
+    _heartRateCardDataModel.clear();
+    _mobilityCardDataModel.clear();
+    _measuresCardDataModel.clear();
+    _surveysCardDataModel.clear();
+    _audioCardDataModel.clear();
+    _videoCardDataModel.clear();
+    _imageCardDataModel.clear();
+    _studyProgressCardDataModel.clear();
+
+    super.clear();
+  }
+
+  @override
   void dispose() {
     _activityCardDataModel.dispose();
     _stepsCardDataModel.dispose();

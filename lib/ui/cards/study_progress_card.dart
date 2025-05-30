@@ -19,7 +19,7 @@ class StudyProgressCardWidgetState extends State<StudyProgressCardWidget> {
 
     widget.model.updateProgress();
     return StudiesMaterial(
-      backgroundColor: Theme.of(context).extension<CarpColors>()!.white!,
+      backgroundColor: Theme.of(context).extension<RPColors>()!.white!,
       hasBox: true,
       elevation: 0,
       child: Padding(

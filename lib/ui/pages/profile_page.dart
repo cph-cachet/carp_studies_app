@@ -217,7 +217,7 @@ class ProfilePageState extends State<ProfilePage> {
           children: ListTile.divideTiles(
             context: context,
             tiles: children,
-            color: Theme.of(context).extension<CarpColors>()!.grey300,
+            color: Theme.of(context).extension<RPColors>()!.grey300,
           ).toList(),
         ),
       ),
@@ -248,7 +248,7 @@ class ProfilePageState extends State<ProfilePage> {
       leading: leading,
       title: Text(title,
           style: profileActionStyle.copyWith(
-              color: Theme.of(context).extension<CarpColors>()!.grey900)),
+              color: Theme.of(context).extension<RPColors>()!.grey900)),
       trailing: trailing,
       onTap: onTap,
       contentPadding: EdgeInsets.symmetric(vertical: 4, horizontal: 16),

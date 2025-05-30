@@ -57,17 +57,17 @@ class ScoreboardPersistentHeaderDelegate
           style: scoreNumberStyle.copyWith(
               fontSize: calculateScrollAwareSizing(shrinkOffset,
                   scoreNumberStyleSmall.fontSize!, scoreNumberStyle.fontSize!),
-              color: Theme.of(context).extension<CarpColors>()!.grey900)),
+              color: Theme.of(context).extension<RPColors>()!.grey900)),
       if (shrinkOffset < offsetForShrink)
         Text(locale.translate('cards.scoreboard.days'),
             style: scoreTextStyle.copyWith(
-                color: Theme.of(context).extension<CarpColors>()!.grey900)),
+                color: Theme.of(context).extension<RPColors>()!.grey900)),
       if (shrinkOffset > offsetForShrink)
         Padding(
           padding: const EdgeInsets.only(left: 8.0),
           child: Text(locale.translate('cards.scoreboard.days-short'),
               style: scoreTextStyle.copyWith(
-                  color: Theme.of(context).extension<CarpColors>()!.grey900)),
+                  color: Theme.of(context).extension<RPColors>()!.grey900)),
         )
     ];
 
@@ -76,11 +76,11 @@ class ScoreboardPersistentHeaderDelegate
           style: scoreNumberStyle.copyWith(
               fontSize: calculateScrollAwareSizing(shrinkOffset,
                   scoreNumberStyleSmall.fontSize!, scoreNumberStyle.fontSize!),
-              color: Theme.of(context).extension<CarpColors>()!.primary)),
+              color: Theme.of(context).extension<RPColors>()!.primary)),
       if (shrinkOffset < offsetForShrink)
         Text(locale.translate('cards.scoreboard.tasks'),
             style: scoreTextStyle.copyWith(
-                color: Theme.of(context).extension<CarpColors>()!.primary)),
+                color: Theme.of(context).extension<RPColors>()!.primary)),
       if (shrinkOffset > offsetForShrink)
         Expanded(
           flex: 0,
@@ -88,7 +88,7 @@ class ScoreboardPersistentHeaderDelegate
             padding: const EdgeInsets.only(left: 8.0),
             child: Text(locale.translate('cards.scoreboard.tasks-short'),
                 style: scoreTextStyle.copyWith(
-                    color: Theme.of(context).extension<CarpColors>()!.primary)),
+                    color: Theme.of(context).extension<RPColors>()!.primary)),
           ),
         )
     ];
@@ -96,7 +96,7 @@ class ScoreboardPersistentHeaderDelegate
     return Container(
       height: height,
       decoration: BoxDecoration(
-        color: Theme.of(context).extension<CarpColors>()!.white,
+        color: Theme.of(context).extension<RPColors>()!.white,
         borderRadius: BorderRadius.circular(8), // Rounded corners
       ),
       child: StreamBuilder<UserTask>(

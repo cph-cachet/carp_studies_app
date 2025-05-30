@@ -21,7 +21,7 @@ class _SurveyCardState extends State<SurveyCard> {
     }
 
     return StudiesMaterial(
-      backgroundColor: Theme.of(context).extension<CarpColors>()!.white!,
+      backgroundColor: Theme.of(context).extension<RPColors>()!.white!,
       elevation: 0,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -85,9 +85,8 @@ class _SurveyCardState extends State<SurveyCard> {
                       Text(
                         '$totalSurveys',
                         style: surveysCardTotalTextStyle.copyWith(
-                          color: Theme.of(context)
-                              .extension<CarpColors>()!
-                              .grey800,
+                          color:
+                              Theme.of(context).extension<RPColors>()!.grey800,
                         ),
                       )
                     ],

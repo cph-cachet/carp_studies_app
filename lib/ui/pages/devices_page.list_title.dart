@@ -24,7 +24,7 @@ class DevicesPageListTitle extends StatelessWidget {
         child: Text(
             locale.translate("pages.devices.${type.name}.title").toUpperCase(),
             style: dataCardTitleStyle.copyWith(
-                color: Theme.of(context).extension<CarpColors>()!.grey900,
+                color: Theme.of(context).extension<RPColors>()!.grey900,
                 fontWeight: FontWeight.bold)),
       ),
     );

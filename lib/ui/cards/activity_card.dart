@@ -63,7 +63,7 @@ class ActivityCardState extends State<ActivityCard> {
     RPLocalizations locale = RPLocalizations.of(context)!;
 
     return StudiesMaterial(
-      backgroundColor: Theme.of(context).extension<CarpColors>()!.white!,
+      backgroundColor: Theme.of(context).extension<RPColors>()!.white!,
       elevation: 0,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -74,7 +74,7 @@ class ActivityCardState extends State<ActivityCard> {
                 Text(
                   '${_walk! + _run! + _cycle!}',
                   style: dataVizCardTitleNumber.copyWith(
-                    color: Theme.of(context).extension<CarpColors>()!.grey900!,
+                    color: Theme.of(context).extension<RPColors>()!.grey900!,
                   ),
                 ),
                 Padding(
@@ -82,7 +82,7 @@ class ActivityCardState extends State<ActivityCard> {
                   child: Text(
                     locale.translate('cards.activity.total.min'),
                     style: dataVizCardTitleText.copyWith(
-                      color: Theme.of(context).extension<CarpColors>()!.grey600,
+                      color: Theme.of(context).extension<RPColors>()!.grey600,
                     ),
                   ),
                 ),
@@ -93,7 +93,7 @@ class ActivityCardState extends State<ActivityCard> {
                 Text(
                   "${widget.model.currentMonth} ${widget.model.startOfWeek} - ${int.parse(widget.model.endOfWeek) < int.parse(widget.model.startOfWeek) ? widget.model.nextMonth : widget.model.currentMonth} ${widget.model.endOfWeek}, ${widget.model.currentYear}",
                   style: dataVizCardTitleText.copyWith(
-                    color: Theme.of(context).extension<CarpColors>()!.grey600,
+                    color: Theme.of(context).extension<RPColors>()!.grey600,
                   ),
                 ),
                 Spacer(),
@@ -128,7 +128,7 @@ class ActivityCardState extends State<ActivityCard> {
                               locale.translate('cards.activity.walking'),
                               style: dataVizCardBottomText.copyWith(
                                   color: Theme.of(context)
-                                      .extension<CarpColors>()!
+                                      .extension<RPColors>()!
                                       .grey800),
                             ),
                           ),
@@ -153,7 +153,7 @@ class ActivityCardState extends State<ActivityCard> {
                               locale.translate('cards.activity.running'),
                               style: dataVizCardBottomText.copyWith(
                                   color: Theme.of(context)
-                                      .extension<CarpColors>()!
+                                      .extension<RPColors>()!
                                       .grey800),
                             ),
                           ),
@@ -175,9 +175,8 @@ class ActivityCardState extends State<ActivityCard> {
                       child: Text(
                         locale.translate('cards.activity.cycling'),
                         style: dataVizCardBottomText.copyWith(
-                          color: Theme.of(context)
-                              .extension<CarpColors>()!
-                              .grey800,
+                          color:
+                              Theme.of(context).extension<RPColors>()!.grey800,
                         ),
                       ),
                     ),
@@ -300,13 +299,13 @@ class ActivityCardState extends State<ActivityCard> {
   Widget rightTitles(double value, TitleMeta meta) {
     return SideTitleWidget(
       meta: meta,
-      space: 16,
+      space: 6,
       child: Text(
         value.toInt() % meta.appliedInterval == 0
             ? value.toInt().toString()
             : '',
         style: dataCardRightTitleStyle.copyWith(
-          color: Theme.of(context).extension<CarpColors>()!.grey600,
+          color: Theme.of(context).extension<RPColors>()!.grey600,
         ),
       ),
     );

@@ -37,7 +37,7 @@ class AudioPageState extends State<AudioPage> {
                           Spacer(),
                           IconButton(
                             color: Theme.of(context)
-                                .extension<CarpColors>()!
+                                .extension<RPColors>()!
                                 .grey900!,
                             onPressed: () {
                               _showCancelConfirmationDialog();
@@ -68,14 +68,14 @@ class AudioPageState extends State<AudioPage> {
                                           ),
                                           style: audioTitleStyle.copyWith(
                                             color: Theme.of(context)
-                                                .extension<CarpColors>()!
+                                                .extension<RPColors>()!
                                                 .primary,
                                           ),
                                         ),
                                       ),
                                       StudiesMaterial(
                                         backgroundColor: Theme.of(context)
-                                            .extension<CarpColors>()!
+                                            .extension<RPColors>()!
                                             .white!,
                                         child: Scrollbar(
                                           child: SingleChildScrollView(
@@ -99,7 +99,7 @@ class AudioPageState extends State<AudioPage> {
                                       CircleAvatar(
                                         radius: 30,
                                         backgroundColor: Theme.of(context)
-                                            .extension<CarpColors>()!
+                                            .extension<RPColors>()!
                                             .primary,
                                         child: IconButton(
                                           onPressed: () => widget.audioUserTask!
@@ -137,14 +137,14 @@ class AudioPageState extends State<AudioPage> {
                                           ),
                                           style: audioTitleStyle.copyWith(
                                             color: Theme.of(context)
-                                                .extension<CarpColors>()!
+                                                .extension<RPColors>()!
                                                 .primary,
                                           ),
                                         ),
                                       ),
                                       StudiesMaterial(
                                         backgroundColor: Theme.of(context)
-                                            .extension<CarpColors>()!
+                                            .extension<RPColors>()!
                                             .white!,
                                         child: Scrollbar(
                                           child: SingleChildScrollView(
@@ -211,7 +211,7 @@ class AudioPageState extends State<AudioPage> {
                                               'pages.audio_task.done'),
                                           style: audioTitleStyle.copyWith(
                                             color: Theme.of(context)
-                                                .extension<CarpColors>()!
+                                                .extension<RPColors>()!
                                                 .primary,
                                           ),
                                         ),
@@ -245,7 +245,7 @@ class AudioPageState extends State<AudioPage> {
                                                 icon: Icon(
                                                   Icons.replay,
                                                   color: Theme.of(context)
-                                                      .extension<CarpColors>()!
+                                                      .extension<RPColors>()!
                                                       .grey700,
                                                   size: 30,
                                                 ),

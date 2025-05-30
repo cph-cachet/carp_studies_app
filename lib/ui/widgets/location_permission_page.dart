@@ -5,11 +5,10 @@ class LocationPermissionPage {
     RPLocalizations locale = RPLocalizations.of(context)!;
 
     return Scaffold(
-      backgroundColor:
-          Theme.of(context).extension<CarpColors>()!.backgroundGray,
+      backgroundColor: Theme.of(context).extension<RPColors>()!.backgroundGray,
       appBar: AppBar(
         backgroundColor:
-            Theme.of(context).extension<CarpColors>()!.backgroundGray,
+            Theme.of(context).extension<RPColors>()!.backgroundGray,
         title: const CarpAppBar(),
         automaticallyImplyLeading: false,
         centerTitle: true,
@@ -36,7 +35,7 @@ class LocationPermissionPage {
                   padding: const EdgeInsets.only(top: 16.0),
                   child: StudiesMaterial(
                     backgroundColor:
-                        Theme.of(context).extension<CarpColors>()!.white!,
+                        Theme.of(context).extension<RPColors>()!.white!,
                     elevation: 2.0,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12.0),
@@ -65,7 +64,7 @@ class LocationPermissionPage {
                                           fontWeight: FontWeight.bold,
                                           fontSize: 22.0,
                                           color: Theme.of(context)
-                                              .extension<CarpColors>()!
+                                              .extension<RPColors>()!
                                               .primary,
                                         ),
                                       ),
@@ -77,7 +76,7 @@ class LocationPermissionPage {
                                     child: Icon(
                                       Icons.location_on,
                                       color: Theme.of(context)
-                                          .extension<CarpColors>()!
+                                          .extension<RPColors>()!
                                           .primary,
                                       size: 48,
                                     ),

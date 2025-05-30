@@ -33,9 +33,8 @@ class AudioTaskPageState extends State<AudioTaskPage> {
                         ),
                         Spacer(),
                         IconButton(
-                          color: Theme.of(context)
-                              .extension<CarpColors>()!
-                              .grey900!,
+                          color:
+                              Theme.of(context).extension<RPColors>()!.grey900!,
                           onPressed: () {
                             _showCancelConfirmationDialog();
                           },
@@ -90,7 +89,7 @@ class AudioTaskPageState extends State<AudioTaskPage> {
                             ),
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Theme.of(context)
-                                  .extension<CarpColors>()!
+                                  .extension<RPColors>()!
                                   .primary,
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 30,

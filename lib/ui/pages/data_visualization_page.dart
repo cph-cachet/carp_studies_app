@@ -16,7 +16,7 @@ class _DataVisualizationPageState extends State<DataVisualizationPage> {
     RPLocalizations locale = RPLocalizations.of(context)!;
     return Scaffold(
         backgroundColor:
-            Theme.of(context).extension<CarpColors>()!.backgroundGray,
+            Theme.of(context).extension<RPColors>()!.backgroundGray,
         body: SafeArea(
             child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -40,7 +40,7 @@ class _DataVisualizationPageState extends State<DataVisualizationPage> {
                       Text(locale.translate('pages.data_viz.title'),
                           style: aboutStudyCardTitleStyle.copyWith(
                             color: Theme.of(context)
-                                .extension<CarpColors>()!
+                                .extension<RPColors>()!
                                 .grey900,
                             fontWeight: FontWeight.bold,
                           )),
@@ -62,7 +62,7 @@ class _DataVisualizationPageState extends State<DataVisualizationPage> {
                       child: Text(locale.translate('pages.data_viz.thanks'),
                           style: aboutCardSubtitleStyle.copyWith(
                             color: Theme.of(context)
-                                .extension<CarpColors>()!
+                                .extension<RPColors>()!
                                 .grey600,
                           )),
                     ),

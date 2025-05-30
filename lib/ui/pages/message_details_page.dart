@@ -42,7 +42,7 @@ class MessageDetailsPage extends StatelessWidget {
                         left: 26, right: 10, top: 16, bottom: 16),
                     icon: Icon(
                       Icons.arrow_back_ios,
-                      color: Theme.of(context).extension<CarpColors>()!.grey600,
+                      color: Theme.of(context).extension<RPColors>()!.grey600,
                     ),
                     onPressed: () {
                       if (context.canPop()) {
@@ -79,7 +79,7 @@ class MessageDetailsPage extends StatelessWidget {
                       child: Text(locale.translate(message.title!),
                           style: aboutCardTitleStyle.copyWith(
                               color: Theme.of(context)
-                                  .extension<CarpColors>()!
+                                  .extension<RPColors>()!
                                   .grey900)),
                     ),
                     message.subTitle != null
@@ -89,7 +89,7 @@ class MessageDetailsPage extends StatelessWidget {
                             child: Text(locale.translate(message.subTitle!),
                                 style: aboutCardContentStyle.copyWith(
                                     color: Theme.of(context)
-                                        .extension<CarpColors>()!
+                                        .extension<RPColors>()!
                                         .grey700)),
                           )
                         : const SizedBox.shrink(),
@@ -120,7 +120,7 @@ class MessageDetailsPage extends StatelessWidget {
                               locale.translate(message.message!),
                               style: aboutCardContentStyle.copyWith(
                                   color: Theme.of(context)
-                                      .extension<CarpColors>()!
+                                      .extension<RPColors>()!
                                       .grey900),
                               textAlign: TextAlign.justify,
                             )

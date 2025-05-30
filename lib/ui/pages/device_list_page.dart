@@ -49,8 +49,7 @@ class DeviceListPageState extends State<DeviceListPage> {
   Widget build(BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;
     return Scaffold(
-      backgroundColor:
-          Theme.of(context).extension<CarpColors>()!.backgroundGray,
+      backgroundColor: Theme.of(context).extension<RPColors>()!.backgroundGray,
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -74,9 +73,8 @@ class DeviceListPageState extends State<DeviceListPage> {
                       Text(
                         locale.translate('pages.devices.title'),
                         style: aboutStudyCardTitleStyle.copyWith(
-                          color: Theme.of(context)
-                              .extension<CarpColors>()!
-                              .grey900,
+                          color:
+                              Theme.of(context).extension<RPColors>()!.grey900,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -98,7 +96,7 @@ class DeviceListPageState extends State<DeviceListPage> {
                       Text(locale.translate("pages.devices.message"),
                           style: aboutCardSubtitleStyle.copyWith(
                             color: Theme.of(context)
-                                .extension<CarpColors>()!
+                                .extension<RPColors>()!
                                 .grey600,
                           )),
                       const SizedBox(height: 15),
@@ -136,7 +134,7 @@ class DeviceListPageState extends State<DeviceListPage> {
               builder: (BuildContext context, Widget? widget) => Center(
                 child: StudiesMaterial(
                   backgroundColor:
-                      Theme.of(context).extension<CarpColors>()!.grey50!,
+                      Theme.of(context).extension<RPColors>()!.grey50!,
                   child: _cardListBuilder(
                     leading: _smartphoneDevice[index].icon!,
                     title: (
@@ -261,7 +259,7 @@ class DeviceListPageState extends State<DeviceListPage> {
               Text(
                 title!.$1,
                 style: deviceTitle.copyWith(
-                  color: Theme.of(context).extension<CarpColors>()!.grey900,
+                  color: Theme.of(context).extension<RPColors>()!.grey900,
                 ),
               ),
               SizedBox(width: 6),
@@ -278,7 +276,7 @@ class DeviceListPageState extends State<DeviceListPage> {
                   Text(
                     subtitle,
                     style: deviceSubtitle.copyWith(
-                      color: Theme.of(context).extension<CarpColors>()!.grey700,
+                      color: Theme.of(context).extension<RPColors>()!.grey700,
                     ),
                   ),
                 ],
@@ -301,7 +299,7 @@ class DeviceListPageState extends State<DeviceListPage> {
   ) =>
       Center(
         child: StudiesMaterial(
-          backgroundColor: Theme.of(context).extension<CarpColors>()!.grey50!,
+          backgroundColor: Theme.of(context).extension<RPColors>()!.grey50!,
           child: StreamBuilder<T>(
             stream: stream,
             initialData: initialData,

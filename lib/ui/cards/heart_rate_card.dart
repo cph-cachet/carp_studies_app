@@ -42,7 +42,7 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
   @override
   Widget build(BuildContext context) {
     return StudiesMaterial(
-      backgroundColor: Theme.of(context).extension<CarpColors>()!.white!,
+      backgroundColor: Theme.of(context).extension<RPColors>()!.white!,
       elevation: 0,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -98,7 +98,7 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
                 : locale.translate('cards.heartrate.bpm'),
             style: heartRateBPMTextStyle.copyWith(
               fontSize: 12,
-              color: Theme.of(context).extension<CarpColors>()!.grey600,
+              color: Theme.of(context).extension<RPColors>()!.grey600,
             ),
           ),
         ),
@@ -147,8 +147,7 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
                     Text(
                       locale.translate('cards.heartrate.bpm'),
                       style: heartRateBPMTextStyle.copyWith(
-                        color:
-                            Theme.of(context).extension<CarpColors>()!.grey600,
+                        color: Theme.of(context).extension<RPColors>()!.grey600,
                       ),
                     ),
                   ],
@@ -307,13 +306,13 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
   Widget rightTitles(double value, TitleMeta meta) {
     return SideTitleWidget(
       meta: meta,
-      space: 16,
+      space: 6,
       child: Text(
         value.toInt() % meta.appliedInterval == 0
             ? value.toInt().toString()
             : '',
         style: dataCardRightTitleStyle.copyWith(
-          color: Theme.of(context).extension<CarpColors>()!.grey600,
+          color: Theme.of(context).extension<RPColors>()!.grey600,
         ),
         maxLines: 1,
       ),

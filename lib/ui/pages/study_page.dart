@@ -13,8 +13,7 @@ class StudyPageState extends State<StudyPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:
-          Theme.of(context).extension<CarpColors>()!.backgroundGray,
+      backgroundColor: Theme.of(context).extension<RPColors>()!.backgroundGray,
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -78,13 +77,12 @@ class StudyPageState extends State<StudyPage> {
         builder: (context, snapshot) {
           if (snapshot.data == true) {
             return StudiesMaterial(
-              backgroundColor: Theme.of(context).extension<CarpColors>()!.grey50!,
+              backgroundColor: Theme.of(context).extension<RPColors>()!.grey50!,
               elevation: 10,
               child: Container(
                 decoration: BoxDecoration(
                     border: Border.all(
-                      color:
-                          Theme.of(context).extension<CarpColors>()!.grey600!,
+                      color: Theme.of(context).extension<RPColors>()!.grey600!,
                       width: 1.0,
                     ),
                     borderRadius: BorderRadius.circular(16.0)),
@@ -99,7 +97,7 @@ class StudyPageState extends State<StudyPage> {
                             locale.translate('pages.about.app_update'),
                             style: aboutCardSubtitleStyle.copyWith(
                               color: Theme.of(context)
-                                  .extension<CarpColors>()!
+                                  .extension<RPColors>()!
                                   .grey900,
                             ),
                           ),
@@ -149,7 +147,7 @@ class StudyPageState extends State<StudyPage> {
     timeago.setLocaleMessages('es', timeago.EsMessages());
 
     return StudiesMaterial(
-      backgroundColor: Theme.of(context).extension<CarpColors>()!.grey50!,
+      backgroundColor: Theme.of(context).extension<RPColors>()!.grey50!,
       child: InkWell(
         onTap: () {
           if (onTap != null) {
@@ -178,9 +176,8 @@ class StudyPageState extends State<StudyPage> {
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: Text(locale.translate(message.title!),
                     style: aboutStudyCardTitleStyle.copyWith(
-                        color: Theme.of(context)
-                            .extension<CarpColors>()!
-                            .primary)),
+                        color:
+                            Theme.of(context).extension<RPColors>()!.primary)),
               ),
               if (message.subTitle != null && message.subTitle!.isNotEmpty)
                 Row(children: [
@@ -188,8 +185,7 @@ class StudyPageState extends State<StudyPage> {
                     child: Text(
                       locale.translate(message.subTitle!),
                       style: aboutCardContentStyle.copyWith(
-                        color:
-                            Theme.of(context).extension<CarpColors>()!.grey700,
+                        color: Theme.of(context).extension<RPColors>()!.grey700,
                       ),
                     ),
                   ),
@@ -201,7 +197,7 @@ class StudyPageState extends State<StudyPage> {
                     "${locale.translate(message.message!).substring(0, (message.message!.length > 150) ? 150 : null)}...",
                     style: aboutCardContentStyle.copyWith(
                         color:
-                            Theme.of(context).extension<CarpColors>()!.grey900),
+                            Theme.of(context).extension<RPColors>()!.grey900),
                     textAlign: TextAlign.start,
                   )),
                 ]),
@@ -256,14 +252,14 @@ class StudyPageState extends State<StudyPage> {
 
         return Card(
           margin: const EdgeInsets.all(16.0),
-          color: Theme.of(context).extension<CarpColors>()!.grey50,
+          color: Theme.of(context).extension<RPColors>()!.grey50,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16.0),
           ),
           child: Container(
             decoration: BoxDecoration(
                 border: Border.all(
-                  color: Theme.of(context).extension<CarpColors>()!.grey600!,
+                  color: Theme.of(context).extension<RPColors>()!.grey600!,
                   width: 1.0,
                 ),
                 borderRadius: BorderRadius.circular(16.0)),
@@ -305,7 +301,7 @@ class StudyPageState extends State<StudyPage> {
                                     studyStatusText[deploymentStatus]!),
                                 style: aboutCardSubtitleStyle.copyWith(
                                     color: Theme.of(context)
-                                        .extension<CarpColors>()!
+                                        .extension<RPColors>()!
                                         .grey900)),
                           ),
                         ),
@@ -349,7 +345,7 @@ class StudyPageState extends State<StudyPage> {
 
     return Container(
       child: StudiesMaterial(
-        backgroundColor: Theme.of(context).extension<CarpColors>()!.grey50!,
+        backgroundColor: Theme.of(context).extension<RPColors>()!.grey50!,
         hasBox: true,
         child: InkWell(
           onTap: () {
@@ -367,15 +363,22 @@ class StudyPageState extends State<StudyPage> {
               children: [
                 Row(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8.0),
-                      child: Text(locale.translate(message.title!),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            top: 8.0, bottom: 8, right: 8),
+                        child: Text(
+                          locale.translate(message.title!),
+                          overflow: TextOverflow.ellipsis,
                           style: aboutCardTitleStyle.copyWith(
-                              color: Theme.of(context)
-                                  .extension<CarpColors>()!
-                                  .grey900)),
+                            color: Theme.of(context)
+                                .extension<RPColors>()!
+                                .grey900,
+                          ),
+                        ),
+                      ),
                     ),
-                    Spacer(),
+                    // const SizedBox(width: 8),
                     Material(
                       color: CACHET.DEPLOYMENT_DEPLOYING,
                       borderRadius: BorderRadius.circular(100.0),
@@ -410,9 +413,8 @@ class StudyPageState extends State<StudyPage> {
                       Text(
                         timeago.format(message.timestamp.toLocal()),
                         style: aboutCardTimeAgoStyle.copyWith(
-                          color: Theme.of(context)
-                              .extension<CarpColors>()!
-                              .grey600,
+                          color:
+                              Theme.of(context).extension<RPColors>()!.grey600,
                         ),
                       )
                     ],

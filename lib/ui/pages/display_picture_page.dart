@@ -60,7 +60,7 @@ class DisplayPicturePageState extends State<DisplayPicturePage> {
                 ),
                 Spacer(),
                 IconButton(
-                  color: Theme.of(context).extension<CarpColors>()!.grey900!,
+                  color: Theme.of(context).extension<RPColors>()!.grey900!,
                   onPressed: () {
                     _showCancelConfirmationDialog();
                   },

@@ -45,7 +45,7 @@ class CameraTaskPageState extends State<CameraTaskPage> {
                                   Spacer(),
                                   IconButton(
                                     color: Theme.of(context)
-                                        .extension<CarpColors>()!
+                                        .extension<RPColors>()!
                                         .grey900!,
                                     onPressed: () {
                                       _showCancelConfirmationDialog();
@@ -112,7 +112,7 @@ class CameraTaskPageState extends State<CameraTaskPage> {
                                           ),
                                           style: ElevatedButton.styleFrom(
                                             backgroundColor: Theme.of(context)
-                                                .extension<CarpColors>()!
+                                                .extension<RPColors>()!
                                                 .primary,
                                             padding: const EdgeInsets.symmetric(
                                               horizontal: 30,

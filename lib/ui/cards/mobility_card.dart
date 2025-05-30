@@ -30,7 +30,7 @@ class _MobilityCardState extends State<MobilityCard> {
     RPLocalizations locale = RPLocalizations.of(context)!;
 
     return StudiesMaterial(
-      backgroundColor: Theme.of(context).extension<CarpColors>()!.white!,
+      backgroundColor: Theme.of(context).extension<RPColors>()!.white!,
       elevation: 0,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -49,8 +49,7 @@ class _MobilityCardState extends State<MobilityCard> {
                   child: Text(
                     locale.translate('cards.mobility.homestay'),
                     style: dataVizCardTitleText.copyWith(
-                      color:
-                          Theme.of(context).extension<CarpColors>()!.grey900!,
+                      color: Theme.of(context).extension<RPColors>()!.grey900!,
                     ),
                   ),
                 ),
@@ -61,7 +60,7 @@ class _MobilityCardState extends State<MobilityCard> {
                 Text(
                   "${widget.model.currentMonth} ${widget.model.startOfWeek} - ${int.parse(widget.model.endOfWeek) < int.parse(widget.model.startOfWeek) ? widget.model.nextMonth : widget.model.currentMonth} ${widget.model.endOfWeek}, ${widget.model.currentYear}",
                   style: dataVizCardTitleText.copyWith(
-                    color: Theme.of(context).extension<CarpColors>()!.grey600,
+                    color: Theme.of(context).extension<RPColors>()!.grey600,
                   ),
                 ),
                 Spacer(),
@@ -93,7 +92,7 @@ class _MobilityCardState extends State<MobilityCard> {
                         locale.translate('cards.mobility.places'),
                         style: dataVizCardBottomText.copyWith(
                             color: Theme.of(context)
-                                .extension<CarpColors>()!
+                                .extension<RPColors>()!
                                 .grey800),
                       ),
                     ),
@@ -203,13 +202,13 @@ class _MobilityCardState extends State<MobilityCard> {
   Widget rightTitles(double value, TitleMeta meta) {
     return SideTitleWidget(
       meta: meta,
-      space: 16,
+      space: 6,
       child: Text(
         value.toInt() % meta.appliedInterval == 0
             ? value.toInt().toString()
             : '',
         style: dataCardRightTitleStyle.copyWith(
-          color: Theme.of(context).extension<CarpColors>()!.grey600,
+          color: Theme.of(context).extension<RPColors>()!.grey600,
         ),
       ),
     );
@@ -218,13 +217,13 @@ class _MobilityCardState extends State<MobilityCard> {
   Widget leftTitles(double value, TitleMeta meta) {
     return SideTitleWidget(
       meta: meta,
-      space: 16,
+      space: 6,
       child: Text(
         value.toInt() % meta.appliedInterval == 0
             ? value.toInt().toString()
             : '',
         style: dataCardRightTitleStyle.copyWith(
-          color: Theme.of(context).extension<CarpColors>()!.grey600,
+          color: Theme.of(context).extension<RPColors>()!.grey600,
         ),
       ),
     );

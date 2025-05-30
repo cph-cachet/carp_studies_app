@@ -53,7 +53,7 @@ class HealthServiceConnectPage1 extends StatelessWidget {
                                 "pages.devices.type.health.instructions.page1.ios"),
                         style: healthServiceConnectTitleStyle.copyWith(
                             color: Theme.of(context)
-                                .extension<CarpColors>()!
+                                .extension<RPColors>()!
                                 .primary),
                         textAlign: TextAlign.center,
                       ),
@@ -64,7 +64,7 @@ class HealthServiceConnectPage1 extends StatelessWidget {
                         "${locale.translate("pages.devices.type.health.instructions.page1.part2")}",
                         style: healthServiceConnectMessageStyle.copyWith(
                             color: Theme.of(context)
-                                .extension<CarpColors>()!
+                                .extension<RPColors>()!
                                 .grey900),
                         textAlign: TextAlign.center,
                       ),
@@ -89,7 +89,7 @@ class HealthServiceConnectPage1 extends StatelessWidget {
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Theme.of(context)
-                                  .extension<CarpColors>()!
+                                  .extension<RPColors>()!
                                   .primary,
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 30, vertical: 12),

@@ -97,6 +97,8 @@ dependency_overrides:
   #   path: ../carp/carp.sensing-flutter/backends/carp_backend/
   # research_package: 
   #   path: ../research.package/
+  # cognition_package:
+  #   path: ../cognition_package
 
 
 dev_dependencies:

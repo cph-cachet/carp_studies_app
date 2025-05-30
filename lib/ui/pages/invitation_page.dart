@@ -17,8 +17,7 @@ class InvitationDetailsPage extends StatelessWidget {
     var invitation = model.getInvitation(invitationId);
 
     return Scaffold(
-      backgroundColor:
-          Theme.of(context).extension<CarpColors>()!.backgroundGray,
+      backgroundColor: Theme.of(context).extension<RPColors>()!.backgroundGray,
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.surfaceContainerHigh,
         title: const CarpAppBar(),
@@ -67,7 +66,7 @@ class InvitationDetailsPage extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 16.0),
                 child: StudiesMaterial(
                   backgroundColor:
-                      Theme.of(context).extension<CarpColors>()!.white!,
+                      Theme.of(context).extension<RPColors>()!.white!,
                   elevation: 2.0,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12.0),
@@ -100,7 +99,7 @@ class InvitationDetailsPage extends StatelessWidget {
                   padding: const EdgeInsets.only(top: 16.0),
                   child: StudiesMaterial(
                     backgroundColor:
-                        Theme.of(context).extension<CarpColors>()!.white!,
+                        Theme.of(context).extension<RPColors>()!.white!,
                     elevation: 2.0,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12.0),
@@ -126,7 +125,7 @@ class InvitationDetailsPage extends StatelessWidget {
                                         fontWeight: FontWeight.bold,
                                         fontSize: 22.0,
                                         color: Theme.of(context)
-                                            .extension<CarpColors>()!
+                                            .extension<RPColors>()!
                                             .primary,
                                       ),
                                     ),

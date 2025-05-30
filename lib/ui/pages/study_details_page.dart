@@ -10,11 +10,10 @@ class StudyDetailsPage extends StatelessWidget {
     RPLocalizations locale = RPLocalizations.of(context)!;
 
     return Scaffold(
-      backgroundColor:
-          Theme.of(context).extension<CarpColors>()!.backgroundGray,
+      backgroundColor: Theme.of(context).extension<RPColors>()!.backgroundGray,
       body: SafeArea(
         child: Container(
-          color: Theme.of(context).extension<CarpColors>()!.backgroundGray,
+          color: Theme.of(context).extension<RPColors>()!.backgroundGray,
           child: Column(
             children: [
               Padding(
@@ -29,7 +28,7 @@ class StudyDetailsPage extends StatelessWidget {
                         left: 26, right: 10, top: 16, bottom: 16),
                     icon: Icon(
                       Icons.arrow_back_ios,
-                      color: Theme.of(context).extension<CarpColors>()!.grey600,
+                      color: Theme.of(context).extension<RPColors>()!.grey600,
                     ),
                     onPressed: () {
                       if (context.canPop()) {
@@ -44,7 +43,7 @@ class StudyDetailsPage extends StatelessWidget {
                     child: Text(locale.translate(model.title),
                         style: aboutCardTitleStyle.copyWith(
                             color: Theme.of(context)
-                                .extension<CarpColors>()!
+                                .extension<RPColors>()!
                                 .primary)),
                   ),
                 ],
@@ -77,7 +76,7 @@ class StudyDetailsPage extends StatelessWidget {
                           context: context,
                           leading: Icon(Icons.mail,
                               color: Theme.of(context)
-                                  .extension<CarpColors>()!
+                                  .extension<RPColors>()!
                                   .primary),
                           trailing: const Icon(Icons.arrow_forward_ios,
                               color: CACHET.GREY_6),
@@ -93,7 +92,7 @@ class StudyDetailsPage extends StatelessWidget {
                             context: context,
                             leading: Icon(Icons.policy,
                                 color: Theme.of(context)
-                                    .extension<CarpColors>()!
+                                    .extension<RPColors>()!
                                     .primary),
                             trailing: const Icon(Icons.arrow_forward_ios,
                                 color: CACHET.GREY_6),
@@ -112,7 +111,7 @@ class StudyDetailsPage extends StatelessWidget {
                           context: context,
                           leading: Icon(Icons.public,
                               color: Theme.of(context)
-                                  .extension<CarpColors>()!
+                                  .extension<RPColors>()!
                                   .primary),
                           trailing: const Icon(Icons.arrow_forward_ios,
                               color: CACHET.GREY_6),
@@ -139,7 +138,7 @@ class StudyDetailsPage extends StatelessWidget {
                             locale.translate('widgets.study_card.responsible'),
                             style: studyDetailsInfoTitle.copyWith(
                                 color: Theme.of(context)
-                                    .extension<CarpColors>()!
+                                    .extension<RPColors>()!
                                     .grey900),
                           ),
                           Padding(
@@ -148,7 +147,7 @@ class StudyDetailsPage extends StatelessWidget {
                               locale.translate(model.responsibleName),
                               style: studyDetailsInfoMessage.copyWith(
                                   color: Theme.of(context)
-                                      .extension<CarpColors>()!
+                                      .extension<RPColors>()!
                                       .grey700),
                             ),
                           ),
@@ -157,7 +156,7 @@ class StudyDetailsPage extends StatelessWidget {
                                 'widgets.study_card.participant_role'),
                             style: studyDetailsInfoTitle.copyWith(
                                 color: Theme.of(context)
-                                    .extension<CarpColors>()!
+                                    .extension<RPColors>()!
                                     .grey900),
                           ),
                           Padding(
@@ -166,7 +165,7 @@ class StudyDetailsPage extends StatelessWidget {
                               locale.translate(model.participantRole),
                               style: studyDetailsInfoMessage.copyWith(
                                   color: Theme.of(context)
-                                      .extension<CarpColors>()!
+                                      .extension<RPColors>()!
                                       .grey700),
                             ),
                           ),
@@ -174,7 +173,7 @@ class StudyDetailsPage extends StatelessWidget {
                             locale.translate('widgets.study_card.device_role'),
                             style: studyDetailsInfoTitle.copyWith(
                                 color: Theme.of(context)
-                                    .extension<CarpColors>()!
+                                    .extension<RPColors>()!
                                     .grey900),
                           ),
                           Padding(
@@ -183,7 +182,7 @@ class StudyDetailsPage extends StatelessWidget {
                               locale.translate(model.deviceRole),
                               style: studyDetailsInfoMessage.copyWith(
                                   color: Theme.of(context)
-                                      .extension<CarpColors>()!
+                                      .extension<RPColors>()!
                                       .grey700),
                             ),
                           ),
@@ -191,7 +190,7 @@ class StudyDetailsPage extends StatelessWidget {
                       ),
                     ),
                     Divider(
-                      color: Theme.of(context).extension<CarpColors>()!.grey300,
+                      color: Theme.of(context).extension<RPColors>()!.grey300,
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 16.0),
@@ -204,7 +203,7 @@ class StudyDetailsPage extends StatelessWidget {
                                 'widgets.study_card.study_description'),
                             style: studyDetailsInfoTitle.copyWith(
                                 color: Theme.of(context)
-                                    .extension<CarpColors>()!
+                                    .extension<RPColors>()!
                                     .grey900),
                           ),
                           Padding(
@@ -213,7 +212,7 @@ class StudyDetailsPage extends StatelessWidget {
                               locale.translate(model.description),
                               style: studyDetailsInfoMessage.copyWith(
                                   color: Theme.of(context)
-                                      .extension<CarpColors>()!
+                                      .extension<RPColors>()!
                                       .grey700),
                             ),
                           ),
@@ -222,7 +221,7 @@ class StudyDetailsPage extends StatelessWidget {
                                 .translate('widgets.study_card.study_purpose'),
                             style: studyDetailsInfoTitle.copyWith(
                                 color: Theme.of(context)
-                                    .extension<CarpColors>()!
+                                    .extension<RPColors>()!
                                     .grey900),
                           ),
                           Padding(
@@ -231,7 +230,7 @@ class StudyDetailsPage extends StatelessWidget {
                               locale.translate(model.purpose),
                               style: studyDetailsInfoMessage.copyWith(
                                   color: Theme.of(context)
-                                      .extension<CarpColors>()!
+                                      .extension<RPColors>()!
                                       .grey700),
                             ),
                           ),
@@ -250,7 +249,7 @@ class StudyDetailsPage extends StatelessWidget {
 
   Widget _buildSectionCard(BuildContext context, List<Widget> children) {
     return Card(
-      color: Theme.of(context).extension<CarpColors>()!.white,
+      color: Theme.of(context).extension<RPColors>()!.white,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8.0),
       ),
@@ -260,7 +259,7 @@ class StudyDetailsPage extends StatelessWidget {
           children: ListTile.divideTiles(
             context: context,
             tiles: children,
-            color: Theme.of(context).extension<CarpColors>()!.grey300,
+            color: Theme.of(context).extension<RPColors>()!.grey300,
           ).toList(),
         ),
       ),
@@ -279,7 +278,7 @@ class StudyDetailsPage extends StatelessWidget {
       leading: leading,
       title: Text(title,
           style: profileActionStyle.copyWith(
-              color: Theme.of(context).extension<CarpColors>()!.grey900)),
+              color: Theme.of(context).extension<RPColors>()!.grey900)),
       trailing: trailing,
       onTap: onTap,
       contentPadding: EdgeInsets.symmetric(vertical: 4, horizontal: 16),

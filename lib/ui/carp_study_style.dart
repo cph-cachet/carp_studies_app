@@ -3,22 +3,22 @@ part of carp_study_app;
 @immutable
 class CarpColors extends ThemeExtension<CarpColors> {
   const CarpColors({
-    required this.primary,
-    required this.warningColor,
-    required this.backgroundGray,
-    required this.tabBarBackground,
-    required this.white,
-    required this.grey50,
-    required this.grey100,
-    required this.grey200,
-    required this.grey300,
-    required this.grey400,
-    required this.grey500,
-    required this.grey600,
-    required this.grey700,
-    required this.grey800,
-    required this.grey900,
-    required this.grey950,
+    this.primary,
+    this.warningColor,
+    this.backgroundGray,
+    this.tabBarBackground,
+    this.white,
+    this.grey50,
+    this.grey100,
+    this.grey200,
+    this.grey300,
+    this.grey400,
+    this.grey500,
+    this.grey600,
+    this.grey700,
+    this.grey800,
+    this.grey900,
+    this.grey950,
   });
 
   final Color? primary;
@@ -110,7 +110,7 @@ class CarpColors extends ThemeExtension<CarpColors> {
 ThemeData carpStudyTheme = ThemeData.light().copyWith(
   extensions: <ThemeExtension<dynamic>>[
     CarpColors(
-      primary: const Color(0xff006398),
+      primary: const Color(0xff000000),
       warningColor: Colors.orange[500],
       backgroundGray: const Color(0xfff2f2f7),
       tabBarBackground: const Color.fromARGB(255, 227, 227, 228),

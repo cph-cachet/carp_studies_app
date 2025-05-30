@@ -178,6 +178,7 @@ class CarpStudyAppState extends State<CarpStudyApp> {
 
   @override
   Widget build(BuildContext context) {
+    final carpColors = Theme.of(context).extension<CarpColors>();
     return MaterialApp.router(
       scaffoldMessengerKey: bloc.scaffoldKey,
       supportedLocales: const [
@@ -186,7 +187,7 @@ class CarpStudyAppState extends State<CarpStudyApp> {
         Locale('es'),
       ],
       localizationsDelegates: [
-        // Research Package translations
+      // Research Package translations
         rpLocalizationsDelegate,
         // Built-in localization of basic text for Cupertino widgets
         GlobalCupertinoLocalizations.delegate,
@@ -206,8 +207,33 @@ class CarpStudyAppState extends State<CarpStudyApp> {
         }
         return supportedLocales.first; // default to EN
       },
-      theme: carpStudyTheme,
-      darkTheme: carpStudyDarkTheme,
+      // theme: ThemeData(
+      //   extensions: [
+      //     RPColors(
+      //       primary: CarpColors().primary,
+      //     ),
+      //   ],
+      // ),
+
+      // theme: ThemeData(
+      //   extensions: [
+      //     researchPackageTheme.extension<RPColors>()!.copyWith(
+      //           primary: CarpColors().primary,
+      //         ),
+      //   ],
+      // ),
+
+      // theme: researchPackageTheme,
+
+      theme: researchPackageTheme.copyWith(
+        extensions: [
+          researchPackageTheme.extension<RPColors>()!.copyWith(
+                primary: carpColors?.primary,
+              ),
+        ],
+      ),
+
+      darkTheme: researchPackageDarkTheme,
       debugShowCheckedModeBanner: false,
       routerConfig: _router,
     );

@@ -133,6 +133,11 @@ class StudyAppBLoC extends ChangeNotifier {
   /// The deployment running on this phone.
   SmartphoneDeployment? get deployment => Sensing().controller?.deployment;
 
+  /// Get the status for the current study deployment.
+  /// Returns null if the study is not yet deployed on this phone.
+  Future<StudyDeploymentStatus?> getStudyDeploymentStatus() async =>
+      await Sensing().getStudyDeploymentStatus();
+
   /// When was this study deployed on this phone.
   DateTime? get studyStartTimestamp => deployment?.deployed;
 
@@ -195,6 +200,16 @@ class StudyAppBLoC extends ChangeNotifier {
       debug("$runtimeType - Error checking Health Connect installation: $e");
       return false;
     }
+  }
+
+  Future<bool?> getAppHasUpdate() async {
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    AppVersionResult result = await AppVersionUpdate.checkForUpdates(
+      playStoreId: packageInfo.packageName,
+      appleId: '1569798025',
+      country: 'dk',
+    );
+    return result.canUpdate;
   }
 
   /// Deploy the local protocol if running in local mode.
@@ -397,6 +412,8 @@ class StudyAppBLoC extends ChangeNotifier {
   List<Probe> get runningProbes => (Sensing().controller != null)
       ? Sensing().controller!.executor.probes
       : [];
+
+  DeploymentService get deploymentService => Sensing().deploymentService;
 
   /// The list of all devices in this deployment.
   Iterable<DeviceViewModel> get deploymentDevices =>

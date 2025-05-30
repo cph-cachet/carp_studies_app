@@ -11,13 +11,13 @@ class LogoutMessage extends StatelessWidget {
       content: Text(locale.translate("widgets.logoutmessage.message")),
       actions: <Widget>[
         TextButton(
-          child: Text(locale.translate("widgets.logoutmessage.cancel")),
+          child: Text(locale.translate("cancel")),
           onPressed: () {
             context.pop(false);
           },
         ),
         TextButton(
-          child: Text(locale.translate("widgets.logoutmessage.okay")),
+          child: Text(locale.translate("okay")),
           onPressed: () {
             context.pop(true);
           },

@@ -47,14 +47,13 @@ class AudioUserTask extends UserTask {
   @override
   Widget? get widget => AudioTaskPage(audioUserTask: this);
 
-  /// Callback when recording is to (re)start.
+  /// Callback when recording is to start.
   void onRecordStart() {
     _countDownController = StreamController.broadcast();
     ongoingRecordingDuration = recordingDuration;
     state = UserTaskState.started;
     backgroundTaskExecutor.start();
 
-    // Listen for the recorded audio measurement and add it as a result - #482
     try {
       backgroundTaskExecutor.measurements
           .firstWhere((measurement) => measurement.data is AudioMedia)
@@ -73,6 +72,14 @@ class AudioUserTask extends UserTask {
 
   /// Callback when recording is to stop.
   void onRecordStop() {
+    _timer?.cancel();
+    _countDownController?.close();
+    backgroundTaskExecutor.stop();
+  }
+
+  /// Callback when recording is to start.
+  void onRecordReset() {
+    state = UserTaskState.enqueued;
     _timer?.cancel();
     _countDownController?.close();
 
@@ -125,9 +132,7 @@ class VideoUserTask extends UserTask {
   /// the data stream.
   void onSave() {
     MediaData? media;
-
     backgroundTaskExecutor.stop();
-
     if (_file != null) {
       // create the media measurement ...
       media = switch (_mediaType) {

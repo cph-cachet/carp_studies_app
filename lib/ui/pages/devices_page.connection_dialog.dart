@@ -91,27 +91,27 @@ class _ConnectionDialogState extends State<ConnectionDialog> {
         buildTranslatedButton("pages.devices.connection.instructions", () {
           setState(() => currentStep = CurrentStep.instructions);
         }, true),
-        buildTranslatedButton("pages.devices.connection.next", () {
+        buildTranslatedButton("next", () {
           if (selectedDevice != null) {
             setState(() => currentStep = CurrentStep.done);
           }
         }, selectedDevice != null),
       ],
       CurrentStep.instructions: [
-        buildTranslatedButton("pages.devices.connection.settings", () {
+        buildTranslatedButton("settings", () {
           Platform.isAndroid
               ? OpenSettingsPlusAndroid().bluetooth()
               : OpenSettingsPlusIOS().bluetooth();
         }, true),
-        buildTranslatedButton("pages.devices.connection.ok", () {
+        buildTranslatedButton("ok", () {
           setState(() => currentStep = CurrentStep.scan);
         }, true),
       ],
       CurrentStep.done: [
-        buildTranslatedButton("pages.devices.connection.back", () {
+        buildTranslatedButton("back", () {
           setState(() => currentStep = CurrentStep.scan);
         }, true),
-        buildTranslatedButton("pages.devices.connection.done", () {
+        buildTranslatedButton("done", () {
           FlutterBluePlus.stopScan();
           if (selectedDevice != null) {
             widget.device.connectToDevice(selectedDevice!);

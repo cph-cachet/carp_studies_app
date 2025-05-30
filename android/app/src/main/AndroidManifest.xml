@@ -102,7 +102,6 @@
         android:label="CARP Studies"
         android:icon="@mipmap/ic_launcher"
         android:enableOnBackInvokedCallback="true">
-        
         <activity
             android:name="net.openid.appauth.RedirectUriReceiverActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar"

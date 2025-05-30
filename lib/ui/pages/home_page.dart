@@ -14,7 +14,7 @@ class HomePage extends StatefulWidget {
 class HomePageState extends State<HomePage> {
   /// Ask for location permissions.
   ///
-  /// The method opens the [LocationUsageDialog] if location permissions are
+  /// The method opens the [LocationPermissionPage] if location permissions are
   /// needed and not yet granted.
   ///
   /// Android requires the app to show a modal window explaining "why" the app
@@ -42,7 +42,8 @@ class HomePageState extends State<HomePage> {
                     child: child,
                   ),
                 ),
-            pageBuilder: (context, anim1, anim2) => LocationUsageDialog().build(
+            pageBuilder: (context, anim1, anim2) =>
+                LocationPermissionPage().build(
                   context,
                   "dialog.location.info",
                 ));
@@ -95,29 +96,31 @@ class HomePageState extends State<HomePage> {
     });
 
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.secondary,
+      backgroundColor: Theme.of(context).extension<RPColors>()!.backgroundGray,
       body: SafeArea(
         child: widget.child,
       ),
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Theme.of(context).extension<RPColors>()!.white,
         type: BottomNavigationBarType.fixed,
-        selectedItemColor: Theme.of(context).primaryColor,
+        selectedItemColor: Theme.of(context).extension<RPColors>()!.primary,
+        //unselectedItemColor: Theme.of(context).primaryColor.withOpacity(0.8),
         items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+              icon: const Icon(Icons.announcement),
+              label: locale.translate('app_home.nav_bar_item.about'),
+              activeIcon: const Icon(Icons.announcement)),
           BottomNavigationBarItem(
             icon: const Icon(Icons.playlist_add_check),
             label: locale.translate('app_home.nav_bar_item.tasks'),
             activeIcon: const Icon(Icons.playlist_add_check),
           ),
           BottomNavigationBarItem(
-              icon: const Icon(Icons.announcement_outlined),
-              label: locale.translate('app_home.nav_bar_item.about'),
-              activeIcon: const Icon(Icons.announcement)),
-          BottomNavigationBarItem(
-              icon: const Icon(Icons.leaderboard_outlined),
+              icon: const Icon(Icons.leaderboard),
               label: locale.translate('app_home.nav_bar_item.data'),
               activeIcon: const Icon(Icons.leaderboard)),
           BottomNavigationBarItem(
-              icon: const Icon(Icons.devices_other_outlined),
+              icon: const Icon(Icons.devices_other),
               label: locale.translate('app_home.nav_bar_item.devices'),
               activeIcon: const Icon(Icons.devices_other)),
         ],
@@ -129,10 +132,10 @@ class HomePageState extends State<HomePage> {
 
   static int _calculateSelectedIndex(BuildContext context) {
     final String location = GoRouterState.of(context).matchedLocation;
-    if (location.startsWith(TaskListPage.route)) {
+    if (location.startsWith(StudyPage.route)) {
       return 0;
     }
-    if (location.startsWith(StudyPage.route)) {
+    if (location.startsWith(TaskListPage.route)) {
       return 1;
     }
     if (location.startsWith(DataVisualizationPage.route)) {
@@ -147,10 +150,10 @@ class HomePageState extends State<HomePage> {
   void _onItemTapped(int index, BuildContext context) {
     switch (index) {
       case 0:
-        context.go(TaskListPage.route);
+        context.go(StudyPage.route);
         break;
       case 1:
-        context.go(StudyPage.route);
+        context.go(TaskListPage.route);
         break;
       case 2:
         context.go(DataVisualizationPage.route);

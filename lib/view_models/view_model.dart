@@ -106,10 +106,8 @@ abstract class SerializableViewModel<D extends DataModel> extends ViewModel {
 
   /// Current path and filename of the cache of the model.
   Future<String> get filename async {
-    // if (_filename == null) {
     String path = await LocalSettings().cacheBasePath ?? '';
     _filename = '$path/$runtimeType.json';
-    // }
     return _filename!;
   }
 

@@ -187,7 +187,7 @@ class CarpStudyAppState extends State<CarpStudyApp> {
         Locale('es'),
       ],
       localizationsDelegates: [
-      // Research Package translations
+        // Research Package translations
         rpLocalizationsDelegate,
         // Built-in localization of basic text for Cupertino widgets
         GlobalCupertinoLocalizations.delegate,

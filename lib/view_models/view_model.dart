@@ -75,7 +75,8 @@ abstract class SerializableViewModel<D extends DataModel> extends ViewModel {
     });
 
     // save the data model on a regular basis.
-    Timer.periodic(const Duration(minutes: 3), (_) => save());
+    _persistenceTimer =
+        Timer.periodic(const Duration(minutes: 3), (_) => save());
 
     /// Check if we are running in a test environment.
     /// If so, do not listen to app lifecycle events.
@@ -103,7 +104,7 @@ abstract class SerializableViewModel<D extends DataModel> extends ViewModel {
     save().then((_) => super.dispose());
   }
 
-  /// Current path and filename of the data.
+  /// Current path and filename of the cache of the model.
   Future<String> get filename async {
     String path = await LocalSettings().cacheBasePath ?? '';
     _filename = '$path/$runtimeType.json';

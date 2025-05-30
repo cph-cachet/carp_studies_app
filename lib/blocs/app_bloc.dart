@@ -305,7 +305,7 @@ class StudyAppBLoC extends ChangeNotifier {
     // initialize the UI data models
     appViewModel.init(Sensing().controller!);
 
-    // set up the messaging part
+    // set up the messaging part and get the initial list of messages
     messageManager.initialize();
     refreshMessages();
 

@@ -1,25 +1,38 @@
 part of carp_study_app;
 
 /// State of Bluetooth connection UI.
-enum CurrentStep2 { intro, scan, instructions, done }
+enum CurrentSte3 { scan, instructions, done }
 
-class HWDeviceConnectPage1 extends StatefulWidget {
+class ConnectionDialog3 extends StatefulWidget {
   final DeviceViewModel device;
 
-  const HWDeviceConnectPage1({super.key, required this.device});
+  const ConnectionDialog3({super.key, required this.device});
 
   @override
-  State<StatefulWidget> createState() => _HWDeviceConnectPage1State();
+  State<StatefulWidget> createState() => _ConnectionDialogState3();
 }
 
-class _HWDeviceConnectPage1State extends State<HWDeviceConnectPage1> {
-  CurrentStep2 currentStep = CurrentStep2.scan;
+class _ConnectionDialogState3 extends State<ConnectionDialog3> {
+  @override
+  initState() {
+    super.initState();
+    FlutterBluePlus.startScan();
+  }
+
+  @override
+  void dispose() {
+    FlutterBluePlus.stopScan();
+    super.dispose();
+  }
+
+  CurrentStep3 currentStep = CurrentStep3.scan;
   BluetoothDevice? selectedDevice;
   int selected = 40;
 
   @override
   Widget build(BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;
+
     return Scaffold(
       body: SafeArea(
         child: Container(
@@ -35,91 +48,22 @@ class _HWDeviceConnectPage1State extends State<HWDeviceConnectPage1> {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 24.0),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
-                        locale.translate(
-                            "pages.devices.connection.step.start.title"),
-                        style: healthServiceConnectTitleStyle.copyWith(
-                            color: Theme.of(context)
-                                .extension<RPColors>()!
-                                .primary),
-                        textAlign: TextAlign.center,
+                      _buildDialogTitle(locale),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.6,
+                        child: _buildStepContent(locale),
                       ),
-                      const SizedBox(height: 10),
-                      Text.rich(
-                        TextSpan(
-                          children: [
-                            TextSpan(
-                              text: locale.translate(
-                                  "pages.devices.connection.step.start.1"),
-                            ),
-                            TextSpan(
-                              text: locale.translate(
-                                  "pages.devices.connection.instructions"),
-                              style: TextStyle(
-                                color: Theme.of(context)
-                                    .extension<RPColors>()!
-                                    .primary,
-                                decoration: TextDecoration.underline,
-                                fontWeight: FontWeight.bold,
-                              ),
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = () {
-                                  Platform.isAndroid
-                                      ? OpenSettingsPlusAndroid().bluetooth()
-                                      : OpenSettingsPlusIOS().bluetooth();
-                                },
-                            ),
-                            TextSpan(
-                              text: locale.translate(
-                                "pages.devices.connection.step.start.2",
-                              ),
-                            ),
-                          ],
-                        ),
-                        style: healthServiceConnectMessageStyle.copyWith(
-                            color: Theme.of(context)
-                                .extension<RPColors>()!
-                                .grey900),
-                        textAlign: TextAlign.center,
-                      ),
-                      const SizedBox(height: 30),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          OutlinedButton(
-                            child: Text(locale.translate("cancel")),
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                          ),
-                          ElevatedButton(
-                            child: Text(
-                              locale.translate("Next"),
-                              style: TextStyle(
-                                color: Colors.white,
-                              ),
-                            ),
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Theme.of(context)
-                                  .extension<RPColors>()!
-                                  .primary,
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 30, vertical: 12),
-                            ),
-                            onPressed: () {
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute<void>(
-                                    builder: (context) => HWDeviceConnectPage2(
-                                        device: widget.device)),
-                              );
-                            },
-                          ),
-                        ],
+                        children: _buildActionButtons(locale),
                       ),
                     ],
+                    // title: _buildDialogTitle(locale),
+                    // content: SizedBox(
+                    //   height: MediaQuery.of(context).size.height * 0.6,
+                    //   child: _buildStepContent(locale),
+                    // ),
+                    // actions: _buildActionButtons(locale),
                   ),
                 ),
               ),
@@ -131,48 +75,16 @@ class _HWDeviceConnectPage1State extends State<HWDeviceConnectPage1> {
   }
 
   Widget _buildDialogTitle(RPLocalizations locale) {
-    switch (currentStep) {
-      case CurrentStep2.intro:
-        return Column(
-          children: [
-            Container(
-              padding: const EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(20),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.1),
-                    blurRadius: 10,
-                    spreadRadius: 2,
-                  ),
-                ],
-              ),
-              child: Image.asset(
-                'assets/instructions/connect_to_hw.png',
-                height: 250,
-                width: 250,
-              ),
-            ),
-            const SizedBox(height: 20),
-          ],
-        );
-        break;
-      default:
-    }
     final stepTitleMap = {
-      CurrentStep2.intro: const DialogTitle(
+      CurrentStep3.scan: const DialogTitle(
         title: "pages.devices.connection.step.start.title",
       ),
-      CurrentStep2.scan: const DialogTitle(
-        title: "pages.devices.connection.step.start.title",
-      ),
-      CurrentStep2.instructions: DialogTitle(
+      CurrentStep3.instructions: DialogTitle(
         title: "pages.devices.connection.step.how_to.title",
         deviceName: selectedDevice?.platformName,
         titleEnd: "pages.devices.connection.step.how_to.device",
       ),
-      CurrentStep2.done: DialogTitle(
+      CurrentStep3.done: DialogTitle(
         title: "pages.devices.connection.step.confirm.title",
         deviceName: selectedDevice?.platformName,
       ),
@@ -184,9 +96,9 @@ class _HWDeviceConnectPage1State extends State<HWDeviceConnectPage1> {
 
   Widget _buildStepContent(RPLocalizations locale) {
     final stepContentMap = {
-      CurrentStep2.scan: stepContent(currentStep, widget.device),
-      CurrentStep2.instructions: connectionInstructions(widget.device, context),
-      CurrentStep2.done: confirmDevice(selectedDevice, context),
+      CurrentStep3.scan: stepContent(currentStep, widget.device),
+      CurrentStep3.instructions: connectionInstructions(widget.device, context),
+      CurrentStep3.done: confirmDevice(selectedDevice, context),
     };
 
     return stepContentMap[currentStep] ??
@@ -203,29 +115,29 @@ class _HWDeviceConnectPage1State extends State<HWDeviceConnectPage1> {
     }
 
     final stepButtonConfigs = {
-      CurrentStep2.scan: [
+      CurrentStep3.scan: [
         buildTranslatedButton("pages.devices.connection.instructions", () {
-          setState(() => currentStep = CurrentStep2.instructions);
+          setState(() => currentStep = CurrentStep3.instructions);
         }, true),
         buildTranslatedButton("next", () {
           if (selectedDevice != null) {
-            setState(() => currentStep = CurrentStep2.done);
+            setState(() => currentStep = CurrentStep3.done);
           }
         }, selectedDevice != null),
       ],
-      CurrentStep2.instructions: [
+      CurrentStep3.instructions: [
         buildTranslatedButton("settings", () {
           Platform.isAndroid
               ? OpenSettingsPlusAndroid().bluetooth()
               : OpenSettingsPlusIOS().bluetooth();
         }, true),
         buildTranslatedButton("ok", () {
-          setState(() => currentStep = CurrentStep2.scan);
+          setState(() => currentStep = CurrentStep3.scan);
         }, true),
       ],
-      CurrentStep2.done: [
+      CurrentStep3.done: [
         buildTranslatedButton("back", () {
-          setState(() => currentStep = CurrentStep2.scan);
+          setState(() => currentStep = CurrentStep3.scan);
         }, true),
         buildTranslatedButton("done", () {
           FlutterBluePlus.stopScan();
@@ -240,12 +152,12 @@ class _HWDeviceConnectPage1State extends State<HWDeviceConnectPage1> {
   }
 
   Widget stepContent(
-    CurrentStep2 currentStep,
+    CurrentStep3 currentStep,
     DeviceViewModel device,
   ) {
-    if (currentStep == CurrentStep2.scan) {
+    if (currentStep == CurrentStep3.scan) {
       return scanWidget(device, context);
-    } else if (currentStep == CurrentStep2.instructions) {
+    } else if (currentStep == CurrentStep3.instructions) {
       return connectionInstructions(device, context);
     } else {
       return confirmDevice(selectedDevice, context);
@@ -258,7 +170,7 @@ class _HWDeviceConnectPage1State extends State<HWDeviceConnectPage1> {
     return Column(
       children: [
         Text(
-          "${locale.translate("pages.devices.connection.step.start.1")} ${locale.translate(device.typeName)} ${locale.translate("pages.devices.connection.step.start.2")}",
+          "${locale.translate("pages.devices.connection.step.scan.1")} ${locale.translate(device.typeName)} ${locale.translate("pages.devices.connection.step.scan.2")}",
           style: aboutCardContentStyle,
           textAlign: TextAlign.justify,
         ),
@@ -304,6 +216,10 @@ class _HWDeviceConnectPage1State extends State<HWDeviceConnectPage1> {
 
   Widget connectionInstructions(DeviceViewModel device, BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;
+    Image? connectionImage;
+    if (device is PolarDevice && (device as PolarDevice).deviceType == PolarDeviceType.H10) {
+      connectionImage = Image(image: AssetImage('assets/instructions/polar_h10.png'));
+    }
     return Column(
       children: [
         Expanded(
@@ -311,7 +227,11 @@ class _HWDeviceConnectPage1State extends State<HWDeviceConnectPage1> {
             child: Column(
               children: [
                 Image(
-                    image: const AssetImage('assets/icons/connection.png'),
+                    image: AssetImage(device.connectionInstructionsImage!),
+                    width: MediaQuery.of(context).size.height * 0.2,
+                    height: MediaQuery.of(context).size.height * 0.2),
+                Image(
+                    image: AssetImage(device.connectionInstructionsImage!),
                     width: MediaQuery.of(context).size.height * 0.2,
                     height: MediaQuery.of(context).size.height * 0.2),
                 Text(

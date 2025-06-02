@@ -77,6 +77,9 @@ class DeviceViewModel extends ViewModel {
   /// Instructions to the user on how to connect to this type of device.
   String? get connectionInstructions => _deviceConnectionInstructions[type!];
 
+  String? get connectionInstructionsImage =>
+      _deviceConnectionInstructionsImage[type!];
+
   /// Display information about this phone.
   Map<String, String?> get phoneInfo => {
         'name': '${DeviceInfo().deviceID}',
@@ -212,4 +215,10 @@ const Map<String, String> _deviceConnectionInstructions = {
   Smartphone.DEVICE_TYPE: "pages.devices.type.smartphone.instructions",
   PolarDevice.DEVICE_TYPE: "pages.devices.type.polar.instructions",
   MovesenseDevice.DEVICE_TYPE: "pages.devices.type.movesense.instructions",
+};
+
+const Map<String, String> _deviceConnectionInstructionsImage = {
+  Smartphone.DEVICE_TYPE: "assets/icons/connection_done.png",
+  PolarDeviceType.H9: "assets/instructions/polar_instructions.png",
+  MovesenseDevice.DEVICE_TYPE: "assets/instructions/movesense_instructions.png",
 };

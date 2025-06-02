@@ -107,6 +107,7 @@ part 'ui/pages/device_list_page.dart';
 part 'ui/pages/devices_page.authorization_dialog.dart';
 part 'ui/pages/devices_page.enable_bluetooth_dialog.dart';
 part 'ui/pages/devices_page.connection_dialog.dart';
+part 'ui/pages/devices_page.connection_what_the_helly.dart';
 part 'ui/pages/devices_page.hw_device_connect1.dart';
 part 'ui/pages/devices_page.hw_device_connect2.dart';
 part 'ui/pages/devices_page.disconnection_dialog.dart';

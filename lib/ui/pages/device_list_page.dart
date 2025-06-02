@@ -354,11 +354,12 @@ class DeviceListPageState extends State<DeviceListPage> {
               false;
           if (disconnect) await device.disconnectFromDevice();
         } else {
-          await showDialog<void>(
-            context: context,
-            barrierDismissible: true,
-            builder: (context) => ConnectionDialog(device: device),
-          );
+          Navigator.push(
+              context,
+              MaterialPageRoute<void>(
+                // barrierDismissible: true,
+                builder: (context) => HWDeviceConnectPage1(device: device),
+              ));
         }
       } else if (bluetoothAdapterState == BluetoothAdapterState.unauthorized &&
           Platform.isIOS) {

@@ -40,8 +40,8 @@ class HealthServiceConnectPage1 extends StatelessWidget {
                           Platform.isAndroid
                               ? 'assets/instructions/google_health_connect_icon.png'
                               : 'assets/instructions/apple_health_icon.png',
-                          height: 100,
-                          width: 100,
+                          height: 250,
+                          width: 250,
                         ),
                       ),
                       const SizedBox(height: 20),
@@ -73,12 +73,25 @@ class HealthServiceConnectPage1 extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           OutlinedButton(
+                            child: const Text("Cancel"),
                             onPressed: () {
                               Navigator.pop(context);
                             },
-                            child: const Text("Cancel"),
                           ),
                           ElevatedButton(
+                            child: Text(
+                              locale.translate("Next"),
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                            ),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Theme.of(context)
+                                  .extension<RPColors>()!
+                                  .primary,
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 30, vertical: 12),
+                            ),
                             onPressed: () {
                               Navigator.pushReplacement(
                                 context,
@@ -87,17 +100,6 @@ class HealthServiceConnectPage1 extends StatelessWidget {
                                         HealthServiceConnectPage2()),
                               );
                             },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Theme.of(context)
-                                  .extension<RPColors>()!
-                                  .primary,
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 30, vertical: 12),
-                            ),
-                            child: Text(locale.translate("Next"),
-                                style: TextStyle(
-                                  color: Colors.white,
-                                )),
                           ),
                         ],
                       ),

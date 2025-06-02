@@ -47,8 +47,8 @@ class HealthServiceConnectPage2 extends StatelessWidget {
                           Platform.isAndroid
                               ? 'assets/instructions/google_health_connect_icon.png'
                               : 'assets/instructions/apple_health_icon.png',
-                          height: 100,
-                          width: 100,
+                          height: 250,
+                          width: 250,
                         ),
                       ),
                       const SizedBox(height: 20),
@@ -112,19 +112,18 @@ class HealthServiceConnectPage2 extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           OutlinedButton(
+                            child: const Text("Cancel"),
                             onPressed: () {
                               Navigator.pop(context);
                             },
-                            child: const Text("Cancel"),
                           ),
                           ElevatedButton(
-                            onPressed: () async {
-                              await healthServive.deviceManager
-                                  .requestPermissions();
-                              await healthServive.deviceManager.connect();
-
-                              Navigator.pop(context);
-                            },
+                            child: const Text(
+                              "Next",
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                            ),
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Theme.of(context)
                                   .extension<RPColors>()!
@@ -132,10 +131,13 @@ class HealthServiceConnectPage2 extends StatelessWidget {
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 30, vertical: 12),
                             ),
-                            child: const Text("Next",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                )),
+                            onPressed: () async {
+                              await healthServive.deviceManager
+                                  .requestPermissions();
+                              await healthServive.deviceManager.connect();
+
+                              Navigator.pop(context);
+                            },
                           ),
                         ],
                       ),

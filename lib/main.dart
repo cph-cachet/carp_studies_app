@@ -9,6 +9,7 @@ import 'dart:io';
 
 import 'package:app_version_update/data/models/app_version_result.dart';
 import 'package:async/async.dart';
+import 'package:flutter/gestures.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -106,6 +107,8 @@ part 'ui/pages/device_list_page.dart';
 part 'ui/pages/devices_page.authorization_dialog.dart';
 part 'ui/pages/devices_page.enable_bluetooth_dialog.dart';
 part 'ui/pages/devices_page.connection_dialog.dart';
+part 'ui/pages/devices_page.hw_device_connect1.dart';
+part 'ui/pages/devices_page.hw_device_connect2.dart';
 part 'ui/pages/devices_page.disconnection_dialog.dart';
 part 'ui/pages/devices_page.list_title.dart';
 part 'ui/pages/devices_page.health_service_connect1.dart';

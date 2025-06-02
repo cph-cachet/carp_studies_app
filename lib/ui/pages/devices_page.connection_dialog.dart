@@ -142,7 +142,7 @@ class _ConnectionDialogState extends State<ConnectionDialog> {
     return Column(
       children: [
         Text(
-          "${locale.translate("pages.devices.connection.step.start.1")} ${locale.translate(device.typeName)} ${locale.translate("pages.devices.connection.step.start.2")}",
+          "${locale.translate("pages.devices.connection.step.scan.1")} ${locale.translate(device.typeName)} ${locale.translate("pages.devices.connection.step.scan.2")}",
           style: aboutCardContentStyle,
           textAlign: TextAlign.justify,
         ),

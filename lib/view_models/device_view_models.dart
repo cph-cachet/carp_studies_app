@@ -219,6 +219,6 @@ const Map<String, String> _deviceConnectionInstructions = {
 
 const Map<String, String> _deviceConnectionInstructionsImage = {
   Smartphone.DEVICE_TYPE: "assets/icons/connection_done.png",
-  PolarDeviceType.H9: "assets/instructions/polar_instructions.png",
+  PolarDevice.DEVICE_TYPE: "assets/instructions/polar_instructions.png",
   MovesenseDevice.DEVICE_TYPE: "assets/instructions/movesense_instructions.png",
 };

@@ -216,24 +216,78 @@ class _ConnectionDialogState3 extends State<ConnectionDialog3> {
 
   Widget connectionInstructions(DeviceViewModel device, BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;
-    Image? connectionImage;
-    if (device is PolarDevice && (device as PolarDevice).deviceType == PolarDeviceType.H10) {
-      connectionImage = Image(image: AssetImage('assets/instructions/polar_h10.png'));
+    AssetImage? assetImage;
+    // switch ((
+    //   widget.device.type,
+    //   (
+    //     widget.device.deviceManager
+    //     as PolarDeviceManager?)
+    //       ?.configuration
+    //       ?.deviceType
+    // )) {
+    //   case (PolarDevice.DEVICE_TYPE, PolarDeviceType.H10) ||
+    //         (PolarDevice.DEVICE_TYPE, PolarDeviceType.H9):
+    //     assetImage =
+    //         AssetImage('assets/instructions/polar_h9_h10_instructions.png');
+    //     break;
+    //   case (PolarDevice.DEVICE_TYPE, PolarDeviceType.SENSE):
+    //     assetImage =
+    //         AssetImage('assets/instructions/polar_sense_instructions.png');
+    //     break;
+    //   default:
+    //     if (device is MovesenseDevice) {
+    //       assetImage =
+    //           AssetImage('assets/instructions/movesense_instructions.png');
+    //     } else {
+    //       assetImage = AssetImage('assets/instructions/connect_to_hw.png');
+    //     }
+    // }
+    print("kill me ${widget.device.deviceManager}");
+    switch (widget.device.deviceManager) {
+      case PolarDeviceManager polarManager
+          when widget.device.type == PolarDevice.DEVICE_TYPE 
+          &&
+              ((widget.device.deviceManager as PolarDeviceManager).configuration?.deviceType == PolarDeviceType.H10 ||
+                  polarManager.configuration?.deviceType == PolarDeviceType.H9)
+                  :
+                  print("aaaa${polarManager.configuration?.deviceType}");
+        assetImage =
+            AssetImage('assets/instructions/polar_h9_h10_instructions.png');
+        break;
+
+      case PolarDeviceManager polarManager
+          // when widget.device.type == PolarDevice.DEVICE_TYPE &&
+          //     (widget.device.deviceManager as PolarDeviceManager).configuration?.deviceType == PolarDeviceType.SENSE
+              :
+              print("bbbb${polarManager.configuration?.deviceType}");
+              print("bbbb${(widget.device.deviceManager as PolarDeviceManager).configuration?.deviceType}");
+        assetImage =
+            AssetImage('assets/instructions/polar_sense_instructions.png');
+        break;
+
+      case MovesenseDeviceManager ms:
+      print("cccc${ms.configuration?.deviceType}");
+        assetImage =
+            AssetImage('assets/instructions/movesense_instructions.png');
+        break;
+
+      default:
+      print("dddd${widget.device.deviceManager}");
+        assetImage = AssetImage('assets/instructions/connect_to_hw.png');
     }
+
+    Image connectionImage = Image(
+      image: assetImage,
+      width: MediaQuery.of(context).size.height * 0.2,
+      height: MediaQuery.of(context).size.height * 0.2,
+    );
     return Column(
       children: [
         Expanded(
           child: SingleChildScrollView(
             child: Column(
               children: [
-                Image(
-                    image: AssetImage(device.connectionInstructionsImage!),
-                    width: MediaQuery.of(context).size.height * 0.2,
-                    height: MediaQuery.of(context).size.height * 0.2),
-                Image(
-                    image: AssetImage(device.connectionInstructionsImage!),
-                    width: MediaQuery.of(context).size.height * 0.2,
-                    height: MediaQuery.of(context).size.height * 0.2),
+                connectionImage,
                 Text(
                   locale.translate(device.connectionInstructions!),
                   style: aboutCardContentStyle,

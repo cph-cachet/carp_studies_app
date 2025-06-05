@@ -41,12 +41,12 @@ class _ConnectionDialogState3 extends State<ConnectionDialog3> {
             children: [
               Padding(
                 padding:
-                    const EdgeInsets.symmetric(vertical: 8.0, horizontal: 18),
+                    const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16),
                 child: const CarpAppBar(hasProfileIcon: true),
               ),
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
                   child: Column(
                     children: [
                       _buildDialogTitle(locale),
@@ -58,12 +58,6 @@ class _ConnectionDialogState3 extends State<ConnectionDialog3> {
                         children: _buildActionButtons(locale),
                       ),
                     ],
-                    // title: _buildDialogTitle(locale),
-                    // content: SizedBox(
-                    //   height: MediaQuery.of(context).size.height * 0.6,
-                    //   child: _buildStepContent(locale),
-                    // ),
-                    // actions: _buildActionButtons(locale),
                   ),
                 ),
               ),
@@ -76,9 +70,32 @@ class _ConnectionDialogState3 extends State<ConnectionDialog3> {
 
   Widget _buildDialogTitle(RPLocalizations locale) {
     final stepTitleMap = {
-      CurrentStep3.scan: const DialogTitle(
-        title: "pages.devices.connection.step.start.title",
+      CurrentStep3.scan: Padding(
+        padding: const EdgeInsets.only(bottom: 16),
+        child: Container(
+          alignment: Alignment.centerLeft,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Flexible(
+                child: Text(
+                  locale.translate(
+                        "pages.devices.connection.step.start.title",
+                      ) +
+                      (" ${locale.translate(widget.device.name)} "),
+                  style: aboutCardTitleStyle.copyWith(
+                    color: Theme.of(context).primaryColor,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
+      // const Text(
+      //   "pages.devices.connection.step.start.title",
+      // ),
       CurrentStep3.instructions: DialogTitle(
         title: "pages.devices.connection.step.how_to.title",
         deviceName: selectedDevice?.platformName,
@@ -118,6 +135,9 @@ class _ConnectionDialogState3 extends State<ConnectionDialog3> {
       CurrentStep3.scan: [
         buildTranslatedButton("pages.devices.connection.instructions", () {
           setState(() => currentStep = CurrentStep3.instructions);
+        }, true),
+        buildTranslatedButton("cancel", () {
+          context.pop(true);
         }, true),
         buildTranslatedButton("next", () {
           if (selectedDevice != null) {
@@ -167,50 +187,62 @@ class _ConnectionDialogState3 extends State<ConnectionDialog3> {
   Widget scanWidget(DeviceViewModel device, BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;
 
-    return Column(
-      children: [
-        Text(
-          "${locale.translate("pages.devices.connection.step.scan.1")} ${locale.translate(device.typeName)} ${locale.translate("pages.devices.connection.step.scan.2")}",
-          style: aboutCardContentStyle,
-          textAlign: TextAlign.justify,
-        ),
-        Expanded(
-          child: StreamBuilder<List<ScanResult>>(
-            stream: FlutterBluePlus.scanResults,
-            initialData: const [],
-            builder: (context, snapshot) => SingleChildScrollView(
-              child: Column(
-                children: snapshot.data!
-                    .where((element) => element.device.platformName.isNotEmpty)
-                    .toList()
-                    .asMap()
-                    .entries
-                    .map(
-                      (bluetoothDevice) => ListTile(
-                        selected: bluetoothDevice.key == selected,
-                        title: Text(bluetoothDevice.value.device.platformName),
-                        selectedTileColor: Theme.of(context)
-                            .primaryColor
-                            .withValues(alpha: 0.2),
-                        onTap: () {
-                          selectedDevice = bluetoothDevice.value.device;
-                          setState(() {
-                            selected = bluetoothDevice.key;
-                          });
-                        },
-                      ),
-                    )
-                    .toList(),
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 16),
+      child: Column(
+        children: [
+          Text(
+            "${locale.translate("pages.devices.connection.step.scan.1")} ${locale.translate(device.typeName)} ${locale.translate("pages.devices.connection.step.scan.2")}",
+            style: aboutCardSubtitleStyle,
+            textAlign: TextAlign.justify,
+          ),
+          Expanded(
+            child: StreamBuilder<List<ScanResult>>(
+              stream: FlutterBluePlus.scanResults,
+              initialData: const [],
+              builder: (context, snapshot) => SingleChildScrollView(
+                child: Column(
+                  children: snapshot.data!
+                      .where(
+                          (element) => element.device.platformName.isNotEmpty)
+                      .toList()
+                      .asMap()
+                      .entries
+                      .map(
+                        (bluetoothDevice) => ListTile(
+                          selected: bluetoothDevice.key == selected,
+                          title: Text(
+                            bluetoothDevice.value.device.platformName,
+                            style: aboutCardSubtitleStyle.copyWith(
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
+                          selectedTileColor: Theme.of(context)
+                              .primaryColor
+                              .withValues(alpha: 0.2),
+                          onTap: () {
+                            selectedDevice = bluetoothDevice.value.device;
+                            setState(() {
+                              selected = bluetoothDevice.key;
+                            });
+                          },
+                        ),
+                      )
+                      .toList(),
+                ),
               ),
             ),
           ),
-        ),
-        Text(
-          locale.translate("pages.devices.connection.step.start.3"),
-          style: aboutCardContentStyle,
-          textAlign: TextAlign.justify,
-        )
-      ],
+          Padding(
+            padding: const EdgeInsets.only(top: 16),
+            child: Text(
+              locale.translate("pages.devices.connection.step.start.3"),
+              style: aboutCardSubtitleStyle,
+              textAlign: TextAlign.justify,
+            ),
+          )
+        ],
+      ),
     );
   }
 
@@ -242,37 +274,51 @@ class _ConnectionDialogState3 extends State<ConnectionDialog3> {
     //       assetImage = AssetImage('assets/instructions/connect_to_hw.png');
     //     }
     // }
+
+    // Extract deviceManager and deviceType for easier switching
+    final deviceManager = widget.device.deviceManager;
+    final deviceType = (deviceManager is PolarDeviceManager)
+        ? deviceManager.configuration?.deviceType
+        : null;
+
+    // switch ((widget.device.deviceManager, widget.device.)) {
+    //   case (PolarDeviceManager, PolarDeviceType.H10) ||
+    //      (PolarDeviceManager, PolarDeviceType.H9):
+    //   assetImage = AssetImage('assets/instructions/polar_h9_h10_instructions.png');
+    //   break;
+    //   case (PolarDeviceManager, PolarDeviceType.SENSE):
+    //   assetImage = AssetImage('assets/instructions/polar_sense_instructions.png');
+    //   break;
+    //   case (MovesenseDeviceManager, _):
+    //   assetImage = AssetImage('assets/instructions/movesense_instructions.png');
+    //   break;
+    //   default:
+    //   assetImage = AssetImage('assets/instructions/connect_to_hw.png');
+    // }
+
     print("kill me ${widget.device.deviceManager}");
     switch (widget.device.deviceManager) {
-      case PolarDeviceManager polarManager
-          when widget.device.type == PolarDevice.DEVICE_TYPE 
-          &&
-              ((widget.device.deviceManager as PolarDeviceManager).configuration?.deviceType == PolarDeviceType.H10 ||
-                  polarManager.configuration?.deviceType == PolarDeviceType.H9)
-                  :
-                  print("aaaa${polarManager.configuration?.deviceType}");
+      case PolarDeviceManager _
+          when widget.device.type == PolarDevice.DEVICE_TYPE &&
+              (widget.device.polarDeviceType == PolarDeviceType.H10 ||
+                  widget.device.polarDeviceType == PolarDeviceType.H9):
         assetImage =
             AssetImage('assets/instructions/polar_h9_h10_instructions.png');
         break;
 
-      case PolarDeviceManager polarManager
-          // when widget.device.type == PolarDevice.DEVICE_TYPE &&
-          //     (widget.device.deviceManager as PolarDeviceManager).configuration?.deviceType == PolarDeviceType.SENSE
-              :
-              print("bbbb${polarManager.configuration?.deviceType}");
-              print("bbbb${(widget.device.deviceManager as PolarDeviceManager).configuration?.deviceType}");
+      case PolarDeviceManager _
+          when widget.device.type == PolarDevice.DEVICE_TYPE &&
+              widget.device.polarDeviceType == PolarDeviceType.SENSE:
         assetImage =
             AssetImage('assets/instructions/polar_sense_instructions.png');
         break;
 
-      case MovesenseDeviceManager ms:
-      print("cccc${ms.configuration?.deviceType}");
+      case MovesenseDeviceManager _:
         assetImage =
             AssetImage('assets/instructions/movesense_instructions.png');
         break;
 
       default:
-      print("dddd${widget.device.deviceManager}");
         assetImage = AssetImage('assets/instructions/connect_to_hw.png');
     }
 

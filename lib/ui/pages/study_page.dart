@@ -166,9 +166,7 @@ class StudyPageState extends State<StudyPage> {
                 Center(
                   child: Container(
                     height: 150,
-                    color: Theme.of(context)
-                        .colorScheme
-                        .secondary,
+                    color: Theme.of(context).colorScheme.secondary,
                     child: widget.model.getMessageImage(message.image),
                   ),
                 ),

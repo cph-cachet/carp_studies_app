@@ -80,6 +80,24 @@ class DeviceViewModel extends ViewModel {
   String? get connectionInstructionsImage =>
       _deviceConnectionInstructionsImage[type!];
 
+  PolarDeviceType get polarDeviceType {
+    if (deviceManager is PolarDeviceManager) {
+      return (deviceManager as PolarDeviceManager).configuration?.deviceType ??
+          PolarDeviceType.UNKNOWN;
+    } else {
+      return PolarDeviceType.UNKNOWN;
+    }
+  }
+
+  MovesenseDeviceType get movesenseDeviceType {
+    if (deviceManager is MovesenseDeviceManager) {
+      return (deviceManager as MovesenseDeviceManager).configuration?.deviceType ??
+          MovesenseDeviceType.UNKNOWN;
+    } else {
+      return MovesenseDeviceType.UNKNOWN;
+    }
+  }
+
   /// Display information about this phone.
   Map<String, String?> get phoneInfo => {
         'name': '${DeviceInfo().deviceID}',

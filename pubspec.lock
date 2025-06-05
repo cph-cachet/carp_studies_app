@@ -253,10 +253,10 @@ packages:
     dependency: "direct main"
     description:
       name: carp_connectivity_package
-      sha256: "0a3b930038a4fcedd86de85e2c548d581dfd02d43af5223cefe761b32b50f209"
+      sha256: e85a5864091917208d6fa0e8162997e71fc8f562a9e2e5f1fd257a8c6a48bd29
       url: "https://pub.dev"
     source: hosted
-    version: "1.7.2"
+    version: "1.8.1+1"
   carp_context_package:
     dependency: "direct main"
     description:
@@ -269,10 +269,10 @@ packages:
     dependency: "direct main"
     description:
       name: carp_core
-      sha256: "3f513897bc6afc69215c570a881f8d50c25576867328b68d9ba238135bdaf041"
+      sha256: "106eac4823a1538d7f949a2e8e8097134ead8b1b45f7077cf327a4c8aedaff32"
       url: "https://pub.dev"
     source: hosted
-    version: "1.9.2"
+    version: "1.9.3"
   carp_health_package:
     dependency: "direct main"
     description:
@@ -873,10 +873,10 @@ packages:
     dependency: transitive
     description:
       name: health
-      sha256: "4c7458f35e5e74f709e99af5e7f5d78d4b2ac25b09d6a70eedec1c7b5cf091e8"
+      sha256: "0432c4e5c5348164adff57e78ca3191c88f0cdf7c2b0d72b6785a6af965177ac"
       url: "https://pub.dev"
     source: hosted
-    version: "12.2.0"
+    version: "12.2.1"
   html:
     dependency: transitive
     description:
@@ -2094,10 +2094,10 @@ packages:
     dependency: "direct main"
     description:
       name: video_player
-      sha256: "7d78f0cfaddc8c19d4cb2d3bebe1bfef11f2103b0a03e5398b303a1bf65eeb14"
+      sha256: "0d55b1f1a31e5ad4c4967bfaa8ade0240b07d20ee4af1dfef5f531056512961a"
       url: "https://pub.dev"
     source: hosted
-    version: "2.9.5"
+    version: "2.10.0"
   video_player_android:
     dependency: transitive
     description:

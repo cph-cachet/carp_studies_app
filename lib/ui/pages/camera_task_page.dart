@@ -16,112 +16,133 @@ class CameraTaskPageState extends State<CameraTaskPage> {
   @override
   Widget build(BuildContext context) => PopScope(
         canPop: true,
-        // onPopInvoked: (didPop) async =>
-        //     _showCancelConfirmationDialog() as FutureOr<bool>,
         child: Scaffold(
-          body: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
-              child: _stepSelector()),
+          body: SafeArea(
+            child: StreamBuilder<UserTaskState>(
+                stream: widget.mediaUserTask.stateEvents,
+                initialData: UserTaskState.enqueued,
+                builder: (context, AsyncSnapshot<UserTaskState> snapshot) {
+                  RPLocalizations locale = RPLocalizations.of(context)!;
+                  switch (snapshot.data) {
+                    case UserTaskState.enqueued:
+                      return StreamBuilder<UserTaskState>(
+                        stream: widget.mediaUserTask.stateEvents,
+                        initialData: UserTaskState.enqueued,
+                        builder:
+                            (context, AsyncSnapshot<UserTaskState> snapshot) {
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Row(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 8.0, horizontal: 10),
+                                    child: const CarpAppBar(
+                                      hasProfileIcon: false,
+                                    ),
+                                  ),
+                                  Spacer(),
+                                  IconButton(
+                                    color: Theme.of(context)
+                                        .extension<RPColors>()!
+                                        .grey900!,
+                                    onPressed: () {
+                                      _showCancelConfirmationDialog();
+                                    },
+                                    icon: const Icon(
+                                      Icons.close,
+                                      size: 30,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Column(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 30),
+                                    child: const Image(
+                                        image: AssetImage(
+                                            'assets/icons/camera.png'),
+                                        width: 220,
+                                        height: 220),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 12),
+                                    child: Text(
+                                      locale.translate(
+                                          widget.mediaUserTask.title),
+                                      style: audioTitleStyle,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 12, horizontal: 20),
+                                    child: Text(
+                                      locale.translate(
+                                          widget.mediaUserTask.description),
+                                      style: audioContentStyle,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 30),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        OutlinedButton(
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                          child:
+                                              Text(locale.translate("Cancel")),
+                                        ),
+                                        ElevatedButton(
+                                          onPressed: () => Navigator.push(
+                                            context,
+                                            MaterialPageRoute<void>(
+                                              builder: (context) => CameraPage(
+                                                videoUserTask:
+                                                    widget.mediaUserTask,
+                                              ),
+                                            ),
+                                          ),
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: Theme.of(context)
+                                                .extension<RPColors>()!
+                                                .primary,
+                                            padding: const EdgeInsets.symmetric(
+                                              horizontal: 30,
+                                              vertical: 12,
+                                            ),
+                                          ),
+                                          child: Text(
+                                            locale.translate("next"),
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    default:
+                      return const SizedBox.shrink();
+                  }
+                }),
+          ),
         ),
       );
 
-  Widget _stepSelector() => StreamBuilder<UserTaskState>(
-      stream: widget.mediaUserTask.stateEvents,
-      initialData: UserTaskState.enqueued,
-      builder: (context, AsyncSnapshot<UserTaskState> snapshot) {
-        switch (snapshot.data) {
-          case UserTaskState.enqueued:
-            return _stepOne();
-          default:
-            return const SizedBox.shrink();
-        }
-      });
-
-  Widget _stepOne() {
-    RPLocalizations locale = RPLocalizations.of(context)!;
-
-    return StreamBuilder<UserTaskState>(
-      stream: widget.mediaUserTask.stateEvents,
-      initialData: UserTaskState.enqueued,
-      builder: (context, AsyncSnapshot<UserTaskState> snapshot) {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const SizedBox(height: 35),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                IconButton(
-                    onPressed: () {
-                      _showCancelConfirmationDialog();
-                    },
-                    icon: Icon(Icons.close,
-                        color: Theme.of(context).primaryColor, size: 30))
-              ],
-            ),
-            const SizedBox(height: 35),
-            const Image(
-                image: AssetImage('assets/icons/camera.png'),
-                width: 220,
-                height: 220),
-            const SizedBox(height: 40),
-            Text(locale.translate(widget.mediaUserTask.title),
-                style: audioTitleStyle),
-            const SizedBox(height: 10),
-            Text(locale.translate(widget.mediaUserTask.description),
-                style: audioContentStyle),
-            Expanded(
-              child: Align(
-                alignment: FractionalOffset.bottomCenter,
-                child: Padding(
-                  padding: const EdgeInsets.only(bottom: 30.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      const SizedBox(width: 50),
-                      const SizedBox(width: 30),
-                      CircleAvatar(
-                        radius: 30,
-                        backgroundColor: CACHET.RED_1,
-                        child: IconButton(
-                          onPressed: () => Navigator.push(
-                            context,
-                            MaterialPageRoute<void>(
-                              builder: (context) => CameraPage(
-                                videoUserTask: widget.mediaUserTask,
-                                // cameras: widget.mediaUserTask.cameras,
-                              ),
-                            ),
-                          ),
-                          padding: const EdgeInsets.all(0),
-                          icon: const Icon(Icons.camera_alt,
-                              color: Colors.white, size: 30),
-                        ),
-                      ),
-                      InkWell(
-                        child: Text(
-                          locale.translate("pages.audio_task.skip"),
-                          style: aboutCardTitleStyle.copyWith(
-                              color: Theme.of(context).primaryColor),
-                        ),
-                        onTap: () {
-                          widget.mediaUserTask.onDone();
-                          context.pop();
-                        },
-                      ),
-                      const SizedBox(width: 30),
-                    ],
-                  ),
-                ),
-              ),
-            )
-          ],
-        );
-      },
-    );
-  }
-
-// Taken from RP
   Future<void> _showCancelConfirmationDialog() {
     RPLocalizations locale = RPLocalizations.of(context)!;
 

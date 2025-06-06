@@ -58,6 +58,9 @@ platform :android do
       if version_number > current_production_version_code && version_number > current_internal_version_code
         test_version = "#{base_version}-test+#{version_number}"
         sh "sed -i 's/^version: .*/version: #{test_version}/' #{pubspec_path}"
+        sh "flutter clean"
+        sh "flutter pub get"
+        sh "flutter pub upgrade"
         sh "flutter build appbundle --release --no-deferred-components --no-tree-shake-icons --dart-define='deployment-mode=test'"
 
         upload_to_play_store(

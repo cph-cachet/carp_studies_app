@@ -54,8 +54,13 @@ class _ConnectionDialogState3 extends State<ConnectionDialog3> {
                         height: MediaQuery.of(context).size.height * 0.6,
                         child: _buildStepContent(locale),
                       ),
-                      Row(
-                        children: _buildActionButtons(locale),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 16),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: _buildActionButtons(locale),
+                        ),
                       ),
                     ],
                   ),
@@ -70,45 +75,39 @@ class _ConnectionDialogState3 extends State<ConnectionDialog3> {
 
   Widget _buildDialogTitle(RPLocalizations locale) {
     final stepTitleMap = {
-      CurrentStep3.scan: Padding(
-        padding: const EdgeInsets.only(bottom: 16),
-        child: Container(
-          alignment: Alignment.centerLeft,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Flexible(
-                child: Text(
-                  locale.translate(
-                        "pages.devices.connection.step.start.title",
-                      ) +
-                      (" ${locale.translate(widget.device.name)} "),
-                  style: aboutCardTitleStyle.copyWith(
-                    color: Theme.of(context).primaryColor,
-                  ),
-                  textAlign: TextAlign.center,
+      CurrentStep3.scan:
+          locale.translate("pages.devices.connection.step.start.title") +
+              (" ${widget.device.name} "),
+      CurrentStep3.instructions:
+          locale.translate("pages.devices.connection.step.how_to.title") +
+              (" ${selectedDevice?.platformName} ") +
+              locale.translate("pages.devices.connection.step.how_to.device"),
+      CurrentStep3.done:
+          locale.translate("pages.devices.connection.step.confirm.title") +
+              (" ${selectedDevice?.platformName} "),
+    };
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 16),
+      child: Container(
+        alignment: Alignment.centerLeft,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Flexible(
+              child: Text(
+                stepTitleMap[currentStep] ?? '',
+                style: healthServiceConnectMessageStyle.copyWith(
+                  color: Theme.of(context).primaryColor,
                 ),
+                textAlign: TextAlign.center,
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
-      // const Text(
-      //   "pages.devices.connection.step.start.title",
-      // ),
-      CurrentStep3.instructions: DialogTitle(
-        title: "pages.devices.connection.step.how_to.title",
-        deviceName: selectedDevice?.platformName,
-        titleEnd: "pages.devices.connection.step.how_to.device",
-      ),
-      CurrentStep3.done: DialogTitle(
-        title: "pages.devices.connection.step.confirm.title",
-        deviceName: selectedDevice?.platformName,
-      ),
-    };
+    );
 
-    return stepTitleMap[currentStep] ??
-        Container(); // Return a default widget if necessary
+    // return stepTitleMap[currentStep] ?? Container();
   }
 
   Widget _buildStepContent(RPLocalizations locale) {
@@ -123,49 +122,83 @@ class _ConnectionDialogState3 extends State<ConnectionDialog3> {
   }
 
   List<Widget> _buildActionButtons(RPLocalizations locale) {
-    Widget buildTranslatedButton(
-        String key, VoidCallback onPressed, bool enabled) {
-      return TextButton(
+    Widget buildTranslatedButton(String key, VoidCallback onPressed,
+        bool enabled, ButtonStyle? buttonStyle, TextStyle? buttonTextStyle) {
+      return ElevatedButton(
         onPressed: enabled ? onPressed : null,
-        child: Text(locale.translate(key).toUpperCase()),
+        child: Text(
+          locale.translate(key).toUpperCase(),
+          style: buttonTextStyle,
+        ),
+        style: buttonStyle,
       );
     }
 
     final stepButtonConfigs = {
       CurrentStep3.scan: [
-        buildTranslatedButton("pages.devices.connection.instructions", () {
-          setState(() => currentStep = CurrentStep3.instructions);
-        }, true),
         buildTranslatedButton("cancel", () {
           context.pop(true);
-        }, true),
-        buildTranslatedButton("next", () {
-          if (selectedDevice != null) {
-            setState(() => currentStep = CurrentStep3.done);
-          }
-        }, selectedDevice != null),
+        }, true, null, null),
+        buildTranslatedButton(
+          "next",
+          () {
+            if (selectedDevice != null) {
+              setState(() => currentStep = CurrentStep3.done);
+            }
+          },
+          selectedDevice != null,
+          ElevatedButton.styleFrom(
+            backgroundColor: Theme.of(context).extension<RPColors>()!.primary,
+            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 12),
+          ),
+          TextStyle(
+            color: Colors.white,
+          ),
+        ),
       ],
       CurrentStep3.instructions: [
         buildTranslatedButton("settings", () {
           Platform.isAndroid
               ? OpenSettingsPlusAndroid().bluetooth()
               : OpenSettingsPlusIOS().bluetooth();
-        }, true),
-        buildTranslatedButton("ok", () {
-          setState(() => currentStep = CurrentStep3.scan);
-        }, true),
+        }, true, null, null),
+        buildTranslatedButton(
+          "ok",
+          () {
+            setState(() => currentStep = CurrentStep3.scan);
+          },
+          true,
+          ElevatedButton.styleFrom(
+            backgroundColor: Theme.of(context).extension<RPColors>()!.primary,
+            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 12),
+          ),
+          TextStyle(
+            color: Colors.white,
+          ),
+        ),
       ],
       CurrentStep3.done: [
         buildTranslatedButton("back", () {
           setState(() => currentStep = CurrentStep3.scan);
-        }, true),
-        buildTranslatedButton("done", () {
-          FlutterBluePlus.stopScan();
-          if (selectedDevice != null) {
-            widget.device.connectToDevice(selectedDevice!);
-            context.pop(true);
-          }
-        }, true),
+        }, true, null, null),
+        buildTranslatedButton(
+          "done",
+          () {
+            FlutterBluePlus.stopScan();
+            if (selectedDevice != null) {
+              widget.device.connectToDevice(selectedDevice!);
+              context.pop(true);
+            }
+          },
+          true,
+          ElevatedButton.styleFrom(
+            backgroundColor: Theme.of(context).extension<RPColors>()!.primary,
+            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 12),
+          ),
+          TextStyle(
+            color: Colors.white,
+          ),
+        ),
       ],
     };
     return stepButtonConfigs[currentStep] ?? [];
@@ -193,7 +226,7 @@ class _ConnectionDialogState3 extends State<ConnectionDialog3> {
         children: [
           Text(
             "${locale.translate("pages.devices.connection.step.scan.1")} ${locale.translate(device.typeName)} ${locale.translate("pages.devices.connection.step.scan.2")}",
-            style: aboutCardSubtitleStyle,
+            style: healthServiceConnectMessageStyle,
             textAlign: TextAlign.justify,
           ),
           Expanded(
@@ -201,6 +234,7 @@ class _ConnectionDialogState3 extends State<ConnectionDialog3> {
               stream: FlutterBluePlus.scanResults,
               initialData: const [],
               builder: (context, snapshot) => SingleChildScrollView(
+                padding: const EdgeInsets.only(top: 16),
                 child: Column(
                   children: snapshot.data!
                       .where(
@@ -213,9 +247,7 @@ class _ConnectionDialogState3 extends State<ConnectionDialog3> {
                           selected: bluetoothDevice.key == selected,
                           title: Text(
                             bluetoothDevice.value.device.platformName,
-                            style: aboutCardSubtitleStyle.copyWith(
-                              color: Theme.of(context).primaryColor,
-                            ),
+                            style: healthServiceConnectTitleStyle,
                           ),
                           selectedTileColor: Theme.of(context)
                               .primaryColor
@@ -235,10 +267,36 @@ class _ConnectionDialogState3 extends State<ConnectionDialog3> {
           ),
           Padding(
             padding: const EdgeInsets.only(top: 16),
-            child: Text(
-              locale.translate("pages.devices.connection.step.start.3"),
-              style: aboutCardSubtitleStyle,
-              textAlign: TextAlign.justify,
+            child: Text.rich(
+              TextSpan(
+                children: [
+                  TextSpan(
+                    text: locale
+                        .translate("pages.devices.connection.step.start.1"),
+                  ),
+                  TextSpan(
+                    text: locale
+                        .translate("pages.devices.connection.instructions"),
+                    style: TextStyle(
+                      color: Theme.of(context).extension<RPColors>()!.primary,
+                      decoration: TextDecoration.underline,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () {
+                        setState(() => currentStep = CurrentStep3.instructions);
+                      },
+                  ),
+                  TextSpan(
+                    text: locale.translate(
+                      "pages.devices.connection.step.start.2",
+                    ),
+                  ),
+                ],
+              ),
+              style: healthServiceConnectMessageStyle.copyWith(
+                  color: Theme.of(context).extension<RPColors>()!.grey900),
+              textAlign: TextAlign.center,
             ),
           )
         ],
@@ -249,54 +307,7 @@ class _ConnectionDialogState3 extends State<ConnectionDialog3> {
   Widget connectionInstructions(DeviceViewModel device, BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;
     AssetImage? assetImage;
-    // switch ((
-    //   widget.device.type,
-    //   (
-    //     widget.device.deviceManager
-    //     as PolarDeviceManager?)
-    //       ?.configuration
-    //       ?.deviceType
-    // )) {
-    //   case (PolarDevice.DEVICE_TYPE, PolarDeviceType.H10) ||
-    //         (PolarDevice.DEVICE_TYPE, PolarDeviceType.H9):
-    //     assetImage =
-    //         AssetImage('assets/instructions/polar_h9_h10_instructions.png');
-    //     break;
-    //   case (PolarDevice.DEVICE_TYPE, PolarDeviceType.SENSE):
-    //     assetImage =
-    //         AssetImage('assets/instructions/polar_sense_instructions.png');
-    //     break;
-    //   default:
-    //     if (device is MovesenseDevice) {
-    //       assetImage =
-    //           AssetImage('assets/instructions/movesense_instructions.png');
-    //     } else {
-    //       assetImage = AssetImage('assets/instructions/connect_to_hw.png');
-    //     }
-    // }
 
-    // Extract deviceManager and deviceType for easier switching
-    final deviceManager = widget.device.deviceManager;
-    final deviceType = (deviceManager is PolarDeviceManager)
-        ? deviceManager.configuration?.deviceType
-        : null;
-
-    // switch ((widget.device.deviceManager, widget.device.)) {
-    //   case (PolarDeviceManager, PolarDeviceType.H10) ||
-    //      (PolarDeviceManager, PolarDeviceType.H9):
-    //   assetImage = AssetImage('assets/instructions/polar_h9_h10_instructions.png');
-    //   break;
-    //   case (PolarDeviceManager, PolarDeviceType.SENSE):
-    //   assetImage = AssetImage('assets/instructions/polar_sense_instructions.png');
-    //   break;
-    //   case (MovesenseDeviceManager, _):
-    //   assetImage = AssetImage('assets/instructions/movesense_instructions.png');
-    //   break;
-    //   default:
-    //   assetImage = AssetImage('assets/instructions/connect_to_hw.png');
-    // }
-
-    print("kill me ${widget.device.deviceManager}");
     switch (widget.device.deviceManager) {
       case PolarDeviceManager _
           when widget.device.type == PolarDevice.DEVICE_TYPE &&
@@ -351,15 +362,27 @@ class _ConnectionDialogState3 extends State<ConnectionDialog3> {
     RPLocalizations locale = RPLocalizations.of(context)!;
     return Column(
       children: [
-        Image(
-            image: const AssetImage('assets/icons/connection_done.png'),
-            width: MediaQuery.of(context).size.height * 0.2,
-            height: MediaQuery.of(context).size.height * 0.2),
-        Text(
-          ("${locale.translate("pages.devices.connection.step.confirm.1")} '${device?.platformName}' ${locale.translate("pages.devices.connection.step.confirm.2")}")
-              .trim(),
-          style: aboutCardContentStyle,
-          textAlign: TextAlign.justify,
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              children: [
+                Image(
+                    image: const AssetImage('assets/icons/connection_done.png'),
+                    width: MediaQuery.of(context).size.height * 0.2,
+                    height: MediaQuery.of(context).size.height * 0.2),
+                Padding(
+                  padding: const EdgeInsets.only(top: 32),
+                  child: Text(
+                    ("${locale.translate("pages.devices.connection.step.confirm.1")} '${device?.platformName}' ${locale.translate("pages.devices.connection.step.confirm.2")}")
+                        .trim(),
+                    style: aboutCardContentStyle,
+                    textAlign: TextAlign.justify,
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
       ],
     );

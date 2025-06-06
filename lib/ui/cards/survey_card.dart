@@ -11,6 +11,8 @@ class SurveyCard extends StatefulWidget {
 }
 
 class _SurveyCardState extends State<SurveyCard> {
+  int get totalSurveys => widget.model.tasksTable.entries.length;
+
   @override
   Widget build(BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;
@@ -19,6 +21,8 @@ class _SurveyCardState extends State<SurveyCard> {
     }
 
     return StudiesMaterial(
+      backgroundColor: Theme.of(context).extension<RPColors>()!.white!,
+      elevation: 0,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
@@ -69,9 +73,23 @@ class _SurveyCardState extends State<SurveyCard> {
                 // The pie chart
                 Expanded(
                   flex: 3,
-                  child: PieChart(
-                    PieChartData(
-                        sections: pieChartSections, startDegreeOffset: 270),
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      PieChart(
+                        PieChartData(
+                          sections: pieChartSections,
+                          startDegreeOffset: 270,
+                        ),
+                      ),
+                      Text(
+                        '$totalSurveys',
+                        style: surveysCardTotalTextStyle.copyWith(
+                          color:
+                              Theme.of(context).extension<RPColors>()!.grey800,
+                        ),
+                      )
+                    ],
                   ),
                 ),
               ]),
@@ -91,10 +109,7 @@ class _SurveyCardState extends State<SurveyCard> {
               .colors[widget.model.tasksTable.keys.toList().indexOf(entry.key)],
           value: entry.value.toDouble(),
           title: '${entry.value}',
-          // radius: 50,
           showTitle: false,
-          // titleStyle: dataCardTitleStyle.copyWith(
-          //     color: Theme.of(context).primaryColor),
         );
       },
     ).toList();

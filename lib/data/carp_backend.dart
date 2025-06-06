@@ -5,12 +5,11 @@ part of carp_study_app;
 ///
 /// Use as a singleton ` CarpBackend()`.
 class CarpBackend {
-  /// The URL of the CARP Privacy Policy for this app.
-  static const String carpPrivacyUrl =
-      "https://carp.cachet.dk/privacy-policy-app";
-
   /// The URL of the official CARP web site.
   static const String carpWebsiteUrl = "https://carp.cachet.dk";
+
+  /// The URL of the CARP Privacy Policy for this app.
+  static const String carpPrivacyUrl = "$carpWebsiteUrl/privacy-policy-app";
 
   /// The URIs of the CARP Web Service (CAWS) host for each [DeploymentMode].
   static const Map<DeploymentMode, String> uris = {
@@ -158,6 +157,7 @@ class CarpBackend {
 
   /// Set the [study] used on this phone.
   set study(SmartphoneStudy study) {
+    info('Setting (new) study in CAWS services - study: $study');
     CarpService().study = study;
     CarpParticipationService().study = study;
     CarpDeploymentService().study = study;

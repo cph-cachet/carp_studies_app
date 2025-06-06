@@ -17,7 +17,7 @@ class InvitationDetailsPage extends StatelessWidget {
     var invitation = model.getInvitation(invitationId);
 
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.secondary,
+      backgroundColor: Theme.of(context).extension<RPColors>()!.backgroundGray,
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.surfaceContainerHigh,
         title: const CarpAppBar(),
@@ -62,10 +62,44 @@ class InvitationDetailsPage extends StatelessWidget {
                   ],
                 ),
               ),
+              Padding(
+                padding: const EdgeInsets.only(top: 16.0),
+                child: StudiesMaterial(
+                  backgroundColor:
+                      Theme.of(context).extension<RPColors>()!.white!,
+                  elevation: 2.0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          locale
+                              .translate('invitation.roles_in_the_study.title'),
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20.0,
+                          ),
+                        ),
+                        const SizedBox(height: 8.0),
+                        Text(
+                          '${locale.translate('invitation.roles_in_the_study.description')} ${invitation.participantRoleName}, ${invitation.deviceRoleName}',
+                          style: const TextStyle(fontSize: 16.0),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.only(top: 16.0),
                   child: StudiesMaterial(
+                    backgroundColor:
+                        Theme.of(context).extension<RPColors>()!.white!,
                     elevation: 2.0,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12.0),
@@ -87,9 +121,12 @@ class InvitationDetailsPage extends StatelessWidget {
                                   children: [
                                     TextSpan(
                                       text: invitation.invitation.name,
-                                      style: const TextStyle(
+                                      style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 22.0,
+                                        color: Theme.of(context)
+                                            .extension<RPColors>()!
+                                            .primary,
                                       ),
                                     ),
                                     TextSpan(

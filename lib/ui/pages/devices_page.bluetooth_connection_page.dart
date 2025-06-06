@@ -1,18 +1,18 @@
 part of carp_study_app;
 
 /// State of Bluetooth connection UI.
-enum CurrentSte3 { scan, instructions, done }
+enum CurrentStep { scan, instructions, done }
 
-class ConnectionDialog3 extends StatefulWidget {
+class BluetoothConnectionPage extends StatefulWidget {
   final DeviceViewModel device;
 
-  const ConnectionDialog3({super.key, required this.device});
+  const BluetoothConnectionPage({super.key, required this.device});
 
   @override
-  State<StatefulWidget> createState() => _ConnectionDialogState3();
+  State<StatefulWidget> createState() => _BluetoothConnectionPageState();
 }
 
-class _ConnectionDialogState3 extends State<ConnectionDialog3> {
+class _BluetoothConnectionPageState extends State<BluetoothConnectionPage> {
   @override
   initState() {
     super.initState();
@@ -25,7 +25,7 @@ class _ConnectionDialogState3 extends State<ConnectionDialog3> {
     super.dispose();
   }
 
-  CurrentStep3 currentStep = CurrentStep3.scan;
+  CurrentStep currentStep = CurrentStep.scan;
   BluetoothDevice? selectedDevice;
   int selected = 40;
 
@@ -75,14 +75,14 @@ class _ConnectionDialogState3 extends State<ConnectionDialog3> {
 
   Widget _buildDialogTitle(RPLocalizations locale) {
     final stepTitleMap = {
-      CurrentStep3.scan:
+      CurrentStep.scan:
           locale.translate("pages.devices.connection.step.start.title") +
               (" ${widget.device.name} "),
-      CurrentStep3.instructions:
+      CurrentStep.instructions:
           locale.translate("pages.devices.connection.step.how_to.title") +
               (" ${selectedDevice?.platformName} ") +
               locale.translate("pages.devices.connection.step.how_to.device"),
-      CurrentStep3.done:
+      CurrentStep.done:
           locale.translate("pages.devices.connection.step.confirm.title") +
               (" ${selectedDevice?.platformName} "),
     };
@@ -106,19 +106,16 @@ class _ConnectionDialogState3 extends State<ConnectionDialog3> {
         ),
       ),
     );
-
-    // return stepTitleMap[currentStep] ?? Container();
   }
 
   Widget _buildStepContent(RPLocalizations locale) {
     final stepContentMap = {
-      CurrentStep3.scan: stepContent(currentStep, widget.device),
-      CurrentStep3.instructions: connectionInstructions(widget.device, context),
-      CurrentStep3.done: confirmDevice(selectedDevice, context),
+      CurrentStep.scan: stepContent(currentStep, widget.device),
+      CurrentStep.instructions: connectionInstructions(widget.device, context),
+      CurrentStep.done: confirmDevice(selectedDevice, context),
     };
 
-    return stepContentMap[currentStep] ??
-        Container(); // Return a default widget if necessary
+    return stepContentMap[currentStep] ?? Container();
   }
 
   List<Widget> _buildActionButtons(RPLocalizations locale) {
@@ -135,7 +132,7 @@ class _ConnectionDialogState3 extends State<ConnectionDialog3> {
     }
 
     final stepButtonConfigs = {
-      CurrentStep3.scan: [
+      CurrentStep.scan: [
         buildTranslatedButton("cancel", () {
           context.pop(true);
         }, true, null, null),
@@ -143,7 +140,7 @@ class _ConnectionDialogState3 extends State<ConnectionDialog3> {
           "next",
           () {
             if (selectedDevice != null) {
-              setState(() => currentStep = CurrentStep3.done);
+              setState(() => currentStep = CurrentStep.done);
             }
           },
           selectedDevice != null,
@@ -156,7 +153,7 @@ class _ConnectionDialogState3 extends State<ConnectionDialog3> {
           ),
         ),
       ],
-      CurrentStep3.instructions: [
+      CurrentStep.instructions: [
         buildTranslatedButton("settings", () {
           Platform.isAndroid
               ? OpenSettingsPlusAndroid().bluetooth()
@@ -165,7 +162,7 @@ class _ConnectionDialogState3 extends State<ConnectionDialog3> {
         buildTranslatedButton(
           "ok",
           () {
-            setState(() => currentStep = CurrentStep3.scan);
+            setState(() => currentStep = CurrentStep.scan);
           },
           true,
           ElevatedButton.styleFrom(
@@ -177,9 +174,9 @@ class _ConnectionDialogState3 extends State<ConnectionDialog3> {
           ),
         ),
       ],
-      CurrentStep3.done: [
+      CurrentStep.done: [
         buildTranslatedButton("back", () {
-          setState(() => currentStep = CurrentStep3.scan);
+          setState(() => currentStep = CurrentStep.scan);
         }, true, null, null),
         buildTranslatedButton(
           "done",
@@ -205,12 +202,12 @@ class _ConnectionDialogState3 extends State<ConnectionDialog3> {
   }
 
   Widget stepContent(
-    CurrentStep3 currentStep,
+    CurrentStep currentStep,
     DeviceViewModel device,
   ) {
-    if (currentStep == CurrentStep3.scan) {
+    if (currentStep == CurrentStep.scan) {
       return scanWidget(device, context);
-    } else if (currentStep == CurrentStep3.instructions) {
+    } else if (currentStep == CurrentStep.instructions) {
       return connectionInstructions(device, context);
     } else {
       return confirmDevice(selectedDevice, context);
@@ -225,7 +222,9 @@ class _ConnectionDialogState3 extends State<ConnectionDialog3> {
       child: Column(
         children: [
           Text(
-            "${locale.translate("pages.devices.connection.step.scan.1")} ${locale.translate(device.typeName)} ${locale.translate("pages.devices.connection.step.scan.2")}",
+            "${locale.translate("pages.devices.connection.step.scan.1")} "
+            "${locale.translate(device.typeName)} "
+            "${locale.translate("pages.devices.connection.step.scan.2")}",
             style: healthServiceConnectMessageStyle,
             textAlign: TextAlign.justify,
           ),
@@ -284,7 +283,7 @@ class _ConnectionDialogState3 extends State<ConnectionDialog3> {
                     ),
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {
-                        setState(() => currentStep = CurrentStep3.instructions);
+                        setState(() => currentStep = CurrentStep.instructions);
                       },
                   ),
                   TextSpan(

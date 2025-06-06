@@ -358,7 +358,7 @@ class DeviceListPageState extends State<DeviceListPage> {
               context,
               MaterialPageRoute<void>(
                 // barrierDismissible: true,
-                builder: (context) => ConnectionDialog3(device: device),
+                builder: (context) => BluetoothConnectionPage(device: device),
               ));
         }
       } else if (bluetoothAdapterState == BluetoothAdapterState.unauthorized &&

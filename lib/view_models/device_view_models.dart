@@ -91,7 +91,9 @@ class DeviceViewModel extends ViewModel {
 
   MovesenseDeviceType get movesenseDeviceType {
     if (deviceManager is MovesenseDeviceManager) {
-      return (deviceManager as MovesenseDeviceManager).configuration?.deviceType ??
+      return (deviceManager as MovesenseDeviceManager)
+              .configuration
+              ?.deviceType ??
           MovesenseDeviceType.UNKNOWN;
     } else {
       return MovesenseDeviceType.UNKNOWN;

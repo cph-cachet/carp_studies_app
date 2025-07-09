@@ -307,7 +307,12 @@ class TaskListPageState extends State<TaskListPage>
             if (userTask.hasWidget) {
               context.push('/task/${userTask.id}');
             } else {
-              Timer(const Duration(seconds: 10), () => userTask.onDone());
+              Timer(const Duration(seconds: 10), () {
+                userTask.onDone();
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Text(locale.translate('Done!')),
+                    duration: const Duration(seconds: 1)));
+            });
             }
           }
         },

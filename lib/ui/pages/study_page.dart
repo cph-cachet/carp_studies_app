@@ -289,8 +289,7 @@ class StudyPageState extends State<StudyPage> {
                                             .DeployingDevices
                                     ? locale.translate(
                                         'pages.about.status.deploying_devices')
-                                    : locale.translate(
-                                        'pages.about.status.${deploymentStatus.toString().split('.').last}'),
+                                    : deploymentStatus.toString().split('.').last,
                                 maxLines: 2,
                                 style: aboutCardSubtitleStyle.copyWith(
                                     color: studyStatusColors[deploymentStatus]),

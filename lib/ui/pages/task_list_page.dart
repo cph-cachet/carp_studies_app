@@ -245,16 +245,19 @@ class TaskListPageState extends State<TaskListPage>
                                     : Colors.grey,
                               ),
                             const SizedBox(width: 4.0),
-                            Text(
-                              _timeRemainingSubtitle(userTask),
-                              style: TextStyle(
-                                color: userTask.expiresIn != null &&
-                                        userTask.expiresIn!.inHours < 24
-                                    ? Theme.of(context)
-                                        .extension<RPColors>()!
-                                        .warningColor
-                                    : Colors.grey,
-                                fontSize: 12.0,
+                            Padding(
+                              padding: const EdgeInsets.only(right: 20),
+                              child: Text(
+                                _timeRemainingSubtitle(userTask),
+                                style: TextStyle(
+                                  color: userTask.expiresIn != null &&
+                                          userTask.expiresIn!.inHours < 24
+                                      ? Theme.of(context)
+                                          .extension<RPColors>()!
+                                          .warningColor
+                                      : Colors.grey,
+                                  fontSize: 12.0,
+                                ),
                               ),
                             )
                           ],
@@ -273,20 +276,29 @@ class TaskListPageState extends State<TaskListPage>
                                 ),
                               ),
                               const SizedBox(height: 4.0),
-                              Text(
-                                locale.translate(userTask.description),
+                              Padding(
+                                padding: const EdgeInsets.only(right: 20),
+                                child: Text(
+                                  locale.translate(userTask.description),
+                                ),
                               ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  Text(
-                                    _estimatedTimeSubtitle(userTask),
-                                    style: TextStyle(
-                                      color: Colors.grey,
-                                      fontSize: 12.0,
+                              Padding(
+                                padding: const EdgeInsets.only(top: 8.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(right: 20),
+                                      child: Text(
+                                        _estimatedTimeSubtitle(userTask),
+                                        style: TextStyle(
+                                          color: Colors.grey,
+                                          fontSize: 12.0,
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ],
                           ),
@@ -312,7 +324,7 @@ class TaskListPageState extends State<TaskListPage>
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                     content: Text(locale.translate('Done!')),
                     duration: const Duration(seconds: 1)));
-            });
+              });
             }
           }
         },

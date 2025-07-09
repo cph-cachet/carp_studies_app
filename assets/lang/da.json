@@ -104,6 +104,7 @@
     "install": "Installér",
     "pages.about.app_update": "Der er en ny version af appen tilgængelig.",
     "pages.about.status.invited.message": "Du er inviteret til denne undersøgelse.",
+    "pages.about.status.deploying_devices": "Udrulning",
     "pages.about.status.deploying_devices.message": "Følgende enhed(er) skal stadig registreres, før denne undersøgelse kan starte: ",
     "pages.about.status.running.message": "Undersøgelsen kører i øjeblikket og indsamler data fra denne enhed.",
     "pages.about.status.stopped.message": "Denne undersøgelse er blevet afbrudt og indsamler ikke længere data.",

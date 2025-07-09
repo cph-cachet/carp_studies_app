@@ -83,7 +83,7 @@ class StudyDetailsPage extends StatelessWidget {
                           title: locale.translate('pages.profile.contact'),
                           onTap: () async {
                             _sendEmailToContactResearcher(
-                              model.responsibleEmail,
+                              locale.translate(model.responsibleEmail),
                               'Support for study: ${locale.translate(model.title)} - User: ${model.responsibleName}',
                             );
                           },
@@ -99,12 +99,11 @@ class StudyDetailsPage extends StatelessWidget {
                             title:
                                 locale.translate('pages.about.study.privacy'),
                             onTap: () async {
-                              String url = model.privacyPolicyUrl;
                               try {
-                                await launchUrl(Uri.parse(url));
+                                await launchUrl(Uri.parse(CarpBackend.carpPrivacyUrl));
                               } catch (error) {
                                 warning(
-                                    "Could not launch study description URL - '$url'");
+                                    "Could not launch study description URL");
                               }
                             }),
                         _buildActionListTile(
@@ -117,12 +116,11 @@ class StudyDetailsPage extends StatelessWidget {
                               color: CACHET.GREY_6),
                           title: locale.translate('pages.about.study.website'),
                           onTap: () async {
-                            String url = model.studyDescriptionUrl;
                             try {
-                              await launchUrl(Uri.parse(url));
+                              await launchUrl(Uri.parse(CarpBackend.carpWebsiteUrl));
                             } catch (error) {
                               warning(
-                                  "Could not launch study description URL - '$url'");
+                                  "Could not launch study description URL");
                             }
                           },
                         ),

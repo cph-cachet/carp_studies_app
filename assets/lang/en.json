@@ -116,6 +116,7 @@
   "install": "Install",
   "pages.about.app_update": "There is a new version of the app available.",
   "pages.about.status.invited.message": "You are invited to this study.",
+  "pages.about.status.deploying_devices": "Deploying",
   "pages.about.status.deploying_devices.message": "The following device(s) still need to be registered before this study can start: ",
   "pages.about.status.running.message": "The study is currently running and collecting data from this device.",
   "pages.about.status.stopped.message": "This study has been discontinued and is no longer collecting data.",

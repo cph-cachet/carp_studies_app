@@ -284,7 +284,14 @@ class StudyPageState extends State<StudyPage> {
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 6.0),
                               child: Text(
-                                deploymentStatus.toString().split('.').last,
+                                deploymentStatus ==
+                                        StudyDeploymentStatusTypes
+                                            .DeployingDevices
+                                    ? locale.translate(
+                                        'pages.about.status.deploying_devices')
+                                    : locale.translate(
+                                        'pages.about.status.${deploymentStatus.toString().split('.').last}'),
+                                maxLines: 2,
                                 style: aboutCardSubtitleStyle.copyWith(
                                     color: studyStatusColors[deploymentStatus]),
                               ),
@@ -295,8 +302,12 @@ class StudyPageState extends State<StudyPage> {
                           child: Padding(
                             padding: const EdgeInsets.only(left: 16.0),
                             child: Text(
-                                locale.translate(
-                                    studyStatusText[deploymentStatus]!),
+                                locale.translate(deploymentStatus ==
+                                        StudyDeploymentStatusTypes
+                                            .DeployingDevices
+                                    ? locale.translate(
+                                        'pages.about.status.deploying_devices.message')
+                                    : studyStatusText[deploymentStatus]!),
                                 style: aboutCardSubtitleStyle.copyWith(
                                     color: Theme.of(context)
                                         .extension<RPColors>()!

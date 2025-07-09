@@ -84,10 +84,12 @@ class InvitationDetailsPage extends StatelessWidget {
                             fontSize: 20.0,
                           ),
                         ),
-                        const SizedBox(height: 8.0),
-                        Text(
-                          '${locale.translate('invitation.roles_in_the_study.description')} ${invitation.participantRoleName}, ${invitation.deviceRoleName}',
-                          style: const TextStyle(fontSize: 16.0),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 8),
+                          child: Text(
+                            '${locale.translate('invitation.roles_in_the_study.description')} ${invitation.participantRoleName}, ${invitation.deviceRoleName}',
+                            style: const TextStyle(fontSize: 16.0),
+                          ),
                         ),
                       ],
                     ),
@@ -116,26 +118,42 @@ class InvitationDetailsPage extends StatelessWidget {
                         children: [
                           Expanded(
                             child: SingleChildScrollView(
-                              child: Text.rich(
-                                TextSpan(
-                                  children: [
-                                    TextSpan(
-                                      text: invitation.invitation.name,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    invitation.invitation.name,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 22.0,
+                                      color: Theme.of(context)
+                                          .extension<RPColors>()!
+                                          .primary,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 8, bottom: 24),
+                                    child: Text(
+                                      '${(locale.translate('pages.profile.study_id'))}: ${invitation.studyDeploymentId}',
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
-                                        fontSize: 22.0,
+                                        fontSize: 14,
                                         color: Theme.of(context)
                                             .extension<RPColors>()!
-                                            .primary,
+                                            .grey600,
                                       ),
+                                      maxLines: 1,
+                                      textScaler: TextScaler.linear(0.9),
                                     ),
-                                    TextSpan(
-                                      text:
-                                          '\n${invitation.invitation.description ?? ''}',
-                                      style: const TextStyle(fontSize: 16.0),
-                                    ),
-                                  ],
-                                ),
+                                  ),
+                                  Text(
+                                    invitation.invitation.description ?? '',
+                                    style: const TextStyle(
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ],
                               ),
                             ),
                           ),

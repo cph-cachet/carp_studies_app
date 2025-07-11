@@ -178,16 +178,19 @@ class StudyPageState extends State<StudyPage> {
                             Theme.of(context).extension<RPColors>()!.primary)),
               ),
               if (message.subTitle != null && message.subTitle!.isNotEmpty)
-                Row(children: [
-                  Expanded(
-                    child: Text(
-                      locale.translate(message.subTitle!),
-                      style: aboutCardContentStyle.copyWith(
-                        color: Theme.of(context).extension<RPColors>()!.grey700,
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        locale.translate(message.subTitle!),
+                        style: aboutCardContentStyle.copyWith(
+                          color:
+                              Theme.of(context).extension<RPColors>()!.grey700,
+                        ),
                       ),
                     ),
-                  ),
-                ]),
+                  ],
+                ),
               if (message.message != null && message.message!.isNotEmpty)
                 Row(children: [
                   Expanded(
@@ -289,7 +292,10 @@ class StudyPageState extends State<StudyPage> {
                                             .DeployingDevices
                                     ? locale.translate(
                                         'pages.about.status.deploying_devices')
-                                    : deploymentStatus.toString().split('.').last,
+                                    : deploymentStatus
+                                        .toString()
+                                        .split('.')
+                                        .last,
                                 maxLines: 2,
                                 style: aboutCardSubtitleStyle.copyWith(
                                     color: studyStatusColors[deploymentStatus]),
@@ -386,7 +392,6 @@ class StudyPageState extends State<StudyPage> {
                         ),
                       ),
                     ),
-                    // const SizedBox(width: 8),
                     Material(
                       color: CACHET.DEPLOYMENT_DEPLOYING,
                       borderRadius: BorderRadius.circular(100.0),

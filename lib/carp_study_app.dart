@@ -50,6 +50,7 @@ class CarpStudyAppState extends State<CarpStudyApp> {
               path: homeRoute,
               parentNavigatorKey: _shellNavigatorKey,
               redirect: (context, state) {
+                print('im home, ocome over babe. im alone. no i cant. but my parents arent home. ${state.uri.query}');
                 if (bloc.deploymentMode != DeploymentMode.local) {
                   if (!bloc.backend.isAuthenticated) {
                     return LoginPage.route;
@@ -63,6 +64,20 @@ class CarpStudyAppState extends State<CarpStudyApp> {
                 }
 
                 return firstRoute;
+              }),
+          GoRoute(
+              path: '/anonymous',
+              redirect: (context, state) async {
+                if (bloc.backend.isAuthenticated) {
+                  print('im not a prin ${state.pathParameters}');
+                  return StudyPage.route;
+                } else {
+                  print('ιμ α πριντ${state.pathParameters}');
+                  await bloc.backend.authenticateAnonymous();
+                  return bloc.study != null
+                      ? InformedConsentPage.route
+                      : (bloc.user == null ? LoginPage.route : null);
+                }
               }),
           GoRoute(
             path: TaskListPage.route,

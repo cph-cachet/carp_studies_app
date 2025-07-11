@@ -226,7 +226,8 @@ class TaskListPageState extends State<TaskListPage>
                             Padding(
                               padding: const EdgeInsets.only(left: 4.0),
                               child: Text(
-                                userTask.type,
+                                userTask.type[0].toUpperCase() +
+                                    userTask.type.substring(1),
                                 style: TextStyle(
                                   color: taskTypeColors[userTask.type],
                                   fontWeight: FontWeight.bold,

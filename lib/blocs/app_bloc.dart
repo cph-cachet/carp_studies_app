@@ -135,7 +135,7 @@ class StudyAppBLoC extends ChangeNotifier {
 
   /// Get the status for the current study deployment.
   /// Returns null if the study is not yet deployed on this phone.
-  Future<StudyDeploymentStatus?> getStudyDeploymentStatus() async =>
+  Future<StudyDeploymentStatus?> get studyDeploymentStatus async =>
       await Sensing().getStudyDeploymentStatus();
 
   /// When was this study deployed on this phone.

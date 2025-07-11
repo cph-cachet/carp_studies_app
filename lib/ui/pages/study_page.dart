@@ -231,7 +231,7 @@ class StudyPageState extends State<StudyPage> {
   Widget _studyStatusCard() {
     RPLocalizations locale = RPLocalizations.of(context)!;
     return FutureBuilder<StudyDeploymentStatus?>(
-      future: bloc.getStudyDeploymentStatus(),
+      future: bloc.studyDeploymentStatus,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Spacer();
@@ -310,8 +310,22 @@ class StudyPageState extends State<StudyPage> {
                                 locale.translate(deploymentStatus ==
                                         StudyDeploymentStatusTypes
                                             .DeployingDevices
-                                    ? locale.translate(
-                                        'pages.about.status.deploying_devices.message')
+                                    ? snapshot.data?.deviceStatusList.any(
+                                                (device) =>
+                                                    device.status ==
+                                                    DeviceDeploymentStatusTypes
+                                                        .Unregistered) ==
+                                            true
+                                        ? snapshot.data!.deviceStatusList
+                                            .where((device) =>
+                                                device.status ==
+                                                DeviceDeploymentStatusTypes
+                                                    .Unregistered)
+                                            .map((device) =>
+                                                device.device.roleName)
+                                            .join(' | ')
+                                        : locale.translate(
+                                            'pages.about.status.deploying_devices.message')
                                     : studyStatusText[deploymentStatus]!),
                                 style: aboutCardSubtitleStyle.copyWith(
                                     color: Theme.of(context)

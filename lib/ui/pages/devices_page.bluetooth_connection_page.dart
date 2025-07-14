@@ -50,9 +50,13 @@ class _BluetoothConnectionPageState extends State<BluetoothConnectionPage> {
                   child: Column(
                     children: [
                       _buildDialogTitle(locale),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.6,
-                        child: _buildStepContent(locale),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: SizedBox(
+                            child: _buildStepContent(locale),
+                          ),
+                        ),
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(

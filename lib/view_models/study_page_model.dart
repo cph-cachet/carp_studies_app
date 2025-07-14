@@ -32,7 +32,6 @@ class StudyPageViewModel extends ViewModel {
   String get deviceRole => bloc.deployment?.deviceRoleName ?? '';
 
   Future<StudyDeploymentStatus?> get studyDeploymentStatus  => bloc.studyDeploymentStatus;
-  // List<DeviceDeploymentStatus> get deviceStatusList => bloc.studyDeploymentStatus;;
 
   /// The stream of messages (count)
   Stream<int> get messageStream => bloc.messageStream;

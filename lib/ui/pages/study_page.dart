@@ -307,30 +307,14 @@ class StudyPageState extends State<StudyPage> {
                           child: Padding(
                             padding: const EdgeInsets.only(left: 16.0),
                             child: Text(
-                                locale.translate(deploymentStatus ==
-                                        StudyDeploymentStatusTypes
-                                            .DeployingDevices
-                                    ? snapshot.data?.deviceStatusList.any(
-                                                (device) =>
-                                                    device.status ==
-                                                    DeviceDeploymentStatusTypes
-                                                        .Unregistered) ==
-                                            true
-                                        ? snapshot.data!.deviceStatusList
-                                            .where((device) =>
-                                                device.status ==
-                                                DeviceDeploymentStatusTypes
-                                                    .Unregistered)
-                                            .map((device) =>
-                                                device.device.roleName)
-                                            .join(' | ')
-                                        : locale.translate(
-                                            'pages.about.status.deploying_devices.message')
-                                    : studyStatusText[deploymentStatus]!),
-                                style: aboutCardSubtitleStyle.copyWith(
-                                    color: Theme.of(context)
-                                        .extension<RPColors>()!
-                                        .grey900)),
+                              getStatusText(
+                                  context, deploymentStatus, snapshot, locale),
+                              style: aboutCardSubtitleStyle.copyWith(
+                                color: Theme.of(context)
+                                    .extension<RPColors>()!
+                                    .grey900,
+                              ),
+                            ),
                           ),
                         ),
                       ],
@@ -343,6 +327,37 @@ class StudyPageState extends State<StudyPage> {
         );
       },
     );
+  }
+
+  String getStatusText(
+    BuildContext context,
+    StudyDeploymentStatusTypes deploymentStatusType,
+    AsyncSnapshot<StudyDeploymentStatus?>
+        snapshot, // replace with the correct snapshot type
+    RPLocalizations locale, // replace with your locale type
+  ) {
+    if (deploymentStatusType == StudyDeploymentStatusTypes.DeployingDevices) {
+      final hasUnregisteredDevices = snapshot.data?.deviceStatusList.any(
+            (deviceDeploymentStatus) =>
+                deviceDeploymentStatus.status ==
+                DeviceDeploymentStatusTypes.Unregistered,
+          ) ==
+          true;
+
+      if (hasUnregisteredDevices) {
+        return snapshot.data!.deviceStatusList
+            .where((device) =>
+                device.status == DeviceDeploymentStatusTypes.Unregistered &&
+                device.device is PrimaryDeviceConfiguration)
+            .map((device) => device.device.roleName)
+            .join(' | ');
+      } else {
+        return locale.translate('pages.about.status.deploying_devices.message');
+      }
+    } else {
+      // Now you can easily add more conditions here
+      return studyStatusText[deploymentStatusType]!;
+    }
   }
 
   static Map<StudyDeploymentStatusTypes, Color> studyStatusColors = {

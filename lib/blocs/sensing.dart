@@ -138,11 +138,16 @@ class Sensing {
     _study = await SmartPhoneClientManager().addStudy(bloc.study!);
 
     // Get the study controller and try to deploy the study.
-    //
-    // Note that if the study has already been deployed on this phone it has
-    // been cached locally and the local version will be used pr. default.
-    // If not deployed before (i.e., cached) the study deployment will be
-    // fetched from the deployment service.
+    await tryDeployment();
+  }
+
+  ///7 Try to deploy the study.
+  ///
+  /// Note that if the study has already been deployed on this phone it has
+  /// been cached locally and the local version will be used pr. default.
+  /// If not deployed before (i.e., cached) the study deployment will be
+  /// fetched from the deployment service.
+  Future<void> tryDeployment() async {
     _controller =
         SmartPhoneClientManager().getStudyRuntime(study!.studyDeploymentId);
     await controller?.tryDeployment(useCached: true);

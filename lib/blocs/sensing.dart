@@ -128,7 +128,7 @@ class Sensing {
   }
 
   /// Add and deploy the study, and configure the study runtime (sampling).
-  Future<void> addStudy() async {
+  Future<StudyStatus> addStudy() async {
     assert(SmartPhoneClientManager().isConfigured,
         'The client manager is not yet configured. Call SmartPhoneClientManager().configure() before adding a study.');
     assert(bloc.study != null,
@@ -136,9 +136,11 @@ class Sensing {
 
     // Add the study to the client.
     _study = await SmartPhoneClientManager().addStudy(bloc.study!);
+    _controller =
+        SmartPhoneClientManager().getStudyRuntime(study!.studyDeploymentId);
 
     // Get the study controller and try to deploy the study.
-    await tryDeployment();
+    return await tryDeployment();
   }
 
   ///7 Try to deploy the study.
@@ -147,10 +149,11 @@ class Sensing {
   /// been cached locally and the local version will be used pr. default.
   /// If not deployed before (i.e., cached) the study deployment will be
   /// fetched from the deployment service.
-  Future<void> tryDeployment() async {
-    _controller =
-        SmartPhoneClientManager().getStudyRuntime(study!.studyDeploymentId);
-    await controller?.tryDeployment(useCached: true);
+  Future<StudyStatus> tryDeployment() async {
+    assert(controller != null,
+        'No study or controller is provided. Cannot start deployment w/o a study.');
+
+    StudyStatus status = await controller!.tryDeployment(useCached: true);
 
     // Make sure to translate the user tasks in the study protocol before using
     // them in the app's task list.
@@ -164,6 +167,7 @@ class Sensing {
         .listen((measurement) => debugPrint(toJsonString(measurement)));
 
     info('$runtimeType - Study added, deployment id: $studyDeploymentId');
+    return status;
   }
 
   Future<void> removeStudy() async {

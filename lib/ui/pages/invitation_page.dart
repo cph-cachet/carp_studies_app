@@ -134,17 +134,20 @@ class InvitationDetailsPage extends StatelessWidget {
                                   Padding(
                                     padding: const EdgeInsets.only(
                                         top: 8, bottom: 24),
-                                    child: Text(
-                                      '${(locale.translate('pages.profile.study_id'))}: ${invitation.studyDeploymentId}',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 14,
-                                        color: Theme.of(context)
-                                            .extension<RPColors>()!
-                                            .grey600,
+                                    child: FittedBox(
+                                      fit: BoxFit.scaleDown,
+                                      child: Text(
+                                        '${(locale.translate('pages.profile.study_id'))}: ${invitation.studyDeploymentId}',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 14,
+                                          color: Theme.of(context)
+                                              .extension<RPColors>()!
+                                              .grey600,
+                                        ),
+                                        maxLines: 1,
+                                        textScaler: TextScaler.linear(0.9),
                                       ),
-                                      maxLines: 1,
-                                      textScaler: TextScaler.linear(0.9),
                                     ),
                                   ),
                                   Text(

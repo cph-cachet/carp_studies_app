@@ -133,6 +133,9 @@ class StudyAppBLoC extends ChangeNotifier {
   /// The deployment running on this phone.
   SmartphoneDeployment? get deployment => Sensing().controller?.deployment;
 
+  Set<ExpectedParticipantData?> get expectedParticipantData =>
+      deployment?.expectedParticipantData ?? {};
+
   /// Get the status for the current study deployment.
   /// Returns null if the study is not yet deployed on this phone.
   Future<StudyDeploymentStatus?> get studyDeploymentStatus async =>

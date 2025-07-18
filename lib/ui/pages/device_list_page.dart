@@ -250,8 +250,9 @@ class DeviceListPageState extends State<DeviceListPage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [leading!],
         ),
-        title: SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
+        title: FittedBox(
+          fit: BoxFit.scaleDown,
+          alignment: Alignment.centerLeft,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
@@ -273,10 +274,14 @@ class DeviceListPageState extends State<DeviceListPage> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    subtitle,
-                    style: deviceSubtitle.copyWith(
-                      color: Theme.of(context).extension<RPColors>()!.grey700,
+                  FittedBox(
+                    fit: BoxFit.scaleDown,
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      subtitle,
+                      style: deviceSubtitle.copyWith(
+                        color: Theme.of(context).extension<RPColors>()!.grey700,
+                      ),
                     ),
                   ),
                 ],

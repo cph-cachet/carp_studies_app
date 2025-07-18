@@ -152,6 +152,38 @@ class TaskListPageState extends State<TaskListPage>
                               ),
                             ),
                           ),
+                          SliverPadding(
+                              padding: const EdgeInsets.only(
+                                  left: 24, right: 24, bottom: 16),
+                              sliver: SliverToBoxAdapter(
+                                child: GestureDetector(
+                                  child: StudiesMaterial(
+                                    hasBorder: true,
+                                    borderColor: Theme.of(context)
+                                        .extension<RPColors>()!
+                                        .grey50!,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.horizontal(
+                                        left: Radius.circular(2.0),
+                                        right: Radius.circular(8.0),
+                                      ),
+                                    ),
+                                    backgroundColor: Theme.of(context)
+                                        .extension<RPColors>()!
+                                        .grey50!,
+                                    elevation: 0,
+                                    child: Text(
+                                      locale.translate(
+                                          'pages.task_list.description'),
+                                      style: aboutCardSubtitleStyle,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                  onTap: () {
+                                    context.push(ParticipantDataPage.route);
+                                  },
+                                ),
+                              )),
                           SliverList(
                             delegate: SliverChildBuilderDelegate(
                               (BuildContext context, int index) {

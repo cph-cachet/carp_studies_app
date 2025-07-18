@@ -80,12 +80,9 @@ class _BluetoothConnectionPageState extends State<BluetoothConnectionPage> {
   Widget _buildDialogTitle(RPLocalizations locale) {
     final stepTitleMap = {
       CurrentStep.scan:
-          locale.translate("pages.devices.connection.step.start.title") +
-              (" ${widget.device.name} "),
+          locale.translate("pages.devices.connection.step.start.title"),
       CurrentStep.instructions:
-          locale.translate("pages.devices.connection.step.how_to.title") +
-              (" ${selectedDevice?.platformName} ") +
-              locale.translate("pages.devices.connection.step.how_to.device"),
+          locale.translate("pages.devices.connection.step.how_to.title"),
       CurrentStep.done:
           locale.translate("pages.devices.connection.step.confirm.title") +
               (" ${selectedDevice?.platformName} "),

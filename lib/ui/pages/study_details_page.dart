@@ -100,11 +100,11 @@ class StudyDetailsPage extends StatelessWidget {
                                 locale.translate('pages.about.study.privacy'),
                             onTap: () async {
                               try {
-                                await launchUrl(
-                                    Uri.parse(model.privacyPolicyUrl));
+                                await launchUrl(Uri.parse(
+                                    locale.translate(model.privacyPolicyUrl)));
                               } catch (error) {
                                 warning(
-                                    "Could not launch study description URL - ${model.privacyPolicyUrl}");
+                                    "Could not launch study description URL - ${locale.translate(model.privacyPolicyUrl)}");
                               }
                             }),
                         _buildActionListTile(
@@ -118,10 +118,11 @@ class StudyDetailsPage extends StatelessWidget {
                           title: locale.translate('pages.about.study.website'),
                           onTap: () async {
                             try {
-                              await launchUrl(
-                                  Uri.parse(model.studyDescriptionUrl));
+                              await launchUrl(Uri.parse(
+                                  locale.translate(model.studyDescriptionUrl)));
                             } catch (error) {
-                              warning("Could not launch study description URL - ${model.studyDescriptionUrl}");
+                              warning(
+                                  "Could not launch study description URL - ${locale.translate(model.studyDescriptionUrl)}");
                             }
                           },
                         ),

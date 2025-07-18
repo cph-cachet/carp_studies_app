@@ -30,11 +30,13 @@ class StudyPageState extends State<StudyPage> {
                 builder: (context, AsyncSnapshot<int> snapshot) {
                   return RefreshIndicator(
                     onRefresh: () async {
-                      await Future.wait([
-                        bloc.refreshMessages(),
-                        bloc.deploymentService.getStudyDeploymentStatus(
-                            widget.model.studyDeploymentId),
-                      ]);
+                      await bloc.refreshMessages();
+                      final status = await Sensing().tryDeployment();
+                      if (status == StudyStatus.Deployed) {
+                        bloc.start();
+                      }
+                      bloc.deploymentService.getStudyDeploymentStatus(
+                          widget.model.studyDeploymentId);
                     },
                     child: ListView.builder(
                       // This is +3 bc the first two cards are the study card and the study status card
@@ -307,8 +309,7 @@ class StudyPageState extends State<StudyPage> {
                           child: Padding(
                             padding: const EdgeInsets.only(left: 16.0),
                             child: Text(
-                              getStatusText(
-                                  context, deploymentStatus, snapshot, locale),
+                              getStatusText(locale, deploymentStatus, snapshot),
                               style: aboutCardSubtitleStyle.copyWith(
                                 color: Theme.of(context)
                                     .extension<RPColors>()!
@@ -330,33 +331,17 @@ class StudyPageState extends State<StudyPage> {
   }
 
   String getStatusText(
-    BuildContext context,
+    RPLocalizations locale,
     StudyDeploymentStatusTypes deploymentStatusType,
-    AsyncSnapshot<StudyDeploymentStatus?>
-        snapshot, // replace with the correct snapshot type
-    RPLocalizations locale, // replace with your locale type
+    AsyncSnapshot<StudyDeploymentStatus?> snapshot,
   ) {
     if (deploymentStatusType == StudyDeploymentStatusTypes.DeployingDevices) {
-      final hasUnregisteredDevices = snapshot.data?.deviceStatusList.any(
-            (deviceDeploymentStatus) =>
-                deviceDeploymentStatus.status ==
-                DeviceDeploymentStatusTypes.Unregistered,
-          ) ==
-          true;
-
-      if (hasUnregisteredDevices) {
-        return snapshot.data!.deviceStatusList
-            .where((device) =>
-                device.status == DeviceDeploymentStatusTypes.Unregistered &&
-                device.device is PrimaryDeviceConfiguration)
-            .map((device) => device.device.roleName)
-            .join(' | ');
-      } else {
-        return locale.translate('pages.about.status.deploying_devices.message');
-      }
+      return locale.translate('pages.about.status.deploying_devices.message') +
+          snapshot.data!.deviceStatusList.first
+              .remainingDevicesToRegisterBeforeDeployment!
+              .join(' | ');
     } else {
-      // Now you can easily add more conditions here
-      return studyStatusText[deploymentStatusType]!;
+      return locale.translate(studyStatusText[deploymentStatusType]!);
     }
   }
 

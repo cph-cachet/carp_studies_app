@@ -1,5 +1,6 @@
 {
     "next": "Næste",
+    "previous": "Forrige",
     "back": "Tilbage",
     "done": "Færdig",
     "ok": "OK",
@@ -164,7 +165,7 @@
     "pages.devices.connection.disconnect_bluetooth.title": "Frakobl Bluetooth",
     "pages.devices.connection.disconnect_bluetooth.message": "Er du sikker på, at du vil frakoble",
     "pages.devices.connection.disconnect_bluetooth.disconnect": "Frakobl",
-    "pages.devices.connection.step.how_to.title": "Sådan forbindes ",
+    "pages.devices.connection.step.how_to.title": "Sådan forbindes",
     "pages.devices.connection.step.start.title": "Forbind til enhed",
     "pages.devices.connection.step.start.1": "Vælg den",
     "pages.devices.connection.step.start.2": "enhed, du vil forbinde til, og tryk 'Næste'.",

@@ -119,6 +119,11 @@ class CarpStudyAppState extends State<CarpStudyApp> {
         ),
       ),
       GoRoute(
+        path: ParticipantDataPage.route,
+        parentNavigatorKey: _rootNavigatorKey,
+        builder: (context, state) => ParticipantDataPage(),
+      ),
+      GoRoute(
         path: '/task/:taskId',
         parentNavigatorKey: _rootNavigatorKey,
         builder: (context, state) {
@@ -234,7 +239,7 @@ class CarpStudyAppState extends State<CarpStudyApp> {
       ),
 
       darkTheme: researchPackageDarkTheme,
-      debugShowCheckedModeBanner: false,
+      debugShowCheckedModeBanner: true,
       routerConfig: _router,
     );
   }

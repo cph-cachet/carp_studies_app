@@ -19,7 +19,7 @@ class StudyPageViewModel extends ViewModel {
   String get privacyPolicyUrl =>
       bloc.deployment?.studyDescription?.privacyPolicyUrl ??
       'https://carp.dk/privacy-policy-app/';
-  
+
   String get piTitle => bloc.deployment?.responsible?.title ?? '';
   String get piName => bloc.deployment?.responsible?.name ?? '';
   String get piAddress => bloc.deployment?.responsible?.address ?? '';
@@ -31,7 +31,8 @@ class StudyPageViewModel extends ViewModel {
   String get participantRole => bloc.deployment?.participantRoleName ?? '';
   String get deviceRole => bloc.deployment?.deviceRoleName ?? '';
 
-  Future<StudyDeploymentStatus?> get studyDeploymentStatus  => bloc.studyDeploymentStatus;
+  Future<StudyDeploymentStatus?> get studyDeploymentStatus =>
+      bloc.studyDeploymentStatus;
 
   /// The stream of messages (count)
   Stream<int> get messageStream => bloc.messageStream;

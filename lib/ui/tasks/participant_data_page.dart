@@ -47,8 +47,6 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
 
   final TextEditingController _phoneNumberController = TextEditingController();
 
-  PhoneNumber _phoneNumber = PhoneNumber(isoCode: 'DK');
-
   bool _nextEnabled = false;
 
   final List<ParticipantStep> _includedSteps = [ParticipantStep.presentTypes];
@@ -62,11 +60,18 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
     "ssn": ParticipantStep.socialSecurityNumber,
   };
 
+  final Map<ParticipantStep, String> participantStepDescriptions = {
+    ParticipantStep.address: 'Address',
+    ParticipantStep.diagnosis: 'Diagnosis',
+    ParticipantStep.fullName: 'Full Name',
+    ParticipantStep.informedConsent: 'Informed Consent',
+    ParticipantStep.phoneNumber: 'Phone Number',
+    ParticipantStep.socialSecurityNumber: 'Social Security Number',
+  };
+
   @override
   void initState() {
     super.initState();
-    _phoneNumber = PhoneNumber(isoCode: 'DK');
-
     for (final key in _stepMap.keys) {
       if (expectedData.any(
           (dataType) => dataType!.attribute!.inputDataType.contains(key))) {
@@ -122,34 +127,24 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
               _streetController.text.isNotEmpty &&
               _postalCodeController.text.isNotEmpty &&
               _countryController.text.isNotEmpty;
-          print(
-              "Address: ${_address1Controller.text}, ${_streetController.text}, ${_postalCodeController.text}, ${_countryController.text}");
           break;
         case ParticipantStep.diagnosis:
           _nextEnabled = _effectiveDateController.text.isNotEmpty &&
               _icd11CodeController.text.isNotEmpty &&
               _conclusionController.text.isNotEmpty;
-          print(
-              "Diagnosis: ${_effectiveDateController.text}, ${_icd11CodeController.text}, ${_conclusionController.text}");
           break;
         case ParticipantStep.fullName:
           _nextEnabled = _firstNameController.text.isNotEmpty &&
               _lastNameController.text.isNotEmpty;
-          print(
-              "Full Name: ${_firstNameController.text}, ${_lastNameController.text}");
           break;
         case ParticipantStep.informedConsent:
           _nextEnabled = _informedConsentDescriptionController.text.isNotEmpty;
-          print(
-              "Informed Consent: ${_informedConsentDescriptionController.text}");
           break;
         case ParticipantStep.phoneNumber:
           _nextEnabled = _phoneNumberController.text.isNotEmpty;
-          print("Phone Number: w${_phoneNumberController.text}");
           break;
         case ParticipantStep.socialSecurityNumber:
           _nextEnabled = _ssnController.text.isNotEmpty;
-          print("Social Security Number: ${_ssnController.text}");
           break;
         default:
           _nextEnabled = false;
@@ -267,7 +262,7 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
     final stepContentMap = {
       ParticipantStep.presentTypes: [
         _buildPresentTypes(
-          'a, b, c, d',
+          _includedSteps,
         )
       ],
       ParticipantStep.address: [
@@ -331,19 +326,25 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
     );
   }
 
-  Widget _buildPresentTypes(String typesText) {
+  Widget _buildPresentTypes(List<ParticipantStep> steps) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          typesText,
-          style: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-            letterSpacing: 0.4,
+      children: steps
+          .where((step) => step != ParticipantStep.presentTypes)
+          .map((step) {
+        final description = participantStepDescriptions[step] ?? '';
+        return Padding(
+          padding: const EdgeInsets.only(bottom: 8.0),
+          child: Text(
+            description,
+            style: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+              letterSpacing: 0.4,
+            ),
           ),
-        ),
-      ],
+        );
+      }).toList(),
     );
   }
 
@@ -360,13 +361,8 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
     if (isPhoneNumber) {
       return InternationalPhoneNumberInput(
         onInputChanged: (phoneNumber) {
-          // controller.text = phoneNumber.phoneNumber ?? '';
           print(phoneNumber.phoneNumber);
         },
-        // onSaved: (phoneNumber) {
-        //   controller.text = phoneNumber.phoneNumber ?? '';
-        //   print("ONSAVED ${controller.text}");
-        // },
         selectorConfig: SelectorConfig(
           selectorType: PhoneInputSelectorType.DIALOG,
           useBottomSheetSafeArea: true,
@@ -509,10 +505,6 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
     return [
       buildTranslatedButton("previous", () {
         setState(() {
-          for (final controller in _requiredControllers) {
-            print("Controller: ${controller} ${controller.text}");
-            print("\n\n\n");
-          }
           final idx = _includedSteps.indexOf(currentStep);
           if (currentStep.index - 1 >= 0) {
             currentStep = _includedSteps[idx - 1];
@@ -523,14 +515,9 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
         "next",
         () {
           setState(() {
-            for (final controller in _requiredControllers) {
-              print("Controller: ${controller} ${controller.text}");
-              print("\n\n\n");
-            }
             final idx = _includedSteps.indexOf(currentStep);
             if (currentStep.index + 1 < ParticipantStep.values.length) {
               currentStep = _includedSteps[idx + 1];
-              // _validateRequiredFields();
             }
           });
         },

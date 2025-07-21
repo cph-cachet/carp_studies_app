@@ -21,50 +21,10 @@ class ParticipantDataPage extends StatefulWidget {
 
 class ParticipantDataPageState extends State<ParticipantDataPage> {
   ParticipantStep currentStep = ParticipantStep.presentTypes;
+  final ParticipantDataPageViewModel model = ParticipantDataPageViewModel();
   Set<ExpectedParticipantData?> expectedData = bloc.expectedParticipantData;
 
-  late final Set<TextEditingController> _nonOptionalControllers;
   final Set<StepField> _allUsedStepFields = {};
-
-  final TextEditingController _address1Controller = TextEditingController();
-  final TextEditingController _address2Controller = TextEditingController();
-  final TextEditingController _streetController = TextEditingController();
-  final TextEditingController _postalCodeController = TextEditingController();
-  final TextEditingController _countryController = TextEditingController();
-
-  final TextEditingController _effectiveDateController =
-      TextEditingController();
-  final TextEditingController _diagnosisDescriptionController =
-      TextEditingController();
-  final TextEditingController _icd11CodeController = TextEditingController();
-  final TextEditingController _conclusionController = TextEditingController();
-
-  final TextEditingController _firstNameController = TextEditingController();
-  final TextEditingController _middleNameController = TextEditingController();
-  final TextEditingController _lastNameController = TextEditingController();
-
-  final TextEditingController _informedConsentDescriptionController =
-      TextEditingController();
-
-  final TextEditingController _ssnController = TextEditingController();
-
-  final TextEditingController _phoneNumberController = TextEditingController();
-
-  late StepField address1Field;
-  late StepField address2Field;
-  late StepField streetField;
-  late StepField postalCodeField;
-  late StepField countryField;
-  late StepField effectiveDateField;
-  late StepField diagnosisDescriptionField;
-  late StepField icd11CodeField;
-  late StepField conclusionField;
-  late StepField firstNameField;
-  late StepField middleNameField;
-  late StepField lastNameField;
-  late StepField informedConsentDescriptionField;
-  late StepField ssnField;
-  late StepField phoneNumberField;
 
   bool _nextEnabled = false;
 
@@ -104,109 +64,95 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
     /// Always include the review step at the end
     _includedSteps.add(ParticipantStep.review);
 
-    _nonOptionalControllers = {
-      _address1Controller,
-      _streetController,
-      _postalCodeController,
-      _countryController,
-      _effectiveDateController,
-      _icd11CodeController,
-      _conclusionController,
-      _firstNameController,
-      _lastNameController,
-      _informedConsentDescriptionController,
-      _phoneNumberController,
-      _ssnController,
+    model._nonOptionalControllers = {
+      model._address1Controller,
+      model._streetController,
+      model._postalCodeController,
+      model._countryController,
+      model._effectiveDateController,
+      model._icd11CodeController,
+      model._conclusionController,
+      model._firstNameController,
+      model._lastNameController,
+      model._informedConsentDescriptionController,
+      model._phoneNumberController,
+      model._ssnController,
     };
 
-    for (final controller in _nonOptionalControllers) {
+    for (final controller in model._nonOptionalControllers) {
       controller.addListener(_validateRequiredFields);
     }
 
-    address1Field = StepField(
+    model.address1Field = StepField(
       title: "tasks.participant_data.address.address1",
-      controller: _address1Controller,
+      controller: model._address1Controller,
     );
-    address2Field = StepField(
+    model.address2Field = StepField(
       title: "tasks.participant_data.address.address2",
-      controller: _address2Controller,
+      controller: model._address2Controller,
     );
-    streetField = StepField(
+    model.streetField = StepField(
       title: "tasks.participant_data.address.street",
-      controller: _streetController,
+      controller: model._streetController,
     );
-    postalCodeField = StepField(
+    model.postalCodeField = StepField(
       title: "tasks.participant_data.address.postal_code",
-      controller: _postalCodeController,
+      controller: model._postalCodeController,
     );
-    countryField = StepField(
+    model.countryField = StepField(
       title: "tasks.participant_data.address.country",
-      controller: _countryController,
+      controller: model._countryController,
     );
 
-    effectiveDateField = StepField(
+    model.effectiveDateField = StepField(
       title: "tasks.participant_data.diagnosis.effective_date",
-      controller: _effectiveDateController,
+      controller: model._effectiveDateController,
     );
-    diagnosisDescriptionField = StepField(
+    model.diagnosisDescriptionField = StepField(
       title: "tasks.participant_data.diagnosis.diagnosis_description",
-      controller: _diagnosisDescriptionController,
+      controller: model._diagnosisDescriptionController,
     );
-    icd11CodeField = StepField(
+    model.icd11CodeField = StepField(
       title: "tasks.participant_data.diagnosis.icd11_code",
-      controller: _icd11CodeController,
+      controller: model._icd11CodeController,
     );
-    conclusionField = StepField(
+    model.conclusionField = StepField(
       title: "tasks.participant_data.diagnosis.conclusion",
-      controller: _conclusionController,
+      controller: model._conclusionController,
     );
 
-    firstNameField = StepField(
+    model.firstNameField = StepField(
       title: "tasks.participant_data.full_name.first_name",
-      controller: _firstNameController,
+      controller: model._firstNameController,
     );
-    middleNameField = StepField(
+    model.middleNameField = StepField(
       title: "tasks.participant_data.full_name.middle_name",
-      controller: _middleNameController,
+      controller: model._middleNameController,
     );
-    lastNameField = StepField(
+    model.lastNameField = StepField(
       title: "tasks.participant_data.full_name.last_name",
-      controller: _lastNameController,
+      controller: model._lastNameController,
     );
 
-    informedConsentDescriptionField = StepField(
+    model.informedConsentDescriptionField = StepField(
       title: "tasks.participant_data.informed_consent.description",
-      controller: _informedConsentDescriptionController,
+      controller: model._informedConsentDescriptionController,
     );
 
-    phoneNumberField = StepField(
+    model.phoneNumberField = StepField(
       title: "tasks.participant_data.phone_number.phone_number",
-      controller: _phoneNumberController,
+      controller: model._phoneNumberController,
     );
 
-    ssnField = StepField(
+    model.ssnField = StepField(
       title: "tasks.participant_data.ssn.ssn",
-      controller: _ssnController,
+      controller: model._ssnController,
     );
   }
 
   @override
   void dispose() {
-    _address1Controller.dispose();
-    _address2Controller.dispose();
-    _streetController.dispose();
-    _postalCodeController.dispose();
-    _countryController.dispose();
-    _effectiveDateController.dispose();
-    _diagnosisDescriptionController.dispose();
-    _icd11CodeController.dispose();
-    _conclusionController.dispose();
-    _firstNameController.dispose();
-    _middleNameController.dispose();
-    _lastNameController.dispose();
-    _informedConsentDescriptionController.dispose();
-    _phoneNumberController.dispose();
-    _ssnController.dispose();
+    model.dispose();
     super.dispose();
   }
 
@@ -217,28 +163,29 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
     setState(() {
       switch (currentStep) {
         case ParticipantStep.address:
-          _nextEnabled = _address1Controller.text.isNotEmpty &&
-              _streetController.text.isNotEmpty &&
-              _postalCodeController.text.isNotEmpty &&
-              _countryController.text.isNotEmpty;
+          _nextEnabled = model._address1Controller.text.isNotEmpty &&
+              model._streetController.text.isNotEmpty &&
+              model._postalCodeController.text.isNotEmpty &&
+              model._countryController.text.isNotEmpty;
           break;
         case ParticipantStep.diagnosis:
-          _nextEnabled = _effectiveDateController.text.isNotEmpty &&
-              _icd11CodeController.text.isNotEmpty &&
-              _conclusionController.text.isNotEmpty;
+          _nextEnabled = model._effectiveDateController.text.isNotEmpty &&
+              model._icd11CodeController.text.isNotEmpty &&
+              model._conclusionController.text.isNotEmpty;
           break;
         case ParticipantStep.fullName:
-          _nextEnabled = _firstNameController.text.isNotEmpty &&
-              _lastNameController.text.isNotEmpty;
+          _nextEnabled = model._firstNameController.text.isNotEmpty &&
+              model._lastNameController.text.isNotEmpty;
           break;
         case ParticipantStep.informedConsent:
-          _nextEnabled = _informedConsentDescriptionController.text.isNotEmpty;
+          _nextEnabled =
+              model._informedConsentDescriptionController.text.isNotEmpty;
           break;
         case ParticipantStep.phoneNumber:
-          _nextEnabled = _phoneNumberController.text.isNotEmpty;
+          _nextEnabled = model._phoneNumberController.text.isNotEmpty;
           break;
         case ParticipantStep.socialSecurityNumber:
-          _nextEnabled = _ssnController.text.isNotEmpty;
+          _nextEnabled = model._ssnController.text.isNotEmpty;
           break;
         case ParticipantStep.review:
           _nextEnabled = true;
@@ -374,36 +321,38 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
         break;
       case ParticipantStep.address:
         fields.addAll([
-          _buildField(locale, address1Field),
-          _buildField(locale, address2Field, isOptional: true),
-          _buildField(locale, streetField),
-          _buildField(locale, postalCodeField),
-          _buildField(locale, countryField),
+          _buildField(locale, model.address1Field),
+          _buildField(locale, model.address2Field, isOptional: true),
+          _buildField(locale, model.streetField),
+          _buildField(locale, model.postalCodeField),
+          _buildField(locale, model.countryField),
         ]);
         break;
       case ParticipantStep.diagnosis:
         fields.addAll([
-          _buildField(locale, effectiveDateField),
-          _buildField(locale, diagnosisDescriptionField, isOptional: true),
-          _buildField(locale, icd11CodeField),
-          _buildField(locale, conclusionField, isThicc: true),
+          _buildField(locale, model.effectiveDateField),
+          _buildField(locale, model.diagnosisDescriptionField,
+              isOptional: true),
+          _buildField(locale, model.icd11CodeField),
+          _buildField(locale, model.conclusionField, isThicc: true),
         ]);
         break;
       case ParticipantStep.fullName:
         fields.addAll([
-          _buildField(locale, firstNameField),
-          _buildField(locale, middleNameField, isOptional: true),
-          _buildField(locale, lastNameField),
+          _buildField(locale, model.firstNameField),
+          _buildField(locale, model.middleNameField, isOptional: true),
+          _buildField(locale, model.lastNameField),
         ]);
         break;
       case ParticipantStep.informedConsent:
-        fields.add(_buildField(locale, informedConsentDescriptionField));
+        fields.add(_buildField(locale, model.informedConsentDescriptionField));
         break;
       case ParticipantStep.phoneNumber:
-        fields.add(_buildField(locale, phoneNumberField, isPhoneNumber: true));
+        fields.add(
+            _buildField(locale, model.phoneNumberField, isPhoneNumber: true));
         break;
       case ParticipantStep.socialSecurityNumber:
-        fields.add(_buildField(locale, ssnField, isCPR: true));
+        fields.add(_buildField(locale, model.ssnField, isCPR: true));
         break;
       case ParticipantStep.review:
         fields.add(_buildReviewStep(

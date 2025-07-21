@@ -7,7 +7,8 @@ enum ParticipantStep {
   fullName,
   informedConsent,
   phoneNumber,
-  socialSecurityNumber
+  socialSecurityNumber,
+  review
 }
 
 class ParticipantDataPage extends StatefulWidget {
@@ -22,7 +23,9 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
   ParticipantStep currentStep = ParticipantStep.presentTypes;
   Set<ExpectedParticipantData?> expectedData = bloc.expectedParticipantData;
 
-  late final List<TextEditingController> _requiredControllers;
+  late final Set<TextEditingController> _nonOptionalControllers;
+  final Set<StepField> _allUsedStepFields = {};
+
   final TextEditingController _address1Controller = TextEditingController();
   final TextEditingController _address2Controller = TextEditingController();
   final TextEditingController _streetController = TextEditingController();
@@ -47,8 +50,26 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
 
   final TextEditingController _phoneNumberController = TextEditingController();
 
+  late StepField address1Field;
+  late StepField address2Field;
+  late StepField streetField;
+  late StepField postalCodeField;
+  late StepField countryField;
+  late StepField effectiveDateField;
+  late StepField diagnosisDescriptionField;
+  late StepField icd11CodeField;
+  late StepField conclusionField;
+  late StepField firstNameField;
+  late StepField middleNameField;
+  late StepField lastNameField;
+  late StepField informedConsentDescriptionField;
+  late StepField ssnField;
+  late StepField phoneNumberField;
+
   bool _nextEnabled = false;
 
+  /// Always include the present types step at the beginning
+  /// and the review step at the end.
   final List<ParticipantStep> _includedSteps = [ParticipantStep.presentTypes];
 
   final Map<String, ParticipantStep> _stepMap = {
@@ -67,6 +88,7 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
     ParticipantStep.informedConsent: 'Informed Consent',
     ParticipantStep.phoneNumber: 'Phone Number',
     ParticipantStep.socialSecurityNumber: 'Social Security Number',
+    ParticipantStep.review: 'Review',
   };
 
   @override
@@ -79,7 +101,10 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
       }
     }
 
-    _requiredControllers = [
+    /// Always include the review step at the end
+    _includedSteps.add(ParticipantStep.review);
+
+    _nonOptionalControllers = {
       _address1Controller,
       _streetController,
       _postalCodeController,
@@ -92,11 +117,77 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
       _informedConsentDescriptionController,
       _phoneNumberController,
       _ssnController,
-    ];
+    };
 
-    for (final controller in _requiredControllers) {
+    for (final controller in _nonOptionalControllers) {
       controller.addListener(_validateRequiredFields);
     }
+
+    address1Field = StepField(
+      title: "tasks.participant_data.address.address1",
+      controller: _address1Controller,
+    );
+    address2Field = StepField(
+      title: "tasks.participant_data.address.address2",
+      controller: _address2Controller,
+    );
+    streetField = StepField(
+      title: "tasks.participant_data.address.street",
+      controller: _streetController,
+    );
+    postalCodeField = StepField(
+      title: "tasks.participant_data.address.postal_code",
+      controller: _postalCodeController,
+    );
+    countryField = StepField(
+      title: "tasks.participant_data.address.country",
+      controller: _countryController,
+    );
+
+    effectiveDateField = StepField(
+      title: "tasks.participant_data.diagnosis.effective_date",
+      controller: _effectiveDateController,
+    );
+    diagnosisDescriptionField = StepField(
+      title: "tasks.participant_data.diagnosis.diagnosis_description",
+      controller: _diagnosisDescriptionController,
+    );
+    icd11CodeField = StepField(
+      title: "tasks.participant_data.diagnosis.icd11_code",
+      controller: _icd11CodeController,
+    );
+    conclusionField = StepField(
+      title: "tasks.participant_data.diagnosis.conclusion",
+      controller: _conclusionController,
+    );
+
+    firstNameField = StepField(
+      title: "tasks.participant_data.full_name.first_name",
+      controller: _firstNameController,
+    );
+    middleNameField = StepField(
+      title: "tasks.participant_data.full_name.middle_name",
+      controller: _middleNameController,
+    );
+    lastNameField = StepField(
+      title: "tasks.participant_data.full_name.last_name",
+      controller: _lastNameController,
+    );
+
+    informedConsentDescriptionField = StepField(
+      title: "tasks.participant_data.informed_consent.description",
+      controller: _informedConsentDescriptionController,
+    );
+
+    phoneNumberField = StepField(
+      title: "tasks.participant_data.phone_number.phone_number",
+      controller: _phoneNumberController,
+    );
+
+    ssnField = StepField(
+      title: "tasks.participant_data.ssn.ssn",
+      controller: _ssnController,
+    );
   }
 
   @override
@@ -119,6 +210,9 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
     super.dispose();
   }
 
+  /// Validates the required fields based on the current step.
+  /// Updates the [_nextEnabled] state variable accordingly.
+  /// This method is called whenever a relevant text field changes.
   void _validateRequiredFields() {
     setState(() {
       switch (currentStep) {
@@ -145,6 +239,9 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
           break;
         case ParticipantStep.socialSecurityNumber:
           _nextEnabled = _ssnController.text.isNotEmpty;
+          break;
+        case ParticipantStep.review:
+          _nextEnabled = true;
           break;
         default:
           _nextEnabled = false;
@@ -218,6 +315,7 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
     );
   }
 
+  /// Builds the title of the dialog based on the current step.
   Widget _buildDialogTitle(RPLocalizations locale) {
     final stepTitleMap = {
       ParticipantStep.presentTypes:
@@ -234,6 +332,8 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
           locale.translate("tasks.participant_data.phone_number.title"),
       ParticipantStep.socialSecurityNumber:
           locale.translate("tasks.participant_data.ssn.title"),
+      ParticipantStep.review:
+          locale.translate("tasks.participant_data.review.title"),
     };
     return Padding(
       padding: const EdgeInsets.only(bottom: 16),
@@ -257,86 +357,79 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
     );
   }
 
+  /// Builds the content of the current step based on the [_includedSteps].
   Widget _buildStepContent(
       RPLocalizations locale, Set<ExpectedParticipantData?> expectedData) {
-    final stepContentMap = {
-      ParticipantStep.presentTypes: [
-        _buildPresentTypes(
-          _includedSteps,
-        )
-      ],
-      ParticipantStep.address: [
-        _buildField(locale, _address1Controller,
-            title: "tasks.participant_data.address.address1"),
-        _buildField(locale, _address2Controller,
-            title: "tasks.participant_data.address.address2"),
-        _buildField(locale, _streetController,
-            title: "tasks.participant_data.address.street"),
-        _buildField(locale, _postalCodeController,
-            title: "tasks.participant_data.address.postal_code"),
-        _buildField(locale, _countryController,
-            title: "tasks.participant_data.address.country"),
-      ],
-      ParticipantStep.diagnosis: [
-        _buildField(locale, _effectiveDateController,
-            title: "tasks.participant_data.diagnosis.effective_date"),
-        _buildField(locale, _diagnosisDescriptionController,
-            title: "tasks.participant_data.diagnosis.diagnosis_description",
-            isOptional: true),
-        _buildField(locale, _icd11CodeController,
-            title: "tasks.participant_data.diagnosis.icd11_code"),
-        _buildField(locale, _conclusionController,
-            title: "tasks.participant_data.diagnosis.conclusion",
-            isThicc: true),
-      ],
-      ParticipantStep.fullName: [
-        _buildField(locale, _firstNameController,
-            title: "tasks.participant_data.full_name.first_name"),
-        _buildField(
+    List<Widget> fields = [];
+    switch (currentStep) {
+      case ParticipantStep.presentTypes:
+        fields.add(_buildPresentTypes(
+          _includedSteps
+              .where((step) =>
+                  step != ParticipantStep.presentTypes &&
+                  step != ParticipantStep.review)
+              .map((step) => participantStepDescriptions[step])
+              .toList(),
+        ));
+        break;
+      case ParticipantStep.address:
+        fields.addAll([
+          _buildField(locale, address1Field),
+          _buildField(locale, address2Field, isOptional: true),
+          _buildField(locale, streetField),
+          _buildField(locale, postalCodeField),
+          _buildField(locale, countryField),
+        ]);
+        break;
+      case ParticipantStep.diagnosis:
+        fields.addAll([
+          _buildField(locale, effectiveDateField),
+          _buildField(locale, diagnosisDescriptionField, isOptional: true),
+          _buildField(locale, icd11CodeField),
+          _buildField(locale, conclusionField, isThicc: true),
+        ]);
+        break;
+      case ParticipantStep.fullName:
+        fields.addAll([
+          _buildField(locale, firstNameField),
+          _buildField(locale, middleNameField, isOptional: true),
+          _buildField(locale, lastNameField),
+        ]);
+        break;
+      case ParticipantStep.informedConsent:
+        fields.add(_buildField(locale, informedConsentDescriptionField));
+        break;
+      case ParticipantStep.phoneNumber:
+        fields.add(_buildField(locale, phoneNumberField, isPhoneNumber: true));
+        break;
+      case ParticipantStep.socialSecurityNumber:
+        fields.add(_buildField(locale, ssnField, isCPR: true));
+        break;
+      case ParticipantStep.review:
+        fields.add(_buildReviewStep(
           locale,
-          _middleNameController,
-          title: "tasks.participant_data.full_name.middle_name",
-          isOptional: true,
-        ),
-        _buildField(locale, _lastNameController,
-            title: "tasks.participant_data.full_name.last_name"),
-      ],
-      ParticipantStep.informedConsent: [
-        _buildField(locale, _informedConsentDescriptionController,
-            title: "tasks.participant_data.informed_consent.description"),
-      ],
-      ParticipantStep.socialSecurityNumber: [
-        _buildField(locale, _ssnController,
-            title: "tasks.participant_data.ssn.country", isCPR: true),
-      ],
-      ParticipantStep.phoneNumber: [
-        _buildField(locale, _phoneNumberController,
-            title: "tasks.participant_data.phone_number.country",
-            isPhoneNumber: true),
-      ],
-    };
+          _allUsedStepFields,
+        ));
+        break;
+    }
 
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ...(stepContentMap[currentStep] ?? []),
-        ],
+        children: fields,
       ),
     );
   }
 
-  Widget _buildPresentTypes(List<ParticipantStep> steps) {
+  /// Builds the present types section and the review section, displaying the steps that are included
+  Widget _buildPresentTypes(List<String?> steps) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: steps
-          .where((step) => step != ParticipantStep.presentTypes)
-          .map((step) {
-        final description = participantStepDescriptions[step] ?? '';
+      children: steps.map((step) {
         return Padding(
           padding: const EdgeInsets.only(bottom: 8.0),
           child: Text(
-            description,
+            step ?? '',
             style: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w600,
@@ -348,21 +441,60 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
     );
   }
 
+  Widget _buildReviewStep(RPLocalizations locale, Set<StepField> fields) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: List.generate(fields.length, (index) {
+        final field = fields.elementAt(index).title;
+        final input = (index < fields.length
+                ? fields.elementAt(index).controller.text
+                : null) ??
+            'N/A';
+
+        return Padding(
+          padding: const EdgeInsets.only(bottom: 16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                locale.translate(field),
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                  letterSpacing: 0.4,
+                ),
+              ),
+              Text(
+                locale.translate(input),
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                  letterSpacing: 0.4,
+                ),
+              ),
+            ],
+          ),
+        );
+      }),
+    );
+  }
+
+  /// Is used to build all the text fields in the participant data page.
+  /// Is called as many times as the number of steps in each participant data page.
   Widget _buildField(
     RPLocalizations locale,
-    TextEditingController controller, {
-    required String title,
+    StepField stepField, {
     bool isPhoneNumber = false,
     bool isCPR = false,
     bool isOptional = false,
     bool isThicc = false,
   }) {
     _validateRequiredFields();
+    _allUsedStepFields.add(stepField);
     if (isPhoneNumber) {
       return InternationalPhoneNumberInput(
-        onInputChanged: (phoneNumber) {
-          print(phoneNumber.phoneNumber);
-        },
+        onInputChanged: (phoneNumber) {},
+        textFieldController: stepField.controller,
         selectorConfig: SelectorConfig(
           selectorType: PhoneInputSelectorType.DIALOG,
           useBottomSheetSafeArea: true,
@@ -370,7 +502,6 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
         ignoreBlank: false,
         autoValidateMode: AutovalidateMode.disabled,
         selectorTextStyle: TextStyle(color: Colors.black),
-        textFieldController: controller,
         formatInput: true,
         keyboardType:
             TextInputType.numberWithOptions(signed: true, decimal: true),
@@ -395,10 +526,9 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
                   ),
                   child: CountryCodePicker(
                     onChanged: (value) {
-                      controller.text =
-                          '${value.code}${_phoneNumberController.text}';
+                      stepField.controller.text =
+                          '${value.code}${stepField.controller.text}';
                     },
-                    // initialSelection: country,
                     showCountryOnly: true,
                     showOnlyCountryWhenClosed: true,
                     alignLeft: false,
@@ -413,10 +543,7 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
           Expanded(
             flex: 3,
             child: TextFormField(
-              onChanged: (value) {
-                controller.text = value;
-              },
-              controller: controller,
+              controller: stepField.controller,
               decoration: InputDecoration(
                 filled: true,
                 fillColor: Colors.grey[100],
@@ -445,7 +572,7 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
           Padding(
             padding: const EdgeInsets.only(bottom: 4),
             child: Text(
-              locale.translate(title),
+              locale.translate(stepField.title),
               textAlign: TextAlign.start,
               style: const TextStyle(
                 fontSize: 12,
@@ -457,10 +584,7 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
           Padding(
             padding: const EdgeInsets.only(bottom: 16),
             child: TextFormField(
-              onChanged: (value) {
-                controller.text = value;
-              },
-              controller: controller,
+              controller: stepField.controller,
               keyboardType: TextInputType.multiline,
               maxLines: isThicc ? null : 1,
               decoration: InputDecoration(
@@ -489,6 +613,9 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
     }
   }
 
+  /// Builds the action buttons at the bottom of the page.
+  /// Includes "Cancel", "Previous", "Next", and "Submit" buttons.
+  /// The "Next" button is enabled only if the required fields for the current step are filled.
   List<Widget> _buildActionButtons(RPLocalizations locale) {
     Widget buildTranslatedButton(String key, VoidCallback onPressed,
         bool enabled, ButtonStyle? buttonStyle, TextStyle? buttonTextStyle) {
@@ -503,33 +630,56 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
     }
 
     return [
-      buildTranslatedButton("previous", () {
-        setState(() {
-          final idx = _includedSteps.indexOf(currentStep);
-          if (currentStep.index - 1 >= 0) {
-            currentStep = _includedSteps[idx - 1];
-          }
-        });
-      }, true, null, null),
-      buildTranslatedButton(
-        "next",
-        () {
-          setState(() {
-            final idx = _includedSteps.indexOf(currentStep);
-            if (currentStep.index + 1 < ParticipantStep.values.length) {
-              currentStep = _includedSteps[idx + 1];
-            }
-          });
-        },
-        currentStep == ParticipantStep.presentTypes ? true : _nextEnabled,
-        ElevatedButton.styleFrom(
-          backgroundColor: Theme.of(context).extension<RPColors>()!.primary,
-          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 12),
-        ),
-        TextStyle(
-          color: Colors.white,
-        ),
-      ),
+      currentStep == ParticipantStep.presentTypes
+          ? buildTranslatedButton("cancel", () {
+              context.pop();
+            }, true, null, null)
+          : buildTranslatedButton("previous", () {
+              setState(() {
+                final idx = _includedSteps.indexOf(currentStep);
+                if (currentStep.index - 1 >= 0) {
+                  currentStep = _includedSteps[idx - 1];
+                }
+              });
+            }, true, null, null),
+      currentStep.index == ParticipantStep.values.length - 1
+          ? buildTranslatedButton(
+              "submit",
+              () {
+                // CALL setParticipantData from carp webservices
+              },
+              _nextEnabled,
+              ElevatedButton.styleFrom(
+                backgroundColor:
+                    Theme.of(context).extension<RPColors>()!.primary,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 30, vertical: 12),
+              ),
+              TextStyle(
+                color: Colors.white,
+              ),
+            )
+          : buildTranslatedButton(
+              "next",
+              () {
+                setState(() {
+                  final idx = _includedSteps.indexOf(currentStep);
+                  if (currentStep.index + 1 < ParticipantStep.values.length) {
+                    currentStep = _includedSteps[idx + 1];
+                  }
+                });
+              },
+              currentStep == ParticipantStep.presentTypes ? true : _nextEnabled,
+              ElevatedButton.styleFrom(
+                backgroundColor:
+                    Theme.of(context).extension<RPColors>()!.primary,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 30, vertical: 12),
+              ),
+              TextStyle(
+                color: Colors.white,
+              ),
+            ),
     ];
   }
 
@@ -561,4 +711,14 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
       },
     );
   }
+}
+
+class StepField {
+  final String title;
+  final TextEditingController controller;
+
+  StepField({
+    required this.title,
+    required this.controller,
+  });
 }

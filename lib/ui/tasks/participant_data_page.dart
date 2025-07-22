@@ -22,7 +22,6 @@ class ParticipantDataPage extends StatefulWidget {
 class ParticipantDataPageState extends State<ParticipantDataPage> {
   ParticipantStep currentStep = ParticipantStep.presentTypes;
   final ParticipantDataPageViewModel model = ParticipantDataPageViewModel();
-  Set<ExpectedParticipantData?> expectedData = bloc.expectedParticipantData;
 
   final Set<StepField> _allUsedStepFields = {};
 
@@ -55,7 +54,7 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
   void initState() {
     super.initState();
     for (final key in _stepMap.keys) {
-      if (expectedData.any(
+      if (model.expectedData.any(
           (dataType) => dataType!.attribute!.inputDataType.contains(key))) {
         _includedSteps.add(_stepMap[key]!);
       }
@@ -239,7 +238,8 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
                         child: Padding(
                           padding: const EdgeInsets.symmetric(vertical: 8),
                           child: SizedBox(
-                            child: _buildStepContent(locale, expectedData),
+                            child:
+                                _buildStepContent(locale, model.expectedData),
                           ),
                         ),
                       ),
@@ -448,6 +448,22 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
           selectorType: PhoneInputSelectorType.DIALOG,
           useBottomSheetSafeArea: true,
         ),
+        inputDecoration: InputDecoration(
+          labelText: locale.translate(stepField.title),
+          floatingLabelBehavior: FloatingLabelBehavior.always,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8),
+            borderSide: BorderSide(color: Colors.blue),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8),
+            borderSide: BorderSide(color: Colors.grey.shade300),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8),
+            borderSide: BorderSide(color: Colors.blue, width: 2),
+          ),
+        ),
         ignoreBlank: false,
         autoValidateMode: AutovalidateMode.disabled,
         selectorTextStyle: TextStyle(color: Colors.black),
@@ -494,8 +510,8 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
             child: TextFormField(
               controller: stepField.controller,
               decoration: InputDecoration(
-                filled: true,
-                fillColor: Colors.grey[100],
+                labelText: locale.translate(stepField.title),
+                floatingLabelBehavior: FloatingLabelBehavior.always,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
                   borderSide: BorderSide(color: Colors.blue),
@@ -519,26 +535,14 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.only(bottom: 4),
-            child: Text(
-              locale.translate(stepField.title),
-              textAlign: TextAlign.start,
-              style: const TextStyle(
-                fontSize: 12,
-                color: Colors.blue,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ),
-          Padding(
             padding: const EdgeInsets.only(bottom: 16),
             child: TextFormField(
               controller: stepField.controller,
               keyboardType: TextInputType.multiline,
               maxLines: isThicc ? null : 1,
               decoration: InputDecoration(
-                filled: true,
-                fillColor: Colors.grey[100],
+                labelText: locale.translate(stepField.title),
+                floatingLabelBehavior: FloatingLabelBehavior.always,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
                   borderSide: BorderSide(color: Colors.blue),
@@ -595,7 +599,10 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
           ? buildTranslatedButton(
               "submit",
               () {
-                // CALL setParticipantData from carp webservices
+                bloc.setParticipantData(
+                  bloc.study!.studyDeploymentId,
+                  {},
+                );
               },
               _nextEnabled,
               ElevatedButton.styleFrom(

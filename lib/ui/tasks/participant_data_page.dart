@@ -74,7 +74,9 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
       model._firstNameController,
       model._lastNameController,
       model._informedConsentDescriptionController,
+      model._phoneNumberCodeController,
       model._phoneNumberController,
+      model._ssnCountryController,
       model._ssnController,
     };
 
@@ -220,7 +222,6 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
   @override
   Widget build(BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;
-
     return Scaffold(
       body: SafeArea(
         child: Container(
@@ -418,11 +419,21 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: List.generate(fields.length, (index) {
-        final field = fields.elementAt(index).title;
-        final input = (index < fields.length
-                ? fields.elementAt(index).controller.text
-                : null) ??
-            'N/A';
+        final String field = fields.elementAt(index).title;
+        String input = "";
+        if (index < fields.length) {
+          if (fields.elementAt(index).controller ==
+              model._phoneNumberController) {
+            input =
+                "${model._phoneNumberCodeController.text} ${fields.elementAt(index).controller.text}";
+          } else if (fields.elementAt(index).controller ==
+              model._ssnController) {
+            input =
+                "${model._ssnCountryController.text} ${fields.elementAt(index).controller.text}";
+          } else {
+            input = fields.elementAt(index).controller.text;
+          }
+        }
 
         return Padding(
           padding: const EdgeInsets.only(bottom: 16.0),
@@ -438,7 +449,7 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
                 ),
               ),
               Text(
-                locale.translate(input),
+                input,
                 style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
@@ -467,7 +478,9 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
     _allUsedStepFields.add(stepField);
     if (isPhoneNumber) {
       return InternationalPhoneNumberInput(
-        onInputChanged: (phoneNumber) {},
+        onInputChanged: (phoneNumber) {
+          model._phoneNumberCodeController.text = phoneNumber.dialCode ?? '';
+        },
         textFieldController: stepField.controller,
         selectorConfig: SelectorConfig(
           selectorType: PhoneInputSelectorType.DIALOG,
@@ -502,8 +515,8 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
                   child: CountryCodePicker(
                     onChanged: (value) {
                       stepField.controller.clear();
-                      stepField.controller.text =
-                          '${value.code}${stepField.controller.text}';
+                      model._ssnCountryController.text = value.code ?? '';
+                      stepField.controller.text = stepField.controller.text;
                     },
                     initialSelection: 'DK',
                     showCountryOnly: true,
@@ -538,7 +551,6 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
                 focusNode: stepField.focusNode,
                 textInputAction: TextInputAction.next,
                 onFieldSubmitted: (_) {
-                  print('Field submitted: ${stepField.title}');
                   if (stepField.nextFocusNode != null) {
                     FocusScope.of(context)
                         .requestFocus(stepField.nextFocusNode);
@@ -700,13 +712,13 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
       },
       ParticipantStep.phoneNumber: {
         PhoneNumberInput.type: PhoneNumberInput(
-          countryCode: model._phoneNumberController.text,
+          countryCode: model._phoneNumberCodeController.text,
           number: model._phoneNumberController.text,
         ),
       },
       ParticipantStep.socialSecurityNumber: {
         SocialSecurityNumberInput.type: SocialSecurityNumberInput(
-          country: "DK",
+          country: model._ssnCountryController.text,
           socialSecurityNumber: model._ssnController.text,
         ),
       },
@@ -717,7 +729,7 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
         participantData.addAll(dataMap);
       }
     }
-    print("Participant Data: $participantData");
+    LocalSettings().isExpectedParticipantDataSet = true;
     return participantData;
   }
 

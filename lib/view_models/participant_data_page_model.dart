@@ -23,9 +23,12 @@ class ParticipantDataPageViewModel extends ViewModel {
   final TextEditingController _informedConsentDescriptionController =
       TextEditingController();
 
-  final TextEditingController _ssnController =
+  final TextEditingController _ssnCountryController =
       TextEditingController(text: "DK");
+  final TextEditingController _ssnController = TextEditingController();
 
+  final TextEditingController _phoneNumberCodeController =
+      TextEditingController();
   final TextEditingController _phoneNumberController = TextEditingController();
 
   final FocusNode _address1FocusNode = FocusNode();
@@ -58,5 +61,4 @@ class ParticipantDataPageViewModel extends ViewModel {
   late StepField phoneNumberField;
 
   late final Set<TextEditingController> _nonOptionalControllers;
-
 }

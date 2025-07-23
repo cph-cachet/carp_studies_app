@@ -14,6 +14,8 @@ class LocalSettings {
   /// See https://developer.android.com/health-and-fitness/guides/health-connect/develop/get-started#get-client
   static const healthConnectPackageName = 'com.google.android.apps.healthdata';
 
+  bool isExpectedParticipantDataSet = false;
+
   // Keys for storing in shared preferences
   static const String userKey = 'user';
   static const String participantKey = 'participant';

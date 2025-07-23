@@ -152,8 +152,11 @@ class TaskListPageState extends State<TaskListPage>
                               ),
                             ),
                           ),
-                          SliverToBoxAdapter(
-                              child: _buildParticipantDataCard()),
+                          // LocalSettings().isExpectedParticipantDataSet
+                          //     ? const SliverToBoxAdapter()
+                          //     : 
+                              SliverToBoxAdapter(
+                                  child: _buildParticipantDataCard()),
                           SliverList(
                             delegate: SliverChildBuilderDelegate(
                               (BuildContext context, int index) {
@@ -626,7 +629,7 @@ class TaskListPageState extends State<TaskListPage>
       color: CACHET.LIGHT_BROWN,
     ),
     "ExpectedParticipantData": const Icon(
-      Icons.dataset_linked,
+      Icons.dataset,
       color: CACHET.TASK_INPUT_DATA,
     ),
   };

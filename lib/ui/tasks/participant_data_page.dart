@@ -85,52 +85,73 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
     model.address1Field = StepField(
       title: "tasks.participant_data.address.address1",
       controller: model._address1Controller,
+      focusNode: model._address1FocusNode,
+      nextFocusNode: model._address2FocusNode,
     );
     model.address2Field = StepField(
       title: "tasks.participant_data.address.address2",
       controller: model._address2Controller,
+      focusNode: model._address2FocusNode,
+      nextFocusNode: model._streetFocusNode,
     );
     model.streetField = StepField(
       title: "tasks.participant_data.address.street",
       controller: model._streetController,
+      focusNode: model._streetFocusNode,
+      nextFocusNode: model._postalCodeFocusNode,
     );
     model.postalCodeField = StepField(
       title: "tasks.participant_data.address.postal_code",
       controller: model._postalCodeController,
+      focusNode: model._postalCodeFocusNode,
+      nextFocusNode: model._countryFocusNode,
     );
     model.countryField = StepField(
       title: "tasks.participant_data.address.country",
       controller: model._countryController,
+      focusNode: model._countryFocusNode,
     );
 
     model.effectiveDateField = StepField(
       title: "tasks.participant_data.diagnosis.effective_date",
       controller: model._effectiveDateController,
+      focusNode: model._effectiveDateFocusNode,
+      nextFocusNode: model._diagnosisDescriptionFocusNode,
     );
     model.diagnosisDescriptionField = StepField(
       title: "tasks.participant_data.diagnosis.diagnosis_description",
       controller: model._diagnosisDescriptionController,
+      focusNode: model._diagnosisDescriptionFocusNode,
+      nextFocusNode: model._icd11CodeFocusNode,
     );
     model.icd11CodeField = StepField(
       title: "tasks.participant_data.diagnosis.icd11_code",
       controller: model._icd11CodeController,
+      focusNode: model._icd11CodeFocusNode,
+      nextFocusNode: model._conclusionFocusNode,
     );
     model.conclusionField = StepField(
       title: "tasks.participant_data.diagnosis.conclusion",
       controller: model._conclusionController,
+      focusNode: model._conclusionFocusNode,
     );
 
     model.firstNameField = StepField(
       title: "tasks.participant_data.full_name.first_name",
       controller: model._firstNameController,
+      focusNode: model._firstNameFocusNode,
+      nextFocusNode: model._middleNameFocusNode,
     );
     model.middleNameField = StepField(
       title: "tasks.participant_data.full_name.middle_name",
       controller: model._middleNameController,
+      focusNode: model._middleNameFocusNode,
+      nextFocusNode: model._lastNameFocusNode,
     );
     model.lastNameField = StepField(
       title: "tasks.participant_data.full_name.last_name",
       controller: model._lastNameController,
+      focusNode: model._lastNameFocusNode,
     );
 
     model.informedConsentDescriptionField = StepField(
@@ -232,6 +253,7 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20.0),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       _buildDialogTitle(locale),
                       Expanded(
@@ -330,7 +352,7 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
         break;
       case ParticipantStep.diagnosis:
         fields.addAll([
-          _buildField(locale, model.effectiveDateField),
+          _buildField(locale, model.effectiveDateField, isDatePicker: true),
           _buildField(locale, model.diagnosisDescriptionField,
               isOptional: true),
           _buildField(locale, model.icd11CodeField),
@@ -378,7 +400,8 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
         return Padding(
           padding: const EdgeInsets.only(bottom: 8.0),
           child: Text(
-            step ?? '',
+            "\u2022 ${step ?? ''}",
+            textAlign: TextAlign.start,
             style: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w600,
@@ -390,6 +413,7 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
     );
   }
 
+  /// Builds the review (last) step, displaying all the fields and their values.
   Widget _buildReviewStep(RPLocalizations locale, Set<StepField> fields) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -437,6 +461,7 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
     bool isCPR = false,
     bool isOptional = false,
     bool isThicc = false,
+    bool isDatePicker = false,
   }) {
     _validateRequiredFields();
     _allUsedStepFields.add(stepField);
@@ -448,22 +473,7 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
           selectorType: PhoneInputSelectorType.DIALOG,
           useBottomSheetSafeArea: true,
         ),
-        inputDecoration: InputDecoration(
-          labelText: locale.translate(stepField.title),
-          floatingLabelBehavior: FloatingLabelBehavior.always,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8),
-            borderSide: BorderSide(color: Colors.blue),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8),
-            borderSide: BorderSide(color: Colors.grey.shade300),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8),
-            borderSide: BorderSide(color: Colors.blue, width: 2),
-          ),
-        ),
+        inputDecoration: _buildInputDecoration(locale, stepField, isThicc),
         ignoreBlank: false,
         autoValidateMode: AutovalidateMode.disabled,
         selectorTextStyle: TextStyle(color: Colors.black),
@@ -491,9 +501,11 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
                   ),
                   child: CountryCodePicker(
                     onChanged: (value) {
+                      stepField.controller.clear();
                       stepField.controller.text =
                           '${value.code}${stepField.controller.text}';
                     },
+                    initialSelection: 'DK',
                     showCountryOnly: true,
                     showOnlyCountryWhenClosed: true,
                     alignLeft: false,
@@ -509,22 +521,7 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
             flex: 3,
             child: TextFormField(
               controller: stepField.controller,
-              decoration: InputDecoration(
-                labelText: locale.translate(stepField.title),
-                floatingLabelBehavior: FloatingLabelBehavior.always,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                  borderSide: BorderSide(color: Colors.blue),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                  borderSide: BorderSide(color: Colors.grey.shade300),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                  borderSide: BorderSide(color: Colors.blue, width: 2),
-                ),
-              ),
+              decoration: _buildInputDecoration(locale, stepField, isThicc),
               keyboardType: TextInputType.number,
             ),
           ),
@@ -537,33 +534,60 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
           Padding(
             padding: const EdgeInsets.only(bottom: 16),
             child: TextFormField(
-              controller: stepField.controller,
-              keyboardType: TextInputType.multiline,
-              maxLines: isThicc ? null : 1,
-              decoration: InputDecoration(
-                labelText: locale.translate(stepField.title),
-                floatingLabelBehavior: FloatingLabelBehavior.always,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                  borderSide: BorderSide(color: Colors.blue),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                  borderSide: BorderSide(color: Colors.grey.shade300),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                  borderSide: BorderSide(color: Colors.blue, width: 2),
-                ),
-                contentPadding: isThicc
-                    ? const EdgeInsets.symmetric(horizontal: 16, vertical: 70)
-                    : const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-              ),
-            ),
+                controller: stepField.controller,
+                focusNode: stepField.focusNode,
+                textInputAction: TextInputAction.next,
+                onFieldSubmitted: (_) {
+                  print('Field submitted: ${stepField.title}');
+                  if (stepField.nextFocusNode != null) {
+                    FocusScope.of(context)
+                        .requestFocus(stepField.nextFocusNode);
+                  }
+                },
+                onTap: isDatePicker
+                    ? () async {
+                        DateTime? pickedDate = await showDatePicker(
+                          context: context,
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime(1900),
+                          lastDate: DateTime.now(),
+                        );
+                        if (pickedDate != null) {
+                          stepField.controller.text =
+                              "${pickedDate.toLocal()}".split(' ')[0];
+                        }
+                      }
+                    : null,
+                keyboardType: TextInputType.multiline,
+                maxLines: isThicc ? null : 1,
+                decoration: _buildInputDecoration(locale, stepField, isThicc)),
           ),
         ],
       );
     }
+  }
+
+  InputDecoration _buildInputDecoration(
+      RPLocalizations locale, StepField stepField, bool isThicc) {
+    return InputDecoration(
+      labelText: locale.translate(stepField.title),
+      floatingLabelBehavior: FloatingLabelBehavior.always,
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(8),
+        borderSide: BorderSide(color: Colors.blue),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(8),
+        borderSide: BorderSide(color: Colors.grey.shade300),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(8),
+        borderSide: BorderSide(color: Colors.blue, width: 2),
+      ),
+      contentPadding: isThicc
+          ? const EdgeInsets.symmetric(horizontal: 16, vertical: 70)
+          : const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+    );
   }
 
   /// Builds the action buttons at the bottom of the page.
@@ -601,7 +625,8 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
               () {
                 bloc.setParticipantData(
                   bloc.study!.studyDeploymentId,
-                  {},
+                  _setParticipantData(),
+                  bloc.study!.participantRoleName,
                 );
               },
               _nextEnabled,
@@ -639,6 +664,63 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
     ];
   }
 
+  Map<String, Data> _setParticipantData() {
+    // This method can be used to set the participant data
+    // if needed before submitting.
+    // Currently, it is called when the "Submit" button is pressed.
+
+    final Map<String, Data> participantData = {};
+
+    final Map<ParticipantStep, Map<String, Data>> participantStepToDataType = {
+      ParticipantStep.address: {
+        AddressInput.type: AddressInput(
+          address1: model._address1Controller.text,
+          address2: model._address2Controller.text,
+          street: model._streetController.text,
+          postalCode: model._postalCodeController.text,
+          country: model._countryController.text,
+        ),
+      },
+      ParticipantStep.diagnosis: {
+        DiagnosisInput.type: DiagnosisInput(
+          effectiveDate: DateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
+              .parse('${model._effectiveDateController.text}T00:00:00Z')
+              .toUtc(),
+          diagnosis: model._diagnosisDescriptionController.text,
+          icd11Code: model._icd11CodeController.text,
+          conclusion: model._conclusionController.text,
+        ),
+      },
+      ParticipantStep.fullName: {
+        FullNameInput.type: FullNameInput(
+          firstName: model._firstNameController.text,
+          middleName: model._middleNameController.text,
+          lastName: model._lastNameController.text,
+        ),
+      },
+      ParticipantStep.phoneNumber: {
+        PhoneNumberInput.type: PhoneNumberInput(
+          countryCode: model._phoneNumberController.text,
+          number: model._phoneNumberController.text,
+        ),
+      },
+      ParticipantStep.socialSecurityNumber: {
+        SocialSecurityNumberInput.type: SocialSecurityNumberInput(
+          country: "DK",
+          socialSecurityNumber: model._ssnController.text,
+        ),
+      },
+    };
+    for (final step in _includedSteps) {
+      final dataMap = participantStepToDataType[step];
+      if (dataMap != null) {
+        participantData.addAll(dataMap);
+      }
+    }
+    print("Participant Data: $participantData");
+    return participantData;
+  }
+
   Future<void> _showCancelConfirmationDialog() {
     RPLocalizations locale = RPLocalizations.of(context)!;
 
@@ -672,9 +754,13 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
 class StepField {
   final String title;
   final TextEditingController controller;
+  final FocusNode? focusNode;
+  final FocusNode? nextFocusNode;
 
   StepField({
     required this.title,
     required this.controller,
+    this.focusNode,
+    this.nextFocusNode,
   });
 }

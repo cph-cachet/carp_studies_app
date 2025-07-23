@@ -5,6 +5,7 @@ part of carp_study_app;
 class CACHET {
   static const Color BLUE = Color.fromRGBO(97, 195, 217, 1.0);
   static const Color TASK_BLUE = Color.fromRGBO(58, 130, 247, 1.0);
+  static const Color TASK_INPUT_DATA = Color.fromRGBO(161, 97, 106, 1.0);
   static const Color TASK_COMPLETED_BLUE = Color.fromRGBO(0, 99, 152, 1.0);
   static const Color TASK_TO_EXPIRE_BACKGROUND = Color(0x1aFFA600);
 

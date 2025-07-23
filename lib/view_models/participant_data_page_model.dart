@@ -2,7 +2,7 @@ part of carp_study_app;
 
 class ParticipantDataPageViewModel extends ViewModel {
   Set<ExpectedParticipantData?> expectedData = bloc.expectedParticipantData;
-  
+
   final TextEditingController _address1Controller = TextEditingController();
   final TextEditingController _address2Controller = TextEditingController();
   final TextEditingController _streetController = TextEditingController();
@@ -23,9 +23,23 @@ class ParticipantDataPageViewModel extends ViewModel {
   final TextEditingController _informedConsentDescriptionController =
       TextEditingController();
 
-  final TextEditingController _ssnController = TextEditingController();
+  final TextEditingController _ssnController =
+      TextEditingController(text: "DK");
 
   final TextEditingController _phoneNumberController = TextEditingController();
+
+  final FocusNode _address1FocusNode = FocusNode();
+  final FocusNode _address2FocusNode = FocusNode();
+  final FocusNode _streetFocusNode = FocusNode();
+  final FocusNode _postalCodeFocusNode = FocusNode();
+  final FocusNode _countryFocusNode = FocusNode();
+  final FocusNode _effectiveDateFocusNode = FocusNode();
+  final FocusNode _diagnosisDescriptionFocusNode = FocusNode();
+  final FocusNode _icd11CodeFocusNode = FocusNode();
+  final FocusNode _conclusionFocusNode = FocusNode();
+  final FocusNode _firstNameFocusNode = FocusNode();
+  final FocusNode _middleNameFocusNode = FocusNode();
+  final FocusNode _lastNameFocusNode = FocusNode();
 
   late StepField address1Field;
   late StepField address2Field;

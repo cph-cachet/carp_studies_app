@@ -60,7 +60,7 @@ dependencies:
   intl_phone_number_input: ^0.7.4
 
 dependency_overrides:
-  polar: 7.5.1
+  # polar: 7.5.1
   # camera_android_camerax: 0.6.10+1
   # flutter_plugin_android_lifecycle: 2.0.24
 

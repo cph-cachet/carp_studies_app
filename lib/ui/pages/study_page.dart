@@ -236,7 +236,7 @@ class StudyPageState extends State<StudyPage> {
       future: bloc.studyDeploymentStatus,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Spacer();
+          return Container();
         } else if (snapshot.hasError) {
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 22),

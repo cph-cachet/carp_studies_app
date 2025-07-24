@@ -121,7 +121,8 @@ class CarpStudyAppState extends State<CarpStudyApp> {
       GoRoute(
         path: ParticipantDataPage.route,
         parentNavigatorKey: _rootNavigatorKey,
-        builder: (context, state) => ParticipantDataPage(),
+        builder: (context, state) => ParticipantDataPage(
+            model: bloc.appViewModel.participantDataPageViewModel),
       ),
       GoRoute(
         path: '/task/:taskId',

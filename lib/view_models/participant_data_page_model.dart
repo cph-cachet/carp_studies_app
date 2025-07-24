@@ -1,7 +1,8 @@
 part of carp_study_app;
 
 class ParticipantDataPageViewModel extends ViewModel {
-  Set<ExpectedParticipantData?> expectedData = bloc.expectedParticipantData;
+  Set<ExpectedParticipantData?> get expectedData =>
+      bloc.expectedParticipantData;
 
   final TextEditingController _address1Controller = TextEditingController();
   final TextEditingController _address2Controller = TextEditingController();

@@ -13,7 +13,8 @@ enum ParticipantStep {
 
 class ParticipantDataPage extends StatefulWidget {
   static const String route = '/participant_data';
-  const ParticipantDataPage({super.key});
+  final ParticipantDataPageViewModel model;
+  const ParticipantDataPage({super.key, required this.model});
 
   @override
   ParticipantDataPageState createState() => ParticipantDataPageState();
@@ -21,7 +22,7 @@ class ParticipantDataPage extends StatefulWidget {
 
 class ParticipantDataPageState extends State<ParticipantDataPage> {
   ParticipantStep currentStep = ParticipantStep.presentTypes;
-  final ParticipantDataPageViewModel model = ParticipantDataPageViewModel();
+  
 
   final Set<StepField> _allUsedStepFields = {};
 
@@ -54,7 +55,7 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
   void initState() {
     super.initState();
     for (final key in _stepMap.keys) {
-      if (model.expectedData.any(
+      if (widget.model.expectedData.any(
           (dataType) => dataType!.attribute!.inputDataType.contains(key))) {
         _includedSteps.add(_stepMap[key]!);
       }
@@ -63,119 +64,113 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
     /// Always include the review step at the end
     _includedSteps.add(ParticipantStep.review);
 
-    model._nonOptionalControllers = {
-      model._address1Controller,
-      model._streetController,
-      model._postalCodeController,
-      model._countryController,
-      model._effectiveDateController,
-      model._icd11CodeController,
-      model._conclusionController,
-      model._firstNameController,
-      model._lastNameController,
-      model._informedConsentDescriptionController,
-      model._phoneNumberCodeController,
-      model._phoneNumberController,
-      model._ssnCountryController,
-      model._ssnController,
+    widget.model._nonOptionalControllers = {
+      widget.model._address1Controller,
+      widget.model._streetController,
+      widget.model._postalCodeController,
+      widget.model._countryController,
+      widget.model._effectiveDateController,
+      widget.model._icd11CodeController,
+      widget.model._conclusionController,
+      widget.model._firstNameController,
+      widget.model._lastNameController,
+      widget.model._informedConsentDescriptionController,
+      widget.model._phoneNumberCodeController,
+      widget.model._phoneNumberController,
+      widget.model._ssnCountryController,
+      widget.model._ssnController,
     };
 
-    for (final controller in model._nonOptionalControllers) {
+    for (final controller in widget.model._nonOptionalControllers) {
       controller.addListener(_validateRequiredFields);
     }
 
-    model.address1Field = StepField(
+    widget.model.address1Field = StepField(
       title: "tasks.participant_data.address.address1",
-      controller: model._address1Controller,
-      focusNode: model._address1FocusNode,
-      nextFocusNode: model._address2FocusNode,
+      controller: widget.model._address1Controller,
+      focusNode: widget.model._address1FocusNode,
+      nextFocusNode: widget.model._address2FocusNode,
     );
-    model.address2Field = StepField(
+    widget.model.address2Field = StepField(
       title: "tasks.participant_data.address.address2",
-      controller: model._address2Controller,
-      focusNode: model._address2FocusNode,
-      nextFocusNode: model._streetFocusNode,
+      controller: widget.model._address2Controller,
+      focusNode: widget.model._address2FocusNode,
+      nextFocusNode: widget.model._streetFocusNode,
     );
-    model.streetField = StepField(
+    widget.model.streetField = StepField(
       title: "tasks.participant_data.address.street",
-      controller: model._streetController,
-      focusNode: model._streetFocusNode,
-      nextFocusNode: model._postalCodeFocusNode,
+      controller: widget.model._streetController,
+      focusNode: widget.model._streetFocusNode,
+      nextFocusNode: widget.model._postalCodeFocusNode,
     );
-    model.postalCodeField = StepField(
+    widget.model.postalCodeField = StepField(
       title: "tasks.participant_data.address.postal_code",
-      controller: model._postalCodeController,
-      focusNode: model._postalCodeFocusNode,
-      nextFocusNode: model._countryFocusNode,
+      controller: widget.model._postalCodeController,
+      focusNode: widget.model._postalCodeFocusNode,
+      nextFocusNode: widget.model._countryFocusNode,
     );
-    model.countryField = StepField(
+    widget.model.countryField = StepField(
       title: "tasks.participant_data.address.country",
-      controller: model._countryController,
-      focusNode: model._countryFocusNode,
+      controller: widget.model._countryController,
+      focusNode: widget.model._countryFocusNode,
     );
 
-    model.effectiveDateField = StepField(
+    widget.model.effectiveDateField = StepField(
       title: "tasks.participant_data.diagnosis.effective_date",
-      controller: model._effectiveDateController,
-      focusNode: model._effectiveDateFocusNode,
-      nextFocusNode: model._diagnosisDescriptionFocusNode,
+      controller: widget.model._effectiveDateController,
+      focusNode: widget.model._effectiveDateFocusNode,
+      nextFocusNode: widget.model._diagnosisDescriptionFocusNode,
     );
-    model.diagnosisDescriptionField = StepField(
+    widget.model.diagnosisDescriptionField = StepField(
       title: "tasks.participant_data.diagnosis.diagnosis_description",
-      controller: model._diagnosisDescriptionController,
-      focusNode: model._diagnosisDescriptionFocusNode,
-      nextFocusNode: model._icd11CodeFocusNode,
+      controller: widget.model._diagnosisDescriptionController,
+      focusNode: widget.model._diagnosisDescriptionFocusNode,
+      nextFocusNode: widget.model._icd11CodeFocusNode,
     );
-    model.icd11CodeField = StepField(
+    widget.model.icd11CodeField = StepField(
       title: "tasks.participant_data.diagnosis.icd11_code",
-      controller: model._icd11CodeController,
-      focusNode: model._icd11CodeFocusNode,
-      nextFocusNode: model._conclusionFocusNode,
+      controller: widget.model._icd11CodeController,
+      focusNode: widget.model._icd11CodeFocusNode,
+      nextFocusNode: widget.model._conclusionFocusNode,
     );
-    model.conclusionField = StepField(
+    widget.model.conclusionField = StepField(
       title: "tasks.participant_data.diagnosis.conclusion",
-      controller: model._conclusionController,
-      focusNode: model._conclusionFocusNode,
+      controller: widget.model._conclusionController,
+      focusNode: widget.model._conclusionFocusNode,
     );
 
-    model.firstNameField = StepField(
+    widget.model.firstNameField = StepField(
       title: "tasks.participant_data.full_name.first_name",
-      controller: model._firstNameController,
-      focusNode: model._firstNameFocusNode,
-      nextFocusNode: model._middleNameFocusNode,
+      controller: widget.model._firstNameController,
+      focusNode: widget.model._firstNameFocusNode,
+      nextFocusNode: widget.model._middleNameFocusNode,
     );
-    model.middleNameField = StepField(
+    widget.model.middleNameField = StepField(
       title: "tasks.participant_data.full_name.middle_name",
-      controller: model._middleNameController,
-      focusNode: model._middleNameFocusNode,
-      nextFocusNode: model._lastNameFocusNode,
+      controller: widget.model._middleNameController,
+      focusNode: widget.model._middleNameFocusNode,
+      nextFocusNode: widget.model._lastNameFocusNode,
     );
-    model.lastNameField = StepField(
+    widget.model.lastNameField = StepField(
       title: "tasks.participant_data.full_name.last_name",
-      controller: model._lastNameController,
-      focusNode: model._lastNameFocusNode,
+      controller: widget.model._lastNameController,
+      focusNode: widget.model._lastNameFocusNode,
     );
 
-    model.informedConsentDescriptionField = StepField(
+    widget.model.informedConsentDescriptionField = StepField(
       title: "tasks.participant_data.informed_consent.description",
-      controller: model._informedConsentDescriptionController,
+      controller: widget.model._informedConsentDescriptionController,
     );
 
-    model.phoneNumberField = StepField(
+    widget.model.phoneNumberField = StepField(
       title: "tasks.participant_data.phone_number.phone_number",
-      controller: model._phoneNumberController,
+      controller: widget.model._phoneNumberController,
     );
 
-    model.ssnField = StepField(
+    widget.model.ssnField = StepField(
       title: "tasks.participant_data.ssn.ssn",
-      controller: model._ssnController,
+      controller: widget.model._ssnController,
     );
-  }
-
-  @override
-  void dispose() {
-    model.dispose();
-    super.dispose();
   }
 
   /// Validates the required fields based on the current step.
@@ -185,29 +180,29 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
     setState(() {
       switch (currentStep) {
         case ParticipantStep.address:
-          _nextEnabled = model._address1Controller.text.isNotEmpty &&
-              model._streetController.text.isNotEmpty &&
-              model._postalCodeController.text.isNotEmpty &&
-              model._countryController.text.isNotEmpty;
+          _nextEnabled = widget.model._address1Controller.text.isNotEmpty &&
+              widget.model._streetController.text.isNotEmpty &&
+              widget.model._postalCodeController.text.isNotEmpty &&
+              widget.model._countryController.text.isNotEmpty;
           break;
         case ParticipantStep.diagnosis:
-          _nextEnabled = model._effectiveDateController.text.isNotEmpty &&
-              model._icd11CodeController.text.isNotEmpty &&
-              model._conclusionController.text.isNotEmpty;
+          _nextEnabled = widget.model._effectiveDateController.text.isNotEmpty &&
+              widget.model._icd11CodeController.text.isNotEmpty &&
+              widget.model._conclusionController.text.isNotEmpty;
           break;
         case ParticipantStep.fullName:
-          _nextEnabled = model._firstNameController.text.isNotEmpty &&
-              model._lastNameController.text.isNotEmpty;
+          _nextEnabled = widget.model._firstNameController.text.isNotEmpty &&
+              widget.model._lastNameController.text.isNotEmpty;
           break;
         case ParticipantStep.informedConsent:
           _nextEnabled =
-              model._informedConsentDescriptionController.text.isNotEmpty;
+              widget.model._informedConsentDescriptionController.text.isNotEmpty;
           break;
         case ParticipantStep.phoneNumber:
-          _nextEnabled = model._phoneNumberController.text.isNotEmpty;
+          _nextEnabled = widget.model._phoneNumberController.text.isNotEmpty;
           break;
         case ParticipantStep.socialSecurityNumber:
-          _nextEnabled = model._ssnController.text.isNotEmpty;
+          _nextEnabled = widget.model._ssnController.text.isNotEmpty;
           break;
         case ParticipantStep.review:
           _nextEnabled = true;
@@ -262,7 +257,7 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
                           padding: const EdgeInsets.symmetric(vertical: 8),
                           child: SizedBox(
                             child:
-                                _buildStepContent(locale, model.expectedData),
+                                _buildStepContent(locale, widget.model.expectedData),
                           ),
                         ),
                       ),
@@ -344,38 +339,38 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
         break;
       case ParticipantStep.address:
         fields.addAll([
-          _buildField(locale, model.address1Field),
-          _buildField(locale, model.address2Field, isOptional: true),
-          _buildField(locale, model.streetField),
-          _buildField(locale, model.postalCodeField),
-          _buildField(locale, model.countryField),
+          _buildField(locale, widget.model.address1Field),
+          _buildField(locale, widget.model.address2Field, isOptional: true),
+          _buildField(locale, widget.model.streetField),
+          _buildField(locale, widget.model.postalCodeField),
+          _buildField(locale, widget.model.countryField),
         ]);
         break;
       case ParticipantStep.diagnosis:
         fields.addAll([
-          _buildField(locale, model.effectiveDateField, isDatePicker: true),
-          _buildField(locale, model.diagnosisDescriptionField,
+          _buildField(locale, widget.model.effectiveDateField, isDatePicker: true),
+          _buildField(locale, widget.model.diagnosisDescriptionField,
               isOptional: true),
-          _buildField(locale, model.icd11CodeField),
-          _buildField(locale, model.conclusionField, isThicc: true),
+          _buildField(locale, widget.model.icd11CodeField),
+          _buildField(locale, widget.model.conclusionField, isThicc: true),
         ]);
         break;
       case ParticipantStep.fullName:
         fields.addAll([
-          _buildField(locale, model.firstNameField),
-          _buildField(locale, model.middleNameField, isOptional: true),
-          _buildField(locale, model.lastNameField),
+          _buildField(locale, widget.model.firstNameField),
+          _buildField(locale, widget.model.middleNameField, isOptional: true),
+          _buildField(locale, widget.model.lastNameField),
         ]);
         break;
       case ParticipantStep.informedConsent:
-        fields.add(_buildField(locale, model.informedConsentDescriptionField));
+        fields.add(_buildField(locale, widget.model.informedConsentDescriptionField));
         break;
       case ParticipantStep.phoneNumber:
         fields.add(
-            _buildField(locale, model.phoneNumberField, isPhoneNumber: true));
+            _buildField(locale, widget.model.phoneNumberField, isPhoneNumber: true));
         break;
       case ParticipantStep.socialSecurityNumber:
-        fields.add(_buildField(locale, model.ssnField, isCPR: true));
+        fields.add(_buildField(locale, widget.model.ssnField, isCPR: true));
         break;
       case ParticipantStep.review:
         fields.add(_buildReviewStep(
@@ -423,13 +418,13 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
         String input = "";
         if (index < fields.length) {
           if (fields.elementAt(index).controller ==
-              model._phoneNumberController) {
+              widget.model._phoneNumberController) {
             input =
-                "${model._phoneNumberCodeController.text} ${fields.elementAt(index).controller.text}";
+                "${widget.model._phoneNumberCodeController.text} ${fields.elementAt(index).controller.text}";
           } else if (fields.elementAt(index).controller ==
-              model._ssnController) {
+              widget.model._ssnController) {
             input =
-                "${model._ssnCountryController.text} ${fields.elementAt(index).controller.text}";
+                "${widget.model._ssnCountryController.text} ${fields.elementAt(index).controller.text}";
           } else {
             input = fields.elementAt(index).controller.text;
           }
@@ -479,7 +474,7 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
     if (isPhoneNumber) {
       return InternationalPhoneNumberInput(
         onInputChanged: (phoneNumber) {
-          model._phoneNumberCodeController.text = phoneNumber.dialCode ?? '';
+          widget.model._phoneNumberCodeController.text = phoneNumber.dialCode ?? '';
         },
         textFieldController: stepField.controller,
         selectorConfig: SelectorConfig(
@@ -515,7 +510,7 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
                   child: CountryCodePicker(
                     onChanged: (value) {
                       stepField.controller.clear();
-                      model._ssnCountryController.text = value.code ?? '';
+                      widget.model._ssnCountryController.text = value.code ?? '';
                       stepField.controller.text = stepField.controller.text;
                     },
                     initialSelection: 'DK',
@@ -635,11 +630,8 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
           ? buildTranslatedButton(
               "submit",
               () {
-                bloc.setParticipantData(
-                  bloc.study!.studyDeploymentId,
-                  _setParticipantData(),
-                  bloc.study!.participantRoleName,
-                );
+                _setParticipantData();
+                context.pop();
               },
               _nextEnabled,
               ElevatedButton.styleFrom(
@@ -676,7 +668,7 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
     ];
   }
 
-  Map<String, Data> _setParticipantData() {
+  void _setParticipantData() {
     // This method can be used to set the participant data
     // if needed before submitting.
     // Currently, it is called when the "Submit" button is pressed.
@@ -686,40 +678,40 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
     final Map<ParticipantStep, Map<String, Data>> participantStepToDataType = {
       ParticipantStep.address: {
         AddressInput.type: AddressInput(
-          address1: model._address1Controller.text,
-          address2: model._address2Controller.text,
-          street: model._streetController.text,
-          postalCode: model._postalCodeController.text,
-          country: model._countryController.text,
+          address1: widget.model._address1Controller.text,
+          address2: widget.model._address2Controller.text,
+          street: widget.model._streetController.text,
+          postalCode: widget.model._postalCodeController.text,
+          country: widget.model._countryController.text,
         ),
       },
       ParticipantStep.diagnosis: {
         DiagnosisInput.type: DiagnosisInput(
           effectiveDate: DateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
-              .parse('${model._effectiveDateController.text}T00:00:00Z')
+              .parse('${widget.model._effectiveDateController.text}T00:00:00Z')
               .toUtc(),
-          diagnosis: model._diagnosisDescriptionController.text,
-          icd11Code: model._icd11CodeController.text,
-          conclusion: model._conclusionController.text,
+          diagnosis: widget.model._diagnosisDescriptionController.text,
+          icd11Code: widget.model._icd11CodeController.text,
+          conclusion: widget.model._conclusionController.text,
         ),
       },
       ParticipantStep.fullName: {
         FullNameInput.type: FullNameInput(
-          firstName: model._firstNameController.text,
-          middleName: model._middleNameController.text,
-          lastName: model._lastNameController.text,
+          firstName: widget.model._firstNameController.text,
+          middleName: widget.model._middleNameController.text,
+          lastName: widget.model._lastNameController.text,
         ),
       },
       ParticipantStep.phoneNumber: {
         PhoneNumberInput.type: PhoneNumberInput(
-          countryCode: model._phoneNumberCodeController.text,
-          number: model._phoneNumberController.text,
+          countryCode: widget.model._phoneNumberCodeController.text,
+          number: widget.model._phoneNumberController.text,
         ),
       },
       ParticipantStep.socialSecurityNumber: {
         SocialSecurityNumberInput.type: SocialSecurityNumberInput(
-          country: model._ssnCountryController.text,
-          socialSecurityNumber: model._ssnController.text,
+          country: widget.model._ssnCountryController.text,
+          socialSecurityNumber: widget.model._ssnController.text,
         ),
       },
     };
@@ -730,7 +722,11 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
       }
     }
     LocalSettings().isExpectedParticipantDataSet = true;
-    return participantData;
+    bloc.setParticipantData(
+      bloc.study!.studyDeploymentId,
+      participantData,
+      bloc.study!.participantRoleName,
+    );
   }
 
   Future<void> _showCancelConfirmationDialog() {

@@ -22,7 +22,6 @@ class ParticipantDataPage extends StatefulWidget {
 
 class ParticipantDataPageState extends State<ParticipantDataPage> {
   ParticipantStep currentStep = ParticipantStep.presentTypes;
-  
 
   final Set<StepField> _allUsedStepFields = {};
 
@@ -54,6 +53,38 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
   @override
   void initState() {
     super.initState();
+    widget.model._address1Controller = TextEditingController();
+    widget.model._address2Controller = TextEditingController();
+    widget.model._streetController = TextEditingController();
+    widget.model._postalCodeController = TextEditingController();
+    widget.model._countryController = TextEditingController();
+    widget.model._effectiveDateController = TextEditingController();
+    widget.model._diagnosisDescriptionController = TextEditingController();
+    widget.model._icd11CodeController = TextEditingController();
+    widget.model._conclusionController = TextEditingController();
+    widget.model._firstNameController = TextEditingController();
+    widget.model._middleNameController = TextEditingController();
+    widget.model._lastNameController = TextEditingController();
+    widget.model._informedConsentDescriptionController =
+        TextEditingController();
+    widget.model._phoneNumberCodeController = TextEditingController();
+    widget.model._phoneNumberController = TextEditingController();
+    widget.model._ssnCountryController = TextEditingController(text: "DK");
+    widget.model._ssnController = TextEditingController();
+
+    widget.model._address1FocusNode = FocusNode();
+    widget.model._address2FocusNode = FocusNode();
+    widget.model._streetFocusNode = FocusNode();
+    widget.model._postalCodeFocusNode = FocusNode();
+    widget.model._countryFocusNode = FocusNode();
+    widget.model._effectiveDateFocusNode = FocusNode();
+    widget.model._diagnosisDescriptionFocusNode = FocusNode();
+    widget.model._icd11CodeFocusNode = FocusNode();
+    widget.model._conclusionFocusNode = FocusNode();
+    widget.model._firstNameFocusNode = FocusNode();
+    widget.model._middleNameFocusNode = FocusNode();
+    widget.model._lastNameFocusNode = FocusNode();
+
     for (final key in _stepMap.keys) {
       if (widget.model.expectedData.any(
           (dataType) => dataType!.attribute!.inputDataType.contains(key))) {
@@ -173,6 +204,11 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
     );
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   /// Validates the required fields based on the current step.
   /// Updates the [_nextEnabled] state variable accordingly.
   /// This method is called whenever a relevant text field changes.
@@ -186,17 +222,18 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
               widget.model._countryController.text.isNotEmpty;
           break;
         case ParticipantStep.diagnosis:
-          _nextEnabled = widget.model._effectiveDateController.text.isNotEmpty &&
-              widget.model._icd11CodeController.text.isNotEmpty &&
-              widget.model._conclusionController.text.isNotEmpty;
+          _nextEnabled =
+              widget.model._effectiveDateController.text.isNotEmpty &&
+                  widget.model._icd11CodeController.text.isNotEmpty &&
+                  widget.model._conclusionController.text.isNotEmpty;
           break;
         case ParticipantStep.fullName:
           _nextEnabled = widget.model._firstNameController.text.isNotEmpty &&
               widget.model._lastNameController.text.isNotEmpty;
           break;
         case ParticipantStep.informedConsent:
-          _nextEnabled =
-              widget.model._informedConsentDescriptionController.text.isNotEmpty;
+          _nextEnabled = widget
+              .model._informedConsentDescriptionController.text.isNotEmpty;
           break;
         case ParticipantStep.phoneNumber:
           _nextEnabled = widget.model._phoneNumberController.text.isNotEmpty;
@@ -256,8 +293,8 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
                         child: Padding(
                           padding: const EdgeInsets.symmetric(vertical: 8),
                           child: SizedBox(
-                            child:
-                                _buildStepContent(locale, widget.model.expectedData),
+                            child: _buildStepContent(
+                                locale, widget.model.expectedData),
                           ),
                         ),
                       ),
@@ -348,7 +385,8 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
         break;
       case ParticipantStep.diagnosis:
         fields.addAll([
-          _buildField(locale, widget.model.effectiveDateField, isDatePicker: true),
+          _buildField(locale, widget.model.effectiveDateField,
+              isDatePicker: true),
           _buildField(locale, widget.model.diagnosisDescriptionField,
               isOptional: true),
           _buildField(locale, widget.model.icd11CodeField),
@@ -363,11 +401,12 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
         ]);
         break;
       case ParticipantStep.informedConsent:
-        fields.add(_buildField(locale, widget.model.informedConsentDescriptionField));
+        fields.add(
+            _buildField(locale, widget.model.informedConsentDescriptionField));
         break;
       case ParticipantStep.phoneNumber:
-        fields.add(
-            _buildField(locale, widget.model.phoneNumberField, isPhoneNumber: true));
+        fields.add(_buildField(locale, widget.model.phoneNumberField,
+            isPhoneNumber: true));
         break;
       case ParticipantStep.socialSecurityNumber:
         fields.add(_buildField(locale, widget.model.ssnField, isCPR: true));
@@ -474,7 +513,8 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
     if (isPhoneNumber) {
       return InternationalPhoneNumberInput(
         onInputChanged: (phoneNumber) {
-          widget.model._phoneNumberCodeController.text = phoneNumber.dialCode ?? '';
+          widget.model._phoneNumberCodeController.text =
+              phoneNumber.dialCode ?? '';
         },
         textFieldController: stepField.controller,
         selectorConfig: SelectorConfig(
@@ -510,7 +550,8 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
                   child: CountryCodePicker(
                     onChanged: (value) {
                       stepField.controller.clear();
-                      widget.model._ssnCountryController.text = value.code ?? '';
+                      widget.model._ssnCountryController.text =
+                          value.code ?? '';
                       stepField.controller.text = stepField.controller.text;
                     },
                     initialSelection: 'DK',

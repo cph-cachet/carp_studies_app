@@ -199,8 +199,8 @@ class CarpStudyAppViewModel extends ViewModel {
   final InvitationsViewModel _invitationsListViewModel = InvitationsViewModel();
   final InformedConsentViewModel _informedConsentViewModel =
       InformedConsentViewModel();
-  final ParticipantDataPageViewModel
-      _participantDataPageViewModel = ParticipantDataPageViewModel();
+  final ParticipantDataPageViewModel _participantDataPageViewModel =
+      ParticipantDataPageViewModel();
 
   CarpStudyAppViewModel() : super();
 

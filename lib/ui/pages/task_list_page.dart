@@ -154,9 +154,9 @@ class TaskListPageState extends State<TaskListPage>
                           ),
                           // LocalSettings().isExpectedParticipantDataSet
                           //     ? const SliverToBoxAdapter()
-                          //     : 
-                              SliverToBoxAdapter(
-                                  child: _buildParticipantDataCard()),
+                          //     :
+                          SliverToBoxAdapter(
+                              child: _buildParticipantDataCard()),
                           SliverList(
                             delegate: SliverChildBuilderDelegate(
                               (BuildContext context, int index) {
@@ -406,6 +406,8 @@ class TaskListPageState extends State<TaskListPage>
               Timer(const Duration(seconds: 10), () {
                 userTask.onDone();
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    backgroundColor:
+                        Theme.of(context).extension<RPColors>()!.grey700,
                     content: Text(locale.translate('Done!')),
                     duration: const Duration(seconds: 1)));
               });

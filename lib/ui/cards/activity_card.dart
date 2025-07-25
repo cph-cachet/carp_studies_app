@@ -320,21 +320,22 @@ class ActivityCardState extends State<ActivityCard> {
   }
 
   String _getDayName(int dayIndex) {
+    RPLocalizations locale = RPLocalizations.of(context)!;
     switch (dayIndex) {
       case 1:
-        return 'Mon';
+        return locale.translate("pages.data_viz.mon");
       case 2:
-        return 'Tue';
+        return locale.translate("pages.data_viz.tue");
       case 3:
-        return 'Wed';
+        return locale.translate("pages.data_viz.wed");
       case 4:
-        return 'Thu';
+        return locale.translate("pages.data_viz.thu");
       case 5:
-        return 'Fri';
+        return locale.translate("pages.data_viz.fri");
       case 6:
-        return 'Sat';
+        return locale.translate("pages.data_viz.sat");
       case 7:
-        return 'Sun';
+        return locale.translate("pages.data_viz.sun");
       default:
         return '';
     }

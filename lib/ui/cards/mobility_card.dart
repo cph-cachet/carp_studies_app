@@ -47,7 +47,7 @@ class _MobilityCardState extends State<MobilityCard> {
                 Padding(
                   padding: const EdgeInsets.only(left: 4.0),
                   child: Text(
-                    locale.translate('cards.mobility.homestay'),
+                    "${locale.translate('cards.mobility.homestay')} ${_getDayName(touchedIndex)}",
                     style: dataVizCardTitleText.copyWith(
                       color: Theme.of(context).extension<RPColors>()!.grey900!,
                     ),
@@ -231,35 +231,30 @@ class _MobilityCardState extends State<MobilityCard> {
 
   Widget bottomTitles(double value, TitleMeta meta) {
     const style = TextStyle(fontSize: 10);
-    String text;
-    switch (value.toInt()) {
-      case 1:
-        text = 'Mon';
-        break;
-      case 2:
-        text = 'Tue';
-        break;
-      case 3:
-        text = 'Wed';
-        break;
-      case 4:
-        text = 'Thu';
-        break;
-      case 5:
-        text = 'Fri';
-        break;
-      case 6:
-        text = 'Sat';
-        break;
-      case 7:
-        text = 'Sun';
-        break;
-      default:
-        text = '';
-    }
     return SideTitleWidget(
       meta: meta,
-      child: Text(text, style: style),
+      child: Text(_getDayName(value.toInt()), style: style),
     );
+  }
+
+  String _getDayName(int dayIndex) {
+    switch (dayIndex) {
+      case 1:
+        return 'Mon';
+      case 2:
+        return 'Tue';
+      case 3:
+        return 'Wed';
+      case 4:
+        return 'Thu';
+      case 5:
+        return 'Fri';
+      case 6:
+        return 'Sat';
+      case 7:
+        return 'Sun';
+      default:
+        return '';
+    }
   }
 }

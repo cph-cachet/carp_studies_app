@@ -152,11 +152,10 @@ class TaskListPageState extends State<TaskListPage>
                               ),
                             ),
                           ),
-                          // LocalSettings().isExpectedParticipantDataSet
-                          //     ? const SliverToBoxAdapter()
-                          //     :
-                          SliverToBoxAdapter(
-                              child: _buildParticipantDataCard()),
+                          LocalSettings().isExpectedParticipantDataSet
+                              ? const SliverToBoxAdapter()
+                              : SliverToBoxAdapter(
+                                  child: _buildParticipantDataCard()),
                           SliverList(
                             delegate: SliverChildBuilderDelegate(
                               (BuildContext context, int index) {
@@ -409,6 +408,9 @@ class TaskListPageState extends State<TaskListPage>
                     backgroundColor:
                         Theme.of(context).extension<RPColors>()!.grey700,
                     content: Text(locale.translate('Done!')),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(4),
+                    ),
                     duration: const Duration(seconds: 1)));
               });
             }

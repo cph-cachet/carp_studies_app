@@ -362,8 +362,11 @@ class DeviceListPageState extends State<DeviceListPage> {
           Navigator.push(
               context,
               MaterialPageRoute<void>(
-                // barrierDismissible: true,
-                builder: (context) => BluetoothConnectionPage(device: device),
+                builder: (context) => BluetoothConnectionPage(
+                    LocalSettings().hasUserSeenDeviceConnectionInstructions
+                        ? CurrentStep.scan
+                        : CurrentStep.instructions,
+                    device: device),
               ));
         }
       } else if (bluetoothAdapterState == BluetoothAdapterState.unauthorized &&

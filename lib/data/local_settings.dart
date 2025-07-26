@@ -15,6 +15,7 @@ class LocalSettings {
   static const healthConnectPackageName = 'com.google.android.apps.healthdata';
 
   bool isExpectedParticipantDataSet = false;
+  bool hasUserSeenDeviceConnectionInstructions = false;
 
   // Keys for storing in shared preferences
   static const String userKey = 'user';

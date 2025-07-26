@@ -6,15 +6,25 @@ enum CurrentStep { scan, instructions, done }
 class BluetoothConnectionPage extends StatefulWidget {
   final DeviceViewModel device;
 
-  const BluetoothConnectionPage({super.key, required this.device});
+  const BluetoothConnectionPage(CurrentStep currentStep,
+      {super.key, required this.device})
+      : _currentStep = currentStep;
+
+  final CurrentStep _currentStep;
 
   @override
-  State<StatefulWidget> createState() => _BluetoothConnectionPageState();
+  State<StatefulWidget> createState() =>
+      _BluetoothConnectionPageState(_currentStep);
 }
 
 class _BluetoothConnectionPageState extends State<BluetoothConnectionPage> {
+  _BluetoothConnectionPageState(this.currentStep);
+
+  CurrentStep currentStep;
+
   @override
   initState() {
+    print("LOCALSETTINGS: ${LocalSettings().hasUserSeenDeviceConnectionInstructions}");
     super.initState();
     FlutterBluePlus.startScan();
   }
@@ -22,10 +32,11 @@ class _BluetoothConnectionPageState extends State<BluetoothConnectionPage> {
   @override
   void dispose() {
     FlutterBluePlus.stopScan();
+    LocalSettings().hasUserSeenDeviceConnectionInstructions = true;
     super.dispose();
   }
 
-  CurrentStep currentStep = CurrentStep.scan;
+  // CurrentStep currentStep = CurrentStep.scan;
   BluetoothDevice? selectedDevice;
   int selected = 40;
 

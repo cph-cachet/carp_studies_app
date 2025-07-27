@@ -65,6 +65,8 @@ dependency_overrides:
   # flutter_plugin_android_lifecycle: 2.0.24
 
   # Overriding carp libraries to use the local copy, if needed
+  carp_cortrium_package:
+    path: ../carp_cortrium_package/
   # carp_serializable:
   #   path: ../carp/carp.sensing-flutter/carp_serializable/
   # carp_core:

@@ -273,6 +273,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.9.4"
+  carp_cortrium_package:
+    dependency: "direct overridden"
+    description:
+      path: "../carp_cortrium_package"
+      relative: true
+    source: path
+    version: "1.0.0"
   carp_health_package:
     dependency: "direct main"
     description:
@@ -433,6 +440,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.0.1"
+  cortrium_c3:
+    dependency: transitive
+    description:
+      path: "../app-sdk"
+      relative: true
+    source: path
+    version: "0.0.1"
   country_code_picker:
     dependency: "direct main"
     description:

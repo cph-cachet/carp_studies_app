@@ -152,6 +152,19 @@ class TaskListPageState extends State<TaskListPage>
                               ),
                             ),
                           ),
+                          FutureBuilder<bool>(
+                            future: AppPreferences
+                                .hasFilledExpectedParticipantData(),
+                            builder: (context, snapshot) {
+                              if (snapshot.hasData && snapshot.data == true) {
+                                return const SliverToBoxAdapter();
+                              } else {
+                                return SliverToBoxAdapter(
+                                  child: _buildParticipantDataCard(),
+                                );
+                              }
+                            },
+                          ),
                           SliverList(
                             delegate: SliverChildBuilderDelegate(
                               (BuildContext context, int index) {
@@ -183,6 +196,84 @@ class TaskListPageState extends State<TaskListPage>
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildParticipantDataCard() {
+    return GestureDetector(
+      child: StudiesMaterial(
+        hasBorder: true,
+        borderColor: taskTypeColors["ExpectedParticipantData"]!,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.horizontal(
+            left: Radius.circular(2.0),
+            right: Radius.circular(8.0),
+          ),
+        ),
+        backgroundColor: Theme.of(context).extension<RPColors>()!.grey50!,
+        elevation: 0,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 16),
+          child: IntrinsicHeight(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const SizedBox(width: 12.0),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Icon(taskTypeIcons["ExpectedParticipantData"]!.icon,
+                              color: taskTypeColors["ExpectedParticipantData"]),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 4.0),
+                            child: Text(
+                              "Input Data",
+                              style: TextStyle(
+                                color:
+                                    taskTypeColors["ExpectedParticipantData"],
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 8.0),
+                      Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Participant Data",
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16.0,
+                              ),
+                            ),
+                            const SizedBox(height: 4.0),
+                            Padding(
+                              padding: const EdgeInsets.only(right: 20),
+                              child: Text(
+                                "Fill in the required participant data to continue with the study.",
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+      onTap: () {
+        context.push(ParticipantDataPage.route);
+      },
     );
   }
 
@@ -226,7 +317,8 @@ class TaskListPageState extends State<TaskListPage>
                             Padding(
                               padding: const EdgeInsets.only(left: 4.0),
                               child: Text(
-                                userTask.type,
+                                userTask.type[0].toUpperCase() +
+                                    userTask.type.substring(1),
                                 style: TextStyle(
                                   color: taskTypeColors[userTask.type],
                                   fontWeight: FontWeight.bold,
@@ -245,16 +337,19 @@ class TaskListPageState extends State<TaskListPage>
                                     : Colors.grey,
                               ),
                             const SizedBox(width: 4.0),
-                            Text(
-                              _timeRemainingSubtitle(userTask),
-                              style: TextStyle(
-                                color: userTask.expiresIn != null &&
-                                        userTask.expiresIn!.inHours < 24
-                                    ? Theme.of(context)
-                                        .extension<RPColors>()!
-                                        .warningColor
-                                    : Colors.grey,
-                                fontSize: 12.0,
+                            Padding(
+                              padding: const EdgeInsets.only(right: 20),
+                              child: Text(
+                                _timeRemainingSubtitle(userTask),
+                                style: TextStyle(
+                                  color: userTask.expiresIn != null &&
+                                          userTask.expiresIn!.inHours < 24
+                                      ? Theme.of(context)
+                                          .extension<RPColors>()!
+                                          .warningColor
+                                      : Colors.grey,
+                                  fontSize: 12.0,
+                                ),
                               ),
                             )
                           ],
@@ -273,20 +368,29 @@ class TaskListPageState extends State<TaskListPage>
                                 ),
                               ),
                               const SizedBox(height: 4.0),
-                              Text(
-                                locale.translate(userTask.description),
+                              Padding(
+                                padding: const EdgeInsets.only(right: 20),
+                                child: Text(
+                                  locale.translate(userTask.description),
+                                ),
                               ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  Text(
-                                    _estimatedTimeSubtitle(userTask),
-                                    style: TextStyle(
-                                      color: Colors.grey,
-                                      fontSize: 12.0,
+                              Padding(
+                                padding: const EdgeInsets.only(top: 8.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(right: 20),
+                                      child: Text(
+                                        _estimatedTimeSubtitle(userTask),
+                                        style: TextStyle(
+                                          color: Colors.grey,
+                                          fontSize: 12.0,
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ],
                           ),
@@ -307,7 +411,17 @@ class TaskListPageState extends State<TaskListPage>
             if (userTask.hasWidget) {
               context.push('/task/${userTask.id}');
             } else {
-              Timer(const Duration(seconds: 10), () => userTask.onDone());
+              Timer(const Duration(seconds: 10), () {
+                userTask.onDone();
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    backgroundColor:
+                        Theme.of(context).extension<RPColors>()!.grey700,
+                    content: Text(locale.translate('Done!')),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    duration: const Duration(seconds: 1)));
+              });
             }
           }
         },
@@ -527,10 +641,10 @@ class TaskListPageState extends State<TaskListPage>
       Icons.sensors,
       color: CACHET.LIGHT_BROWN,
     ),
-    // BackgroundSensingUserTask.ONE_TIME_SENSING_TYPE: const Icon(
-    //   Icons.settings_input_component,
-    //   color: CACHET.PURPLE,
-    // ),
+    "ExpectedParticipantData": const Icon(
+      Icons.dataset,
+      color: CACHET.TASK_INPUT_DATA,
+    ),
   };
 
   static Map<String, Color> taskTypeColors = {
@@ -541,7 +655,7 @@ class TaskListPageState extends State<TaskListPage>
     SurveyUserTask.IMAGE_TYPE: CACHET.YELLOW,
     HealthUserTask.HEALTH_ASSESSMENT_TYPE: CACHET.RED_1,
     BackgroundSensingUserTask.SENSING_TYPE: CACHET.LIGHT_BROWN,
-    // BackgroundSensingUserTask.ONE_TIME_SENSING_TYPE: CACHET.PURPLE,
+    "ExpectedParticipantData": CACHET.TASK_INPUT_DATA,
   };
 
   static Map<String, Icon> measureTypeIcons = {
@@ -573,12 +687,6 @@ class TaskListPageState extends State<TaskListPage>
       Icons.highlight,
       color: CACHET.YELLOW,
     ),
-    // ConnectivitySamplingPackage.BLUETOOTH:
-    //     Icon(Icons.bluetooth_searching, size: 50, color: CACHET.DARK_BLUE),
-    // ConnectivitySamplingPackage.WIFI:
-    //     Icon(Icons.wifi, size: 50, color: CACHET.LIGHT_PURPLE),
-    // ConnectivitySamplingPackage.CONNECTIVITY:
-    //     Icon(Icons.cast_connected, size: 50, color: CACHET.GREEN),
     MediaSamplingPackage.AUDIO: const Icon(
       Icons.mic,
       color: CACHET.GREEN,
@@ -595,12 +703,6 @@ class TaskListPageState extends State<TaskListPage>
       Icons.image,
       color: CACHET.YELLOW,
     ),
-    // AppsSamplingPackage.APPS: Icon(Icons.apps, size: 50, color: CACHET.LIGHT_GREEN),
-    //AppsSamplingPackage.APP_USAGE: Icon(Icons.get_app, size: 50, color: CACHET.LIGHT_GREEN),
-    // CommunicationSamplingPackage.TEXT_MESSAGE: Icon(Icons.text_fields, size: 50, color: CACHET.LIGHT_PURPLE),
-    // CommunicationSamplingPackage.TEXT_MESSAGE_LOG: Icon(Icons.textsms, size: 50, color: CACHET.LIGHT_PURPLE),
-    // CommunicationSamplingPackage.PHONE_LOG: Icon(Icons.phone_in_talk, size: 50, color: CACHET.ORANGE),
-    // CommunicationSamplingPackage.CALENDAR: Icon(Icons.event, size: 50, color: CACHET.CYAN),
     DeviceSamplingPackage.SCREEN_EVENT: const Icon(
       Icons.screen_lock_portrait,
       color: CACHET.LIGHT_PURPLE,
@@ -609,10 +711,6 @@ class TaskListPageState extends State<TaskListPage>
       Icons.location_searching,
       color: CACHET.CYAN,
     ),
-    // ContextSamplingPackage.LOCATION: const Icon(
-    //   Icons.my_location,
-    //   color: CACHET.YELLOW,
-    // ),
     ContextSamplingPackage.ACTIVITY: const Icon(
       Icons.local_fire_department,
       color: CACHET.ORANGE,

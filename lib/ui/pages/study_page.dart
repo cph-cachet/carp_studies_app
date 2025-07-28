@@ -30,11 +30,13 @@ class StudyPageState extends State<StudyPage> {
                 builder: (context, AsyncSnapshot<int> snapshot) {
                   return RefreshIndicator(
                     onRefresh: () async {
-                      await Future.wait([
-                        bloc.refreshMessages(),
-                        bloc.deploymentService.getStudyDeploymentStatus(
-                            widget.model.studyDeploymentId),
-                      ]);
+                      await bloc.refreshMessages();
+                      final status = await Sensing().tryDeployment();
+                      if (status == StudyStatus.Deployed) {
+                        bloc.start();
+                      }
+                      bloc.deploymentService.getStudyDeploymentStatus(
+                          widget.model.studyDeploymentId);
                     },
                     child: ListView.builder(
                       // This is +3 bc the first two cards are the study card and the study status card
@@ -178,16 +180,19 @@ class StudyPageState extends State<StudyPage> {
                             Theme.of(context).extension<RPColors>()!.primary)),
               ),
               if (message.subTitle != null && message.subTitle!.isNotEmpty)
-                Row(children: [
-                  Expanded(
-                    child: Text(
-                      locale.translate(message.subTitle!),
-                      style: aboutCardContentStyle.copyWith(
-                        color: Theme.of(context).extension<RPColors>()!.grey700,
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        locale.translate(message.subTitle!),
+                        style: aboutCardContentStyle.copyWith(
+                          color:
+                              Theme.of(context).extension<RPColors>()!.grey700,
+                        ),
                       ),
                     ),
-                  ),
-                ]),
+                  ],
+                ),
               if (message.message != null && message.message!.isNotEmpty)
                 Row(children: [
                   Expanded(
@@ -228,10 +233,10 @@ class StudyPageState extends State<StudyPage> {
   Widget _studyStatusCard() {
     RPLocalizations locale = RPLocalizations.of(context)!;
     return FutureBuilder<StudyDeploymentStatus?>(
-      future: bloc.getStudyDeploymentStatus(),
+      future: bloc.studyDeploymentStatus,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Spacer();
+          return Container();
         } else if (snapshot.hasError) {
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 22),
@@ -284,7 +289,16 @@ class StudyPageState extends State<StudyPage> {
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 6.0),
                               child: Text(
-                                deploymentStatus.toString().split('.').last,
+                                deploymentStatus ==
+                                        StudyDeploymentStatusTypes
+                                            .DeployingDevices
+                                    ? locale.translate(
+                                        'pages.about.status.deploying_devices')
+                                    : deploymentStatus
+                                        .toString()
+                                        .split('.')
+                                        .last,
+                                maxLines: 2,
                                 style: aboutCardSubtitleStyle.copyWith(
                                     color: studyStatusColors[deploymentStatus]),
                               ),
@@ -295,12 +309,13 @@ class StudyPageState extends State<StudyPage> {
                           child: Padding(
                             padding: const EdgeInsets.only(left: 16.0),
                             child: Text(
-                                locale.translate(
-                                    studyStatusText[deploymentStatus]!),
-                                style: aboutCardSubtitleStyle.copyWith(
-                                    color: Theme.of(context)
-                                        .extension<RPColors>()!
-                                        .grey900)),
+                              getStatusText(locale, deploymentStatus, snapshot),
+                              style: aboutCardSubtitleStyle.copyWith(
+                                color: Theme.of(context)
+                                    .extension<RPColors>()!
+                                    .grey900,
+                              ),
+                            ),
                           ),
                         ),
                       ],
@@ -313,6 +328,21 @@ class StudyPageState extends State<StudyPage> {
         );
       },
     );
+  }
+
+  String getStatusText(
+    RPLocalizations locale,
+    StudyDeploymentStatusTypes deploymentStatusType,
+    AsyncSnapshot<StudyDeploymentStatus?> snapshot,
+  ) {
+    if (deploymentStatusType == StudyDeploymentStatusTypes.DeployingDevices) {
+      return locale.translate('pages.about.status.deploying_devices.message') +
+          snapshot.data!.deviceStatusList.first
+              .remainingDevicesToRegisterBeforeDeployment!
+              .join(' | ');
+    } else {
+      return locale.translate(studyStatusText[deploymentStatusType]!);
+    }
   }
 
   static Map<StudyDeploymentStatusTypes, Color> studyStatusColors = {
@@ -376,7 +406,6 @@ class StudyPageState extends State<StudyPage> {
                         ),
                       ),
                     ),
-                    // const SizedBox(width: 8),
                     Material(
                       color: CACHET.DEPLOYMENT_DEPLOYING,
                       borderRadius: BorderRadius.circular(100.0),

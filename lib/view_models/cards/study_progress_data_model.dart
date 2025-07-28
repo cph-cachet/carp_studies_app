@@ -41,8 +41,8 @@ class StudyProgressCardViewModel extends ViewModel {
 
   void updateProgress() {
     _progressTable['completed'] = taskCompleted;
-    _progressTable['expired'] = taskExpired;
     _progressTable['pending'] = taskPending;
+    _progressTable['expired'] = taskExpired;
   }
 }
 

@@ -133,9 +133,14 @@ class StudyAppBLoC extends ChangeNotifier {
   /// The deployment running on this phone.
   SmartphoneDeployment? get deployment => Sensing().controller?.deployment;
 
+  Set<ExpectedParticipantData?> get expectedParticipantData =>
+      deployment?.expectedParticipantData ?? {};
+
+  // CarpParticipationService()
+
   /// Get the status for the current study deployment.
   /// Returns null if the study is not yet deployed on this phone.
-  Future<StudyDeploymentStatus?> getStudyDeploymentStatus() async =>
+  Future<StudyDeploymentStatus?> get studyDeploymentStatus async =>
       await Sensing().getStudyDeploymentStatus();
 
   /// When was this study deployed on this phone.
@@ -315,6 +320,19 @@ class StudyAppBLoC extends ChangeNotifier {
     info('Study configuration done.');
     notifyListeners();
     _state = StudyAppState.configured;
+  }
+
+  /// Set the participant data for this study.
+  void setParticipantData(
+    String studyDeploymentId,
+    Map<String, Data> data, [
+    String? inputByParticipantRole,
+  ]) {
+    CarpParticipationService().setParticipantData(
+      studyDeploymentId,
+      data,
+      inputByParticipantRole,
+    );
   }
 
   /// Does this app use location permissions?

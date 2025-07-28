@@ -72,12 +72,12 @@ class DisplayPicturePageState extends State<DisplayPicturePage> {
               ],
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
+              padding: const EdgeInsets.all(10),
               child: ClipRRect(
                 borderRadius: const BorderRadius.all(Radius.circular(20)),
                 child: SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.7,
-                  width: MediaQuery.of(context).size.width * 0.9,
+                  height: MediaQuery.of(context).size.height * 0.5,
+                  width: MediaQuery.of(context).size.width * 0.5,
                   child: (widget.isVideo && _videoPlayerController != null)
                       ? _videoPlayerController!.value.isInitialized
                           ? AspectRatio(
@@ -89,7 +89,6 @@ class DisplayPicturePageState extends State<DisplayPicturePage> {
                 ),
               ),
             ),
-            const SizedBox(height: 40),
             Padding(
               padding: const EdgeInsets.only(bottom: 30, left: 10, right: 10),
               child: Column(

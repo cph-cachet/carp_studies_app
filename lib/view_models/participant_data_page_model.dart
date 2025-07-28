@@ -1,7 +1,6 @@
 part of carp_study_app;
 
 class ParticipantDataPageViewModel extends ViewModel {
-
   Set<ExpectedParticipantData?> get expectedData =>
       bloc.expectedParticipantData;
 

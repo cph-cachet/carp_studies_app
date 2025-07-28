@@ -142,21 +142,23 @@ class DeviceViewModel extends ViewModel {
 
 const Map<String, String> _deviceTypeName = {
   Smartphone.DEVICE_TYPE: "pages.devices.type.smartphone.name",
+  PolarDevice.DEVICE_TYPE: "pages.devices.type.polar.name",
+  MovesenseDevice.DEVICE_TYPE: "pages.devices.type.movesense.name",
+  CortriumDevice.DEVICE_TYPE: "pages.devices.type.cortrium.name",
   WeatherService.DEVICE_TYPE: "pages.devices.type.weather.name",
   AirQualityService.DEVICE_TYPE: "pages.devices.type.air_quality.name",
   LocationService.DEVICE_TYPE: "pages.devices.type.location.name",
-  PolarDevice.DEVICE_TYPE: "pages.devices.type.polar.name",
-  MovesenseDevice.DEVICE_TYPE: "pages.devices.type.movesense.name",
   HealthService.DEVICE_TYPE: "pages.devices.type.health.name",
 };
 
 const Map<String, String> _deviceTypeDescription = {
   Smartphone.DEVICE_TYPE: "pages.devices.type.smartphone.description",
+  PolarDevice.DEVICE_TYPE: "pages.devices.type.polar.description",
+  MovesenseDevice.DEVICE_TYPE: "pages.devices.type.movesense.description",
+  CortriumDevice.DEVICE_TYPE: "pages.devices.type.cortrium.description",
   WeatherService.DEVICE_TYPE: "pages.devices.type.weather.description",
   AirQualityService.DEVICE_TYPE: "pages.devices.type.air_quality.description",
   LocationService.DEVICE_TYPE: "pages.devices.type.location.description",
-  PolarDevice.DEVICE_TYPE: "pages.devices.type.polar.description",
-  MovesenseDevice.DEVICE_TYPE: "pages.devices.type.movesense.description",
   HealthService.DEVICE_TYPE: "pages.devices.type.health.description",
 };
 
@@ -190,6 +192,11 @@ const Map<String, Icon> _deviceTypeIcon = {
   ),
   HealthService.DEVICE_TYPE: Icon(
     Icons.favorite_rounded,
+    size: 30,
+    color: CACHET.RED_1,
+  ),
+  CortriumDevice.DEVICE_TYPE: Icon(
+    Icons.monitor_heart_outlined,
     size: 30,
     color: CACHET.RED_1,
   ),
@@ -235,10 +242,12 @@ const Map<String, String> _deviceConnectionInstructions = {
   Smartphone.DEVICE_TYPE: "pages.devices.type.smartphone.instructions",
   PolarDevice.DEVICE_TYPE: "pages.devices.type.polar.instructions",
   MovesenseDevice.DEVICE_TYPE: "pages.devices.type.movesense.instructions",
+  CortriumDevice.DEVICE_TYPE: "pages.devices.type.cortrium.instructions",
 };
 
 const Map<String, String> _deviceConnectionInstructionsImage = {
   Smartphone.DEVICE_TYPE: "assets/icons/connection_done.png",
   PolarDevice.DEVICE_TYPE: "assets/instructions/polar_instructions.png",
   MovesenseDevice.DEVICE_TYPE: "assets/instructions/movesense_instructions.png",
+  CortriumDevice.DEVICE_TYPE: "assets/instructions/cortrium_instructions.png",
 };

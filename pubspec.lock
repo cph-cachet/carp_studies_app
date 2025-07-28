@@ -279,7 +279,7 @@ packages:
       path: "../carp_cortrium_package"
       relative: true
     source: path
-    version: "1.0.0"
+    version: "1.0.1"
   carp_health_package:
     dependency: "direct main"
     description:

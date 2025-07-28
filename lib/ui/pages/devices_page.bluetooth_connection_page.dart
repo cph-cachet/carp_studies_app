@@ -6,13 +6,22 @@ enum CurrentStep { scan, instructions, done }
 class BluetoothConnectionPage extends StatefulWidget {
   final DeviceViewModel device;
 
-  const BluetoothConnectionPage({super.key, required this.device});
+  const BluetoothConnectionPage(CurrentStep currentStep,
+      {super.key, required this.device})
+      : _currentStep = currentStep;
+
+  final CurrentStep _currentStep;
 
   @override
-  State<StatefulWidget> createState() => _BluetoothConnectionPageState();
+  State<StatefulWidget> createState() =>
+      _BluetoothConnectionPageState(_currentStep);
 }
 
 class _BluetoothConnectionPageState extends State<BluetoothConnectionPage> {
+  _BluetoothConnectionPageState(this.currentStep);
+
+  CurrentStep currentStep;
+
   @override
   initState() {
     super.initState();
@@ -22,10 +31,11 @@ class _BluetoothConnectionPageState extends State<BluetoothConnectionPage> {
   @override
   void dispose() {
     FlutterBluePlus.stopScan();
+    AppPreferences.setHasSeenBluetoothConnectionInstructions();
     super.dispose();
   }
 
-  CurrentStep currentStep = CurrentStep.scan;
+  // CurrentStep currentStep = CurrentStep.scan;
   BluetoothDevice? selectedDevice;
   int selected = 40;
 
@@ -50,9 +60,13 @@ class _BluetoothConnectionPageState extends State<BluetoothConnectionPage> {
                   child: Column(
                     children: [
                       _buildDialogTitle(locale),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.6,
-                        child: _buildStepContent(locale),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: SizedBox(
+                            child: _buildStepContent(locale),
+                          ),
+                        ),
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(
@@ -76,12 +90,9 @@ class _BluetoothConnectionPageState extends State<BluetoothConnectionPage> {
   Widget _buildDialogTitle(RPLocalizations locale) {
     final stepTitleMap = {
       CurrentStep.scan:
-          locale.translate("pages.devices.connection.step.start.title") +
-              (" ${widget.device.name} "),
+          locale.translate("pages.devices.connection.step.start.title"),
       CurrentStep.instructions:
-          locale.translate("pages.devices.connection.step.how_to.title") +
-              (" ${selectedDevice?.platformName} ") +
-              locale.translate("pages.devices.connection.step.how_to.device"),
+          locale.translate("pages.devices.connection.step.how_to.title"),
       CurrentStep.done:
           locale.translate("pages.devices.connection.step.confirm.title") +
               (" ${selectedDevice?.platformName} "),

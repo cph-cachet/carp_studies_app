@@ -228,11 +228,14 @@ class ProfilePageState extends State<ProfilePage> {
     return ListTile(
       title: Text(title,
           style: profileSectionStyle.copyWith(color: CACHET.GREY_6)),
-      subtitle: Text(
-        subtitle,
-        style: profileTitleStyle,
-        maxLines: 1,
-        textScaler: TextScaler.linear(0.9),
+      subtitle: FittedBox(
+        fit: BoxFit.scaleDown,
+        alignment: Alignment.centerLeft,
+        child: Text(
+          subtitle,
+          style: profileTitleStyle,
+          maxLines: 1,
+        ),
       ),
     );
   }

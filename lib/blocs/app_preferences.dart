@@ -3,7 +3,6 @@ part of carp_study_app;
 class AppPreferences {
   static Future<bool> hasSeenBluetoothConnectionInstructions() async {
     final prefs = await SharedPreferences.getInstance();
-    print("PREFSINSTRUCTIONS ${prefs.getBool('hasSeenBluetoothConnectionInstructions') ?? false}" );
     return prefs.getBool('hasSeenBluetoothConnectionInstructions') ?? false;
   }
 
@@ -14,7 +13,6 @@ class AppPreferences {
 
   static Future<bool> hasFilledExpectedParticipantData() async {
     final prefs = await SharedPreferences.getInstance();
-    print("PREFSPARTICIPANT ${prefs.getBool('hasFilledExpectedParticipantData') ?? false}");
     return prefs.getBool('hasFilledExpectedParticipantData') ?? false;
   }
 

@@ -37,7 +37,7 @@ platform :android do
           aab: '../build/app/outputs/bundle/release/app-release.aab',
         )
       else
-        UI.user_error!("Version code must be greater than or equal to the current version code: #{current_version_code}")
+        UI.user_error!("Version code must be greater than or equal to the current version code: #{current_production_version_code} and #{current_internal_version_code}")
       end
     end
   end

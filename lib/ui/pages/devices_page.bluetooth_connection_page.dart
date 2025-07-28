@@ -24,7 +24,6 @@ class _BluetoothConnectionPageState extends State<BluetoothConnectionPage> {
 
   @override
   initState() {
-    print("LOCALSETTINGS: ${LocalSettings().hasUserSeenDeviceConnectionInstructions}");
     super.initState();
     FlutterBluePlus.startScan();
   }
@@ -32,7 +31,7 @@ class _BluetoothConnectionPageState extends State<BluetoothConnectionPage> {
   @override
   void dispose() {
     FlutterBluePlus.stopScan();
-    LocalSettings().hasUserSeenDeviceConnectionInstructions = true;
+    AppPreferences.setHasSeenBluetoothConnectionInstructions();
     super.dispose();
   }
 

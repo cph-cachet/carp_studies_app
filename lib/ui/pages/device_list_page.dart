@@ -359,15 +359,19 @@ class DeviceListPageState extends State<DeviceListPage> {
               false;
           if (disconnect) await device.disconnectFromDevice();
         } else {
+          final hasSeenInstructions =
+              await AppPreferences.hasSeenBluetoothConnectionInstructions();
           Navigator.push(
-              context,
-              MaterialPageRoute<void>(
-                builder: (context) => BluetoothConnectionPage(
-                    LocalSettings().hasUserSeenDeviceConnectionInstructions
-                        ? CurrentStep.scan
-                        : CurrentStep.instructions,
-                    device: device),
-              ));
+            context,
+            MaterialPageRoute<void>(
+              builder: (context) => BluetoothConnectionPage(
+                hasSeenInstructions
+                    ? CurrentStep.scan
+                    : CurrentStep.instructions,
+                device: device,
+              ),
+            ),
+          );
         }
       } else if (bluetoothAdapterState == BluetoothAdapterState.unauthorized &&
           Platform.isIOS) {

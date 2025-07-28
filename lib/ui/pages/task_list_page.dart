@@ -152,10 +152,18 @@ class TaskListPageState extends State<TaskListPage>
                               ),
                             ),
                           ),
-                          LocalSettings().isExpectedParticipantDataSet
-                              ? const SliverToBoxAdapter()
-                              : SliverToBoxAdapter(
-                                  child: _buildParticipantDataCard()),
+                          FutureBuilder<bool>(
+                            future: AppPreferences.hasFilledExpectedParticipantData(),
+                            builder: (context, snapshot) {
+                              if (snapshot.hasData && snapshot.data == true) {
+                                return const SliverToBoxAdapter();
+                              } else {
+                                return SliverToBoxAdapter(
+                                  child: _buildParticipantDataCard(),
+                                );
+                              }
+                            },
+                          ),
                           SliverList(
                             delegate: SliverChildBuilderDelegate(
                               (BuildContext context, int index) {

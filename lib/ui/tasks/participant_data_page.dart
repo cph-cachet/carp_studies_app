@@ -762,12 +762,14 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
         participantData.addAll(dataMap);
       }
     }
-    LocalSettings().isExpectedParticipantDataSet = true;
+
     bloc.setParticipantData(
       bloc.study!.studyDeploymentId,
       participantData,
       bloc.study!.participantRoleName,
     );
+    
+    AppPreferences.setHasFilledExpectedParticipantData();
   }
 
   Future<void> _showCancelConfirmationDialog() {

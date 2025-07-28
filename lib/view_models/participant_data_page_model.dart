@@ -1,6 +1,9 @@
 part of carp_study_app;
 
 class ParticipantDataPageViewModel extends ViewModel {
+
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+
   Set<ExpectedParticipantData?> get expectedData =>
       bloc.expectedParticipantData;
 

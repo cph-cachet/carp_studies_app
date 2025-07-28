@@ -34,6 +34,7 @@ import 'package:open_settings_plus/core/open_settings_plus.dart';
 import 'package:appcheck/appcheck.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:app_version_update/app_version_update.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 // the CARP packages
 import 'package:carp_serializable/carp_serializable.dart';
@@ -58,6 +59,7 @@ import 'package:carp_movesense_package/carp_movesense_package.dart';
 part 'blocs/app_bloc.dart';
 part 'blocs/util.dart';
 part 'blocs/sensing.dart';
+part 'blocs/app_preferences.dart';
 
 part 'data/local_settings.dart';
 part 'data/carp_backend.dart';

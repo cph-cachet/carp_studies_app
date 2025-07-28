@@ -768,7 +768,7 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
       participantData,
       bloc.study!.participantRoleName,
     );
-    
+
     AppPreferences.setHasFilledExpectedParticipantData();
   }
 

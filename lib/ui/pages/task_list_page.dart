@@ -153,7 +153,8 @@ class TaskListPageState extends State<TaskListPage>
                             ),
                           ),
                           FutureBuilder<bool>(
-                            future: AppPreferences.hasFilledExpectedParticipantData(),
+                            future: AppPreferences
+                                .hasFilledExpectedParticipantData(),
                             builder: (context, snapshot) {
                               if (snapshot.hasData && snapshot.data == true) {
                                 return const SliverToBoxAdapter();

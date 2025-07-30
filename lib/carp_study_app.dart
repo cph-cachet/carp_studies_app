@@ -49,8 +49,38 @@ class CarpStudyAppState extends State<CarpStudyApp> {
           GoRoute(
               path: homeRoute,
               parentNavigatorKey: _shellNavigatorKey,
-              redirect: (context, state) {
-                print('im home, ocome over babe. im alone. no i cant. but my parents arent home. ${state.uri.query}');
+              redirect: (context, state) async {
+                print(
+                    '''im home, ocome over babe. im alone. no i cant. but my parents arent home. ${state.uri.host}
+                     ${state.uri.path} ${state.uri.pathSegments} ${state.uri.scheme} ${state.uri.userInfo} ${state.uri.port} ${state.uri.query} ${state.uri.queryParameters}''');
+
+                if (state.uri.queryParameters.containsKey("session_state")) {
+                  bool isConnected = await bloc.checkConnectivity();
+                  if (isConnected) {
+                    await bloc.backend.initialize();
+                    if (!bloc.backend.isAuthenticated) {
+                      
+                      await bloc.backend.authenticate();
+                    }
+                    if (context.mounted) return CarpStudyAppState.homeRoute;
+                  } else {
+                    showDialog<bool>(
+                      context: context,
+                      builder: (context) => PopScope(
+                        onPopInvokedWithResult: (didPop, result) async {
+                          WidgetsBinding.instance
+                              .addPostFrameCallback((_) async {
+                            if (didPop && result == true) {
+                              Navigator.of(context).pop();
+                            }
+                          });
+                        },
+                        child: EnableInternetConnectionDialog(),
+                      ),
+                    );
+                  }
+                }
+
                 if (bloc.deploymentMode != DeploymentMode.local) {
                   if (!bloc.backend.isAuthenticated) {
                     return LoginPage.route;
@@ -64,20 +94,6 @@ class CarpStudyAppState extends State<CarpStudyApp> {
                 }
 
                 return firstRoute;
-              }),
-          GoRoute(
-              path: '/anonymous',
-              redirect: (context, state) async {
-                if (bloc.backend.isAuthenticated) {
-                  print('im not a prin ${state.pathParameters}');
-                  return StudyPage.route;
-                } else {
-                  print('ιμ α πριντ${state.pathParameters}');
-                  await bloc.backend.authenticateAnonymous();
-                  return bloc.study != null
-                      ? InformedConsentPage.route
-                      : (bloc.user == null ? LoginPage.route : null);
-                }
               }),
           GoRoute(
             path: TaskListPage.route,
@@ -126,6 +142,22 @@ class CarpStudyAppState extends State<CarpStudyApp> {
           ),
         ],
       ),
+      // GoRoute(
+      //     path: '/anonymous',
+      //     parentNavigatorKey: _rootNavigatorKey,
+      //     redirect: (context, state) {
+      //       if (bloc.backend.isAuthenticated) {
+      //         print('im not a prin ${state.pathParameters}');
+      //         return StudyPage.route;
+      //       } else {
+      //         print(
+      //             'i am the printer the printer of worlds ${state.pathParameters}');
+      //         // await bloc.backend.authenticateAnonymous();
+      //         return bloc.study != null
+      //             ? InformedConsentPage.route
+      //             : (bloc.user == null ? LoginPage.route : null);
+      //       }
+      //     }),
       GoRoute(
         path: StudyDetailsPage.route,
         parentNavigatorKey: _rootNavigatorKey,

@@ -103,16 +103,6 @@ class CarpBackend {
     }
   }
 
-  Future<void> authenticateAnonymous() async {
-    try {
-      user = await CarpAuthService().authenticateAnonymous();
-      info('$runtimeType - User authenticated anonymously - user: $user');
-    } catch (error) {
-      user = null;
-      warning('$runtimeType - Error authenticating user anonymously - $error');
-    }
-  }
-
   /// Refresh authentication token based on the refresh token.
   Future<CarpUser> refresh() async {
     user = await CarpAuthService().refresh();

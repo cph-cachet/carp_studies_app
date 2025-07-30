@@ -169,7 +169,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="carp-studies" />
+                <data android:scheme="carp-studies" android:pathPrefix="/anonymous"/>
             </intent-filter>
         </activity>
         <activity

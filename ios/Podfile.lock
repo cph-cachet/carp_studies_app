@@ -1,10 +1,10 @@
 PODS:
   - Alamofire (5.8.1)
-  - AppAuth (1.7.4):
-    - AppAuth/Core (= 1.7.4)
-    - AppAuth/ExternalUserAgent (= 1.7.4)
-  - AppAuth/Core (1.7.4)
-  - AppAuth/ExternalUserAgent (1.7.4):
+  - AppAuth (2.0.0):
+    - AppAuth/Core (= 2.0.0)
+    - AppAuth/ExternalUserAgent (= 2.0.0)
+  - AppAuth/Core (2.0.0)
+  - AppAuth/ExternalUserAgent (2.0.0):
     - AppAuth/Core
   - "appcheck (1.5.4+1)":
     - Flutter
@@ -24,12 +24,14 @@ PODS:
   - flutter_activity_recognition (0.0.1):
     - Flutter
   - flutter_appauth (0.0.1):
-    - AppAuth (= 1.7.4)
+    - AppAuth (= 2.0.0)
     - Flutter
   - flutter_blue_plus_darwin (0.0.2):
     - Flutter
     - FlutterMacOS
   - flutter_local_notifications (0.0.1):
+    - Flutter
+  - flutter_native_splash (2.4.3):
     - Flutter
   - flutter_secure_storage (6.0.0):
     - Flutter
@@ -85,7 +87,7 @@ PODS:
   - sqflite_darwin (0.0.4):
     - Flutter
     - FlutterMacOS
-  - SwiftProtobuf (1.29.0)
+  - SwiftProtobuf (1.30.0)
   - url_launcher_ios (0.0.1):
     - Flutter
   - video_player_avfoundation (0.0.1):
@@ -106,6 +108,7 @@ DEPENDENCIES:
   - flutter_appauth (from `.symlinks/plugins/flutter_appauth/ios`)
   - flutter_blue_plus_darwin (from `.symlinks/plugins/flutter_blue_plus_darwin/darwin`)
   - flutter_local_notifications (from `.symlinks/plugins/flutter_local_notifications/ios`)
+  - flutter_native_splash (from `.symlinks/plugins/flutter_native_splash/ios`)
   - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
   - flutter_sound (from `.symlinks/plugins/flutter_sound/ios`)
   - flutter_timezone (from `.symlinks/plugins/flutter_timezone/ios`)
@@ -164,6 +167,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_blue_plus_darwin/darwin"
   flutter_local_notifications:
     :path: ".symlinks/plugins/flutter_local_notifications/ios"
+  flutter_native_splash:
+    :path: ".symlinks/plugins/flutter_native_splash/ios"
   flutter_secure_storage:
     :path: ".symlinks/plugins/flutter_secure_storage/ios"
   flutter_sound:
@@ -216,7 +221,7 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Alamofire: 3ca42e259043ee0dc5c0cdd76c4bc568b8e42af7
-  AppAuth: 182c5b88630569df5acb672720534756c29b3358
+  AppAuth: 1c1a8afa7e12f2ec3a294d9882dfa5ab7d3cb063
   appcheck: 3c94d0ffc94bd639938cac7427d5b13df2795404
   audio_session: 9bb7f6c970f21241b19f5a3658097ae459681ba0
   audio_streamer: 2e472b9f81cec5e381c4cf7667afa3055dcb45a4
@@ -226,9 +231,10 @@ SPEC CHECKSUMS:
   device_info_plus: 21fcca2080fbcd348be798aa36c3e5ed849eefbe
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   flutter_activity_recognition: 52dfad4c1e9cec99f0841b3ed0efcc9d424b3deb
-  flutter_appauth: b951036a3b715d9e38fe5c0e2eb9aded58383984
+  flutter_appauth: d4abcf54856e5d8ba82ed7646ffc83245d4aa448
   flutter_blue_plus_darwin: 20a08bfeaa0f7804d524858d3d8744bcc1b6dbc3
   flutter_local_notifications: a5a732f069baa862e728d839dd2ebb904737effb
+  flutter_native_splash: c32d145d68aeda5502d5f543ee38c192065986cf
   flutter_secure_storage: 1ed9476fba7e7a782b22888f956cce43e2c62f13
   flutter_sound: b9236a5875299aaa4cef1690afd2f01d52a3f890
   flutter_sound_core: 427465f72d07ab8c3edbe8ffdde709ddacd3763c
@@ -252,7 +258,7 @@ SPEC CHECKSUMS:
   sensors_plus: 6a11ed0c2e1d0bd0b20b4029d3bad27d96e0c65b
   shared_preferences_foundation: 9e1978ff2562383bd5676f64ec4e9aa8fa06a6f7
   sqflite_darwin: 20b2a3a3b70e43edae938624ce550a3cbf66a3d0
-  SwiftProtobuf: b7aa08087e2ab6d162862d143020091254095f69
+  SwiftProtobuf: 3697407f0d5b23bedeba9c2eaaf3ec6fdff69349
   url_launcher_ios: 694010445543906933d732453a59da0a173ae33d
   video_player_avfoundation: 2cef49524dd1f16c5300b9cd6efd9611ce03639b
   Zip: b3fef584b147b6e582b2256a9815c897d60ddc67

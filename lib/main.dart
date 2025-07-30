@@ -32,6 +32,7 @@ import 'package:open_settings_plus/core/open_settings_plus.dart';
 import 'package:appcheck/appcheck.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:app_version_update/app_version_update.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 // the CARP packages
 import 'package:carp_serializable/carp_serializable.dart';

@@ -80,54 +80,46 @@ class StudyPageState extends State<StudyPage> {
           if (snapshot.data == true) {
             return StudiesMaterial(
               backgroundColor: Theme.of(context).extension<RPColors>()!.grey50!,
-              elevation: 10,
-              child: Container(
-                decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Theme.of(context).extension<RPColors>()!.grey600!,
-                      width: 1.0,
+              elevation: 8,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 16.0),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          locale.translate('pages.about.app_update'),
+                          style: aboutCardSubtitleStyle.copyWith(
+                            color: Theme.of(context)
+                                .extension<RPColors>()!
+                                .grey900,
+                          ),
+                        ),
+                      ),
                     ),
-                    borderRadius: BorderRadius.circular(16.0)),
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 16.0),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            locale.translate('pages.about.app_update'),
-                            style: aboutCardSubtitleStyle.copyWith(
-                              color: Theme.of(context)
-                                  .extension<RPColors>()!
-                                  .grey900,
-                            ),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 16),
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          _redirectToUpdateStore();
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: CACHET.DEPLOYMENT_DEPLOYING,
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 30,
+                            vertical: 12,
+                          ),
+                        ),
+                        child: Text(
+                          locale.translate("get"),
+                          style: TextStyle(
+                            color: Colors.white,
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 16),
-                        child: ElevatedButton(
-                          onPressed: () async {
-                            _redirectToUpdateStore();
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: CACHET.DEPLOYMENT_DEPLOYING,
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 30,
-                              vertical: 12,
-                            ),
-                          ),
-                          child: Text(
-                            locale.translate("get"),
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             );
@@ -257,73 +249,66 @@ class StudyPageState extends State<StudyPage> {
           margin: const EdgeInsets.all(16.0),
           color: Theme.of(context).extension<RPColors>()!.grey50,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16.0),
+            borderRadius: BorderRadius.circular(8),
           ),
-          child: Container(
-            decoration: BoxDecoration(
-                border: Border.all(
-                  color: Theme.of(context).extension<RPColors>()!.grey600!,
-                  width: 1.0,
-                ),
-                borderRadius: BorderRadius.circular(16.0)),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 16.0, vertical: 22.0),
-                    child: Row(
-                      children: [
-                        Column(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 6.0, vertical: 4),
-                              child: CircleAvatar(
-                                radius: 18,
-                                backgroundColor:
-                                    studyStatusColors[deploymentStatus],
-                              ),
+          elevation: 0,
+          child: Row(
+            children: [
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 16.0, vertical: 22.0),
+                  child: Row(
+                    children: [
+                      Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 6.0, vertical: 4),
+                            child: CircleAvatar(
+                              radius: 18,
+                              backgroundColor:
+                                  studyStatusColors[deploymentStatus],
                             ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 6.0),
-                              child: Text(
-                                deploymentStatus ==
-                                        StudyDeploymentStatusTypes
-                                            .DeployingDevices
-                                    ? locale.translate(
-                                        'pages.about.status.deploying_devices')
-                                    : deploymentStatus
-                                        .toString()
-                                        .split('.')
-                                        .last,
-                                maxLines: 2,
-                                style: aboutCardSubtitleStyle.copyWith(
-                                    color: studyStatusColors[deploymentStatus]),
-                              ),
-                            ),
-                          ],
-                        ),
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 16.0),
+                          ),
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 6.0),
                             child: Text(
-                              getStatusText(locale, deploymentStatus, snapshot),
+                              deploymentStatus ==
+                                      StudyDeploymentStatusTypes
+                                          .DeployingDevices
+                                  ? locale.translate(
+                                      'pages.about.status.deploying_devices')
+                                  : deploymentStatus
+                                      .toString()
+                                      .split('.')
+                                      .last,
+                              maxLines: 2,
                               style: aboutCardSubtitleStyle.copyWith(
-                                color: Theme.of(context)
-                                    .extension<RPColors>()!
-                                    .grey900,
-                              ),
+                                  color: studyStatusColors[deploymentStatus]),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 16.0),
+                          child: Text(
+                            getStatusText(locale, deploymentStatus, snapshot),
+                            style: aboutCardSubtitleStyle.copyWith(
+                              color: Theme.of(context)
+                                  .extension<RPColors>()!
+                                  .grey900,
                             ),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         );
       },

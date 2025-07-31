@@ -15,10 +15,10 @@ class StudiesMaterial extends StatelessWidget {
   const StudiesMaterial({
     super.key,
     required this.child,
-    this.elevation = 2.0,
+    this.elevation = 0,
     this.margin = const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
     this.shape = const RoundedRectangleBorder(
-      borderRadius: BorderRadius.all(Radius.circular(16.0)),
+      borderRadius: BorderRadius.all(Radius.circular(8)),
     ),
     this.clipBehavior,
     this.hasBorder = false,

@@ -205,18 +205,18 @@ packages:
     dependency: "direct main"
     description:
       name: camera_android_camerax
-      sha256: "4b6c1bef4270c39df96402c4d62f2348c3bb2bbaefd0883b9dbd58f426306ad0"
+      sha256: "58b8fe843a3c83fd1273c00cb35f5a8ae507f6cc9b2029bcf7e2abba499e28d8"
       url: "https://pub.dev"
     source: hosted
-    version: "0.6.19"
+    version: "0.6.19+1"
   camera_avfoundation:
     dependency: transitive
     description:
       name: camera_avfoundation
-      sha256: cabc6cbdeadca9cbcac178110c9d5e87bde5c646c3b8c9c4c2747fc500a12432
+      sha256: "04e1f052ef268085a4f0550389211cc46005a9af015e444c7b1ee7aa19332e5d"
       url: "https://pub.dev"
     source: hosted
-    version: "0.9.20+5"
+    version: "0.9.20+6"
   camera_platform_interface:
     dependency: transitive
     description:
@@ -279,7 +279,7 @@ packages:
       path: "../carp_cortrium_package"
       relative: true
     source: path
-    version: "1.0.1"
+    version: "1.0.2"
   carp_health_package:
     dependency: "direct main"
     description:
@@ -443,7 +443,7 @@ packages:
   cortrium_c3:
     dependency: transitive
     description:
-      path: "../app-sdk"
+      path: "../Cortrium/app-sdk"
       relative: true
     source: path
     version: "0.0.1"
@@ -1876,10 +1876,10 @@ packages:
     dependency: transitive
     description:
       name: sqflite_common
-      sha256: "84731e8bfd8303a3389903e01fb2141b6e59b5973cacbb0929021df08dddbe8b"
+      sha256: "6ef422a4525ecc601db6c0a2233ff448c731307906e92cabc9ba292afaae16a6"
       url: "https://pub.dev"
     source: hosted
-    version: "2.5.5"
+    version: "2.5.6"
   sqflite_darwin:
     dependency: transitive
     description:
@@ -2164,18 +2164,18 @@ packages:
     dependency: transitive
     description:
       name: video_player_android
-      sha256: "9d5af2d233ba69df803dcf2f31e66d9a4c6206f2d96178df06b09b0ec3056b39"
+      sha256: "0fabf59eea728a6a887f29f2818eafbefb4b37c727dbb62dccef56c9287a692f"
       url: "https://pub.dev"
     source: hosted
-    version: "2.8.9"
+    version: "2.8.10"
   video_player_avfoundation:
     dependency: transitive
     description:
       name: video_player_avfoundation
-      sha256: "9fedd55023249f3a02738c195c906b4e530956191febf0838e37d0dac912f953"
+      sha256: d716c279c940b5b4625da6bae625e88540d4150a8f3390f961454245e9848675
       url: "https://pub.dev"
     source: hosted
-    version: "2.8.0"
+    version: "2.8.1"
   video_player_platform_interface:
     dependency: transitive
     description:

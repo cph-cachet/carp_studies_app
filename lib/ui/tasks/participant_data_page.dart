@@ -255,6 +255,7 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
   Widget build(BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;
     return Scaffold(
+      backgroundColor: Theme.of(context).extension<RPColors>()!.backgroundGray!,
       body: SafeArea(
         child: Container(
           padding: const EdgeInsets.all(16.0),
@@ -762,14 +763,12 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
         participantData.addAll(dataMap);
       }
     }
-
+    LocalSettings().isExpectedParticipantDataSet = true;
     bloc.setParticipantData(
       bloc.study!.studyDeploymentId,
       participantData,
       bloc.study!.participantRoleName,
     );
-
-    AppPreferences.setHasFilledExpectedParticipantData();
   }
 
   Future<void> _showCancelConfirmationDialog() {

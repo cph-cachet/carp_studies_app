@@ -21,7 +21,6 @@ class StudyProgressCardWidgetState extends State<StudyProgressCardWidget> {
     return StudiesMaterial(
       backgroundColor: Theme.of(context).extension<RPColors>()!.white!,
       hasBox: true,
-      elevation: 0,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: StreamBuilder(

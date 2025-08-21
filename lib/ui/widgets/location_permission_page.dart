@@ -6,14 +6,6 @@ class LocationPermissionPage {
 
     return Scaffold(
       backgroundColor: Theme.of(context).extension<RPColors>()!.backgroundGray,
-      appBar: AppBar(
-        backgroundColor:
-            Theme.of(context).extension<RPColors>()!.backgroundGray,
-        title: const CarpAppBar(),
-        automaticallyImplyLeading: false,
-        centerTitle: true,
-        elevation: 0.0,
-      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 16.0),
         child: SafeArea(
@@ -36,7 +28,6 @@ class LocationPermissionPage {
                   child: StudiesMaterial(
                     backgroundColor:
                         Theme.of(context).extension<RPColors>()!.white!,
-                    elevation: 2.0,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12.0),
                     ),

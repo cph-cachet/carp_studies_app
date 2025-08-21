@@ -102,6 +102,7 @@
     "pages.profile.log_out": "Log ud",
     "pages.profile.log_out.confirmation": "Du er ved at forlade dette studie og logge af. Operativsystemet vil åbne en browser for at logge dig ud. Er du sikker?",
     "pages.profile.leave_study.confirmation": "Du er ved at forlade studiet. Du vil ikke længere deltage i dette studie. Er du sikker?",
+    "announcements": "Annonceringer",
     "announcement": "Annoncering",
     "article": "Artikel",
     "news": "Nyhed",

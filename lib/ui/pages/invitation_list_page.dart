@@ -122,7 +122,6 @@ class InvitationMaterial extends StatelessWidget {
     RPLocalizations locale = RPLocalizations.of(context)!;
     return StudiesMaterial(
       backgroundColor: Theme.of(context).extension<RPColors>()!.white!,
-      elevation: 0.0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12.0),
       ),

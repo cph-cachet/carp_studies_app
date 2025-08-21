@@ -211,7 +211,6 @@ class TaskListPageState extends State<TaskListPage>
           ),
         ),
         backgroundColor: Theme.of(context).extension<RPColors>()!.grey50!,
-        elevation: 0,
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 16),
           child: IntrinsicHeight(
@@ -295,7 +294,6 @@ class TaskListPageState extends State<TaskListPage>
               userTask.expiresIn != null && userTask.expiresIn!.inHours < 24
                   ? CACHET.TASK_TO_EXPIRE_BACKGROUND
                   : Theme.of(context).extension<RPColors>()!.grey50!,
-          elevation: 0,
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 16),
             child: IntrinsicHeight(
@@ -499,7 +497,6 @@ class TaskListPageState extends State<TaskListPage>
         child: StudiesMaterial(
           backgroundColor: Theme.of(context).extension<RPColors>()!.grey50!,
           hasBorder: true,
-          elevation: 0,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.horizontal(
               left: Radius.circular(2.0),

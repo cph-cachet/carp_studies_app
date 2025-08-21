@@ -31,7 +31,6 @@ class _MobilityCardState extends State<MobilityCard> {
 
     return StudiesMaterial(
       backgroundColor: Theme.of(context).extension<RPColors>()!.white!,
-      elevation: 0,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(

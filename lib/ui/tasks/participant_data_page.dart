@@ -206,6 +206,33 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
 
   @override
   void dispose() {
+    widget.model._address1Controller.dispose();
+    widget.model._streetController.dispose();
+    widget.model._postalCodeController.dispose();
+    widget.model._countryController.dispose();
+    widget.model._effectiveDateController.dispose();
+    widget.model._diagnosisDescriptionController.dispose();
+    widget.model._icd11CodeController.dispose();
+    widget.model._conclusionController.dispose();
+    widget.model._firstNameController.dispose();
+    widget.model._middleNameController.dispose();
+    widget.model._lastNameController.dispose();
+    widget.model._informedConsentDescriptionController.dispose();
+    widget.model._phoneNumberController.dispose();
+    widget.model._ssnController.dispose();
+
+    widget.model._address1FocusNode.dispose();
+    widget.model._streetFocusNode.dispose();
+    widget.model._postalCodeFocusNode.dispose();
+    widget.model._countryFocusNode.dispose();
+    widget.model._effectiveDateFocusNode.dispose();
+    widget.model._diagnosisDescriptionFocusNode.dispose();
+    widget.model._icd11CodeFocusNode.dispose();
+    widget.model._conclusionFocusNode.dispose();
+    widget.model._firstNameFocusNode.dispose();
+    widget.model._middleNameFocusNode.dispose();
+    widget.model._lastNameFocusNode.dispose();
+
     super.dispose();
   }
 
@@ -255,6 +282,7 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
   Widget build(BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;
     return Scaffold(
+      backgroundColor: Theme.of(context).extension<RPColors>()!.backgroundGray!,
       body: SafeArea(
         child: Container(
           padding: const EdgeInsets.all(16.0),
@@ -728,9 +756,12 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
       },
       ParticipantStep.diagnosis: {
         DiagnosisInput.type: DiagnosisInput(
-          effectiveDate: DateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
-              .parse('${widget.model._effectiveDateController.text}T00:00:00Z')
-              .toUtc(),
+          effectiveDate: widget.model._effectiveDateController.text.isNotEmpty
+              ? DateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
+                  .parse(
+                      '${widget.model._effectiveDateController.text}T00:00:00Z')
+                  .toUtc()
+              : null,
           diagnosis: widget.model._diagnosisDescriptionController.text,
           icd11Code: widget.model._icd11CodeController.text,
           conclusion: widget.model._conclusionController.text,
@@ -768,7 +799,6 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
       participantData,
       bloc.study!.participantRoleName,
     );
-
     AppPreferences.setHasFilledExpectedParticipantData();
   }
 

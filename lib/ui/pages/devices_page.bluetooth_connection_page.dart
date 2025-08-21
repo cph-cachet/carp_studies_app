@@ -318,20 +318,26 @@ class _BluetoothConnectionPageState extends State<BluetoothConnectionPage> {
     RPLocalizations locale = RPLocalizations.of(context)!;
     AssetImage? assetImage;
 
-    switch (widget.device.deviceManager) {
+    switch (device.deviceManager) {
       case PolarDeviceManager _
-          when widget.device.type == PolarDevice.DEVICE_TYPE &&
-              (widget.device.polarDeviceType == PolarDeviceType.H10 ||
-                  widget.device.polarDeviceType == PolarDeviceType.H9):
+          when device.type == PolarDevice.DEVICE_TYPE &&
+              (device.polarDeviceType == PolarDeviceType.H10 ||
+                  device.polarDeviceType == PolarDeviceType.H9):
         assetImage =
             AssetImage('assets/instructions/polar_h9_h10_instructions.png');
         break;
 
       case PolarDeviceManager _
-          when widget.device.type == PolarDevice.DEVICE_TYPE &&
-              widget.device.polarDeviceType == PolarDeviceType.SENSE:
+          when device.type == PolarDevice.DEVICE_TYPE &&
+              device.polarDeviceType == PolarDeviceType.SENSE:
         assetImage =
             AssetImage('assets/instructions/polar_sense_instructions.png');
+        break;
+
+      // if device type is not defined in the protocol, show h9, h10 instructions
+      case PolarDeviceManager _:
+        assetImage =
+            AssetImage('assets/instructions/polar_h9_h10_instructions.png');
         break;
 
       case MovesenseDeviceManager _:
@@ -345,22 +351,28 @@ class _BluetoothConnectionPageState extends State<BluetoothConnectionPage> {
 
     Image connectionImage = Image(
       image: assetImage,
-      width: MediaQuery.of(context).size.height * 0.2,
-      height: MediaQuery.of(context).size.height * 0.2,
+      width: MediaQuery.of(context).size.height * 0.5,
+      height: MediaQuery.of(context).size.height * 0.5,
     );
     return Column(
       children: [
         Expanded(
           child: SingleChildScrollView(
-            child: Column(
-              children: [
-                connectionImage,
-                Text(
-                  locale.translate(device.connectionInstructions!),
-                  style: aboutCardContentStyle,
-                  textAlign: TextAlign.justify,
-                ),
-              ],
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 20.0),
+              child: Column(
+                children: [
+                  connectionImage,
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 20.0),
+                    child: Text(
+                      locale.translate(device.connectionInstructions!),
+                      style: aboutCardContentStyle,
+                      textAlign: TextAlign.justify,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

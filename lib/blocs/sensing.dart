@@ -95,6 +95,7 @@ class Sensing {
     SamplingPackageRegistry().register(HealthSamplingPackage());
     SamplingPackageRegistry().register(PolarSamplingPackage());
     SamplingPackageRegistry().register(MovesenseSamplingPackage());
+    SamplingPackageRegistry().register(CortriumSamplingPackage());
 
     // create and register external data managers
     DataManagerRegistry().register(CarpDataManagerFactory());

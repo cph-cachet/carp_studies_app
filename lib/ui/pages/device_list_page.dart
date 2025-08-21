@@ -180,10 +180,8 @@ class DeviceListPageState extends State<DeviceListPage> {
                               color: CACHET.DEPLOYMENT_DEPLOYING,
                               borderRadius: BorderRadius.circular(100)),
                           child: Text(
-                              locale
-                                  .translate(
-                                      device.getDeviceStatusIcon as String)
-                                  .toUpperCase(),
+                              locale.translate(
+                                  device.getDeviceStatusIcon as String),
                               style: aboutCardTitleStyle.copyWith(
                                   color: Colors.white)),
                         ),
@@ -220,8 +218,7 @@ class DeviceListPageState extends State<DeviceListPage> {
                           child: Text(
                             locale
                                 .translate(
-                                    service.getServiceStatusIcon as String)
-                                .toUpperCase(),
+                                    service.getServiceStatusIcon as String),
                             style: aboutCardTitleStyle.copyWith(
                                 color: Colors.white),
                           ),

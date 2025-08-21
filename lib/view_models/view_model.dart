@@ -241,7 +241,6 @@ class CarpStudyAppViewModel extends ViewModel {
     _profilePageViewModel.clear();
     _invitationsListViewModel.clear();
     _informedConsentViewModel.clear();
-    _participantDataPageViewModel.clear();
 
     super.clear();
   }
@@ -256,7 +255,6 @@ class CarpStudyAppViewModel extends ViewModel {
     _profilePageViewModel.dispose();
     _invitationsListViewModel.dispose();
     _informedConsentViewModel.dispose();
-    _participantDataPageViewModel.dispose();
 
     super.dispose();
   }

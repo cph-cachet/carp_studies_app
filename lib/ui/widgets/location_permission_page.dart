@@ -28,6 +28,9 @@ class LocationPermissionPage {
                   child: StudiesMaterial(
                     backgroundColor:
                         Theme.of(context).extension<RPColors>()!.white!,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12.0),
+                    ),
                     child: Padding(
                       padding: const EdgeInsets.only(
                         right: 24.0,

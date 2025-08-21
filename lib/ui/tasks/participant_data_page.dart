@@ -793,7 +793,7 @@ class ParticipantDataPageState extends State<ParticipantDataPage> {
         participantData.addAll(dataMap);
       }
     }
-    
+
     bloc.setParticipantData(
       bloc.study!.studyDeploymentId,
       participantData,

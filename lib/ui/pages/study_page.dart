@@ -393,7 +393,6 @@ class StudyPageState extends State<StudyPage> {
     return Container(
       child: StudiesMaterial(
         backgroundColor: Theme.of(context).extension<RPColors>()!.grey50!,
-        hasBox: true,
         child: InkWell(
           onTap: () {
             if (onTap != null) {

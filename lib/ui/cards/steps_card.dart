@@ -6,7 +6,7 @@ class StepsCardWidget extends StatefulWidget {
   final StepsCardViewModel model;
   const StepsCardWidget(this.model,
       {super.key,
-      this.colors = const [CACHET.BLUE_1, CACHET.BLUE_2, CACHET.BLUE_3]});
+      this.colors = const [CACHET.ORANGE, CACHET.BLUE_2, CACHET.BLUE_3]});
 
   @override
   StepsCardWidgetState createState() => StepsCardWidgetState();
@@ -29,19 +29,40 @@ class StepsCardWidgetState extends State<StepsCardWidget> {
     RPLocalizations locale = RPLocalizations.of(context)!;
 
     return StudiesMaterial(
+      backgroundColor: Theme.of(context).extension<RPColors>()!.white!,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-            ChartsLegend(
-              title: locale.translate('cards.steps.title'),
-              iconAssetName: Icon(Icons.directions_walk,
-                  color: Theme.of(context).primaryColor),
-              heroTag: 'steps-card',
-              values: [
-                '$_step ${locale.translate('cards.steps.steps')}',
+            Row(
+              children: [
+                Text(
+                  '$_step',
+                  style: dataVizCardTitleNumber.copyWith(
+                    color: Theme.of(context).extension<RPColors>()!.grey900!,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 4.0),
+                  child: Text(
+                    '${locale.translate('cards.steps.steps')} ${_getDayName(touchedIndex)}',
+                    style: dataVizCardTitleText.copyWith(
+                      color: Theme.of(context).extension<RPColors>()!.grey600,
+                    ),
+                  ),
+                ),
               ],
-              colors: widget.colors,
+            ),
+            Row(
+              children: [
+                Text(
+                  "${widget.model.currentMonth} ${widget.model.startOfWeek} - ${int.parse(widget.model.endOfWeek) < int.parse(widget.model.startOfWeek) ? widget.model.nextMonth : widget.model.currentMonth} ${widget.model.endOfWeek}, ${widget.model.currentYear}",
+                  style: dataVizCardTitleText.copyWith(
+                    color: Theme.of(context).extension<RPColors>()!.grey600,
+                  ),
+                ),
+                Spacer(),
+              ],
             ),
             SizedBox(
               height: 160,
@@ -135,8 +156,8 @@ class StepsCardWidgetState extends State<StepsCardWidget> {
           color: widget.colors[1].withValues(alpha: isTouched ? 0.8 : 1),
           width: 32,
           borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(8),
-            topRight: Radius.circular(8),
+            topLeft: Radius.circular(4),
+            topRight: Radius.circular(4),
           ),
         ),
       ],
@@ -146,50 +167,48 @@ class StepsCardWidgetState extends State<StepsCardWidget> {
   Widget rightTitles(double value, TitleMeta meta) {
     return SideTitleWidget(
       meta: meta,
-      space: 16,
+      space: 6,
       child: Text(
         value.toInt() % meta.appliedInterval == 0
             ? value.toInt().toString()
             : '',
         style: dataCardRightTitleStyle.copyWith(
-          color: Theme.of(context).extension<CarpColors>()!.grey600,
+          color: Theme.of(context).extension<RPColors>()!.grey600,
         ),
-        maxLines: 1,
       ),
     );
   }
 
   Widget bottomTitles(double value, TitleMeta meta) {
     const style = TextStyle(fontSize: 10);
-    String text;
-    switch (value.toInt()) {
-      case 1:
-        text = 'Mon';
-        break;
-      case 2:
-        text = 'Tue';
-        break;
-      case 3:
-        text = 'Wed';
-        break;
-      case 4:
-        text = 'Thu';
-        break;
-      case 5:
-        text = 'Fri';
-        break;
-      case 6:
-        text = 'Sat';
-        break;
-      case 7:
-        text = 'Sun';
-        break;
-      default:
-        text = '';
-    }
     return SideTitleWidget(
       meta: meta,
-      child: Text(text, style: style),
+      child: Text(
+        _getDayName(value.toInt()),
+        style: style,
+      ),
     );
+  }
+
+  String _getDayName(int dayIndex) {
+    RPLocalizations locale = RPLocalizations.of(context)!;
+    switch (dayIndex) {
+      case 1:
+        return locale.translate("pages.data_viz.mon");
+      case 2:
+        return locale.translate("pages.data_viz.tue");
+      case 3:
+        return locale.translate("pages.data_viz.wed");
+      case 4:
+        return locale.translate("pages.data_viz.thu");
+      case 5:
+        return locale.translate("pages.data_viz.fri");
+      case 6:
+        return locale.translate("pages.data_viz.sat");
+      case 7:
+        return locale.translate("pages.data_viz.sun");
+      default:
+        return '';
+    }
   }
 }

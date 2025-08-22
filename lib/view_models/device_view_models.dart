@@ -77,6 +77,29 @@ class DeviceViewModel extends ViewModel {
   /// Instructions to the user on how to connect to this type of device.
   String? get connectionInstructions => _deviceConnectionInstructions[type!];
 
+  String? get connectionInstructionsImage =>
+      _deviceConnectionInstructionsImage[type!];
+
+  PolarDeviceType get polarDeviceType {
+    if (deviceManager is PolarDeviceManager) {
+      return (deviceManager as PolarDeviceManager).configuration?.deviceType ??
+          PolarDeviceType.UNKNOWN;
+    } else {
+      return PolarDeviceType.UNKNOWN;
+    }
+  }
+
+  MovesenseDeviceType get movesenseDeviceType {
+    if (deviceManager is MovesenseDeviceManager) {
+      return (deviceManager as MovesenseDeviceManager)
+              .configuration
+              ?.deviceType ??
+          MovesenseDeviceType.UNKNOWN;
+    } else {
+      return MovesenseDeviceType.UNKNOWN;
+    }
+  }
+
   /// Display information about this phone.
   Map<String, String?> get phoneInfo => {
         'name': '${DeviceInfo().deviceID}',
@@ -122,7 +145,6 @@ const Map<String, String> _deviceTypeName = {
   WeatherService.DEVICE_TYPE: "pages.devices.type.weather.name",
   AirQualityService.DEVICE_TYPE: "pages.devices.type.air_quality.name",
   LocationService.DEVICE_TYPE: "pages.devices.type.location.name",
-  ESenseDevice.DEVICE_TYPE: "pages.devices.type.esense.name",
   PolarDevice.DEVICE_TYPE: "pages.devices.type.polar.name",
   MovesenseDevice.DEVICE_TYPE: "pages.devices.type.movesense.name",
   HealthService.DEVICE_TYPE: "pages.devices.type.health.name",
@@ -133,7 +155,6 @@ const Map<String, String> _deviceTypeDescription = {
   WeatherService.DEVICE_TYPE: "pages.devices.type.weather.description",
   AirQualityService.DEVICE_TYPE: "pages.devices.type.air_quality.description",
   LocationService.DEVICE_TYPE: "pages.devices.type.location.description",
-  ESenseDevice.DEVICE_TYPE: "pages.devices.type.esense.description",
   PolarDevice.DEVICE_TYPE: "pages.devices.type.polar.description",
   MovesenseDevice.DEVICE_TYPE: "pages.devices.type.movesense.description",
   HealthService.DEVICE_TYPE: "pages.devices.type.health.description",
@@ -151,16 +172,11 @@ const Map<String, Icon> _deviceTypeIcon = {
   ),
   AirQualityService.DEVICE_TYPE: Icon(
     Icons.air,
-    color: CACHET.LIGHT_BLUE_2,
+    color: CACHET.LIGHT_BLUE,
   ),
   LocationService.DEVICE_TYPE: Icon(
     Icons.location_on,
     color: CACHET.GREEN,
-  ),
-  ESenseDevice.DEVICE_TYPE: Icon(
-    Icons.headphones,
-    size: 30,
-    color: CACHET.BLUE_1,
   ),
   PolarDevice.DEVICE_TYPE: Icon(
     Icons.monitor_heart,
@@ -184,7 +200,7 @@ const Map<DeviceStatus, dynamic> _deviceStatusIcon = {
   DeviceStatus.connecting: Icon(Icons.bluetooth_searching_rounded,
       color: CACHET.DARK_BLUE, size: 30),
   DeviceStatus.connected:
-      Icon(Icons.bluetooth_rounded, color: CACHET.DARK_BLUE, size: 30),
+      Icon(Icons.bluetooth_rounded, color: CACHET.GREEN_1, size: 30),
   DeviceStatus.disconnected: "pages.devices.status.action.connect",
   DeviceStatus.paired: "pages.devices.status.action.connect",
   DeviceStatus.error: Icon(Icons.error_outline, color: CACHET.RED_1, size: 30),
@@ -217,7 +233,12 @@ const Map<DeviceStatus, String> _deviceStatusText = {
 
 const Map<String, String> _deviceConnectionInstructions = {
   Smartphone.DEVICE_TYPE: "pages.devices.type.smartphone.instructions",
-  ESenseDevice.DEVICE_TYPE: "pages.devices.type.esense.instructions",
   PolarDevice.DEVICE_TYPE: "pages.devices.type.polar.instructions",
   MovesenseDevice.DEVICE_TYPE: "pages.devices.type.movesense.instructions",
+};
+
+const Map<String, String> _deviceConnectionInstructionsImage = {
+  Smartphone.DEVICE_TYPE: "assets/icons/connection_done.png",
+  PolarDevice.DEVICE_TYPE: "assets/instructions/polar_instructions.png",
+  MovesenseDevice.DEVICE_TYPE: "assets/instructions/movesense_instructions.png",
 };

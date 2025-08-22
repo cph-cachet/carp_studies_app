@@ -14,6 +14,25 @@ class ActivityCardViewModel extends SerializableViewModel<WeeklyActivities> {
   Stream<Measurement>? get activityEvents => controller?.measurements
       .where((measurement) => measurement.data is Activity);
 
+  final DateTime _startOfWeek =
+      DateTime.now().subtract(Duration(days: DateTime.now().weekday - 1));
+  final DateTime _endOfWeek = DateTime.now()
+      .subtract(Duration(days: DateTime.now().weekday - 1))
+      .add(Duration(days: 6));
+
+  String get startOfWeek => DateFormat('dd').format(_startOfWeek);
+
+  String get endOfWeek => DateFormat('dd').format(_endOfWeek);
+
+  String get currentMonth =>
+      DateFormat('MMM').format(DateTime(_startOfWeek.year, _startOfWeek.month));
+
+  String get nextMonth => DateFormat('MMM')
+      .format(DateTime(_startOfWeek.year, _startOfWeek.month + 1, 1));
+
+  String get currentYear =>
+      DateFormat('yyyy').format(DateTime(DateTime.now().year));
+
   @override
   void init(SmartphoneDeploymentController ctrl) {
     super.init(ctrl);

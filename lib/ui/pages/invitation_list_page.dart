@@ -9,12 +9,11 @@ class InvitationListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     RPLocalizations locale = RPLocalizations.of(context)!;
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.secondary,
+      backgroundColor: Theme.of(context).extension<RPColors>()!.backgroundGray,
       body: FutureBuilder<List<ActiveParticipationInvitation>>(
         future: bloc.backend.getInvitations(),
         builder: (context, snapshot) {
           Widget child;
-
           if (snapshot.hasData) {
             child = SliverFixedExtentList(
               itemExtent: 150,
@@ -39,14 +38,14 @@ class InvitationListPage extends StatelessWidget {
             slivers: [
               SliverAppBar(
                 backgroundColor:
-                    Theme.of(context).colorScheme.surfaceContainerHighest,
+                    Theme.of(context).extension<RPColors>()!.backgroundGray,
                 title: const CarpAppBar(),
                 centerTitle: true,
                 pinned: true,
                 stretch: true,
                 stretchTriggerOffset: 20,
                 scrolledUnderElevation: 0,
-                onStretchTrigger: () async => bloc.backend.getInvitations(),
+                onStretchTrigger: () async => bloc.backend.invitations,
               ),
               SliverToBoxAdapter(
                 child: Padding(
@@ -120,8 +119,9 @@ class InvitationMaterial extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    RPLocalizations locale = RPLocalizations.of(context)!;
     return StudiesMaterial(
-      elevation: 2.0,
+      backgroundColor: Theme.of(context).extension<RPColors>()!.white!,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12.0),
       ),
@@ -138,16 +138,38 @@ class InvitationMaterial extends StatelessWidget {
               Text(
                 invitation.invitation.name,
                 maxLines: 1,
-                style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20.0,
+                style: studyTitleStyle.copyWith(
+                    color: CACHET.TASK_COMPLETED_BLUE,
                     overflow: TextOverflow.ellipsis),
+              ),
+              Text.rich(
+                TextSpan(
+                  children: [
+                    TextSpan(
+                      text: locale.translate(
+                          'invitation_list.roles_in_the_study.description'),
+                      style: studyDetailsInfoTitle.copyWith(
+                        color: Theme.of(context).extension<RPColors>()!.grey600,
+                        fontSize: 12,
+                      ),
+                    ),
+                    TextSpan(
+                      text: invitation.participantRoleName,
+                      style: studyDetailsInfoTitle.copyWith(
+                        color: Theme.of(context).extension<RPColors>()!.grey600,
+                        fontSize: 12,
+                      ),
+                    ),
+                  ],
+                ),
               ),
               Text(
                 invitation.invitation.description ?? '',
                 maxLines: 2,
-                style: const TextStyle(
-                    fontSize: 16.0, overflow: TextOverflow.ellipsis),
+                style: studyDetailsInfoTitle.copyWith(
+                  color: Theme.of(context).extension<RPColors>()!.grey900,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
             ],
           ),

@@ -17,14 +17,7 @@ class InvitationDetailsPage extends StatelessWidget {
     var invitation = model.getInvitation(invitationId);
 
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.secondary,
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.surfaceContainerHigh,
-        title: const CarpAppBar(),
-        automaticallyImplyLeading: false,
-        centerTitle: true,
-        elevation: 0.0,
-      ),
+      backgroundColor: Theme.of(context).extension<RPColors>()!.backgroundGray,
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 16.0),
         child: SafeArea(
@@ -62,11 +55,45 @@ class InvitationDetailsPage extends StatelessWidget {
                   ],
                 ),
               ),
+              Padding(
+                padding: const EdgeInsets.only(top: 16.0),
+                child: StudiesMaterial(
+                  backgroundColor:
+                      Theme.of(context).extension<RPColors>()!.white!,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          locale
+                              .translate('invitation.roles_in_the_study.title'),
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20.0,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 8),
+                          child: Text(
+                            '${locale.translate('invitation.roles_in_the_study.description')} ${invitation.participantRoleName}, ${invitation.deviceRoleName}',
+                            style: const TextStyle(fontSize: 16.0),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.only(top: 16.0),
                   child: StudiesMaterial(
-                    elevation: 2.0,
+                    backgroundColor:
+                        Theme.of(context).extension<RPColors>()!.white!,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12.0),
                     ),
@@ -82,23 +109,45 @@ class InvitationDetailsPage extends StatelessWidget {
                         children: [
                           Expanded(
                             child: SingleChildScrollView(
-                              child: Text.rich(
-                                TextSpan(
-                                  children: [
-                                    TextSpan(
-                                      text: invitation.invitation.name,
-                                      style: const TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 22.0,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    invitation.invitation.name,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 22.0,
+                                      color: Theme.of(context)
+                                          .extension<RPColors>()!
+                                          .primary,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 8, bottom: 24),
+                                    child: FittedBox(
+                                      fit: BoxFit.scaleDown,
+                                      child: Text(
+                                        '${(locale.translate('pages.profile.study_id'))}: ${invitation.studyDeploymentId}',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 14,
+                                          color: Theme.of(context)
+                                              .extension<RPColors>()!
+                                              .grey600,
+                                        ),
+                                        maxLines: 1,
+                                        textScaler: TextScaler.linear(0.9),
                                       ),
                                     ),
-                                    TextSpan(
-                                      text:
-                                          '\n${invitation.invitation.description ?? ''}',
-                                      style: const TextStyle(fontSize: 16.0),
-                                    ),
-                                  ],
-                                ),
+                                  ),
+                                  Text(
+                                    invitation.invitation.description ?? '',
+                                    style: const TextStyle(
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ],
                               ),
                             ),
                           ),

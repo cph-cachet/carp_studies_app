@@ -20,6 +20,7 @@ part of carp_study_app;
 /// added to the [client].
 class Sensing {
   static final Sensing _instance = Sensing._();
+  StudyDeploymentStatus? _status;
   SmartphoneDeploymentController? _controller;
   Study? _study;
 
@@ -92,7 +93,6 @@ class Sensing {
     SamplingPackageRegistry().register(MediaSamplingPackage());
     SamplingPackageRegistry().register(SurveySamplingPackage());
     SamplingPackageRegistry().register(HealthSamplingPackage());
-    SamplingPackageRegistry().register(ESenseSamplingPackage());
     SamplingPackageRegistry().register(PolarSamplingPackage());
     SamplingPackageRegistry().register(MovesenseSamplingPackage());
 
@@ -128,7 +128,7 @@ class Sensing {
   }
 
   /// Add and deploy the study, and configure the study runtime (sampling).
-  Future<void> addStudy() async {
+  Future<StudyStatus> addStudy() async {
     assert(SmartPhoneClientManager().isConfigured,
         'The client manager is not yet configured. Call SmartPhoneClientManager().configure() before adding a study.');
     assert(bloc.study != null,
@@ -136,16 +136,24 @@ class Sensing {
 
     // Add the study to the client.
     _study = await SmartPhoneClientManager().addStudy(bloc.study!);
-
-    // Get the study controller and try to deploy the study.
-    //
-    // Note that if the study has already been deployed on this phone it has
-    // been cached locally and the local version will be used pr. default.
-    // If not deployed before (i.e., cached) the study deployment will be
-    // fetched from the deployment service.
     _controller =
         SmartPhoneClientManager().getStudyRuntime(study!.studyDeploymentId);
-    await controller?.tryDeployment(useCached: true);
+
+    // Get the study controller and try to deploy the study.
+    return await tryDeployment();
+  }
+
+  ///7 Try to deploy the study.
+  ///
+  /// Note that if the study has already been deployed on this phone it has
+  /// been cached locally and the local version will be used pr. default.
+  /// If not deployed before (i.e., cached) the study deployment will be
+  /// fetched from the deployment service.
+  Future<StudyStatus> tryDeployment() async {
+    assert(controller != null,
+        'No study or controller is provided. Cannot start deployment w/o a study.');
+
+    StudyStatus status = await controller!.tryDeployment(useCached: true);
 
     // Make sure to translate the user tasks in the study protocol before using
     // them in the app's task list.
@@ -159,6 +167,7 @@ class Sensing {
         .listen((measurement) => debugPrint(toJsonString(measurement)));
 
     info('$runtimeType - Study added, deployment id: $studyDeploymentId');
+    return status;
   }
 
   Future<void> removeStudy() async {
@@ -166,6 +175,19 @@ class Sensing {
       await SmartPhoneClientManager().removeStudy(study!.studyDeploymentId);
     }
   }
+
+  /// Get the last known status for the current study deployment.
+  /// Use [getStudyDeploymentStatus] to refresh the status from CAWS.
+  /// Returns null if the study is not yet deployed on this phone.
+  StudyDeploymentStatus? get studyDeploymentStatus => _status;
+
+  /// Get the status for the current study deployment.
+  /// Returns null if the study is not yet deployed on this phone.
+  Future<StudyDeploymentStatus?> getStudyDeploymentStatus() async =>
+      studyDeploymentId != null
+          ? _status = await deploymentService
+              .getStudyDeploymentStatus(studyDeploymentId!)
+          : null;
 
   /// Translate the title and description of all AppTask in the study protocol
   /// of the current master deployment.

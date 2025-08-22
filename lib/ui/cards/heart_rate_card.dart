@@ -2,12 +2,6 @@ part of carp_study_app;
 
 class HeartRateCardWidget extends StatefulWidget {
   final HeartRateCardViewModel model;
-  static const colors = [
-    Color.fromARGB(255, 243, 54, 32),
-    Color.fromARGB(255, 179, 179, 181),
-    Color.fromARGB(70, 0, 0, 0),
-  ];
-
   const HeartRateCardWidget(this.model, {super.key});
 
   factory HeartRateCardWidget.withSampleData(HeartRateCardViewModel model) =>
@@ -47,9 +41,8 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
 
   @override
   Widget build(BuildContext context) {
-    RPLocalizations locale = RPLocalizations.of(context)!;
-
     return StudiesMaterial(
+      backgroundColor: Theme.of(context).extension<RPColors>()!.white!,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
@@ -57,26 +50,15 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
             StreamBuilder(
               stream: widget.model.heartRateStream,
               builder: (context, AsyncSnapshot<double> snapshot) {
-                // animationController.duration = Duration(
-                //     milliseconds: 1000 ~/
-                //         (((widget.model.currentHeartRate ?? 0) + 1) / 60));
-
                 return Column(
                   children: [
-                    ChartsLegend(
-                        title: locale.translate('cards.heartrate.title'),
-                        iconAssetName: Icon(Icons.monitor_heart,
-                            color: Theme.of(context).primaryColor),
-                        heroTag: 'HeartRate-card',
-                        values: const [],
-                        colors: HeartRateCardWidget.colors),
                     getDailyRange,
                     SizedBox(
                       height: 240,
                       child: barCharts,
                     ),
                     SizedBox(
-                      height: 80,
+                      height: 50,
                       child: currentHeartRateWidget,
                     )
                   ],
@@ -99,26 +81,23 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         Container(
-          margin: const EdgeInsets.only(left: 8, right: 2),
+          margin: const EdgeInsets.only(left: 8, right: 4, bottom: 4),
           child: Text(
             min == null || max == null
-                // ? locale.translate('cards.no_data')
                 ? '-'
                 : '${(min.toInt())} - ${(max.toInt())}',
-            style: heartRateNumberStyle.copyWith(
-              fontSize: 40,
-            ),
+            style: heartRateNumberStyle,
           ),
         ),
         Padding(
-          padding: const EdgeInsets.only(bottom: 4.0),
+          padding: const EdgeInsets.only(bottom: 10),
           child: Text(
             min == null || max == null
                 ? ''
                 : locale.translate('cards.heartrate.bpm'),
-            style: heartRateNumberStyle.copyWith(
+            style: heartRateBPMTextStyle.copyWith(
               fontSize: 12,
-              color: Theme.of(context).extension<CarpColors>()!.grey600,
+              color: Theme.of(context).extension<RPColors>()!.grey600,
             ),
           ),
         ),
@@ -139,7 +118,7 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Container(
-                margin: const EdgeInsets.only(left: 8),
+                margin: const EdgeInsets.only(left: 8, bottom: 8, right: 4),
                 child: currentHeartRate != null
                     ? Text(
                         currentHeartRate.toStringAsFixed(0),
@@ -148,7 +127,7 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
                     : Text('-', style: heartRateNumberStyle),
               ),
               Padding(
-                padding: const EdgeInsets.only(bottom: 8.0),
+                padding: const EdgeInsets.only(bottom: 14),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -158,17 +137,16 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
                         scale: Tween<double>(begin: 1, end: 1)
                             .animate(animationController),
                         child: Icon(
-                          Icons.favorite_outline_rounded,
-                          color: HeartRateCardWidget.colors[0],
-                          size: 32,
+                          Icons.favorite,
+                          color: CACHET.HEART_RATE_RED,
+                          size: 10,
                         ),
                       ),
                     ),
                     Text(
                       locale.translate('cards.heartrate.bpm'),
-                      style: heartRateNumberStyle.copyWith(
-                        color:
-                            Theme.of(context).extension<CarpColors>()!.grey600,
+                      style: heartRateBPMTextStyle.copyWith(
+                        color: Theme.of(context).extension<RPColors>()!.grey600,
                       ),
                     ),
                   ],
@@ -207,7 +185,7 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
                     ),
                   ),
                   TextSpan(
-                    text: "\n${rod.fromY.toInt()} - ${rod.toY.toInt()}",
+                    text: "\n${rod.fromY.toInt()}-${rod.toY.toInt()}",
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 30,
@@ -275,10 +253,9 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
                 dashArray: [3, 2]),
             verticalInterval: 1 / 24,
             checkToShowVerticalLine: (value) {
-              if (value == 1 / 4) return true;
-              if (value == 12 / 24) return true;
-              if (value == 18 / 24) return true;
-              if (value == 24 / 24) return true;
+              if ((value * 24).round() == 6) return true;
+              if ((value * 24).round() == 12) return true;
+              if ((value * 24).round() == 18) return true;
               return false;
             }),
         borderData: FlBorderData(
@@ -328,13 +305,13 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
   Widget rightTitles(double value, TitleMeta meta) {
     return SideTitleWidget(
       meta: meta,
-      space: 16,
+      space: 6,
       child: Text(
         value.toInt() % meta.appliedInterval == 0
             ? value.toInt().toString()
             : '',
         style: dataCardRightTitleStyle.copyWith(
-          color: Theme.of(context).extension<CarpColors>()!.grey600,
+          color: Theme.of(context).extension<RPColors>()!.grey600,
         ),
         maxLines: 1,
       ),
@@ -349,7 +326,7 @@ class HeartRateCardWidgetState extends State<HeartRateCardWidget>
                   BarChartRodData(
                     fromY: value.value.min,
                     toY: value.value.max ?? 0,
-                    color: HeartRateCardWidget.colors[0],
+                    color: CACHET.HEART_RATE_RED,
                     width: 6,
                   ),
                 ],

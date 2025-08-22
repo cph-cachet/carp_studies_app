@@ -6,6 +6,7 @@ final _shellNavigatorKey = GlobalKey<NavigatorState>();
 class CarpStudyApp extends StatefulWidget {
   const CarpStudyApp({super.key});
 
+  /// Reload language translations and re-build the entire app.
   static void reloadLocale(BuildContext context) async {
     CarpStudyAppState? state =
         context.findAncestorStateOfType<CarpStudyAppState>();
@@ -118,6 +119,12 @@ class CarpStudyAppState extends State<CarpStudyApp> {
         ),
       ),
       GoRoute(
+        path: ParticipantDataPage.route,
+        parentNavigatorKey: _rootNavigatorKey,
+        builder: (context, state) => ParticipantDataPage(
+            model: bloc.appViewModel.participantDataPageViewModel),
+      ),
+      GoRoute(
         path: '/task/:taskId',
         parentNavigatorKey: _rootNavigatorKey,
         builder: (context, state) {
@@ -129,9 +136,6 @@ class CarpStudyAppState extends State<CarpStudyApp> {
       GoRoute(
         path: InformedConsentPage.route,
         parentNavigatorKey: _rootNavigatorKey,
-        // redirect: (context, state) => bloc.hasInformedConsentBeenAccepted
-        //     ? firstRoute
-        //     : (bloc.studyId == null ? InvitationListPage.route : null),
         builder: (context, state) => InformedConsentPage(
           model: bloc.appViewModel.informedConsentViewModel,
         ),
@@ -180,6 +184,7 @@ class CarpStudyAppState extends State<CarpStudyApp> {
 
   @override
   Widget build(BuildContext context) {
+    final carpColors = Theme.of(context).extension<CarpColors>();
     return MaterialApp.router(
       scaffoldMessengerKey: bloc.scaffoldKey,
       supportedLocales: const [
@@ -208,8 +213,34 @@ class CarpStudyAppState extends State<CarpStudyApp> {
         }
         return supportedLocales.first; // default to EN
       },
-      theme: carpStudyTheme,
-      darkTheme: carpStudyDarkTheme,
+      // theme: ThemeData(
+      //   extensions: [
+      //     RPColors(
+      //       primary: CarpColors().primary,
+      //     ),
+      //   ],
+      // ),
+
+      // theme: ThemeData(
+      //   extensions: [
+      //     researchPackageTheme.extension<RPColors>()!.copyWith(
+      //           primary: CarpColors().primary,
+      //         ),
+      //   ],
+      // ),
+
+      // theme: researchPackageTheme,
+
+      theme: researchPackageTheme.copyWith(
+        extensions: [
+          researchPackageTheme.extension<RPColors>()!.copyWith(
+                primary: carpColors?.primary,
+              ),
+        ],
+      ),
+
+      darkTheme: researchPackageDarkTheme,
+      debugShowCheckedModeBanner: true,
       routerConfig: _router,
     );
   }

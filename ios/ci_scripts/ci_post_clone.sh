@@ -27,10 +27,8 @@ cd ios && pod install
 MODE="production"
 if [ "${CI_WORKFLOW:-}" = "Master - Public Testing" ]; then
   MODE="production"
-  echo "Mode is set to production"
 elif [ "${CI_WORKFLOW:-}" = "Test - Internal Testing" ]; then
   MODE="test"
-  echo "Mode is set to test"
 fi
 
 flutter build ios --config-only --release --dart-define="deployment-mode=$MODE"

@@ -60,7 +60,7 @@ class StudyPageState extends State<StudyPage> {
                         if (index == 3 && bloc.messages.isNotEmpty) {
                           return _buildAnnouncementsTitle(context);
                         }
-                        if (index == 4) {
+                        if (index >= 4) {
                           // This is -4 bc the first two cards are the study card and the study status card and we don't want to show them in the list
                           return _announcementCard(
                               context, bloc.messages[index - 4]);

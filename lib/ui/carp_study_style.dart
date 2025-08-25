@@ -251,117 +251,119 @@ ThemeData carpStudyDarkTheme = ThemeData.dark().copyWith(
   ),
 );
 
-TextStyle studyTitleStyle =
-    const TextStyle(fontSize: 24, fontWeight: FontWeight.w600);
+// These TextStyles are now implemented in ResearchPackage
 
-TextStyle studyDetailsInfoTitle =
-    const TextStyle(fontSize: 16, fontWeight: FontWeight.w700);
+// TextStyle studyTitleStyle =
+//     const TextStyle(fontSize: 24, fontWeight: FontWeight.w600);
 
-TextStyle studyDetailsInfoMessage =
-    const TextStyle(fontSize: 12, fontWeight: FontWeight.w700);
+// TextStyle studyDetailsInfoTitle =
+//     const TextStyle(fontSize: 16, fontWeight: FontWeight.w700);
 
-TextStyle readMoreStudyStyle =
-    const TextStyle(fontSize: 12, fontWeight: FontWeight.w700);
+// TextStyle studyDetailsInfoMessage =
+//     const TextStyle(fontSize: 12, fontWeight: FontWeight.w700);
 
-TextStyle scoreNumberStyle = const TextStyle(
-    fontSize: 36,
-    fontWeight: FontWeight.w800,
-    color: Color.fromRGBO(32, 111, 162, 1));
+// TextStyle readMoreStudyStyle =
+//     const TextStyle(fontSize: 12, fontWeight: FontWeight.w700);
 
-TextStyle scoreNumberStyleSmall = const TextStyle(
-    fontSize: 20,
-    fontWeight: FontWeight.w800,
-    color: Color.fromRGBO(32, 111, 162, 1));
+// TextStyle scoreNumberStyle = const TextStyle(
+//     fontSize: 36,
+//     fontWeight: FontWeight.w800,
+//     color: Color.fromRGBO(32, 111, 162, 1));
 
-TextStyle scoreTextStyle =
-    const TextStyle(fontSize: 12, fontWeight: FontWeight.w700);
+// TextStyle scoreNumberStyleSmall = const TextStyle(
+//     fontSize: 20,
+//     fontWeight: FontWeight.w800,
+//     color: Color.fromRGBO(32, 111, 162, 1));
 
-TextStyle aboutStudyCardTitleStyle =
-    const TextStyle(fontSize: 24, fontWeight: FontWeight.w700)
-        .apply(fontFamily: 'OpenSans');
+// TextStyle scoreTextStyle =
+//     const TextStyle(fontSize: 12, fontWeight: FontWeight.w700);
 
-TextStyle aboutCardTitleStyle =
-    const TextStyle(fontSize: 20, fontWeight: FontWeight.w700)
-        .apply(fontFamily: 'OpenSans');
+// TextStyle aboutStudyCardTitleStyle =
+//     const TextStyle(fontSize: 24, fontWeight: FontWeight.w700)
+//         .apply(fontFamily: 'OpenSans');
 
-TextStyle aboutCardInfoStyle =
-    const TextStyle(fontSize: 14, fontStyle: FontStyle.italic);
+// TextStyle aboutCardTitleStyle =
+//     const TextStyle(fontSize: 20, fontWeight: FontWeight.w700)
+//         .apply(fontFamily: 'OpenSans');
 
-TextStyle aboutCardSubtitleStyle =
-    const TextStyle(fontSize: 16, fontWeight: FontWeight.w600);
+// TextStyle aboutCardInfoStyle =
+//     const TextStyle(fontSize: 14, fontStyle: FontStyle.italic);
 
-TextStyle aboutCardContentStyle =
-    const TextStyle(fontSize: 16, fontWeight: FontWeight.w400)
-        .apply(fontFamily: 'OpenSans');
+// TextStyle aboutCardSubtitleStyle =
+//     const TextStyle(fontSize: 16, fontWeight: FontWeight.w600);
 
-TextStyle aboutCardTimeAgoStyle =
-    const TextStyle(fontSize: 10, fontWeight: FontWeight.w600)
-        .apply(fontFamily: 'OpenSans');
+// TextStyle aboutCardContentStyle =
+//     const TextStyle(fontSize: 16, fontWeight: FontWeight.w400)
+//         .apply(fontFamily: 'OpenSans');
 
-TextStyle sectionTitleStyle =
-    const TextStyle(fontSize: 18, fontWeight: FontWeight.w700);
+// TextStyle aboutCardTimeAgoStyle =
+//     const TextStyle(fontSize: 10, fontWeight: FontWeight.w600)
+//         .apply(fontFamily: 'OpenSans');
 
-TextStyle inputFieldStyle =
-    const TextStyle(fontSize: 15, color: Color(0xff707070));
+// TextStyle sectionTitleStyle =
+//     const TextStyle(fontSize: 18, fontWeight: FontWeight.w700);
 
-TextStyle welcomeMessageStyle = const TextStyle(
-    fontSize: 24, color: Color(0xff707070), fontWeight: FontWeight.bold);
+// TextStyle inputFieldStyle =
+//     const TextStyle(fontSize: 15, color: Color(0xff707070));
 
-TextStyle studyDescriptionStyle =
-    const TextStyle(fontSize: 12, fontWeight: FontWeight.w300);
+// TextStyle welcomeMessageStyle = const TextStyle(
+//     fontSize: 24, color: Color(0xff707070), fontWeight: FontWeight.bold);
 
-TextStyle dataCardTitleStyle = const TextStyle(
-    fontSize: 16, fontWeight: FontWeight.w400, letterSpacing: 1);
-TextStyle dataCardRightTitleStyle =
-    const TextStyle(fontSize: 14, letterSpacing: 1);
-TextStyle measuresStyle =
-    const TextStyle(fontSize: 18, fontWeight: FontWeight.w400);
-TextStyle legendStyle =
-    const TextStyle(fontSize: 12, fontWeight: FontWeight.w400);
+// TextStyle studyDescriptionStyle =
+//     const TextStyle(fontSize: 12, fontWeight: FontWeight.w300);
 
-TextStyle audioTitleStyle =
-    const TextStyle(fontSize: 22, fontWeight: FontWeight.w700);
-TextStyle audioContentStyle =
-    const TextStyle(fontSize: 16, fontWeight: FontWeight.w700);
+// TextStyle dataCardTitleStyle = const TextStyle(
+//     fontSize: 16, fontWeight: FontWeight.w400, letterSpacing: 1);
+// TextStyle dataCardRightTitleStyle =
+//     const TextStyle(fontSize: 14, letterSpacing: 1);
+// TextStyle measuresStyle =
+//     const TextStyle(fontSize: 18, fontWeight: FontWeight.w400);
+// TextStyle legendStyle =
+//     const TextStyle(fontSize: 12, fontWeight: FontWeight.w400);
 
-TextStyle heartRateNumberStyle =
-    const TextStyle(fontSize: 28, fontWeight: FontWeight.w700);
-TextStyle heartRateBPMTextStyle =
-    const TextStyle(fontSize: 10, fontWeight: FontWeight.w700);
+// TextStyle audioTitleStyle =
+//     const TextStyle(fontSize: 22, fontWeight: FontWeight.w700);
+// TextStyle audioContentStyle =
+//     const TextStyle(fontSize: 16, fontWeight: FontWeight.w700);
 
-TextStyle surveysCardTotalTextStyle =
-    const TextStyle(fontSize: 24, fontWeight: FontWeight.w700);
+// TextStyle heartRateNumberStyle =
+//     const TextStyle(fontSize: 28, fontWeight: FontWeight.w700);
+// TextStyle heartRateBPMTextStyle =
+//     const TextStyle(fontSize: 10, fontWeight: FontWeight.w700);
 
-TextStyle dataVizCardTitleNumber =
-    const TextStyle(fontSize: 28, fontWeight: FontWeight.w700);
-TextStyle dataVizCardTitleText =
-    const TextStyle(fontSize: 12, fontWeight: FontWeight.w700);
-TextStyle dataVizCardBottomNumber =
-    const TextStyle(fontSize: 22, fontWeight: FontWeight.w700);
-TextStyle dataVizCardBottomText =
-    const TextStyle(fontSize: 12, fontWeight: FontWeight.w700);
+// TextStyle surveysCardTotalTextStyle =
+//     const TextStyle(fontSize: 24, fontWeight: FontWeight.w700);
 
-TextStyle deviceTitle =
-    const TextStyle(fontSize: 16, fontWeight: FontWeight.w700);
+// TextStyle dataVizCardTitleNumber =
+//     const TextStyle(fontSize: 28, fontWeight: FontWeight.w700);
+// TextStyle dataVizCardTitleText =
+//     const TextStyle(fontSize: 12, fontWeight: FontWeight.w700);
+// TextStyle dataVizCardBottomNumber =
+//     const TextStyle(fontSize: 22, fontWeight: FontWeight.w700);
+// TextStyle dataVizCardBottomText =
+//     const TextStyle(fontSize: 12, fontWeight: FontWeight.w700);
 
-TextStyle deviceSubtitle =
-    const TextStyle(fontSize: 12, fontWeight: FontWeight.w700);
+// TextStyle deviceTitle =
+//     const TextStyle(fontSize: 16, fontWeight: FontWeight.w700);
 
-TextStyle healthServiceConnectTitleStyle =
-    const TextStyle(fontSize: 24, fontWeight: FontWeight.w700);
+// TextStyle deviceSubtitle =
+//     const TextStyle(fontSize: 12, fontWeight: FontWeight.w700);
 
-TextStyle healthServiceConnectMessageStyle =
-    const TextStyle(fontSize: 22, fontWeight: FontWeight.w700);
+// TextStyle healthServiceConnectTitleStyle =
+//     const TextStyle(fontSize: 24, fontWeight: FontWeight.w700);
 
-TextStyle profileSectionStyle =
-    TextStyle(fontSize: 12, fontWeight: FontWeight.w600);
-TextStyle profileTitleStyle =
-    TextStyle(fontSize: 14, fontWeight: FontWeight.w600);
-TextStyle profileActionStyle =
-    TextStyle(fontSize: 16, fontWeight: FontWeight.w600);
+// TextStyle healthServiceConnectMessageStyle =
+//     const TextStyle(fontSize: 22, fontWeight: FontWeight.w700);
 
-TextStyle timerStyle =
-    const TextStyle(fontSize: 36, fontWeight: FontWeight.w600);
+// TextStyle profileSectionStyle =
+//     TextStyle(fontSize: 12, fontWeight: FontWeight.w600);
+// TextStyle profileTitleStyle =
+//     TextStyle(fontSize: 14, fontWeight: FontWeight.w600);
+// TextStyle profileActionStyle =
+//     TextStyle(fontSize: 16, fontWeight: FontWeight.w600);
 
-TextStyle studyNameStyle =
-    const TextStyle(fontSize: 30.0, fontWeight: FontWeight.w800);
+// TextStyle timerStyle =
+//     const TextStyle(fontSize: 36, fontWeight: FontWeight.w600);
+
+// TextStyle studyNameStyle =
+//     const TextStyle(fontSize: 30.0, fontWeight: FontWeight.w800);

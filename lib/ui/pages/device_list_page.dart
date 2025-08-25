@@ -180,10 +180,8 @@ class DeviceListPageState extends State<DeviceListPage> {
                               color: CACHET.DEPLOYMENT_DEPLOYING,
                               borderRadius: BorderRadius.circular(100)),
                           child: Text(
-                              locale
-                                  .translate(
-                                      device.getDeviceStatusIcon as String)
-                                  .toUpperCase(),
+                              locale.translate(
+                                  device.getDeviceStatusIcon as String),
                               style: aboutCardTitleStyle.copyWith(
                                   color: Colors.white)),
                         ),
@@ -218,10 +216,8 @@ class DeviceListPageState extends State<DeviceListPage> {
                               color: CACHET.DEPLOYMENT_DEPLOYING,
                               borderRadius: BorderRadius.circular(100)),
                           child: Text(
-                            locale
-                                .translate(
-                                    service.getServiceStatusIcon as String)
-                                .toUpperCase(),
+                            locale.translate(
+                                service.getServiceStatusIcon as String),
                             style: aboutCardTitleStyle.copyWith(
                                 color: Colors.white),
                           ),
@@ -250,8 +246,9 @@ class DeviceListPageState extends State<DeviceListPage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [leading!],
         ),
-        title: SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
+        title: FittedBox(
+          fit: BoxFit.scaleDown,
+          alignment: Alignment.centerLeft,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
@@ -273,10 +270,14 @@ class DeviceListPageState extends State<DeviceListPage> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    subtitle,
-                    style: deviceSubtitle.copyWith(
-                      color: Theme.of(context).extension<RPColors>()!.grey700,
+                  FittedBox(
+                    fit: BoxFit.scaleDown,
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      subtitle,
+                      style: deviceSubtitle.copyWith(
+                        color: Theme.of(context).extension<RPColors>()!.grey700,
+                      ),
                     ),
                   ),
                 ],
@@ -354,12 +355,19 @@ class DeviceListPageState extends State<DeviceListPage> {
               false;
           if (disconnect) await device.disconnectFromDevice();
         } else {
+          final hasSeenInstructions =
+              await AppPreferences.hasSeenBluetoothConnectionInstructions();
           Navigator.push(
-              context,
-              MaterialPageRoute<void>(
-                // barrierDismissible: true,
-                builder: (context) => BluetoothConnectionPage(device: device),
-              ));
+            context,
+            MaterialPageRoute<void>(
+              builder: (context) => BluetoothConnectionPage(
+                hasSeenInstructions
+                    ? CurrentStep.scan
+                    : CurrentStep.instructions,
+                device: device,
+              ),
+            ),
+          );
         }
       } else if (bluetoothAdapterState == BluetoothAdapterState.unauthorized &&
           Platform.isIOS) {

@@ -199,6 +199,8 @@ class CarpStudyAppViewModel extends ViewModel {
   final InvitationsViewModel _invitationsListViewModel = InvitationsViewModel();
   final InformedConsentViewModel _informedConsentViewModel =
       InformedConsentViewModel();
+  final ParticipantDataPageViewModel _participantDataPageViewModel =
+      ParticipantDataPageViewModel();
 
   CarpStudyAppViewModel() : super();
 
@@ -212,6 +214,8 @@ class CarpStudyAppViewModel extends ViewModel {
       _invitationsListViewModel;
   InformedConsentViewModel get informedConsentViewModel =>
       _informedConsentViewModel;
+  ParticipantDataPageViewModel get participantDataPageViewModel =>
+      _participantDataPageViewModel;
 
   @override
   void init(SmartphoneDeploymentController ctrl) {
@@ -224,6 +228,7 @@ class CarpStudyAppViewModel extends ViewModel {
     _profilePageViewModel.init(ctrl);
     _invitationsListViewModel.init(ctrl);
     _informedConsentViewModel.init(ctrl);
+    _participantDataPageViewModel.init(ctrl);
   }
 
   @override

@@ -4,6 +4,7 @@
 cd $CI_PRIMARY_REPOSITORY_PATH
 
 set -ex
+set -euo pipefail
 
 # Install Flutter using git.
 git clone https://github.com/flutter/flutter.git --depth 1 -b stable $HOME/flutter
@@ -21,5 +22,15 @@ brew install cocoapods
 
 # Install CocoaPods dependencies.
 cd ios && pod install
+
+# Default to "production" unless matched
+MODE="production"
+if [ "${CI_WORKFLOW:-}" = "Master - Public Testing" ]; then
+  MODE="production"
+elif [ "${CI_WORKFLOW:-}" = "Test - Internal Testing" ]; then
+  MODE="test"
+fi
+
+flutter build ios --config-only --release --dart-define="deployment-mode=$MODE"
 
 exit 0

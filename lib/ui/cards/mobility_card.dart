@@ -31,7 +31,6 @@ class _MobilityCardState extends State<MobilityCard> {
 
     return StudiesMaterial(
       backgroundColor: Theme.of(context).extension<RPColors>()!.white!,
-      elevation: 0,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
@@ -47,7 +46,7 @@ class _MobilityCardState extends State<MobilityCard> {
                 Padding(
                   padding: const EdgeInsets.only(left: 4.0),
                   child: Text(
-                    locale.translate('cards.mobility.homestay'),
+                    "${locale.translate('cards.mobility.homestay')} ${_getDayName(touchedIndex)}",
                     style: dataVizCardTitleText.copyWith(
                       color: Theme.of(context).extension<RPColors>()!.grey900!,
                     ),
@@ -231,35 +230,31 @@ class _MobilityCardState extends State<MobilityCard> {
 
   Widget bottomTitles(double value, TitleMeta meta) {
     const style = TextStyle(fontSize: 10);
-    String text;
-    switch (value.toInt()) {
-      case 1:
-        text = 'Mon';
-        break;
-      case 2:
-        text = 'Tue';
-        break;
-      case 3:
-        text = 'Wed';
-        break;
-      case 4:
-        text = 'Thu';
-        break;
-      case 5:
-        text = 'Fri';
-        break;
-      case 6:
-        text = 'Sat';
-        break;
-      case 7:
-        text = 'Sun';
-        break;
-      default:
-        text = '';
-    }
     return SideTitleWidget(
       meta: meta,
-      child: Text(text, style: style),
+      child: Text(_getDayName(value.toInt()), style: style),
     );
+  }
+
+  String _getDayName(int dayIndex) {
+    RPLocalizations locale = RPLocalizations.of(context)!;
+    switch (dayIndex) {
+      case 1:
+        return locale.translate("pages.data_viz.mon");
+      case 2:
+        return locale.translate("pages.data_viz.tue");
+      case 3:
+        return locale.translate("pages.data_viz.wed");
+      case 4:
+        return locale.translate("pages.data_viz.thu");
+      case 5:
+        return locale.translate("pages.data_viz.fri");
+      case 6:
+        return locale.translate("pages.data_viz.sat");
+      case 7:
+        return locale.translate("pages.data_viz.sun");
+      default:
+        return '';
+    }
   }
 }

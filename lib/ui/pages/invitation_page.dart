@@ -18,13 +18,6 @@ class InvitationDetailsPage extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: Theme.of(context).extension<RPColors>()!.backgroundGray,
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.surfaceContainerHigh,
-        title: const CarpAppBar(),
-        automaticallyImplyLeading: false,
-        centerTitle: true,
-        elevation: 0.0,
-      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 16.0),
         child: SafeArea(
@@ -67,7 +60,6 @@ class InvitationDetailsPage extends StatelessWidget {
                 child: StudiesMaterial(
                   backgroundColor:
                       Theme.of(context).extension<RPColors>()!.white!,
-                  elevation: 2.0,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12.0),
                   ),
@@ -102,7 +94,6 @@ class InvitationDetailsPage extends StatelessWidget {
                   child: StudiesMaterial(
                     backgroundColor:
                         Theme.of(context).extension<RPColors>()!.white!,
-                    elevation: 2.0,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12.0),
                     ),
@@ -134,17 +125,20 @@ class InvitationDetailsPage extends StatelessWidget {
                                   Padding(
                                     padding: const EdgeInsets.only(
                                         top: 8, bottom: 24),
-                                    child: Text(
-                                      '${(locale.translate('pages.profile.study_id'))}: ${invitation.studyDeploymentId}',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 14,
-                                        color: Theme.of(context)
-                                            .extension<RPColors>()!
-                                            .grey600,
+                                    child: FittedBox(
+                                      fit: BoxFit.scaleDown,
+                                      child: Text(
+                                        '${(locale.translate('pages.profile.study_id'))}: ${invitation.studyDeploymentId}',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 14,
+                                          color: Theme.of(context)
+                                              .extension<RPColors>()!
+                                              .grey600,
+                                        ),
+                                        maxLines: 1,
+                                        textScaler: TextScaler.linear(0.9),
                                       ),
-                                      maxLines: 1,
-                                      textScaler: TextScaler.linear(0.9),
                                     ),
                                   ),
                                   Text(

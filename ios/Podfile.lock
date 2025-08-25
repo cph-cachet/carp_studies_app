@@ -46,6 +46,9 @@ PODS:
   - just_audio (0.0.1):
     - Flutter
     - FlutterMacOS
+  - libphonenumber_plugin (0.0.1):
+    - Flutter
+    - PhoneNumberKit
   - location (0.0.1):
     - Flutter
   - mdsflutter (0.0.1):
@@ -68,6 +71,12 @@ PODS:
     - Flutter
   - permission_handler_apple (9.3.0):
     - Flutter
+  - PhoneNumberKit (3.8.0):
+    - PhoneNumberKit/PhoneNumberKitCore (= 3.8.0)
+    - PhoneNumberKit/UIKit (= 3.8.0)
+  - PhoneNumberKit/PhoneNumberKitCore (3.8.0)
+  - PhoneNumberKit/UIKit (3.8.0):
+    - PhoneNumberKit/PhoneNumberKitCore
   - polar (0.0.1):
     - Flutter
     - PolarBleSdk (~> 5.7.0)
@@ -114,6 +123,7 @@ DEPENDENCIES:
   - flutter_timezone (from `.symlinks/plugins/flutter_timezone/ios`)
   - health (from `.symlinks/plugins/health/ios`)
   - just_audio (from `.symlinks/plugins/just_audio/darwin`)
+  - libphonenumber_plugin (from `.symlinks/plugins/libphonenumber_plugin/ios`)
   - location (from `.symlinks/plugins/location/ios`)
   - mdsflutter (from `.symlinks/plugins/mdsflutter/ios`)
   - Movesense (from `https://bitbucket.org/movesense/movesense-mobile-lib/`)
@@ -124,6 +134,7 @@ DEPENDENCIES:
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - pedometer (from `.symlinks/plugins/pedometer/ios`)
   - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
+  - PhoneNumberKit (~> 3.7)
   - polar (from `.symlinks/plugins/polar/ios`)
   - screen_state (from `.symlinks/plugins/screen_state/ios`)
   - sensors_plus (from `.symlinks/plugins/sensors_plus/ios`)
@@ -137,6 +148,7 @@ SPEC REPOS:
     - Alamofire
     - AppAuth
     - flutter_sound_core
+    - PhoneNumberKit
     - PolarBleSdk
     - RxSwift
     - SwiftProtobuf
@@ -179,6 +191,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/health/ios"
   just_audio:
     :path: ".symlinks/plugins/just_audio/darwin"
+  libphonenumber_plugin:
+    :path: ".symlinks/plugins/libphonenumber_plugin/ios"
   location:
     :path: ".symlinks/plugins/location/ios"
   mdsflutter:
@@ -241,6 +255,7 @@ SPEC CHECKSUMS:
   flutter_timezone: 7c838e17ffd4645d261e87037e5bebf6d38fe544
   health: fe206e65f13a9b88623605fbd8af8f029e23dc35
   just_audio: 4e391f57b79cad2b0674030a00453ca5ce817eed
+  libphonenumber_plugin: d134f173b22bfa5ede50887071f087f309277f8c
   location: 155caecf9da4f280ab5fe4a55f94ceccfab838f8
   mdsflutter: bd3c0b3335d50947d1a192cf70f930e0fb04a766
   Movesense: 5ee7f342042aff32d24924b7f3fe4f2e86532522
@@ -251,6 +266,7 @@ SPEC CHECKSUMS:
   path_provider_foundation: 080d55be775b7414fd5a5ef3ac137b97b097e564
   pedometer: 1c5eaab0c6bce8eb7651f7095553b5081c9d06ed
   permission_handler_apple: 4ed2196e43d0651e8ff7ca3483a069d469701f2d
+  PhoneNumberKit: ec00ab8cef5342c1dc49fadb99d23fa7e66cf0ef
   polar: bc78b0a6fce15cad0a88ad8eb831fa76f709df7b
   PolarBleSdk: e3df6f62b6ed34701d2e1d74ebe24fd8245062ca
   RxSwift: 5710a9e6b17f3c3d6e40d6e559b9fa1e813b2ef8
@@ -263,6 +279,6 @@ SPEC CHECKSUMS:
   video_player_avfoundation: 2cef49524dd1f16c5300b9cd6efd9611ce03639b
   Zip: b3fef584b147b6e582b2256a9815c897d60ddc67
 
-PODFILE CHECKSUM: 637a852170391ffc67bb926aa9b5540c53ed8eaf
+PODFILE CHECKSUM: 0f233b2493d660073cf18073d2b24e7b319ab4a8
 
 COCOAPODS: 1.16.2

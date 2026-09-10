@@ -317,18 +317,18 @@ packages:
     dependency: "direct main"
     description:
       name: carp_connectivity_package
-      sha256: "72214fa603b427d2ad0330bf2815c0476b1bf0c90f744ef29d82434d8e107844"
+      sha256: ff6085b33e756218056c5113dac0387b1a061d2d5c2760e759b09e1c8ce5e98e
       url: "https://pub.dev"
     source: hosted
-    version: "2.2.0"
+    version: "2.2.1"
   carp_context_package:
     dependency: "direct main"
     description:
       name: carp_context_package
-      sha256: db3446e336ee3f60dcc037d0503690dd898fec3edbd489b6bb18a30c87c3c224
+      sha256: "1fb56bedad8efacb5a8aa9dfad8d00a16e4dd3d9119c4bd91aa66004adb79150"
       url: "https://pub.dev"
     source: hosted
-    version: "2.1.0"
+    version: "2.1.1"
   carp_core:
     dependency: "direct main"
     description:
@@ -349,10 +349,10 @@ packages:
     dependency: "direct main"
     description:
       name: carp_mobile_sensing
-      sha256: "5a1f38d4068e7bc2e1120e8551344f1d3098030875c72cd6eabf32d823a7d79b"
+      sha256: a98899cc0c07326035bf23f69826808c9bba445b0e6c46ba491d248d2f4713d7
       url: "https://pub.dev"
     source: hosted
-    version: "2.3.1"
+    version: "2.4.0"
   carp_movesense_flutter:
     dependency: transitive
     description:

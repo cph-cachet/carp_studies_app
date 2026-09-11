@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - test
+      - build/manual-5.0.1
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -61,3 +62,15 @@ jobs:
         env:
           PLAY_STORE_JSON_KEY: PLAY_STORE_CONFIG.json
         working-directory: android
+
+      - name: Build signed testing bundle for manual upload
+        if: github.ref == 'refs/heads/build/manual-5.0.1'
+        run: flutter build appbundle --release --no-deferred-components --no-tree-shake-icons --dart-define=deployment-mode=test --build-name=5.0.1-test --build-number=147
+
+      - name: Save signed testing bundle
+        if: github.ref == 'refs/heads/build/manual-5.0.1'
+        uses: actions/upload-artifact@v4
+        with:
+          name: carp-study-app-5.0.1-test-147
+          path: build/app/outputs/bundle/release/app-release.aab
+          if-no-files-found: error

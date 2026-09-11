@@ -47,6 +47,8 @@ class Sensing {
       deploymentService: deploymentService,
       dataCollectorFactory: DeviceController(),
 
+      // Request permissions when connecting, not all at study startup.
+      askForPermissions: false,
       // Only resumed - the user connects to it themselves the first time.
       enableBackgroundMode: false,
     );

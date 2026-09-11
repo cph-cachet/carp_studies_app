@@ -97,6 +97,9 @@
     <uses-permission android:name="android.permission.health.READ_HEART_RATE" />
     <uses-permission android:name="android.permission.health.READ_SKIN_TEMPERATURE" />
 
+    <!-- Sleep - one permission covers sessions and all stages -->
+    <uses-permission android:name="android.permission.health.READ_SLEEP" />
+
     <!-- Historical data (older than 30 days since permission granted) -->
     <uses-permission android:name="android.permission.health.READ_HEALTH_DATA_HISTORY" />
 

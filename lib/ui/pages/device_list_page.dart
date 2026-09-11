@@ -179,7 +179,7 @@ class DeviceListPageState extends State<DeviceListPage> {
               leading: const Icon(Icons.autorenew_rounded, size: 30, color: Color(0xff3260A4)),
               title: (locale.translate('pages.devices.type.background.name'), null),
               subtitle: locale.translate('pages.devices.type.background.description'),
-              onTap: connected ? null : () async => await BackgroundSensingService().connect(),
+              onTap: connected ? null : _backgroundSensingClicked,
               trailing: connected
                   ? const Icon(Icons.sensors_rounded, color: _statusSuccess, size: 30)
                   : _connectPill(locale.translate('pages.devices.status.action.connect')),
@@ -295,6 +295,18 @@ class DeviceListPageState extends State<DeviceListPage> {
     await service.deviceManager.connect();
   }
 
+  Future<void> _backgroundSensingClicked() async {
+    await BackgroundSensingService().connect();
+    // If the iOS permission request did not grant Always, explain the Settings fallback.
+    if (!BackgroundSensingService().isConnected && Platform.isIOS && mounted) {
+      await showDialog<void>(
+        context: context,
+        barrierDismissible: true,
+        builder: (context) => _permissionDeniedDialog(context, 'pages.devices.background_permission.message'),
+      );
+    }
+  }
+
   Future<void> _hardwareDeviceClicked(DeviceViewModel device) async {
     // fast out if no Bluetooth
     if (!(await FlutterBluePlus.isSupported)) return;
@@ -319,7 +331,7 @@ class DeviceListPageState extends State<DeviceListPage> {
           await showDialog<void>(
             context: context,
             barrierDismissible: true,
-            builder: (context) => _permissionDeniedDialog(context),
+            builder: (context) => _permissionDeniedDialog(context, 'pages.devices.location_permission.message'),
           );
           return;
         }
@@ -343,12 +355,12 @@ class DeviceListPageState extends State<DeviceListPage> {
     }
   }
 
-  /// Shown when BLE permissions are still denied - points to the app settings.
-  Widget _permissionDeniedDialog(BuildContext context) {
+  /// Explain missing permissions and offer the app settings.
+  Widget _permissionDeniedDialog(BuildContext context, String messageKey) {
     final locale = RPLocalizations.of(context)!;
     return AlertDialog(
       title: Text(locale.translate("pages.devices.location_permission.title")),
-      content: SingleChildScrollView(child: Text(locale.translate("pages.devices.location_permission.message"))),
+      content: SingleChildScrollView(child: Text(locale.translate(messageKey))),
       actions: [
         TextButton(child: Text(locale.translate("cancel")), onPressed: () => Navigator.pop(context)),
         ElevatedButton(

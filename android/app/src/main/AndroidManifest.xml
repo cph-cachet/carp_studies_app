@@ -42,6 +42,11 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
+    <!-- Used by the background service (flutter_background) to keep sampling
+         running while the app is not in the foreground. The service itself is
+         declared in the <application> tag below. -->
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+
     <!-- The following permissions are used in the Context Package -->
 
     <!--Location Permissions-->
@@ -61,13 +66,26 @@
         android:name="com.google.android.gms.permission.ACTIVITY_RECOGNITION"
         android:maxSdkVersion="28" />
 
-    <!-- The following permissions are used in the flutter_local_notifications Package  -->
-    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+    <!-- The following permissions are used in the flutter_local_notifications Package.
+         Reminders are scheduled inexactly, so SCHEDULE_EXACT_ALARM is not needed. -->
     <uses-permission android:name="android.permission.VIBRATE" />
 
     <!-- The following permissions are used in the Media Package  -->
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.CAMERA" />
+
+    <!-- open_filex declares the media permissions so it can open files from the
+         gallery. We only open a PDF we wrote to our own cache, so drop them -
+         Play requires a photo/video access declaration for apps that keep them. -->
+    <uses-permission
+        android:name="android.permission.READ_MEDIA_IMAGES"
+        tools:node="remove" />
+    <uses-permission
+        android:name="android.permission.READ_MEDIA_VIDEO"
+        tools:node="remove" />
+    <uses-permission
+        android:name="android.permission.READ_MEDIA_AUDIO"
+        tools:node="remove" />
 
     <!-- Permissions for Health Connect API -->
     <!-- Activity (ACTIVITY_RECOGNITION declared above) -->
@@ -78,6 +96,9 @@
     <!-- Vital signs -->
     <uses-permission android:name="android.permission.health.READ_HEART_RATE" />
     <uses-permission android:name="android.permission.health.READ_SKIN_TEMPERATURE" />
+
+    <!-- Sleep - one permission covers sessions and all stages -->
+    <uses-permission android:name="android.permission.health.READ_SLEEP" />
 
     <!-- Historical data (older than 30 days since permission granted) -->
     <uses-permission android:name="android.permission.health.READ_HEALTH_DATA_HISTORY" />
@@ -204,6 +225,17 @@
         <!-- service for using the Android activity recognition API
         <service android:name="dk.cachet.activity_recognition_flutter.activity.ActivityRecognizedService"
         android:exported="true"/> -->
+
+        <!-- The foreground service hosting the study sampling pipeline. The
+             flutter_background plugin does not declare it, so it is declared
+             here with its foreground service type.
+             "location": continuous location updates are what keep sampling
+             alive - the same anchor background sensing uses on iOS - and the
+             type is uncapped, unlike dataSync's 6 hours per day. -->
+        <service
+            android:name="de.julianassmann.flutter_background.IsolateHolderService"
+            android:exported="false"
+            android:foregroundServiceType="location" />
 
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
